@@ -20,19 +20,18 @@ $dialog-footer-height: 3.6rem !default;
             
             @extend %flow;
             @extend %horizontal;
+            @extend %solid;
             @extend %middle;
             @extend %center;
             
-            flex: 0 0 auto;
-            align-self: stretch;
             margin: 0px $gutter/2 0px $gutter/2;
             
             &:first-child {
-                margin-right: 0px;
+                margin-left: 0px;
             }
             
             &:last-child {
-                margin-left: 0px;
+                margin-right: 0px;
             }
             
         }
