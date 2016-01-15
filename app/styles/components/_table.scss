@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+    display: table;
+}
+
+thead tr {
+    border-bottom: 1px solid #d0d0d0
+}
+
+table, td, th {
+    border: none;
+}
+
+td, th {
+    padding: $gutter/2 $gutter/2;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+}

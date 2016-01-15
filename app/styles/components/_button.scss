@@ -1,0 +1,36 @@
+.button {
+    display: inline-block;
+    position: relative;
+    line-height: 2em;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.button:hover {
+    transition: text-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: rgba(125, 125, 125, 0.26) 1px 1px 1px;
+    transition-delay: 0.05s;
+}
+
+.button.filled {
+    padding-left: $gutter / 2;
+    padding-right: $gutter / 2;
+}
+
+.button.filled:hover {
+    transition: box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: none;
+    transition-delay: 0.05s;
+    box-shadow: 0 1px 4px 0 rgba(64, 64, 64, 0.26);
+}
+
+.button.tiny {
+    line-height: 1.7em;
+    font-size: 0.85em;
+}
+
+.button.small {
+    line-height: 1.8em;
+    font-size: 0.9em;
+}

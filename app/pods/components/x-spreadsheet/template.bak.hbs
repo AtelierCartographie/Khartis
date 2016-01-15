@@ -1,0 +1,28 @@
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th><div>#</div></th>
+                {{#each data.header as |col|}}
+                    <th><div>{{col}}</div></th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data.body as |row i|}}
+                <tr>
+                    {{x-spreadsheet.x-cell value=i}}
+                    {{#each row as |col|}}
+                        {{x-spreadsheet.x-cell value=col editedCell=editedCell startEdit="startEditCell" endEdit="endEditCell"}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="fixed-thead">
+    {{#each headers as |header|}}
+        {{x-spreadsheet.x-header content=header.content refEl=header.refEl onMouseEnter="onMouseEnterHeader" onMouseLeave="onMouseLeaveHeader"}}
+    {{/each}}
+    {{x-spreadsheet.resize-handle ready="onResizeHandleReady"}}
+</div>

@@ -1,0 +1,94 @@
+& {
+    @extend %flow;
+    @extend %vertical;
+    @extend %stretched;
+    flex-basis: 100%;
+    overflow-x: scroll;
+    overflow-y: initial;
+    width: 100px;
+    height: 100%;
+}
+
+.sheet {
+    @extend %flow;
+    @extend %vertical;
+}
+
+.sheet .head {
+    @extend %flow;
+    @extend %horizontal;
+    @extend %solid;
+    @extend .filled;
+    @extend .with-relief;
+    @extend .with-relief.topbar;
+    z-index: 2;
+}
+
+.sheet .body {
+    @extend %flow;
+    @extend %vertical;
+    @extend %scrollable;
+    @extend %stretched;
+    overflow-y: scroll;
+    overflow-x: visible;
+    max-width: 100%;
+}
+
+.sheet .row {
+    @extend %flow;
+    @extend %horizontal;
+    @extend %solid;
+}
+
+.sheet .cell {
+    @extend %flow;
+    @extend %solid;
+    @extend %horizontal;
+    @extend %middle;
+    @extend %center;
+    @extend .bordered;
+    @extend .padded;
+    height: 100%;
+    width: 300px;
+}
+
+.sheet .column.row-nums {
+    @extend %flow;
+    @extend %vertical;
+    @extend %solid;
+    @extend .filled;
+    @extend .with-relief;
+    @extend .with-relief.leftbar;
+    margin-top: -30px;
+    z-index: 2;
+    
+    &.affixed {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    
+    &.affixed + .column {
+        margin-left: 30px;
+    }
+}
+
+.sheet .column.row-nums, .sheet .column.dash {
+    width: 30px;
+}
+
+
+
+.row {
+    height: 100px;
+}
+
+.row-nums {
+}
+
+.columns .head {
+}
+
+.columns .body {
+    background-color: green;
+}

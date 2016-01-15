@@ -1,0 +1,42 @@
+$dialog-header-height: 4.6rem !default;
+$dialog-footer-height: 3.6rem !default;
+
+.dialog {
+    
+    @extend %panel;
+    @extend .with-relief;
+    
+    & > footer {
+        
+        @extend %flow;
+        @extend %horizontal;
+        @extend %right;
+        @extend %middle;
+        
+        padding: $gutter/2 $gutter $gutter/2 $gutter;
+        height: $dialog-footer-height;
+        
+        & > .button {
+            
+            @extend %flow;
+            @extend %horizontal;
+            @extend %middle;
+            @extend %center;
+            
+            flex: 0 0 auto;
+            align-self: stretch;
+            margin: 0px $gutter/2 0px $gutter/2;
+            
+            &:first-child {
+                margin-right: 0px;
+            }
+            
+            &:last-child {
+                margin-left: 0px;
+            }
+            
+        }
+        
+    }
+    
+}

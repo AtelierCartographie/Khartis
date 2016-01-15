@@ -1,0 +1,245 @@
+$font-size-base: 1.35rem !default;
+$line-height: $font-size-base;
+$gutter: 1.5rem !default;
+$viewport-min-width: 102.4rem !default;
+
+@mixin box-flex($n) {
+    position: relative;
+    flex: $n;
+}
+
+@mixin cell-size() {
+    @for $i from 1 through 12 {
+        &.w#{$i}, &%w#{$i} {
+            width: (100% / 12) * $i;
+        }
+        &.h#{$i}, &%h#{$i} {
+            height: (100% / 12) * $i;
+        }
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    line-height: $line-height;
+    font-size: $font-size-base;
+}
+
+%viewport {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    margin: 0;
+    min-width: $viewport-min-width;
+}
+
+.flow, %flow {
+    @include box-flex(1);
+    @include cell-size();
+    flex-basis: auto;
+    z-index: 1;
+    
+    &.solid, &%solid {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    
+    &.breakable, &%beakable {
+        flex-wrap: wrap;
+    }
+    
+    &.scrollable, &%scrollable {
+        flex-basis: 0;
+    }
+    
+    &.stretched, &%stretched {
+        align-self: stretch;
+    }
+    
+    &.space-between, &%space-between {
+        justify-content: space-between;
+    }
+
+    &.space-around, &%space-around {
+        justify-content: space-around;
+    }
+    
+    &.outer, &%outer {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        
+        &.full, &%full {
+            right: 0;
+            bottom: 0;
+        }
+    }
+    
+    &.vertical, &%vertical {
+        display:         flex;
+        flex-direction: column;
+        
+        &.airy > *, &%airy > * {
+            margin-top: $gutter/2;
+            margin-bottom: $gutter/2;
+            &:first-child { margin-top: 0; }
+            &:last-child { margin-bottom: 0; }
+        }
+        
+        &.center, &%center {
+            align-items: center;
+        }
+        
+        &.middle, &%middle {
+            justify-content: center;
+        }
+        
+        &.left, &%left {
+            flex-direction: row;
+        }
+
+        &.right, &%right {
+            flex-direction: row-reverse;
+        }
+
+        &.top, &%top {
+            align-items: flex-start;
+        }
+
+        &.bottom, &%bottom {
+            align-items: flex-end;
+        }
+        
+        &.baseline, &%baseline {
+            align-items: baseline;
+        }
+    }
+    
+    &.horizontal, &%horizontal {
+        display: flex;
+        flex-direction: row;
+        
+        &.airy > *, &%airy > * {
+            margin-left: $gutter/2;
+            margin-right: $gutter/2;
+            &:first-child { margin-left: 0; }
+            &:last-child { margin-right: 0; }
+        }
+        
+        &.center, &%center {
+            justify-content: center;
+        }
+        
+        &.middle, &%middle {
+            align-items: center;
+        }
+        
+        &.top, &%top {
+            flex-direction: row;
+        }
+
+        &.bottom, &%bottom {
+            flex-direction: row-reverse;
+        }
+
+        &.left, &%left {
+            align-items: flex-start;
+        }
+
+        &.right, &%right {
+            align-items: flex-end;
+        }
+    }
+}
+
+/* shortcuts */
+
+.padded-l {
+    padding-left: $gutter / 2;
+}
+
+.padded-r {
+    padding-right: $gutter / 2;
+}
+
+.padded-t {
+    padding-top: $gutter / 2;
+}
+
+.padded-b {
+    padding-bottom: $gutter / 2;
+}
+
+.padded {
+    @extend .padded-l;
+    @extend .padded-r;
+    @extend .padded-t;
+    @extend .padded-b;
+}
+
+.padded-h {
+    @extend .padded-l;
+    @extend .padded-r;
+}
+
+.padded-v {
+    @extend .padded-t;
+    @extend .padded-b;
+}
+
+/* Misc */
+
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}

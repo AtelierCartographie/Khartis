@@ -1,0 +1,167 @@
+input:not([type]),
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime-local],
+input[type=tel], input[type=number],
+input[type=search], textarea, .select-box {
+    
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border: 1px solid #f0f0f0;
+    border-left: 2px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    font-size: 1em;
+    box-shadow: none;
+    transition: all .3s;
+    overflow: auto;
+    padding: $gutter/2 $gutter/2;
+    height: calc(#{$line-height} + #{$gutter});
+    
+}
+
+input[type=radio] {
+    position: relative;
+    opacity: 0;
+    border: none;
+    z-index: 1;
+}
+
+input[type=radio] + .-h {
+    display: inline-block;
+    position: relative;
+    height: 1em;
+}
+
+input[type=radio] + .-h:before, input[type=radio] + .-h:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.1rem;
+    left: -1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    z-index: 0;
+    border: 2px solid #26a69a;
+    border-radius: 50%;
+    transition: .2s;
+    box-sizing: border-box;
+}
+
+input[type=radio]:checked + .-h:after {
+    background-color: #26a69a;
+    border: 1px solid white;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.1rem;
+    margin-top: 0.1rem;
+}
+
+input[type=checkbox] {
+    position: relative;
+    opacity: 0;
+    border: none;
+    z-index: 1;
+}
+
+input[type=checkbox] + .-h {
+    display: inline-block;
+    position: relative;
+    height: 1em;
+}
+
+input[type=checkbox] + .-h:before, input[type=checkbox] + .-h:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.1rem;
+    left: -1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    z-index: 0;
+    border: 2px solid #26a69a;
+    border-radius: 1px;
+    transition: .2s;
+    box-sizing: border-box;
+}
+
+input[type=checkbox]:checked + .-h:before {
+    background-color: #26a69a;
+}
+
+input[type=checkbox]:checked + .-h:after {
+    top: 0;
+    left: -1.4rem;
+    width: 0.7rem;
+    height: 1.2rem;
+    border-top: 0.1rem solid transparent;
+    border-left: 0.1rem solid transparent;
+    border-right: 0.1rem solid white;
+    border-bottom: 0.1rem solid white;
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+
+textarea {
+    height: calc(#{$line-height*3} + #{$gutter});
+    resize: none;
+    overflow-y: auto;
+}
+
+select {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0px;
+    padding-left: $gutter/2;
+    cursor: pointer;
+}
+
+
+
+.select-box {
+    position: relative;
+    width: 100%;
+    border: 1px solid #f0f0f0;
+    border-left: 2px solid #9e9e9e;
+    padding: 0;
+}
+
+.select-box::after {
+    content: "▼";
+    font-size: 0.8em;
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    right: $gutter / 2;
+    color: #9e9e9e;
+}
+
+input, textarea, .select-box {
+    &:focus {
+        border-left: 2px solid #26a69a;
+    }
+}
+
+label {
+    color: #8e8e8e;
+    font-weight: bold;
+    font-size: 0.95em;
+    cursor: text;
+    transition: .2s ease-out;
+    margin: $gutter / 4 0px $gutter / 4 0px;
+}

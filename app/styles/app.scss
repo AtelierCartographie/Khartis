@@ -1,0 +1,72 @@
+$header-height: 5.6rem;
+$footer-height: 1.1em;
+
+@import "normalize";
+@import "flow";
+@import "theme";
+@import "pod-styles";
+
+/* flow */
+body > .ember-view {
+    @extend %viewport;
+    @extend .vertical.flow;
+}
+
+body > .ember-view > header {
+    z-index: 2;
+}
+
+body > .ember-view > header {
+    
+    @extend %flow;
+    @extend %solid;
+    @extend %horizontal;
+    @extend %middle;
+    @extend %space-between;
+    @extend .with-relief.topbar;
+    
+    padding-left: 2em;
+    padding-right: 2em;
+    
+    .brand {
+        display: block;
+        font-size: 2rem;
+    }
+    
+}
+
+body > section.main {
+    min-height: 200px;
+}
+
+.cm-s-default {
+    width: 100%;
+    border: 1px solid #f0f0f0;
+    border-left: 2px solid #9e9e9e;
+    height: 200px;
+}
+
+.import-dialog {
+    width: 50%;
+    flex-basis: auto;
+}
+
+.paste-csv-area:focus {
+    height: 200px;
+}
+
+nav {
+    width: 50px;
+}
+
+aside {
+    width: 250px;
+}
+
+header {
+    height: $header-height;
+}
+
+footer {
+    height: $footer-height;
+}

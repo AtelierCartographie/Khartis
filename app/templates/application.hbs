@@ -1,3 +1,120 @@
-<h2 id="title">Welcome to Ember</h2>
+<header class="filled primary with-relief topbar">
+    <span class="brand">MAPP</span>
+    <div>Ici un menu</div>
+</header>
+
+<div class="test"></div>
+
+<section class="main horizontal flow">
+    
+    <nav class="solid airy vertical middle flow padded filled contrast">
+        <div class="filled" style="height: 36px; border-radius: 20px;"></div> <!-- ici un icon -->
+        <div class="filled" style="height: 36px;"></div> <!-- ici un icon -->
+    </nav>
+    
+    <aside class="solid airy vertical flow padded filled default">
+        <div class="small panel">
+            <header class="filled primary">
+                <div class="title">Taille en pixels</div>
+                <div class="actions"><b>-</b></div>
+            </header>
+            <div class="vertical airy flow padded-v filled">
+                <div class="horizontal airy middle flow">
+                    <div class="horizontal middle flow">
+                        <label class="horizontal right flow w3 padded-r text-right">X</label>
+                        <input/>
+                        <small class="padded">px</small>
+                    </div>
+                    <div class="horizontal middle flow">
+                        <label class="horizontal right flow w3 padded-r text-right">Y</label>
+                        <input/>
+                        <small class="padded">px</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="small panel">
+            <header class="filled primary">
+                <div class="title">Contenu</div>
+                <div class="actions"><b>-</b></div>
+            </header>
+            <div class="vertical airy flow filled">
+                <div class="vertical middle flow">
+                    <label class="horizontal flow">Contenu de l'article</label>
+                    <textarea/>
+                </div>
+                <div class="horizontal airy middle center flow">
+                    <label class="horizontal right solid flow text-right">Oui ?</label>
+                    <span><input type="radio" name="group1"/><i class="-h"></i></span>
+                    <label class="horizontal right solid flow text-right">Non ?</label>
+                    <span><input type="radio" name="group1"/><i class="-h"></i></span>
+                </div>
+                <div class="horizontal airy middle center flow">
+                    <label class="horizontal right solid flow text-right">Validé ?</label>
+                    <span><input type="checkbox"/><i class="-h"></i></span>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <section class="horizontal middle center flow">
+        
+        <div class="horizontal stretched flow">
+            {{x-spreadsheet class="csvsheet"}}
+        </div>
+        
+        <div class="full outer horizontal middle center flow hidden">
+            <div class="dialog import-dialog">
+                <header class="filled primary">
+                    <div class="title">1. Import data</div>
+                    <div class="actions"><a href="#">[close]</a></div>
+                </header>
+                <div class="vertical airy flow filled">
+                    <div class="horizontal baseline flow padded-v">
+                        <label class="horizontal right flow w3 padded-r text-right">Collez ici le csv</label>
+                        {{textarea value=csvContent class="paste-csv-area" placeholder="Copy and paste your data"}}
+                    </div>
+                    <div>
+                        
+                    </div>
+                    <!--<div>
+                        {{!ivy-codemirror value=csvContent lineNumbers=true mode="csv"}}
+                    </div>-->
+                    <div class="horizontal middle flow padded-v">
+                        <label class="horizontal right flow w3 padded-r text-right">Entrez votre nom</label>
+                        <input placeholder="Ici le nom"/>
+                    </div>
+                    <div class="vertical flow">
+                        <label>Ceci est un select</label>
+                        <div class="select-box">
+                            <select>
+                                <option>Option 1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="horizontal baseline flow">
+                        <label>ou téléversez un fichier</label>
+                        <div class="padded flow w2">
+                            {{file-loader onContentLoaded="parseCsvContent"}}
+                        </div>
+                    </div>
+                </div>
+                <footer class="filled default">
+                    <a class="button text-success">Valider</a>
+                    <a class="button">Annuler</a>
+                </footer>
+            </div>
+        </div>
+    </section>
+    
+    <div class="outer horizontal center flow w12 hidden">
+        <div class="horizontal solid flow w4 filled default with-relief topbar">
+            <input placeholder="boite de recherche flotante"/>
+        </div>
+    </div>
+    
+</section>
+
+<footer class="text-center filled warning with-relief bottombar"><small>Apyx copyright blabla</small></footer>
 
 {{outlet}}

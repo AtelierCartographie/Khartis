@@ -1,0 +1,104 @@
+$font-color: #404040 !default;
+
+.with-relief {
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+}
+
+.with-relief.topbar {
+    box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.24);
+}
+
+.with-relief.bottombar {
+    box-shadow: 0 -4px 8px -4px rgba(0, 0, 0, 0.24);
+}
+
+.with-relief.leftbar {
+    box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.24);
+}
+
+html {
+    color: $font-color;
+}
+
+small {
+    font-size: 0.9em;
+}
+
+/* colors */
+.filled {
+    
+    & {
+        background-color: white;
+    }
+    
+    &.default {
+        background-color: #f0f0f0;
+    }
+
+    &.primary {
+        background-color: #4285f4;
+        &, a { color: #fff; }
+    }
+
+    &.success {
+        background-color: #0f9d58;
+        &, a { color: #fff; }
+    }
+    
+    &.warning {
+        background-color: #FF9800;
+        &, a { color: #fff; }
+    }
+
+    &.danger {
+        background-color: #F44336;
+        &, a { color: #fff; }
+    }
+    
+    &.contrast {
+        background-color: #404040;
+        &, a { color: #fff; }
+    }
+    
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.bordered {
+    
+    border-width: 1px;
+    border-style: solid;
+    
+    & {
+        border-color: #404040;
+    }
+    
+}
+
+.text-default {
+    color: #eee;
+}
+
+.text-primary {
+    color: #4285f4;
+}
+
+.text-success {
+    color: #0f9d58;
+}
+
+.text-warning {
+    color: #FF9800;
+}
+
+.text-danger {
+    color: #F44336;
+}
+
+@import "components/panel";
+@import "components/dialog";
+@import "components/form";
+@import "components/button";
+@import "components/table";
