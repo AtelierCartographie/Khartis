@@ -189,37 +189,37 @@ body {
 
 /* shortcuts */
 
-.padded-l {
+.padded-l, %padded-l {
     padding-left: $gutter / 2;
 }
 
-.padded-r {
+.padded-r, %padded-r {
     padding-right: $gutter / 2;
 }
 
-.padded-t {
+.padded-t, %padded-t {
     padding-top: $gutter / 2;
 }
 
-.padded-b {
+.padded-b, %padded-b {
     padding-bottom: $gutter / 2;
 }
 
-.padded {
-    @extend .padded-l;
-    @extend .padded-r;
-    @extend .padded-t;
-    @extend .padded-b;
+.padded, %padded {
+    @extend %padded-l;
+    @extend %padded-r;
+    @extend %padded-t;
+    @extend %padded-b;
 }
 
-.padded-h {
-    @extend .padded-l;
-    @extend .padded-r;
+.padded-h, %padded-h {
+    @extend %padded-l;
+    @extend %padded-r;
 }
 
-.padded-v {
-    @extend .padded-t;
-    @extend .padded-b;
+.padded-v, %padded-v {
+    @extend %padded-t;
+    @extend %padded-b;
 }
 
 /* Misc */

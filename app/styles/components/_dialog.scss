@@ -11,10 +11,11 @@ $dialog-footer-height: 3.6rem !default;
         @extend %flow;
         @extend %horizontal;
         @extend %right;
+        @extend %airy;
         @extend %middle;
         
-        padding: $gutter/2 $gutter $gutter/2 $gutter;
         height: $dialog-footer-height;
+        padding: 0px $gutter 0px $gutter;
         
         & > .button {
             
@@ -23,16 +24,6 @@ $dialog-footer-height: 3.6rem !default;
             @extend %solid;
             @extend %middle;
             @extend %center;
-            
-            margin: 0px $gutter/2 0px $gutter/2;
-            
-            &:first-child {
-                margin-left: 0px;
-            }
-            
-            &:last-child {
-                margin-right: 0px;
-            }
             
         }
         
