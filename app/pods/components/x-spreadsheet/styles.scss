@@ -4,8 +4,9 @@
     @extend %full;
 }
 
-$spreadsheet-cell-width: 250px !default;
-$spreadsheet-cell-height: 50px !default;
+$spreadsheet-cell-width: 140px !default;
+$spreadsheet-cell-height: 30px !default;
+$spreadsheet-cell-header-height: 50px !default;
 $spreadsheet-numbering-width: 30px !default;
 
 
@@ -24,12 +25,16 @@ $spreadsheet-numbering-width: 30px !default;
         top: 0px;
         left: 0px;
         padding-left: $spreadsheet-numbering-width;
+        .cell {
+            height: $spreadsheet-cell-header-height;
+            border-bottom: none;
+        }
     }
     
     & > .body {
         @extend .filled;
         position: absolute;
-        top: $spreadsheet-cell-height;
+        top: $spreadsheet-cell-header-height;
         left: $spreadsheet-numbering-width;
     }
     
@@ -49,14 +54,18 @@ $spreadsheet-numbering-width: 30px !default;
         @extend .filled.contrast;
         @extend .with-relief;
         @extend .with-relief.leftbar;
-        padding-top: $spreadsheet-cell-height;
+        padding-top: $spreadsheet-cell-header-height;
+        .cell { border-right: none; }
     }
     
     & > .dash {
-        @extend .filled.primary;
+        @extend .filled.warning;
         @extend .with-relief;
         @extend .with-relief.leftbar;
-        .cell { border: none };
+        .cell {
+            border: none;
+            height: $spreadsheet-cell-header-height;
+        }
     }
     
     .row {
@@ -70,10 +79,12 @@ $spreadsheet-numbering-width: 30px !default;
         @extend %horizontal;
         @extend %middle;
         @extend %padded;
-        @extend .bordered;
         
         width: $spreadsheet-cell-width;
         height: $spreadsheet-cell-height;
+        
+        border-bottom: 1px solid #D0D0D0;
+        border-right: 1px solid #D0D0D0;
         
         input {
             position: absolute;

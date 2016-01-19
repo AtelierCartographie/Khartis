@@ -5,16 +5,18 @@ import d3 from 'd3';
 
 let fakeData = [
     
-    ["Col 1", "Col 2", "Col 3", "Col 4", "Col 5"],
-    ["1", "2", "3", "4", "3"],
-    ["4", "5", "6", "3", "4"],
-    ["7", "8", "9", "1", "2"],
-    ["10", "11", "12", "4", "3"],
-    ["10", "11", "12", "4", "3"],
-    ["10", "11", "12", "4", "3"],
-    ["10", "11", "12", "4", "3"],
-    ["10", "11", "12", "4", "3"],
-    ["10", "11", "12", "4", "3"]
+    ["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"],
+    ["1", "2", "3", "4", "3", "1"],
+    ["4", "5", "6", "3", "4", "2"],
+    ["7", "8", "9", "1", "2", "3"],
+    ["10", "11", "12", "4", "3", "4"],
+    ["10", "11", "12", "4", "3", "5"],
+    ["10", "11", "12", "4", "3", "9"],
+    ["10", "11", "12", "4", "3", "6"],
+    ["10", "11", "12", "4", "3", "9"],
+    ["10", "11", "12", "4", "3", "8"],
+    ["10", "11", "12", "4", "3", "7"],
+    ["10", "11", "12", "4", "3", "9"]
     
 ];
 
@@ -60,9 +62,9 @@ export default Ember.Component.extend({
             header = this.$(".sheet > .header");
         
         this.$(".sheet").scroll(function(e) {
-          numbering.css({left: $(this).scrollLeft()});
-          header.css({top: $(this).scrollTop()});
-          dash.css({left: $(this).scrollLeft(), top: $(this).scrollTop()});
+            numbering.css({transform: `translateX(${$(this).scrollLeft()}px)`});
+            header.css({transform: `translateY(${$(this).scrollTop()}px)`});
+            dash.css({transform: `translate(${$(this).scrollLeft()}px, ${$(this).scrollTop()}px)`});
         });
         
     },
