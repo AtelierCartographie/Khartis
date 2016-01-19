@@ -1,94 +1,93 @@
 & {
     @extend %flow;
-    @extend %vertical;
-    @extend %stretched;
-    flex-basis: 100%;
-    overflow-x: scroll;
-    overflow-y: initial;
-    width: 100px;
-    height: 100%;
+    @extend %outer;
+    @extend %full;
 }
+
+$spreadsheet-cell-width: 250px !default;
+$spreadsheet-cell-height: 50px !default;
+$spreadsheet-numbering-width: 30px !default;
+
 
 .sheet {
-    @extend %flow;
-    @extend %vertical;
-}
-
-.sheet .head {
-    @extend %flow;
-    @extend %horizontal;
-    @extend %solid;
-    @extend .filled;
-    @extend .with-relief;
-    @extend .with-relief.topbar;
-    z-index: 2;
-}
-
-.sheet .body {
-    @extend %flow;
-    @extend %vertical;
-    @extend %scrollable;
-    @extend %stretched;
-    overflow-y: scroll;
-    overflow-x: visible;
-    max-width: 100%;
-}
-
-.sheet .row {
-    @extend %flow;
-    @extend %horizontal;
-    @extend %solid;
-}
-
-.sheet .cell {
-    @extend %flow;
-    @extend %solid;
-    @extend %horizontal;
-    @extend %middle;
-    @extend %center;
-    @extend .bordered;
-    @extend .padded;
-    height: 100%;
-    width: 300px;
-}
-
-.sheet .column.row-nums {
-    @extend %flow;
-    @extend %vertical;
-    @extend %solid;
-    @extend .filled;
-    @extend .with-relief;
-    @extend .with-relief.leftbar;
-    margin-top: -30px;
-    z-index: 2;
     
-    &.affixed {
+    @extend %flow;
+    @extend .filled;
+    
+    overflow: scroll;
+    
+    & > .header {
+        @extend .filled.contrast;
+        @extend .with-relief;
+        @extend .with-relief.topbar;
         position: absolute;
-        left: 0px;
         top: 0px;
+        left: 0px;
+        padding-left: $spreadsheet-numbering-width;
     }
     
-    &.affixed + .column {
-        margin-left: 30px;
+    & > .body {
+        @extend .filled;
+        position: absolute;
+        top: $spreadsheet-cell-height;
+        left: $spreadsheet-numbering-width;
     }
-}
-
-.sheet .column.row-nums, .sheet .column.dash {
-    width: 30px;
-}
-
-
-
-.row {
-    height: 100px;
-}
-
-.row-nums {
-}
-
-.columns .head {
-}
-
-.columns .body {
-    background-color: green;
+    
+    & > .numbering, & > .dash {
+        
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        
+        .cell {
+            width: $spreadsheet-numbering-width;
+        }
+        
+    }
+    
+    & > .numbering {
+        @extend .filled.contrast;
+        @extend .with-relief;
+        @extend .with-relief.leftbar;
+        padding-top: $spreadsheet-cell-height;
+    }
+    
+    & > .dash {
+        @extend .filled.primary;
+        @extend .with-relief;
+        @extend .with-relief.leftbar;
+        .cell { border: none };
+    }
+    
+    .row {
+        @extend %flow;
+        @extend %horizontal;
+    }
+    
+    .cell {
+        
+        @extend %flow;
+        @extend %horizontal;
+        @extend %middle;
+        @extend %padded;
+        @extend .bordered;
+        
+        width: $spreadsheet-cell-width;
+        height: $spreadsheet-cell-height;
+        
+        input {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border: none;
+            display: none;
+        }
+        
+        &.edited input { display: flex; }
+        &.edited .label { display: none; }
+        
+    }
+    
 }

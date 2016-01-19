@@ -1,33 +1,17 @@
 import Ember from 'ember';
+import XCell from '../x-cell/component';
 /* global $ */
 
-export default Ember.Component.extend({
+export default XCell.extend({
     
-   tagName: "th",
-    
-   content: "",
-   
-   refEl: null,
-   
-   widthChange: function() {
-       this.$().width($(this.get('refEl')).outerWidth());   
-   }.observes('refEl'),
+   classNames: ["header"],
    
    didInsertElement() {
    
        this.$()
-        .mouseenter( () => this.sendAction("onMouseEnter", this) )
-        .mouseleave( () => this.sendAction("onMouseLeave", this) );
+            .mouseenter( () => this.sendAction("onMouseEnter", this) )
+            .mouseleave( () => this.sendAction("onMouseLeave", this) );
         
-        
-        this.widthChange();
-        
-   },
-   
-   resizeTo(left) {
-       let w = left - this.$().position().left;
-       this.$().width(w);
-       $(this.get('refEl')).width(w);
    }
     
 });

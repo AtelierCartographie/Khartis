@@ -4,33 +4,63 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     
-    tagName: "td",
+    tagName: "div",
+    classNames: ["cell"],
     
-    value: '',
+    cell: null,
     
-    editedCell: null,
-    edited: function() {
-        return this.get('editedCell') == this;
-    }.property('editedCell'),
+    backupValue: null,
     
-    toggleEdited: function() {
-        this.$().toggleClass('edited', this.get('edited'));
-        this.$('input').focus();
-    }.observes('edited'),
+    didInsertElement() {
+        this.layout();
+    },
+    
+    toggleEditedState: function() {
+        this.$().toggleClass('edited', this.get('cell.edited'));
+        
+        if (this.get('cell.edited')) {
+            this.set('backupValue', this.get('cell.value'));
+            this.$('input').focus();
+        }
+    }.observes('cell.edited'),
     
     doubleClick() {
-        this.sendAction(this.get('edited') ? 'endEdit':'startEdit', this);
+        this.get('cell.edited') ? this.commitEdition() : this.startEdition();
+    },
+    
+    layout: function() {
+        this.$().outerWidth(this.get('cell.layout.width'));
+        this.$().outerHeight(this.get('cell.layout.height'));
+    }.observes('cell.layout.width', 'cell.layout.height'),
+    
+    startEdition() {
+        this.sendAction('edit-start', this.get('cell'));
+    },
+    
+    cancelEdition() {
+        this.set('cell.value', this.get('backupValue'));
+        this.sendAction('edit-end', this.get('cell'));
+    },
+    
+    commitEdition() {
+        this.sendAction('edit-end', this.get('cell'));
     },
     
     actions: {
         
         onInputEnter() {
-            this.sendAction('endEdit', this);
+            this.sendAction('edit-end', this.get('cell'));
         },
         
         onInputBlur() {
-            if (this.get('edited')) {
-                this.sendAction('endEdit', this);
+            if (this.get('cell.edited')) {
+                this.sendAction('edit-end', this.get('cell'));
+            }
+        },
+        
+        onKeyUp(v, e) {
+            if (e.keyCode === 27) {//esc
+                this.cancelEdition();
             }
         }
         

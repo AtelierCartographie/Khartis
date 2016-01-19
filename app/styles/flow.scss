@@ -5,7 +5,7 @@ $viewport-min-width: 102.4rem !default;
 
 @mixin box-flex($n) {
     position: relative;
-    flex: $n;
+    flex: $n 1 auto;
 }
 
 @mixin cell-size() {
@@ -19,34 +19,12 @@ $viewport-min-width: 102.4rem !default;
     }
 }
 
-* {
+*, :after, :before {
     box-sizing: border-box;
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-menu,
-nav,
-section,
-summary {
-  display: block;
 }
 
 html {
   font-size: 62.5%;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
 }
 
 body {
@@ -67,8 +45,8 @@ body {
 .flow, %flow {
     @include box-flex(1);
     @include cell-size();
-    flex-basis: auto;
-    z-index: 1;
+    display: flex;
+    z-index: 0;
     
     &.solid, &%solid {
         flex-grow: 0;
@@ -226,6 +204,14 @@ body {
 
 .hidden {
     display: none !important;
+}
+
+.visuallyhidden { 
+    position: absolute; 
+    overflow: hidden; 
+    clip: rect(0 0 0 0); 
+    height: 1px; width: 1px; 
+    margin: -1px; padding: 0; border: 0; 
 }
 
 .invisible {

@@ -6,6 +6,11 @@ $footer-height: 1.1em;
 @import "theme";
 @import "pod-styles";
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 /* flow */
 body > .ember-view {
     @extend %viewport;
@@ -13,7 +18,7 @@ body > .ember-view {
 }
 
 body > .ember-view > header {
-    z-index: 2;
+    z-index: 1;
 }
 
 body > .ember-view > header {

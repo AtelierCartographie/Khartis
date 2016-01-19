@@ -1,70 +1,27 @@
 <div class="sheet">
-    <div class="head">
+    <div class="body">
+        {{#each struct.body as |row|}}
+            <div class="row">
+                {{#each row.cells as |cell|}}
+                    {{x-spreadsheet.x-cell cell=cell edit-start="startEditCell" edit-end="endEditCell"}}
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+    
+    <div class="numbering">
+        {{#each struct.body as |row i|}}
+            <div class="row"><div class="cell">{{i}}</div></div>
+        {{/each}}
+    </div>
+    <div class="header">
         <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
+            {{#each struct.header.cells as |cell|}}
+                {{x-spreadsheet.x-header cell=cell edit-start="startEditCell" edit-end="endEditCell"}}
+            {{/each}}
         </div>
     </div>
-    <div class="body">
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
-        <div class="row">
-            <div class="cell">Colonne 1</div>
-            <div class="cell">Colonne 2</div>
-            <div class="cell">Colonne 3</div>
-            <div class="cell">Colonne 4</div>
-            <div class="cell">Colonne 5</div>
-            <div class="cell">Colonne 6</div>
-        </div>
+    <div class="dash">
+        <div class="row"><div class="cell">#</div></div>
     </div>
 </div>
