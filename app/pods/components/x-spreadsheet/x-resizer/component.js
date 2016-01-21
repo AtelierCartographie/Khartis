@@ -34,7 +34,7 @@ export default Ember.Component.extend({
                 el.classed('dragged', true);
                 this.set('target.cell.state.resizing', true);
                 this.$().offset({
-                    left: this.get('target').$().offset().left + this.get('target').$().outerWidth() - this.$().width()
+                    left: this.get('target').$().offset().left + this.get('target').$().outerWidth() - this.$().width() + this.$().parent('.sheet').scrollLeft()
                 });
             })
             .on('dragend', () => {
@@ -42,8 +42,8 @@ export default Ember.Component.extend({
                 el.classed('dragged', false);
             })
             .on('drag', () => {
-                let x = d3.mouse(el.node().parentNode)[0],
-                    cellOffset = this.get('target').$().offset().left - this.get('target').$().parent().offset().left;
+                let x = d3.mouse(el.node().parentNode)[0] + this.$().parent('.sheet').scrollLeft(),
+                    cellOffset = this.get('target').$().offset().left - this.get('target').$().parent().offset().left; //TODO : corriger le min
                 x = Math.max(cellOffset, x);
                 el.style('left', x + 'px');
             });
