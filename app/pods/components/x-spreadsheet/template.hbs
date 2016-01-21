@@ -17,11 +17,18 @@
     <div class="header">
         <div class="row">
             {{#each struct.header.cells as |cell|}}
-                {{x-spreadsheet.x-header cell=cell edit-start="startEditCell" edit-end="endEditCell"}}
+                {{x-spreadsheet.x-header cell=cell
+                    edit-start="startEditCell"
+                    edit-end="endEditCell"
+                    mouse-enter="onMouseEnterHeader"
+                    mouse-leave="onMouseLeaveHeader"
+                    start-resize="onStartResizeHeader"
+                }}
             {{/each}}
         </div>
     </div>
     <div class="dash">
         <div class="row"><div class="cell">#</div></div>
     </div>
+    {{x-spreadsheet.x-resizer target=resizable apply-resize="onApplyResize"}}
 </div>

@@ -101,4 +101,49 @@ $spreadsheet-numbering-width: 30px !default;
         
     }
     
+    /* RESIZE */
+    
+    $resize-handle-width: 0.6rem !default;
+    
+    & > .resizer {
+        
+        display: none;
+        position: absolute;
+        width: $resize-handle-width;
+        height: 100%;
+        
+        &.dragged {
+            display: block;
+            border-right: 1px solid $color-primary;
+        }
+ 
+    }
+    
+    & > .resizer {
+        pointer-events: none;
+    }
+    
+    & > .resizer .handle, & > .header .resize-handle {
+        @extend .filled.primary;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $resize-handle-width;
+        height: $spreadsheet-cell-header-height;
+        cursor: e-resize;
+    }
+    
+    & > .header .resize-handle {
+        display: none;
+        right: -1px;
+    }
+    
+    & > .header .cell:hover .resize-handle {
+        display: block;
+    }
+    
+    & > .header .cell.resizing:hover .resize-handle {
+        display: none;
+    }
+    
 }

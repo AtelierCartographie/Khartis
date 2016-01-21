@@ -16,16 +16,20 @@ export default Ember.Component.extend({
     },
     
     toggleEditedState: function() {
-        this.$().toggleClass('edited', this.get('cell.edited'));
+        this.$().toggleClass('edited', this.get('cell.state.edited'));
         
-        if (this.get('cell.edited')) {
+        if (this.get('cell.state.edited')) {
             this.set('backupValue', this.get('cell.value'));
             this.$('input').focus();
         }
-    }.observes('cell.edited'),
+    }.observes('cell.state.edited'),
+    
+    toggleResizingState: function() {
+        this.$().toggleClass('resizing', this.get('cell.state.resizing'));
+    }.observes('cell.state.resizing'),
     
     doubleClick() {
-        this.get('cell.edited') ? this.commitEdition() : this.startEdition();
+        this.get('cell.state.edited') ? this.commitEdition() : this.startEdition();
     },
     
     layout: function() {
@@ -34,27 +38,27 @@ export default Ember.Component.extend({
     }.observes('cell.layout.width', 'cell.layout.height'),
     
     startEdition() {
-        this.sendAction('edit-start', this.get('cell'));
+        this.sendAction('edit-start', this.get('cell'), this);
     },
     
     cancelEdition() {
         this.set('cell.value', this.get('backupValue'));
-        this.sendAction('edit-end', this.get('cell'));
+        this.sendAction('edit-end', this.get('cell'), this);
     },
     
     commitEdition() {
-        this.sendAction('edit-end', this.get('cell'));
+        this.sendAction('edit-end', this.get('cell'), this);
     },
     
     actions: {
         
         onInputEnter() {
-            this.sendAction('edit-end', this.get('cell'));
+            this.sendAction('edit-end', this.get('cell'), this);
         },
         
         onInputBlur() {
-            if (this.get('cell.edited')) {
-                this.sendAction('edit-end', this.get('cell'));
+            if (this.get('cell.state.edited')) {
+                this.sendAction('edit-end', this.get('cell'), this);
             }
         },
         

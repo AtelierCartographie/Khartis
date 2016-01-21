@@ -28,10 +28,15 @@ let Struct = Ember.Object.extend({
         return this.get('data').map( (r, i) => { 
             return Ember.Object.create({
                 header: i === 0,
-                cells: r.map ( c => {
+                cells: r.map ( (c, j) => {
                     return Ember.Object.create({
+                        index: j,
                         value: c,
-                        edited: false,
+                        state: {
+                            edited: false,
+                            selected: false,
+                            resizing: false 
+                        },
                         layout: {}
                     })
                 })
@@ -54,6 +59,8 @@ export default Ember.Component.extend({
     tagName: "div",
     
     struct: Struct.create({data: fakeData}),
+    
+    resizable: null,
     
     didInsertElement() {
         
@@ -79,20 +86,26 @@ export default Ember.Component.extend({
             cell.set('edited', false);
         },
         
-        onHeaderOver() {
-            console.log("over");
+        onMouseEnterHeader(cell, component) {
         },
         
-        onMouseEnterHeader(headerComponent) {
-            this.get('resizeHandleComponent').attachToHeader(headerComponent);
+        onMouseLeaveHeader(cell, component) {
         },
         
-        onMouseLeaveHeader(headerComponent) {
-            this.get('resizeHandleComponent').detachFromHeader(headerComponent);
+        onApplyResize(width, cell) {
+            let cellIndex = cell.get('index');
+            this.get('struct.rows').forEach( r => {
+                r.cells.forEach( c => {
+                    if (c.get('index') === cellIndex) {
+                        c.set('layout.width', width);
+                    }
+                });
+            });
+            this.set('resizable', null);
         },
         
-        onResizeHandleReady(resizeHandleComponent) {
-            this.set('resizeHandleComponent', resizeHandleComponent);
+        onStartResizeHeader(cell, component) {
+            this.set('resizable', component);
         }
         
     }

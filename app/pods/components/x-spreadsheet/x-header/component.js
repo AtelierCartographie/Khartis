@@ -9,8 +9,13 @@ export default XCell.extend({
    didInsertElement() {
    
        this.$()
-            .mouseenter( () => this.sendAction("onMouseEnter", this) )
-            .mouseleave( () => this.sendAction("onMouseLeave", this) );
+            .mouseenter( () => this.sendAction("mouse-enter", this.get('cell'), this) )
+            .mouseleave( () => this.sendAction("mouse-leave", this.get('cell'), this) );
+            
+       this.$(".resize-handle").mousedown( (e) => {
+           this.sendAction("start-resize", this.get('cell'), this)
+           e.preventDefault();
+       });
         
    }
     
