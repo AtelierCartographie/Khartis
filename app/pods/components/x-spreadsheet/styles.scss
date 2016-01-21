@@ -96,6 +96,7 @@ $spreadsheet-numbering-width: 30px !default;
             display: none;
         }
         
+        &.selected { border: 1px solid $color-primary; }
         &.edited input { display: flex; }
         &.edited .label { display: none; }
         

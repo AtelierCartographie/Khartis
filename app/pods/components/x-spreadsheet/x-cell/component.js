@@ -24,9 +24,17 @@ export default Ember.Component.extend({
         }
     }.observes('cell.state.edited'),
     
+    toggleSelectedState: function() {
+        this.$().toggleClass('selected', this.get('cell.state.selected'));
+    }.observes('cell.state.selected'),
+    
     toggleResizingState: function() {
         this.$().toggleClass('resizing', this.get('cell.state.resizing'));
     }.observes('cell.state.resizing'),
+    
+    click() {
+        this.get('cell.state.selected') ? this.endSelection() : this.startSelection();
+    },
     
     doubleClick() {
         this.get('cell.state.edited') ? this.commitEdition() : this.startEdition();
@@ -37,8 +45,17 @@ export default Ember.Component.extend({
         this.$().outerHeight(this.get('cell.layout.height'));
     }.observes('cell.layout.width', 'cell.layout.height'),
     
+    startSelection() {
+        this.sendAction('select-start', this.get('cell'), this);
+    },
+    
+    endSelection() {
+        this.sendAction('select-end', this.get('cell'), this);
+    },
+    
     startEdition() {
         this.sendAction('edit-start', this.get('cell'), this);
+        this.sendAction('select-start', this.get('cell'), this);
     },
     
     cancelEdition() {

@@ -79,11 +79,19 @@ export default Ember.Component.extend({
     actions: {
         
         startEditCell(cell) {
-            this.get('struct.rows').forEach( r => r.cells.forEach( c => c.set('edited', c == cell) ) );
+            this.get('struct.rows').forEach( r => r.cells.forEach( c => c.set('state.edited', c == cell) ) );
         },
         
         endEditCell(cell) {
-            cell.set('edited', false);
+            cell.set('state.edited', false);
+        },
+        
+        startSelectCell(cell) {
+            this.get('struct.rows').forEach( r => r.cells.forEach( c => c.set('state.selected', c == cell) ) );
+        },
+        
+        endSelectCell(cell) {
+            cell.set('state.selected', false);
         },
         
         onMouseEnterHeader(cell, component) {

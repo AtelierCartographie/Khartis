@@ -3,7 +3,12 @@
         {{#each struct.body as |row|}}
             <div class="row">
                 {{#each row.cells as |cell|}}
-                    {{x-spreadsheet.x-cell cell=cell edit-start="startEditCell" edit-end="endEditCell"}}
+                    {{x-spreadsheet.x-cell cell=cell
+                        edit-start="startEditCell"
+                        edit-end="endEditCell"
+                        select-start="startSelectCell"
+                        select-end="endSelectCell"
+                    }}
                 {{/each}}
             </div>
         {{/each}}
