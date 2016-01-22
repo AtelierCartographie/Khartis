@@ -137,7 +137,7 @@ let CellStruct = IdentifiableStruct.extend({
 CellStruct.reopenClass({
     restore: function(struct, refs) {
         var o = CellStruct.create({_uuid: struct._uuid});
-        refs[struct._uuid] = o;s
+        refs[struct._uuid] = o;
         o.setProperties({
             value: struct.value,
             column: refs[struct.column],
