@@ -127,8 +127,8 @@ let CellStruct = IdentifiableStruct.extend({
     export() {
         return {
             _uuid: this.get('_uuid'),
-            column: `#${this.get('column._uuid')}`,
-            row: `#${this.get('row._uuid')}`,
+            column: `${this.get('column._uuid')}`,
+            row: `${this.get('row._uuid')}`,
             value: this.get('value')
         };
     }
@@ -137,11 +137,11 @@ let CellStruct = IdentifiableStruct.extend({
 CellStruct.reopenClass({
     restore: function(struct, refs) {
         var o = CellStruct.create({_uuid: struct._uuid});
-        refs[struct._uuid] = o;
+        refs[struct._uuid] = o;s
         o.setProperties({
             value: struct.value,
-            column: refs[struct.column.replace('#', '')],
-            row: refs[struct.row.replace('#', '')]
+            column: refs[struct.column],
+            row: refs[struct.row]
         });
         return o;
     }
