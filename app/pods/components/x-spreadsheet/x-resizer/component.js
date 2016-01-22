@@ -56,6 +56,7 @@ export default Ember.Component.extend({
         let width = this.$().offset().left - this.get('target').$().offset().left;
         this.set('target.cell.state.resizing', false);
         this.sendAction('apply-resize', width, this.get('target.cell'));
+        this.sendAction('stop-resize', this.get('target'));
     }
     
 });

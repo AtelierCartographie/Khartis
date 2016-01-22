@@ -133,6 +133,8 @@ $spreadsheet-numbering-width: 30px !default;
         
         .label {
             @extend %fluid;
+            overflow: hidden;
+            white-space: nowrap;
         }
         
         input {

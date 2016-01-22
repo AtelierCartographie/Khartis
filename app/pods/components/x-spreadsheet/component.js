@@ -20,11 +20,23 @@ let fakeData = [
     
 ];
 
-let RowStruct = Ember.Object.extend({
+let IdentifiableStruct = Ember.Object.extend({
+   _uuid: null,
+   init() {
+       if (!this.get('_uuid')) {
+           this.set('_uuid', `${new Date().getTime()}-${++IdentifiableStruct.__c}`);
+       }
+   } 
+});
+
+IdentifiableStruct.reopenClass({__c: 0});
+
+let RowStruct = IdentifiableStruct.extend({
     header: null,
     cells: null,
     layout: null,
     init() {
+        this._super();
         this.set('layout', {
            height: null 
         });
@@ -41,33 +53,97 @@ let RowStruct = Ember.Object.extend({
             })
         });
         return row;
+    },
+    export() {
+        return {
+            _uuid: this.get('_uuid'),
+            header: this.get('header'),
+            cells: this.get('cells').map( c => c.export() ),
+            layout: this.get('layout')
+        };
     }
 });
 
-let ColumnStruct = Ember.Object.extend({
+
+RowStruct.reopenClass({
+    restore: function(struct, refs) {
+        var o = RowStruct.create({_uuid: struct._uuid});
+        refs[struct._uuid] = o;
+        o.setProperties({
+            header: struct.header,
+            layout: struct.layout,
+            cells: struct.cells.map( x => CellStruct.restore(x, refs) )
+        });
+        return o;
+    }
+});
+
+let ColumnStruct = IdentifiableStruct.extend({
     layout: null,
     meta: null,
     init() {
+        this._super();
         this.set('meta', {
            type: "text" 
         });
         this.set('layout', {
-           width: null 
+           width: null
         });
+    },
+    export() {
+        return {
+            _uuid: this.get('_uuid'),
+            layout: this.get('layout'),
+            meta: this.get('meta')
+        };
     }
 });
 
-let CellStruct = Ember.Object.extend({
+ColumnStruct.reopenClass({
+    restore: function(struct, refs) {
+        var o = ColumnStruct.create({_uuid: struct._uuid});
+        refs[struct._uuid] = o;
+        o.setProperties({
+            layout: struct.layout,
+            meta: struct.meta
+        });
+        return o;
+    }
+});
+
+let CellStruct = IdentifiableStruct.extend({
     column: null,
     row: null,
     value: null,
     state: null,
     init() {
+        this._super();
         this.set('state', {
             edited: false,
             selected: false,
             resizing: false 
         });
+    },
+    export() {
+        return {
+            _uuid: this.get('_uuid'),
+            column: `#${this.get('column._uuid')}`,
+            row: `#${this.get('row._uuid')}`,
+            value: this.get('value')
+        };
+    }
+});
+
+CellStruct.reopenClass({
+    restore: function(struct, refs) {
+        var o = CellStruct.create({_uuid: struct._uuid});
+        refs[struct._uuid] = o;
+        o.setProperties({
+            value: struct.value,
+            column: refs[struct.column.replace('#', '')],
+            row: refs[struct.row.replace('#', '')]
+        });
+        return o;
     }
 });
 
@@ -78,7 +154,7 @@ let Struct = Ember.Object.extend({
     rows: null,
     columns: null,
     
-    dataChange: function() {
+    buildFromData: function() {
         
         let columns = [],
             rows = this.get('data').map( (r, i) => {
@@ -96,10 +172,12 @@ let Struct = Ember.Object.extend({
                 return row;
             });
         
-        this.set('rows', rows);
-        this.set('columns', columns);
+        this.setProperties({
+            rows: rows,
+            columns: columns
+        });
         
-    }.observes('data').on('init'),
+    },
     
     header: function() {
         return this.get('rows')[0];
@@ -146,9 +224,29 @@ let Struct = Ember.Object.extend({
                 })
             );
         });
+    },
+    
+    export() {
+        return {
+            data: this.get('data'),
+            rows: this.get('rows').map( x => x.export() ),
+            columns: this.get('columns').map( x => x.export() )
+        };
     }
-   
+    
 });
+
+Struct.reopenClass({
+    restore: function(struct, refs = {}) {
+        var o = Struct.create();
+        o.setProperties({
+            data: struct.data,
+            columns: struct.columns.map( x => ColumnStruct.restore(x, refs) ),
+            rows: struct.rows.map( x => RowStruct.restore(x, refs) )
+        });
+        return o;
+    }
+})
 
 export default Ember.Component.extend({
     
@@ -157,6 +255,10 @@ export default Ember.Component.extend({
     struct: Struct.create({data: fakeData}),
     
     resizable: null,
+    
+    buildStruct: function() {
+        this.get('struct').buildFromData();
+    }.on("init"),
     
     didInsertElement() {
         
@@ -208,13 +310,25 @@ export default Ember.Component.extend({
         onMouseLeaveHeader(cell, component) {
         },
         
+        onStartResizeHeader(cell, component) {
+            this.set('resizable', component);
+        },
+        
         onApplyResize(width, cell) {
             cell.set('column.layout.width', width);
+        },
+        
+        onStopResize(component) {
             this.set('resizable', null);
         },
         
-        onStartResizeHeader(cell, component) {
-            this.set('resizable', component);
+        save() {
+            window.localStorage.setItem('sheet-data', JSON.stringify(this.get('struct').export()));
+        },
+        
+        restore() {
+            console.log(JSON.parse(window.localStorage.getItem('sheet-data')));
+            this.set('struct', Struct.restore(JSON.parse(window.localStorage.getItem('sheet-data'))));
         }
         
     }

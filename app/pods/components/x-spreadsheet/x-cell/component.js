@@ -20,7 +20,7 @@ export default Ember.Component.extend({
         
         if (this.get('cell.state.edited')) {
             this.set('backupValue', this.get('cell.value'));
-            this.$('input').focus();
+            this.$('input').focus().select();
         }
     }.observes('cell.state.edited'),
     

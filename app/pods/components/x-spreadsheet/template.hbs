@@ -1,6 +1,8 @@
 <div class="toolbar">
     <div class="tool add-row-icon" {{action 'addRow'}}>–</div>
     <div class="tool add-column-icon" {{action 'addColumn'}}>|</div>
+    <div class="tool save" {{action 'save'}}>s</div>
+    <div class="tool restore" {{action 'restore'}}>r</div>
 </div>
 <div class="sheet">
     <div class="body">
@@ -39,5 +41,5 @@
     <div class="dash">
         <div class="row"><div class="cell">#</div></div>
     </div>
-    {{x-spreadsheet.x-resizer target=resizable apply-resize="onApplyResize"}}
+    {{x-spreadsheet.x-resizer target=resizable apply-resize="onApplyResize" stop-resize="onStopResize"}}
 </div>

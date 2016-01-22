@@ -7,6 +7,8 @@ export default XCell.extend({
    classNames: ["header"],
    
    didInsertElement() {
+       
+       this._super();
    
        this.$()
             .mouseenter( () => this.sendAction("mouse-enter", this.get('cell'), this) )
@@ -16,7 +18,7 @@ export default XCell.extend({
            this.sendAction("start-resize", this.get('cell'), this)
            e.preventDefault();
        });
-        
+      
    }
     
 });
