@@ -4,7 +4,6 @@ $gutter: 1.5rem !default;
 $viewport-min-width: 102.4rem !default;
 
 @mixin box-flex($n) {
-    position: relative;
     flex: $n 1 auto;
 }
 
@@ -42,38 +41,19 @@ body {
     min-width: $viewport-min-width;
 }
 
-.flow, %flow {
-    @include box-flex(1);
-    @include cell-size();
-    display: flex;
-    z-index: 0;
-    
-    &.solid, &%solid {
-        flex-grow: 0;
-        flex-shrink: 0;
-    }
-    
-    &.breakable, &%beakable {
-        flex-wrap: wrap;
-    }
-    
-    &.scrollable, &%scrollable {
-        flex-basis: 0;
-    }
-    
-    &.stretched, &%stretched {
+.fluid, %fluid {
+   @include box-flex(1);
+   @include cell-size();
+   
+   &.stretched, &%stretched {
         align-self: stretch;
-    }
-    
-    &.space-between, &%space-between {
-        justify-content: space-between;
-    }
-
-    &.space-around, &%space-around {
-        justify-content: space-around;
-    }
-    
-    &.outer, &%outer {
+   }
+   
+   &.scrollable, &%scrollable {
+        flex-basis: 0;
+   }
+   
+   &.outer, &%outer {
         position: absolute;
         left: 0px;
         top: 0px;
@@ -83,10 +63,36 @@ body {
             bottom: 0;
         }
     }
+   
+}
+
+.solid, %solid {
+   @extend %fluid;
+   flex-grow: 0;
+   flex-shrink: 0;
+}
+
+.flow, %flow {
+    @extend %fluid;
+    display: flex;
+    position: relative;
+    z-index: 0;
+    
+    &.space-between, &%space-between {
+        justify-content: space-between;
+    }
+
+    &.space-around, &%space-around {
+        justify-content: space-around;
+    }
     
     &.vertical, &%vertical {
         display:         flex;
         flex-direction: column;
+        
+        &.btp, %btp {
+            flex-direction: column-reverse;
+        }
         
         &.airy > *, &%airy > * {
             margin-top: $gutter/2;
@@ -104,29 +110,42 @@ body {
         }
         
         &.left, &%left {
-            flex-direction: row;
-        }
-
-        &.right, &%right {
-            flex-direction: row-reverse;
-        }
-
-        &.top, &%top {
             align-items: flex-start;
         }
 
-        &.bottom, &%bottom {
+        &.right, &%right {
             align-items: flex-end;
         }
         
-        &.baseline, &%baseline {
-            align-items: baseline;
+        &.breakable-reverse, &%breakable-reverse {
+            
+            &.left, &%left {
+                align-items: flex-end;
+            }
+
+            &.right, &%right {
+                align-items: flex-start;
+            }
+            
         }
+
+        &.top, &%top {
+            justify-content: flex-start;
+        }
+
+        &.bottom, &%bottom {
+            justify-content: flex-end;
+        }
+        
     }
     
     &.horizontal, &%horizontal {
         display: flex;
         flex-direction: row;
+        
+        &.rtl, &%rtl {
+            flex-direction: row-reverse;
+        }
         
         &.airy > *, &%airy > * {
             margin-left: $gutter/2;
@@ -162,6 +181,14 @@ body {
         &.baseline, &%baseline {
             align-items: baseline;
         }
+    }
+    
+    &.breakable, &%breakable {
+        flex-wrap: wrap;
+    }
+    
+    &.breakable-reverse, &%breakable-reverse {
+        flex-wrap: wrap-reverse;
     }
 }
 

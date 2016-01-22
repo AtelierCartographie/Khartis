@@ -41,9 +41,13 @@ export default Ember.Component.extend({
     },
     
     layout: function() {
-        this.$().outerWidth(this.get('cell.layout.width'));
-        this.$().outerHeight(this.get('cell.layout.height'));
-    }.observes('cell.layout.width', 'cell.layout.height'),
+        if (this.get('cell.column.layout.width')) {
+            this.$().outerWidth(this.get('cell.column.layout.width'));
+        }
+        if (this.get('cell.column.layout.height')) {
+            this.$().outerHeight(this.get('cell.row.layout.height'));
+        }
+    }.observes('cell.column.layout.width', 'cell.row.layout.height'),
     
     startSelection() {
         this.sendAction('select-start', this.get('cell'), this);

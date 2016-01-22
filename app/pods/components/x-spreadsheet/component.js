@@ -20,37 +20,133 @@ let fakeData = [
     
 ];
 
+let RowStruct = Ember.Object.extend({
+    header: null,
+    cells: null,
+    layout: null,
+    init() {
+        this.set('layout', {
+           height: null 
+        });
+    },
+    emptyCopy() {
+        var row = RowStruct.create();
+        row.setProperties({
+            header: this.get('header'),
+            cells: this.get('cells').map( (c, i) => {
+                return CellStruct.create({
+                    column: c.get('column'),
+                    row: row
+                })
+            })
+        });
+        return row;
+    }
+});
+
+let ColumnStruct = Ember.Object.extend({
+    layout: null,
+    meta: null,
+    init() {
+        this.set('meta', {
+           type: "text" 
+        });
+        this.set('layout', {
+           width: null 
+        });
+    }
+});
+
+let CellStruct = Ember.Object.extend({
+    column: null,
+    row: null,
+    value: null,
+    state: null,
+    init() {
+        this.set('state', {
+            edited: false,
+            selected: false,
+            resizing: false 
+        });
+    }
+});
+
 let Struct = Ember.Object.extend({
     
-    data: null,
+    data: Em.A(),
     
-    rows: function() {
-        return this.get('data').map( (r, i) => { 
-            return Ember.Object.create({
-                header: i === 0,
-                cells: r.map ( (c, j) => {
-                    return Ember.Object.create({
-                        index: j,
-                        value: c,
-                        state: {
-                            edited: false,
-                            selected: false,
-                            resizing: false 
-                        },
-                        layout: {}
+    rows: null,
+    columns: null,
+    
+    dataChange: function() {
+        
+        let columns = [],
+            rows = this.get('data').map( (r, i) => {
+                let row = RowStruct.create();
+                row.setProperties({
+                    header: i === 0,
+                    cells: r.map ( (c, j) => {
+                        return CellStruct.create({
+                            column: columns[j] ? columns[j] : (columns[j] = ColumnStruct.create()),
+                            row: row,
+                            value: c
+                        });
                     })
-                })
+                });
+                return row;
             });
-        });
-    }.property('data'),
+        
+        this.set('rows', rows);
+        this.set('columns', columns);
+        
+    }.observes('data').on('init'),
     
     header: function() {
         return this.get('rows')[0];
     }.property('rows.[]'),
     
     body: function() {
+        console.log("change");
         return this.get('rows').slice(1);
-    }.property('rows.[]')
+    }.property('rows.[]'),
+    
+    selectedCell: function() {
+        for (let row of this.get('rows')) {
+            for (let cell of row.get('cells')) {
+                if (cell.get('state.selected')) {
+                    return cell;
+                }
+            }       
+        }
+        return null;
+    },
+    
+    addRow() {
+        let selectedCell = this.selectedCell(),
+            shift = selectedCell ? 0:1,
+            row = selectedCell ? selectedCell.get('row') : this.get('rows')[this.get('rows.length') - 1],
+            index = this.get('rows').indexOf(row);
+            
+        this.get('rows').insertAt(index + shift, row.emptyCopy());
+    },
+    
+    addColumn() {
+        let selectedCell = this.selectedCell(),
+            shift = selectedCell ? 0:1,
+            index = selectedCell ? this.get('columns').indexOf(selectedCell.get('column')) : this.get('columns.length') - 1,
+            column = ColumnStruct.create();
+        
+        this.get('columns').insertAt(index + shift, column);
+        this.get('rows').forEach( r => {
+            r.get('cells').insertAt(
+                index + shift,
+                CellStruct.create({
+                    column: column,
+                    row: r
+                })
+            );
+        });
+    }
    
 });
 
@@ -79,7 +175,9 @@ export default Ember.Component.extend({
     actions: {
         
         startEditCell(cell) {
-            this.get('struct.rows').forEach( r => r.cells.forEach( c => c.set('state.edited', c == cell) ) );
+            this.get('struct.rows').forEach(
+                r => r.cells.forEach( c => c.set('state.edited', c == cell) )
+            );
         },
         
         endEditCell(cell) {
@@ -87,11 +185,21 @@ export default Ember.Component.extend({
         },
         
         startSelectCell(cell) {
-            this.get('struct.rows').forEach( r => r.cells.forEach( c => c.set('state.selected', c == cell) ) );
+            this.get('struct.rows').forEach(
+                r => r.cells.forEach( c => c.set('state.selected', c == cell) )
+            );
         },
         
         endSelectCell(cell) {
             cell.set('state.selected', false);
+        },
+        
+        addRow() {
+            this.get('struct').addRow();
+        },
+        
+        addColumn() {
+            this.get('struct').addColumn();
         },
         
         onMouseEnterHeader(cell, component) {
@@ -101,14 +209,7 @@ export default Ember.Component.extend({
         },
         
         onApplyResize(width, cell) {
-            let cellIndex = cell.get('index');
-            this.get('struct.rows').forEach( r => {
-                r.cells.forEach( c => {
-                    if (c.get('index') === cellIndex) {
-                        c.set('layout.width', width);
-                    }
-                });
-            });
+            cell.set('column.layout.width', width);
             this.set('resizable', null);
         },
         
