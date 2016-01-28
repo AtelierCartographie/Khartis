@@ -17,9 +17,9 @@ export default Ember.TextField.extend({
     
     isInteger: function() {
         return this.get('isNumeric') && this.get('precision') === 0;
-    }.property('isNumeric', 'precision'),
+    }.property('isNumeric', 'precision')
 
-    sanitize: function() {
+    /*sanitize: function() {
         
         if (this.get('value') != null && this.get('isNumeric')) {
             
@@ -49,6 +49,6 @@ export default Ember.TextField.extend({
                     && (key.charCode < 48 || key.charCode > 57)) return false;
             });
         }
-    }
+    }*/
     
 });
