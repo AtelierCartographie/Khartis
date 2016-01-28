@@ -21,17 +21,9 @@ let fakeData = [
     
 ];
 
-let DecoratedCell = Ember.Object.extend({
-    cell: null,
-    state: null,
-    init() {
-        this.set('state', {
-            selected: false,
-            edited: false,
-            resizing: false
-        });
-    }
-});
+let mod = function(k, n) {
+    return ((k %= n) < 0) ? k+n : k; 
+}
 
 export default Ember.Component.extend({
     
@@ -78,6 +70,31 @@ export default Ember.Component.extend({
             this.get('data.rows').forEach(
                 r => r.cells.forEach( c => c.set('state.sheet.selected', c == cell) )
             );
+        },
+        
+        cycleCellSelection(cell, shift) {
+            let colIndex = cell.index(),
+                rowIndex = this.get('data.rows').indexOf(cell.row),
+                absIndex = rowIndex * this.get('data.columns').length + colIndex,
+                nextAbsIndex = mod(absIndex + shift, this.get('data').size());
+            
+            this.send('startSelectCell', this.get('data').getCellAt(
+                    Math.floor(nextAbsIndex/ this.get('data.columns').length),
+                    nextAbsIndex % this.get('data.columns').length
+                    )
+                );
+        },
+        
+        moveCellSelection(cell, row, col) {
+            
+            let rowIndex = this.get('data.rows').indexOf(cell.row) + row,
+                colIndex = cell.index() + col;
+                
+            rowIndex = Math.max(0, Math.min(this.get('data.rows').length - 1, rowIndex));
+            colIndex = Math.max(0, Math.min(this.get('data.columns').length - 1, colIndex));
+            
+            this.send('startSelectCell', this.get('data').getCellAt(rowIndex, colIndex));
+            
         },
         
         endSelectCell(cell) {

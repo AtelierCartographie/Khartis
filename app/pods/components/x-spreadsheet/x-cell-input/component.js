@@ -33,7 +33,6 @@ export default Ember.TextField.extend({
     
     }.observes('value', 'precision', 'dataType'),
     
-    
     dotDisallowed() {
        return this.get('value').length == 0
             || (this.get('value') != null && this.get('value').indexOf('.') >= 0)

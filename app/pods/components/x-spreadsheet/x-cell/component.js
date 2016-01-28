@@ -5,6 +5,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     
     tagName: "div",
+    
     classNames: ["cell"],
     
     cell: null,
@@ -13,6 +14,54 @@ export default Ember.Component.extend({
     
     didInsertElement() {
         this.layout();
+        this.$().attr("tabindex", 1);
+        
+        this.$().on("keydown", (e) => {
+            
+            if (e.keyCode === 9) { //tab
+                this.cycleSelection(e.shiftKey ? -1:1);
+                e.preventDefault();
+            }
+            
+            if (!this.get('cell.state.sheet.edited')) {
+                switch (e.keyCode) {
+                    case 37:
+                        this.moveSelection(0,-1);
+                        e.preventDefault();
+                        break;
+                    case 38:
+                        this.moveSelection(-1,0);
+                        e.preventDefault();
+                        break;
+                    case 39:
+                        this.moveSelection(0,1);
+                        e.preventDefault();
+                        break;
+                    case 40:
+                        this.moveSelection(1,0);
+                        e.preventDefault();
+                        break;
+                }
+            }
+            
+        });
+        
+        this.$().on("keyup", (e) => {
+            if (e.keyCode === 13) { //enter
+                this.startEdition();
+            } else if (e.keyCode === 8) { //backspace
+                this.startEdition();
+                this.set('cell.value', "");
+            } else if (e.keyCode === 27) { //esc
+                if (!this.get('cell.state.sheet.edited')) {
+                    this.endSelection();
+                }
+            }
+            if (!this.get('cell.state.sheet.edited')) {
+                e.stopImmediatePropagation();
+            }
+        });
+        
     },
     
     toggleEditedState: function() {
@@ -25,6 +74,11 @@ export default Ember.Component.extend({
     }.observes('cell.state.sheet.edited'),
     
     toggleSelectedState: function() {
+        if (!this.$().hasClass('selected') && this.get('cell.state.sheet.selected')) {
+            this.$().focus();
+        } else if (this.$().hasClass('selected') && !this.get('cell.state.sheet.selected')) {
+            this.$().blur();
+        }
         this.$().toggleClass('selected', this.get('cell.state.sheet.selected'));
     }.observes('cell.state.sheet.selected'),
     
@@ -33,7 +87,7 @@ export default Ember.Component.extend({
     }.observes('cell.state.sheet.resizing'),
     
     click(e) {
-        this.get('cell.state.sheet.selected') ? this.endSelection() : this.startSelection();
+        this.startSelection();
         e.stopImmediatePropagation();
     },
     
@@ -59,6 +113,14 @@ export default Ember.Component.extend({
         this.sendAction('select-end', this.get('cell'), this);
     },
     
+    moveSelection(row, col) {
+        this.sendAction('move-selection', this.get('cell'), row, col, this);
+    },
+    
+    cycleSelection(shift) {
+        this.sendAction('cycle-selection', this.get('cell'), shift, this);
+    },
+    
     startEdition() {
         this.sendAction('edit-start', this.get('cell'), this);
         this.sendAction('select-start', this.get('cell'), this);
@@ -67,16 +129,18 @@ export default Ember.Component.extend({
     cancelEdition() {
         this.set('cell.value', this.get('backupValue'));
         this.sendAction('edit-end', this.get('cell'), this);
+        this.$().focus();
     },
     
     commitEdition() {
         this.sendAction('edit-end', this.get('cell'), this);
+        this.$().focus();
     },
     
     actions: {
         
         onInputEnter() {
-            this.sendAction('edit-end', this.get('cell'), this);
+            this.commitEdition();
         },
         
         onInputBlur() {

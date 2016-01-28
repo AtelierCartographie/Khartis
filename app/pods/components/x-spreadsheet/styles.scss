@@ -147,9 +147,11 @@ $spreadsheet-numbering-width: 30px !default;
             margin-right: -$gutter/2;
         }
         
-        &.selected { border: 1px solid $color-primary; }
+        &.selected { border: 1px dashed $color-primary; }
+        &.selected.edited { border: 1px solid $color-primary; }
         &.edited input { display: flex; }
         &.edited .label { display: none; }
+        &:focus { outline: none; }
         
     }
     

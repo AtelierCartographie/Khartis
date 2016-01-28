@@ -123,6 +123,19 @@ let CellStruct = Struct.extend({
     column: null,
     row: null,
     value: null,
+    
+    index() {
+        return this.get('row.cells').indexOf(this);
+    },
+    
+    isFirstOfRow() {
+        return this.index() === 0;
+    },
+    
+    isLastOfRow() {
+        return this.index() === this.get('row.cells').length - 1;
+    },
+    
     init() {
         this._super();
         this.set('state', {
@@ -174,6 +187,10 @@ let DataStruct = Struct.extend({
         return this.get('rows').slice(1);
     }.property('rows.[]'),
     
+    size: function() {
+        return this.get('rows').length * this.get('columns').length;
+    },
+    
     selectedCell() {
         for (let row of this.get('rows')) {
             for (let cell of row.get('cells')) {
@@ -183,6 +200,10 @@ let DataStruct = Struct.extend({
             }       
         }
         return null;
+    },
+    
+    getCellAt(row, col) {
+        return this.get('rows').objectAt(row).get('cells').objectAt(col);
     },
     
     addRow() {

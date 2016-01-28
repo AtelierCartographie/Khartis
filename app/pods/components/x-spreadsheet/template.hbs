@@ -15,6 +15,8 @@
                         edit-end="endEditCell"
                         select-start="startSelectCell"
                         select-end="endSelectCell"
+                        move-selection="moveCellSelection"
+                        cycle-selection="cycleCellSelection"
                     }}
                 {{/each}}
             </div>
@@ -35,6 +37,8 @@
                     edit-end="endEditCell"
                     select-start="startSelectCell"
                     select-end="endSelectCell"
+                    move-selection="moveCellSelection"
+                    cycle-selection="cycleCellSelection"
                     mouse-enter="onMouseEnterHeader"
                     mouse-leave="onMouseLeaveHeader"
                     start-resize=(action 'onStartResizeHeader' target=resizer)
