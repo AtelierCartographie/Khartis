@@ -3,10 +3,11 @@
     <div class="tool add-column-icon" {{action 'addColumn'}}>|</div>
     <div class="tool save" {{action 'save'}}>s</div>
     <div class="tool restore" {{action 'restore'}}>r</div>
+    <div class="small button import filled primary">Importer des données</div>
 </div>
 <div class="sheet">
     <div class="body">
-        {{#each struct.body as |row|}}
+        {{#each data.body as |row|}}
             <div class="row">
                 {{#each row.cells as |cell|}}
                     {{x-spreadsheet.x-cell cell=cell
@@ -21,25 +22,29 @@
     </div>
     
     <div class="numbering">
-        {{#each struct.body as |row i|}}
+        {{#each data.body as |row i|}}
             <div class="row"><div class="cell">{{i}}</div></div>
         {{/each}}
     </div>
+    {{#x-spreadsheet.h-resizer apply-resize="onApplyResize" as |resizer|}}
     <div class="header">
         <div class="row">
-            {{#each struct.header.cells as |cell|}}
+            {{#each data.header.cells as |cell|}}
                 {{x-spreadsheet.x-header cell=cell
                     edit-start="startEditCell"
                     edit-end="endEditCell"
+                    select-start="startSelectCell"
+                    select-end="endSelectCell"
                     mouse-enter="onMouseEnterHeader"
                     mouse-leave="onMouseLeaveHeader"
-                    start-resize="onStartResizeHeader"
+                    start-resize=(action 'onStartResizeHeader' target=resizer)
                 }}
             {{/each}}
         </div>
     </div>
+    {{/x-spreadsheet.h-resizer}}
     <div class="dash">
         <div class="row"><div class="cell">#</div></div>
     </div>
-    {{x-spreadsheet.x-resizer target=resizable apply-resize="onApplyResize" stop-resize="onStopResize"}}
+    
 </div>

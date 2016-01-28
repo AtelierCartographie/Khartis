@@ -28,7 +28,7 @@ $spreadsheet-numbering-width: 30px !default;
         
         /* TODO : REMOVE */
         padding-top: 5px;
-        background-color: green;
+        background-color: green; //TODO : REMOVE
         color: white;
     }
 }
@@ -70,8 +70,10 @@ $spreadsheet-numbering-width: 30px !default;
                 @extend %solid;
                 width: 18px;
                 height: 18px;
+                line-height: 18px;
+                border-radius: 50%;
                 margin: 2px;
-                background: red;
+                text-align: center;
             }
         }
     }

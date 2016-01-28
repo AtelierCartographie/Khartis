@@ -1,5 +1,6 @@
 $font-color: #404040 !default;
 $color-primary: #4285f4 !default;
+$color-success: #0f9d58 !default;
 
 .with-relief {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
@@ -42,7 +43,7 @@ small {
     }
 
     &.success {
-        background-color: #0f9d58;
+        background-color: $color-success;
         &, a { color: #fff; }
     }
     
@@ -87,7 +88,7 @@ small {
 }
 
 .text-success {
-    color: #0f9d58;
+    color: $color-success;
 }
 
 .text-warning {

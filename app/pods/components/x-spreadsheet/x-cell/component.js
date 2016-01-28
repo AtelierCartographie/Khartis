@@ -16,38 +16,40 @@ export default Ember.Component.extend({
     },
     
     toggleEditedState: function() {
-        this.$().toggleClass('edited', this.get('cell.state.edited'));
+        this.$().toggleClass('edited', this.get('cell.state.sheet.edited'));
         
-        if (this.get('cell.state.edited')) {
+        if (this.get('cell.state.sheet.edited')) {
             this.set('backupValue', this.get('cell.value'));
             this.$('input').focus().select();
         }
-    }.observes('cell.state.edited'),
+    }.observes('cell.state.sheet.edited'),
     
     toggleSelectedState: function() {
-        this.$().toggleClass('selected', this.get('cell.state.selected'));
-    }.observes('cell.state.selected'),
+        this.$().toggleClass('selected', this.get('cell.state.sheet.selected'));
+    }.observes('cell.state.sheet.selected'),
     
     toggleResizingState: function() {
-        this.$().toggleClass('resizing', this.get('cell.state.resizing'));
-    }.observes('cell.state.resizing'),
+        this.$().toggleClass('resizing', this.get('cell.state.sheet.resizing'));
+    }.observes('cell.state.sheet.resizing'),
     
-    click() {
-        this.get('cell.state.selected') ? this.endSelection() : this.startSelection();
+    click(e) {
+        this.get('cell.state.sheet.selected') ? this.endSelection() : this.startSelection();
+        e.stopImmediatePropagation();
     },
     
-    doubleClick() {
-        this.get('cell.state.edited') ? this.commitEdition() : this.startEdition();
+    doubleClick(e) {
+        this.get('cell.state.sheet.edited') ? this.commitEdition() : this.startEdition();
+        e.stopImmediatePropagation();
     },
     
     layout: function() {
-        if (this.get('cell.column.layout.width')) {
-            this.$().outerWidth(this.get('cell.column.layout.width'));
+        if (this.get('cell.column.layout.sheet.width')) {
+            this.$().outerWidth(this.get('cell.column.layout.sheet.width'));
         }
-        if (this.get('cell.column.layout.height')) {
-            this.$().outerHeight(this.get('cell.row.layout.height'));
+        if (this.get('cell.column.layout.sheet.height')) {
+            this.$().outerHeight(this.get('cell.row.layout.sheet.height'));
         }
-    }.observes('cell.column.layout.width', 'cell.row.layout.height'),
+    }.observes('cell.column.layout.sheet.width', 'cell.row.layout.sheet.height'),
     
     startSelection() {
         this.sendAction('select-start', this.get('cell'), this);
@@ -78,7 +80,7 @@ export default Ember.Component.extend({
         },
         
         onInputBlur() {
-            if (this.get('cell.state.edited')) {
+            if (this.get('cell.state.sheet.edited')) {
                 this.sendAction('edit-end', this.get('cell'), this);
             }
         },
