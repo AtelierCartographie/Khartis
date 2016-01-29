@@ -26,7 +26,6 @@ RowStruct.reopenClass({
     createWithModel(row) {
         let o = this.create();
         o.setProperties({
-            header: row.get('header'),
             cells: row.get('cells').map( (c, i) => {
                 return CellStruct.create({
                     column: c.get('column'),
@@ -98,7 +97,7 @@ let ColumnStruct = Struct.extend({
         this.set('meta.type', type);
         this.set('meta.probability', p[type]);
         
-    }.observes('cells.[].value'),
+    }.observes('cells.@each.value'),
     
     export() {
         return this._super({
