@@ -52,6 +52,68 @@ export default Ember.Component.extend({
             }
         });
         
+        $(window).resize( () => this.drawBackground() );
+        this.drawBackground();
+    },
+    
+    onDatachange: function() {
+        Ember.run.later(this, this.drawBackground);
+    }.observes('data.rows.[]', 'data.columns.[]'),
+    
+    drawBackground: function() {
+        
+        if (this.$()) {
+            
+            let el = this.$('.background');
+            
+            let scrollBarSize = el[0].offsetHeight - el[0].clientHeight;
+            el.width(this.$('.sheet')[0].scrollWidth - scrollBarSize);
+            el.height(this.$('.sheet')[0].scrollHeight - scrollBarSize);
+            
+            let fill = function*(x, max, step) {
+                while (x < max) {
+                    x += step;
+                    yield step;
+                }
+            }
+            
+            let rows = [this.$(".header > .row").height()]
+                .concat($.makeArray(this.$(".body > .row")).map( (el) => $(el).height() ))
+            
+            rows = rows.concat([...fill(rows.reduce( (r, v) => r+v , 0), el.height(), 30)]);
+
+            d3.select(el[0]).selectAll("line.row")
+                .data(rows)
+                .enter()
+                .append("line")
+                .attr("x1", 0)
+                .attr("x2", "100%")
+                .attr("y1", (d, i) => rows.slice(0, i+1).reduce( (r, v) => r+v , 0) -1)
+                .attr("y2", (d, i) => rows.slice(0, i+1).reduce( (r, v) => r+v , 0) -1)
+                .classed("row", true);
+                
+           let columns = [this.$('.numbering').width()]
+                .concat($.makeArray(this.$(".body > .row:first-child > .cell")).map( (el) => $(el).outerWidth() ));
+            
+           columns = columns.concat([...fill(columns.reduce( (r, v) => r+v , 0), el.width(), 100)]);
+           
+           let layout = (lines) => {
+               lines
+                .attr("x1", (d, i) => columns.slice(0, i+1).reduce( (r, v) => r+v , 0) -1)
+                .attr("x2", (d, i) => columns.slice(0, i+1).reduce( (r, v) => r+v , 0) -1)
+                .attr("y1", 0)
+                .attr("y2", "100%")
+                .classed("column", true);
+           };     
+           
+           let lines = d3.select(el[0]).selectAll("line.column");
+           layout(lines);
+           lines = lines.data(columns)
+                .enter()
+                .append("line");
+           layout(lines);
+        }
+        
     },
     
     actions: {
@@ -117,6 +179,7 @@ export default Ember.Component.extend({
         
         onApplyResize(width, cell) {
             cell.set('column.layout.sheet.width', width);
+            this.drawBackground();
         },
         
         save() {

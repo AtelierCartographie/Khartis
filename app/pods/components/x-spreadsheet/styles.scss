@@ -40,6 +40,19 @@ $spreadsheet-numbering-width: 30px !default;
     
     overflow: scroll;
     
+    .background {
+        @extend .filled.default;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-top: 1px solid #D0D0D0;
+        border-left: 1px solid #D0D0D0;
+        
+        line {
+            stroke: #D0D0D0;
+        }
+    }
+    
     & > .header {
         @extend .filled.contrast;
         @extend .with-relief;
@@ -83,6 +96,8 @@ $spreadsheet-numbering-width: 30px !default;
         position: absolute;
         top: $spreadsheet-cell-header-height;
         left: $spreadsheet-numbering-width;
+        margin-right: $spreadsheet-cell-width;
+        margin-bottom: $spreadsheet-cell-height;
     }
     
     & > .numbering, & > .dash {

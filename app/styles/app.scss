@@ -65,7 +65,9 @@ nav {
 }
 
 aside {
+    @extend .filled.default;
     width: 250px;
+    &.empty { width: 0.5rem; }
 }
 
 header {
