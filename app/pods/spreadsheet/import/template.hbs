@@ -5,34 +5,33 @@
             <div class="actions"><a href="#">[close]</a></div>
         </header>
         <div class="vertical airy flow filled">
-            <div class="horizontal baseline flow padded-v">
-                <label class="horizontal right flow w3 padded-r text-right">Collez ici le csv</label>
+            <div class="horizontal baseline flow">
+                <label class="horizontal right solid flow w3 padded-r text-right">Collez ici le csv</label>
                 {{textarea value=csvContent class="paste-csv-area" placeholder="Copy and paste your data"}}
             </div>
-            <div>
-                
+            <div class="horizontal baseline flow">
+                <label class="horizontal right solid flow w3 padded-r text-right">ou téléversez un fichier</label>
+                <div class="padded-v fluid">
+                    {{file-loader onContentLoaded="parseCsvContent"}}
+                </div>
             </div>
+            
             <!--<div>
                 {{!ivy-codemirror value=csvContent lineNumbers=true mode="csv"}}
             </div>-->
-            <div class="horizontal middle flow padded-v">
+<!--            <div class="horizontal middle flow padded-v">
                 <label class="horizontal right flow w3 padded-r text-right">Entrez votre nom</label>
                 <input placeholder="Ici le nom"/>
-            </div>
-            <div class="vertical flow">
+            </div>-->
+<!--            <div class="vertical flow">
                 <label>Ceci est un select</label>
                 <div class="select-box">
                     <select>
                         <option>Option 1</option>
                     </select>
                 </div>
-            </div>
-            <div class="horizontal baseline flow">
-                <label>ou téléversez un fichier</label>
-                <div class="padded flow w2">
-                    {{file-loader onContentLoaded="parseCsvContent"}}
-                </div>
-            </div>
+            </div>-->
+
         </div>
         <footer class="filled default">
             <a class="button">Annuler</a>

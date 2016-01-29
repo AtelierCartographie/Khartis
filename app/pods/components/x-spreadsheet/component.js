@@ -5,8 +5,8 @@ import d3 from 'd3';
 /* global $ */
 
 let fakeData = [
-    
-    ["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"],
+    ["Colonne 1"]
+    /*["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"],
     ["1", "2", "3", "4", "3", "1"],
     ["4", "5", "6", "3", "4", "2"],
     ["7", "8", "9", "1", "2", "3"],
@@ -17,7 +17,7 @@ let fakeData = [
     ["10", "11sdf", "12", "4", "3", "9"],
     ["10", "11sdf", "12", "4", "3", "8"],
     ["10", "11df", "12", "4", "3", "7"],
-    ["10", "11sdf", "12", "4", "3", "9"]
+    ["10", "11sdf", "12", "4", "3", "9"]*/
     
 ];
 
@@ -188,6 +188,10 @@ export default Ember.Component.extend({
         
         restore() {
             this.set('data', DataStruct.restore(JSON.parse(window.localStorage.getItem('sheet-data'))));
+        },
+        
+        openImport(url) {
+            this.sendAction('navigateTo', "import");
         }
         
     }
