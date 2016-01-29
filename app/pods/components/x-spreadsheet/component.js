@@ -64,11 +64,12 @@ export default Ember.Component.extend({
         
         if (this.$()) {
             
-            let el = this.$('.background');
+            let el = this.$('.background'),
+                d3l = d3.select(el[0]);
             
-            let scrollBarSize = el[0].offsetHeight - el[0].clientHeight;
-            el.width(this.$('.sheet')[0].scrollWidth - scrollBarSize);
-            el.height(this.$('.sheet')[0].scrollHeight - scrollBarSize);
+            let scrollBarSize = this.$('.sheet')[0].offsetHeight - this.$('.sheet')[0].clientHeight;
+            d3l.attr('width', this.$('.sheet')[0].scrollWidth - scrollBarSize);
+            d3l.attr('height', this.$('.sheet')[0].scrollHeight - scrollBarSize);
             
             let fill = function*(x, max, step) {
                 while (x < max) {
@@ -92,8 +93,8 @@ export default Ember.Component.extend({
                 .attr("y2", (d, i) => rows.slice(0, i+1).reduce( (r, v) => r+v , 0) -1)
                 .classed("row", true);
                 
-           let columns = [this.$('.numbering').width()]
-                .concat($.makeArray(this.$(".body > .row:first-child > .cell")).map( (el) => $(el).outerWidth() ));
+           let columns = [this.$('.dash').width()]
+                .concat($.makeArray(this.$(".header > .row:first-child > .cell")).map( (el) => $(el).outerWidth() ));
             
            columns = columns.concat([...fill(columns.reduce( (r, v) => r+v , 0), el.width(), 100)]);
            

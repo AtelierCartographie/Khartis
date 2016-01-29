@@ -34,6 +34,7 @@ export default Ember.Component.extend({
                 el.classed('dragged', true);
                 this.set('target.cell.state.sheet.resizing', true);
                 $el.offset({
+                    top: this.get('target').$().offset().top,
                     left: this.get('target').$().offset().left + this.get('target').$().outerWidth() - $el.width() + $el.parent('.sheet').scrollLeft()
                 });
             })
