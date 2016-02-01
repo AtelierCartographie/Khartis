@@ -9,6 +9,7 @@ $footer-height: 1.1em;
 html, body {
   height: 100%;
   margin: 0;
+  line-height: 1.5em;
 }
 
 /* flow */
@@ -60,13 +61,9 @@ body > section.main {
   height: 200px;
 }
 
-nav {
-  width: 50px;
-}
-
 aside {
   @extend .filled.default;
-  width: 250px;
+  width: 320px;
   &.empty {
     width: 0;
   }
@@ -85,28 +82,37 @@ footer {
 
   z-index:10;
   border-right: 1px solid hsla(0, 0%, 21%, 1);
+  width: 5rem;
 
   .tool {
+
+    @extend %flow;
+    @extend %solid;
+    height: 5rem;
+    width: 100%;
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
 
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 1.1em;
-    height: 1.1em;
-    padding: 1em;
-
-    font-size: 2.6rem;
-    //background-color: hsla(0, 0%, 35%, 1);
     cursor:pointer;
 
-    &:hover {
-      color:$color-warning;
+    &:hover, &.selected {
+      color: $color-primary;
     }
 
     &:not(:last-child) {
       margin-bottom: 0.4em;
+    }
+
+    &.selected {
+      @extend .filled.default;
+      box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.24);
+      z-index: 1;
     }
 
   }

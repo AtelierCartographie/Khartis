@@ -6,17 +6,25 @@
 
 <section class="main horizontal flow">
 
-    <nav class="menu-left solid airy vertical middle flow filled contrast">
-        <div class="tool tooltip right"  {{action 'navigateTo' 'spreadsheet'}} data-tooltip="Tableur">
-            <i class="iconfont iconfont-table"></i>
+    <nav class="menu-left solid vertical space-between flow filled contrast">
+        <div class="vertical airy flow">
+          <div class="tool selected tooltip right"  {{action 'navigateTo' 'spreadsheet'}} data-tooltip="Tableur">
+              <i class="iconfont iconfont-table"></i>
+          </div>
+          <div class="tool tooltip right" {{action 'navigateTo' 'graph'}} data-tooltip="Carte">
+              <i class="iconfont iconfont-map"></i>
+          </div>
         </div>
-        <div class="tool tooltip right" {{action 'navigateTo' 'graph'}} data-tooltip="Carte">
-            <i class="iconfont iconfont-map"></i>
+        <div class="vertical airy btp flow">
+            <div class="tool" {{action 'navigateTo' 'graph'}}>
+                <i class="iconfont iconfont-save"></i>
+            </div>
         </div>
     </nav>
 
     {{outlet "sidebar"}}
     {{outlet "main"}}
+    {{outlet "help"}}
 
     <div class="outer horizontal center flow w12 hidden">
         <div class="horizontal solid flow w4 filled default with-relief topbar">
