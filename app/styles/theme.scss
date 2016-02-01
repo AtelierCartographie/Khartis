@@ -1,102 +1,113 @@
 $font-color: #404040 !default;
 $color-primary: #4285f4 !default;
 $color-success: #0f9d58 !default;
+$color-warning: #FF9800 !default;
 
 .with-relief {
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
 }
 
 .with-relief.topbar {
-    box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.24);
 }
 
 .with-relief.bottombar {
-    box-shadow: 0 -4px 8px -4px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 -4px 8px -4px rgba(0, 0, 0, 0.24);
 }
 
 .with-relief.leftbar {
-    box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.24);
+  box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.24);
 }
 
 html {
-    color: $font-color;
+  color: $font-color;
 }
 
 small {
-    font-size: 0.9em;
+  font-size: 0.9em;
 }
 
 /* colors */
 .filled {
-    
-    & {
-        background-color: white;
-    }
-    
-    &.default {
-        background-color: #f0f0f0;
-    }
 
-    &.primary {
-        background-color: #4285f4;
-        &, a { color: #fff; }
-    }
+  & {
+    background-color: white;
+  }
 
-    &.success {
-        background-color: $color-success;
-        &, a { color: #fff; }
-    }
-    
-    &.warning {
-        background-color: #FF9800;
-        &, a { color: #fff; }
-    }
+  &.default {
+    background-color: #f0f0f0;
+  }
 
-    &.danger {
-        background-color: #F44336;
-        &, a { color: #fff; }
+  &.primary {
+    background-color: #4285f4;
+    &, a {
+      color: #fff;
     }
-    
-    &.contrast {
-        background-color: #404040;
-        &, a { color: #fff; }
+  }
+
+  &.success {
+    background-color: $color-success;
+    &, a {
+      color: #fff;
     }
-    
+  }
+
+  &.warning {
+    background-color: $color-warning;
+    &, a {
+      color: #fff;
+    }
+  }
+
+  &.danger {
+    background-color: #F44336;
+    &, a {
+      color: #fff;
+    }
+  }
+
+  &.contrast {
+    background-color: #404040;
+    &, a {
+      color: #fff;
+    }
+  }
+
 }
 
 .round {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .bordered {
-    
-    border-width: 1px;
-    border-style: solid;
-    
-    & {
-        border-color: #404040;
-    }
-    
+
+  border-width: 1px;
+  border-style: solid;
+
+  & {
+    border-color: #404040;
+  }
+
 }
 
 .text-default {
-    color: #eee;
+  color: #eee;
 }
 
 .text-primary {
-    color: #4285f4;
+  color: #4285f4;
 }
 
 .text-success {
-    color: $color-success;
+  color: $color-success;
 }
 
 .text-warning {
-    color: #FF9800;
+  color: $color-warning;
 }
 
 .text-danger {
-    color: #F44336;
+  color: #F44336;
 }
 
 @import "components/panel";
