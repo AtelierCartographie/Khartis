@@ -23,13 +23,13 @@
             </div>
         {{/each}}
     </div>
-    
+
     <div class="numbering">
         {{#each data.body as |row i|}}
             <div class="row"><div class="cell">{{i}}</div></div>
         {{/each}}
     </div>
-    {{#x-spreadsheet.h-resizer apply-resize="onApplyResize" as |resizer|}}
+    {{#x-spreadsheet.h-resizer minWidth=colsMinWidth apply-resize="onApplyResize" as |resizer|}}
     <div class="header">
         <div class="row">
             {{#each data.header.cells as |cell|}}
@@ -51,5 +51,5 @@
     <div class="dash">
         <div class="row"><div class="cell">#</div></div>
     </div>
-    
+
 </div>
