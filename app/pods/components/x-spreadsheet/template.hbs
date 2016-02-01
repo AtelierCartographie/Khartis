@@ -1,8 +1,16 @@
 <div class="toolbar">
-    <div class="tool add-row-icon" {{action 'addRow'}}>–</div>
-    <div class="tool add-column-icon" {{action 'addColumn'}}>|</div>
-    <div class="tool save" {{action 'save'}}>s</div>
-    <div class="tool restore" {{action 'restore'}}>r</div>
+    <div class="tool add-row-icon" {{action 'addRow'}}>
+        <i class="iconfont iconfont-add-row"></i>
+    </div>
+    <div class="tool add-column-icon" {{action 'addColumn'}}>
+        <i class="iconfont iconfont-add-col"></i>
+    </div>
+    <div class="tool save" {{action 'save'}}>
+        <i class="iconfont iconfont-save"></i>
+    </div>
+    <div class="tool restore" {{action 'restore'}}>
+        <i class="iconfont iconfont-undo"></i>
+    </div>
     <div class="small button import filled primary" {{action 'openImport'}}>Importer des données</div>
 </div>
 <div class="sheet">

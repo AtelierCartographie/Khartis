@@ -1,15 +1,20 @@
 <header class="filled primary with-relief topbar">
-    <span class="brand">MAPP</span>
+    <span class="brand"><span>MAPP</span></span>
+    <span class="iconfont iconfont-ember"></span>
     <div>Ici un menu</div>
 </header>
 
 <section class="main horizontal flow">
-    
-    <nav class="solid airy vertical middle flow padded filled contrast">
-        <div class="filled" style="height: 36px; border-radius: 20px;" {{action 'navigateTo' 'spreadsheet'}}></div> <!-- ici un icon -->
-        <div class="filled" style="height: 36px;" {{action 'navigateTo' 'graph'}}></div> <!-- ici un icon -->
+
+    <nav class="menu-left solid airy vertical middle flow filled contrast">
+        <div class="tool"  {{action 'navigateTo' 'spreadsheet'}}>
+            <i class="iconfont iconfont-table"></i>
+        </div>
+        <div class="tool" {{action 'navigateTo' 'graph'}}>
+            <i class="iconfont iconfont-map"></i>
+        </div>
     </nav>
-    
+
     {{outlet "sidebar"}}
     {{outlet "main"}}
     {{outlet "help"}}
@@ -19,7 +24,7 @@
             <input placeholder="boite de recherche flotante"/>
         </div>
     </div>
-    
+
 </section>
 
 <footer class="text-center filled warning with-relief bottombar"><small>Apyx copyright blabla</small></footer>
