@@ -20,6 +20,9 @@ $spreadsheet-numbering-width: 30px !default;
   @extend %padded-v;
   @extend .filled.default;
 
+  // TODO: centralize z-index levels in a scss map
+  z-index:2;
+
   height: 60px;
   //background-color: hsla(0,0%,31%,1); // dark
   background-color: hsla(0, 0%, 87%, 1);
@@ -27,6 +30,8 @@ $spreadsheet-numbering-width: 30px !default;
   border-left: 1px solid hsl(0, 0%, 83%);
 
   .tool {
+
+    position:relative; // Tooltip
 
     display: flex;
     align-items: center;
@@ -94,6 +99,7 @@ $spreadsheet-numbering-width: 30px !default;
       @extend %right;
       @extend %airy;
 
+      z-index: 10;
       align-content: flex-start;
       height: $spreadsheet-cell-header-height;
       padding-top: 2px;
@@ -101,6 +107,8 @@ $spreadsheet-numbering-width: 30px !default;
 
       & *[class^="icon-"] {
         @extend %solid;
+
+        position: relative; // tooltip
 
         display: flex;
         align-items: center;
@@ -265,6 +273,7 @@ $spreadsheet-numbering-width: 30px !default;
   $resize-handle-width: 0.6rem !default;
 
   & > .resizer {
+    z-index: 5;
 
     display: none;
     position: absolute;

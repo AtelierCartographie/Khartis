@@ -1,14 +1,14 @@
 <div class="toolbar">
-    <div class="tool add-row-icon" {{action 'addRow'}}>
+    <div class="tool add-row-icon tooltip bottom" {{action 'addRow'}} data-tooltip="Ajouter une ligne">
         <i class="iconfont iconfont-add-row"></i>
     </div>
-    <div class="tool add-column-icon" {{action 'addColumn'}}>
+    <div class="tool add-column-icon tooltip bottom" {{action 'addColumn'}} data-tooltip="Ajouter une colonne">
         <i class="iconfont iconfont-add-col"></i>
     </div>
-    <div class="tool save" {{action 'save'}}>
+    <div class="tool save tooltip bottom" {{action 'save'}} data-tooltip="Sauvegarder">
         <i class="iconfont iconfont-save"></i>
     </div>
-    <div class="tool restore" {{action 'restore'}}>
+    <div class="tool restore tooltip bottom" {{action 'restore'}} data-tooltip="Restaurer">
         <i class="iconfont iconfont-undo"></i>
     </div>
     <div class="small button import filled primary" {{action 'openImport'}}>Importer des données</div>

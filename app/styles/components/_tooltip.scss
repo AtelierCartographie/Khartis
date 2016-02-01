@@ -1,0 +1,124 @@
+$tooltip-arrow-height: 10px;
+$tooltip-arrow-width: 10px;
+$tooltip-min-width: 12em;
+$tooltip-background: hsl(0, 0%, 20%);
+
+/**
+* Usage
+*   - Tooltip is generated on an element with a .tooltip class
+*   - Position can be specified with .top .left .bottom or .right class
+*   - Text of the tooltip is extracted from data-tooltip attribute
+*
+*   Note: The .tooltip element must have its position to relative
+*/
+
+@mixin rectangle() {
+  border-style: solid;
+  border-width:  0 $tooltip-arrow-width $tooltip-arrow-height $tooltip-arrow-width;
+  border-color:transparent;
+  border-bottom-color: $tooltip-background;;
+}
+
+// Tooltip container
+.tooltip {
+  z-index: 150;
+}
+
+.tooltip:hover::after,
+.tooltip:hover::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+// Tooltip content
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 1;
+  //
+  min-width: $tooltip-min-width;
+  padding: .8em 1.2em;
+  border-radius: 0.3em;
+  //
+  line-height: 1.7;
+  text-align: center;
+  font-size: 1rem;
+  background-color: $tooltip-background;
+  color: hsla(0, 100%, 100%, 0.9);
+  box-shadow: 0 18px 19px -10px rgba(0, 0, 0, 0.4);
+}
+
+
+// Tooltip "arrow"
+.tooltip::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  //
+  width: 0;
+  height: 0;
+  // Rectangle
+  @include rectangle()
+}
+
+
+.tooltip::after,
+.tooltip::before {
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 100ms, opacity 100ms;
+}
+
+// At Top
+.tooltip.top::after {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-110%);
+}
+
+.tooltip.top::before {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%) rotate(180deg);
+}
+
+// At Right
+.tooltip.right::after {
+  right: -$tooltip-arrow-height;
+  top: 50%;
+  transform: translateX(100%) translateY(-50%);
+}
+
+.tooltip.right::before {
+  right: 0;
+  top: 50%;
+  transform: translateX(100%) translateY(-50%) rotate(-90deg);
+}
+
+// At Bottom
+.tooltip.bottom::after {
+  bottom: 0 ;
+  left: 50%;
+  transform: translateX(-50%) translateY(110%);
+}
+
+.tooltip.bottom::before {
+  left:50%;
+  bottom:0;
+  transform: translateX(-50%) translateY(100%);
+}
+
+// At Left
+.tooltip.left::after {
+  left: -$tooltip-arrow-height;
+  top: 50%;
+  transform: translateX(-100%) translateY(-50%);
+}
+
+.tooltip.left::before {
+  left: 0;
+  top:50%;
+  transform: translateX(-100%) translateY(-50%) rotate(90deg);
+}

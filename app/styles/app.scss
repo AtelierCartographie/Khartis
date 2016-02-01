@@ -83,10 +83,12 @@ footer {
 
 .menu-left {
 
+  z-index:10;
   border-right: 1px solid hsla(0, 0%, 21%, 1);
 
   .tool {
 
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;

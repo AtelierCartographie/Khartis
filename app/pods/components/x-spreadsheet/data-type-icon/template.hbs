@@ -1,7 +1,7 @@
-<div class="icon-type filled {{if isValid 'success' 'danger'}}">
+<div class="icon-type filled {{if isValid 'success' 'danger'}} tooltip bottom" data-tooltip="Some Tooltip here">
    {{#if (x-eq meta.type 'text')}}
    T
    {{else if (x-eq meta.type 'numeric')}}
    N
-   {{/if}} 
+   {{/if}}
 </div>
