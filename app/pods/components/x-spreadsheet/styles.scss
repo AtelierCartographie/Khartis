@@ -19,17 +19,34 @@ $spreadsheet-numbering-width: 30px !default;
   @extend %airy;
   @extend %padded-v;
   @extend .filled.default;
-  height: 40px;
-  .tool {
-    height: 100%;
-    width: 30px;
-    text-align: center;
-    cursor: pointer;
 
-    /* TODO : REMOVE */
-    padding-top: 5px;
-    background-color: green; //TODO : REMOVE
-    color: white;
+  height: 60px;
+  //background-color: hsla(0,0%,31%,1); // dark
+  background-color: hsla(0, 0%, 87%, 1);
+  border-bottom: 1px solid hsl(0, 0%, 83%);
+  border-left: 1px solid hsl(0, 0%, 83%);
+
+  .tool {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 0.1em;
+
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid hsla(0,0%,0.2%,0.1);
+    background-color: hsla(0,0%,70%, 1);
+    color: hsla(0,0%,30%, 1);
+
+    font-size:2.7rem;
+    &:hover {
+      background: rgb(244, 159, 11);
+      color: hsla(0,0%,30%, 1);
+    }
   }
 }
 
@@ -61,10 +78,13 @@ $spreadsheet-numbering-width: 30px !default;
     top: 0px;
     left: 0px;
     padding-left: $spreadsheet-numbering-width;
+
     .cell {
       height: $spreadsheet-cell-header-height;
+      border-right: 1px solid #313030;
       border-bottom: none;
     }
+
     .cell .meta-icons {
       @extend %flow;
       @extend %solid;
@@ -81,12 +101,17 @@ $spreadsheet-numbering-width: 30px !default;
 
       & *[class^="icon-"] {
         @extend %solid;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         width: 18px;
         height: 18px;
-        line-height: 18px;
-        border-radius: 50%;
+
+        border-radius: .2em;
         margin: 2px;
-        text-align: center;
+
       }
     }
   }
@@ -98,6 +123,8 @@ $spreadsheet-numbering-width: 30px !default;
     left: $spreadsheet-numbering-width;
     margin-right: $spreadsheet-cell-width;
     margin-bottom: $spreadsheet-cell-height;
+
+    box-shadow: 0 4px 16px rgba(#000, 0.2);
   }
 
   & > .numbering, & > .dash {
@@ -119,6 +146,7 @@ $spreadsheet-numbering-width: 30px !default;
     padding-top: $spreadsheet-cell-header-height;
     .cell {
       border-right: none;
+      border-bottom-color: #313030;
     }
   }
 
@@ -147,8 +175,8 @@ $spreadsheet-numbering-width: 30px !default;
     width: $spreadsheet-cell-width;
     height: $spreadsheet-cell-height;
 
-    border-bottom: 1px solid #D0D0D0;
-    border-right: 1px solid #D0D0D0;
+    border-bottom: 1px solid hsl(0, 0%, 82%);
+    border-right: 1px solid hsl(0, 0%, 54%);
 
     .label {
       @extend %fluid;
@@ -175,8 +203,8 @@ $spreadsheet-numbering-width: 30px !default;
     }
 
     // Overlapping border simulation on body cells
-    &.selected:not(.header)::before,
-    &.edited :not(.header)::before {
+    &.selected::before,
+    &.edited::before {
 
       $border-width: 2px;
 
@@ -196,29 +224,38 @@ $spreadsheet-numbering-width: 30px !default;
       // TODO: Maybe put an 'editing icon' indicator?
     }
 
-    // Header cells
-    &.header.selected::before,
-    &.header.selected.edited::before {
-      content: '';
-      background-color: transparent;
-
-      position: absolute;
+    // Selected header cell's border does not 'overflows'
+    &.header.selected::before {
       top: 0;
+      bottom: 0;
       left: 0;
-
-      height: 0;
-      width: 0;
-
-      border-left: 20px solid $color-primary;
-      border-right: 20px solid transparent;
-      border-bottom: 20px solid transparent;
+      right: 0;
     }
+
+    // Header cells ===> Top left triangle
+    //&.header.selected::before,
+    //&.header.selected.edited::before {
+    //  content: '';
+    //  background-color: transparent;
+    //
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //
+    //  height: 0;
+    //  width: 0;
+    //
+    //  border-left: 20px solid $color-primary;
+    //  border-right: 20px solid transparent;
+    //  border-bottom: 20px solid transparent;
+    //}
 
     &.header.selected.edited {
       background-color: rgba($color-warning, 0.4);
     }
+
     &.header.selected.edited::before {
-      border-left-color:transparent;
+      border: none;
     }
 
   }
