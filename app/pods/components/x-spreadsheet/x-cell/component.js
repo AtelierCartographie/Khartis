@@ -17,6 +17,7 @@ export default Ember.Component.extend({
         this.$().attr("tabindex", 1);
         
         this.$().on("keydown", (e) => {
+            console.log(e);
             
             if (e.keyCode === 9) { //tab
                 this.cycleSelection(e.shiftKey ? -1:1);
@@ -27,6 +28,7 @@ export default Ember.Component.extend({
                 switch (e.keyCode) {
                     case 8:
                         e.preventDefault();
+                        break;
                     case 37:
                         this.moveSelection(0,-1);
                         e.preventDefault();
