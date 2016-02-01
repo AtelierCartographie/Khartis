@@ -1,8 +1,8 @@
 & {
-    @extend %flow;
-    @extend %vertical;
-    @extend %outer;
-    @extend %full;
+  @extend %flow;
+  @extend %vertical;
+  @extend %outer;
+  @extend %full;
 }
 
 $spreadsheet-cell-width: 140px !default;
@@ -11,233 +11,261 @@ $spreadsheet-cell-header-height: 50px !default;
 $spreadsheet-numbering-width: 30px !default;
 
 .toolbar {
-    @extend %flow;
-    @extend %horizontal;
-    @extend %solid;
-    @extend %center;
-    @extend %middle;
-    @extend %airy;
-    @extend %padded-v;
-    @extend .filled.default;
-    height: 40px;
-    .tool {
-        height: 100%;
-        width: 30px;
-        text-align: center;
-        cursor: pointer;
+  @extend %flow;
+  @extend %horizontal;
+  @extend %solid;
+  @extend %center;
+  @extend %middle;
+  @extend %airy;
+  @extend %padded-v;
+  @extend .filled.default;
+  height: 40px;
+  .tool {
+    height: 100%;
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
 
-        /* TODO : REMOVE */
-        padding-top: 5px;
-        background-color: green; //TODO : REMOVE
-        color: white;
-    }
+    /* TODO : REMOVE */
+    padding-top: 5px;
+    background-color: green; //TODO : REMOVE
+    color: white;
+  }
 }
 
 .sheet {
 
-    @extend %flow;
+  @extend %flow;
+  @extend .filled;
+
+  overflow: scroll;
+
+  .background {
+    @extend .filled.default;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 1px solid #D0D0D0;
+    border-left: 1px solid #D0D0D0;
+
+    line {
+      stroke: #D0D0D0;
+    }
+  }
+
+  & > .header {
+    @extend .filled.contrast;
+    @extend .with-relief;
+    @extend .with-relief.topbar;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-left: $spreadsheet-numbering-width;
+    .cell {
+      height: $spreadsheet-cell-header-height;
+      border-bottom: none;
+    }
+    .cell .meta-icons {
+      @extend %flow;
+      @extend %solid;
+      @extend %vertical;
+      @extend %middle;
+      @extend %breakable-reverse;
+      @extend %right;
+      @extend %airy;
+
+      align-content: flex-start;
+      height: $spreadsheet-cell-header-height;
+      padding-top: 2px;
+      padding-bottom: 2px;
+
+      & *[class^="icon-"] {
+        @extend %solid;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 50%;
+        margin: 2px;
+        text-align: center;
+      }
+    }
+  }
+
+  & > .body {
     @extend .filled;
+    position: absolute;
+    top: $spreadsheet-cell-header-height;
+    left: $spreadsheet-numbering-width;
+    margin-right: $spreadsheet-cell-width;
+    margin-bottom: $spreadsheet-cell-height;
+  }
 
-    overflow: scroll;
+  & > .numbering, & > .dash {
 
-    .background {
-        @extend .filled.default;
-        position: absolute;
-        top: 0;
-        left: 0;
-        border-top: 1px solid #D0D0D0;
-        border-left: 1px solid #D0D0D0;
-
-        line {
-            stroke: #D0D0D0;
-        }
-    }
-
-    & > .header {
-        @extend .filled.contrast;
-        @extend .with-relief;
-        @extend .with-relief.topbar;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        padding-left: $spreadsheet-numbering-width;
-        .cell {
-            height: $spreadsheet-cell-header-height;
-            border-bottom: none;
-        }
-        .cell .meta-icons {
-            @extend %flow;
-            @extend %solid;
-            @extend %vertical;
-            @extend %middle;
-            @extend %breakable-reverse;
-            @extend %right;
-            @extend %airy;
-
-            align-content: flex-start;
-            height: $spreadsheet-cell-header-height;
-            padding-top: 2px;
-            padding-bottom: 2px;
-
-            & *[class^="icon-"] {
-                @extend %solid;
-                width: 18px;
-                height: 18px;
-                line-height: 18px;
-                border-radius: 50%;
-                margin: 2px;
-                text-align: center;
-            }
-        }
-    }
-
-    & > .body {
-        @extend .filled;
-        position: absolute;
-        top: $spreadsheet-cell-header-height;
-        left: $spreadsheet-numbering-width;
-        margin-right: $spreadsheet-cell-width;
-        margin-bottom: $spreadsheet-cell-height;
-    }
-
-    & > .numbering, & > .dash {
-
-        position: absolute;
-        top: 0px;
-        left: 0px;
-
-        .cell {
-            width: $spreadsheet-numbering-width;
-        }
-
-    }
-
-    & > .numbering {
-        @extend .filled.contrast;
-        @extend .with-relief;
-        @extend .with-relief.leftbar;
-        padding-top: $spreadsheet-cell-header-height;
-        .cell { border-right: none; }
-    }
-
-    & > .dash {
-        @extend .filled.warning;
-        @extend .with-relief;
-        @extend .with-relief.leftbar;
-        .cell {
-            border: none;
-            height: $spreadsheet-cell-header-height;
-        }
-    }
-
-    .row {
-        @extend %flow;
-        @extend %horizontal;
-    }
+    position: absolute;
+    top: 0px;
+    left: 0px;
 
     .cell {
-
-        @extend %flow;
-        @extend %horizontal;
-        @extend %middle;
-        @extend %padded;
-
-        width: $spreadsheet-cell-width;
-        height: $spreadsheet-cell-height;
-
-        border-bottom: 1px solid #D0D0D0;
-        border-right: 1px solid #D0D0D0;
-
-        .label {
-            @extend %fluid;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        input {
-            @extend %fluid;
-            border: none;
-            display: none;
-            margin-left: -$gutter/2;
-            margin-right: -$gutter/2;
-        }
-
-        &.selected {
-          border: 1px dashed $color-primary;
-          z-index: 50;
-        }
-        &.selected.edited { border: 1px solid $color-primary; }
-        &.edited input { display: flex; }
-        &.edited .label { display: none; }
-        &:focus { outline: none; }
-
-        // Overlapping border simulation
-        &.selected:not(.header)::before,
-        &.edited :not(.header)::before{
-
-          $border-width:2px;
-
-          content:'';
-          position: absolute;
-          top: - $border-width;
-          left: - $border-width;
-          bottom: - $border-width;
-          right: - $border-width;
-          border:$border-width solid $color-primary;
-          background-color: transparent;
-          z-index: -1;
-        }
-
-        &.selected.edited:not(.header)::before {
-          border-color: $color-warning;
-          // TODO: Maybe put an 'editing icon' indicator?
-        }
-
+      width: $spreadsheet-numbering-width;
     }
 
-    /* RESIZE */
+  }
 
-    $resize-handle-width: 0.6rem !default;
+  & > .numbering {
+    @extend .filled.contrast;
+    @extend .with-relief;
+    @extend .with-relief.leftbar;
+    padding-top: $spreadsheet-cell-header-height;
+    .cell {
+      border-right: none;
+    }
+  }
 
-    & > .resizer {
+  & > .dash {
+    @extend .filled.warning;
+    @extend .with-relief;
+    @extend .with-relief.leftbar;
+    .cell {
+      border: none;
+      height: $spreadsheet-cell-header-height;
+    }
+  }
 
-        display: none;
-        position: absolute;
-        width: $resize-handle-width;
-        height: 100%;
+  .row {
+    @extend %flow;
+    @extend %horizontal;
+  }
 
-        &.dragged {
-            display: block;
-            border-right: 1px solid $color-primary;
-        }
+  .cell {
 
+    @extend %flow;
+    @extend %horizontal;
+    @extend %middle;
+    @extend %padded;
+
+    width: $spreadsheet-cell-width;
+    height: $spreadsheet-cell-height;
+
+    border-bottom: 1px solid #D0D0D0;
+    border-right: 1px solid #D0D0D0;
+
+    .label {
+      @extend %fluid;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    & > .resizer {
-        pointer-events: none;
+    input {
+      @extend %fluid;
+      border: none;
+      display: none;
+      margin-left: -$gutter/2;
+      margin-right: -$gutter/2;
     }
 
-    & > .resizer .handle, & > .header .resize-handle {
-        @extend .filled.primary;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: $resize-handle-width;
-        height: $spreadsheet-cell-header-height;
-        cursor: e-resize;
+    &.edited input {
+      display: flex;
+    }
+    &.edited .label {
+      display: none;
+    }
+    &:focus {
+      outline: none;
     }
 
-    & > .header .resize-handle {
-        display: none;
-        right: -1px;
+    // Overlapping border simulation on body cells
+    &.selected:not(.header)::before,
+    &.edited :not(.header)::before {
+
+      $border-width: 2px;
+
+      content: '';
+      position: absolute;
+      top: - $border-width;
+      left: - $border-width;
+      bottom: - $border-width;
+      right: - $border-width;
+      border: $border-width solid $color-primary;
+      background-color: transparent;
+      z-index: -1;
     }
 
-    & > .header .cell:hover .resize-handle {
-        display: block;
+    &.selected.edited:not(.header)::before {
+      border-color: $color-warning;
+      // TODO: Maybe put an 'editing icon' indicator?
     }
 
-    & > .header .cell.resizing:hover .resize-handle {
-        display: none;
+    // Header cells
+    &.header.selected::before,
+    &.header.selected.edited::before {
+      content: '';
+      background-color: transparent;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      height: 0;
+      width: 0;
+
+      border-left: 20px solid $color-primary;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid transparent;
     }
+
+    &.header.selected.edited {
+      background-color: rgba($color-warning, 0.4);
+    }
+    &.header.selected.edited::before {
+      border-left-color:transparent;
+    }
+
+  }
+
+  /* RESIZE */
+
+  $resize-handle-width: 0.6rem !default;
+
+  & > .resizer {
+
+    display: none;
+    position: absolute;
+    width: $resize-handle-width;
+    height: 100%;
+
+    &.dragged {
+      display: block;
+      border-right: 1px solid $color-primary;
+    }
+
+  }
+
+  & > .resizer {
+    pointer-events: none;
+  }
+
+  & > .resizer .handle, & > .header .resize-handle {
+    @extend .filled.primary;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $resize-handle-width;
+    height: $spreadsheet-cell-header-height;
+    cursor: e-resize;
+  }
+
+  & > .header .resize-handle {
+    display: none;
+    right: -1px;
+  }
+
+  & > .header .cell:hover .resize-handle {
+    display: block;
+  }
+
+  & > .header .cell.resizing:hover .resize-handle {
+    display: none;
+  }
 
 }
