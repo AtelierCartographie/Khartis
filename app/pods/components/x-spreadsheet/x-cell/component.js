@@ -57,6 +57,7 @@ export default Ember.Component.extend({
                     this.endSelection();
                 }
             }
+            
             if (!this.get('cell.state.sheet.edited')) {
                 
                 if (e.keyCode === 8) { //backspace
