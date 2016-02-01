@@ -23,12 +23,10 @@ export default Ember.Component.extend({
                 e.preventDefault();
             }
             
-            if (e.keyCode === 8) { //backspace
-                e.preventDefault();
-            }
-            
             if (!this.get('cell.state.sheet.edited')) {
                 switch (e.keyCode) {
+                    case 8:
+                        e.preventDefault();
                     case 37:
                         this.moveSelection(0,-1);
                         e.preventDefault();
@@ -51,18 +49,22 @@ export default Ember.Component.extend({
         });
         
         this.$().on("keyup", (e) => {
+            
             if (e.keyCode === 13) { //enter
                 this.startEdition();
-            } else if (e.keyCode === 8) { //backspace
-                e.preventDefault();
-                this.startEdition();
-                this.set('cell.value', "");
             } else if (e.keyCode === 27) { //esc
                 if (!this.get('cell.state.sheet.edited')) {
                     this.endSelection();
                 }
             }
             if (!this.get('cell.state.sheet.edited')) {
+                
+                if (e.keyCode === 8) { //backspace
+                    this.startEdition();
+                    this.set('cell.value', "");
+                    e.preventDefault();
+                }
+                
                 e.stopImmediatePropagation();
             }
         });
