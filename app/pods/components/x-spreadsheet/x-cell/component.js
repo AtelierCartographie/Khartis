@@ -23,6 +23,10 @@ export default Ember.Component.extend({
                 e.preventDefault();
             }
             
+            if (e.keyCode === 8) { //backspace
+                e.preventDefault();
+            }
+            
             if (!this.get('cell.state.sheet.edited')) {
                 switch (e.keyCode) {
                     case 37:
@@ -50,6 +54,7 @@ export default Ember.Component.extend({
             if (e.keyCode === 13) { //enter
                 this.startEdition();
             } else if (e.keyCode === 8) { //backspace
+                e.preventDefault();
                 this.startEdition();
                 this.set('cell.value', "");
             } else if (e.keyCode === 27) { //esc
