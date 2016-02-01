@@ -70,6 +70,13 @@ aside {
     &.empty { width: 0.5rem; }
 }
 
+.help {
+    @extend .filled.default;
+    @extend .with-relief.rightbar;
+    width: 300px;
+    z-index: 1;
+}
+
 header {
     height: $header-height;
 }

@@ -8,7 +8,7 @@
 $spreadsheet-cell-width: 140px !default;
 $spreadsheet-cell-height: 30px !default;
 $spreadsheet-cell-header-height: 50px !default;
-$spreadsheet-numbering-width: 30px !default;
+$spreadsheet-numbering-width: 40px !default;
 
 .toolbar {
   @extend %flow;
@@ -108,6 +108,7 @@ $spreadsheet-numbering-width: 30px !default;
 
     .cell {
       width: $spreadsheet-numbering-width;
+      justify-content: center;
     }
 
   }

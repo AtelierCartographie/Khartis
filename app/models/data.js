@@ -207,7 +207,7 @@ let DataStruct = Struct.extend({
     
     addRow() {
         let selectedCell = this.selectedCell(),
-            shift = selectedCell ? 0:1,
+            shift = selectedCell && !selectedCell.get('row.header') ? 0:1,
             row = selectedCell ? selectedCell.get('row') : this.get('rows')[this.get('rows.length') - 1],
             index = this.get('rows').indexOf(row);
             

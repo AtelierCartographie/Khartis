@@ -19,6 +19,10 @@ $color-warning: #FF9800 !default;
   box-shadow: 8px 0px 8px -4px rgba(0, 0, 0, 0.24);
 }
 
+.with-relief.rightbar {
+  box-shadow: -8px 0px 8px -4px rgba(0, 0, 0, 0.24);
+}
+
 html {
   color: $font-color;
 }
