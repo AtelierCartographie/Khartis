@@ -1,8 +1,3 @@
-$font-color: #404040 !default;
-$color-primary: #4285f4 !default;
-$color-success: #0f9d58 !default;
-$color-warning: #FF9800 !default;
-
 .with-relief {
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
 }
@@ -24,7 +19,7 @@ $color-warning: #FF9800 !default;
 }
 
 html {
-  color: $font-color;
+  color: color(text);
 }
 
 small {
@@ -35,7 +30,7 @@ small {
 .filled {
 
   & {
-    background-color: white;
+    background-color: greys(white);
   }
 
   &.default {
@@ -43,37 +38,37 @@ small {
   }
 
   &.primary {
-    background-color: #4285f4;
+    background-color: color(primary);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.success {
     background-color: $color-success;
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.warning {
     background-color: $color-warning;
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.danger {
-    background-color: #F44336;
+    background-color: color(danger);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.contrast {
-    background-color: #404040;
+    background-color: color(text);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
@@ -89,7 +84,7 @@ small {
   border-style: solid;
 
   & {
-    border-color: #404040;
+    border-color: color(text);
   }
 
 }
@@ -99,19 +94,19 @@ small {
 }
 
 .text-primary {
-  color: #4285f4;
+  color: color(primary);
 }
 
 .text-success {
-  color: $color-success;
+  color: color(success);
 }
 
 .text-warning {
-  color: $color-warning;
+  color: color(warning);
 }
 
 .text-danger {
-  color: #F44336;
+  color: color(danger);
 }
 
 @import "components/panel";
