@@ -44,6 +44,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-electron": "0.3.2",
     "ember-export-application-global": "^1.0.4",
+    "ember-i18n": "4.2.0",
     "ember-magic-resolver": "^0.1.2",
     "ember-normalize": "0.0.9",
     "ember-resolver": "^2.0.3",

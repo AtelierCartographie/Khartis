@@ -2,6 +2,7 @@ $font-color: #404040 !default;
 $color-primary: #4285f4 !default;
 $color-success: #0f9d58 !default;
 $color-warning: #FF9800 !default;
+$color-default: #f0f0f0 !default;
 
 .with-relief {
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
@@ -25,6 +26,7 @@ $color-warning: #FF9800 !default;
 
 html {
   color: $font-color;
+  line-height: 1.5em;
 }
 
 small {
@@ -39,11 +41,11 @@ small {
   }
 
   &.default {
-    background-color: #f0f0f0;
+    background-color: $color-default;
   }
 
   &.primary {
-    background-color: #4285f4;
+    background-color: $color-primary;
     &, a {
       color: #fff;
     }
@@ -71,7 +73,7 @@ small {
   }
 
   &.contrast {
-    background-color: #404040;
+    background-color: $font-color;
     &, a {
       color: #fff;
     }
@@ -89,13 +91,13 @@ small {
   border-style: solid;
 
   & {
-    border-color: #404040;
+    border-color: $font-color;
   }
 
 }
 
 .text-default {
-  color: #eee;
+  color: $color-default;
 }
 
 .text-primary {
