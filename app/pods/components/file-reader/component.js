@@ -13,38 +13,31 @@ export default Ember.Component.extend({
 	
 	fReader: null,
   
-  	didInsertElement: function() {
+  	didInsertElement() {
           
-        var self = this;
-  		
-        this.set('fReader', new FileReader());
-        
-        this.$().on("change", function() {
-			
-			self.read(this.files);
-			
-		});
+      var self = this;
+    
+      this.set('fReader', new FileReader());
+      
+      this.$().on("change", function() {
+        self.read(this.files);
+      });
           
-		this.get('fReader').onload = (e) => {
-			
-            this.sendAction('onread', e.target.result);
-            
-		};
-        
-        this.sendAction('onready', this);
+      this.get('fReader').onload = (e) => {
+        this.sendAction('onread', e.target.result);
+      };
+          
+      this.sendAction('onready', this);
 		
   	},
 	
-	read: function(files) {
-        
-	   this.get('fReader').readAsText(files[0]);
-		
-	},
+    read: function(files) {
+      this.get('fReader').readAsText(files[0]);
+    },
     
     actions: {
         
         trigger: function() {
-            console.log("trigger");
             this.$().click();
         }
         

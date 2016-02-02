@@ -6,6 +6,10 @@ let Project = Struct.extend({
   
     data: null,
     
+    importRawData(data) {
+      this.set('data', DataStruct.createFromRawData(data));
+    },
+    
     export() {
         return this._super({
             data: this.get('data').export()
