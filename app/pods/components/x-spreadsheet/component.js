@@ -37,7 +37,6 @@ export default Ember.Component.extend({
    */
   colsMinWidth: 100,
 
-
   build: function () {
     this.set('data', DataStruct.createFromRawData(fakeData));
   }.on("init"),
@@ -54,20 +53,30 @@ export default Ember.Component.extend({
       dash.css({transform: `translate(${$(this).scrollLeft()}px, ${$(this).scrollTop()}px)`});
     });
 
-    $("body").on("click", () => {
+    $("body").on("click.spreadsheet", () => {
       let cell = this.get('data').selectedCell();
       if (cell) {
         this.send('endSelectCell', cell);
       }
     });
 
-    $(window).resize(() => this.drawBackground());
+    $(window).on("resize.spreadsheet", () => this.drawBackground());
     this.drawBackground();
+  },
+  
+  willDestroyElement() {
+      $("body").off("click.spreadsheet");
+      $(window).off("resize.spreadsheet");
   },
 
   onDatachange: function () {
     Ember.run.later(this, this.drawBackground);
   }.observes('data.rows.[]', 'data.columns.[]'),
+  
+  unselectCell: function() {
+      
+      
+  },
 
   drawBackground: function () {
 
@@ -103,9 +112,9 @@ export default Ember.Component.extend({
         .classed("row", true);
 
       let columns = [this.$('.dash').width()]
-        .concat($.makeArray(this.$(".header > .row:first-child > .cell")).map( (el) => $(el).outerWidth()));
+        .concat($.makeArray(this.$(".header > .row:first-child > .cell")).map( (el) => $(el).outerWidth() ));
 
-      columns = columns.concat([...fill(columns.reduce((r, v) => r + v, 0), el.width(), 100)]);
+      columns = columns.concat([...fill(columns.reduce((r, v) => r + v, 0), el.width(), 160)]);
 
       let layout = (lines) => {
         lines
