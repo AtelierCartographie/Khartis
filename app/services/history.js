@@ -10,7 +10,7 @@ var History = Ember.Service.extend(Ember.Evented, {
     needle: null,
     
     init() {
-      this.clear();
+      //this.clear();
       this._super();
       this.restore();
     },
