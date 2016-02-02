@@ -1,4 +1,8 @@
 <div class="horizontal stretched flow">
-{{x-spreadsheet class="csvsheet" navigateTo="navigateTo" }} {{!-- colsMinWidth=Number --}}
+{{x-spreadsheet class="csvsheet" 
+  navigateTo="navigateTo"
+  data=model.data
+  ask-undo="onAskUndo"
+  ask-redo="onAskRedo"}} {{!-- colsMinWidth=Number --}}
 </div>
 {{outlet}}

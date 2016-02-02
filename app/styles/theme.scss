@@ -26,6 +26,9 @@ $color-default: #f0f0f0 !default;
 
 html {
   color: $font-color;
+}
+
+html, body {
   line-height: 1.5em;
 }
 

@@ -4,31 +4,16 @@ import d3 from 'd3';
 /*global Em*/
 /* global $ */
 
-let fakeData = [
-  ["Colonne 1"]
-  /*["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"],
-   ["1", "2", "3", "4", "3", "1"],
-   ["4", "5", "6", "3", "4", "2"],
-   ["7", "8", "9", "1", "2", "3"],
-   ["10", "11", "12", "4", "3", "4"],
-   ["10", "11", "12", "4", "3", "5"],
-   ["10", "11sf", "12", "4", "3", "9"],
-   ["10", "11sdf", "12", "4", "3", "6"],
-   ["10", "11sdf", "12", "4", "3", "9"],
-   ["10", "11sdf", "12", "4", "3", "8"],
-   ["10", "11df", "12", "4", "3", "7"],
-   ["10", "11sdf", "12", "4", "3", "9"]*/
-
-];
-
 let mod = function (k, n) {
   return ((k %= n) < 0) ? k + n : k;
 }
 
 export default Ember.Component.extend({
+    
+  growl: Ember.inject.service(),
+  history: Ember.inject.service(),
 
   data: null,
-
 
   /**
    * Min width of the spreadsheet columns.
@@ -38,7 +23,6 @@ export default Ember.Component.extend({
   colsMinWidth: 100,
 
   build: function () {
-    this.set('data', DataStruct.createFromRawData(fakeData));
   }.on("init"),
 
   didInsertElement() {
@@ -72,11 +56,6 @@ export default Ember.Component.extend({
   onDatachange: function () {
     Ember.run.later(this, this.drawBackground);
   }.observes('data.rows.[]', 'data.columns.[]'),
-  
-  unselectCell: function() {
-      
-      
-  },
 
   drawBackground: function () {
 
@@ -184,10 +163,12 @@ export default Ember.Component.extend({
 
     addRow() {
       this.get('data').addRow();
+      this.sendAction('save-history');
     },
 
     addColumn() {
       this.get('data').addColumn();
+      this.sendAction('save-history');
     },
 
     onMouseEnterHeader(cell, component) {
@@ -200,13 +181,13 @@ export default Ember.Component.extend({
       cell.set('column.layout.sheet.width', width);
       this.drawBackground();
     },
-
-    save() {
-      window.localStorage.setItem('sheet-data', JSON.stringify(this.get('data').export()));
+    
+    undo() {
+      this.sendAction('ask-undo');
     },
-
-    restore() {
-      this.set('data', DataStruct.restore(JSON.parse(window.localStorage.getItem('sheet-data'))));
+    
+    redo() {
+      this.sendAction('ask-redo');
     },
 
     openImport(url) {
