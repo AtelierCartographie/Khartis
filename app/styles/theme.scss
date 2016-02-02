@@ -20,6 +20,7 @@
 
 html {
   color: color(text);
+  line-height: 1.5em;
 }
 
 small {
@@ -34,7 +35,7 @@ small {
   }
 
   &.default {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; // TODO: $color-default
   }
 
   &.primary {
@@ -45,14 +46,14 @@ small {
   }
 
   &.success {
-    background-color: $color-success;
+    background-color: color(success);
     &, a {
       color: greys(white);
     }
   }
 
   &.warning {
-    background-color: $color-warning;
+    background-color: color(warning);
     &, a {
       color: greys(white);
     }
@@ -90,7 +91,7 @@ small {
 }
 
 .text-default {
-  color: #eee;
+  color: #eee; // TODO: $color-default
 }
 
 .text-primary {

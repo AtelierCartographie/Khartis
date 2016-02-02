@@ -8,7 +8,6 @@ $footer-height: 1.1em;
 /**
 * Colors
 */
-
 // Main colors
 $tint-shade-multiplier: 5%;
 
@@ -17,6 +16,11 @@ $colors: (
     tint: lighten(#404040, $tint-shade-multiplier),
     base: #404040,
     shade: darken(#404040, $tint-shade-multiplier)
+  ),
+  default:(
+    tint: lighten(#f0f0f0, $tint-shade-multiplier),
+    base: #f0f0f0,
+    shade: darken(#f0f0f0, $tint-shade-multiplier)
   ),
   primary: (
     tint: lighten(#4285f4, $tint-shade-multiplier),
