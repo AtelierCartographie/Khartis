@@ -20,18 +20,16 @@ $spreadsheet-numbering-width: 40px !default;
   @extend %padded-v;
   @extend .filled.default;
 
-  // TODO: centralize z-index levels in a scss map
-  z-index:2;
-
   height: 60px;
-  //background-color: hsla(0,0%,31%,1); // dark
-  background-color: hsla(0, 0%, 87%, 1);
-  border-bottom: 1px solid hsl(0, 0%, 83%);
-  border-left: 1px solid hsl(0, 0%, 83%);
+  @include depth(toolbar);
+
+  background-color: greys(10%);
+  border-bottom: 1px solid darken(greys(10%), 5%);
+  border-left: 1px solid darken(greys(10%), 5%);
 
   .tool {
 
-    position:relative; // Tooltip
+    position: relative;
 
     display: flex;
     align-items: center;
@@ -40,17 +38,18 @@ $spreadsheet-numbering-width: 40px !default;
     height: 1.5em;
     width: 1.5em;
     border-radius: 0.1em;
-
+    //
     cursor: pointer;
     font-weight: bold;
-    border: 1px solid hsla(0,0%,0.2%,0.1);
-    background-color: hsla(0,0%,70%, 1);
-    color: hsla(0,0%,30%, 1);
+    //
+    background-color: greys(20%);
+    border: 1px solid darken(greys(20%), 5%);
+    color: greys(50%);
+    font-size:2.4rem;
 
-    font-size:2.7rem;
     &:hover {
-      background: rgb(244, 159, 11);
-      color: hsla(0,0%,30%, 1);
+      background: $color-warning;
+      color: greys(70%);
     }
   }
 }
@@ -63,15 +62,16 @@ $spreadsheet-numbering-width: 40px !default;
   overflow: scroll;
 
   .background {
+
     @extend .filled.default;
     position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 1px solid #D0D0D0;
-    border-left: 1px solid #D0D0D0;
+    top: 0;left: 0;
+
+    border-top: 1px solid greys(20%);
+    border-left: 1px solid greys(20%);
 
     line {
-      stroke: #D0D0D0;
+      stroke: greys(20%);
     }
   }
 
@@ -86,7 +86,7 @@ $spreadsheet-numbering-width: 40px !default;
 
     .cell {
       height: $spreadsheet-cell-header-height;
-      border-right: 1px solid #313030;
+      border-right: 1px solid greys(80%);
       border-bottom: none;
     }
 
@@ -99,7 +99,6 @@ $spreadsheet-numbering-width: 40px !default;
       @extend %right;
       @extend %airy;
 
-      z-index: 10;
       align-content: flex-start;
       height: $spreadsheet-cell-header-height;
       padding-top: 2px;
@@ -131,15 +130,13 @@ $spreadsheet-numbering-width: 40px !default;
     left: $spreadsheet-numbering-width;
     margin-right: $spreadsheet-cell-width;
     margin-bottom: $spreadsheet-cell-height;
-
-    box-shadow: 0 4px 16px rgba(#000, 0.2);
   }
 
   & > .numbering, & > .dash {
 
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 
     .cell {
       width: $spreadsheet-numbering-width;
@@ -153,9 +150,10 @@ $spreadsheet-numbering-width: 40px !default;
     @extend .with-relief;
     @extend .with-relief.leftbar;
     padding-top: $spreadsheet-cell-header-height;
+
     .cell {
       border-right: none;
-      border-bottom-color: #313030;
+      border-bottom-color: greys(80%);
     }
   }
 
@@ -184,8 +182,8 @@ $spreadsheet-numbering-width: 40px !default;
     width: $spreadsheet-cell-width;
     height: $spreadsheet-cell-height;
 
-    border-bottom: 1px solid hsl(0, 0%, 82%);
-    border-right: 1px solid hsl(0, 0%, 54%);
+    border-bottom: 1px solid greys(20%);
+    border-right:  1px solid greys(30%);
 
     .label {
       @extend %fluid;
@@ -225,7 +223,7 @@ $spreadsheet-numbering-width: 40px !default;
       right: - $border-width;
       border: $border-width solid $color-primary;
       background-color: transparent;
-      z-index: -1;
+      @include depth(disabled);
     }
 
     &.selected.edited:not(.header)::before {
@@ -260,7 +258,7 @@ $spreadsheet-numbering-width: 40px !default;
     //}
 
     &.header.selected.edited {
-      background-color: rgba($color-warning, 0.4);
+      background-color: transparentize($color-warning, 0.6);
     }
 
     &.header.selected.edited::before {
@@ -274,7 +272,6 @@ $spreadsheet-numbering-width: 40px !default;
   $resize-handle-width: 0.6rem !default;
 
   & > .resizer {
-    z-index: 5;
 
     display: none;
     position: absolute;

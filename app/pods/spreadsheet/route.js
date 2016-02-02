@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Project from 'mapp/models/project';
 import {DataStruct} from 'mapp/models/data';
 
+
 let blankData = [
   ["Colonne 1"],
   [""]
@@ -36,26 +37,27 @@ export default Ember.Route.extend({
       return project;
     },
     
+    init() {
+      this.get('history').on("undo", () => this.refresh() );
+      this.get('history').on("redo", () => this.refresh() );
+      this._super();
+    },
+    
     model() {
-      if (this.get('history').top()) {
-        return Project.restore(this.get('history').top());
+      let top = this.get('history').top();
+      if (top) {
+        return Project.restore(top);
       } else {
         return this.get('history').save(this.newProject());
       }
     },
     
     actions: {
+      
         navigateTo(url) {
-            this.transitionTo("/"+url);
-        },
-        
-        onAskUndo() {
-          
-        },
-        
-        onAskredo() {
-          
+          this.transitionTo("/"+url);
         }
+        
     }
     
 });

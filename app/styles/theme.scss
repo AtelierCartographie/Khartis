@@ -1,9 +1,3 @@
-$font-color: #404040 !default;
-$color-primary: #4285f4 !default;
-$color-success: #0f9d58 !default;
-$color-warning: #FF9800 !default;
-$color-default: #f0f0f0 !default;
-
 .with-relief {
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24);
 }
@@ -24,11 +18,8 @@ $color-default: #f0f0f0 !default;
   box-shadow: -8px 0px 8px -4px rgba(0, 0, 0, 0.24);
 }
 
-html {
-  color: $font-color;
-}
-
 html, body {
+  color: color(text);
   line-height: 1.5em;
 }
 
@@ -40,45 +31,45 @@ small {
 .filled {
 
   & {
-    background-color: white;
+    background-color: greys(white);
   }
 
   &.default {
-    background-color: $color-default;
+    background-color: #f0f0f0; // TODO: $color-default
   }
 
   &.primary {
-    background-color: $color-primary;
+    background-color: color(primary);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.success {
-    background-color: $color-success;
+    background-color: color(success);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.warning {
-    background-color: $color-warning;
+    background-color: color(warning);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.danger {
-    background-color: #F44336;
+    background-color: color(danger);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
   &.contrast {
-    background-color: $font-color;
+    background-color: color(text);
     &, a {
-      color: #fff;
+      color: greys(white);
     }
   }
 
@@ -94,29 +85,29 @@ small {
   border-style: solid;
 
   & {
-    border-color: $font-color;
+    border-color: color(text);
   }
 
 }
 
 .text-default {
-  color: $color-default;
+  color: #eee; // TODO: $color-default
 }
 
 .text-primary {
-  color: #4285f4;
+  color: color(primary);
 }
 
 .text-success {
-  color: $color-success;
+  color: color(success);
 }
 
 .text-warning {
-  color: $color-warning;
+  color: color(warning);
 }
 
 .text-danger {
-  color: #F44336;
+  color: color(danger);
 }
 
 @import "components/panel";

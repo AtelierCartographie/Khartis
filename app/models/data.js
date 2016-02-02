@@ -101,8 +101,16 @@ let ColumnStruct = Struct.extend({
     
     export() {
         return this._super({
-            layout: this.get('layout'),
-            meta: this.get('meta')
+            layout: {
+              sheet: {
+                width: this.get('layout.sheet.width')
+              }
+            },
+            meta: {
+              type: this.get('meta'),
+              probability: this.get('meta.probability'),
+              manual:  this.get('meta.manual')
+            }
         });
     }
 });

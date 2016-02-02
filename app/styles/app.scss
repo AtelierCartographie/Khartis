@@ -1,6 +1,4 @@
-$header-height: 5.6rem;
-$footer-height: 1.1em;
-
+@import 'utils/variables';
 @import "normalize";
 @import "flow";
 @import "theme";
@@ -18,7 +16,7 @@ body > .ember-view {
 }
 
 body > .ember-view > header {
-  z-index: 1;
+  @include depth(header);
 }
 
 body > .ember-view > header {
@@ -93,9 +91,6 @@ footer {
 
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-
     cursor:pointer;
 
     &:hover, &.selected {
@@ -108,10 +103,10 @@ footer {
 
     &.selected {
       @extend .filled.default;
-      box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.24);
+      @include shadow(2);
+      //box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.24);
       z-index: 1;
     }
 
   }
-
 }

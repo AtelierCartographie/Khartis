@@ -43,13 +43,35 @@ export default Ember.Component.extend({
         this.send('endSelectCell', cell);
       }
     });
+    
+    let meta = false;
+    $("body").on("keyup.spreadsheet", (e) => {
+      
+      if (e.keyCode === 91) {
+        meta = false;
+      }
+      
+    }).on("keydown.spreadsheet", (e) => {
+     
+      if (e.keyCode === 91) {
+          meta = true;
+      }
+     
+      if (e.keyCode === 90 && (meta || e.ctrlKey)) {
+        e.preventDefault();
+        e.shiftKey ? this.get('history').redo() : this.get('history').undo();
+      } 
+      
+    });
 
     $(window).on("resize.spreadsheet", () => this.drawBackground());
     this.drawBackground();
   },
   
   willDestroyElement() {
-      $("body").off("click.spreadsheet");
+      $("body").off("click.spreadsheet")
+               .off("keydown.spreadsheet")
+               .off("keyup.spreadsheet");
       $(window).off("resize.spreadsheet");
   },
 
@@ -124,6 +146,7 @@ export default Ember.Component.extend({
 
     endEditCell(cell) {
       cell.set('state.sheet.edited', false);
+      this.sendAction('save-history');
     },
 
     startSelectCell(cell) {
@@ -179,15 +202,16 @@ export default Ember.Component.extend({
 
     onApplyResize(width, cell) {
       cell.set('column.layout.sheet.width', width);
+      this.sendAction('save-history');
       this.drawBackground();
     },
     
     undo() {
-      this.sendAction('ask-undo');
+      this.get('history').undo();
     },
     
     redo() {
-      this.sendAction('ask-redo');
+      this.get('history').redo();
     },
 
     openImport(url) {
