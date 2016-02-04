@@ -110,8 +110,8 @@ Dans un premier temps on peut définir comme projection par défaut la [Natural 
     .precision(.1);
 
 A discuter : 
-   - la forme et le format que doit prendre la liste des projections pour que 
-        - les paramètres et le bout de code correspondant à la projection soit facilement implémentés
-        - celle-ci puisse évoluer (ajout, suppression)
-        - toutes les projections ne seront pas associées à tous les fonds de carte (cf point suivant)
-    - la liste classera les projections selon les propriétés préservées (équivalente, conforme, équidistante ou un mix)
+- la forme et le format que doit prendre la liste des projections pour que 
+    - les paramètres et le bout de code correspondant à la projection soit facilement implémentés
+    - celle-ci puisse évoluer (ajout, suppression)
+- toutes les projections ne seront pas associées à tous les fonds de carte (cf point suivant)
+- la liste classera les projections selon les propriétés préservées (équivalente, conforme, équidistante ou un mix)
