@@ -1,0 +1,252 @@
+ï»¿Data Source,Indicateurs du développement dans le monde,,,,,
+Last Updated Date,22/12/2015,,,,,
+,,,,,,
+Country Name,Country Code,Indicator Name,1960,2011,1960,2011
+Aruba,ABW,Émissions de CO2 (tonnes métriques par habitant),,"23,9224121",,23.9224121017109
+Andorre,AND,Émissions de CO2 (tonnes métriques par habitant),,"5,96868547",,5.96868546996089
+Afghanistan,AFG,Émissions de CO2 (tonnes métriques par habitant),"0,046067875","0,425262105",0.0460678750472635,0.425262104940417
+Angola,AGO,Émissions de CO2 (tonnes métriques par habitant),"0,104357101","1,35400753",0.10435710106389,1.35400752956755
+Albanie,ALB,Émissions de CO2 (tonnes métriques par habitant),"1,258194928","1,60703771",1.25819492789657,1.60703771025689
+Le monde arabe,ARB,Émissions de CO2 (tonnes métriques par habitant),"0,643963548","4,724499697",0.643963547887705,4.72449969733611
+Émirats arabes unis,ARE,Émissions de CO2 (tonnes métriques par habitant),"0,118785902","20,43383762",0.118785902474841,20.4338376195602
+Argentine,ARG,Émissions de CO2 (tonnes métriques par habitant),"2,367473032","4,562048512",2.36747303164667,4.56204851225823
+Arménie,ARM,Émissions de CO2 (tonnes métriques par habitant),,"1,671656923",,1.67165692267883
+Samoa américaines,ASM,Émissions de CO2 (tonnes métriques par habitant),,,,
+Antigua-et-Barbuda,ATG,Émissions de CO2 (tonnes métriques par habitant),"0,67061685","5,823804338",0.67061685045994,5.8238043379617
+Australie,AUS,Émissions de CO2 (tonnes métriques par habitant),"8,582936643","16,51920992",8.58293664258675,16.5192099166948
+Autriche,AUT,Émissions de CO2 (tonnes métriques par habitant),"4,373318828","7,769983423",4.37331882803344,7.76998342279337
+Azerbaïdjan,AZE,Émissions de CO2 (tonnes métriques par habitant),,"3,647379147",,3.6473791469432
+Burundi,BDI,Émissions de CO2 (tonnes métriques par habitant),,"0,021349926",,0.0213499260634489
+Belgique,BEL,Émissions de CO2 (tonnes métriques par habitant),"9,941594074","8,849398302",9.94159407412845,8.84939830249506
+Bénin,BEN,Émissions de CO2 (tonnes métriques par habitant),"0,066354118","0,509962226",0.0663541178309111,0.509962225664154
+Burkina Faso,BFA,Émissions de CO2 (tonnes métriques par habitant),"0,009111897","0,11998056",0.00911189654961774,0.119980559825133
+Bangladesh,BGD,Émissions de CO2 (tonnes métriques par habitant),,"0,372017166",,0.372017165838757
+Bulgarie,BGR,Émissions de CO2 (tonnes métriques par habitant),"2,833901121","6,71438251",2.83390112126359,6.71438250987163
+Bahreïn,BHR,Émissions de CO2 (tonnes métriques par habitant),"3,542864352","17,94732981",3.54286435160399,17.9473298142286
+Bahamas,BHS,Émissions de CO2 (tonnes métriques par habitant),"3,74983109","5,199844019",3.74983109033472,5.19984401885954
+Bosnie-Herzégovine,BIH,Émissions de CO2 (tonnes métriques par habitant),,"6,19665215",,6.1966521497478
+Bélarus,BLR,Émissions de CO2 (tonnes métriques par habitant),,"6,682510398",,6.68251039797319
+Belize,BLZ,Émissions de CO2 (tonnes métriques par habitant),"0,47795108","1,670904302",0.47795107963679,1.67090430233936
+Bermudes,BMU,Émissions de CO2 (tonnes métriques par habitant),"3,551373874","6,07721021",3.55137387387387,6.07721021002416
+Bolivie,BOL,Émissions de CO2 (tonnes métriques par habitant),"0,272037723","1,599499039",0.272037722985901,1.59949903941542
+Brésil,BRA,Émissions de CO2 (tonnes métriques par habitant),"0,647067792","2,191393564",0.64706779227431,2.19139356376845
+Barbade,BRB,Émissions de CO2 (tonnes métriques par habitant),"0,746312799","5,580177618",0.746312799327946,5.58017761812104
+Brunéi Darussalam,BRN,Émissions de CO2 (tonnes métriques par habitant),"4,078179041","24,39201338",4.0781790406355,24.3920133786297
+Bhoutan,BTN,Émissions de CO2 (tonnes métriques par habitant),,"0,766205619",,0.766205619422981
+Botswana,BWA,Émissions de CO2 (tonnes métriques par habitant),,"2,323345006",,2.32334500642674
+République centrafricaine,CAF,Émissions de CO2 (tonnes métriques par habitant),"0,058535378","0,063127814",0.058535378426752,0.0631278135947735
+Canada,CAN,Émissions de CO2 (tonnes métriques par habitant),"10,77084729","14,13581338",10.7708472869716,14.1358133791149
+,CEB,Émissions de CO2 (tonnes métriques par habitant),"5,114244335","6,911131207",5.11424433505303,6.91113120718235
+Suisse,CHE,Émissions de CO2 (tonnes métriques par habitant),"3,664365979","4,625229924",3.66436597885029,4.62522992397501
+Îles Anglo-Normandes,CHI,Émissions de CO2 (tonnes métriques par habitant),,,,
+Chili,CHL,Émissions de CO2 (tonnes métriques par habitant),"1,75304482","4,61644538",1.75304482040082,4.61644538016156
+Chine,CHN,Émissions de CO2 (tonnes métriques par habitant),"1,170381372","6,710301991",1.17038137226978,6.71030199087886
+Côte d'Ivoire,CIV,Émissions de CO2 (tonnes métriques par habitant),"0,132972288","0,312877703",0.132972287870922,0.312877702632263
+Cameroun,CMR,Émissions de CO2 (tonnes métriques par habitant),"0,050613584","0,268091793",0.0506135841847797,0.268091792889505
+"Congo, République du",COG,Émissions de CO2 (tonnes métriques par habitant),"0,220689812","0,538098379",0.22068981166774,0.538098378550474
+Colombie,COL,Émissions de CO2 (tonnes métriques par habitant),"0,995718607","1,560629099",0.995718607042166,1.56062909881097
+Comores,COM,Émissions de CO2 (tonnes métriques par habitant),"0,058289002","0,220233473",0.0582890023949304,0.220233472817373
+Cabo Verde,CPV,Émissions de CO2 (tonnes métriques par habitant),"0,108750667","0,859061433",0.108750667272979,0.859061432792295
+Costa Rica,CRI,Émissions de CO2 (tonnes métriques par habitant),"0,368614042","1,704974495",0.368614042168214,1.7049744950915
+Petits états des Caraïbes,CSS,Émissions de CO2 (tonnes métriques par habitant),"1,402640778","9,692960268",1.40264077827437,9.69296026779196
+Cuba,CUB,Émissions de CO2 (tonnes métriques par habitant),"1,91845183","3,172315091",1.91845183023581,3.17231509144201
+Curacao,CUW,Émissions de CO2 (tonnes métriques par habitant),,,,
+Îles Caïmans,CYM,Émissions de CO2 (tonnes métriques par habitant),"1,39837295","10,30493107",1.39837295029872,10.3049310710498
+Chypre,CYP,Émissions de CO2 (tonnes métriques par habitant),"1,548907456","6,735375823",1.54890745624676,6.73537582255401
+République tchèque,CZE,Émissions de CO2 (tonnes métriques par habitant),,"10,43108813",,10.4310881349318
+Allemagne,DEU,Émissions de CO2 (tonnes métriques par habitant),,"8,917832846",,8.91783284592949
+Djibouti,DJI,Émissions de CO2 (tonnes métriques par habitant),"0,482292314","0,561940931",0.48229231431441,0.561940931477949
+Dominique,DMA,Émissions de CO2 (tonnes métriques par habitant),"0,18330112","1,746141565",0.183301119701413,1.74614156466205
+Danemark,DNK,Émissions de CO2 (tonnes métriques par habitant),"6,502683093","7,248328717",6.50268309283578,7.24832871740999
+République dominicaine,DOM,Émissions de CO2 (tonnes métriques par habitant),"0,316155334","2,182907888",0.316155333922883,2.18290788799199
+Algérie,DZA,Émissions de CO2 (tonnes métriques par habitant),"0,553763578","3,316037892",0.553763578109343,3.3160378920663
+Asie de l'Est et Pacifique,EAP,Émissions de CO2 (tonnes métriques par habitant),"0,952728672","5,302499354",0.952728672424787,5.30249935370452
+Asie de l'Est et Pacifique (tous niveaux de revenu),EAS,Émissions de CO2 (tonnes métriques par habitant),"1,162002504","5,859548487",1.16200250398713,5.85954848739331
+Europe et Asie centrale,ECA,Émissions de CO2 (tonnes métriques par habitant),,"5,412707404",,5.4127074041852
+Europe et Asie centrale (tous niveaux de revenu),ECS,Émissions de CO2 (tonnes métriques par habitant),,"7,541334226",,7.54133422629917
+Équateur,ECU,Émissions de CO2 (tonnes métriques par habitant),"0,388033962","2,354017387",0.388033962021741,2.35401738651458
+"Égypte, République arabe d'",EGY,Émissions de CO2 (tonnes métriques par habitant),"0,593007187","2,635115225",0.593007187357662,2.63511522475978
+Zone euro,EMU,Émissions de CO2 (tonnes métriques par habitant),"4,251980961","7,132483",4.25198096123597,7.13248299990191
+Érythrée,ERI,Émissions de CO2 (tonnes métriques par habitant),,"0,108718365",,0.108718364579018
+Espagne,ESP,Émissions de CO2 (tonnes métriques par habitant),"1,606592711","5,790764234",1.60659271055656,5.79076423425033
+Estonie,EST,Émissions de CO2 (tonnes métriques par habitant),,"14,04988252",,14.0498825181421
+Éthiopie,ETH,Émissions de CO2 (tonnes métriques par habitant),"0,015892219","0,083943117",0.0158922186581343,0.0839431166461619
+Union européenne,EUU,Émissions de CO2 (tonnes métriques par habitant),"5,762829217","7,06979787",5.76282921702225,7.06979787027619
+,FCS,Émissions de CO2 (tonnes métriques par habitant),"0,274430039","0,858628846",0.274430038645422,0.8586288462196
+Finlande,FIN,Émissions de CO2 (tonnes métriques par habitant),"3,409846728","10,1640461",3.40984672774319,10.1640460986379
+Fidji,FJI,Émissions de CO2 (tonnes métriques par habitant),"0,494050328","1,424813248",0.494050327543387,1.42481324805984
+France,FRA,Émissions de CO2 (tonnes métriques par habitant),"5,793507945","5,185043424",5.79350794502963,5.18504342392799
+Îles Féroé,FRO,Émissions de CO2 (tonnes métriques par habitant),"1,712251211","11,72121175",1.71225121111306,11.7212117462674
+"Micronésie, États fédérés de",FSM,Émissions de CO2 (tonnes métriques par habitant),,"1,240335923",,1.24033592330589
+Gabon,GAB,Émissions de CO2 (tonnes métriques par habitant),"0,264452943","1,418165749",0.264452942673016,1.41816574927503
+Royaume-Uni,GBR,Émissions de CO2 (tonnes métriques par habitant),"11,15075916","7,085732086",11.1507591603053,7.08573208602778
+Géorgie,GEO,Émissions de CO2 (tonnes métriques par habitant),,"1,769150524",,1.769150523604
+Ghana,GHA,Émissions de CO2 (tonnes métriques par habitant),"0,219944425","0,404379798",0.219944425111071,0.404379797695834
+Guinée,GIN,Émissions de CO2 (tonnes métriques par habitant),"0,114804749","0,229423425",0.114804748571104,0.229423424565039
+Gambie,GMB,Émissions de CO2 (tonnes métriques par habitant),"0,049832984","0,241098417",0.0498329840811678,0.241098416956387
+Guinée-Bissau,GNB,Émissions de CO2 (tonnes métriques par habitant),"0,029744957","0,146810683",0.0297449574712812,0.146810683420286
+Guinée équatoriale,GNQ,Émissions de CO2 (tonnes métriques par habitant),"0,087269698","8,907241536",0.0872696983519426,8.9072415363595
+Grèce,GRC,Émissions de CO2 (tonnes métriques par habitant),"1,128920482","7,556057769",1.12892048165296,7.55605776856022
+Grenade,GRD,Émissions de CO2 (tonnes métriques par habitant),"0,244844816","2,408137432",0.244844815882307,2.40813743218807
+Groenland,GRL,Émissions de CO2 (tonnes métriques par habitant),"6,882676923","12,44034101",6.88267692307692,12.4403410089647
+Guatemala,GTM,Émissions de CO2 (tonnes métriques par habitant),"0,326049925","0,748055056",0.326049925440121,0.748055056454528
+Guam,GUM,Émissions de CO2 (tonnes métriques par habitant),,,,
+Guyane,GUY,Émissions de CO2 (tonnes métriques par habitant),"1,169858673","2,357722028",1.16985867265013,2.35772202840916
+Revenu élevé,HIC,Émissions de CO2 (tonnes métriques par habitant),"7,528170708","11,07028048",7.52817070768231,11.0702804825437
+"Chine, RAS de Hong Kong",HKG,Émissions de CO2 (tonnes métriques par habitant),"0,960982311","5,695268539",0.960982310797388,5.69526853894451
+Honduras,HND,Émissions de CO2 (tonnes métriques par habitant),"0,307669104","1,103745053",0.307669103990195,1.10374505308333
+Pays pauvres très endettés (PPTE),HPC,Émissions de CO2 (tonnes métriques par habitant),"0,119892056","0,230193318",0.119892056425893,0.230193317551096
+Croatie,HRV,Émissions de CO2 (tonnes métriques par habitant),,"4,801530011",,4.80153001129275
+Haïti,HTI,Émissions de CO2 (tonnes métriques par habitant),"0,073981936","0,217962048",0.0739819355639705,0.217962047888149
+Hongrie,HUN,Émissions de CO2 (tonnes métriques par habitant),"4,544465241","4,862989931",4.54446524112109,4.86298993143314
+Indonésie,IDN,Émissions de CO2 (tonnes métriques par habitant),"0,243805292","2,303780983",0.243805291731486,2.30378098280951
+Île de Man,IMN,Émissions de CO2 (tonnes métriques par habitant),,,,
+Inde,IND,Émissions de CO2 (tonnes métriques par habitant),"0,268161407","1,662873483",0.26816140743122,1.66287348286691
+Non classifié,INX,Émissions de CO2 (tonnes métriques par habitant),,,,
+Irlande,IRL,Émissions de CO2 (tonnes métriques par habitant),"3,952726791","7,880759326",3.95272679063848,7.88075932628823
+"Iran, République islamique d'",IRN,Émissions de CO2 (tonnes métriques par habitant),"1,706877306","7,802145093",1.70687730649309,7.80214509349436
+Iraq,IRQ,Émissions de CO2 (tonnes métriques par habitant),"1,133839678","4,20163513",1.1338396783762,4.20163513007514
+Islande,ISL,Émissions de CO2 (tonnes métriques par habitant),"6,913193297","5,896828979",6.91319329741306,5.89682897929244
+Israël,ISR,Émissions de CO2 (tonnes métriques par habitant),"3,059851846","8,952413531",3.05985184624554,8.95241353112365
+Italie,ITA,Émissions de CO2 (tonnes métriques par habitant),"2,178444772","6,702557614",2.1784447715823,6.70255761383033
+Jamaïque,JAM,Émissions de CO2 (tonnes métriques par habitant),"0,902679123","2,872655693",0.902679123365641,2.87265569267489
+Jordanie,JOR,Émissions de CO2 (tonnes métriques par habitant),"0,881991706","3,601147064",0.881991706161137,3.60114706358194
+Japon,JPN,Émissions de CO2 (tonnes métriques par habitant),"2,516537519","9,291834303",2.51653751935718,9.29183430343302
+Kazakhstan,KAZ,Émissions de CO2 (tonnes métriques par habitant),,"15,81009754",,15.8100975441818
+Kenya,KEN,Émissions de CO2 (tonnes métriques par habitant),"0,299496881","0,327569171",0.29949688110701,0.327569171129451
+République kirghize,KGZ,Émissions de CO2 (tonnes métriques par habitant),,"1,199591629",,1.19959162949262
+Cambodge,KHM,Émissions de CO2 (tonnes métriques par habitant),"0,041012378","0,308073152",0.0410123777385943,0.308073151562941
+Kiribati,KIR,Émissions de CO2 (tonnes métriques par habitant),,"0,595622098",,0.595622097800539
+Saint-Kitts-et-Nevis,KNA,Émissions de CO2 (tonnes métriques par habitant),"0,214875872","5,050964187",0.214875871633103,5.05096418732782
+"Corée, République de",KOR,Émissions de CO2 (tonnes métriques par habitant),"0,501837251","11,84075687",0.501837250634426,11.8407568666903
+Kosovo,KSV,Émissions de CO2 (tonnes métriques par habitant),,,,
+Koweït,KWT,Émissions de CO2 (tonnes métriques par habitant),"29,78819829","28,10266175",29.7881982883014,28.1026617530789
+Amérique latine et Caraïbes,LAC,Émissions de CO2 (tonnes métriques par habitant),"0,900351908","2,384175607",0.900351907994315,2.38417560728642
+République démocratique populaire lao,LAO,Émissions de CO2 (tonnes métriques par habitant),"0,038054779","0,188910506",0.0380547788054779,0.188910505867133
+Liban,LBN,Émissions de CO2 (tonnes métriques par habitant),"1,430289424","4,668312508",1.43028942444764,4.6683125079609
+Libéria,LBR,Émissions de CO2 (tonnes métriques par habitant),"0,147293527","0,218425012",0.147293526636282,0.218425012023314
+Libye,LBY,Émissions de CO2 (tonnes métriques par habitant),"0,483113477","6,204914344",0.483113477431659,6.20491434412335
+Sainte-Lucie,LCA,Émissions de CO2 (tonnes métriques par habitant),"0,163157251","2,270423588",0.163157250753607,2.27042358794721
+Amérique latine et Caraïbes (tous niveaux de revenu),LCN,Émissions de CO2 (tonnes métriques par habitant),"1,333395011","2,933329176",1.33339501076359,2.93332917595013
+Pays les moins avancés : classement de l'ONU,LDC,Émissions de CO2 (tonnes métriques par habitant),"0,098311811","0,268707273",0.0983118113538991,0.268707273387085
+Faible revenu,LIC,Émissions de CO2 (tonnes métriques par habitant),,"0,27096449",,0.270964490008672
+Liechtenstein,LIE,Émissions de CO2 (tonnes métriques par habitant),,"1,405096204",,1.40509620384815
+Sri Lanka,LKA,Émissions de CO2 (tonnes métriques par habitant),"0,228261116","0,72992084",0.228261115602264,0.729920839522737
+"Revenu intermédiaire, tranche inférieure",LMC,Émissions de CO2 (tonnes métriques par habitant),"0,371185547","1,508992665",0.371185546733614,1.5089926650977
+Revenu faible et intermédiaire,LMY,Émissions de CO2 (tonnes métriques par habitant),"0,825413985","3,103174447",0.825413985331985,3.10317444743731
+Lesotho,LSO,Émissions de CO2 (tonnes métriques par habitant),,"1,082269608",,1.08226960820483
+Lituanie,LTU,Émissions de CO2 (tonnes métriques par habitant),,"4,537558514",,4.53755851412512
+Luxembourg,LUX,Émissions de CO2 (tonnes métriques par habitant),"36,6851833","20,8978117",36.6851832977673,20.8978116975694
+Lettonie,LVA,Émissions de CO2 (tonnes métriques par habitant),,"3,786801437",,3.7868014365136
+"Région administrative spéciale de Macao, Chine",MAC,Émissions de CO2 (tonnes métriques par habitant),"0,299423759","2,133060902",0.299423758865248,2.13306090195031
+Saint-Martin (fr),MAF,Émissions de CO2 (tonnes métriques par habitant),,,,
+Maroc,MAR,Émissions de CO2 (tonnes métriques par habitant),"0,295357988","1,737915547",0.295357988224715,1.73791554669125
+Monaco,MCO,Émissions de CO2 (tonnes métriques par habitant),,,,
+Moldova,MDA,Émissions de CO2 (tonnes métriques par habitant),,"1,398821793",,1.39882179311941
+Madagascar,MDG,Émissions de CO2 (tonnes métriques par habitant),"0,078382804","0,112992805",0.0783828044674529,0.112992805389691
+Maldives,MDV,Émissions de CO2 (tonnes métriques par habitant),,"2,927763926",,2.92776392572944
+Afrique du Nord et Moyen-Orient (tous niveaux de revenu),MEA,Émissions de CO2 (tonnes métriques par habitant),"0,969101074","5,962865313",0.96910107445172,5.96286531300497
+Mexique,MEX,Émissions de CO2 (tonnes métriques par habitant),"1,653382289","3,876107611",1.65338228937023,3.87610761080744
+Îles Marshall,MHL,Émissions de CO2 (tonnes métriques par habitant),,"1,954207191",,1.95420719057498
+Revenu intermédiaire,MIC,Émissions de CO2 (tonnes métriques par habitant),"0,87642012","3,424407905",0.876420120393459,3.42440790514306
+"Macédoine, ex-République yougoslave de",MKD,Émissions de CO2 (tonnes métriques par habitant),,"4,519210141",,4.51921014111123
+Mali,MLI,Émissions de CO2 (tonnes métriques par habitant),"0,022989591","0,079956379",0.0229895910314549,0.0799563786058226
+Malte,MLT,Émissions de CO2 (tonnes métriques par habitant),"1,044345429","6,034321639",1.04434542949012,6.03432163894414
+Myanmar,MMR,Émissions de CO2 (tonnes métriques par habitant),"0,126463436","0,200285212",0.12646343570247,0.200285212139622
+Moyen-Orient et Afrique du Nord,MNA,Émissions de CO2 (tonnes métriques par habitant),"0,860373404","3,878219274",0.860373404235302,3.87821927364453
+Monténégro,MNE,Émissions de CO2 (tonnes métriques par habitant),,"4,145547583",,4.14554758345308
+Mongolie,MNG,Émissions de CO2 (tonnes métriques par habitant),"1,354716938","6,915146531",1.35471693769008,6.91514653104629
+Mariannes,MNP,Émissions de CO2 (tonnes métriques par habitant),,,,
+Mozambique,MOZ,Émissions de CO2 (tonnes métriques par habitant),"0,251537178","0,131189805",0.251537177721152,0.131189805492051
+Mauritanie,MRT,Émissions de CO2 (tonnes métriques par habitant),"0,042730461","0,627225464",0.0427304613305056,0.627225463799213
+Maurice,MUS,Émissions de CO2 (tonnes métriques par habitant),"0,272514943","3,127070817",0.272514942723982,3.12707081740397
+Malawi,MWI,Émissions de CO2 (tonnes métriques par habitant),,"0,079231485",,0.0792314846186132
+Malaisie,MYS,Émissions de CO2 (tonnes métriques par habitant),,"7,898823573",,7.89882357346821
+Amérique du Nord,NAC,Émissions de CO2 (tonnes métriques par habitant),"15,5255288","16,7319858",15.5255287984268,16.7319858017319
+Namibie,NAM,Émissions de CO2 (tonnes métriques par habitant),,"1,239160489",,1.23916048891129
+Nouvelle-Calédonie,NCL,Émissions de CO2 (tonnes métriques par habitant),"10,90816456","15,17329528",10.908164556962,15.1732952755906
+Niger,NER,Émissions de CO2 (tonnes métriques par habitant),"0,008640403","0,083958178",0.0086404030145982,0.0839581777578064
+Nigéria,NGA,Émissions de CO2 (tonnes métriques par habitant),"0,075348847","0,53749756",0.0753488473116664,0.537497560078966
+Nicaragua,NIC,Émissions de CO2 (tonnes métriques par habitant),"0,29960906","0,843541955",0.299609059805172,0.843541954964946
+Pays-Bas,NLD,Émissions de CO2 (tonnes métriques par habitant),"6,39917962","10,06448974",6.3991796202037,10.0644897398765
+Revenu élevé : non OCDE,NOC,Émissions de CO2 (tonnes métriques par habitant),,"11,66039326",,11.6603932570965
+Norvège,NOR,Émissions de CO2 (tonnes métriques par habitant),"3,658563698","9,192879069",3.65856369820612,9.19287906857298
+Népal,NPL,Émissions de CO2 (tonnes métriques par habitant),"0,00802172","0,159474455",0.00802172031367379,0.159474454709674
+Nouvelle-Zélande,NZL,Émissions de CO2 (tonnes métriques par habitant),"4,867069736","7,124050867",4.86706973606544,7.12405086678832
+Revenu élevé : OCDE,OEC,Émissions de CO2 (tonnes métriques par habitant),"7,86271371","10,97783709",7.86271370987307,10.9778370949351
+Pays membres de l'OCDE,OED,Émissions de CO2 (tonnes métriques par habitant),"7,283429251","9,907168406",7.2834292505557,9.90716840566788
+Oman,OMN,Émissions de CO2 (tonnes métriques par habitant),,"20,20389451",,20.2038945134942
+Autres petits états,OSS,Émissions de CO2 (tonnes métriques par habitant),,"1,548096716",,1.54809671563533
+Pakistan,PAK,Émissions de CO2 (tonnes métriques par habitant),"0,315164764","0,941171125",0.31516476401196,0.941171125077653
+Panama,PAN,Émissions de CO2 (tonnes métriques par habitant),"0,880397979","2,625276244",0.880397979034781,2.62527624410677
+Pérou,PER,Émissions de CO2 (tonnes métriques par habitant),"0,81237664","1,783233144",0.812376640147477,1.7832331442343
+Philippines,PHL,Émissions de CO2 (tonnes métriques par habitant),"0,317249028","0,867845343",0.317249027643298,0.867845343351234
+Palaos,PLW,Émissions de CO2 (tonnes métriques par habitant),"1,521892509","10,85543046",1.52189250881926,10.8554304571484
+Papouasie-Nouvelle-Guinée,PNG,Émissions de CO2 (tonnes métriques par habitant),"0,091350751","0,746895234",0.0913507514399145,0.746895234112231
+Pologne,POL,Émissions de CO2 (tonnes métriques par habitant),"6,740362582","8,335786706",6.74036258180107,8.33578670557733
+Porto Rico,PRI,Émissions de CO2 (tonnes métriques par habitant),,,,
+"Corée, République démocratique de",PRK,Émissions de CO2 (tonnes métriques par habitant),,"2,987182112",,2.98718211203856
+Portugal,PRT,Émissions de CO2 (tonnes métriques par habitant),"0,928578089","4,709849624",0.928578089430729,4.70984962434502
+Paraguay,PRY,Émissions de CO2 (tonnes métriques par habitant),"0,15994831","0,841915242",0.159948309685733,0.841915242121446
+Petits états insulaires du Pacifique,PSS,Émissions de CO2 (tonnes métriques par habitant),"0,359324383","1,097999746",0.359324382928478,1.09799974602997
+Polynésie française,PYF,Émissions de CO2 (tonnes métriques par habitant),"0,469628472","3,167952684",0.469628472266691,3.16795268439279
+Qatar,QAT,Émissions de CO2 (tonnes métriques par habitant),"3,72056057","44,01892637",3.72056056987043,44.0189263670224
+Roumanie,ROU,Émissions de CO2 (tonnes métriques par habitant),"2,903812021","4,210560124",2.90381202054338,4.21056012429912
+Fédération de Russie,RUS,Émissions de CO2 (tonnes métriques par habitant),,"12,64732823",,12.6473282325063
+Rwanda,RWA,Émissions de CO2 (tonnes métriques par habitant),"0,036252175","0,062874197",0.0362521749327748,0.0628741973256297
+Asie du Sud,SAS,Émissions de CO2 (tonnes métriques par habitant),"0,243844208","1,408997076",0.24384420849057,1.40899707611236
+Arabie saoudite,SAU,Émissions de CO2 (tonnes métriques par habitant),"0,655055537","18,07245072",0.655055537216211,18.0724507178889
+Soudan,SDN,Émissions de CO2 (tonnes métriques par habitant),"0,129783714","0,349548724",0.12978371368493,0.349548724216747
+Sénégal,SEN,Émissions de CO2 (tonnes métriques par habitant),"0,260810811","0,58833415",0.260810810810811,0.588334149509437
+Singapour,SGP,Émissions de CO2 (tonnes métriques par habitant),"0,846367833","4,320151436",0.846367832847425,4.32015143623281
+Îles Salomon,SLB,Émissions de CO2 (tonnes métriques par habitant),"0,093332428","0,368304169",0.0933324283738727,0.368304169270601
+Sierra Leone,SLE,Émissions de CO2 (tonnes métriques par habitant),"0,327755728","0,152044168",0.327755728213903,0.152044167890243
+El Salvador,SLV,Émissions de CO2 (tonnes métriques par habitant),"0,224301883","1,103998574",0.224301883132089,1.10399857445029
+Saint-Marin,SMR,Émissions de CO2 (tonnes métriques par habitant),,,,
+Somalie,SOM,Émissions de CO2 (tonnes métriques par habitant),"0,030598466","0,05870688",0.030598466104093,0.0587068801132291
+Serbie,SRB,Émissions de CO2 (tonnes métriques par habitant),,"6,799114997",,6.79911499690563
+Afrique subsaharienne,SSA,Émissions de CO2 (tonnes métriques par habitant),"0,546006371","0,82359608",0.546006370726852,0.82359608016772
+Soudan du Sud,SSD,Émissions de CO2 (tonnes métriques par habitant),,,,
+Afrique subsaharienne (tous niveaux de revenu),SSF,Émissions de CO2 (tonnes métriques par habitant),"0,545417281","0,830941119",0.545417280631294,0.830941118863881
+Petits états,SST,Émissions de CO2 (tonnes métriques par habitant),"0,602429672","3,459790992",0.602429672100995,3.45979099177518
+Sao Tomé-et-Principe,STP,Émissions de CO2 (tonnes métriques par habitant),"0,171208466","0,587909256",0.171208466267217,0.587909256438739
+Suriname,SUR,Émissions de CO2 (tonnes métriques par habitant),"1,492233733","3,649913361",1.49223373291214,3.64991336144231
+République slovaque,SVK,Émissions de CO2 (tonnes métriques par habitant),,"6,367545917",,6.36754591744492
+Slovénie,SVN,Émissions de CO2 (tonnes métriques par habitant),,"7,504259702",,7.50425970227631
+Suède,SWE,Émissions de CO2 (tonnes métriques par habitant),"6,576406584","5,518421481",6.5764065843507,5.5184214812387
+Swaziland,SWZ,Émissions de CO2 (tonnes métriques par habitant),"0,094501379","0,864988313",0.0945013787356865,0.864988312997234
+Sint Maarten (Dutch part),SXM,Émissions de CO2 (tonnes métriques par habitant),,,,
+Seychelles,SYC,Émissions de CO2 (tonnes métriques par habitant),,"6,835706362",,6.83570636200409
+République arabe syrienne,SYR,Émissions de CO2 (tonnes métriques par habitant),"0,701817876","2,736990943",0.701817876199955,2.7369909434886
+Îles Turques-et-Caïques,TCA,Émissions de CO2 (tonnes métriques par habitant),,"6,010149084",,6.01014908437608
+Tchad,TCD,Émissions de CO2 (tonnes métriques par habitant),"0,018319148","0,043830424",0.0183191478307438,0.0438304243635328
+Togo,TGO,Émissions de CO2 (tonnes métriques par habitant),"0,04176239","0,319443622",0.0417623898063477,0.319443621625301
+Thaïlande,THA,Émissions de CO2 (tonnes métriques par habitant),"0,135585899","4,534491734",0.135585898664454,4.53449173353441
+Tadjikistan,TJK,Émissions de CO2 (tonnes métriques par habitant),,"0,35894763",,0.358947629748805
+Turkménistan,TKM,Émissions de CO2 (tonnes métriques par habitant),,"12,18366658",,12.183666583638
+Timor-Leste,TLS,Émissions de CO2 (tonnes métriques par habitant),,"0,16364808",,0.163648080314747
+Tonga,TON,Émissions de CO2 (tonnes métriques par habitant),"0,178587662","0,983561959",0.178587662337662,0.983561958770787
+Trinité-et-Tobago,TTO,Émissions de CO2 (tonnes métriques par habitant),"3,042576086","37,14005424",3.0425760859701,37.140054240742
+Tunisie,TUN,Émissions de CO2 (tonnes métriques par habitant),"0,409210934","2,402455639",0.409210934392178,2.40245563904139
+Turquie,TUR,Émissions de CO2 (tonnes métriques par habitant),"0,610472837","4,383104516",0.610472836627799,4.38310451625186
+Tuvalu,TUV,Émissions de CO2 (tonnes métriques par habitant),,,,
+Tanzanie,TZA,Émissions de CO2 (tonnes métriques par habitant),"0,082261435","0,1549349",0.0822614345738593,0.154934900364361
+Ouganda,UGA,Émissions de CO2 (tonnes métriques par habitant),"0,062123143","0,110886576",0.0621231426070875,0.110886575504705
+Ukraine,UKR,Émissions de CO2 (tonnes métriques par habitant),,"6,262351962",,6.26235196177316
+"Revenu intermédiaire, tranche supérieure",UMC,Émissions de CO2 (tonnes métriques par habitant),"1,28825643","5,710563536",1.28825642964868,5.71056353588949
+Uruguay,URY,Émissions de CO2 (tonnes métriques par habitant),"1,701583242","2,296200685",1.7015832424386,2.29620068466244
+États-Unis,USA,Émissions de CO2 (tonnes métriques par habitant),"15,99977916","17,02021634",15.9997791565885,17.0202163384029
+Ouzbékistan,UZB,Émissions de CO2 (tonnes métriques par habitant),,"3,914921266",,3.91492126628356
+Saint-Vincent-et-les Grenadines,VCT,Émissions de CO2 (tonnes métriques par habitant),"0,135902061","2,179923359",0.135902060582102,2.17992335903275
+Venezuela,VEN,Émissions de CO2 (tonnes métriques par habitant),"7,005107008","6,416333581",7.00510700768212,6.4163335811843
+Îles Vierges (EU),VIR,Émissions de CO2 (tonnes métriques par habitant),,,,
+Viet Nam,VNM,Émissions de CO2 (tonnes métriques par habitant),"0,215631379","1,971889173",0.215631378982817,1.97188917349727
+Vanuatu,VUT,Émissions de CO2 (tonnes métriques par habitant),,"0,591265773",,0.59126577254461
+Cisjordanie et Gaza,PSE,Émissions de CO2 (tonnes métriques par habitant),,"0,572406877",,0.572406877323468
+Monde,WLD,Émissions de CO2 (tonnes métriques par habitant),"3,096143978","4,94464893",3.09614397795523,4.94464893026102
+Samoa,WSM,Émissions de CO2 (tonnes métriques par habitant),"0,135008514","1,252110076",0.135008513967509,1.25211007608011
+"Yémen, Rép. du",YEM,Émissions de CO2 (tonnes métriques par habitant),"0,703402679","0,919967617",0.703402679397349,0.919967617002559
+Afrique du Sud,ZAF,Émissions de CO2 (tonnes métriques par habitant),"5,629717694","9,257216472",5.62971769372269,9.25721647223847
+"Congo, République démocratique du",COD,Émissions de CO2 (tonnes métriques par habitant),"0,152228066","0,050302688",0.152228066100193,0.050302687534911
+Zambie,ZMB,Émissions de CO2 (tonnes métriques par habitant),,"0,212449645",,0.212449644529525
+Zimbabwe,ZWE,Émissions de CO2 (tonnes métriques par habitant),,"0,691697897",,0.691697896516679
