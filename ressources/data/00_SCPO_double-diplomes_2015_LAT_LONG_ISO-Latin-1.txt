@@ -1,0 +1,25 @@
+ï»¿Niveau collège,Niveau Master,Niveau PhD,Nom de l'université,Ville,Etats,Pays,Lat,Lng
+x,x,x,Columbia University,New York,New York,Etats-Unis,40.8097368,-73.9608715
+x,x,x,Test pour absence de donnée,LackofData,,,,
+x,,,University College London,Londres,,Grande-Bretagne,53.7190281,-2.0727838999999904
+x,x,,Keio University,Tokyo,,Japon,35.6489643,139.7429376
+x,,,University of British Columbia,Vancouver,British Columbia,Canada,49.2188455,-123.09133750000001
+x,x,,Freïe Universität,Berlin,,Allemagne,52.52000659999999,13.404953999999975
+x,,,University of Sydney,Sydney,,Australie,-33.8827039,151.20209780000005
+x,,,"University of California, Berkeley",Berkeley,Californie,Etats-Unis,37.8805941,-122.24479580000002
+x,x,,National University of Singapore,Singapour,,Singapour,1.3049414,103.77318760000003
+x,,,Hong Kong University,Hong Kong,,Chine,22.5359935,114.21109049999995
+,x,,Georgetown,Washington,District of Columbia,Etats-Unis,47.5431717,-122.32213630000001
+,x,,University of Pennsylvania,Philadelphie,Pennsylvania,Etats-Unis,39.9667054,-75.17875240000001
+,x,,London School of Economics and Political Science,Londres,,Grande-Bretagne,51.5138889,-0.11666666666666667
+,x,,Université de Saint-Gall,Saint Gall,,Suisse,47.4244818,9.376717299999996
+,x,,FGV EAESP,Sao Paulo,,Brésil,-23.5505199,-46.63330939999997
+,x,,MGIMO,Moscou,,Russie,55.755826,37.6173
+,x,,Fudan University,Shanghai,,Chine,31.2985307,121.50144649999993
+,x,,Peking University,Pékin,,Chine,39.9917719,116.30999889999998
+,x,,Stockholm School of Economics,Stockholm,,Suède,59.32932349999999,18.068580800000063
+,x,,Hertie School of Governance,Berlin,,Allemagne,52.52000659999999,13.404953999999975
+,x,,University of Tokyo Todai,Tokyo,,Japon,35.7126775,139.76198899999997
+,x,,Université Bocconi,Milan,,Italie,45.4654219,9.18592430000001
+,,x,Max Planck Institute,Berlin,,Allemagne,52.52355379999999,13.379071599999975
+,,x,Northwestern University,Chicago,,Etats-Unis,41.8954119,-87.61973490000003
