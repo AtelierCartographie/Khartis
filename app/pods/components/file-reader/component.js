@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import TextEncoding from 'npm:text-encoding';
 /* global $ */
 
 export default Ember.Component.extend({
@@ -24,7 +25,13 @@ export default Ember.Component.extend({
       });
           
       this.get('fReader').onload = (e) => {
-        this.sendAction('onread', e.target.result);
+        
+        if (e.target.result instanceof ArrayBuffer) {
+          let encoding = this.detectCharset(e.target.result);
+          let s = new TextEncoding.TextDecoder(encoding).decode(new Uint8Array(e.target.result));
+          this.sendAction('onread', s);
+        }
+        
       };
           
       this.sendAction('onready', this);
@@ -32,7 +39,23 @@ export default Ember.Component.extend({
   	},
 	
     read: function(files) {
-      this.get('fReader').readAsText(files[0]);
+      this.get('fReader').readAsArrayBuffer(files[0]);
+    },
+    
+    detectCharset(buf) {
+      
+      let view = new Uint8Array(buf);
+      for (var i = 0; i < view.byteLength; i++) {
+        let c = view[i];
+        console.log(c);
+        if ( (c > 127) && (c < 2048) ) {
+          console.log("utf");
+          return "UTF-8";
+        }
+        console.log("iso");
+        return "iso8859-1";
+      }
+      
     },
     
     actions: {

@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   
-  model() {
-    return this.modelFor('spreadsheet');
+  redirect() {
+    this.transitionTo('/spreadsheet/import/step1');
   }
   
 });

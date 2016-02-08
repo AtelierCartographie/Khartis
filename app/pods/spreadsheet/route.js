@@ -23,10 +23,10 @@ let blankData = [
 
 export default Ember.Route.extend({
   
-    history: Ember.inject.service(),
+    store: Ember.inject.service(),
     
     renderTemplate: function() {
-        this.render("spreadsheet/sidebar", { outlet: "sidebar" });
+        this.render("spreadsheet.sidebar", { outlet: "sidebar" });
         this.render({ outlet: "main" });
     },
     
@@ -38,18 +38,27 @@ export default Ember.Route.extend({
     },
     
     init() {
-      this.get('history').on("undo", () => this.refresh() );
-      this.get('history').on("redo", () => this.refresh() );
+      
       this._super();
+      
+      //TODO : implémenter la sélection du projet sélectionné en dehors de cette route
+      let projects = this.get('store').list(),
+          project;
+          
+      if (projects.length) {
+        project = this.get('store.projects')[0]; //TODO : remove
+      } else {
+        project = this.get('store').persist(this.newProject().export());
+      }
+      
+      this.get('store').follow(project)
+        .on("undo", () => this.refresh() )
+        .on("redo", () => this.refresh() );
+        
     },
     
     model() {
-      let top = this.get('history').top();
-      if (top) {
-        return Project.restore(top);
-      } else {
-        return this.get('history').save(this.newProject());
-      }
+      return Project.restore(this.get('store').versions().current());
     },
     
     actions: {

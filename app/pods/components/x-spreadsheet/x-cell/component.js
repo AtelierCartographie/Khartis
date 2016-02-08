@@ -1,6 +1,4 @@
 import Ember from 'ember';
-/*global Em*/
-/* global $ */
 
 export default Ember.Component.extend({
     
@@ -17,7 +15,6 @@ export default Ember.Component.extend({
         this.$().attr("tabindex", 1);
         
         this.$().on("keydown", (e) => {
-            console.log(e);
             
             if (e.keyCode === 9) { //tab
                 this.cycleSelection(e.shiftKey ? -1:1);
@@ -102,7 +99,11 @@ export default Ember.Component.extend({
     },
     
     doubleClick(e) {
-        this.get('cell.state.sheet.edited') ? this.commitEdition() : this.startEdition();
+        if (this.get('cell.state.sheet.edited')) {
+          this.commitEdition();
+        } else {
+          this.startEdition();
+        }
         e.stopImmediatePropagation();
     },
     

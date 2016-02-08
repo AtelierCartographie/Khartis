@@ -3,12 +3,23 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   
-    history: Ember.inject.service(),
+    store: Ember.inject.service(),
   
     actions: {
       
-      onSaveHistory() {
-        this.get('history').save(this.get('model'));
+      onAskVersioning(type) {
+        switch (type) {
+          case "undo":
+            this.get('store').versions().undo();
+            break;
+          case "redo": 
+            this.get('store').versions().redo();
+            break;
+          case "freeze": 
+            this.get('store').versions().freeze(this.get('model').export());
+            break;
+        }
+        
       }
     
     }

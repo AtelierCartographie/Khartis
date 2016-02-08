@@ -7,8 +7,12 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
     
-    this.route("spreadsheet", {path: "/"}, function() {
-        this.route("import");
+    this.route("index", {path: "/"});
+    
+    this.route("spreadsheet", {path: "spreadsheet"}, function() {
+        this.route("import", function() {
+          this.route("step1");
+        });
     });
     
     this.route("graph", function() {

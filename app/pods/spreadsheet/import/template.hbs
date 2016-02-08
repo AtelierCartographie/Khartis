@@ -1,41 +1,12 @@
 <div class="full outer horizontal middle center flow">
     <div class="dialog import-dialog">
         <header class="filled primary">
-            <div class="title">1. Import data</div>
-            <div class="actions"><a href="#">[close]</a></div>
+            <div class="title">Importer des données</div>
+            <div class="actions"></div>
         </header>
-        <div class="vertical airy flow filled">
-            <div class="horizontal baseline flow">
-                <label class="horizontal right solid flow w3 padded-r text-right">Collez ici le csv</label>
-                {{textarea value=csvContent class="paste-csv-area" placeholder="Copy and paste your data"}}
-            </div>
-            <div class="horizontal baseline flow">
-                <label class="horizontal right solid flow w3 padded-r text-right">ou téléversez un fichier</label>
-                <div class="padded-v fluid">
-                    {{file-loader onContentLoaded="parseCsvContent"}}
-                </div>
-            </div>
-            
-            <!--<div>
-                {{!ivy-codemirror value=csvContent lineNumbers=true mode="csv"}}
-            </div>-->
-<!--            <div class="horizontal middle flow padded-v">
-                <label class="horizontal right flow w3 padded-r text-right">Entrez votre nom</label>
-                <input placeholder="Ici le nom"/>
-            </div>-->
-<!--            <div class="vertical flow">
-                <label>Ceci est un select</label>
-                <div class="select-box">
-                    <select>
-                        <option>Option 1</option>
-                    </select>
-                </div>
-            </div>-->
-
-        </div>
+        {{outlet 'main'}}
         <footer class="filled default">
-            <a class="button">Annuler</a>
-            <a class="button text-success">Valider</a>
+          {{outlet 'footer'}}
         </footer>
     </div>
 </div>

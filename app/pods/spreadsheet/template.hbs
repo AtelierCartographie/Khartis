@@ -2,7 +2,10 @@
 {{x-spreadsheet class="csvsheet" 
   navigateTo="navigateTo"
   data=model.data
-  save-history="onSaveHistory"}} {{!-- colsMinWidth=Number --}}
+  ask-versioning="onAskVersioning"
+  canUndo=store.versioning.canUndo
+  canRedo=store.versioning.canRedo
+  }} {{!-- colsMinWidth=Number --}}
 </div>
 {{x-test}}
 {{outlet}}

@@ -1,0 +1,19 @@
+<div class="vertical airy flow filled">
+    <div class="padded">Ici un paragraphe sur le formattage des fichiers csv</div>
+    <div class="horizontal baseline flow">
+        <label class="horizontal right solid flow w3 padded-r text-right">Collez ici le csv</label>
+        {{!textarea value=csv class="paste-csv-area" placeholder="Copy and paste your data"}}
+        {{ivy-codemirror value=csv lineNumbers=true}}
+    </div>
+    <div class="horizontal baseline flow">
+        <label class="horizontal right solid flow w3 padded-r text-right">ou téléversez un fichier</label>
+        <div class="padded-v fluid">
+            {{file-loader onContentLoaded="loadCsv"}}
+        </div>
+    </div>
+    <ul>
+      {{#each importReport as |err|}}
+      <li>{{err}}</li>
+      {{/each}}
+    </ul>
+</div>

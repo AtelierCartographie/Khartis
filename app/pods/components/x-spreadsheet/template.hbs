@@ -8,12 +8,12 @@
     <div class="tool save tooltip bottom" {{action 'save'}} data-tooltip="Sauvegarder">
         <i class="iconfont iconfont-save"></i>
     </div>
-    {{#if history.canUndo}}
+    {{#if canUndo}}
     <div class="tool restore tooltip bottom" {{action 'undo'}} data-tooltip="Annuler">
         <i class="iconfont iconfont-undo"></i>
     </div>
     {{/if}}
-    {{#if history.canRedo}}
+    {{#if canRedo}}
     <div class="tool restore tooltip bottom" {{action 'redo'}} data-tooltip="Restaurer">
         <i class="iconfont iconfont-redo"></i>
     </div>

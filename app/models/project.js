@@ -8,6 +8,7 @@ let Project = Struct.extend({
     
     importRawData(data) {
       this.set('data', DataStruct.createFromRawData(data));
+      return this.get('data').analyse();
     },
     
     export() {

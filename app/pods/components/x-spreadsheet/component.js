@@ -11,7 +11,9 @@ let mod = function (k, n) {
 export default Ember.Component.extend({
     
   growl: Ember.inject.service(),
-  history: Ember.inject.service(),
+  
+  canUndo: false,
+  canRedo: false,
 
   data: null,
 
@@ -59,7 +61,7 @@ export default Ember.Component.extend({
      
       if (e.keyCode === 90 && (meta || e.ctrlKey)) {
         e.preventDefault();
-        e.shiftKey ? this.get('history').redo() : this.get('history').undo();
+        e.shiftKey ? this.sendAction('redo') : this.sendAction('undo');
       } 
       
     });
@@ -146,7 +148,7 @@ export default Ember.Component.extend({
 
     endEditCell(cell) {
       cell.set('state.sheet.edited', false);
-      this.sendAction('save-history');
+      this.sendAction('ask-versioning', 'freeze');
     },
 
     startSelectCell(cell) {
@@ -186,12 +188,12 @@ export default Ember.Component.extend({
 
     addRow() {
       this.get('data').addRow();
-      this.sendAction('save-history');
+      this.sendAction('ask-versioning', 'freeze');
     },
 
     addColumn() {
       this.get('data').addColumn();
-      this.sendAction('save-history');
+      this.sendAction('ask-versioning', 'freeze');
     },
 
     onMouseEnterHeader(cell, component) {
@@ -202,16 +204,16 @@ export default Ember.Component.extend({
 
     onApplyResize(width, cell) {
       cell.set('column.layout.sheet.width', width);
-      this.sendAction('save-history');
+      this.sendAction('ask-versioning', 'freeze');
       this.drawBackground();
     },
     
     undo() {
-      this.get('history').undo();
+      this.sendAction('ask-versioning', 'undo');
     },
     
     redo() {
-      this.get('history').redo();
+      this.sendAction('ask-versioning', 'redo');
     },
 
     openImport(url) {

@@ -67,7 +67,7 @@ let ColumnStruct = Struct.extend({
         });
     },
     
-    registerCell(cell) {
+    visit(cell) {
         if (!this.get('cells').some( c => c == cell )) {
             this.get('cells').addObject(cell);
         }
@@ -119,7 +119,11 @@ ColumnStruct.reopenClass({
     restore(json, refs) {
         let o = this._super(json, refs);
         o.setProperties({
-            layout: json.layout,
+            layout: {
+              sheet: {
+                width: json.layout.sheet.width
+              }
+            },
             meta: json.meta
         });
         return o;
@@ -136,48 +140,48 @@ let CellStruct = Struct.extend({
     },
     
     isFirstOfRow() {
-        return this.index() === 0;
+      return this.index() === 0;
     },
     
     isLastOfRow() {
-        return this.index() === this.get('row.cells').length - 1;
+      return this.index() === this.get('row.cells').length - 1;
     },
     
     init() {
-        this._super();
-        this.set('state', {
-            sheet: {
-                    edited: false,
-                    selected: false,
-                    resizing: false
-                   }
-        });
+      this._super();
+      this.set('state', {
+          sheet: {
+                  edited: false,
+                  selected: false,
+                  resizing: false
+                  }
+      });
     },
     
     onColumnChange: function() {
-        if (this.get('column')) {
-            this.get('column').registerCell(this);
-        }
+      if (this.get('column')) {
+          this.get('column').visit(this);
+      }
     }.observes('column').on('init'),
     
     export() {
-        return this._super({
-            column: this.get('column._uuid'),
-            row: this.get('row._uuid'),
-            value: this.get('value')
-        });
+      return this._super({
+          column: this.get('column._uuid'),
+          row: this.get('row._uuid'),
+          value: this.get('value')
+      });
     }
 });
 
 CellStruct.reopenClass({
     restore(json, refs) {
-        let o = this._super(json, refs);
-        o.setProperties({
-            value: json.value,
-            column: refs[json.column],
-            row: refs[json.row]
-        });
-        return o;
+      let o = this._super(json, refs);
+      o.setProperties({
+          value: json.value,
+          column: refs[json.column],
+          row: refs[json.row]
+      });
+      return o;
     }
 });
 
@@ -187,11 +191,11 @@ let DataStruct = Struct.extend({
     columns: null,
     
     header: function() {
-        return this.get('rows')[0];
+        return this.get('rows').filter( r => r.get('header') ).objectAt(0);
     }.property('rows.[]'),
     
     body: function() {
-        return this.get('rows').slice(1);
+        return this.get('rows').filter( r => !r.get('header') );
     }.property('rows.[]'),
     
     size: function() {
@@ -251,6 +255,30 @@ let DataStruct = Struct.extend({
            r.set('cells', r.get('cells').filter( c => c.get('column') != column ));
         });
         this.get('columns').removeObject(column);
+    },
+    
+    analyse() {
+      let err = [];
+      this.analyseHeader(err);
+      this.analyseColumnCount(err);
+      
+      return err;
+    },
+    
+    analyseHeader(err) {
+      if (this.get('header.cells').some( c => Ember.isEmpty(c.get('value')) )) {
+        err.push("L'entête semble incorrecte : certaines cellules sont vides.");
+      }
+    },
+    
+    analyseColumnCount(err) {
+      console.log(this.get('columns').map( c => c.get('cells').length ));
+      let min = Math.min.apply(null, this.get('columns').map( c => c.get('cells').length )),
+          max = Math.max.apply(null, this.get('columns').map( c => c.get('cells').length ));
+          
+      if (min !== max) {
+        err.push(`Csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes : ${min} <> ${max}`);
+      }
     },
     
     export() {
