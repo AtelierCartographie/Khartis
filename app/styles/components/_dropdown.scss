@@ -4,12 +4,13 @@
   padding-left: 0;
   background-color: #FFF;
   margin: 0;
-  min-width: 100px;
-  max-height: 650px;
+  //min-width: 100px;
+  //max-height: 650px;
   overflow-y: auto;
 
   border-top:1px solid greys(10%);
-
+  white-space: nowrap;
+  width: auto;
   opacity: 0;
   position: absolute;
 
@@ -17,10 +18,16 @@
 
   > li {
     color: black;
-    padding: .8em 1.2em;
+    padding: .8rem 1.2rem;
     cursor: pointer;
     width: 100%;
     text-align: left;
+
+    a {
+      font-size:1.4rem;
+      color: black !important; // TODO: too much specificity on the framework
+      text-decoration: none;
+    }
 
     &:hover {
       background-color: darken(greys(white), 5%);

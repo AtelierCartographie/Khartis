@@ -8,16 +8,13 @@
             <i class="fa fa-question"></i>
         </a>
 
-        <a class="header-options">
-            <i class="fa fa-cogs"></i>
-            <!--TODO: triggering-->
-            <div class="dropdown">
-                <a href="#">Nouveau projet</a>
-                <a href="#">Blabla</a>
-                <a href="#">Lorem</a>
-            </div>
-        </a>
+      {{#x-dropdown.x-trigger}}
+          <a class="header-options dropdown-trigger"><i class="fa fa-cogs"></i></a>
+      {{/x-dropdown.x-trigger}}
 
+        <ul class="dropdown">
+            <li>{{#link-to 'new-project'}}Nouveau projet{{/link-to}}</li>
+        </ul>
     </div>
 </header>
 
@@ -26,12 +23,14 @@
 
     <nav class="menu-left solid vertical space-between flow filled contrast {{if  isSidebarVisible 'visible' }}">
         <div class="vertical airy flow">
-          <div class="tool selected tooltip right"  {{action 'navigateTo' 'spreadsheet'}} data-tooltip="Tableur">
-              <i class="iconfont iconfont-table"></i>
-          </div>
-          <div class="tool tooltip right" {{action 'navigateTo' 'graph'}} data-tooltip="Carte">
-              <i class="iconfont iconfont-map"></i>
-          </div>
+
+            <div class="tool selected"  {{action 'navigateTo' 'spreadsheet'}}>
+                <i class="iconfont iconfont-table"></i>
+            </div>
+
+            <div class="tool" {{action 'navigateTo' 'graph'}}>
+                <i class="iconfont iconfont-map"></i>
+            </div>
         </div>
         <div class="vertical airy btp flow">
             <div class="tool" {{action 'navigateTo' 'graph'}}>
@@ -40,8 +39,8 @@
         </div>
     </nav>
 
-    {{outlet "sidebar"}}
-    {{outlet "main"}}
+  {{outlet "sidebar"}}
+  {{outlet "main"}}
 
 
     <section class="help solid filled {{if  isHelpLayerVisible 'visible' }}">

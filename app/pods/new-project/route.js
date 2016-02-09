@@ -6,6 +6,11 @@ export default Ember.Route.extend({
     this.render({outlet: "main"});
   },
 
+  setupController: function (controller, model) {
+    controller.set('model', model);
+    this.controllerFor('application').set('isSidebarVisible', false);
+  },
+
   actions: {
     createDataSet(){
       this.transitionTo('/spreadsheet')

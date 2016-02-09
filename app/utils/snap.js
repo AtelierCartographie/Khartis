@@ -1,3 +1,19 @@
+function getFirstFixedParent(el) {
+
+  let currentEl = el
+
+  do {
+    if (currentEl.nodeType === Node.ELEMENT_NODE) {
+      let style = getComputedStyle(currentEl)
+      if (style.position === 'fixed') {
+        return currentEl
+      }
+    }
+  } while (currentEl = currentEl.parentNode)
+
+}
+
+
 /** Offset Shortcuts map */
 const shortcuts = {
   center: [.5, .5],
@@ -151,10 +167,7 @@ function getBox(el) {
     window.pageYOffset || window.scrollY
   )
 
-  return mapObject(
-    assign({width, height}, scroll.plus(vec(left, top))),
-    v => Math.round(v)
-  )
+  return assign({width:el.offsetWidth, height}, vec(left, top).plus(scroll))
 }
 
 
@@ -207,10 +220,14 @@ function create(el, fn) {
 }
 
 
+/**
+ * Event listeners hub (scroll, resize)
+ * @type {{init, dispose}}
+ */
 var listener = (function listener() {
 
   var events = {scroll: null, resize: null}
-  var observers = []
+  var snapTargets = []
 
   var createEvent = function (target, event) {
     return {
@@ -219,38 +236,36 @@ var listener = (function listener() {
         return {
           dispose(){
             target.removeEventListener(event, fn)
+            return null
           }
         }
       }
     }
   }
 
-  function update() {
+  function update(e) {
+    for (let i = 0; i < snapTargets.length; i++) {
+      var t = snapTargets[i]
 
-    for (let i = 0; i < observers.length; i++) {
-      var t = observers[i]
+      if (e.type=== 'resize' || e.type === 'scroll' && t.updateOnScroll) {
+        t.computation = compute(t.el)
 
-      t.computation = compute(t.el)
-
-      each(t.targets, function (i, offset) {
-
-        i.snapped.computation = compute(i.snapped.el)
-        i.snapped.snapPoint = i.snapped.computation('origin')
-          .minus(i.snapped.computation(i.snapped.baseOffset)) // => here, we want snap target offset
-
-        i.snapPoint = t.computation(offset)
-
-        move(i.snapped, i.snapPoint)
-      })
+        each(t.targets, function (i, offset) {
+          i.snapped.computation = compute(i.snapped.el)
+          i.snapped.snapPoint = i.snapped.computation('origin')
+            .minus(i.snapped.computation(i.snapped.baseOffset))
+          i.snapPoint = t.computation(offset)
+          move(i.snapped, i.snapPoint)
+        })
+      }
     }
   }
 
   return {
+
     init(snappTarget){
 
-      if (observers.indexOf(snappTarget) === -1) {
-        observers.push(snappTarget)
-      }
+      snapTargets.indexOf(snappTarget) === -1 && (snapTargets.push(snappTarget))
 
       if (!events.scroll && !events.resize) {
         events = {
@@ -258,14 +273,11 @@ var listener = (function listener() {
           resize: createEvent(window, 'resize').forEach(update)
         }
       }
-
     },
+
     dispose(){
-      observers = []
-      events = mapObject(events, e => {
-        e.dispose()
-        return null
-      })
+      snapTargets = []
+      events = mapObject(events, e => e.dispose())
     }
   }
 
@@ -297,7 +309,26 @@ function dispose(snapped, snapTarget) {
   }
 }
 
-// TODO : recompute on scroll and resize
+
+function move(snapped, snapTarget) {
+
+  // Compute the styles
+  let styles = mapObject(
+    snapped.snapPoint.plus(snapTarget),
+    val => toPixels(val)
+  )
+
+  // Applies only if it the initial rendering
+  // or if it has diffs
+  if (diff(snapped.memo, styles).hasDiff()) {
+    snapped.memo = styles
+    style(snapped.el, styles)
+  }
+}
+
+
+
+
 export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
 
 
@@ -331,6 +362,10 @@ export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
         targets: {}
       }))
 
+
+      // Is it in a fixed container ?
+      snapTarget.updateOnScroll = !!!getFirstFixedParent(target)
+
       // Target pivots computation
       // A snap target can have multiple snapped objects
       snapTarget.targets[offset] = {
@@ -338,11 +373,12 @@ export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
         snapPoint: snapTarget.computation(offset)
       }
 
-      move(snapped, snapTarget.targets[offset].snapPoint)
-
       // Init scroll / resize listener
       // Events attachment will occur only once
       listener.init(snapTarget)
+
+      // Then move
+      move(snapped, snapTarget.targets[offset].snapPoint)
 
       return {
         dispose: dispose(snapped, snapTarget)
@@ -350,20 +386,3 @@ export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
     }
   }
 }
-
-function move(snapped, snapTarget) {
-
-  // Compute the styles
-  let styles = mapObject(
-    snapped.snapPoint.plus(snapTarget),
-    val => toPixels(val)
-  )
-
-  // Applies only if it the initial rendering
-  // or if it has diffs
-  if (diff(snapped.memo, styles).hasDiff()) {
-    snapped.memo = styles
-    style(snapped.el, styles)
-  }
-}
-

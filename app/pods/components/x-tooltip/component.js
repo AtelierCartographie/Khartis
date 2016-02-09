@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     const show = this.show.bind(this);
     const hide = this.hide.bind(this);
 
-    var snapped = snap(el[0], 'top center')
+    var snapped = snap(el[0], 'middle left')
       .to(parent[0], this.get('position'))
 
     this.set('snapped', snapped)

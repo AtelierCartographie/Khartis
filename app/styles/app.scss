@@ -136,39 +136,39 @@ footer {
 }
 
 
-.dropdown {
-  @extend .vertical.flow;
-  position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 0;
-  min-width: 130px;
-  @include shadow(3);
-  background-color: #fff;
-  transform: translateY(100%);
-  opacity: 0;
-  pointer-events: none;
-
-  a {
-    text-decoration: none;
-    font-weight: bold;
-    text-wrap: none;
-    padding: 0.8rem 1rem;
-    font-size: 1.3rem;
-    color: hsl(0, 0%, 40%) !important; // TODO: clean up
-    text-align: right;
-    flex: 1;
-    &:not(:last-child) {
-      border-bottom: 1px solid rgba(#000, 0.12);
-    }
-  }
-
-  &.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-}
+//.dropdown {
+//  @extend .vertical.flow;
+//  position: absolute;
+//  z-index: 1;
+//  right: 0;
+//  bottom: 0;
+//  min-width: 130px;
+//  @include shadow(3);
+//  background-color: #fff;
+//  transform: translateY(100%);
+//  opacity: 0;
+//  pointer-events: none;
+//
+//  a {
+//    text-decoration: none;
+//    font-weight: bold;
+//    text-wrap: none;
+//    padding: 0.8rem 1rem;
+//    font-size: 1.3rem;
+//    color: hsl(0, 0%, 40%) !important; // TODO: clean up
+//    text-align: right;
+//    flex: 1;
+//    &:not(:last-child) {
+//      border-bottom: 1px solid rgba(#000, 0.12);
+//    }
+//  }
+//
+//  &.visible {
+//    opacity: 1;
+//    pointer-events: auto;
+//  }
+//
+//}
 
 .help {
 
