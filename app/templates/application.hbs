@@ -1,10 +1,28 @@
-<header class="filled primary with-relief topbar">
-    <span class="brand"><span>MAPP</span></span>
-    <span class="iconfont iconfont-ember"></span>
-    <div>Ici un menu</div>
+<header class="application-header filled primary">
+
+    <span class="brand">MAPP</span>
+
+    <div class="header-menu">
+
+        <a class="help-trigger {{if  isHelpLayerVisible 'active' }}" {{action 'toggleHelp'}}>
+            <i class="fa fa-question"></i>
+        </a>
+
+        <a class="header-options">
+            <i class="fa fa-cogs"></i>
+            <!--TODO: triggering-->
+            <div class="dropdown">
+                <a href="#">Nouveau projet</a>
+                <a href="#">Blabla</a>
+                <a href="#">Lorem</a>
+            </div>
+        </a>
+
+    </div>
 </header>
 
-<section class="main horizontal flow">
+
+<main class="application-workspace horizontal flow">
 
     <nav class="menu-left solid vertical space-between flow filled contrast">
         <div class="vertical airy flow">
@@ -24,7 +42,23 @@
 
     {{outlet "sidebar"}}
     {{outlet "main"}}
-    {{outlet "help"}}
+    {{!outlet "help"}}
+
+    <section class="help solid filled {{if  isHelpLayerVisible 'visible' }}">
+
+        <div class="inner">
+            <h2>Lorem Ipsum</h2>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci alias architecto atque consequatur
+                corporis eaque expedita facilis impedit iure laboriosam magnam maiores molestiae nihil perspiciatis, quod rem
+                sunt velit.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci alias architecto atque consequatur
+                corporis eaque expedita facilis impedit iure laboriosam magnam maiores molestiae nihil perspiciatis, quod rem
+                sunt velit.</p>
+        </div>
+
+    </section>
 
     <div class="outer horizontal center flow w12 hidden">
         <div class="horizontal solid flow w4 filled default with-relief topbar">
@@ -32,10 +66,12 @@
         </div>
     </div>
 
-</section>
+</main>
 
-<footer class="text-center filled warning with-relief bottombar"><small>Apyx copyright blabla</small></footer>
+<footer class="text-center filled warning with-relief bottombar">
+    <small>Apyx copyright blabla</small>
+</footer>
 
-{{outlet "footer"}}
+{{! outlet "footer"}}
 
 {{x-growl}}
