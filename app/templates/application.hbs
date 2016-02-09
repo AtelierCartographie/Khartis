@@ -24,7 +24,7 @@
 
 <main class="application-workspace horizontal flow">
 
-    <nav class="menu-left solid vertical space-between flow filled contrast">
+    <nav class="menu-left solid vertical space-between flow filled contrast {{if  isSidebarVisible 'visible' }}">
         <div class="vertical airy flow">
           <div class="tool selected tooltip right"  {{action 'navigateTo' 'spreadsheet'}} data-tooltip="Tableur">
               <i class="iconfont iconfont-table"></i>
@@ -42,22 +42,13 @@
 
     {{outlet "sidebar"}}
     {{outlet "main"}}
-    {{!outlet "help"}}
+
 
     <section class="help solid filled {{if  isHelpLayerVisible 'visible' }}">
-
         <div class="inner">
-            <h2>Lorem Ipsum</h2>
+          {{outlet "help"}}
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci alias architecto atque consequatur
-                corporis eaque expedita facilis impedit iure laboriosam magnam maiores molestiae nihil perspiciatis, quod rem
-                sunt velit.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci alias architecto atque consequatur
-                corporis eaque expedita facilis impedit iure laboriosam magnam maiores molestiae nihil perspiciatis, quod rem
-                sunt velit.</p>
         </div>
-
     </section>
 
     <div class="outer horizontal center flow w12 hidden">
