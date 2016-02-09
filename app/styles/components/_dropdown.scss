@@ -1,0 +1,43 @@
+.dropdown{
+
+  z-index: 10;
+  padding-left: 0;
+  background-color: #FFF;
+  margin: 0;
+  min-width: 100px;
+  max-height: 650px;
+  overflow-y: auto;
+
+  border-top:1px solid greys(10%);
+
+  opacity: 0;
+  position: absolute;
+
+  @include shadow(1);
+
+  > li {
+    color: black;
+    padding: .8em 1.2em;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+      background-color: darken(greys(white), 5%);
+    }
+
+    &.divider {
+      min-height: 0;
+      height: 1px;
+    }
+  }
+
+  >li:not(:last-child){
+    border-bottom:1px solid greys(10%);
+  }
+}
+
+.dropdown.visible {
+  opacity: 1;
+}
+
