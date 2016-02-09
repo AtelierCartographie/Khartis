@@ -27,9 +27,20 @@ export default Ember.Component.extend({
       this.get('fReader').onload = (e) => {
         
         if (e.target.result instanceof ArrayBuffer) {
-          let encoding = this.detectCharset(e.target.result);
-          let s = new TextEncoding.TextDecoder(encoding).decode(new Uint8Array(e.target.result));
+          
+          //on décode une première fois en iso8859-1
+          let buf = this.skipBom(new Uint8Array(e.target.result)),
+              s = new TextEncoding.TextDecoder("UTF-8").decode(buf);
+              
+          let err = this.detectCharsetProblem(s);
+          
+          //et on réencode si besoin
+          if (err > 0) {
+            s = new TextEncoding.TextDecoder("iso8859-1").decode(buf);
+          }
+          
           this.sendAction('onread', s);
+          
         }
         
       };
@@ -42,20 +53,25 @@ export default Ember.Component.extend({
       this.get('fReader').readAsArrayBuffer(files[0]);
     },
     
-    detectCharset(buf) {
+    detectCharsetProblem(s) {
       
-      let view = new Uint8Array(buf);
-      for (var i = 0; i < view.byteLength; i++) {
-        let c = view[i];
-        console.log(c);
-        if ( (c > 127) && (c < 2048) ) {
-          console.log("utf");
-          return "UTF-8";
+      for (var i = 0, err = 0; i < s.length; i++) {
+        let c = s.charCodeAt(i);
+        if ( c === 65533 ) {
+          err++;
         }
-        console.log("iso");
-        return "iso8859-1";
       }
       
+      return err;
+    
+    },
+    
+    skipBom(buf) {
+      // If we have a BOM skip it
+      if (buf.length >= 3 && buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf) {
+        return buf.subarray(3);
+      }
+      return buf;
     },
     
     actions: {
