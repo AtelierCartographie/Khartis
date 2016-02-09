@@ -152,8 +152,6 @@ var Version = Ember.Object.extend(Ember.Evented, {
     }.property('needle', 'stack.[]'),
   
     freeze(project) {
-      console.log(JSON.stringify(project));
-      console.log(JSON.stringify(this.current()));
       if (JSON.stringify(project) !== JSON.stringify(this.current())) {
         console.log("diff");
         this.set('stack', this.get('stack').slice(0, this.get('needle') + 1));

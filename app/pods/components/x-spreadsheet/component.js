@@ -82,6 +82,8 @@ export default Ember.Component.extend({
   }.observes('data.rows.[]', 'data.columns.[]'),
 
   drawBackground: function () {
+    
+    return;
 
     if (this.$()) {
 

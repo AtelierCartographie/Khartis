@@ -237,6 +237,7 @@ let DataStruct = Struct.extend({
             index = selectedCell ? this.get('columns').indexOf(selectedCell.get('column')) : this.get('columns.length') - 1,
             column = ColumnStruct.create();
         
+        this.beginPropertyChanges();
         this.get('columns').insertAt(index + shift, column);
         this.get('rows').forEach( r => {
             r.get('cells').insertAt(
@@ -247,6 +248,7 @@ let DataStruct = Struct.extend({
                 })
             );
         });
+        this.endPropertyChanges();
     },
     
     //TODO : non testé
