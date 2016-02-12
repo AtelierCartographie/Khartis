@@ -1,19 +1,36 @@
-<header class="filled primary with-relief topbar">
-    <span class="brand"><span>MAPP</span></span>
-    <span class="iconfont iconfont-ember"></span>
-    <div>Ici un menu</div>
+<header class="application-header filled primary">
+
+    <span class="brand">MAPP</span>
+
+    <div class="header-menu">
+
+        <a class="help-trigger {{if  isHelpLayerVisible 'active' }}" {{action 'toggleHelp'}}>
+            <i class="fa fa-question"></i>
+        </a>
+
+      {{#x-dropdown.x-trigger}}
+          <a class="header-options dropdown-trigger"><i class="fa fa-cogs"></i></a>
+      {{/x-dropdown.x-trigger}}
+
+        <ul class="dropdown">
+            <li>{{#link-to 'new-project'}}Nouveau projet{{/link-to}}</li>
+        </ul>
+    </div>
 </header>
 
-<section class="main horizontal flow">
 
-    <nav class="menu-left solid vertical space-between flow filled contrast">
+<main class="application-workspace horizontal flow">
+
+    <nav class="menu-left solid vertical space-between flow filled contrast {{if  isSidebarVisible 'visible' }}">
         <div class="vertical airy flow">
-          <div class="tool selected tooltip right"  {{action 'navigateTo' 'spreadsheet'}} data-tooltip="Tableur">
-              <i class="iconfont iconfont-table"></i>
-          </div>
-          <div class="tool tooltip right" {{action 'navigateTo' 'graph'}} data-tooltip="Carte">
-              <i class="iconfont iconfont-map"></i>
-          </div>
+
+            <div class="tool selected"  {{action 'navigateTo' 'spreadsheet'}}>
+                <i class="iconfont iconfont-table"></i>
+            </div>
+
+            <div class="tool" {{action 'navigateTo' 'graph'}}>
+                <i class="iconfont iconfont-map"></i>
+            </div>
         </div>
         <div class="vertical airy btp flow">
             <div class="tool" {{action 'navigateTo' 'graph'}}>
@@ -22,9 +39,16 @@
         </div>
     </nav>
 
-    {{outlet "sidebar"}}
-    {{outlet "main"}}
-    {{!outlet "help"}}
+
+  {{outlet "sidebar"}}
+  {{outlet "main"}}
+
+
+    <section class="help solid filled {{if  isHelpLayerVisible 'visible' }}">
+        <div class="inner">
+          {{outlet "help"}}
+        </div>
+    </section>
 
     <div class="outer horizontal center flow w12 hidden">
         <div class="horizontal solid flow w4 filled default with-relief topbar">
@@ -32,10 +56,12 @@
         </div>
     </div>
 
-</section>
+</main>
 
-<footer class="text-center filled warning with-relief bottombar"><small>Apyx copyright blabla</small></footer>
+<footer class="text-center filled warning with-relief bottombar">
+    <small>Apyx copyright blabla</small>
+</footer>
 
-{{outlet "footer"}}
+{{! outlet "footer"}}
 
 {{x-growl}}

@@ -22,51 +22,57 @@ let blankData = [
 ];
 
 export default Ember.Route.extend({
-  
-    store: Ember.inject.service(),
-    
-    renderTemplate: function() {
-        this.render("spreadsheet.sidebar", { outlet: "sidebar" });
-        this.render({ outlet: "main" });
-    },
-    
-    newProject() {
-      let project = Project.create({
-        data: DataStruct.createFromRawData(blankData)
-      });
-      return project;
-    },
-    
-    init() {
-      
-      this._super();
-      
-      //TODO : implémenter la sélection du projet sélectionné en dehors de cette route
-      let projects = this.get('store').list(),
-          project;
-          
-      if (projects.length) {
-        project = this.get('store.projects')[0]; //TODO : remove
-      } else {
-        project = this.get('store').persist(this.newProject().export());
-      }
-      
-      this.get('store').follow(project)
-        .on("undo", () => this.refresh() )
-        .on("redo", () => this.refresh() );
-        
-    },
-    
-    model() {
-      return Project.restore(this.get('store').versions().current());
-    },
-    
-    actions: {
-      
-        navigateTo(url) {
-          this.transitionTo("/"+url);
-        }
-        
+
+  store: Ember.inject.service(),
+
+  renderTemplate: function () {
+    this.render("spreadsheet.sidebar", {outlet: "sidebar"});
+    this.render("spreadsheet.help", {outlet: "help"});
+    this.render({outlet: "main"});
+  },
+
+  newProject() {
+    let project = Project.create({
+      data: DataStruct.createFromRawData(blankData)
+    });
+    return project;
+  },
+
+  init() {
+
+    this._super();
+
+    //TODO : implémenter la sélection du projet sélectionné en dehors de cette route
+    let projects = this.get('store').list(),
+      project;
+
+    if (projects.length) {
+      project = this.get('store.projects')[0]; //TODO : remove
+    } else {
+      project = this.get('store').persist(this.newProject().export());
     }
-    
+
+    this.get('store').follow(project)
+      .on("undo", () => this.refresh())
+      .on("redo", () => this.refresh());
+
+  },
+
+  model() {
+    return Project.restore(this.get('store').versions().current());
+  },
+
+  setupController: function (controller, model) {
+    controller.set('model', model);
+    this.controllerFor('application').set('isSidebarVisible', true);
+  },
+
+  actions: {
+
+    navigateTo(url) {
+      this.transitionTo("/" + url);
+    }
+
+  }
+
 });

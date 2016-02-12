@@ -2,8 +2,13 @@ import Em from 'ember';
 
 
 export default Ember.Controller.extend({
-   
-   actions: {
-   } 
-    
+
+  isHelpLayerVisible: false,
+
+  actions: {
+    toggleHelp(){
+      this.toggleProperty('isHelpLayerVisible')
+    }
+  }
+
 });
