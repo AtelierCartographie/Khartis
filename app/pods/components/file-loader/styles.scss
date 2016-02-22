@@ -1,10 +1,6 @@
 & {
     .file-reader {
         visibility: hidden;
+        width: 0;
     }
-}
-
-a.button {
-    @extend .filled;
-    @extend .filled.default;
 }

@@ -1,11 +1,13 @@
-<div class="horizontal stretched flow">
-{{x-spreadsheet class="csvsheet" 
-  navigateTo="navigateTo"
-  data=model.data
-  ask-versioning="onAskVersioning"
-  canUndo=store.versioning.canUndo
-  canRedo=store.versioning.canRedo
+<div class="vertical stretched padded flow filled default">
+  <h1 class="breadcrumb">
+    <span>Edition des données</span>
+  </h1>
+  {{x-spreadsheet class="csvsheet" 
+    navigateTo="navigateTo"
+    data=model.data
+    ask-versioning="onAskVersioning"
+    canUndo=store.versioning.canUndo
+    canRedo=store.versioning.canRedo
   }} {{!-- colsMinWidth=Number --}}
 </div>
-{{x-test}}
 {{outlet}}

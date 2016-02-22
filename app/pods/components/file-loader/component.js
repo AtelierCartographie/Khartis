@@ -6,11 +6,11 @@ export default Ember.Component.extend({
     
     fileReaderComponent: null,
     
+    click() {
+      this.get('fileReaderComponent').send('trigger');
+    },
+    
     actions: {
-        
-        triggerFileReader: function() {
-           this.get('fileReaderComponent').send('trigger');
-        },
         
         onFileReaderReady: function(c) {
             this.set('fileReaderComponent', c);

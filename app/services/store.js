@@ -2,6 +2,7 @@ import Ember from 'ember';
 /* global Em */
 
 const NS = "mapp-project",
+      SIZE = 1,
       MAX = 30,
       FREEZE_EVT = "freeze",
       UNDO_EVT = "undo",
@@ -29,6 +30,7 @@ var Store = Ember.Service.extend({
     },
     
     save() {
+      this.get('projects').splice(0, this.get('projects').length - MAX);
       if (!this.get('transient')) {
         window.localStorage.setItem(NS, JSON.stringify(this.get('projects')));
       }
@@ -41,6 +43,16 @@ var Store = Ember.Service.extend({
     
     list() {
       return this.get('projects');
+    },
+    
+    select(uuid) {
+      let project = this.get('projects').find( p => p._uuid === uuid);
+      if (project) {
+        this.follow(project);
+        return project;
+      } else {
+        return false;
+      }
     },
     
     persist(project) {

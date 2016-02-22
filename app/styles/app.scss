@@ -3,6 +3,8 @@
 @import "flow";
 @import "theme";
 @import "pod-styles";
+@import "parts/import-csv";
+@import "parts/breadcrumb";
 
 
 html, body {
@@ -27,14 +29,6 @@ body > .ember-view {
   align-items: stretch;
   flex-basis: $header-height;
   padding: 0 2em;
-}
-
-
-.cm-s-default {
-  width: 100%;
-  border: 1px solid #f0f0f0;
-  border-left: 2px solid #9e9e9e;
-  height: 200px;
 }
 
 
@@ -68,16 +62,16 @@ footer {
   align-items: center;
   display: flex;
   font-size: 2rem;
+  a {
+    text-decoration: none;
+  }
 }
 
 
 .menu-left {
-  width: 0;
+  
+  width: 5rem;
   transition:width 150ms ease-out;
-
-  &.visible {
-    width: 5rem;
-  }
 
   .tool {
     @extend %flow;

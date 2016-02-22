@@ -19,7 +19,7 @@ Struct.reopenClass({
         for (let i = 0,
             t = 0,
             time;;) {
-            yield `${time = new Date().getTime()}-${ i = ( t == time ? i+1 : 0*(t = time) ) }`;
+            yield `${ ( time = new Date().getTime() ).toString(32) }${ ( i = ( t == time ? i+1 : 0*(t = time) ) ).toString(32) }`;
         }
     })(),
     restore(json, refs) {

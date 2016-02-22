@@ -6,9 +6,17 @@ export default Ember.Route.extend({
    
    actions: {
        
-       navigateTo(url) {
-           this.transitionTo(url);
-       }
+    navigateTo(url) {
+      
+      switch(url) {
+        case 'spreadsheet':
+          this.transitionTo(url, this.get('store').versions().current()._uuid);
+          break;
+        default:
+          this.transitionTo(url);
+      }
+
+    }
        
    } 
     

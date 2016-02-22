@@ -1,0 +1,20 @@
+<div class="vertical airy padded flow import-step1">
+    <div class="padded">Ici un paragraphe sur le formattage des fichiers csv</div>
+    <div class="vertical padded flow">
+        <div class="label">
+          Collez ici le csv ou
+          {{file-loader label="importez un fichier" class="button text-primary import-button" onContentLoaded="loadCsv"}}
+        </div>
+        {{ivy-codemirror value=csv lineNumbers=true}}
+    </div>
+    {{#if importReport.length}}
+    <ul>
+      {{#each importReport as |err|}}
+      <li>{{err}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
+    <div class="horizontal padded right flow">
+      {{x-button label="Suivant" class="filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+    </div>
+</div>

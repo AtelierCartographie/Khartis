@@ -1,6 +1,6 @@
 <header class="application-header filled primary">
 
-    <span class="brand">MAPP</span>
+    <span class="brand">{{#link-to 'index'}}MAPP{{/link-to}}</span>
 
     <div class="header-menu">
 
@@ -21,7 +21,8 @@
 
 <main class="application-workspace horizontal flow">
 
-    <nav class="menu-left solid vertical space-between flow filled contrast {{if  isSidebarVisible 'visible' }}">
+  {{#if  isSidebarVisible}}
+    <nav class="menu-left solid vertical space-between flow filled contrast">
         <div class="vertical airy flow">
 
             <div class="tool selected"  {{action 'navigateTo' 'spreadsheet'}}>
@@ -38,6 +39,7 @@
             </div>
         </div>
     </nav>
+   {{/if}}
 
 
   {{outlet "sidebar"}}
@@ -59,7 +61,7 @@
 </main>
 
 <footer class="text-center filled warning with-relief bottombar">
-    <small>Apyx copyright blabla</small>
+    <small>Ici le footer</small>
 </footer>
 
 {{! outlet "footer"}}

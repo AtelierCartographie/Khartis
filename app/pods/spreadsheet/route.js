@@ -26,40 +26,25 @@ export default Ember.Route.extend({
   store: Ember.inject.service(),
 
   renderTemplate: function () {
-    this.render("spreadsheet.sidebar", {outlet: "sidebar"});
+    //this.render("spreadsheet.sidebar", {outlet: "sidebar"});
     this.render("spreadsheet.help", {outlet: "help"});
     this.render({outlet: "main"});
   },
 
-  newProject() {
-    let project = Project.create({
-      data: DataStruct.createFromRawData(blankData)
-    });
-    return project;
-  },
-
-  init() {
-
-    this._super();
-
-    //TODO : implémenter la sélection du projet sélectionné en dehors de cette route
-    let projects = this.get('store').list(),
-      project;
-
-    if (projects.length) {
-      project = this.get('store.projects')[0]; //TODO : remove
+  model(params) {
+    let p = this.get('store').select(params.uuid);
+    console.log(p);
+    if (p) {
+      return Project.restore(p);
     } else {
-      project = this.get('store').persist(this.newProject().export());
+      this.transitionTo('/');
     }
-
-    this.get('store').follow(project)
+  },
+  
+  afterMode(model) {
+    model.follow(model)
       .on("undo", () => this.refresh())
       .on("redo", () => this.refresh());
-
-  },
-
-  model() {
-    return Project.restore(this.get('store').versions().current());
   },
 
   setupController: function (controller, model) {

@@ -1,6 +1,5 @@
 .button {
   display: inline-block;
-  position: relative;
   line-height: 2em;
   border-radius: 2px;
   text-align: center;
@@ -16,6 +15,7 @@
 .button.disabled {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+  cursor: not-allowed;
 }
 
 .button.filled {
