@@ -29,6 +29,7 @@ export default Ember.Controller.extend({
         return r.map( c => c.trim() );
       });
       this.set('importReport', this.get('model').importRawData(data));
+      this.get('store').persist(this.get('model').export());
       this.transitionToRoute('spreadsheet', this.get('model').get('_uuid'));
     }
     

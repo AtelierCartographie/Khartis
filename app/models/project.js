@@ -13,13 +13,20 @@ let Project = Struct.extend({
     
     export() {
         return this._super({
-            data: this.get('data').export()
+            data: this.get('data') ? this.get('data').export() : null
         });
     }
     
 });
 
 Project.reopenClass({
+  
+    createEmpty() {
+      return Project.create({
+        data: DataStruct.createFromRawData([])
+      })
+    },
+    
     restore(json, refs = {}) {
         let o = this._super(json, refs);
         o.setProperties({
@@ -27,6 +34,7 @@ Project.reopenClass({
         });
         return o;
     }
+    
 });
 
 export default Project;

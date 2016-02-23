@@ -4,11 +4,9 @@ import {DataStruct} from 'mapp/models/data';
 
 export default Ember.Route.extend({
   
-  newProject() {
-    let project = Project.create({
-      data: DataStruct.createFromRawData([])
-    });
-    return project;
+  renderTemplate: function () {
+    this.render("new-project.import.help", {into: "application", outlet: "help"});
+    this.render({outlet: "main"});
   },
   
   redirect() {
@@ -16,8 +14,7 @@ export default Ember.Route.extend({
   },
   
   model() {
-    let project = this.newProject();
-    this.get('store').persist(project.export());
+    let project = Project.createEmpty();
     return project;
   },
   
