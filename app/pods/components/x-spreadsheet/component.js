@@ -12,6 +12,7 @@ export default Ember.Component.extend({
     
   growl: Ember.inject.service(),
   
+  hasToolbar: false,
   canUndo: false,
   canRedo: false,
 
