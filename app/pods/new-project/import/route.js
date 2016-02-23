@@ -15,7 +15,10 @@ export default Ember.Route.extend({
   
   model() {
     let project = Project.createEmpty();
-    return project;
+    return {
+      csv: null,
+      project: project
+    };
   },
   
   setupController(controller, model) {

@@ -76,7 +76,7 @@ var Store = Ember.Service.extend({
         this.save();
         return project;
       } else {
-        throw new Error("Can't merge : project not found");
+        return this.persist(project);
       }
       
     },

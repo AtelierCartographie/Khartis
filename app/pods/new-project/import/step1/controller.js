@@ -5,32 +5,28 @@ export default Ember.Controller.extend({
   
   store: Ember.inject.service(),
   
-  csv: null,
-  
   importReport: null,
   
-  setup() {
-    this.set('csv', null);
-  },
-  
   parsable: function() {
-    return this.get('csv') && this.get('csv').length > 0;
-  }.property('csv'),
+    return this.get('model.csv') && this.get('model.csv').length > 0;
+  }.property('model.csv'),
   
   actions: {
     
     loadCsv(text) {
-      this.set('csv', text);
+      this.set('model.csv', text);
     },
 
     parseCsvContent() {
-      let data = CSV.parse(this.get('csv'));
-      data = data.map( r => {
-        return r.map( c => c.trim() );
+      
+      //set loader
+      
+      CSV.readAll(this.get('model.csv'), (data) => {
+        //stop loader
+        this.get('model.project').importRawData(data);
+        this.transitionToRoute('new-project.import.step2');
       });
-      this.set('importReport', this.get('model').importRawData(data));
-      this.get('store').persist(this.get('model').export());
-      this.transitionToRoute('spreadsheet', this.get('model').get('_uuid'));
+      
     }
     
   }

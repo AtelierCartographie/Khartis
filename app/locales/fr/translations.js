@@ -1,4 +1,31 @@
 export default {
+  
+  "general": {
+    "Next": "Suivant",
+    "Back": "Retour",
+    "Submit": "Envoyer",
+    "Cancel": "Annuler",
+    "Import": "Importer",
+    "or": "ou"
+  },
+  
+  "import": {
+    "editor.paste.csv": "Collez ici le csv à importer",
+    "editor.upload.file": "téléversez un fichier",
+    "success": "L'importation a été réalisée avec succés. Les données sont prêtes à être intégrées.",
+    "hasWarning": "L'importation a révélé des anomalies non bloquantes",
+    "warning": {
+      "trim": "Certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
+    },
+    "hasError": "L'importation a révélé des anomalies bloquantes",
+    "error": {
+      "header.emptyCell": "L'entête semble incorrecte : certaines cellules sont vides.",
+      "colNumber": "Csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
+    },
+    "rowCount": "{{count}} lignes importées",
+    "colCount": "{{count}} colonnes importées"
+    
+  },
   "spreadsheet": {
     "sidebar.title": "Edition des données",
     "sidebar.p1": "Cette interface vous permet d'éditer les données qui serviront de base à votre création graphique."

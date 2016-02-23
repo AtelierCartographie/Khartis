@@ -52,25 +52,28 @@ let ColumnStruct = Struct.extend({
     meta: null,
     
     init() {
-        this._super();
-        this.set('cells', Ember.A());
-        this.set('meta', {
-           type: "text",
-           probability: 1,
-           precision: 6,
-           manual: false
-        });
-        this.set('layout', {
-            sheet: {
-                width: null
-            }
-        });
+      this._super();
+      this.set('cells', Ember.A());
+      this.set('meta', {
+          type: "text",
+          probability: 1,
+          precision: 6,
+          manual: false
+      });
+      this.set('layout', {
+          sheet: {
+              width: null
+          }
+      });
     },
     
     visit(cell) {
-        if (!this.get('cells').some( c => c == cell )) {
-            this.get('cells').addObject(cell);
-        }
+      if (!this.get('cells').some( c => c == cell )) {
+          this.get('cells').addObject(cell);
+          cell.addObserver('value', () => {
+            this.autoDetectDataType();
+          });
+      }
     },
     
     autoDetectDataType: function() {
@@ -97,7 +100,7 @@ let ColumnStruct = Struct.extend({
         this.set('meta.type', type);
         this.set('meta.probability', p[type]);
         
-    }.observes('cells.@each.value'),
+    },
     
     export() {
         return this._super({
@@ -136,7 +139,7 @@ let CellStruct = Struct.extend({
     value: null,
     
     index() {
-        return this.get('row.cells').indexOf(this);
+      return this.get('row.cells').indexOf(this);
     },
     
     isFirstOfRow() {
@@ -214,41 +217,41 @@ let DataStruct = Struct.extend({
     },
     
     getCellAt(row, col) {
-        return this.get('rows').objectAt(row).get('cells').objectAt(col);
+      return this.get('rows').objectAt(row).get('cells').objectAt(col);
     },
     
     addRow() {
-        let selectedCell = this.selectedCell(),
-            shift = selectedCell && !selectedCell.get('row.header') ? 0:1,
-            row = selectedCell ? selectedCell.get('row') : this.get('rows')[this.get('rows.length') - 1],
-            index = this.get('rows').indexOf(row);
-            
-        this.get('rows').insertAt(index + shift, RowStruct.createWithModel(row));
+      let selectedCell = this.selectedCell(),
+          shift = selectedCell && !selectedCell.get('row.header') ? 0:1,
+          row = selectedCell ? selectedCell.get('row') : this.get('rows')[this.get('rows.length') - 1],
+          index = this.get('rows').indexOf(row);
+          
+      this.get('rows').insertAt(index + shift, RowStruct.createWithModel(row));
     },
     
     //TODO : non testé
     removeRow(row) {
-        this.get('rows').removeObject(row);
+      this.get('rows').removeObject(row);
     },
     
     addColumn() {
-        let selectedCell = this.selectedCell(),
-            shift = selectedCell ? 0:1,
-            index = selectedCell ? this.get('columns').indexOf(selectedCell.get('column')) : this.get('columns.length') - 1,
-            column = ColumnStruct.create();
-        
-        this.beginPropertyChanges();
-        this.get('columns').insertAt(index + shift, column);
-        this.get('rows').forEach( r => {
-            r.get('cells').insertAt(
-                index + shift,
-                CellStruct.create({
-                    column: column,
-                    row: r
-                })
-            );
-        });
-        this.endPropertyChanges();
+      let selectedCell = this.selectedCell(),
+          shift = selectedCell ? 0:1,
+          index = selectedCell ? this.get('columns').indexOf(selectedCell.get('column')) : this.get('columns.length') - 1,
+          column = ColumnStruct.create();
+      
+      this.beginPropertyChanges();
+      this.get('columns').insertAt(index + shift, column);
+      this.get('rows').forEach( r => {
+          r.get('cells').insertAt(
+              index + shift,
+              CellStruct.create({
+                  column: column,
+                  row: r
+              })
+          );
+      });
+      this.endPropertyChanges();
     },
     
     //TODO : non testé
@@ -260,26 +263,43 @@ let DataStruct = Struct.extend({
     },
     
     analyse() {
-      let err = [];
-      this.analyseHeader(err);
-      this.analyseColumnCount(err);
+      let report = {
+        errors: [],
+        warnings: [] 
+      };
+      this.analyseHeader(report);
+      this.analyseColumnCount(report);
+      this.analyseTrim(report);
       
-      return err;
+      return report;
     },
     
-    analyseHeader(err) {
+    analyseHeader(report) {
       if (this.get('header.cells').some( c => Ember.isEmpty(c.get('value')) )) {
-        err.push("L'entête semble incorrecte : certaines cellules sont vides.");
+        report.errors.push("import.error.header.emptyCell");
       }
     },
     
-    analyseColumnCount(err) {
-      console.log(this.get('columns').map( c => c.get('cells').length ));
+    analyseColumnCount(report) {
       let min = Math.min.apply(null, this.get('columns').map( c => c.get('cells').length )),
           max = Math.max.apply(null, this.get('columns').map( c => c.get('cells').length ));
           
       if (min !== max) {
-        err.push(`Csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes : ${min} <> ${max}`);
+        report.errors.push("import.error.colNumber");
+      }
+    },
+    
+    analyseTrim(report) {
+      let trim = false;
+      this.get('rows').forEach( r => r.get('cells').forEach( c => {
+        
+        let length = c.get('value').length;
+        c.set('value', c.get('value').trim());
+        trim = trim || length != c.get('value').length;
+        
+      }) );
+      if (trim) {
+        report.warnings.push("import.warning.trim");
       }
     },
     

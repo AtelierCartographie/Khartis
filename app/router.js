@@ -12,6 +12,7 @@ Router.map(function() {
     this.route("new-project", {path:"new-project"}, function(){
       this.route("import", function() {
         this.route("step1");
+        this.route("step2");
       });
       this.route("test-data");
     });

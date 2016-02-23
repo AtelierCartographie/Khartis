@@ -2,10 +2,10 @@
     <div class="padded">Ici un paragraphe sur le formattage des fichiers csv</div>
     <div class="vertical padded flow">
         <div class="label">
-          Collez ici le csv ou
-          {{file-loader label="importez un fichier" class="button text-primary import-button" onContentLoaded="loadCsv"}}
+          {{t "import.editor.paste.csv"}} {{t "general.or"}}
+          {{file-loader label=(t "import.editor.upload.file") class="button text-primary import-button" onContentLoaded="loadCsv"}}
         </div>
-        {{ivy-codemirror value=csv lineNumbers=true}}
+        {{ivy-codemirror value=model.csv lineNumbers=true}}
     </div>
     {{#if importReport.length}}
     <ul>
@@ -15,6 +15,6 @@
     </ul>
     {{/if}}
     <div class="horizontal padded right flow">
-      {{x-button label="Suivant" class="filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+      {{x-button label=(t "general.Next") class="filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
     </div>
 </div>
