@@ -1,25 +1,25 @@
 <aside class="solid airy vertical flow padded">
     <div class="small panel">
         <header class="filled primary">
-            <div class="title">Taille en pixels</div>
-            <div class="actions"><b>-</b></div>
+            <div class="title">Mise en page</div>
+            <div class="actions"></div>
         </header>
         <div class="vertical airy flow padded-v filled">
             <div class="horizontal airy middle flow">
                 <div class="horizontal middle flow">
-                    <label class="horizontal right flow w3 padded-r text-right">X</label>
-                    <input/>
+                    <label class="horizontal right flow w3 padded-r text-right">W</label>
+                    {{input value=model.graphLayout.width}}
                     <small class="padded">px</small>
                 </div>
                 <div class="horizontal middle flow">
-                    <label class="horizontal right flow w3 padded-r text-right">Y</label>
-                    <input/>
+                    <label class="horizontal right flow w3 padded-r text-right">H</label>
+                    {{input value=model.graphLayout.height}}
                     <small class="padded">px</small>
                 </div>
             </div>
         </div>
     </div>
-    <div class="small panel">
+    <!--<div class="small panel">
         <header class="filled primary">
             <div class="title">Contenu</div>
             <div class="actions"><b>-</b></div>
@@ -40,5 +40,5 @@
                 <span><input type="checkbox"/><i class="-h"></i></span>
             </div>
         </div>
-    </div>
+    </div>-->
 </aside>

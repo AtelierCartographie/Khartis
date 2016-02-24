@@ -83,5 +83,8 @@
       "ProductName": null,
       "InternalName": null
     }
+  },
+  "dependencies": {
+    "topojson": "^1.6.24"
   }
 }

@@ -33,7 +33,6 @@ export default Ember.Route.extend({
 
   model(params) {
     let p = this.get('store').select(params.uuid);
-    console.log(p);
     if (p) {
       return Project.restore(p);
     } else {
@@ -55,7 +54,10 @@ export default Ember.Route.extend({
   actions: {
 
     navigateTo(url) {
-      this.transitionTo("/" + url);
+      switch(url) {
+        default:
+          return true;
+      }
     }
 
   }

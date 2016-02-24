@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import Struct from './struct';
 import {DataStruct} from './data';
+import GraphLayout from './graph-layout';
 
 let Project = Struct.extend({
   
     data: null,
+    graphLayout: GraphLayout.create(),
     
     report: null,
     

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import CSV from 'npm:csv-string';
 
 export default Ember.Controller.extend({
   
