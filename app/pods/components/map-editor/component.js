@@ -165,7 +165,9 @@ export default Ember.Component.extend({
 			h,
 			this.get('graphLayout.width'),
 			this.get('graphLayout.height'),
-			this.get('graphLayout.margin')
+			this.get('graphLayout.margin'),
+			this.get('graphLayout.projection')
+      
 		);
 
 		path.projection(projection);
@@ -206,17 +208,16 @@ export default Ember.Component.extend({
 			.attr("y", this.get('graphLayout.margin.v'))
 			.attr("width", this.get('graphLayout.width') - 2*this.get('graphLayout.margin.h'))
 			.attr("height", this.get('graphLayout.height') - 2*this.get('graphLayout.margin.v'))
-		  	.attr("stroke-width", "1")
-		  	.attr("stroke-linecap", "round")
-		  	.attr("stroke-dasharray", "1, 3");
+      .attr("stroke-width", "1")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-dasharray", "1, 3");
 		
 		var pathSelection = this.d3l().selectAll("g.geo g.virgin, g.geo g.mapped")
 			.selectAll("path.feature")
 			.attr("d", path)
-        	.data(base.features);
-			
-			
-       	 pathSelection.enter().append("path")
+      .data(base.features);
+      
+    pathSelection.enter().append("path")
 			.classed("feature", true)
 			.attr("d", path)
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
@@ -262,6 +263,9 @@ export default Ember.Component.extend({
 	
 	mapData: function() {
 		
+    //TODO : implement
+    return;
+    
 		var self = this;
 		
 		var scale = this.get('graphLayout.scale');

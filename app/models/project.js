@@ -17,7 +17,8 @@ let Project = Struct.extend({
     
     export() {
         return this._super({
-            data: this.get('data') ? this.get('data').export() : null
+            data: this.get('data') ? this.get('data').export() : null,
+            graphLayout: this.get('graphLayout').export()
         });
     }
     
@@ -34,7 +35,8 @@ Project.reopenClass({
     restore(json, refs = {}) {
         let o = this._super(json, refs);
         o.setProperties({
-            data: DataStruct.restore(json.data, refs)
+            data: DataStruct.restore(json.data, refs),
+            graphLayout: GraphLayout.restore(json.graphLayout, refs)
         });
         return o;
     }

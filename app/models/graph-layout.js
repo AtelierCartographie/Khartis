@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import d3 from 'd3';
 import d3lper from 'mapp/utils/d3lper';
+import Struct from './struct';
 
-var GraphLayout = Ember.Object.extend({
+var GraphLayout = Struct.extend({
 	
   basemap: "110m-world.json",
   
@@ -84,8 +85,8 @@ var GraphLayout = Ember.Object.extend({
 	height: 600,
 	margin: {v: 10, h: 10},
   
-  projection: d3.geo.mercator,
-	
+  projection: "naturalEarth",
+  
 	hOffset: function(screenWidth) {
 		
 		return (screenWidth - this.get('width')) / 2;
@@ -98,25 +99,32 @@ var GraphLayout = Ember.Object.extend({
 		
 	},
 	
-	scale: d3.scale.linear()
+	scale: d3.scale.linear(),
+  
+  export() {
+      return this._super({
+          basemap: this.get('basemap'),
+          projection: this.get('projection'),
+          width: this.get('width'),
+          height: this.get('height')
+      });
+  }
   
 });
 
 GraphLayout.reopenClass({
-	
-	createFromDefaults: function(defaults) {
-		
-		defaults = Ember.Object.create(defaults);
-		
-		return GraphLayout.create({
-			
-			width: defaults.get('layout.width'),
-			height: defaults.get('layout.height')
-			
-		});
-		
-	}
-	
+  
+    restore(json, refs = {}) {
+        let o = this._super(json, refs);
+        o.setProperties({
+            basemap: json.basemap,
+            projection: json.projection,
+            width: json.width,
+            height: json.height
+        });
+        return o;
+    }
+    
 });
 
 

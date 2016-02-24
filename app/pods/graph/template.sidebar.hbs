@@ -8,13 +8,30 @@
             <div class="horizontal airy middle flow">
                 <div class="horizontal middle flow">
                     <label class="horizontal right flow w3 padded-r text-right">W</label>
-                    {{input value=model.graphLayout.width}}
+                    {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
                     <small class="padded">px</small>
                 </div>
                 <div class="horizontal middle flow">
                     <label class="horizontal right flow w3 padded-r text-right">H</label>
-                    {{input value=model.graphLayout.height}}
+                    {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
                     <small class="padded">px</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="small panel">
+        <header class="filled primary">
+            <div class="title">Projection</div>
+            <div class="actions"></div>
+        </header>
+        <div class="vertical airy flow padded-v filled">
+            <div class="horizontal airy middle flow">
+                <div class="horizontal middle flow">
+                    {{#x-select value=model.graphLayout.projection action="projectionChange"}}
+                      {{#each-in availableProjections as |id desc|}}
+                      {{#x-option value=id}}{{desc.name}}{{/x-option}}
+                      {{/each-in}}
+                    {{/x-select}}
                 </div>
             </div>
         </div>

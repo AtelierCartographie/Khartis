@@ -13,7 +13,8 @@
     "normalize.css": "3.0.3",
     "codemirror": "~4.8.0",
     "ember-cli-codemirror-shim": "~0.0.1",
-    "d3": "~3.5.12"
+    "d3": "~3.5.12",
+    "d3-geo-projection": "~0.2.16"
   },
   "resolutions": {
     "ember": "2.2.0"
