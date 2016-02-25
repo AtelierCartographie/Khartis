@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import d3 from 'd3';
 import projector from 'mapp/utils/projector';
+import config from 'mapp/config/environment';
 import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
@@ -23,7 +24,7 @@ export default Ember.Controller.extend({
     return new Promise((res, rej) => {
       
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', `/data/map/${basemap}`, true);
+      xhr.open('GET', `${config.baseURL}data/map/${basemap}`, true);
 
       xhr.onload = (e) => {
         

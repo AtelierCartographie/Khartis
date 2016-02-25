@@ -2,13 +2,14 @@ import Ember from 'ember';
 import ab2string from 'mapp/utils/ab2string';
 import Project from 'mapp/models/project';
 import {DataStruct} from 'mapp/models/data';
+import config from 'mapp/config/environment';
 import CSV from 'npm:csv-string';
 
 export default Ember.Controller.extend({
   
   loadFile(source) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `/data/${source}`, true);
+    xhr.open('GET', `${config.baseURL}data/${source}`, true);
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = (e) => {
