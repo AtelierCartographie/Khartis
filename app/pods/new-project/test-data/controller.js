@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
         let project = Project.create({
           data: DataStruct.createFromRawData(data)
         });
-        this.get('store').persist(project.export());
+        this.get('store').persist(project);
         this.transitionToRoute('spreadsheet', project.get('_uuid'));
         
       }

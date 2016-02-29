@@ -113,11 +113,30 @@ $spreadsheet-numbering-width: 40px !default;
         align-items: center;
         justify-content: center;
 
-        width: 18px;
-        height: 18px;
+        width: 1.8rem;
+        height: 1.8rem;
 
         border-radius: .2em;
         margin: 2px;
+        
+        &.round {
+          border-radius: 50%;
+        }
+        
+        &.geo {
+          font-size: 1.9rem;
+        }
+        
+        &.geo::before {
+          content: " ";
+          background-color: white;
+          left: 0.1em;
+          width: 0.8em;
+          height: 0.8em;
+          position: absolute;
+          z-index: -1;
+          border-radius: 50%;
+        }
 
       }
     }

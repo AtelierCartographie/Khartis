@@ -1,7 +1,7 @@
-<div class="icon-type filled {{if isValid 'success' 'danger'}}">
-   {{#if (x-eq meta.type 'text')}}
-   T
-   {{else if (x-eq meta.type 'numeric')}}
-   N
-   {{/if}}
-</div>
+{{#if (x-eq meta.type 'text')}}
+<div class="icon-type filled {{if isValid 'success' 'danger'}}">T</div>
+{{else if (x-eq meta.type 'numeric')}}
+<div class="icon-type filled {{if isValid 'success' 'danger'}}">N</div>
+{{else if (x-eq meta.type 'iso3')}}
+<div class="icon-type round geo {{if isValid 'text-success' 'text-danger'}}"><i class="iconfont iconfont-globe"></i></div>
+{{/if}}
