@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Project from 'mapp/models/project';
 /* global Em */
 
 const NS = "mapp-project",
@@ -13,15 +14,16 @@ var Store = Ember.Service.extend({
     transient: false,
     
     projects: null,
+    mounted: {},
     
     versioning: null,
     
     init() {
       this._super();
-      this.restore();
+      this._restore();
     },
     
-    restore() {
+    _restore() {
       if (!this.get('transient') && window.localStorage.getItem(NS)) {
         this.set('projects', JSON.parse(window.localStorage.getItem(NS)));
       } else {
@@ -29,7 +31,7 @@ var Store = Ember.Service.extend({
       }
     },
     
-    save() {
+    _save() {
       this.get('projects').splice(0, this.get('projects').length - MAX);
       if (!this.get('transient')) {
         window.localStorage.setItem(NS, JSON.stringify(this.get('projects')));
@@ -46,10 +48,11 @@ var Store = Ember.Service.extend({
     },
     
     select(uuid) {
-      let project = this.get('projects').find( p => p._uuid === uuid);
+      let project = this.get('mounted')[uuid] ? 
+        this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
       if (project) {
-        this.follow(project);
-        return project;
+        this.startVersioning(project);
+        return this.get('mounted')[uuid] = project instanceof Project ? project : Project.restore(project);
       } else {
         return false;
       }
@@ -57,8 +60,9 @@ var Store = Ember.Service.extend({
     
     persist(project) {
       if (!this.get('projects').some( p => p._uuid === project._uuid )) {
-        this.get('projects').addObject( project );
-        this.save();
+        this.get('projects').addObject( project.export() );
+        this._save();
+        this.get('mounted')[project._uuid] = project;
         return project;
       } else {
         throw new Error("Can't persist : a project with same UUID is already persisted");
@@ -71,9 +75,11 @@ var Store = Ember.Service.extend({
         .find( p => p._uuid === project._uuid );
         
       if (old) {
-        this.get('projects').splice(this.get('projects').indexOf(old), 1, project);
+        this.get('projects').splice(this.get('projects').indexOf(old), 1,
+           project instanceof Project ? project.export() : project);
         this.get('projects').enumerableContentDidChange();
-        this.save();
+        this.get('mounted')[project._uuid] = project;
+        this._save();
         return project;
       } else {
         return this.persist(project);
@@ -84,14 +90,14 @@ var Store = Ember.Service.extend({
     remove(project) {
       if (this.get('projects').some( p => p._uuid === project._uuid )) {
         this.set('projects', this.get('projects').filter( p => p._uuid !== project._uuid ));
-        this.save();
+        this._save();
         return true;
       } else {
         throw new Error("Can't remove : project not found");
       }
     },
     
-    follow(project) {
+    startVersioning(project) {
       let self = this,
           versioning = Version.begin(project),
           changeFn = function() {
@@ -164,8 +170,8 @@ var Version = Ember.Object.extend(Ember.Evented, {
     }.property('needle', 'stack.[]'),
   
     freeze(project) {
+      project = project instanceof Project ? project.export() : project;
       if (JSON.stringify(project) !== JSON.stringify(this.current())) {
-        console.log("diff");
         this.set('stack', this.get('stack').slice(0, this.get('needle') + 1));
         this.get('stack').addObject(project);
         this.trigger(FREEZE_EVT);

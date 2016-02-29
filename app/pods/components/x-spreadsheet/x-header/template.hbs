@@ -1,5 +1,7 @@
 <span class="label">{{cell.value}}</span>
+{{#if cell.state.sheet.edited}}
 {{input value=cell.value enter="onInputEnter" focus-out="onInputBlur" key-up="onKeyUp"}}
+{{/if}}
 <div class="meta-icons">
     {{x-spreadsheet.data-type-icon meta=cell.column.meta}}
     <div class=""></div>

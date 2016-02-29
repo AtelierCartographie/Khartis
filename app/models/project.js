@@ -16,10 +16,10 @@ let Project = Struct.extend({
     },
     
     export() {
-        return this._super({
-            data: this.get('data') ? this.get('data').export() : null,
-            graphLayout: this.get('graphLayout').export()
-        });
+      return this._super({
+          data: this.get('data') ? this.get('data').export() : null,
+          graphLayout: this.get('graphLayout').export()
+      });
     }
     
 });

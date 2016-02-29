@@ -23,7 +23,7 @@ let blankData = [
 
 export default Ember.Route.extend({
 
-  store: Ember.inject.service(),
+  growl: Ember.inject.service(),
 
   renderTemplate: function () {
     //this.render("spreadsheet.sidebar", {outlet: "sidebar"});
@@ -31,17 +31,22 @@ export default Ember.Route.extend({
     this.render({outlet: "main"});
   },
 
+  beforeModel() {
+    //loading true
+  },
+
   model(params) {
     let p = this.get('store').select(params.uuid);
     if (p) {
-      return Project.restore(p);
+      return p;
     } else {
       this.transitionTo('/');
     }
   },
   
   afterMode(model) {
-    model.follow(model)
+    //loading false
+    this.get('store').versions()
       .on("undo", () => this.refresh())
       .on("redo", () => this.refresh());
   },

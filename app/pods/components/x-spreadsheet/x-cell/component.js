@@ -11,110 +11,113 @@ export default Ember.Component.extend({
     backupValue: null,
     
     didInsertElement() {
-        this.layout();
-        this.$().attr("tabindex", 1);
-        
-        this.$().on("keydown", (e) => {
-            
-            if (e.keyCode === 9) { //tab
-                this.cycleSelection(e.shiftKey ? -1:1);
-                e.preventDefault();
-            }
-            
-            if (!this.get('cell.state.sheet.edited')) {
-                switch (e.keyCode) {
-                    case 8:
-                        e.preventDefault();
-                        break;
-                    case 37:
-                        this.moveSelection(0,-1);
-                        e.preventDefault();
-                        break;
-                    case 38:
-                        this.moveSelection(-1,0);
-                        e.preventDefault();
-                        break;
-                    case 39:
-                        this.moveSelection(0,1);
-                        e.preventDefault();
-                        break;
-                    case 40:
-                        this.moveSelection(1,0);
-                        e.preventDefault();
-                        break;
-                }
-            }
-            
-        });
-        
-        this.$().on("keyup", (e) => {
-            
-            if (e.keyCode === 13) { //enter
-                this.startEdition();
-            } else if (e.keyCode === 27) { //esc
-                if (!this.get('cell.state.sheet.edited')) {
-                    this.endSelection();
-                }
-            }
-            
-            if (!this.get('cell.state.sheet.edited')) {
-                
-                if (e.keyCode === 8) { //backspace
-                    this.startEdition();
-                    this.set('cell.value', "");
-                    e.preventDefault();
-                }
-                
-                e.stopImmediatePropagation();
-            }
-        });
+      
+      this.$().attr("tabindex", 1);
+      
+      this.$().on("keydown", (e) => {
+          
+          if (e.keyCode === 9) { //tab
+              this.cycleSelection(e.shiftKey ? -1:1);
+              e.preventDefault();
+          }
+          
+          if (!this.get('cell.state.sheet.edited')) {
+              switch (e.keyCode) {
+                  case 8:
+                      e.preventDefault();
+                      break;
+                  case 37:
+                      this.moveSelection(0,-1);
+                      e.preventDefault();
+                      break;
+                  case 38:
+                      this.moveSelection(-1,0);
+                      e.preventDefault();
+                      break;
+                  case 39:
+                      this.moveSelection(0,1);
+                      e.preventDefault();
+                      break;
+                  case 40:
+                      this.moveSelection(1,0);
+                      e.preventDefault();
+                      break;
+              }
+          }
+          
+      });
+      
+      this.$().on("keyup", (e) => {
+          
+          if (e.keyCode === 13) { //enter
+              this.startEdition();
+          } else if (e.keyCode === 27) { //esc
+              if (!this.get('cell.state.sheet.edited')) {
+                  this.endSelection();
+              }
+          }
+          
+          if (!this.get('cell.state.sheet.edited')) {
+              
+              if (e.keyCode === 8) { //backspace
+                  this.startEdition();
+                  this.set('cell.value', "");
+                  e.preventDefault();
+              }
+              
+              e.stopImmediatePropagation();
+          }
+      });
         
     },
     
     toggleEditedState: function() {
-        this.$().toggleClass('edited', this.get('cell.state.sheet.edited'));
-        
-        if (this.get('cell.state.sheet.edited')) {
-            this.set('backupValue', this.get('cell.value'));
+      this.$().toggleClass('edited', this.get('cell.state.sheet.edited'));
+      
+      if (this.get('cell.state.sheet.edited')) {
+          this.set('backupValue', this.get('cell.value'));
+          Ember.run.later(this, () => {
             this.$('input').focus().select();
-        }
+          }, 100);
+      }
     }.observes('cell.state.sheet.edited'),
     
     toggleSelectedState: function() {
-        if (!this.$().hasClass('selected') && this.get('cell.state.sheet.selected')) {
-            this.$().focus();
-        } else if (this.$().hasClass('selected') && !this.get('cell.state.sheet.selected')) {
-            this.$().blur();
-        }
-        this.$().toggleClass('selected', this.get('cell.state.sheet.selected'));
+      if (!this.$().hasClass('selected') && this.get('cell.state.sheet.selected')) {
+          this.$().focus();
+      } else if (this.$().hasClass('selected') && !this.get('cell.state.sheet.selected')) {
+          this.$().blur();
+      }
+      this.$().toggleClass('selected', this.get('cell.state.sheet.selected'));
     }.observes('cell.state.sheet.selected'),
     
     toggleResizingState: function() {
-        this.$().toggleClass('resizing', this.get('cell.state.sheet.resizing'));
+      this.$().toggleClass('resizing', this.get('cell.state.sheet.resizing'));
     }.observes('cell.state.sheet.resizing'),
     
     click(e) {
-        this.startSelection();
-        e.stopImmediatePropagation();
+      this.startSelection();
+      e.stopImmediatePropagation();
     },
     
     doubleClick(e) {
-        if (this.get('cell.state.sheet.edited')) {
-          this.commitEdition();
-        } else {
-          this.startEdition();
-        }
-        e.stopImmediatePropagation();
+      if (this.get('cell.state.sheet.edited')) {
+        this.commitEdition();
+      } else {
+        this.startEdition();
+      }
+      e.stopImmediatePropagation();
     },
     
     layout: function() {
-        if (this.get('cell.column.layout.sheet.width')) {
-            this.$().outerWidth(this.get('cell.column.layout.sheet.width'));
-        }
-        if (this.get('cell.column.layout.sheet.height')) {
-            this.$().outerHeight(this.get('cell.row.layout.sheet.height'));
-        }
-    }.observes('cell.column.layout.sheet.width', 'cell.row.layout.sheet.height'),
+      if (this.get('cell.column.layout.sheet.width')) {
+          this.$().outerWidth(this.get('cell.column.layout.sheet.width'));
+      }
+      if (this.get('cell.column.layout.sheet.height')) {
+          this.$().outerHeight(this.get('cell.row.layout.sheet.height'));
+      }
+    }.observes('cell.column.layout.sheet.width',
+      'cell.row.layout.sheet.height').on("didInsertElement"),
     
     startSelection() {
         this.sendAction('select-start', this.get('cell'), this);

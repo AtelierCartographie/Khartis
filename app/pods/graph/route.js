@@ -13,7 +13,7 @@ export default Ember.Route.extend({
       let p = this.get('store').select(params.uuid);
       
       if (p) {
-        return Project.restore(p);
+        return p;
       } else {
         this.transitionTo('/');
       }

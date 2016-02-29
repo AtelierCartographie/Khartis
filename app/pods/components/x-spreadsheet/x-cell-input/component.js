@@ -9,15 +9,15 @@ export default Ember.TextField.extend({
     
     dataType: DATA_TYPE.TEXT,
     
-    precision: 6,
+    precision: 6
     
-    isNumeric: function() {
+/*    isNumeric: function() {
         return this.get('dataType') === DATA_TYPE.NUMERIC;
     }.property('dataType'),
     
     isInteger: function() {
         return this.get('isNumeric') && this.get('precision') === 0;
-    }.property('isNumeric', 'precision')
+    }.property('isNumeric', 'precision')*/
 
     /*sanitize: function() {
         

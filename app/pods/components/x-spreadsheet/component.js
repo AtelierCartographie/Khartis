@@ -84,6 +84,7 @@ export default Ember.Component.extend({
 
   drawBackground: function () {
     
+    //désactivé
     return;
 
     if (this.$()) {

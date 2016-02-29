@@ -3,6 +3,7 @@ import Resolver from 'magic-resolver';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 import d3 from 'd3';
+/* global Em */
 
 let App;
 
@@ -23,21 +24,16 @@ Ember.Component.reopen({
 });
 
 Ember.debouncedObserver = function() {
-  var args = Array.prototype.slice.call(arguments),
-      fn = args[0],
+  let args = Array.prototype.slice.call(arguments),
+      fn = args.reverse()[1],
       time = args.reverse()[0],
-      keys = args.slice(1, args.length-1);
+      keys = args.slice(0, args.length-2);
 
-  var debouncer = function() {
+  let debouncer = function() {
     Em.run.debounce(this, fn, time);
   };
-  var newArgs = [debouncer];
-
-  keys.forEach(function(item){
-    newArgs.push(item);
-  });
   
-  return Em.observer.apply(this, newArgs);
+  return Em.observer.apply(this, keys.concat([debouncer]));
 };
 
 export default App;

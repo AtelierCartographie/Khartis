@@ -56,9 +56,9 @@ export default Ember.Component.extend({
 		
 		d3g.append("rect")
 			.classed("bg", true)
-	   		.attr("width", "100%")
-	    	.attr("height", "100%")
-	    	.attr("fill", this.get("graphLayout.backgroundColor"));
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("fill", this.get("graphLayout.backgroundColor"));
 			
 		var geo = d3g.append("g")
 			.classed("geo", true);

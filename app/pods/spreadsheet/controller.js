@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
             this.get('store').versions().redo();
             break;
           case "freeze": 
-            this.get('store').versions().freeze(this.get('model').export());
+            this.get('store').versions().freeze(this.get('model'));
             break;
         }
         

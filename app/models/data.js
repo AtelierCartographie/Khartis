@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Struct from './struct';
+import {iso2, iso3} from 'mapp/utils/world-dictionary';
 
 let RowStruct = Struct.extend({
     header: null,
@@ -55,52 +56,62 @@ let ColumnStruct = Struct.extend({
       this._super();
       this.set('cells', Ember.A());
       this.set('meta', {
-          type: "text",
-          probability: 1,
-          precision: 6,
-          manual: false
+        type: "text",
+        probability: 1,
+        precision: 6,
+        manual: false
       });
       this.set('layout', {
-          sheet: {
-              width: null
-          }
+        sheet: {
+          width: null
+        }
       });
     },
     
     visit(cell) {
       if (!this.get('cells').some( c => c == cell )) {
-          this.get('cells').addObject(cell);
-          cell.addObserver('value', () => {
-            this.autoDetectDataType();
-          });
+        this.get('cells').addObject(cell);
       }
     },
     
-    autoDetectDataType: function() {
+    autoDetectDataType: Ember.debouncedObserver('cells.@each.value', function() {
         
         var p = {
-            text: 0,
-            numeric: 0
+          text: 0,
+          numeric: 0,
+          iso2: 0,
+          iso3: 0,
+          dms: 0
         };
         
         this.get('cells')
             .filter( c => !c.get('row.header'))
             .forEach( (c, i, arr) => {
-                if (/^\d+(\.\d+)?$/.test(c.get('value'))) {
-                    p.numeric += 1/arr.length;
-                } else {
+              if (/^\d+(\.\d+)?$/.test(c.get('value'))) {
+                  p.numeric += 1/arr.length;
+              } else {
+                  if (c.get('value').length === 2 && iso2(c.get('value'))) {
+                    p.iso2 += 1/arr.length;
+                  } else if (c.get('value').length === 3 && iso3(c.get('value'))) {
+                    p.iso3 += 1/arr.length;
+                  } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/.test(c.get('value'))) {
+                    p.dms += 1/arr.length;
+                  } else {
                     p.text += 1/arr.length;
-                }
+                  }
+              }
             });
 
         let type = Object.keys(p).reduce( (r, key) => {
            return r == null || p[key] > p[r] ? key : r;
         }, null);
         
-        this.set('meta.type', type);
-        this.set('meta.probability', p[type]);
+        this.setProperties({
+          'meta.type': type,
+          'meta.probability': p[type]
+        });
         
-    },
+    }, 100),
     
     export() {
         return this._super({
@@ -194,26 +205,26 @@ let DataStruct = Struct.extend({
     columns: null,
     
     header: function() {
-        return this.get('rows').filter( r => r.get('header') ).objectAt(0);
+      return this.get('rows').filter( r => r.get('header') ).objectAt(0);
     }.property('rows.[]'),
     
     body: function() {
-        return this.get('rows').filter( r => !r.get('header') );
+      return this.get('rows').filter( r => !r.get('header') );
     }.property('rows.[]'),
     
     size: function() {
-        return this.get('rows').length * this.get('columns').length;
+      return this.get('rows').length * this.get('columns').length;
     },
     
     selectedCell() {
-        for (let row of this.get('rows')) {
-            for (let cell of row.get('cells')) {
-                if (cell.get('state.sheet.selected')) {
-                    return cell;
-                }
-            }       
-        }
-        return null;
+      for (let row of this.get('rows')) {
+        for (let cell of row.get('cells')) {
+          if (cell.get('state.sheet.selected')) {
+              return cell;
+          }
+        }       
+      }
+      return null;
     },
     
     getCellAt(row, col) {
@@ -304,10 +315,10 @@ let DataStruct = Struct.extend({
     },
     
     export() {
-        return this._super({
-            rows: this.get('rows').map( x => x.export() ),
-            columns: this.get('columns').map( x => x.export() )
-        });
+      return this._super({
+          rows: this.get('rows').map( x => x.export() ),
+          columns: this.get('columns').map( x => x.export() )
+      });
     }
     
 });
