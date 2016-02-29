@@ -212,8 +212,11 @@ var listener = (function listener() {
 
         each(t.targets, function (i, offset) {
           i.snapped.computation = compute(i.snapped.el)
+
           i.snapped.snapPoint = i.snapped.computation('origin')
             .minus(i.snapped.computation(i.snapped.baseOffset))
+            .minus(i.snapped.manualOffset)
+
           i.snapPoint = t.computation(offset)
           move(i.snapped, i.snapPoint)
         })
@@ -281,7 +284,8 @@ export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
   var snapped = create(el, () => ({
     el: el,
     computation: compute(el),
-    baseOffset: offset
+    baseOffset: offset,
+    manualOffset: vec(offsetLeft, offsetTop)
   }))
 
   snapped.dispose = dispose
