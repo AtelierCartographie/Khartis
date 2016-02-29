@@ -18,15 +18,28 @@ var positionsOppositesMap = {
   right: 'left'
 }
 
-function getOpposite(pos){
+function getOpposite(pos) {
   return positionsOppositesMap[pos]
+}
+
+function getOffset(pos, offset){
+  switch(pos){
+    case 'top':
+      return {top: offset, left:0 }
+    case 'right':
+      return {top:0, left:-offset}
+    case 'bottom':
+      return {top: -offset, left:0}
+    case 'left':
+      return {top:0, left:offset}
+  }
 }
 
 export default Ember.Component.extend({
 
-  tagName: "",
-  tooltip: null,
+  tagName: '',
   position: 'bottom',
+  offset:5,
   positionClassName: '',
 
   computePosition (){
@@ -47,15 +60,13 @@ export default Ember.Component.extend({
     const tooltip = this.$()
     const trigger = tooltip.next()
 
-    this.set('tooltip', tooltip)
+    this.triggerEl = trigger
+    this.tooltipEl = tooltip
+    this.positions =  this.computePosition()
+    this.computedOffset = getOffset(this.get('position'), this.get('offset'))
 
     const show = this.show.bind(this);
     const hide = this.hide.bind(this);
-
-    var positions = this.computePosition()
-
-    snap(tooltip[0], positions.tooltip)
-      .to(trigger[0],  positions.trigger)
 
     tooltip.appendTo($(document.body))
     trigger.hover(show, hide)
@@ -66,11 +77,14 @@ export default Ember.Component.extend({
   },
 
   show(){
-    this.get('tooltip').addClass('visible')
+    this.snap = snap(this.tooltipEl[0], this.positions.tooltip, this.computedOffset.left, this.computedOffset.top)
+      .to(this.triggerEl[0], this.positions.trigger)
+    this.tooltipEl.addClass('visible')
   },
 
   hide(){
-    this.get('tooltip').removeClass('visible')
+    this.tooltipEl.removeClass('visible')
+    this.snap.dispose()
   }
 
 });
