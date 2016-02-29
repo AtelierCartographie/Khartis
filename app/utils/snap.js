@@ -72,32 +72,6 @@ function filterObject(o, fn, ctx = null) {
   return n
 }
 
-
-function diff(a, b) {
-
-  const diffTypes = {update: 'update', add: 'add', remove: 'remove'}
-  const map = []
-
-  // Updates and additions
-  each(b, (v, k) => {
-    if (!(k in a)) {
-      map.push({type: diffTypes.add, prop: k, value: v})
-    } else if (v !== a[k]) {
-      map.push({type: diffTypes.update, prop: k, value: v, diff: a[k]})
-    }
-  })
-
-  // Deletion
-  each(a, (v, k) => {
-    if (!(k in b)) {
-      map.push({type: diffTypes.remove, prop: k, value: v})
-    }
-  })
-
-  return {map, hasDiff: () => map.length !== 0}
-}
-
-
 var vec = (function vector() {
   var vectProto = {
     plus: function (v) {
@@ -116,19 +90,6 @@ var vec = (function vector() {
   }
 })()
 
-/**
- * Apply styles to the element
- * @param el
- * @param styles
- */
-function style(el, styles) {
-  for (let prop in styles) {
-    if (Object.prototype.hasOwnProperty.call(styles, prop)) {
-      el.style[prop] = styles[prop]
-    }
-  }
-}
-
 
 /**
  * Parse a string offset of type 'top center' to the translated [0, 0.5]
@@ -142,9 +103,7 @@ function parseOffsets(offsets) {
   // A shortcut or only Y offset has bee given
   if (o.length === 1) {
     var o = o.shift()
-    o in shortcuts ?
-      o = shortcuts[o] :
-      o = [yOffsets[o], xOffsets['left']]
+    o = o in shortcuts ? shortcuts[o] :[yOffsets[o], xOffsets['left']]
   } else {
     o = [yOffsets[o[0]], xOffsets[o[1]]]
   }
@@ -160,14 +119,15 @@ function parseOffsets(offsets) {
  */
 function getBox(el) {
 
-  var {left, top, width, height}  = el.getBoundingClientRect()
+  var $el = $(el)
+  var offset = $el.offset()
 
-  var scroll = vec(
-    window.pageXOffset || window.scrollX,
-    window.pageYOffset || window.scrollY
-  )
-
-  return assign({width:el.offsetWidth, height}, vec(left, top).plus(scroll))
+  return {
+    width: $el.outerWidth(),
+    height: $el.outerHeight(),
+    left: offset.left,
+    top: offset.top
+  }
 }
 
 
@@ -291,7 +251,7 @@ function dispose(snapped, snapTarget) {
     // Removing from cache
     cache.remove(snapped)
 
-    // Unreferencing on snapTarget
+    // Dereferencing  snapTarget
     snapTarget.targets = filterObject(snapTarget.targets, (v, k) => {
       return v.snapped !== snapped
     })
@@ -311,31 +271,15 @@ function dispose(snapped, snapTarget) {
 
 
 function move(snapped, snapTarget) {
-
-  // Compute the styles
-  let styles = mapObject(
-    snapped.snapPoint.plus(snapTarget),
-    val => toPixels(val)
-  )
-
-  // Applies only if it the initial rendering
-  // or if it has diffs
-  if (diff(snapped.memo, styles).hasDiff()) {
-    snapped.memo = styles
-    style(snapped.el, styles)
-  }
+  $(snapped.el).offset(snapped.snapPoint.plus(snapTarget))
 }
-
-
 
 
 export default function snap(el, offset, offsetLeft = 0, offsetTop = 0) {
 
-
   // Create a snapped object if not cached. Get it otherwise
   var snapped = create(el, () => ({
     el: el,
-    memo: {},
     computation: compute(el),
     baseOffset: offset
   }))
