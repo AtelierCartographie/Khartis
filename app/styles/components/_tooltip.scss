@@ -1,40 +1,17 @@
 $tooltip-arrow-height: 10px;
-$tooltip-arrow-width: 10px;
-$tooltip-min-width: 12em;
+$tooltip-arrow-width: 7px;
 $tooltip-background: greys(80%);
-
-/**
-* Usage
-*   - Tooltip is generated on an element with a .tooltip class
-*   - Position can be specified with .top .left .bottom or .right class
-*   - Text of the tooltip is extracted from data-tooltip attribute
-*
-*   Note: The .tooltip element must have its position to relative
-*/
-
-@mixin rectangle() {
-  border-style: solid;
-  border-width:  0 $tooltip-arrow-width $tooltip-arrow-height $tooltip-arrow-width;
-  border-color:transparent;
-  border-bottom-color: $tooltip-background;;
-}
-
-// Tooltip container
-//.tooltip:hover::after,
-//.tooltip:hover::before {
-//  opacity: 1;
-//  pointer-events: auto;
-//}
-
 
 // Tooltip content
 .tooltip {
+
+  @include depth(tooltip);
 
   display: block;
   position: absolute;
   width:auto;
   white-space: nowrap;
-
+  pointer-events: none;
   //
   padding: .8em 1.2em;
   border-radius: 0.3em;
@@ -45,77 +22,76 @@ $tooltip-background: greys(80%);
   background-color: $tooltip-background;
   color: greys(10%);
   @include shadow(4);
+  //
+  opacity: 0;
+}
+
+.tooltip.visible {
+  opacity:1;
 }
 
 
 // Tooltip "arrow"
-.tooltip::before {
+.tooltip::after {
   content: '';
   position: absolute;
   //
   width: 0;
   height: 0;
-  // Rectangle
-  @include rectangle()
 }
 
+.tooltip.top::after {
 
-//.tooltip::after,
-//.tooltip::before {
-//  user-select: none;
-//  pointer-events: none;
-//  opacity: 0;
-//  transition: transform 100ms, opacity 100ms;
-//}
-//
-//// At Top
-//.tooltip.top::after {
-//  top: 0;
-//  left: 50%;
-//  transform: translateX(-50%) translateY(-110%);
-//}
-//
-//.tooltip.top::before {
-//  top: 0;
-//  left: 50%;
-//  transform: translateX(-50%) translateY(-100%) rotate(180deg);
-//}
-//
-//// At Right
-//.tooltip.right::after {
-//  right: -$tooltip-arrow-height;
-//  top: 50%;
-//  transform: translateX(100%) translateY(-50%);
-//}
-//
-//.tooltip.right::before {
-//  right: 0;
-//  top: 50%;
-//  transform: translateX(100%) translateY(-50%) rotate(-90deg);
-//}
-//
-//// At Bottom
-//.tooltip.bottom::after {
-//  bottom: 0 ;
-//  left: 50%;
-//  transform: translateX(-50%) translateY(110%);
-//}
-//
-//.tooltip.bottom::before {
-//  left:50%;
-//  bottom:0;
-//  transform: translateX(-50%) translateY(100%);
-//}
-//
-//// At Left
-//.tooltip.left::after {
-//  left: -$tooltip-arrow-height;
-//  top: 50%;
-//  transform: translateX(-100%) translateY(-50%);
-//}
-//
-//.tooltip.left::before {
-//  left: 0;
-//  top:50%;
-//  transform: translateX(-100%) translateY(-50%) rotate(90deg);
-//}
+  bottom: 0;
+  left: 50%;
+
+  // rectangle bottom
+  border-top:$tooltip-arrow-height solid $tooltip-background;
+  border-bottom:none;
+  border-right:$tooltip-arrow-width solid transparent;
+  border-left:$tooltip-arrow-width solid transparent;
+
+  transform: translateX(-50%) translateY(100%);
+}
+
+// tooltip at bottom/center
+.tooltip.bottom::after {
+
+  top: 0;
+  left: 50%;
+
+  border-top:none;
+  border-bottom:$tooltip-arrow-height solid $tooltip-background;
+  border-right:$tooltip-arrow-width solid transparent;
+  border-left:$tooltip-arrow-width solid transparent;
+
+  transform: translateX(-50%) translateY(-100%);
+}
+
+// tooltip at left
+.tooltip.left::after {
+  top: 50%;
+  right: 0;
+
+  // rectangle right
+  border-top:$tooltip-arrow-width solid transparent;
+  border-bottom:$tooltip-arrow-width solid transparent;
+  border-right:none;
+  border-left:$tooltip-arrow-height solid $tooltip-background;
+
+  transform: translateX(100%) translateY(-50%);
+}
+
+.tooltip.right::after {
+
+  top: 50%;
+  left: 0;
+
+  // rectangle right
+  border-top:$tooltip-arrow-width solid transparent;
+  border-bottom:$tooltip-arrow-width solid transparent;
+  border-left:none;
+  border-right:$tooltip-arrow-height solid $tooltip-background;
+
+  transform: translateX(-100%) translateY(-50%);
+}
