@@ -2,43 +2,75 @@ import Ember from 'ember';
 import snap from 'mapp/utils/snap';
 /* global $ */
 
+var positionsMap = {
+  top: 'top center',
+  right: 'middle right',
+  bottom: 'bottom center',
+  left: 'middle left'
+}
+
+var positionsOppositesMap = {
+  top: 'bottom',
+  middle: 'middle',
+  bottom: 'top',
+  left: 'right',
+  center: 'center',
+  right: 'left'
+}
+
+function getOpposite(pos){
+  return positionsOppositesMap[pos]
+}
+
 export default Ember.Component.extend({
 
-  tagName: "div",
-  classNames: ['tooltip', 'popable'],
-  classNameBindings: ['positionClasses'],
-  parent: null,
-  position: 'bottom center',
-  offset: 5,
-  snapped: null,
+  tagName: "",
+  tooltip: null,
+  position: 'bottom',
+  positionClassName: '',
 
-  positionClasses: function () {
-    return this.get('position')
-  }.property('position'),
+  computePosition (){
+
+    var position = positionsMap[this.get('position')]
+    var [v, h] = position.split(' ')
+
+    this.set('positionClassName', /middle/.test(v) ? h : v)
+
+    return {
+      tooltip: `${getOpposite(v)} ${getOpposite(h)}`,
+      trigger: position
+    }
+  },
 
   didInsertElement: function () {
 
-    const el = this.$()
-    const parent = this.parent = el.parent();
+    const tooltip = this.$()
+    const trigger = tooltip.next()
+
+    this.set('tooltip', tooltip)
 
     const show = this.show.bind(this);
     const hide = this.hide.bind(this);
 
-    var snapped = snap(el[0], 'middle left')
-      .to(parent[0], this.get('position'))
+    var positions = this.computePosition()
 
-    this.set('snapped', snapped)
+    snap(tooltip[0], positions.tooltip)
+      .to(trigger[0],  positions.trigger)
 
-    el.appendTo($(document.body))
-    parent.hover(show, hide)
+    tooltip.appendTo($(document.body))
+    trigger.hover(show, hide)
+  },
+
+  '$': function () {
+    return $("#" + this.elementId);
   },
 
   show(){
-    this.$().addClass('visible')
+    this.get('tooltip').addClass('visible')
   },
 
   hide(){
-    this.$().removeClass('visible')
+    this.get('tooltip').removeClass('visible')
   }
 
 });
