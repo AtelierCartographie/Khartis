@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Struct from './struct';
-import {iso2, iso3} from 'mapp/utils/world-dictionary';
+import {geoMatch} from 'mapp/utils/world-dictionary';
 
 let RowStruct = Struct.extend({
     header: null,
@@ -90,10 +90,9 @@ let ColumnStruct = Struct.extend({
               if (/^\d+(\.\d+)?$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
-                  if (c.get('value').length === 2 && iso2(c.get('value'))) {
-                    p.iso2 += 1/arr.length;
-                  } else if (c.get('value').length === 3 && iso3(c.get('value'))) {
-                    p.iso3 += 1/arr.length;
+                  let match = geoMatch(c.get('value'));
+                  if (match) {
+                    p[match.type] += 1/arr.length;
                   } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/.test(c.get('value'))) {
                     p.dms += 1/arr.length;
                   } else {

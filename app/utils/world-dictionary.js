@@ -1,11 +1,26 @@
-function iso2(code) {
-  return dic.find( c => c.iso_a2 === code );
-};
-function iso3(code) {
-  return dic.find( c => c.iso_a3 === code );
-};
+function geoMatch(code) {
+  for (let o of dic) {
+    if (o.iso_a2 === code) {
+      return {
+        type: "iso2",
+        value: o
+      };
+    } else if (o.iso_a3 === code) {
+      return {
+        type: "iso3",
+        value: o
+      };
+    } else if (o.name_ISO_EN === code || o.name_ISO_FR === code) {
+      return {
+        type: "isoName",
+        value: o
+      };
+    }
+  }
+  return false;
+}
 
-export {iso2, iso3};
+export {geoMatch};
 
 let dic = [
   {
