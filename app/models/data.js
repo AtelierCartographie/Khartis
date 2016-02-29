@@ -79,20 +79,19 @@ let ColumnStruct = Struct.extend({
         var p = {
           text: 0,
           numeric: 0,
-          iso2: 0,
-          iso3: 0,
+          geo: 0,
           dms: 0
         };
         
         this.get('cells')
             .filter( c => !c.get('row.header'))
             .forEach( (c, i, arr) => {
-              if (/^\d+(\.\d+)?$/.test(c.get('value'))) {
+              if (/^[\d\,\s]+(\.\d+)?$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
                   let match = geoMatch(c.get('value'));
                   if (match) {
-                    p[match.type] += 1/arr.length;
+                    p.geo += 1/arr.length;
                   } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/.test(c.get('value'))) {
                     p.dms += 1/arr.length;
                   } else {
@@ -158,6 +157,13 @@ let CellStruct = Struct.extend({
     
     isLastOfRow() {
       return this.index() === this.get('row.cells').length - 1;
+    },
+    
+    postProcessedValue() {
+      if (this.get('column.meta.type') === "numeric") {
+        return parseFloat(this.get('value').replace(/[\,\s]+/g, ""));
+      }
+      return this.get('value');
     },
     
     init() {

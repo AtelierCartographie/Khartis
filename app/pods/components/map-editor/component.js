@@ -2,6 +2,7 @@ import Ember from 'ember';
 import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import GraphLayout from 'mapp/models/graph-layout';
+import {geoMatch} from 'mapp/utils/world-dictionary';
 /* global Em */
 
 export default Ember.Component.extend({
@@ -61,13 +62,7 @@ export default Ember.Component.extend({
       .attr("fill", this.get("graphLayout.backgroundColor"));
 			
 		var geo = d3g.append("g")
-			.classed("geo", true);
-			
-		geo.append("g")
-			.classed("virgin", true);
-			
-		geo.append("g")
-			.classed("mapped", true);
+			.classed("layers", true);
 			
 		var og = d3g.append("g")
 			.classed("offset", true);
@@ -102,12 +97,6 @@ export default Ember.Component.extend({
 		d3g.select("rect.bg")
 			.attr("fill", this.get("graphLayout.backgroundColor"));
 		
-		d3g.selectAll("g.geo g.mapped")
-			.attr("filter", "url(#f-drop-shadow)");
-		
-		d3g.selectAll("g.geo path.feature")
-			.attr("stroke", this.get("graphLayout.stroke"));
-			
 		d3g.selectAll("g.offset line")
 			.attr("stroke", "#C0E2EF");
 			
@@ -177,28 +166,28 @@ export default Ember.Component.extend({
 			.attr("y1", this.get('graphLayout').vOffset(h))
 			.attr("x2", w)
 			.attr("y2", this.get('graphLayout').vOffset(h))
-		  	.attr("stroke-width", "1");
+		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.horizontal-bottom")
 			.attr("x1", 0)
 			.attr("y1", h - this.get('graphLayout').vOffset(h))
 			.attr("x2", w)
 			.attr("y2", h - this.get('graphLayout').vOffset(h))
-		  	.attr("stroke-width", "1");
+		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.vertical-left")
 			.attr("x1", w - this.get('graphLayout').hOffset(w))
 			.attr("y1", 0)
 			.attr("x2", w - this.get('graphLayout').hOffset(w))
 			.attr("y2", h)
-		  	.attr("stroke-width", "1");
+		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.vertical-right")
 			.attr("x1", this.get('graphLayout').hOffset(w))
 			.attr("y1", 0)
 			.attr("x2", this.get('graphLayout').hOffset(w))
 			.attr("y2", h)
-		  	.attr("stroke-width", "1");
+		  .attr("stroke-width", "1");
 			
 		this.d3l().select("g.margin")
 			.attr("transform", "translate("+this.get('graphLayout').hOffset(w)
@@ -212,25 +201,15 @@ export default Ember.Component.extend({
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
 		
-		var pathSelection = this.d3l().selectAll("g.geo g.virgin, g.geo g.mapped")
+		var pathSelection = this.d3l().select("defs")
 			.selectAll("path.feature")
 			.attr("d", path)
       .data(base.features);
       
     pathSelection.enter().append("path")
 			.classed("feature", true)
-			.attr("d", path)
-			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
-			.attr("stroke", this.get("graphLayout.stroke"))
-			.on("mouseover", function() {
-
-			})
-			.on("mouseout", function() {
-
-			})
-			.on("click", function(d) {
-
-			});
+      .attr("id", (d) => `f_${d.id}`)
+			.attr("d", path);
 
 		pathSelection.exit().remove();
 			
@@ -256,80 +235,65 @@ export default Ember.Component.extend({
         //
 		//textSelection.exit().remove();
 			
+    this.drawLayers();
 		this.mapData();
 			
 	}.observes('graphLayout.projection', 'graphLayout.autoCenter', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
+   
+  drawLayers: function() {
+    
+    //TODO : implement multi layer
+    this.d3l().select("g.layers")
+      .append("g")
+			.attr("stroke", this.get("graphLayout.stroke"))
+      .classed("layer", true);
+    
+  },
 	
 	mapData: function() {
 		
-    //TODO : implement
-    return;
-    
 		var self = this;
 		
 		var scale = this.get('graphLayout.scale');
+    
+    let geoCol = this.get('data.columns').find( col => col.get('meta.type') === "geo" ),
+        varCol = this.get('data.columns').filter( col => col.get('meta.type') === "numeric" )[0];
 		
-		scale.domain(d3.extent(this.get("data.rows"), (d) => d.values[0] ));
+		scale.domain(d3.extent(varCol.get('cells'), (c) => parseFloat(c.postProcessedValue()) ));
 		scale.range(["#29aadf", "#f9aa0f"]);
-		
-		var gVirgin = this.d3l().select("g.geo g.virgin");
-		var gMapped = this.d3l().select("g.geo g.mapped");
-		
-		this.d3l().selectAll("g.geo path.feature")
-			.each(function(d) {
-				
-				var mappedValue = null;
-				
-				self.get("data.rows").forEach(function(item) {
-			
-					if (item.key.data == d) {
-					
-						if (!(item.values[0] == null || isNaN(scale.domain()[0])))
-							mappedValue = item.values[0];
-					}
-				
-				});
-				
-				var n = $(this);
-				$((mappedValue ? gMapped:gVirgin).node()).append(n.detach());
-				
-				d3.select(this)
-					.style("fill", function(d) {
-					
-						if (mappedValue) {
-							
-							return scale(mappedValue);
-							
-						}
-					
-						return null;
-						
-					});
-				
-			});
-				
-				
-			//.attr("filter", function(d) {
-            //
-			//	var filter = "";
-            //
-			//	self.get("data.rows").forEach(function(item) {
-            //
-			//		if (item.key.data == d) {
-            //
-			//			if (!(item.values[0] == null || isNaN(scale.domain()[0])))
-			//				filter = "url(#f-drop-shadow)";
-			//		}
-            //
-			//	});
-            //
-			//	return filter;
-            //
-            //
-			//});
-			
-			
+    
+    let data = geoCol.get('cells').map( (cell, index) => {
+      
+      let match = geoMatch(cell.get('value')),
+          val;
+          
+      if (match) {
+        val = varCol.get('cells').objectAt(index).postProcessedValue();
+        return {
+          id: match.value.iso_a2,
+          color: scale(val)
+        };
+      }
+      
+      return false;
+      
+    }).filter( d => d !== false );
+    
+    var uses = this.d3l()
+      .selectAll("g.layers g.layer")
+      .selectAll("use.feature")
+      .style("fill", (d) => d.color )
+      .data(data);
+      
+    uses.enter().append("use")
+      .attr("xlink:xlink:href", (d) => `#f_${d.id}`)
+      .attr("fill", (d) => d.color )
+			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
+			.attr("stroke", this.get("graphLayout.stroke"))
+			.classed("feature", true);
+
+		uses.exit().remove();
 			
 	}.observes("data.rows.@each.values")
 

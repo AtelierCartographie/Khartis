@@ -10,7 +10,11 @@ function geoMatch(code) {
         type: "iso3",
         value: o
       };
-    } else if (o.name_ISO_EN === code || o.name_ISO_FR === code) {
+    } else if (o.name_ISO_EN === code
+      || o.name_ISO_FR === code
+      || o.name_UN_EN === code
+      || o.name_UN_FR === code
+      || o.name_UN_ES === code) {
       return {
         type: "isoName",
         value: o

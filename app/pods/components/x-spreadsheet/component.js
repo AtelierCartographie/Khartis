@@ -41,9 +41,11 @@ export default Ember.Component.extend({
     });
 
     $("body").on("click.spreadsheet", () => {
-      let cell = this.get('data').selectedCell();
-      if (cell) {
-        this.send('endSelectCell', cell);
+      if (this.get('data')) {
+        let cell = this.get('data').selectedCell();
+        if (cell) {
+          this.send('endSelectCell', cell);
+        }
       }
     });
     

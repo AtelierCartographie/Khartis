@@ -6,6 +6,8 @@ export default {
     "Submit": "Envoyer",
     "Cancel": "Annuler",
     "Import": "Importer",
+    "Continue": "Continuer",
+    "Validate": "Valider",
     "or": "ou"
   },
   
