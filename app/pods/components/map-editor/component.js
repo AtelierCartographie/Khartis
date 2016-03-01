@@ -8,9 +8,10 @@ import {geoMatch} from 'mapp/utils/world-dictionary';
 export default Ember.Component.extend({
   
   tagName: "svg",
-  attributeBindings: ['height', 'width', 'xmlns', 'version'],
+  attributeBindings: ['height', 'width', 'xmlns', 'xmlns:xlink', 'version'],
   width: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
+  'xmlns:xlink': "http://www.w3.org/1999/xlink",
   version: '1.1',
 	
 	base: null,
@@ -18,32 +19,9 @@ export default Ember.Component.extend({
 	data: null,
 	
 	graphLayout: null,
-  
-	filteredBase: function() {
-		
-		var self = this;
-		
-		var ret = Ember.Object.create(this.get("base"));
-		
-    if (this.get('data')) {
-      
-      ret.set('features', this.get("base.features").filter(function(item, i) {
-        
-        return self.get("data.rows").objectAt(i).values[0] != null;
-        
-      }));
-      
-    }
-		
-		return ret;
-			
-		
-	}.property("base", "data"),
 
 	draw: function() {
     
-    console.log(this.get('graphLayout'));
-		
 		var d3g = this.d3l();
 		
 		// ========
@@ -83,7 +61,7 @@ export default Ember.Component.extend({
 		this.updateVirginPattern();
 
           
-	}.observes("base").on("didInsertElement"),
+	}.on("didInsertElement"),
 	
 	updateColors: function() {
 		
@@ -130,11 +108,29 @@ export default Ember.Component.extend({
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"));
 		
 	}.observes('graphLayout.strokeWidth'),
+  
+  projection: function() {
+    
+    var w = Math.max(this.$().width(), this.get('graphLayout.width'));
+		var h = Math.max(this.$().height(), this.get('graphLayout.height'));
+    
+    return projector.computeProjection(
+			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get("base.lands"),
+			w,
+			h,
+			this.get('graphLayout.width'),
+			this.get('graphLayout.height'),
+			this.get('graphLayout.margin'),
+			this.get('graphLayout.projection')
+		);
+    
+  }.property('graphLayout.autoCenter', 'graphLayout.width',
+    'graphLayout.height', 'graphLayout.margin',
+    'graphLayout.projection'),
+  
 	
 	projectAndDraw: function() {
 		
-		var base = this.get("graphLayout.virginDisplayed") ? this.get("base"):this.get("filteredBase");
-	
 		// ===========
 		// = VIEWBOX =
 		// ===========
@@ -147,19 +143,7 @@ export default Ember.Component.extend({
 		// ===========
 
 		var path = d3.geo.path();
-		
-		var projection = projector.computeProjection(
-			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get("base"),
-			w,
-			h,
-			this.get('graphLayout.width'),
-			this.get('graphLayout.height'),
-			this.get('graphLayout.margin'),
-			this.get('graphLayout.projection')
-      
-		);
-
-		path.projection(projection);
+		path.projection(this.get('projection'));
 		
 		this.d3l().selectAll("g.offset line.horizontal-top")
 			.attr("x1", 0)
@@ -201,101 +185,144 @@ export default Ember.Component.extend({
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
 		
-		var pathSelection = this.d3l().select("defs")
+		let landSel = this.d3l().select("defs")
 			.selectAll("path.feature")
 			.attr("d", path)
-      .data(base.features);
+      .data(this.get('base').lands.features);
       
-    pathSelection.enter().append("path")
-			.classed("feature", true)
-      .attr("id", (d) => `f_${d.id}`)
-			.attr("d", path);
+    landSel.enter()
+      .append("path")
+			.attr("d", path)
+      .attr("id", (d) => `f-path-${d.id}`)
+			.classed("feature", true);
 
-		pathSelection.exit().remove();
-			
-		//var textSelection = this.d3l().select("g.geo")
-		//	.selectAll("text")
-		//	.attr("transform", function(d) {
-		//	
-		//		var centroid = path.centroid(d);
-		//		return d3lper.translate(centroid[0], centroid[1]);
-		//	
-		//	})
-        //	.data(base.features);
-		//	
-		//textSelection.enter().append("text")
-		//	.text(function(d) { return d.properties.code_dept; })
-		//	.attr("text-anchor", "middle")
-		//	.attr("transform", function(d) {
-        //
-		//		var centroid = path.centroid(d);
-		//		return d3lper.translate(centroid[0], centroid[1]);
-        //
-		//	});
-        //
-		//textSelection.exit().remove();
-			
+		landSel.exit().remove();
+    
     this.drawLayers();
-		this.mapData();
 			
-	}.observes('graphLayout.projection', 'graphLayout.autoCenter', 'graphLayout.virginDisplayed', 'graphLayout.width',
+	}.observes('projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
    
   drawLayers: function() {
     
-    //TODO : implement multi layer
-    this.d3l().select("g.layers")
-      .append("g")
+    //TODO : implement multi layer binded to vars
+    let self = this,
+        vars = [{type: "background"}, {index: 0, type: "quali"}, {index: 1, type: "quanti"}];
+    
+    let sel = this.d3l().select("g.layers")
+      .selectAll("g.layer")
+      .data(vars);
+      
+    sel.enter().append("g")
 			.attr("stroke", this.get("graphLayout.stroke"))
       .classed("layer", true);
+      
+   sel.exit().remove();
+   
+   sel.each(function(d) {
+     if (d.type === "background") {
+        self.drawBackgroundLayer(d3.select(this));
+     } else {
+        self.mapData(d3.select(this), d);
+     }
+   });
+    
+  },
+  
+  drawBackgroundLayer: function(d3Layer) {
+    
+    var uses = d3Layer
+      .selectAll("use.feature")
+      .data(this.get('base').lands.features);
+      
+    uses.enter().append("use")
+      .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
+			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
+			.attr("stroke", this.get("graphLayout.stroke"))
+      .style("fill", "#000000")
+			.classed("feature", true);
     
   },
 	
-	mapData: function() {
-		
-		var self = this;
-		
-		var scale = this.get('graphLayout.scale');
+	mapData: function(d3Layer, variable) {
     
     let geoCol = this.get('data.columns').find( col => col.get('meta.type') === "geo" ),
-        varCol = this.get('data.columns').filter( col => col.get('meta.type') === "numeric" )[0];
-		
-		scale.domain(d3.extent(varCol.get('cells'), (c) => parseFloat(c.postProcessedValue()) ));
-		scale.range(["#29aadf", "#f9aa0f"]);
-    
+        varCol = this.get('data.columns').filter( col => col.get('meta.type') === "numeric" )[variable.index];
+        
     let data = geoCol.get('cells').map( (cell, index) => {
       
       let match = geoMatch(cell.get('value')),
           val;
           
-      if (match) {
-        val = varCol.get('cells').objectAt(index).postProcessedValue();
+      if (match && varCol.get('cells').objectAt(index).postProcessedValue() != null) {
         return {
           id: match.value.iso_a2,
-          color: scale(val)
+          value: varCol.get('cells').objectAt(index).postProcessedValue(),
+          land: this.get('base').lands.features.find( f => f.id === match.value.iso_a2),
+          centroid: this.get('base').centroids.features.find( f => f.id === match.value.iso_a2)
         };
       }
       
-      return false;
+      return undefined;
       
-    }).filter( d => d !== false );
+    }).filter( d => d !== undefined );
     
-    var uses = this.d3l()
-      .selectAll("g.layers g.layer")
+    if (variable.type === "quali") {
+      this.mapPath(d3Layer, data);
+    } else {
+      this.mapPoint(d3Layer, data);
+    }
+    
+  },
+  
+  mapPath: function(d3Layer, data) {
+		
+    let scale = this.get('graphLayout.scale');
+		
+		scale.domain(d3.extent(data, c => c.value));
+    scale.range(["#29aadf", "#f9aa0f"]);
+    
+    var uses = d3Layer
       .selectAll("use.feature")
-      .style("fill", (d) => d.color )
+      .style("fill", d => { return d.value ? scale(d.value) : "#000000"; } )
       .data(data);
       
     uses.enter().append("use")
-      .attr("xlink:xlink:href", (d) => `#f_${d.id}`)
-      .attr("fill", (d) => d.color )
+      .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
 			.attr("stroke", this.get("graphLayout.stroke"))
+      .style("fill", d => { return d.value != null ? scale(d.value) : "#000000"; } )
 			.classed("feature", true);
 
 		uses.exit().remove();
 			
-	}.observes("data.rows.@each.values")
+	},
+  
+   mapPoint: function(d3Layer, data) {
+		
+    let projection = this.get('projection'),
+        scale = this.get('graphLayout.scale')
+		
+		scale.domain(d3.extent(data, c => c.value));
+		scale.range([1, 10]);
+    
+    let centroidSel = d3Layer
+			.selectAll("circle.feature")
+			.attr("cx", function (d) { return projection(d.centroid.geometry.coordinates)[0]; })
+      .attr("cy", function (d) { return projection(d.centroid.geometry.coordinates)[1]; })
+      .data(data);
+      
+    centroidSel.enter()
+      .append("circle")
+      .attr("cx", function (d) { return projection(d.centroid.geometry.coordinates)[0]; })
+      .attr("cy", function (d) { return projection(d.centroid.geometry.coordinates)[1]; })
+      .attr("r", d => d.value != null ? scale(d.value): 1)
+      .attr("fill", "blue")
+			.classed("feature", true);
+
+		centroidSel.exit().remove();
+    
+	}
 
 	
 });

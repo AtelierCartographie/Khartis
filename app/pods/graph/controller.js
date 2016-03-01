@@ -14,7 +14,10 @@ export default Ember.Controller.extend({
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
         let j = JSON.parse(json);
-        this.set('basemapData', topojson.feature(j, j.objects.land));
+        this.set('basemapData', {
+          lands: topojson.feature(j, j.objects.land),
+          centroids: topojson.feature(j, j.objects.centroid)
+        });
       });
   },
   

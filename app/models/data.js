@@ -80,7 +80,7 @@ let ColumnStruct = Struct.extend({
           text: 0,
           numeric: 0,
           geo: 0,
-          dms: 0
+          lat_dms: 0
         };
         
         this.get('cells')
@@ -93,7 +93,9 @@ let ColumnStruct = Struct.extend({
                   if (match) {
                     p.geo += 1/arr.length;
                   } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/.test(c.get('value'))) {
-                    p.dms += 1/arr.length;
+                    p.lat_dms += 1/arr.length;
+                  } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/.test(c.get('value'))) {
+                    p.lon_dms += 1/arr.length;
                   } else {
                     p.text += 1/arr.length;
                   }
@@ -160,10 +162,14 @@ let CellStruct = Struct.extend({
     },
     
     postProcessedValue() {
-      if (this.get('column.meta.type') === "numeric") {
-        return parseFloat(this.get('value').replace(/[\,\s]+/g, ""));
+      if (!Ember.isEmpty(this.get('value'))) {
+        if (this.get('column.meta.type') === "numeric") {
+          return parseFloat(this.get('value').replace(/[\,\s]+/g, ""));
+        }
+        return this.get('value');
+      } else {
+        return null;
       }
-      return this.get('value');
     },
     
     init() {

@@ -1,24 +1,26 @@
 function geoMatch(code) {
-  for (let o of dic) {
-    if (o.iso_a2 === code) {
-      return {
-        type: "iso2",
-        value: o
-      };
-    } else if (o.iso_a3 === code) {
-      return {
-        type: "iso3",
-        value: o
-      };
-    } else if (o.name_ISO_EN === code
-      || o.name_ISO_FR === code
-      || o.name_UN_EN === code
-      || o.name_UN_FR === code
-      || o.name_UN_ES === code) {
-      return {
-        type: "isoName",
-        value: o
-      };
+  if (code && code.length > 0) {
+    for (let o of dic) {
+      if (o.iso_a2 === code) {
+        return {
+          type: "iso2",
+          value: o
+        };
+      } else if (o.iso_a3 === code) {
+        return {
+          type: "iso3",
+          value: o
+        };
+      } else if (o.name_ISO_EN === code
+        || o.name_ISO_FR === code
+        || o.name_UN_EN === code
+        || o.name_UN_FR === code
+        || o.name_UN_ES === code) {
+        return {
+          type: "isoName",
+          value: o
+        };
+      }
     }
   }
   return false;
