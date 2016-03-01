@@ -155,54 +155,56 @@ footer {
 }
 
 
-.stepper {
-
+.intro {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex:1;
-  background-color: greys(10%);
+  background-color: color(default);
+}
 
-  &-title {
-    font-size:3rem;
-    margin-bottom:5rem;
+.intro-title {
+  margin: 0 0 7.5rem;
+  font-size:3.5rem;
+  color:greys(70%);
+  font-weight: normal;
+
+  span {
+    font-weight:bold;
+    font-size:3.7rem;
+    text-transform: uppercase;
+  }
+}
+
+.intro-actions {
+  display: flex;
+  justify-content: center;
+  width:80%;
+
+  .button {
+    position: relative;
+    margin:0 2rem;
+    padding:2rem 3rem;
+  }
+
+  .button-label {
+    font-size:2.5rem;
+    text-transform: uppercase;
+  }
+
+  small {
+    font-size:1.6rem;
+    position: absolute;
+    bottom:-2.5rem;
+    left:0;
+    right:0;
+    text-align: right;
+    text-transform:none;
     color:greys(70%);
   }
 
-  &-options {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    margin-left:-10rem;
-    color:greys(60%);
+  small span {
+    font-weight:bold;
   }
-
-  &-option {
-
-    cursor:pointer;
-    padding-left: 10rem;
-
-    .inner {
-      padding: 4rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h3 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    i {
-      font-size: 10rem;
-      margin-bottom: 2rem;
-    }
-  }
-
-  &-option:hover .inner {
-    background-color: greys(20%);
-  }
-
 }

@@ -8,21 +8,21 @@ const NS = "mapp-project",
       FREEZE_EVT = "freeze",
       UNDO_EVT = "undo",
       REDO_EVT = "redo";
-      
+
 var Store = Ember.Service.extend({
-  
+
     transient: false,
-    
+
     projects: null,
     mounted: {},
-    
+
     versioning: null,
-    
+
     init() {
       this._super();
       this._restore();
     },
-    
+
     _restore() {
       if (!this.get('transient') && window.localStorage.getItem(NS)) {
         this.set('projects', JSON.parse(window.localStorage.getItem(NS)));
@@ -30,25 +30,29 @@ var Store = Ember.Service.extend({
         this.set('projects', Em.A());
       }
     },
-    
+
     _save() {
       this.get('projects').splice(0, this.get('projects').length - MAX);
       if (!this.get('transient')) {
         window.localStorage.setItem(NS, JSON.stringify(this.get('projects')));
       }
     },
-    
+
     clear() {
       this.get('projects').clear();
       this.save();
     },
-    
+
     list() {
       return this.get('projects');
     },
-    
+
+    has(){
+      return this.list().length > 0
+    },
+
     select(uuid) {
-      let project = this.get('mounted')[uuid] ? 
+      let project = this.get('mounted')[uuid] ?
         this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
       if (project) {
         this.startVersioning(project);
@@ -57,7 +61,7 @@ var Store = Ember.Service.extend({
         return false;
       }
     },
-    
+
     persist(project) {
       if (!this.get('projects').some( p => p._uuid === project._uuid )) {
         this.get('projects').addObject( project.export() );
@@ -68,12 +72,12 @@ var Store = Ember.Service.extend({
         throw new Error("Can't persist : a project with same UUID is already persisted");
       }
     },
-    
+
     merge(project) {
-      
+
       let old = this.get('projects')
         .find( p => p._uuid === project._uuid );
-        
+
       if (old) {
         this.get('projects').splice(this.get('projects').indexOf(old), 1,
            project instanceof Project ? project.export() : project);
@@ -84,9 +88,9 @@ var Store = Ember.Service.extend({
       } else {
         return this.persist(project);
       }
-      
+
     },
-    
+
     remove(project) {
       if (this.get('projects').some( p => p._uuid === project._uuid )) {
         this.set('projects', this.get('projects').filter( p => p._uuid !== project._uuid ));
@@ -96,21 +100,21 @@ var Store = Ember.Service.extend({
         throw new Error("Can't remove : project not found");
       }
     },
-    
+
     startVersioning(project) {
       let self = this,
           versioning = Version.begin(project),
           changeFn = function() {
             self.merge(this.current());
           };
-          
+
       versioning.on(FREEZE_EVT, changeFn)
            .on(UNDO_EVT, changeFn)
            .on(REDO_EVT, changeFn);
-           
+
       return this.set('versioning', versioning);
     },
-    
+
     versions() {
       if (this.get('versioning')) {
         return this.get('versioning');
@@ -118,57 +122,57 @@ var Store = Ember.Service.extend({
         throw new Error("Unable to return versions() : no versioning found. Use Store.follow(project) first.");
       }
     }
-  
+
 });
 
 var Version = Ember.Object.extend(Ember.Evented, {
-  
+
     stack: null,
     needle: null,
-    
+
     init() {
       this.set('stack', Em.A());
     },
-    
+
     stackChange: function() {
-      
+
       if (this.get('stack').length > MAX) {
         this.get('stack').splice(0, this.get('stack').length - MAX);
       }
-      
+
       this.set('needle', this.get('stack').length - 1);
-      
+
     }.observes('stack.[]').on("init"),
-    
+
     current() {
       if (this.get('stack') && this.get('stack').length > 0) {
         return this.get('stack')[this.get('needle')];
       }
       return undefined;
     },
-    
+
     undo() {
       if (this.get('canUndo')) {
         this.set('needle', this.get('needle') - 1);
         this.trigger(UNDO_EVT);
       }
     },
-    
+
     redo() {
       if (this.get('canRedo')) {
         this.set('needle', this.get('needle') + 1);
         this.trigger(REDO_EVT);
       }
     },
-    
+
     canUndo: function() {
       return this.get('stack').length > 1 && this.get('needle') > 0;
     }.property('stack.[]', 'needle'),
-    
+
     canRedo: function() {
       return this.get('needle') < this.get('stack').length - 1;
     }.property('needle', 'stack.[]'),
-  
+
     freeze(project) {
       project = project instanceof Project ? project.export() : project;
       if (JSON.stringify(project) !== JSON.stringify(this.current())) {
@@ -178,7 +182,7 @@ var Version = Ember.Object.extend(Ember.Evented, {
       }
       return project;
     }
-  
+
 });
 
 Version.reopenClass({
