@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   
   tagName: "svg",
   attributeBindings: ['height', 'width', 'xmlns', 'xmlns:xlink', 'version'],
+  height: "100%",
   width: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
   'xmlns:xlink': "http://www.w3.org/1999/xlink",
@@ -40,8 +41,8 @@ export default Ember.Component.extend({
     // HANDLE RESIZE
     let $size = () => {
       this.setProperties({
-        '$width': this.$().width(),
-        '$height': this.$().height()
+        '$width': this.$().parent().width(),
+        '$height': this.$().parent().height()
       });
     };
     setInterval($size.bind(this), 800);
@@ -131,6 +132,9 @@ export default Ember.Component.extend({
   
 	
 	projectAndDraw: function() {
+    
+    var path = d3.geo.path();
+		path.projection(this.get('projection'));
 		
 		// ===========
 		// = VIEWBOX =
@@ -140,11 +144,7 @@ export default Ember.Component.extend({
 		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
 		
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
-		
 		// ===========
-
-		var path = d3.geo.path();
-		path.projection(this.get('projection'));
 		
 		this.d3l().selectAll("g.offset line.horizontal-top")
 			.attr("x1", 0)
@@ -152,7 +152,7 @@ export default Ember.Component.extend({
 			.attr("x2", w)
 			.attr("y2", this.get('graphLayout').vOffset(h))
 		  .attr("stroke-width", "1");
-			
+    
 		this.d3l().selectAll("g.offset line.horizontal-bottom")
 			.attr("x1", 0)
 			.attr("y1", h - this.get('graphLayout').vOffset(h))
@@ -173,7 +173,7 @@ export default Ember.Component.extend({
 			.attr("x2", this.get('graphLayout').hOffset(w))
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
-			
+		
 		this.d3l().select("g.margin")
 			.attr("transform", "translate("+this.get('graphLayout').hOffset(w)
 				+", "+this.get('graphLayout').vOffset(h)+")")
@@ -252,7 +252,6 @@ export default Ember.Component.extend({
     if (geoCols.length === 1) {
       
       data = varCol.get('cells').map( (cell, index) => {
-        
         
         let match = geoMatch(geoCols[0].get('cells').objectAt(index).postProcessedValue()),
             val = cell.postProcessedValue();
@@ -341,11 +340,7 @@ export default Ember.Component.extend({
 		
 		scale.domain(d3.extent(data, c => c.value));
     
-    console.log(scale.domain());
-    
     d3Layer.selectAll("*").remove();
-    
-    data.forEach( d => console.log(d.point.geometry.coordinates) );
     
     let centroidSel = d3Layer
 			.selectAll(".feature")

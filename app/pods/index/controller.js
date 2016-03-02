@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
 
   actions: {
     resumeProject() {
-      this.transitionToRoute('spreadsheet', this.get('store').list().get('lastObject._uuid'));
+      this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
     },
 
     newProject(){

@@ -141,7 +141,7 @@ let ColumnStruct = Struct.extend({
               }
             },
             meta: {
-              type: this.get('meta'),
+              type: this.get('meta.type'),
               probability: this.get('meta.probability'),
               manual:  this.get('meta.manual')
             }

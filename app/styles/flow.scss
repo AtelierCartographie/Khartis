@@ -75,7 +75,6 @@ body {
 .flow, %flow {
     @extend %fluid;
     display: flex;
-    position: relative;
     z-index: 0;
 
     &.space-between, &%space-between {

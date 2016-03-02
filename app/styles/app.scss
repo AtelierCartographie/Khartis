@@ -13,6 +13,13 @@ html, body {
   margin: 0;
 }
 
+a {
+  cursor: pointer;
+}
+
+.iconfont:before {
+  vertical-align: middle;
+}
 
 /* flow */
 body > .ember-view:not(.popable) {

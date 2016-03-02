@@ -59,6 +59,7 @@ $spreadsheet-numbering-width: 40px !default;
   @extend %flow;
   @extend .filled;
 
+  position: relative;
   overflow: scroll;
 
   .background {
@@ -186,6 +187,7 @@ $spreadsheet-numbering-width: 40px !default;
   .row {
     @extend %flow;
     @extend %horizontal;
+    position: relative;
   }
 
   .cell {
@@ -194,6 +196,8 @@ $spreadsheet-numbering-width: 40px !default;
     @extend %horizontal;
     @extend %middle;
     @extend %padded;
+    
+    position: relative;
 
     width: $spreadsheet-cell-width;
     height: $spreadsheet-cell-height;

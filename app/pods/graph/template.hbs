@@ -1,7 +1,11 @@
-{{#if basemapData}}
-{{map-editor data=model.data
-  base=basemapData
-  graphLayout=model.graphLayout
-  graphLayers=model.graphLayers
-}}
-{{/if}}
+<div class="stretched flow" style="position: relative;">
+  <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
+  {{#if basemapData}}
+  {{map-editor data=model.data
+    base=basemapData
+    graphLayout=model.graphLayout
+    graphLayers=model.graphLayers
+  }}
+  {{/if}}
+  </div>
+</div>

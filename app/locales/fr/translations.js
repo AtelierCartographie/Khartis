@@ -22,6 +22,20 @@ export default {
     }
   },
   
+  "projection": {
+    "naturalEarth": {
+      "name": "Natural earth",
+      "description": ""
+    },
+    "orthographic": {
+      "name": "Orhtographic",
+      "description": ""
+    },
+    "mercator": {
+      "name": "Mercator",
+      "description": ""
+    }
+  },
   
   "import": {
     "editor.paste.csv": "Collez ici le csv à importer",

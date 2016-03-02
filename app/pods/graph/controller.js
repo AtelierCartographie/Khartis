@@ -75,10 +75,15 @@ export default Ember.Controller.extend({
     
   },
   
+  layersChange: function() {
+    this.send('onAskVersioning', 'freeze');
+  }.observes('model.graphLayers.[]', 'model.graphLayers.@each.changeIndicator'),
+  
   actions: {
     
-      projectionChange() {
-        this.send('onAskVersioning');
+      bindProjection(projId) {
+        this.set('model.graphLayout.projection', projId);
+        this.send('onAskVersioning', 'freeze');
       },
       
       addLayer(col) {

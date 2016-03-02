@@ -55,7 +55,8 @@ let GraphLayer = Struct.extend({
   }.property('type'),
   
   canBeSurface: function() {
-    return this.get('geoCols').length === 1 
+    console.log(this.get('geoCols')[0].get('meta.type'));
+    return this.get('geoCols').length === 1
       && this.get('geoCols')[0].get('meta.type') === "geo";
   }.property('geoCols.[]'),
   

@@ -1,9 +1,9 @@
 import d3 from 'd3';
 
 const PROJECTIONS = {
-  "naturalEarth": { name: "naturalEarth", fn: d3.geo.naturalEarth, precision: 1 },
-  "mercator": { name: "mercator", fn: d3.geo.mercator },
-  "orthographic": { name:"orthographic", fn: d3.geo.orthographic, rotatable: true }
+  "naturalEarth": { fn: d3.geo.naturalEarth, precision: 1 },
+  "mercator": { fn: d3.geo.mercator },
+  "orthographic": { fn: d3.geo.orthographic, rotatable: true }
 };
 
 export default {
