@@ -38,7 +38,7 @@
     </div>
     <div class="small panel layers-panel">
         <header class="filled primary">
-            <div class="title">Variables</div>
+            <div class="title">Variables représentées</div>
             <div class="actions"></div>
         </header>
         <div class="vertical airy flow padded-v filled">
@@ -50,6 +50,7 @@
                   <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
                 </div>
               </div>
+              {{#if layer.canBeSurface}}
               <div>
                   Type de représentation : 
                   {{#x-dropdown.x-trigger
@@ -68,6 +69,7 @@
                     <li {{action 'bindLayerType' layer 'surface'}}>{{t 'variable.representation.type.surface'}}</li>
                   </ul>
               </div>
+              {{/if}}
               {{#if layer.isOfTypeShape}}
               <div>
                 Dégradé de :
@@ -91,7 +93,7 @@
               dropdownPivot="top left"
               triggerPivot="bottom left"}}
               <a class="dropdown-trigger">
-                Ajouter une variable
+                Afficher une variable
               </a>
             {{/x-dropdown.x-trigger}}
             <ul class="dropdown">

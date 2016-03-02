@@ -13,6 +13,9 @@ export default Ember.Component.extend({
   xmlns: 'http://www.w3.org/2000/svg',
   'xmlns:xlink': "http://www.w3.org/1999/xlink",
   version: '1.1',
+  
+  $width: null,
+  $height: null,
 	
 	base: null,
 	
@@ -33,7 +36,17 @@ export default Ember.Component.extend({
 		d3g.append("defs");
 			
 		// ---------
-			
+		
+    // HANDLE RESIZE
+    let $size = () => {
+      this.setProperties({
+        '$width': this.$().width(),
+        '$height': this.$().height()
+      });
+    };
+    setInterval($size.bind(this), 800);
+    $size();
+    // ---------
 		
 		d3g.append("rect")
 			.classed("bg", true)
@@ -99,8 +112,8 @@ export default Ember.Component.extend({
   
   projection: function() {
     
-    var w = Math.max(this.$().width(), this.get('graphLayout.width'));
-		var h = Math.max(this.$().height(), this.get('graphLayout.height'));
+    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
+		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
     
     return projector.computeProjection(
 			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get("base.lands"),
@@ -112,7 +125,7 @@ export default Ember.Component.extend({
 			this.get('graphLayout.projection')
 		);
     
-  }.property('graphLayout.autoCenter', 'graphLayout.width',
+  }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.margin',
     'graphLayout.projection'),
   
@@ -123,8 +136,8 @@ export default Ember.Component.extend({
 		// = VIEWBOX =
 		// ===========
 		
-		var w = Math.max(this.$().width(), this.get('graphLayout.width'));
-		var h = Math.max(this.$().height(), this.get('graphLayout.height'));
+		var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
+		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
 		
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
 		
@@ -212,7 +225,7 @@ export default Ember.Component.extend({
     let self = this,
         data = this.get('graphLayers')
           .filter( gl => gl.get('varCol') )
-          .sort( (a,b) => a.get('type') === "order" ? -1:1 );
+          .sort( (a,b) => a.get('type') === "surface" ? -1:1 );
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
@@ -232,38 +245,75 @@ export default Ember.Component.extend({
   
 	mapData: function(d3Layer, graphLayer) {
     
-    let geoCol = this.get('data.columns').find( col => col.get('meta.type') === "geo" ),
-        varCol = graphLayer.get('varCol');
+    let geoCols = graphLayer.get('geoCols'),
+        varCol = graphLayer.get('varCol'),
+        data = [];
+        
+    if (geoCols.length === 1) {
       
-    let data = geoCol.get('cells').map( (cell, index) => {
+      data = varCol.get('cells').map( (cell, index) => {
+        
+        
+        let match = geoMatch(geoCols[0].get('cells').objectAt(index).postProcessedValue()),
+            val = cell.postProcessedValue();
+        if (!cell.get('row.header') && match && val != null) {
+          return {
+            id: match.value.iso_a2,
+            value: val,
+            surface: this.get('base').lands.features.find( f => f.id === match.value.iso_a2),
+            point: this.get('base').centroids.features.find( f => f.id === match.value.iso_a2)
+          };
+        }
+        
+        return undefined;
+        
+      }).filter( d => d !== undefined );
       
-      let match = geoMatch(cell.get('value')),
-          val;
-          
-      if (match && varCol.get('cells').objectAt(index).postProcessedValue() != null) {
-        return {
-          id: match.value.iso_a2,
-          value: varCol.get('cells').objectAt(index).postProcessedValue(),
-          surface: this.get('base').lands.features.find( f => f.id === match.value.iso_a2),
-          point: this.get('base').centroids.features.find( f => f.id === match.value.iso_a2)
-        };
+      if (graphLayer.type === "surface") {
+        this.mapPath(d3Layer, data, graphLayer);
+      } else if (graphLayer.type === "shape") {
+        this.mapShape(d3Layer, data, graphLayer);
       }
       
-      return undefined;
+    } else if (geoCols.length === 2 && geoCols[0] && geoCols[1]) {
       
-    }).filter( d => d !== undefined );
-    
-    if (graphLayer.type === "surface") {
-      this.mapPath(d3Layer, data);
-    } else if (graphLayer.type === "shape") {
-      this.mapShape(d3Layer, data, graphLayer.representation);
+      data = varCol.get('cells').map( (cell, index) => {
+        
+        let val = cell.postProcessedValue(),
+            lon = geoCols[0].get('cells').objectAt(index).postProcessedValue(),
+            lat = geoCols[1].get('cells').objectAt(index).postProcessedValue();
+        
+        if (!cell.get('row.header') 
+          && val != null 
+          && !Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
+          return {
+            id: `coord-${index}`,
+            value: val,
+            surface: null,
+            point: {
+              geometry: {
+                coordinates: [
+                  lon,
+                  lat
+                ]
+              }
+            }
+          };
+        }
+        
+        return undefined;
+        
+      }).filter( d => d !== undefined );
+      
+      this.mapShape(d3Layer, data, graphLayer);
+      
     }
     
   },
   
-  mapPath: function(d3Layer, data) {
+  mapPath: function(d3Layer, data, graphLayer) {
 		
-    let scale = this.get('graphLayout.scale');
+    let scale = d3.scale.linear();
 		
 		scale.domain(d3.extent(data, c => c.value));
     scale.range(["#29aadf", "#f9aa0f"]);
@@ -284,14 +334,18 @@ export default Ember.Component.extend({
 			
 	},
   
-   mapShape: function(d3Layer, data, representation) {
+   mapShape: function(d3Layer, data, graphLayer) {
 		
     let projection = this.get('projection'),
-        scale = this.get('graphLayout.scale')
+        scale = d3.scale[graphLayer.scaleType()]();
 		
 		scale.domain(d3.extent(data, c => c.value));
     
+    console.log(scale.domain());
+    
     d3Layer.selectAll("*").remove();
+    
+    data.forEach( d => console.log(d.point.geometry.coordinates) );
     
     let centroidSel = d3Layer
 			.selectAll(".feature")
@@ -305,13 +359,13 @@ export default Ember.Component.extend({
       .attr("cx", d => projection(d.point.geometry.coordinates)[0] )
       .attr("cy", d => projection(d.point.geometry.coordinates)[1] );
       
-    if (representation.scaleOf === "size") {
-      scale.range([1, 10]);
+    if (graphLayer.get('representation.scaleOf') === "size") {
+      scale.range([4, 10]);
       shape.attr("r", d => d.value != null ? scale(d.value): 1)
-        .attr("fill", representation.fill);
-    } else if (representation.scaleOf === "fill") {
+        .attr("fill", graphLayer.get('representation.fill'));
+    } else if (graphLayer.get('representation.scaleOf') === "fill") {
       scale.range(["#29aadf", "#f9aa0f"]);
-      shape.attr("r", representation.size)
+      shape.attr("r", graphLayer.get('representation.size'))
         .attr("fill", d => d.value != null ? scale(d.value): "none");
     }
 

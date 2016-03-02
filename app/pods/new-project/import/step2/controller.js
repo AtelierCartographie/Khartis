@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 
     finalize() {
       this.get('store').merge(this.get('model.project'));
-      this.transitionToRoute('spreadsheet', this.get('model.project').get('_uuid'));
+      this.transitionToRoute('graph', this.get('model.project').get('_uuid'));
     }
     
   }

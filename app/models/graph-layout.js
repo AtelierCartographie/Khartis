@@ -99,8 +99,6 @@ var GraphLayout = Struct.extend({
 		
 	},
 	
-	scale: d3.scale.linear(),
-  
   export() {
       return this._super({
           basemap: this.get('basemap'),
