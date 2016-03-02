@@ -56,8 +56,16 @@ export default Ember.Controller.extend({
         }));
       },
       
+      removeLayer(layer) {
+        this.get('model.graphLayers').removeObject(layer);
+      },
+      
       bindLayerType(layer, type) {
         layer.set('type', type);
+      },
+      
+      bindLayerScaleOf(layer, type) {
+        layer.set('representation.scaleOf', type);
       },
       
       onAskVersioning(type) {

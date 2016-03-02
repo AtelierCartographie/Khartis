@@ -11,6 +11,18 @@ export default {
     "or": "ou"
   },
   
+  "variable.representation": {
+    "type": {
+      "shape": "forme",
+      "surface": "surface"
+    },
+    "scaleOf": {
+      "size": "taille",
+      "fill": "couleur"
+    }
+  },
+  
+  
   "import": {
     "editor.paste.csv": "Collez ici le csv à importer",
     "editor.upload.file": "téléversez un fichier",

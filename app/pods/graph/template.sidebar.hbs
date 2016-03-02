@@ -36,34 +36,60 @@
             </div>
         </div>
     </div>
-    <div class="small panel">
+    <div class="small panel layers-panel">
         <header class="filled primary">
             <div class="title">Variables</div>
             <div class="actions"></div>
         </header>
         <div class="vertical airy flow padded-v filled">
           {{#each model.graphLayers as |layer|}}
-            <div class="horizontal space-between flow">
-                {{layer.varCol.header.value}}
-                <div>
-                  {{#x-dropdown.x-trigger}}
+            <div>
+              <div class="horizontal space-between flow layer-header">
+                <span>{{layer.varCol.header.value}}</span>
+                <div class="solid w1 text-right">
+                  <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
+                </div>
+              </div>
+              <div>
+                  Type de représentation : 
+                  {{#x-dropdown.x-trigger
+                    dropdownPivot="top left"
+                    triggerPivot="bottom left"}}
                     <a class="dropdown-trigger">
                       {{#unless layer.type}}
-                      Type de représentation
+                      Choisir
                       {{else}}
-                      {{layer.type}}
+                      {{t (concat "variable.representation.type." layer.type)}}
                       {{/unless}}
                     </a>
                   {{/x-dropdown.x-trigger}}
                   <ul class="dropdown">
-                    <li {{action 'bindLayerType' layer 'proportion'}}>Proportion</li>
-                    <li {{action 'bindLayerType' layer 'order'}}>Order</li>
+                    <li {{action 'bindLayerType' layer 'shape'}}>{{t 'variable.representation.type.shape'}}</li>
+                    <li {{action 'bindLayerType' layer 'surface'}}>{{t 'variable.representation.type.surface'}}</li>
                   </ul>
-                </div>
+              </div>
+              {{#if layer.isOfTypeShape}}
+              <div>
+                Dégradé de :
+                {{#x-dropdown.x-trigger
+                  dropdownPivot="top left"
+                  triggerPivot="bottom left"}}
+                  <a class="dropdown-trigger">
+                    {{t (concat "variable.representation.scaleOf." layer.representation.scaleOf)}}
+                  </a>
+                {{/x-dropdown.x-trigger}}
+                <ul class="dropdown">
+                  <li {{action 'bindLayerScaleOf' layer 'size'}}>{{t 'variable.representation.scaleOf.size'}}</li>
+                  <li {{action 'bindLayerScaleOf' layer 'fill'}}>{{t 'variable.representation.scaleOf.fill'}}</li>
+                </ul>
+              </div>
+              {{/if}}
             </div>
           {{/each}}
           <div class="fluid text-center">
-            {{#x-dropdown.x-trigger}}
+            {{#x-dropdown.x-trigger
+              dropdownPivot="top left"
+              triggerPivot="bottom left"}}
               <a class="dropdown-trigger">
                 Ajouter une variable
               </a>
