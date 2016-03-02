@@ -19,6 +19,8 @@ export default Ember.Component.extend({
 	data: null,
 	
 	graphLayout: null,
+  
+  graphLayers: [],
 
 	draw: function() {
     
@@ -38,11 +40,14 @@ export default Ember.Component.extend({
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("fill", this.get("graphLayout.backgroundColor"));
-			
-		var geo = d3g.append("g")
+		
+    d3g.append("g")
+			.classed("backmap", true);
+    	
+		d3g.append("g")
 			.classed("layers", true);
 			
-		var og = d3g.append("g")
+		let og = d3g.append("g")
 			.classed("offset", true);
 			
 		og.append("line").classed("horizontal-top", true);
@@ -50,7 +55,7 @@ export default Ember.Component.extend({
 		og.append("line").classed("vertical-left", true);
 		og.append("line").classed("vertical-right", true);
 		
-		var mg = d3g.append("g")
+		let mg = d3g.append("g")
 			.classed("margin", true);
 			
 		mg.append("rect")
@@ -58,7 +63,6 @@ export default Ember.Component.extend({
 
 		this.projectAndDraw();
 		this.updateColors();
-		this.updateVirginPattern();
 
           
 	}.on("didInsertElement"),
@@ -83,22 +87,6 @@ export default Ember.Component.extend({
 		
 	}.observes('graphLayout.stroke', 'graphLayout.backgroundColor',
     'graphLayout.virginPatternColorAuto', 'graphLayout.virginPatternColor'),
-	
-	updateVirginPattern: function() {
-		
-		var self = this;
-		
-		var d3g = this.d3l();
-		
-		d3g.selectAll("g.geo g.virgin")
-			.style("fill", function() {
-				
-				return "url(#"+self.get('graphLayout.virginPattern')+")";
-				
-			});
-
-		
-	}.observes('graphLayout.virginPattern'),
 	
 	updateStroke: function() {
 		
@@ -198,40 +186,15 @@ export default Ember.Component.extend({
 
 		landSel.exit().remove();
     
+    this.drawBackmap();
     this.drawLayers();
 			
 	}.observes('projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
    
-  drawLayers: function() {
+   drawBackmap: function() {
     
-    //TODO : implement multi layer binded to vars
-    let self = this,
-        vars = [{type: "background"}, {index: 0, type: "quali"}, {index: 1, type: "quanti"}];
-    
-    let sel = this.d3l().select("g.layers")
-      .selectAll("g.layer")
-      .data(vars);
-      
-    sel.enter().append("g")
-			.attr("stroke", this.get("graphLayout.stroke"))
-      .classed("layer", true);
-      
-   sel.exit().remove();
-   
-   sel.each(function(d) {
-     if (d.type === "background") {
-        self.drawBackgroundLayer(d3.select(this));
-     } else {
-        self.mapData(d3.select(this), d);
-     }
-   });
-    
-  },
-  
-  drawBackgroundLayer: function(d3Layer) {
-    
-    var uses = d3Layer
+    var uses = this.d3l().select("g.backmap")
       .selectAll("use.feature")
       .data(this.get('base').lands.features);
       
@@ -243,12 +206,35 @@ export default Ember.Component.extend({
 			.classed("feature", true);
     
   },
-	
-	mapData: function(d3Layer, variable) {
+   
+  drawLayers: function() {
+    
+    let self = this,
+        data = this.get('graphLayers')
+          .filter( gl => gl.get('varCol') )
+          .sort( (a,b) => a.get('type') === "order" ? -1:1 );
+    
+    let sel = this.d3l().select("g.layers")
+      .selectAll("g.layer")
+      .data(data);
+    
+    sel.enter().append("g")
+      .attr("stroke", this.get("graphLayout.stroke"))
+      .classed("layer", true);
+    
+    sel.exit().remove();
+    
+    sel.each(function(d) {
+      self.mapData(d3.select(this), d);
+    });
+    
+  }.observes('graphLayers.[]', 'graphLayers.@each.type'),
+  
+	mapData: function(d3Layer, graphLayer) {
     
     let geoCol = this.get('data.columns').find( col => col.get('meta.type') === "geo" ),
-        varCol = this.get('data.columns').filter( col => col.get('meta.type') === "numeric" )[variable.index];
-        
+        varCol = graphLayer.get('varCol');
+      
     let data = geoCol.get('cells').map( (cell, index) => {
       
       let match = geoMatch(cell.get('value')),
@@ -267,7 +253,7 @@ export default Ember.Component.extend({
       
     }).filter( d => d !== undefined );
     
-    if (variable.type === "quali") {
+    if (graphLayer.type === "order") {
       this.mapPath(d3Layer, data);
     } else {
       this.mapPoint(d3Layer, data);
@@ -282,9 +268,9 @@ export default Ember.Component.extend({
 		scale.domain(d3.extent(data, c => c.value));
     scale.range(["#29aadf", "#f9aa0f"]);
     
-    var uses = d3Layer
-      .selectAll("use.feature")
-      .style("fill", d => { return d.value ? scale(d.value) : "#000000"; } )
+    d3Layer.selectAll("*").remove();
+      
+    let uses = d3Layer.selectAll(".feature")
       .data(data);
       
     uses.enter().append("use")
@@ -306,8 +292,10 @@ export default Ember.Component.extend({
 		scale.domain(d3.extent(data, c => c.value));
 		scale.range([1, 10]);
     
+    d3Layer.selectAll("*").remove();
+    
     let centroidSel = d3Layer
-			.selectAll("circle.feature")
+			.selectAll(".feature")
 			.attr("cx", function (d) { return projection(d.centroid.geometry.coordinates)[0]; })
       .attr("cy", function (d) { return projection(d.centroid.geometry.coordinates)[1]; })
       .data(data);

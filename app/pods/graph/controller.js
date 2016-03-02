@@ -2,6 +2,7 @@ import Ember from 'ember';
 import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import config from 'mapp/config/environment';
+import GraphLayer from 'mapp/models/graph-layer';
 import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
@@ -49,6 +50,16 @@ export default Ember.Controller.extend({
         this.send('onAskVersioning');
       },
       
+      addLayer(col) {
+        this.get('model.graphLayers').addObject(GraphLayer.create({
+          varCol: col
+        }));
+      },
+      
+      bindLayerType(layer, type) {
+        layer.set('type', type);
+      },
+      
       onAskVersioning(type) {
         switch (type) {
           case "undo":
@@ -58,7 +69,6 @@ export default Ember.Controller.extend({
             this.get('store').versions().redo();
             break;
           case "freeze": 
-            console.log("freeze");
             this.get('store').versions().freeze(this.get('model').export());
             break;
         }

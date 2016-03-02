@@ -34,6 +34,7 @@ var Store = Ember.Service.extend({
     _save() {
       this.get('projects').splice(0, this.get('projects').length - MAX);
       if (!this.get('transient')) {
+        console.log( JSON.stringify(this.get('projects')) );
         window.localStorage.setItem(NS, JSON.stringify(this.get('projects')));
       }
     },
@@ -184,7 +185,7 @@ var Version = Ember.Object.extend(Ember.Evented, {
 Version.reopenClass({
   begin(project) {
     let o = Version.create();
-    o.get('stack').addObject(project);
+    o.get('stack').addObject(project instanceof Project ? project.export() : project);
     return o;
   }
 })

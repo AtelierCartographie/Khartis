@@ -36,6 +36,46 @@
             </div>
         </div>
     </div>
+    <div class="small panel">
+        <header class="filled primary">
+            <div class="title">Variables</div>
+            <div class="actions"></div>
+        </header>
+        <div class="vertical airy flow padded-v filled">
+          {{#each model.graphLayers as |layer|}}
+            <div class="horizontal space-between flow">
+                {{layer.varCol.header.value}}
+                <div>
+                  {{#x-dropdown.x-trigger}}
+                    <a class="dropdown-trigger">
+                      {{#unless layer.type}}
+                      Type de représentation
+                      {{else}}
+                      {{layer.type}}
+                      {{/unless}}
+                    </a>
+                  {{/x-dropdown.x-trigger}}
+                  <ul class="dropdown">
+                    <li {{action 'bindLayerType' layer 'proportion'}}>Proportion</li>
+                    <li {{action 'bindLayerType' layer 'order'}}>Order</li>
+                  </ul>
+                </div>
+            </div>
+          {{/each}}
+          <div class="fluid text-center">
+            {{#x-dropdown.x-trigger}}
+              <a class="dropdown-trigger">
+                Ajouter une variable
+              </a>
+            {{/x-dropdown.x-trigger}}
+            <ul class="dropdown">
+              {{#each model.data.columns as |col|}}
+                <li {{action 'addLayer' col}}>{{col.header.value}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+    </div>
     <!--<div class="small panel">
         <header class="filled primary">
             <div class="title">Contenu</div>

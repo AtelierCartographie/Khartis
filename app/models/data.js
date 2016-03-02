@@ -48,6 +48,7 @@ RowStruct.reopenClass({
 });
 
 let ColumnStruct = Struct.extend({
+  
     cells: null, //not exported, visitor pattern
     layout: null,
     meta: null,
@@ -74,13 +75,20 @@ let ColumnStruct = Struct.extend({
       }
     },
     
+    header: function() {
+      return this.get('cells').find( c => c.get('row.header') );
+    }.property('cells.[]'),
+    
     autoDetectDataType: Ember.debouncedObserver('cells.@each.value', function() {
         
         var p = {
           text: 0,
           numeric: 0,
           geo: 0,
-          lat_dms: 0
+          lat_dms: 0,
+          lon_dms: 0,
+          lat: 0,
+          lon: 0
         };
         
         this.get('cells')
@@ -105,6 +113,18 @@ let ColumnStruct = Struct.extend({
         let type = Object.keys(p).reduce( (r, key) => {
            return r == null || p[key] > p[r] ? key : r;
         }, null);
+        
+        if (type === "numeric") {
+          let header = this.get('cells').find( c => c.get('row.header') );
+          console.log(header.get('value'));
+          if (/(?:lon(?:g?\.|gitude)?|lng)/i.test(header.get('value'))) {
+            type = "lon";
+            p[type] = 1;
+          } else if (/lat(?:\.|itude)?/i.test(header.get('value'))) {
+            type = "lat";
+            p[type] = 1;
+          }
+        }
         
         this.setProperties({
           'meta.type': type,

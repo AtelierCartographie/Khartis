@@ -119,11 +119,7 @@ $spreadsheet-numbering-width: 40px !default;
         border-radius: .2em;
         margin: 2px;
         
-        &.round {
-          border-radius: 50%;
-        }
-        
-        &.geo {
+        &.geo, &.coord {
           font-size: 1.9rem;
         }
         
