@@ -10,6 +10,8 @@ module.exports = function(defaults) {
   });
   
   app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
+  app.import("bower_components/jquery-minicolors/jquery.minicolors.min.js");
+  app.import("bower_components/jquery-minicolors/jquery.minicolors.css");
   
   // Use `app.import` to add additional libraries to the generated
   // output files.

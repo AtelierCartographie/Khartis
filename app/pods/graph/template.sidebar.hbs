@@ -1,7 +1,7 @@
 <aside class="solid airy vertical flow padded">
     <div class="small panel">
         <header class="filled primary">
-            <div class="title">Mise en page</div>
+            <div class="title">{{t "general.pageLayout"}}</div>
             <div class="actions"></div>
         </header>
         <div class="vertical airy flow padded-v filled">
@@ -61,7 +61,8 @@
             <div>
               <div class="horizontal space-between flow layer-header">
                 <span>{{layer.varCol.header.value}}</span>
-                <div class="solid w1 text-right">
+                <div class="solid w2 text-right">
+                  <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
                   <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
                 </div>
               </div>
@@ -72,34 +73,70 @@
                     dropdownPivot="top left"
                     triggerPivot="bottom left"}}
                     <a class="dropdown-trigger">
-                      {{#unless layer.type}}
+                      {{#unless layer.mapping}}
                       Choisir
                       {{else}}
-                      {{t (concat "variable.representation.type." layer.type)}}
+                      {{t (concat "variable.mapping.type." layer.mapping.type)}}
                       {{/unless}}
                       <i class="iconfont iconfont-angle-down"></i>
                     </a>
                   {{/x-dropdown.x-trigger}}
                   <ul class="dropdown">
-                    <li {{action 'bindLayerType' layer 'shape'}}>{{t 'variable.representation.type.shape'}}</li>
-                    <li {{action 'bindLayerType' layer 'surface'}}>{{t 'variable.representation.type.surface'}}</li>
+                    <li {{action 'bindLayerMapping' layer 'shape'}}>{{t 'variable.mapping.type.shape'}}</li>
+                    <li {{action 'bindLayerMapping' layer 'surface'}}>{{t 'variable.mapping.type.surface'}}</li>
                   </ul>
               </div>
               {{/if}}
-              {{#if layer.isOfTypeShape}}
+              {{#if layer.mappedToShape}}
               <div>
-                Dégradé de :
+                {{t "general.gradientOf"}} :
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
                   triggerPivot="bottom left"}}
                   <a class="dropdown-trigger">
-                    {{t (concat "variable.representation.scaleOf." layer.representation.scaleOf)}}
+                    {{t (concat "variable.mapping.scaleOf." layer.mapping.scaleOf)}}
                     <i class="iconfont iconfont-angle-down"></i>
                   </a>
                 {{/x-dropdown.x-trigger}}
                 <ul class="dropdown">
-                  <li {{action 'bindLayerScaleOf' layer 'size'}}>{{t 'variable.representation.scaleOf.size'}}</li>
-                  <li {{action 'bindLayerScaleOf' layer 'fill'}}>{{t 'variable.representation.scaleOf.fill'}}</li>
+                  <li {{action 'bindMappingScaleOf' layer 'size'}}>{{t 'variable.mapping.scaleOf.size'}}</li>
+                  <li {{action 'bindMappingScaleOf' layer 'fill'}}>{{t 'variable.mapping.scaleOf.fill'}}</li>
+                </ul>
+              </div>
+              <div>
+                Symbol :
+                {{#x-dropdown.x-trigger
+                  dropdownPivot="top left"
+                  triggerPivot="bottom left"}}
+                  <a class="dropdown-trigger">
+                    {{t (concat "variable.mapping.shape." layer.mapping.shape)}}
+                    <i class="iconfont iconfont-angle-down"></i>
+                  </a>
+                {{/x-dropdown.x-trigger}}
+                <ul class="dropdown">
+                  <li {{action 'bindMappingShape' layer 'point'}}>{{t 'variable.mapping.shape.point'}}</li>
+                  <li {{action 'bindMappingShape' layer 'rect'}}>{{t 'variable.mapping.shape.rect'}}</li>
+                </ul>
+              </div>
+              <div>
+                {{color-picker value=layer.mapping.color}}
+              </div>
+              {{else if layer.mappedToSurface}}
+              <div>
+                Motif de remplissage :
+                {{#x-dropdown.x-trigger
+                  dropdownPivot="top left"
+                  triggerPivot="bottom left"}}
+                  <a class="dropdown-trigger">
+                    {{t (concat "variable.mapping.pattern." layer.mapping.pattern)}}
+                    <i class="iconfont iconfont-angle-down"></i>
+                  </a>
+                {{/x-dropdown.x-trigger}}
+                <ul class="dropdown">
+                  <li {{action 'bindMappingPattern' layer 'solid'}}>{{t 'variable.mapping.pattern.solid'}}</li>
+                  <li {{action 'bindMappingPattern' layer 'horizontal'}}>{{t 'variable.mapping.pattern.horizontal'}}</li>
+                  <li {{action 'bindMappingPattern' layer 'vertical'}}>{{t 'variable.mapping.pattern.vertical'}}</li>
+                  <li {{action 'bindMappingPattern' layer 'diagonal'}}>{{t 'variable.mapping.pattern.diagonal'}}</li>
                 </ul>
               </div>
               {{/if}}
@@ -110,12 +147,12 @@
               dropdownPivot="top left"
               triggerPivot="bottom left"}}
               <a class="dropdown-trigger">
-                <i class="iconfont iconfont-plus"></i> ajouter une variable
+                <i class="iconfont iconfont-plus"></i> {{t "general.addAVariable"}}
               </a>
             {{/x-dropdown.x-trigger}}
             <ul class="dropdown">
               {{#each model.data.columns as |col|}}
-                <li {{action 'addLayer' col}}>{{col.header.value}}</li>
+                <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta}}</li>
               {{/each}}
             </ul>
           </div>

@@ -3,6 +3,7 @@ import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
+import MappingFactory from 'mapp/models/layer-mapping';
 import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
@@ -77,7 +78,7 @@ export default Ember.Controller.extend({
   
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');
-  }.observes('model.graphLayers.[]', 'model.graphLayers.@each.changeIndicator'),
+  }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
   
   actions: {
     
@@ -87,7 +88,7 @@ export default Ember.Controller.extend({
       },
       
       addLayer(col) {
-        this.get('model.graphLayers').addObject(GraphLayer.create({
+        this.get('model.graphLayers').addObject(GraphLayer.createDefault({
           varCol: col,
           geoCols: this.autoDetectGeoCols()
         }));
@@ -97,12 +98,24 @@ export default Ember.Controller.extend({
         this.get('model.graphLayers').removeObject(layer);
       },
       
-      bindLayerType(layer, type) {
-        layer.set('type', type);
+      toggleLayerVisibility(layer) {
+        layer.toggleProperty('visible');
       },
       
-      bindLayerScaleOf(layer, type) {
-        layer.set('representation.scaleOf', type);
+      bindLayerMapping(layer, type) {
+        layer.set('mapping', MappingFactory.createInstance(type));
+      },
+      
+      bindMappingScaleOf(layer, type) {
+        layer.set('mapping.scaleOf', type);
+      },
+      
+      bindMappingPattern(layer, pattern) {
+        layer.set('mapping.pattern', pattern);
+      },
+      
+      bindMappingShape(layer, shape) {
+        layer.set('mapping.shape', shape);
       },
       
       onAskVersioning(type) {

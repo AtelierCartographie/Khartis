@@ -91,53 +91,6 @@ $spreadsheet-numbering-width: 40px !default;
       border-bottom: none;
     }
 
-    .cell .meta-icons {
-      @extend %flow;
-      @extend %solid;
-      @extend %vertical;
-      @extend %middle;
-      @extend %breakable-reverse;
-      @extend %right;
-      @extend %airy;
-
-      align-content: flex-start;
-      height: $spreadsheet-cell-header-height;
-      padding-top: 2px;
-      padding-bottom: 2px;
-
-      & *[class^="icon-"] {
-        @extend %solid;
-
-        position: relative; // tooltip
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: 1.8rem;
-        height: 1.8rem;
-
-        border-radius: .2em;
-        margin: 2px;
-        
-        &.geo, &.coord {
-          font-size: 1.9rem;
-        }
-        
-        &.geo::before {
-          content: " ";
-          background-color: white;
-          left: 0.1em;
-          top: 0;
-          width: 0.8em;
-          height: 0.8em;
-          position: absolute;
-          z-index: -1;
-          border-radius: 50%;
-        }
-
-      }
-    }
   }
 
   & > .body {

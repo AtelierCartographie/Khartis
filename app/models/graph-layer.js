@@ -2,102 +2,72 @@ import Ember from 'ember';
 import Struct from './struct';
 import {ColumnStruct} from './data';
 import GraphLayout from './graph-layout';
+import MappingFactory from './layer-mapping';
+import {SurfaceMapping, ShapeMapping} from './layer-mapping';
 /* global Em */
-
-let ShapeRepresentation = Struct.extend({
-  
-  shape: "point",
-  scaleOf: "size",
-  fill: "#F09010",
-  size: 4,
-  
-  export() {
-    return this._super({
-        shape: this.get('shape'),
-        scaleOf: this.get('scaleOf'),
-        fill: this.get('fill'),
-        size: this.get('size')
-    });
-  }
-
-});
-
-ShapeRepresentation.reopenClass({
-  
-    restore(json, refs = {}) {
-        let o = this._super(json, refs);
-        o.setProperties({
-            shape: json.shape,
-            scaleOf: json.scaleOf,
-            fill: json.fill,
-            size: json.size
-        });
-        return o;
-    }
-    
-});
 
 let GraphLayer = Struct.extend({
   
-  type: "shape",
   varCol: null,
   geoCols: null,
-  representation: null,
+  mapping: null,
+  visible: true,
   
-  changeIndicator: null,
+  _defferedChangeIndicator: null,
   
-  isOfTypeSurface: function() {
-    return this.get('type') === "surface";
-  }.property('type'),
+  mappedToSurface: function() {
+    return this.get('mapping') instanceof SurfaceMapping;
+  }.property('mapping'),
   
-  isOfTypeShape: function() {
-    return this.get('type') === "shape";
-  }.property('type'),
+  mappedToShape: function() {
+    return this.get('mapping') instanceof ShapeMapping;
+  }.property('mapping'),
   
   canBeSurface: function() {
-    console.log(this.get('geoCols')[0].get('meta.type'));
     return this.get('geoCols').length === 1
       && this.get('geoCols')[0].get('meta.type') === "geo";
   }.property('geoCols.[]'),
   
-  representationChange: function() {
-    this.notifyPropertyChange('changeIndicator');
-  }.observes('representation.scaleOf'),
+  deferredChange: Ember.debouncedObserver(
+    'mapping', 'mapping.scaleOf', 'mapping.pattern', 'mapping.shape', 'mapping.color', 'visible',
+    function() {
+      this.notifyPropertyChange('_defferedChangeIndicator');
+    },
+    100),
   
   scaleType() {
     return this.get('varCol.meta.type') === "numeric" ? "linear" : "ordinal";
   },
   
-  typeChange: function() {
-    if (this.get('type') === "shape" && this.get('representation') == null) {
-      this.set('representation', ShapeRepresentation.create());
-    } else {
-      this.set('representation', null); //TODO : surface representation
-    }
-  }.observes('type').on("init"),
-  
   export() {
     return this._super({
-        type: this.get('type'),
+        visible: this.get('visible'),
         varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
         geoCols: this.get('geoCols') ? this.get('geoCols').map( gc => gc.get('_uuid') ) : null,
-        representation: this.get('representation') != null ? this.get('representation').export() : null
+        mapping: this.get('mapping') != null ? this.get('mapping').export() : null
     });
   }
 
 });
-
 GraphLayer.reopenClass({
   
     restore(json, refs = {}) {
         let o = this._super(json, refs);
         o.setProperties({
-            type: json.type,
+            visible: json.visible,
             varCol: json.varCol ? refs[json.varCol] : null,
             geoCols: json.geoCols ? json.geoCols.map( gc => refs[gc] ) : null,
-            representation: json.representation ? ShapeRepresentation.restore(json.representation, refs) : null
+            mapping: MappingFactory.restoreInstance(json.mapping, refs)
         });
         return o;
+    },
+    
+    createDefault(props) {
+      let o = this.create(props);
+      o.setProperties({
+        mapping: MappingFactory.createInstance("shape")
+      });
+      return o;
     }
     
 });

@@ -86,6 +86,7 @@
     }
   },
   "dependencies": {
+    "textures": "^1.0.3",
     "topojson": "^1.6.24"
   }
 }

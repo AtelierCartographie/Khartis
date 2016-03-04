@@ -75,7 +75,6 @@ body {
 .flow, %flow {
     @extend %fluid;
     display: flex;
-    z-index: 0;
 
     &.space-between, &%space-between {
         justify-content: space-between;

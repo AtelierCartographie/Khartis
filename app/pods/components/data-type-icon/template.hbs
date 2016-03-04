@@ -1,0 +1,11 @@
+{{#if (x-eq meta.type 'text')}}
+<span class="icon-type filled success">T</span>
+{{else if (x-eq meta.type 'numeric')}}
+<span class="icon-type filled {{if isValid 'success' 'danger'}}">N</span>
+{{else if (x-eq meta.type 'geo')}}
+<span class="icon-type geo {{if isValid 'text-success' 'text-danger'}}"><i class="iconfont iconfont-globe"></i></span>
+{{else if (x-some (x-eq meta.type 'lat') (x-eq meta.type 'lat_dms'))}}
+<span class="icon-type coord {{if isValid 'text-success' 'text-danger'}}"><i class="iconfont iconfont-map-marker"></i></span>
+{{else if (x-some (x-eq meta.type 'lon') (x-eq meta.type 'lon_dms'))}}
+<span class="icon-type coord {{if isValid 'text-success' 'text-danger'}}"><i class="iconfont iconfont-map-marker"></i></span>
+{{/if}}

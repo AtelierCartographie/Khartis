@@ -8,10 +8,14 @@ export default {
     "Import": "Importer",
     "Continue": "Continuer",
     "Validate": "Valider",
-    "or": "ou"
+    "or": "ou",
+    "gradientOf": "Dégradé de",
+    "pageLayout": "Mise en page",
+    "addAVariable": "ajouter une variable",
+    "contextualHelp": "Aide contextuelle"
   },
   
-  "variable.representation": {
+  "variable.mapping": {
     "type": {
       "shape": "forme",
       "surface": "surface"
@@ -19,6 +23,16 @@ export default {
     "scaleOf": {
       "size": "taille",
       "fill": "couleur"
+    },
+    "pattern": {
+      "solid": "plein",
+      "horizontal": "hachurage horizontal",
+      "vertical": "hachurage vertical",
+      "diagonal": "hachurage diagonal"
+    },
+    "shape": {
+      "point": "point",
+      "rect": "carré"
     }
   },
   

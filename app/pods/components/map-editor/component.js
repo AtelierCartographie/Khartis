@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import d3 from 'd3';
 import projector from 'mapp/utils/projector';
+import d3lper from 'mapp/utils/d3lper';
 import GraphLayout from 'mapp/models/graph-layout';
 import {geoMatch} from 'mapp/utils/world-dictionary';
+import MaskPattern from 'mapp/utils/mask-pattern';
 /* global Em */
 
 export default Ember.Component.extend({
@@ -45,7 +47,7 @@ export default Ember.Component.extend({
         '$height': this.$().parent().height()
       });
     };
-    setInterval($size.bind(this), 800);
+    setInterval($size, 800);
     $size();
     // ---------
 		
@@ -219,13 +221,13 @@ export default Ember.Component.extend({
 			.classed("feature", true);
     
   },
-   
+  
   drawLayers: function() {
     
     let self = this,
         data = this.get('graphLayers')
-          .filter( gl => gl.get('varCol') )
-          .sort( (a,b) => a.get('type') === "surface" ? -1:1 );
+          .filter( gl => gl.get('visible') && gl.get('varCol') )
+          .sort( (a,b) => a.get('mappedToSurface') ? -1:1 );
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
@@ -237,11 +239,12 @@ export default Ember.Component.extend({
     
     sel.exit().remove();
     
-    sel.each(function(d) {
+    sel.each(function(d, index) {
+      d.index = index;
       self.mapData(d3.select(this), d);
     });
     
-  }.observes('graphLayers.[]', 'graphLayers.@each.type', 'graphLayers.@each.changeIndicator'),
+  }.observes('graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
   
 	mapData: function(d3Layer, graphLayer) {
     
@@ -268,9 +271,9 @@ export default Ember.Component.extend({
         
       }).filter( d => d !== undefined );
       
-      if (graphLayer.type === "surface") {
+      if (graphLayer.get('mappedToSurface')) {
         this.mapPath(d3Layer, data, graphLayer);
-      } else if (graphLayer.type === "shape") {
+      } else if (graphLayer.get('mappedToShape')) {
         this.mapShape(d3Layer, data, graphLayer);
       }
       
@@ -321,12 +324,26 @@ export default Ember.Component.extend({
       
     let uses = d3Layer.selectAll(".feature")
       .data(data);
+    
+    let maskUrl = "none";
+    if (!(graphLayer.get('mapping.pattern') === "solid")) {
       
+      let t = MaskPattern.lines({
+        orientation: [ graphLayer.get('mapping.pattern')  ]
+      });
+      this.d3l().call(t);
+      maskUrl = `url(${t.url()})`;
+      
+    }
+
     uses.enter().append("use")
       .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
 			.attr("stroke", this.get("graphLayout.stroke"))
-      .style("fill", d => { return d.value != null ? scale(d.value) : "none"; } )
+      .style({
+        "fill": d => { return d.value != null ? scale(d.value) : "none"; },
+        "mask": maskUrl
+      })
 			.classed("feature", true);
 
 		uses.exit().remove();
@@ -344,24 +361,65 @@ export default Ember.Component.extend({
     
     let centroidSel = d3Layer
 			.selectAll(".feature")
-			.attr("cx", d => projection(d.point.geometry.coordinates)[0] )
-      .attr("cy", d => projection(d.point.geometry.coordinates)[1] )
+			.attr("transform", d => d3lper.translate(
+        projection(d.point.geometry.coordinates)[0],
+        projection(d.point.geometry.coordinates)[1]
+      ))
       .data(data);
       
-    let shape = centroidSel.enter()
-      .append("circle")
+    let g = centroidSel.enter()
+      .append("g")
 			.classed("feature", true)
-      .attr("cx", d => projection(d.point.geometry.coordinates)[0] )
-      .attr("cy", d => projection(d.point.geometry.coordinates)[1] );
+      .attr("transform", d => d3lper.translate(
+        projection(d.point.geometry.coordinates)[0],
+        projection(d.point.geometry.coordinates)[1]
+      ));
+    
+    let shape,
+        sizeFn;
+        
+    if (graphLayer.get('mapping.shape') === "point") {
       
-    if (graphLayer.get('representation.scaleOf') === "size") {
+      shape = g.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0);
+        
+      sizeFn = function(calc) {
+        return function() {
+          this.attr("r", d => calc(d.value));
+        };
+      };
+      
+    } else if (graphLayer.get('mapping.shape') === "rect") {
+      
+      shape = g.append("rect");
+      sizeFn = function(calc) {
+         return function() {
+            let size = d => calc(d.value)*2,
+                shift = d => -calc(d.value);
+            this.attr({
+              width: size,
+              height: size,
+              x: shift,
+              y: shift
+            });
+         };
+      };
+      
+    }
+    
+    if (graphLayer.get('mapping.scaleOf') === "size") {
+      
       scale.range([4, 10]);
-      shape.attr("r", d => d.value != null ? scale(d.value): 1)
-        .attr("fill", graphLayer.get('representation.fill'));
-    } else if (graphLayer.get('representation.scaleOf') === "fill") {
-      scale.range(["#29aadf", "#f9aa0f"]);
-      shape.attr("r", graphLayer.get('representation.size'))
-        .attr("fill", d => d.value != null ? scale(d.value): "none");
+      shape.attr("fill", graphLayer.get('mapping.color'))
+           .call(sizeFn( v => v != null ? scale(v) : 0 ));
+           
+    } else if (graphLayer.get('mapping.scaleOf') === "fill") {
+      
+      scale.range([graphLayer.get('mapping.color'), "#f9aa0f"]);
+      shape.attr("fill", d => d.value != null ? scale(d.value): "none")
+           .call(sizeFn( v => graphLayer.get('mapping.size') ));
+           
     }
 
 		centroidSel.exit().remove();
