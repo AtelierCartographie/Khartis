@@ -1,40 +1,96 @@
-<div class="vertical airy padded flow import-step1">
-    <div class="padded">Rapport d'importation</div>
+<div class="report">
+    <h1>Rapport d'importation</h1>
+
     <div class="vertical padded flow">
-      <div>
-        <div><b>Rapport d'importation :</b></div>
-        <ul>
-          <li>{{t "import.rowCount" count=model.project.data.rows.length}}</li>
-          <li>{{t "import.colCount" count=model.project.data.columns.length}}</li>
-        </ul>
-      </div>
-      {{#unless (x-some hasWarnings hasErrors)}}
-        {{t "import.success"}}
-      {{else}}
-        {{#if hasWarnings}}
         <div>
-          {{t "import.hasWarning"}} :
-          <ul>
-          {{#each model.project.report.warnings as |warning|}}
-            <li>{{t warning}}</li>
-          {{/each}}
-          </ul>
-          </div>
-        {{/if}}
-        {{#if hasErrors}}
-        <div>
-          {{t "import.hasError"}} :
-          <ul>
-          {{#each model.project.report.errors as |error|}}
-             <li>{{t error}}</li>
-          {{/each}}
-          </ul>
+
+            <div>
+                <h2>Résumé</h2>
+                <ul>
+                    <li>{{t "import.rowCount" count=model.project.data.rows.length}}</li>
+                    <li>{{t "import.colCount" count=model.project.data.columns.length}}</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2>Preview</h2>
+                <table class="report-preview">
+                    <thead>
+                    <tr>
+                        <th>Col 1</th>
+                        <th>Col 2</th>
+                        <th>Col 3</th>
+                        <th>Col 4</th>
+                        <th>Col 5</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
         </div>
-        {{/if}}
-      {{/unless}}
-    </div>
-    <div class="horizontal padded space-between flow">
-      {{x-button label=(t "general.Back") class="filled default" action=(action 'back')}}
-      {{x-button label=(t "general.Next") class="filled primary" disabled=hasErrors action=(action 'finalize')}}
+
+        <div class="report-message">
+
+          {{#unless (x-some hasWarnings hasErrors)}}
+            {{t "import.success"}}
+          {{else}}
+            {{#if hasWarnings}}
+                <div>
+                  {{t "import.hasWarning"}} :
+                    <ul>
+                      {{#each model.project.report.warnings as |warning|}}
+                          <li>{{t warning}}</li>
+                      {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+            {{#if hasErrors}}
+                <div>
+                  {{t "import.hasError"}} :
+                    <ul>
+                      {{#each model.project.report.errors as |error|}}
+                          <li>{{t error}}</li>
+                      {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+          {{/unless}}
+
+        </div>
+
     </div>
 </div>
+
+{{x-button label=(t "general.Back") class="filled default btn-prev" action=(action 'back')}}
+{{x-button label=(t "general.Next") class="filled primary btn-next" disabled=hasErrors action=(action 'next')}}

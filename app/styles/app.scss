@@ -68,9 +68,8 @@ footer {
 
 
 .menu-left {
-
   width: 5rem;
-  transition:width 150ms ease-out;
+  transition: width 150ms ease-out;
 
   .tool {
     @extend %flow;
@@ -104,7 +103,6 @@ footer {
 
 
 .header-menu {
-
   display: flex;
   align-items: stretch;
   font-size: 2.3rem;
@@ -130,24 +128,21 @@ footer {
 
 
 .help {
-
-  $width:400px;
-
+  $width: 400px;
   width: 0;
-  overflow:hidden;
+  overflow: hidden;
   position: relative;
-
   display: flex;
   flex-direction: column;
-  transition:width 150ms ease-out;
+  transition: width 150ms ease-out;
 
   .inner {
     background-color: #FFF;
-    padding:2em;
+    padding: 2em;
     width: $width;
   }
 
-  h2{  margin: 0; }
+  h2 { margin: 0; }
 
   &.visible {
     width: $width;
@@ -160,51 +155,174 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex:1;
+  flex: 1;
   background-color: color(default);
 }
 
+
 .intro-title {
   margin: 0 0 7.5rem;
-  font-size:3.5rem;
-  color:greys(70%);
+  font-size: 3.5rem;
+  color: greys(70%);
   font-weight: normal;
 
   span {
-    font-weight:bold;
-    font-size:3.7rem;
+    font-weight: bold;
+    font-size: 3.7rem;
     text-transform: uppercase;
   }
 }
+
 
 .intro-actions {
   display: flex;
   justify-content: center;
-  width:80%;
+  width: 80%;
 
   .button {
     position: relative;
-    margin:0 2rem;
-    padding:2rem 3rem;
+    margin: 0 2rem;
+    padding: 2rem 3rem;
   }
 
   .button-label {
-    font-size:2.5rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
   }
 
   small {
-    font-size:1.6rem;
+    font-size: 1.6rem;
     position: absolute;
-    bottom:-2.5rem;
-    left:0;
-    right:0;
+    bottom: -2.5rem;
+    left: 0;
+    right: 0;
     text-align: right;
-    text-transform:none;
-    color:greys(70%);
+    text-transform: none;
+    color: greys(70%);
   }
 
   small span {
-    font-weight:bold;
+    font-weight: bold;
   }
+}
+
+
+.step-import {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+
+  .importer,
+  .report {
+    flex: 1;
+    padding: 5rem 0;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    margin-bottom: 2.5rem;
+  }
+
+  .csv-description {
+    margin: 0 auto;
+    max-width: 500px;
+    margin-bottom: 5rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .import-button {
+    font-size: 2rem;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .import-samples {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 150px;
+    background-color: #2B2B2B;
+    position: relative;
+
+    h2 {
+      color: #979797;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2B2B2B;
+      width: 100px;
+      height: 100px;
+      background-color: #979797;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        margin-right: 2rem;
+      }
+
+    }
+
+  }
+
+  .btn-prev,
+  .btn-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .btn-prev {
+    left: 5%;
+  }
+  .btn-next {
+    right: 5%;
+  }
+
+}
+
+
+.report {
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+}
+
+
+.report-preview {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(#FFF, 0), rgba(#FFF, 1));
+  }
+
 }

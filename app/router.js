@@ -13,6 +13,8 @@ Router.map(function() {
       this.route("import", function() {
         this.route("step1");
         this.route("step2");
+        this.route("step3");
+        this.route("step4");
       });
       this.route("test-data");
     });

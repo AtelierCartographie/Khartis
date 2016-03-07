@@ -1,20 +1,39 @@
-<div class="vertical airy padded flow import-step1">
-    <div class="padded">Ici un paragraphe sur le formattage des fichiers csv</div>
+<div class="importer">
+
+    <h1>Importation des données</h1>
+
+    <p class="csv-description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, iste, voluptas! Eos fugiat
+        numquam quo sunt. Ad aliquam assumenda autem cum debitis dolorem ea earum eligendi illo, ipsa, minus odit
+        placeat quas soluta tempore voluptate voluptates.
+    </p>
+
+  {{file-loader label=(t "import.editor.upload.file") class="text-primary import-button primary filled" onContentLoaded="loadCsv"}}
+
     <div class="vertical padded flow">
         <div class="label">
-          {{t "import.editor.paste.csv"}} {{t "general.or"}}
-          {{file-loader label=(t "import.editor.upload.file") class="button text-primary import-button" onContentLoaded="loadCsv"}}
+          {{t "general.or"}} {{t "import.editor.paste.csv"}}
         </div>
-        {{ivy-codemirror value=model.csv lineNumbers=true}}
+      {{ivy-codemirror value=model.csv lineNumbers=true}}
     </div>
-    {{#if importReport.length}}
-    <ul>
-      {{#each importReport as |err|}}
-      <li>{{err}}</li>
-      {{/each}}
-    </ul>
-    {{/if}}
-    <div class="horizontal padded right flow">
-      {{x-button label=(t "general.Next") class="filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
-    </div>
+
+  {{#if importReport.length}}
+      <ul>
+        {{#each importReport as |err|}}
+            <li>{{err}}</li>
+        {{/each}}
+      </ul>
+  {{/if}}
+
 </div>
+
+<div class="import-samples">
+    <h2>Utilisez un jeu de test</h2>
+    <ul>
+        <li>Vide</li>
+        <li>Jeu A</li>
+        <li>Jeu B</li>
+    </ul>
+</div>
+
+{{x-button label=(t "general.Next") class="filled primary btn-next" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
