@@ -1,0 +1,61 @@
+<div class="navheader">
+  {{#x-button class="default btn-prev" invisible=(x-not model.project.report) action=(action 'back')}}
+    <i class="iconfont iconfont-long-arrow-left"></i> {{t "import.Back"}}
+  {{/x-button}}
+  {{#x-button class="primary btn-next" disabled=hasErrors action=(action 'next')}}
+    {{t "general.chooseMap"}} <i class="iconfont iconfont-long-arrow-right"></i>
+  {{/x-button}}
+</div>
+<div class="report">
+    <h1>{{t "import.qualifyData"}}</h1>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at cum magni nostrum, odit quam sed? Autem et
+        fugit, ipsum placeat rem ullam vero?
+    </p>
+
+    <div class="horizontal padded flow">
+        <div class="fluid">
+          <ul class="column-list">
+            {{#each model.project.data.columns as |col|}}
+              <li class="{{if (x-eq selectedColumn col) 'selected'}}" {{action 'selectColumn' col}}>
+                  <span class="label">{{col.header.value}}</span>
+                  <div class="column-actions">
+                      <span>{{data-type-icon meta=col.meta}}</span>
+                      <span class="caret"><i class="iconfont iconfont-angle-right"></i></span>
+                  </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{#if selectedColumn}}
+        <div class="solid w6 column-configuration">
+          <div class="vertical padded flow">
+            <div class="column-type horizontal airy flow">
+              <div>{{t "general.dataType"}} : </div>
+              <div>
+                {{#x-dropdown.x-trigger
+                  dropdownPivot="top left"
+                  triggerPivot="bottom left"}}
+                  <a class="dropdown-trigger">
+                    {{t (concat "variable.meta.type." selectedColumn.meta.type)}}
+                    <i class="iconfont iconfont-angle-down"></i>
+                  </a>
+                {{/x-dropdown.x-trigger}}
+                <ul class="dropdown">
+                  <li {{action 'bindColumnType' selectedColumn 'numeric'}}>{{t 'variable.meta.type.numeric'}}</li>
+                  <li {{action 'bindColumnType' selectedColumn 'text'}}>{{t 'variable.meta.type.text'}}</li>
+                  <li {{action 'bindColumnType' selectedColumn 'lat'}}>{{t 'variable.meta.type.lat'}}</li>
+                  <li {{action 'bindColumnType' selectedColumn 'lon'}}>{{t 'variable.meta.type.lon'}}</li>
+                  <li {{action 'bindColumnType' selectedColumn null}}>{{t 'variable.meta.type.auto'}}</li>
+                </ul>
+            </div>
+            </div>
+            {{#x-button class="filled danger" action=(action 'removeColumn' selectedColumn)}}
+              <i class="iconfont iconfont-close"></i> Supprimer cette colonne
+            {{/x-button}}
+          </div>
+        </div>
+        {{/if}}
+    </div>
+</div>

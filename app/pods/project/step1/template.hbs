@@ -1,0 +1,38 @@
+<div class="importer">
+
+    <h1>Importation des données</h1>
+
+    <p class="csv-description">
+        Ici un texte bref sur le rôle de l'importation
+    </p>
+
+    <div class="vertical airy padded filled default flow">
+      <div class="label">
+        {{x-capitalize (t "import.editor.paste.csv")}} {{t "general.or"}} {{file-loader label=(t "import.editor.upload.file") class="text-primary import-button" onContentLoaded="loadCsv"}}
+      </div>
+      <div class="filled">
+      {{ivy-codemirror value=model.csv lineNumbers=true}}
+      </div>
+      {{#x-button class="text-success btn-next" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+        {{t "import.startImport"}} <i class="iconfont iconfont-long-arrow-right"></i>
+      {{/x-button}}
+    </div>
+
+  {{#if importReport.length}}
+      <ul>
+        {{#each importReport as |err|}}
+            <li>{{err}}</li>
+        {{/each}}
+      </ul>
+  {{/if}}
+
+</div>
+
+<div class="import-samples">
+    <h2>Utilisez un jeu de test</h2>
+    <ul>
+        {{#each testDataSets as |set|}}
+        <li class="text-center" {{action 'selectDataSet' set}}>{{set.name}}</li>
+        {{/each}}
+    </ul>
+</div>
