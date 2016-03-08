@@ -16,7 +16,8 @@ export default {
     "chooseMap": "Choisir une carte",
     "dataType": "type de données",
     "label": "libellé",
-    "none": "aucun"
+    "none": "aucun",
+    "summary": "summary"
   },
   
   "variable.meta": {
@@ -72,7 +73,20 @@ export default {
     "displayedVars": "Variables représentées"
   },
   
+  "success": {
+    "typeCoherency": "Toutes les cellules sont correctement formatées"
+  },
+  
+  "warning": {
+    "typeCoherency": "Certaines cellules contiennent des données incompatibles avec le type de colonne sélectionné"
+  },
+  
+  "error": {
+    "noGeoColumn": "Aucune colonne géo-référencée ou lat / lon n'a été trouvée. Veuillez qualifier vos données"
+  },
+  
   "import": {
+    "report": "Rapport d'importation",
     "editor.paste.csv": "collez ici le csv à importer",
     "editor.upload.file": "téléversez un fichier",
     "startImport": "Lancer l'importation",

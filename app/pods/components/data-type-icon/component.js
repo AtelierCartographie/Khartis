@@ -6,8 +6,11 @@ export default Ember.Component.extend({
     tagName: "span",
     
     meta: null,
+    
+    inconsistency: 0,
+    
     isValid: function() {
-        return this.get('meta.probability') > 0.7;
-    }.property('meta.probability')
+        return this.get('inconsistency') === 0;
+    }.property('inconsistency')
     
 });

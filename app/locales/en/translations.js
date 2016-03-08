@@ -16,7 +16,8 @@ export default {
     "chooseMap": "Choose a map",
     "dataType": "data type",
     "label": "label",
-    "none": "none"
+    "none": "none",
+    "summary": "summary"
   },
   
   "variable.meta": {
@@ -48,7 +49,8 @@ export default {
     },
     "shape": {
       "point": "point",
-      "rect": "rect"
+      "rect": "rect",
+      "text": "text"
     }
   },
   
@@ -71,7 +73,20 @@ export default {
     "displayedVars": "Displayed variables"
   },
   
+  "success": {
+    "typeCoherency": "All cells are corectly formatted"
+  },
+  
+  "warning": {
+    "typeCoherency": "Some cells contains data that differs from the selected column type"
+  },
+  
+  "error": {
+    "noGeoColumn": "You must specify at least one georeferenced column or lat / lon columns. Please qualify your data."
+  },
+  
   "import": {
+    "report": "Import report",
     "editor.paste.csv": "paste here the csv to import",
     "editor.upload.file": "upload a file",
     "startImport": "Start import",

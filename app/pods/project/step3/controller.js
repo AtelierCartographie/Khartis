@@ -9,6 +9,18 @@ export default Ember.Controller.extend({
   },
   
   selectedColumn: null,
+  
+  //TODO : rewrite this method
+  hasGeoColumns: function() {
+    let cols = this.get('model.project.data.geoColumns');
+    return (cols.length > 0 && cols.some( c => c && c.get('meta.type') === "geo" ))
+      || (cols.length === 2 && cols[0] && cols[0].get('meta.type') === "lat" && cols[1] && cols[1].get('meta.type') === "lon")
+      || (cols.length === 2 && cols[0] && cols[0].get('meta.type') === "lon" && cols[1] && cols[1].get('meta.type') === "lat");
+  }.property('model.project.data.geoColumns'),
+  
+  displayWarningForType: function() {
+    return this.get('selectedColumn.inconsistency') > 0;
+  }.property('selectedColumn.inconsistency'),
 
   actions: {
     

@@ -13,8 +13,6 @@ let GraphLayer = Struct.extend({
   mapping: null,
   visible: true,
   
-  _defferedChangeIndicator: null,
-  
   mappedToSurface: function() {
     return this.get('mapping') instanceof SurfaceMapping;
   }.property('mapping'),
@@ -36,7 +34,7 @@ let GraphLayer = Struct.extend({
     'mapping', 'mapping.scaleOf', 'mapping.pattern', 'mapping.shape',
     'mapping.labelCol', 'mapping.color', 'visible',
     function() {
-      this.notifyPropertyChange('_defferedChangeIndicator');
+      this.notifyDefferedChange();
     },
     100),
   

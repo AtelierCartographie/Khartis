@@ -2,6 +2,13 @@ import Ember from 'ember';
 
 let Struct = Ember.Object.extend({
    _uuid: null,
+   
+   _defferedChangeIndicator: null,
+   
+   notifyDefferedChange() {
+     this.set('_defferedChangeIndicator', (new Date()).getTime()+Math.random());
+   },
+   
    init() {
       if (!this.get('_uuid')) {
           this.set('_uuid', Struct._nextId.next().value);

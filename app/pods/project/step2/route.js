@@ -6,6 +6,12 @@ export default Ember.Route.extend({
     this.render({ outlet: "main" });
   },
   
+  redirect(model) {
+    if (!model.get('project.report')) {
+      this.transitionTo('project.step3');
+    }
+  },
+  
   model() {
     return this.modelFor('project');
   },

@@ -47,6 +47,30 @@ RowStruct.reopenClass({
     }
 });
 
+let ColumnMeta = Struct.extend({
+  type: null,
+  inconsistency: null,
+  manual: false,
+  
+  export() {
+    return this._super({
+      type: this.get('type'),
+      manual: this.get('manual')
+    });
+  }
+});
+
+ColumnMeta.reopenClass({
+  restore(json, refs) {
+      let o = this._super(json, refs);
+      o.setProperties({
+          type: json.type,
+          manual: json.manual
+      });
+      return o;
+    }
+});
+
 let ColumnStruct = Struct.extend({
   
     cells: null, //not exported, visitor pattern
@@ -56,12 +80,11 @@ let ColumnStruct = Struct.extend({
     init() {
       this._super();
       this.set('cells', Ember.A());
-      this.set('meta', {
+      this.set('meta', ColumnMeta.create({
         type: "text",
-        probability: 1,
-        precision: 6,
+        inconsistency: 1,
         manual: false
-      });
+      }));
       this.set('layout', {
         sheet: {
           width: null
@@ -79,6 +102,13 @@ let ColumnStruct = Struct.extend({
       return this.get('cells').find( c => c.get('row.header') );
     }.property('cells.[]'),
     
+    deferredChange: Ember.debouncedObserver(
+      'cells.@each.value', 'meta.type', 'meta.manual', 
+      function() {
+        this.notifyDefferedChange();
+      },
+      100),
+    
     autoDetectDataType: Ember.debouncedObserver('cells.@each.value', 'meta.manual', function() {
         
         if (!this.get('meta.manual')) {
@@ -94,7 +124,7 @@ let ColumnStruct = Struct.extend({
           };
           
           this.get('cells')
-            .filter( c => !c.get('row.header'))
+            .filter( c => !c.get('row.header') && !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
               if (/^[\d\,\s]+(\.\d+)?$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
@@ -128,54 +158,50 @@ let ColumnStruct = Struct.extend({
           }
           
           this.setProperties({
-            'meta.type': type,
-            'meta.probability': p[type]
+            'meta.type': type
           });
           
         }
         
     }, 100),
     
-    calculateDataCoherency: function() {
+    incorrectCells: function() {
+      console.log('incorrectCells');
+      let p = 0,
+          inconsistency = {
+            "geo": (v) => geoMatch(v),
+            "text": (v) => true,
+            "numeric": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
+            "lat": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
+            "lon": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
+            "lat_dms": (v) => (/^\-?1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/).test(v),
+            "lon_dms": (v) => (/^\-?1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/).test(v)
+          },
+          checkFn = inconsistency[this.get('meta.type')];
       
-      if (this.get('meta.manual')) {
+      let cells = this.get('cells')
+        .filter( c => !c.get('row.header') && !Ember.isEmpty(c.get('value')) )
+        .filter( (c, i, arr) => {
+          return !checkFn(c.get('value')); 
+        });
         
-        let p = 0,
-            coherency = {
-              "text": (v) => true,
-              "numeric": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
-              "lat": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
-              "lon": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
-              "lat_dms": (v) => (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/).test(v),
-              "lon_dms": (v) => (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/).test(v)
-            },
-            checkFn = coherency[this.get('meta.type')];
-        
-        this.get('cells')
-          .filter( c => !c.get('row.header'))
-          .forEach( (c, i, arr) => {
-            p += checkFn(c.get('value')) ? 1/arr.length : 0; 
-          });
-          
-        this.set('meta.probability', p);
-          
-      }
+      return cells;
       
-    }.observes('meta.type', 'meta.manual'),
+    }.property('_defferedChangeIndicator'),
+    
+    inconsistency: function() {
+      return this.get('incorrectCells.length');
+    }.property('incorrectCells.length'),
     
     export() {
-        return this._super({
-            layout: {
-              sheet: {
-                width: this.get('layout.sheet.width')
-              }
-            },
-            meta: {
-              type: this.get('meta.type'),
-              probability: this.get('meta.probability'),
-              manual:  this.get('meta.manual')
+      return this._super({
+          layout: {
+            sheet: {
+              width: this.get('layout.sheet.width')
             }
-        });
+          },
+          meta: this.get('meta').export()
+      });
     }
 });
 
@@ -188,7 +214,7 @@ ColumnStruct.reopenClass({
                 width: json.layout.sheet.width
               }
             },
-            meta: json.meta
+            meta: ColumnMeta.restore(json.meta, refs)
         });
         return o;
     }
@@ -272,6 +298,37 @@ let DataStruct = Struct.extend({
     body: function() {
       return this.get('rows').filter( r => !r.get('header') );
     }.property('rows.[]'),
+    
+    geoColumns: function() {
+      
+      let sortedCols = this.get('columns').filter( 
+        col => ["geo", "lat", "lon", "lat_dms", "lon_dms"].indexOf(col.get('meta.type')) >= 0
+      ).sort( (a,b) => a.get('inconsistency') > b.get('inconsistency') ? 1 : -1 );
+      
+      if (sortedCols[0]) {
+        switch (sortedCols[0].get('meta.type')) {
+          case "geo":
+            return [sortedCols[0]];
+          case "lat":
+            let lon = sortedCols.find( c => c.get('meta.type') === "lon" );
+            return [lon, sortedCols[0]];
+          case "lon":
+            let lat = sortedCols.find( c => c.get('meta.type') === "lat" );
+            return [sortedCols[0], lat];
+          case "lat_dms":
+            let lonDms = sortedCols.find( c => c.get('meta.type') === "lon_dms" );
+            return [lonDms, sortedCols[0]];
+          case "lon_dms":
+            let latDms = sortedCols.find( c => c.get('meta.type') === "lat_dms" );
+            return [sortedCols[0], latDms];
+          default:
+            throw new Error(`Unknow geo colum type ${sortedCols[0].get('meta.type')}`);
+        }
+      }
+      
+      return [];
+        
+    }.property('columns.[]', 'columns.@each._defferedChangeIndicator'),
     
     size: function() {
       return this.get('rows').length * this.get('columns').length;

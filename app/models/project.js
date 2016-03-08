@@ -13,15 +13,12 @@ let Project = Struct.extend({
     
     graphLayers: null,
     
-    geoColumns: null,
-    
     report: null,
     
     init() {
       this._super();
       this.setProperties({
         'graphLayout': GraphLayout.create(),
-        'geoColumns': Em.A(),
         'graphLayers': Em.A()
       });
     },

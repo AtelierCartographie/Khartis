@@ -45,37 +45,6 @@ export default Ember.Controller.extend({
     
   },
   
-  autoDetectGeoCols() {
-    
-   let sortedCols = this.get('model.data.columns').filter( 
-    col => ["geo", "lat", "lon", "lat_dms", "lon_dms"].indexOf(col.get('meta.type')) >= 0
-   ).sort( (a,b) => a.get('probability') > b.get('probability') ? 1 : -1 );
-   
-   if (sortedCols[0]) {
-     switch (sortedCols[0].get('meta.type')) {
-       case "geo":
-        return [sortedCols[0]];
-       case "lat":
-        let lon = sortedCols.find( c => c.get('meta.type') === "lon" );
-        return [lon, sortedCols[0]];
-       case "lon":
-        let lat = sortedCols.find( c => c.get('meta.type') === "lat" );
-        return [sortedCols[0], lat];
-       case "lat_dms":
-        let lonDms = sortedCols.find( c => c.get('meta.type') === "lon_dms" );
-        return [lonDms, sortedCols[0]];
-       case "lon_dms":
-        let latDms = sortedCols.find( c => c.get('meta.type') === "lat_dms" );
-        return [sortedCols[0], latDms];
-       default:
-        throw new Error(`Unknow geo colum type ${sortedCols[0].get('meta.type')}`);
-     }
-   }
-   
-   return [];
-    
-  },
-  
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
@@ -90,7 +59,7 @@ export default Ember.Controller.extend({
       addLayer(col) {
         this.get('model.graphLayers').addObject(GraphLayer.createDefault({
           varCol: col,
-          geoCols: this.autoDetectGeoCols()
+          geoCols: this.get('model.data.geoColumns')
         }));
       },
       

@@ -1,8 +1,8 @@
 <div class="navheader">
   {{#x-button class="default btn-prev" invisible=(x-not model.project.report) action=(action 'back')}}
-    <i class="iconfont iconfont-long-arrow-left"></i> {{t "import.Back"}}
+    <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.Back"}}
   {{/x-button}}
-  {{#x-button class="primary btn-next" disabled=hasErrors action=(action 'next')}}
+  {{#x-button class="primary btn-next" invisible=(x-not hasGeoColumns) action=(action 'next')}}
     {{t "general.chooseMap"}} <i class="iconfont iconfont-long-arrow-right"></i>
   {{/x-button}}
 </div>
@@ -14,6 +14,12 @@
         fugit, ipsum placeat rem ullam vero?
     </p>
 
+    <div class="report-message">
+    {{#unless hasGeoColumns}}
+      <i class="iconfont iconfont-times-circle text-danger"></i> {{t "error.noGeoColumn"}}
+    {{/unless}}
+    </div>
+
     <div class="horizontal padded flow">
         <div class="fluid">
           <ul class="column-list">
@@ -21,7 +27,7 @@
               <li class="{{if (x-eq selectedColumn col) 'selected'}}" {{action 'selectColumn' col}}>
                   <span class="label">{{col.header.value}}</span>
                   <div class="column-actions">
-                      <span>{{data-type-icon meta=col.meta}}</span>
+                      <span>{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</span>
                       <span class="caret"><i class="iconfont iconfont-angle-right"></i></span>
                   </div>
               </li>
@@ -30,9 +36,9 @@
         </div>
         {{#if selectedColumn}}
         <div class="solid w6 column-configuration">
-          <div class="vertical padded flow">
-            <div class="column-type horizontal airy flow">
-              <div>{{t "general.dataType"}} : </div>
+          <div class="vertical padded airy middle flow">
+            <div class="column-type horizontal airy center middle solid flow">
+              <div><b>{{x-capitalize (t "general.dataType")}} : </b></div>
               <div>
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
@@ -49,11 +55,28 @@
                   <li {{action 'bindColumnType' selectedColumn 'lon'}}>{{t 'variable.meta.type.lon'}}</li>
                   <li {{action 'bindColumnType' selectedColumn null}}>{{t 'variable.meta.type.auto'}}</li>
                 </ul>
+             </div>
             </div>
+            {{#if displayWarningForType}}
+            <div class="solid padded">
+              <div class="padded filled warning">
+                <i class="iconfont iconfont-warning"></i>
+                {{t "warning.typeCoherency"}}
+              </div>
             </div>
-            {{#x-button class="filled danger" action=(action 'removeColumn' selectedColumn)}}
-              <i class="iconfont iconfont-close"></i> Supprimer cette colonne
-            {{/x-button}}
+            {{else}}
+            <div class="solid padded">
+              <div class="padded filled success">
+                <i class="iconfont iconfont-check-circle"></i>
+                {{t "success.typeCoherency"}}
+              </div>
+            </div>
+            {{/if}}
+            <div class="horizontal center solid flow">
+              {{#x-button class="default" action=(action 'removeColumn' selectedColumn)}}
+                <i class="iconfont iconfont-close"></i> Supprimer cette colonne
+              {{/x-button}}
+            </div>
           </div>
         </div>
         {{/if}}
