@@ -9,19 +9,18 @@ Router.map(function() {
 
     this.route("index", {path: "/"});
 
-    this.route("new-project", {path:"new-project"}, function(){
-      this.route("import", function() {
+    this.route("project", {path:"project/:uuid"}, function(){
         this.route("step1");
         this.route("step2");
-      });
-      this.route("test-data");
+        this.route("step3");
+        this.route("step4");
     });
 
-    this.route("spreadsheet", {path: "spreadsheet/:uuid"}, function() {
+    /*this.route("spreadsheet", {path: "spreadsheet/:uuid"}, function() {
         this.route("import", function() {
           this.route("step1");
         });
-    });
+    });*/
 
     this.route("graph", {path: "graph/:uuid"}, function() {
 

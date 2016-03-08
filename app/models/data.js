@@ -79,19 +79,21 @@ let ColumnStruct = Struct.extend({
       return this.get('cells').find( c => c.get('row.header') );
     }.property('cells.[]'),
     
-    autoDetectDataType: Ember.debouncedObserver('cells.@each.value', function() {
+    autoDetectDataType: Ember.debouncedObserver('cells.@each.value', 'meta.manual', function() {
         
-        var p = {
-          text: 0,
-          numeric: 0,
-          geo: 0,
-          lat_dms: 0,
-          lon_dms: 0,
-          lat: 0,
-          lon: 0
-        };
-        
-        this.get('cells')
+        if (!this.get('meta.manual')) {
+          
+          var p = {
+            text: 0,
+            numeric: 0,
+            geo: 0,
+            lat_dms: 0,
+            lon_dms: 0,
+            lat: 0,
+            lon: 0
+          };
+          
+          this.get('cells')
             .filter( c => !c.get('row.header'))
             .forEach( (c, i, arr) => {
               if (/^[\d\,\s]+(\.\d+)?$/.test(c.get('value'))) {
@@ -110,28 +112,56 @@ let ColumnStruct = Struct.extend({
               }
             });
 
-        let type = Object.keys(p).reduce( (r, key) => {
-           return r == null || p[key] > p[r] ? key : r;
-        }, null);
-        
-        if (type === "numeric") {
-          let header = this.get('cells').find( c => c.get('row.header') );
-          console.log(header.get('value'));
-          if (/(?:lon(?:g?\.|gitude)?|lng)/i.test(header.get('value'))) {
-            type = "lon";
-            p[type] = 1;
-          } else if (/lat(?:\.|itude)?/i.test(header.get('value'))) {
-            type = "lat";
-            p[type] = 1;
+          let type = Object.keys(p).reduce( (r, key) => {
+            return r == null || p[key] > p[r] ? key : r;
+          }, null);
+          
+          if (type === "numeric") {
+            let header = this.get('cells').find( c => c.get('row.header') );
+            if (/(?:lon(?:g?\.|gitude)?|lng)/i.test(header.get('value'))) {
+              type = "lon";
+              p[type] = 1;
+            } else if (/lat(?:\.|itude)?/i.test(header.get('value'))) {
+              type = "lat";
+              p[type] = 1;
+            }
           }
+          
+          this.setProperties({
+            'meta.type': type,
+            'meta.probability': p[type]
+          });
+          
         }
         
-        this.setProperties({
-          'meta.type': type,
-          'meta.probability': p[type]
-        });
-        
     }, 100),
+    
+    calculateDataCoherency: function() {
+      
+      if (this.get('meta.manual')) {
+        
+        let p = 0,
+            coherency = {
+              "text": (v) => true,
+              "numeric": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
+              "lat": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
+              "lon": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
+              "lat_dms": (v) => (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/).test(v),
+              "lon_dms": (v) => (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/).test(v)
+            },
+            checkFn = coherency[this.get('meta.type')];
+        
+        this.get('cells')
+          .filter( c => !c.get('row.header'))
+          .forEach( (c, i, arr) => {
+            p += checkFn(c.get('value')) ? 1/arr.length : 0; 
+          });
+          
+        this.set('meta.probability', p);
+          
+      }
+      
+    }.observes('meta.type', 'meta.manual'),
     
     export() {
         return this._super({
@@ -296,12 +326,11 @@ let DataStruct = Struct.extend({
       this.endPropertyChanges();
     },
     
-    //TODO : non testé
     removeColumn(column) {
-        this.get('rows').forEach( r => {
-           r.set('cells', r.get('cells').filter( c => c.get('column') != column ));
-        });
-        this.get('columns').removeObject(column);
+      this.get('rows').forEach( r => {
+        r.set('cells', r.get('cells').filter( c => c.get('column') != column ));
+      });
+      this.get('columns').removeObject(column);
     },
     
     analyse() {
@@ -323,12 +352,17 @@ let DataStruct = Struct.extend({
     },
     
     analyseColumnCount(report) {
-      let min = Math.min.apply(null, this.get('columns').map( c => c.get('cells').length )),
-          max = Math.max.apply(null, this.get('columns').map( c => c.get('cells').length ));
-          
+      let min = Math.min.apply(null, this.get('rows').map( c => c.get('cells').length )),
+          max = Math.max.apply(null, this.get('rows').map( c => c.get('cells').length ));
+      
+      if (this.get('columns').length === 1) {
+        report.errors.push("import.error.oneColumn");
+      }
+      
       if (min !== max) {
         report.errors.push("import.error.colNumber");
       }
+      
     },
     
     analyseTrim(report) {

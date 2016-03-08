@@ -2,11 +2,13 @@ import Ember from 'ember';
 import Struct from './struct';
 
 const SHAPE = "shape",
-      SURFACE = "surface";
+      SURFACE = "surface",
+      TEXT = "text";
 
 let Mapping,
     ShapeMapping,
-    SurfaceMapping;
+    SurfaceMapping,
+    TextMapping;
 
 let MappingFactory = Ember.Object.extend({});
 MappingFactory.reopenClass({
@@ -15,6 +17,8 @@ MappingFactory.reopenClass({
       return ShapeMapping.create(props);
     } else if (type === SURFACE) {
       return SurfaceMapping.create(props);
+    } else if (type === TEXT) {
+      return TextMapping.create(props);
     } else {
       throw new Error(`Unknow mapping type ${type}`);
     }
@@ -24,7 +28,9 @@ MappingFactory.reopenClass({
       if (json.type === SHAPE) {
         return ShapeMapping.restore(json, refs);
       } else if (json.type === SURFACE) {
-        return SurfaceMapping.create(json, refs);
+        return SurfaceMapping.restore(json, refs);
+      } else if (json.type === TEXT) {
+        return TextMapping.restore(json, refs);
       } else {
         throw new Error(`Unknow mapping type ${json.type}`);
       }
@@ -57,14 +63,14 @@ ShapeMapping = Mapping.extend({
   shape: "point",
   scaleOf: "size",
   color: "#014FF0",
-  size: 4,
+  size: 6,
   export(props) {
-    return this._super({
+    return this._super(Object.assign({
       shape: this.get('shape'),
       scaleOf: this.get('scaleOf'),
       color: this.get('color'),
       size: this.get('size')
-    });
+    }, props));
   }
 });
 
@@ -84,9 +90,11 @@ ShapeMapping.reopenClass({
 SurfaceMapping = Mapping.extend({
   type: SURFACE,
   pattern: "solid",
+  color: "#01BF40",
   export(props) {
     return this._super({
-      pattern: this.get('pattern')
+      pattern: this.get('pattern'),
+      color: this.get('color')
     });
   }
 });
@@ -95,11 +103,41 @@ SurfaceMapping.reopenClass({
   restore(json, refs = {}) {
     let o = this._super(json, refs);
     o.setProperties({
-      pattern: json.pattern
+      pattern: json.pattern,
+      color: json.color
+    });
+    return o;
+  }
+});
+
+TextMapping = ShapeMapping.extend({
+  type: TEXT,
+  shape: "text",
+  scaleOf: "size",
+  color: "#014FF0",
+  size: 9,
+  labelCol: null,
+  
+  labelAtIndex(index) {
+    return this.get('labelCol.cells').objectAt(index).postProcessedValue();
+  },
+  
+  export(props) {
+    return this._super({
+      labelCol: this.get('labelCol') ? this.get('labelCol._uuid') : null
+    });
+  }
+});
+
+TextMapping.reopenClass({
+  restore(json, refs = {}) {
+    let o = this._super(json, refs);
+    o.setProperties({
+      labelCol: json.labelCol ? refs[json.labelCol] : null
     });
     return o;
   }
 });
 
 export default MappingFactory;
-export {Mapping, ShapeMapping, SurfaceMapping};
+export {Mapping, ShapeMapping, SurfaceMapping, TextMapping};

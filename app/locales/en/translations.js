@@ -12,13 +12,29 @@ export default {
     "gradientOf": "Gradient of",
     "pageLayout": "Page layout",
     "addAVariable": "add a variable",
-    "contextualHelp": "Contextual help"
+    "contextualHelp": "Contextual help",
+    "chooseMap": "Choose a map",
+    "dataType": "data type",
+    "label": "label",
+    "none": "none"
+  },
+  
+  "variable.meta": {
+    "type": {
+      "text": "text",
+      "numeric": "numeric",
+      "geo": "geographic code",
+      "lat": "latitude",
+      "lon": "longitude",
+      "auto": "auto"
+    }
   },
   
   "variable.mapping": {
     "type": {
       "shape": "shape",
-      "surface": "surface"
+      "surface": "surface",
+      "text": "text"
     },
     "scaleOf": {
       "size": "size",
@@ -39,7 +55,7 @@ export default {
   "projection": {
     "naturalEarth": {
       "name": "Natural earth",
-      "description": ""
+      "description": "Natural earth's description"
     },
     "orthographic": {
       "name": "Orhtographic",
@@ -51,21 +67,35 @@ export default {
     }
   },
   
+  "graph": {
+    "displayedVars": "Displayed variables"
+  },
+  
   "import": {
-    "editor.paste.csv": "Paste here the csv to import",
+    "editor.paste.csv": "paste here the csv to import",
     "editor.upload.file": "upload a file",
+    "startImport": "Start import",
+    "qualifyData": "Qualify data",
     "success": "Import has been successfull. Data are ready to be processed.",
-    "hasWarning": "Import has some non blocking warnings",
+    "fatal": "Import can be processed, please edit your csv",
+    "warningsMessage": {
+      "one": "non blocking warning",
+      "other": "non blocking warnings"
+    },
     "warning": {
       "trim": "Some cells contained spaces which has been supressed by the process."
     },
-    "hasError": "Import has some blocking issues",
+    "errorsMessage": {
+      "one": "blocking issue",
+      "other": "blocking issues"
+    },
     "error": {
       "header.emptyCell": "Header is incorrect : come cells are empty.",
+      "oneColumn": "Only one column has been found",
       "colNumber": "Csv format is incorrect. Some rows have different column count"
     },
-    "rowCount": "{{count}} lines imported",
-    "colCount": "{{count}} columns imported"
+    "rowCount": "lines imported",
+    "colCount": "columns imported"
     
   },
   "spreadsheet": {

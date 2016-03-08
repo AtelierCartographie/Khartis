@@ -27,6 +27,8 @@ export default Ember.Component.extend({
 	graphLayout: null,
   
   graphLayers: [],
+  
+  resizeInterval: null,
 
 	draw: function() {
     
@@ -47,7 +49,7 @@ export default Ember.Component.extend({
         '$height': this.$().parent().height()
       });
     };
-    setInterval($size, 800);
+    this.set('resizeInterval', setInterval($size, 800));
     $size();
     // ---------
 		
@@ -82,6 +84,10 @@ export default Ember.Component.extend({
 
           
 	}.on("didInsertElement"),
+  
+  cleanup: function() {
+    clearInterval(this.get('resizeInterval'));
+  }.on("willDestroyElement"),
 	
 	updateColors: function() {
 		
@@ -227,7 +233,7 @@ export default Ember.Component.extend({
     let self = this,
         data = this.get('graphLayers')
           .filter( gl => gl.get('visible') && gl.get('varCol') )
-          .sort( (a,b) => a.get('mappedToSurface') ? -1:1 );
+          .sort( (a,b) => a.get('mappedToShape') ? 1:-1 );
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
@@ -262,6 +268,7 @@ export default Ember.Component.extend({
           return {
             id: match.value.iso_a2,
             value: val,
+            index: index,
             surface: this.get('base').lands.features.find( f => f.id === match.value.iso_a2),
             point: this.get('base').centroids.features.find( f => f.id === match.value.iso_a2)
           };
@@ -291,6 +298,7 @@ export default Ember.Component.extend({
           return {
             id: `coord-${index}`,
             value: val,
+            index: index,
             surface: null,
             point: {
               geometry: {
@@ -315,10 +323,10 @@ export default Ember.Component.extend({
   
   mapPath: function(d3Layer, data, graphLayer) {
 		
-    let scale = d3.scale.linear();
+    let scale = scale = d3.scale[graphLayer.scaleType()]();
 		
 		scale.domain(d3.extent(data, c => c.value));
-    scale.range(["#29aadf", "#f9aa0f"]);
+    scale.range([graphLayer.get('mapping.color'), "#f9aa0f"]);
     
     d3Layer.selectAll("*").remove();
       
@@ -376,7 +384,8 @@ export default Ember.Component.extend({
       ));
     
     let shape,
-        sizeFn;
+        sizeFn,
+        colorFn;
         
     if (graphLayer.get('mapping.shape') === "point") {
       
@@ -387,6 +396,12 @@ export default Ember.Component.extend({
       sizeFn = function(calc) {
         return function() {
           this.attr("r", d => calc(d.value));
+        };
+      };
+      
+      colorFn = function(calc) {
+        return function() {
+          this.attr("fill", d => calc(d.value));
         };
       };
       
@@ -406,20 +421,55 @@ export default Ember.Component.extend({
          };
       };
       
+      colorFn = function(calc) {
+        return function() {
+          this.attr("fill", d => calc(d.value));
+        };
+      };
+      
+    } else if (graphLayer.get('mapping.shape') === "text") {
+      
+      shape = g.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("text-anchor", "middle")
+        .text( (d) => graphLayer.get('mapping').labelAtIndex(d.index) );
+        
+      sizeFn = function(calc) {
+         return function() {
+            let size = d => calc(d.value);
+            this.attr({
+              "font-size": size
+            });
+         };
+      };
+      
+      colorFn = function(calc) {
+        return function() {
+          this.attr({
+            "fill": d => calc(d.value),
+            "stroke": d => calc(d.value)
+          });
+        };
+      };
+      
     }
     
     if (graphLayer.get('mapping.scaleOf') === "size") {
       
-      scale.range([4, 10]);
-      shape.attr("fill", graphLayer.get('mapping.color'))
+      scale.range([graphLayer.get('mapping.size'), graphLayer.get('mapping.size')*2]);
+      shape.call(colorFn( v => graphLayer.get('mapping.color') ))
            .call(sizeFn( v => v != null ? scale(v) : 0 ));
            
     } else if (graphLayer.get('mapping.scaleOf') === "fill") {
       
       scale.range([graphLayer.get('mapping.color'), "#f9aa0f"]);
-      shape.attr("fill", d => d.value != null ? scale(d.value): "none")
+      shape.call(colorFn( v => v != null ? scale(v): "none" ))
            .call(sizeFn( v => graphLayer.get('mapping.size') ));
            
+    } else {
+      shape.call(colorFn( v => graphLayer.get('mapping.color') ))
+           .call(sizeFn( v => graphLayer.get('mapping.size') ));
     }
 
 		centroidSel.exit().remove();

@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
     },
 
     newProject(){
-      this.transitionToRoute('new-project')
+      this.transitionToRoute('project', 'new');
     }
   }
 

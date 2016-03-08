@@ -104,6 +104,9 @@ export default Ember.Controller.extend({
       
       bindLayerMapping(layer, type) {
         layer.set('mapping', MappingFactory.createInstance(type));
+        if (type === "text") {
+          layer.set('mapping.labelCol', layer.get('varCol'));
+        }
       },
       
       bindMappingScaleOf(layer, type) {
@@ -116,6 +119,10 @@ export default Ember.Controller.extend({
       
       bindMappingShape(layer, shape) {
         layer.set('mapping.shape', shape);
+      },
+      
+      bindMappingLabelCol(layer, col) {
+        layer.set('mapping.labelCol', col);
       },
       
       onAskVersioning(type) {
@@ -131,6 +138,10 @@ export default Ember.Controller.extend({
             break;
         }
         
+      },
+      
+      back() {
+        this.transitionToRoute("project.step4", this.get('model._uuid'));
       }
     
     }

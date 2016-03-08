@@ -32,7 +32,7 @@ var Store = Ember.Service.extend({
     },
 
     _save() {
-      this.get('projects').splice(0, this.get('projects').length - MAX);
+      this.get('projects').splice(0, this.get('projects').length - SIZE);
       if (!this.get('transient')) {
         window.localStorage.setItem(NS, JSON.stringify(this.get('projects')));
       }

@@ -1,11 +1,22 @@
-<div class="stretched flow" style="position: relative;">
-  <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
-  {{#if basemapData}}
-  {{map-editor data=model.data
-    base=basemapData
-    graphLayout=model.graphLayout
-    graphLayers=model.graphLayers
-  }}
-  {{/if}}
+<div class="vertical flow">
+  <div class="navheader">
+    {{#x-button class="default btn-prev" action=(action 'back')}}
+      <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.chooseMap"}}
+    {{/x-button}}
   </div>
+  <div class="horizontal flow">
+    {{outlet 'sidebar'}}
+    <div class="stretched flow" style="position: relative;">
+      <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
+      {{#if basemapData}}
+      {{map-editor data=model.data
+        base=basemapData
+        graphLayout=model.graphLayout
+        graphLayers=model.graphLayers
+      }}
+      {{/if}}
+      </div>
+    </div>
+  </div>
+  
 </div>

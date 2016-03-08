@@ -12,13 +12,29 @@ export default {
     "gradientOf": "Dégradé de",
     "pageLayout": "Mise en page",
     "addAVariable": "ajouter une variable",
-    "contextualHelp": "Aide contextuelle"
+    "contextualHelp": "Aide contextuelle",
+    "chooseMap": "Choisir une carte",
+    "dataType": "type de données",
+    "label": "libellé",
+    "none": "aucun"
+  },
+  
+  "variable.meta": {
+    "type": {
+      "text": "text",
+      "numeric": "numérique",
+      "geo": "code géographique",
+      "lat": "latitude",
+      "lon": "longitude",
+      "auto": "automatique"
+    }
   },
   
   "variable.mapping": {
     "type": {
       "shape": "forme",
-      "surface": "surface"
+      "surface": "surface",
+      "text": "text"
     },
     "scaleOf": {
       "size": "taille",
@@ -32,14 +48,15 @@ export default {
     },
     "shape": {
       "point": "point",
-      "rect": "carré"
+      "rect": "carré",
+      "text": "text"
     }
   },
   
   "projection": {
     "naturalEarth": {
       "name": "Natural earth",
-      "description": ""
+      "description": "Description de la projection natural earth"
     },
     "orthographic": {
       "name": "Orhtographic",
@@ -51,21 +68,35 @@ export default {
     }
   },
   
+  "graph": {
+    "displayedVars": "Variables représentées"
+  },
+  
   "import": {
-    "editor.paste.csv": "Collez ici le csv à importer",
+    "editor.paste.csv": "collez ici le csv à importer",
     "editor.upload.file": "téléversez un fichier",
+    "startImport": "Lancer l'importation",
+    "qualifyData": "Qualifier les données",
     "success": "L'importation a été réalisée avec succés. Les données sont prêtes à être intégrées.",
-    "hasWarning": "L'importation a révélé des anomalies non bloquantes",
+    "fatal": "Impossible d'importer les données, veuillez éditer votre csv",
+    "warningsMessage": {
+      "one": "anomalie non bloquante",
+      "other": "anomalies non bloquantes"
+    },
     "warning": {
       "trim": "Certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
     },
-    "hasError": "L'importation a révélé des anomalies bloquantes",
+    "errorsMessage": {
+      "one": "anomalie bloquante",
+      "other": "anomalies bloquantes"
+    },
     "error": {
       "header.emptyCell": "L'entête semble incorrecte : certaines cellules sont vides.",
+      "oneColumn": "Une seule colonne a été trouvée",
       "colNumber": "Csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
     },
-    "rowCount": "{{count}} lignes importées",
-    "colCount": "{{count}} colonnes importées"
+    "rowCount": "lignes importées",
+    "colCount": "colonnes importées"
     
   },
   "spreadsheet": {
