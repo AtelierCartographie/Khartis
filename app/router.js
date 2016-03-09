@@ -23,7 +23,8 @@ Router.map(function() {
     });*/
 
     this.route("graph", {path: "graph/:uuid"}, function() {
-
+        this.route("layout");
+        this.route("mapping");
     });
 
 });

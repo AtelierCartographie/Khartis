@@ -10,10 +10,12 @@ export default {
   
   projections: PROJECTIONS,
   
-  computeProjection(features, width, height, fWidth, fHeight, margin, proj = "mercator") {
-
+  computeProjection(features, width, height, fWidth, fHeight, margin, zoom, proj = "mercator") {
+    
+    zoom = zoom < 1 ? 1 : 1/zoom;
+    
     let projFn = PROJECTIONS[proj].fn,
-        fProjection = projFn().scale(1).translate([0, 0]),
+        fProjection = projFn().scale(zoom).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
         pixelBounds = d3Path.bounds(features),

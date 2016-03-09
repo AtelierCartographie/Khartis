@@ -1,10 +1,23 @@
-<div class="vertical flow">
+<div class="graph vertical flow">
   <div class="navheader">
+    {{#if isInStateLayout}}
     {{#x-button class="default btn-prev" action=(action 'back')}}
       <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.chooseMap"}}
     {{/x-button}}
+    {{#x-button class="default btn-next" action=(action 'next')}}
+      {{t "general.varMapping"}} <i class="iconfont iconfont-long-arrow-right"></i>
+    {{/x-button}}
+    {{else if isInStateMapping}}
+    {{#x-button class="default btn-prev" action=(action 'back')}}
+      <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.pageLayout"}}
+    {{/x-button}}
+    {{/if}}
   </div>
   <div class="horizontal flow">
+    <div class="vertical-navbar">
+      <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}><i class="iconfont iconfont-map"></i></div>
+      <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'mapping'}}><i class="iconfont iconfont-sliders"></i></div>
+    </div>
     {{outlet 'sidebar'}}
     <div class="stretched flow" style="position: relative;">
       <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">

@@ -11,13 +11,16 @@ export default {
     "or": "ou",
     "gradientOf": "Dégradé de",
     "pageLayout": "Mise en page",
+    "varMapping": "Couplage des variables",
     "addAVariable": "ajouter une variable",
     "contextualHelp": "Aide contextuelle",
     "chooseMap": "Choisir une carte",
     "dataType": "type de données",
     "label": "libellé",
     "none": "aucun",
-    "summary": "summary"
+    "summary": "summary",
+    "mappingType": "type de couplage",
+    "backMap": "Fond de carte"
   },
   
   "variable.meta": {

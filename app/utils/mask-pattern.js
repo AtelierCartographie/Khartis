@@ -2,7 +2,7 @@ let lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
       size = 10,
-      stroke = "#808080",
+      stroke = "#909090",
       strokeWidth = opts.stroke || 2,
       id = () => `${orientation.join('-').replace('/', '')}-${strokeWidth}`,
       path = function(orientation) {

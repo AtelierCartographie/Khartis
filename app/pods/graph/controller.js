@@ -8,10 +8,20 @@ import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
   
+  state: null,
+  
   basemapData: null,
   
   availableProjections: projector.projections,
-    
+  
+  isInStateLayout: function() {
+    return this.get('state') === "layout";
+  }.property('state'),
+  
+  isInStateMapping: function() {
+    return this.get('state') === "mapping";
+  }.property('state'),
+  
   setup() {
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
@@ -44,6 +54,11 @@ export default Ember.Controller.extend({
     });
     
   },
+  
+  layoutChange: function() {
+    this.send('onAskVersioning', 'freeze');
+  }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
+    'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor'),
   
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');
@@ -109,8 +124,20 @@ export default Ember.Controller.extend({
         
       },
       
+      selectState(state) {
+        this.transitionToRoute(`graph.${state}`, this.get('model._uuid'));
+      },
+      
+      next() {
+        this.transitionToRoute("graph.mapping", this.get('model._uuid'));
+      },
+      
       back() {
-        this.transitionToRoute("project.step4", this.get('model._uuid'));
+        if (this.get('isInStateLayout')) {
+          this.transitionToRoute("project.step4", this.get('model._uuid'));
+        } else if (this.get('isInStateMapping')) {
+          this.transitionToRoute("graph.layout", this.get('model._uuid'));
+        }
       }
     
     }

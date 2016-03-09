@@ -131,11 +131,12 @@ export default Ember.Component.extend({
 			this.get('graphLayout.width'),
 			this.get('graphLayout.height'),
 			this.get('graphLayout.margin'),
+      this.get('graphLayout.zoom'),
 			this.get('graphLayout.projection')
 		);
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.margin',
+    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin',
     'graphLayout.projection'),
   
 	
@@ -217,16 +218,17 @@ export default Ember.Component.extend({
     
     var uses = this.d3l().select("g.backmap")
       .selectAll("use.feature")
+      .style("fill", this.get('graphLayout.backMapColor'))
       .data(this.get('base').lands.features);
       
     uses.enter().append("use")
       .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
 			.attr("stroke", this.get("graphLayout.stroke"))
-      .style("fill", "none")
+      .style("fill", this.get('graphLayout.backMapColor'))
 			.classed("feature", true);
     
-  },
+  }.observes('graphLayout.backMapColor'),
   
   drawLayers: function() {
     
@@ -433,6 +435,7 @@ export default Ember.Component.extend({
         .attr("x", 0)
         .attr("y", 0)
         .attr("text-anchor", "middle")
+        .style("font-weight", "lighter")
         .text( (d) => graphLayer.get('mapping').labelAtIndex(d.index) );
         
       sizeFn = function(calc) {

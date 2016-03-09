@@ -34,7 +34,6 @@ body > .ember-view:not(.popable) {
   @extend %flow;
   @extend %solid;
   @extend %space-between;
-  //@extend .with-relief.topbar; // Note: Deactivated to see clearer
   align-items: stretch;
   flex-basis: $header-height;
   padding: 0 2em;
@@ -126,7 +125,7 @@ footer {
   > a:hover,
   > a.active {
     color: hsl(0, 0%, 40%);
-    background-color: #fff;
+    background-color: greys(5%);
   }
 }
 
@@ -168,6 +167,7 @@ footer {
   padding: 0.1rem 1rem 0.1rem 1rem;
   height: 3rem;
   background-color: greys(10%);
+  border-bottom: 1px solid greys(15%);
   
 }
 
@@ -430,4 +430,31 @@ footer {
   }*/
 
 
+}
+
+.graph {
+
+  .vertical-navbar {
+    
+    @extend %flow;
+    @extend %vertical;
+    @extend %solid;
+    @extend .filled.contrast;
+    width: 4rem;
+    
+    .state-icon {
+      
+      height: 4rem;
+      line-height: 4rem;
+      text-align: center;
+      cursor: pointer;
+      
+      &.selected {
+        @extend .filled.default;
+        color: $color-primary;
+      }
+      
+    }
+    
+  }
 }

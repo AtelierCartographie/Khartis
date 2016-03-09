@@ -11,6 +11,7 @@ var GraphLayout = Struct.extend({
 	strokeWidth: 1,
 	
 	backgroundColor: "#F7F7F7",
+  backMapColor: "#ededed",
 	
 	autoCenter: false,
 	
@@ -84,6 +85,7 @@ var GraphLayout = Struct.extend({
 	width: 800,
 	height: 600,
 	margin: {v: 10, h: 10},
+  zoom: 1,
   
   projection: "naturalEarth",
   
@@ -103,8 +105,11 @@ var GraphLayout = Struct.extend({
       return this._super({
           basemap: this.get('basemap'),
           projection: this.get('projection'),
+          backgroundColor: this.get('backgroundColor'),
+          backMapColor: this.get('backMapColor'),
           width: this.get('width'),
-          height: this.get('height')
+          height: this.get('height'),
+          zoom: this.get('zoom')
       });
   }
   
@@ -116,9 +121,12 @@ GraphLayout.reopenClass({
         let o = this._super(json, refs);
         o.setProperties({
             basemap: json.basemap,
+            backgroundColor: json.backgroundColor,
+            backMapColor: json.backMapColor,
             projection: json.projection,
             width: json.width,
-            height: json.height
+            height: json.height,
+            zoom: json.zoom
         });
         return o;
     }

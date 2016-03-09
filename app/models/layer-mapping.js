@@ -115,7 +115,7 @@ TextMapping = ShapeMapping.extend({
   shape: "text",
   scaleOf: "size",
   color: "#014FF0",
-  size: 9,
+  size: 10,
   labelCol: null,
   
   labelAtIndex(index) {

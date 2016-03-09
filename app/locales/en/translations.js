@@ -11,13 +11,16 @@ export default {
     "or": "or",
     "gradientOf": "Gradient of",
     "pageLayout": "Page layout",
+    "varMapping": "Variable mapping",
     "addAVariable": "add a variable",
     "contextualHelp": "Contextual help",
     "chooseMap": "Choose a map",
     "dataType": "data type",
     "label": "label",
     "none": "none",
-    "summary": "summary"
+    "summary": "summary",
+    "mappingType": "mapping type",
+    "backMap": "Back map"
   },
   
   "variable.meta": {

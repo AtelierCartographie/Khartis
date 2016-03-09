@@ -1,56 +1,5 @@
 <aside class="solid airy vertical flow padded">
-    <div class="small panel">
-        <header class="filled primary">
-            <div class="title">{{t "general.pageLayout"}}</div>
-            <div class="actions"></div>
-        </header>
-        <div class="vertical airy flow padded-v filled">
-            <div class="horizontal airy middle flow">
-                <div class="horizontal middle flow">
-                    <label class="horizontal right flow w3 padded-r text-right">W</label>
-                    {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
-                    <small class="padded">px</small>
-                </div>
-                <div class="horizontal middle flow">
-                    <label class="horizontal right flow w3 padded-r text-right">H</label>
-                    {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
-                    <small class="padded">px</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="small panel projection-panel">
-        <header class="filled primary">
-            <div class="title">Projection</div>
-            <div class="actions"></div>
-        </header>
-        <div class="vertical airy flow padded-v filled">
-            <div class="horizontal airy middle flow">
-                <div class="horizontal middle flow">
-                    {{#x-dropdown.x-trigger
-                      dropdownPivot="top left"
-                      triggerPivot="bottom left"}}
-                      <a class="dropdown-trigger">
-                         {{#unless model.graphLayout.projection}}
-                         Projection 
-                         {{else}}
-                         {{t (concat "projection." model.graphLayout.projection ".name")}}
-                         {{/unless}}
-                         <i class="iconfont iconfont-angle-down"></i>
-                      </a>
-                    {{/x-dropdown.x-trigger}}
-                    <ul class="dropdown">
-                      {{#each-in availableProjections as |id o|}}
-                        <li {{action 'bindProjection' id}}>
-                          <div>{{t (concat "projection." id ".name")}}</div>
-                          <div class="projection-description"><small>{{t (concat "projection." id ".description")}}</small></div>
-                        </li>
-                      {{/each-in}}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="small panel layers-panel">
         <header class="filled primary">
             <div class="title">{{t "graph.displayedVars"}}</div>
@@ -69,7 +18,7 @@
               </div>
               
               <div>
-                  Type de représentation : 
+                  <label>{{x-capitalize (t "general.mappingType")}}</label>
                   {{#x-dropdown.x-trigger
                     dropdownPivot="top left"
                     triggerPivot="bottom left"}}
@@ -93,7 +42,7 @@
               
               {{#if layer.mappedToShape}}
               <div>
-                Symbol :
+                <label>Symbol :</label>
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
                   triggerPivot="bottom left"}}
@@ -108,7 +57,7 @@
                 </ul>
               </div>
               <div>
-                {{t "general.gradientOf"}} :
+                <label>{{t "general.gradientOf"}} :</label>
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
                   triggerPivot="bottom left"}}
@@ -130,7 +79,7 @@
               
               {{#if layer.mappedToText}}
               <div>
-                {{x-capitalize (t "general.label")}} :
+                <label>{{x-capitalize (t "general.label")}} :</label>
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
                   triggerPivot="bottom left"}}
@@ -154,7 +103,7 @@
               {{else if layer.mappedToSurface}}
               
               <div>
-                Motif de remplissage :
+                <label>Motif de remplissage :</label>
                 {{#x-dropdown.x-trigger
                   dropdownPivot="top left"
                   triggerPivot="bottom left"}}
