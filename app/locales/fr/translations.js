@@ -1,6 +1,8 @@
 export default {
   
   "general": {
+    "welcomeTo": "Bienvenue dans",
+    "onlineEditor": "outil de création de cartes en ligne",
     "Next": "Suivant",
     "Back": "Retour",
     "Submit": "Envoyer",

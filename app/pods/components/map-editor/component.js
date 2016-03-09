@@ -235,7 +235,7 @@ export default Ember.Component.extend({
     let self = this,
         data = this.get('graphLayers')
           .filter( gl => gl.get('visible') && gl.get('varCol') )
-          .sort( (a,b) => a.get('mappedToShape') ? 1:-1 );
+          .sort( (a,b) => a.get('mappedToShape') ? (a.get('mappedToText') ? 1:-1):-1 );
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")

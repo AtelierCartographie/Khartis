@@ -1,6 +1,8 @@
 export default {
   
   "general": {
+    "welcomeTo": "Welcome to",
+    "onlineEditor": "online map editor",
     "Next": "Next",
     "Back": "Back",
     "Submit": "Submit",
