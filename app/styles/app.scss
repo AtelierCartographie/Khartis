@@ -28,7 +28,6 @@ body > .ember-view:not(.popable) {
   @extend .vertical.flow;
 }
 
-
 .application-header {
   @include depth(header);
   @extend %flow;
@@ -37,6 +36,10 @@ body > .ember-view:not(.popable) {
   align-items: stretch;
   flex-basis: $header-height;
   padding: 0 2em;
+}
+
+.application-workspace {
+  overflow-y: scroll;
 }
 
 
@@ -159,7 +162,7 @@ footer {
 }
 
 .navheader {
-  
+
   @extend %flow;
   @extend %solid;
   @extend %horizontal;
@@ -168,7 +171,7 @@ footer {
   height: 3rem;
   background-color: greys(10%);
   border-bottom: 1px solid greys(15%);
-  
+
 }
 
 
@@ -244,7 +247,7 @@ footer {
     width: 70%;
     max-width: 72rem;
   }
-  
+
   .importer .label {
     font-size: 1.1em;
   }
@@ -319,11 +322,11 @@ footer {
     padding-left: 0;
     list-style: none;
   }
-  
+
   li.warnings, li.errors {
     margin-top: 1em;
   }
-  
+
   ul.error-explenation {
     margin-left: 0.3em;
     padding-left: 0.5em;
@@ -331,43 +334,45 @@ footer {
     font-size: 0.9em;
     color: greys(90%);
   }
-  
+
   .report-message {
+    text-align: center;
+    margin-bottom:1rem;
     &, .iconfont { font-size: 1.2em; }
   }
-  
+
   ul.column-list {
-    
+
     margin: 0;
-    
+
     li {
-      
+
       @extend %flow;
       @extend %horizontal;
       border-bottom: 1px solid greys(20%);
       padding-top: 0.8rem;
       padding-bottom: 0.8rem;
-      
+
       &, .label {
         cursor: pointer;
       }
-      
+
       &:hover {
         background-color: rgba($color-primary, 0.3);
       }
       &:last-child {
         border-bottom: none;
       }
-      
+
       .label {
         @extend %fluid;
       }
-      
+
       .column-actions {
         @extend %solid;
         width: 5rem;
       }
-      
+
       &.selected {
         background-color: greys(5%);
         cursor: default;
@@ -375,42 +380,46 @@ footer {
           @extend .invisible;
         }
       }
-      
+
     }
-    
+
   }
-  
+
   .column-configuration {
     @extend %flow;
     min-height: 25rem;
     background-color: greys(5%);
   }
-  
+
   .map-card {
-    
+
     border: 1px solid greys(20%);
     padding: 0.3rem 0.3rem 0.3rem 0.3rem;
     cursor: pointer;
-    
+
     &:hover {
       background-color: greys(10%);
     }
-    
+
     .iconfont {
       font-size: 6em;
     }
-    
+
     .label {
       text-align: center;
     }
-    
+
   }
-  
+
 }
 
 
+.report .accordion-wrapper > div{
+  padding:2rem;
+}
+
 .report-preview {
-  
+
   overflow-y: scroll;
   font-size: 0.8em;
   max-height: 350px;
@@ -429,32 +438,44 @@ footer {
     background: linear-gradient(rgba(#FFF, 0), rgba(#FFF, 0), rgba(#FFF, 0), rgba(#FFF, 1));
   }*/
 
+}
+
+.step-import .report-title{
+
+  background-color: greys(5%);
+  padding: 2rem;
+  margin:0;
+
+  &:not(:last-child){
+    border-bottom:1px solid greys(10%);
+  }
 
 }
+
 
 .graph {
 
   .vertical-navbar {
-    
+
     @extend %flow;
     @extend %vertical;
     @extend %solid;
     @extend .filled.contrast;
     width: 4rem;
-    
+
     .state-icon {
-      
+
       height: 4rem;
       line-height: 4rem;
       text-align: center;
       cursor: pointer;
-      
+
       &.selected {
         @extend .filled.default;
         color: $color-primary;
       }
-      
+
     }
-    
+
   }
 }
