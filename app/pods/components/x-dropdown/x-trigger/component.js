@@ -26,8 +26,6 @@ export default Ember.Component.extend({
     this.toggle = this.toggle.bind(this)
     this.handleOuterClick = this.handleOuterClick.bind(this)
 
-    snap(dropdown[0], this.get('dropdownPivot')).to(trigger[0],  this.get('triggerPivot'))
-
     trigger.on('click', this.toggle)
     dropdown.on('click', this.toggle)
   },
@@ -66,6 +64,15 @@ export default Ember.Component.extend({
     this.set('open', true)
     this.get('targetEl').addClass('visible')
     this.get('triggerEl').addClass('active')
+
+    if(this.get('snapped')){
+      this.get('snapped').dispose()
+    }
+
+    var snapped = snap(this.get('targetEl')[0], this.get('dropdownPivot'))
+      .to(this.get('triggerEl')[0],  this.get('triggerPivot'))
+
+    this.set('snapped', snapped)
   },
 
   hide(){
@@ -90,6 +97,10 @@ export default Ember.Component.extend({
     $(document).off('click', this.handleOuterClick)
     trigger.off('click', this.toggle)
     dropdown.off('click', this.toggle)
+
+    if(this.get('snapped')){
+      this.get('snapped').dispose()
+    }
   }
 
 });
