@@ -109,9 +109,9 @@ Dans un premier temps on peut définir comme projection par défaut la [Natural 
     .translate([width / 2, height / 2])
     .precision(.1);
 
-A discuter : 
-- la forme et le format que doit prendre la liste des projections pour que 
-    - les paramètres et le bout de code correspondant à la projection soit facilement implémentés
-    - celle-ci puisse évoluer (ajout, suppression)
-- toutes les projections ne seront pas associées à tous les fonds de carte (cf point suivant)
-- la liste classera les projections selon les propriétés préservées (équivalente, conforme, équidistante ou un mix)
+La liste des projections définit les paramètres de chacunes. La colonne 'Scale' définit à qu'elle échelle la projection est la plus pertinente (World ou Region).
+Pour certaines projections le centrage doit est modifiable par l'utilisateur, soit la longitude, soit longitude et latitude (voir colonne 'center').
+Les paramètres 'translate' et 'precision' ne sont pas notés dans le tableau car toujours identiques :
+
+    .translate([width / 2, height / 2])
+    .precision(.1)
