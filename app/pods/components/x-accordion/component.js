@@ -25,9 +25,12 @@ export default Ember.Component.extend({
   didInsertElement: function () {
 
     // Handle initial active item
-    let activeItems = this.$('.accordion-item').filter('.active');
+    let $activeItems = this.$('.accordion-item').filter('.active')
+      .sort((a, b) => {
+        return a.getAttribute('accordion-priority') > b.getAttribute('accordion-priority') ? 1:-1;
+      });
     
-    this.get('activeItems').addObjects($.makeArray(activeItems));
+    this.get('activeItems').addObjects($.makeArray($activeItems));
     
     // HANDLE RESIZE
     let $size = () => {

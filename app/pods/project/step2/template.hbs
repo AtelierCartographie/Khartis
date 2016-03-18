@@ -20,7 +20,7 @@
     <div class="vertical airy padded flow">
       {{#x-accordion}}
 
-          <div class="accordion-item active">
+          <div class="accordion-item active" accordion-priority="9999">
               <h2 class="report-title accordion-trigger">{{x-capitalize (t "general.summary")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
 
               <div class="accordion-wrapper">
@@ -63,7 +63,7 @@
               </div>
           </div>
 
-          <div class="accordion-item">
+          <div class="accordion-item active">
               <h2 class="report-title accordion-trigger">Aperçu <span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
               <div class="accordion-wrapper">
                   <div class="report-preview">
