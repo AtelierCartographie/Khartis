@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 
     next(){
       this.get('store').merge(this.get('model.project'));
-      this.transitionToRoute('project.step3', this.get('model.project._uuid'));
+      this.transitionToRoute('graph', this.get('model.project._uuid'));
     }
 
   }

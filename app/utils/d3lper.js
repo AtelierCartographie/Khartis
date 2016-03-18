@@ -4,7 +4,7 @@ export default {
 		return "scale("+val+")";
 	},
 	
-	translate(tx, ty) {
+	translate({tx = 0, ty = 0}) {
 		return "translate("+tx+", "+ty+")";
 	},
 	

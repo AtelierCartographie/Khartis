@@ -23,6 +23,7 @@ Router.map(function() {
     });*/
 
     this.route("graph", {path: "graph/:uuid"}, function() {
+        this.route("geovars");
         this.route("layout");
         this.route("mapping");
     });

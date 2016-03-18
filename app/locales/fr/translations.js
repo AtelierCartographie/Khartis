@@ -25,6 +25,10 @@ export default {
     "backMap": "Fond de carte"
   },
   
+  "navigation": {
+    "openMap": "Ourvir la carte"
+  },
+  
   "variable.meta": {
     "type": {
       "text": "text",

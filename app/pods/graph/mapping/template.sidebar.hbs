@@ -1,166 +1,167 @@
-<aside class="solid airy vertical flow padded">
-    
-    <div class="small panel layers-panel">
-        <header class="filled primary">
-            <div class="title">{{t "graph.displayedVars"}}</div>
-            <div class="actions"></div>
-        </header>
-        <div class="vertical airy flow padded-v filled">
-          {{#each model.graphLayers as |layer|}}
-            <div class="vertical airy flow">
-              <div class="horizontal space-between flow layer-header">
-                <span>{{layer.varCol.header.value}}</span>
-                <div class="solid w3 text-right">
-                  <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.varCol.inconsistency}}</span>
-                  <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                  <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
-                </div>
-              </div>
-              
-              <div>
-                  <label>{{x-capitalize (t "general.mappingType")}}</label>
-                  {{#x-dropdown.x-trigger
-                    dropdownPivot="top left"
-                    triggerPivot="bottom left"}}
-                    <a class="dropdown-trigger">
-                      {{#unless layer.mapping}}
-                      Choisir
-                      {{else}}
-                      {{t (concat "variable.mapping.type." layer.mapping.type)}}
-                      {{/unless}}
-                      <i class="iconfont iconfont-angle-down"></i>
-                    </a>
-                  {{/x-dropdown.x-trigger}}
-                  <ul class="dropdown">
-                    <li {{action 'bindLayerMapping' layer 'shape'}}>{{t 'variable.mapping.type.shape'}}</li>
-                    {{#if layer.canBeSurface}}
-                    <li {{action 'bindLayerMapping' layer 'surface'}}>{{t 'variable.mapping.type.surface'}}</li>
-                    {{/if}}
-                    <li {{action 'bindLayerMapping' layer 'text'}}>{{t 'variable.mapping.type.text'}}</li>
-                  </ul>
-              </div>
-              
-              {{#if layer.mappedToShape}}
-              <div>
-                <label>Symbol :</label>
-                {{#x-dropdown.x-trigger
-                  dropdownPivot="top left"
-                  triggerPivot="bottom left"}}
-                  <a class="dropdown-trigger">
-                    {{t (concat "variable.mapping.shape." layer.mapping.shape)}}
-                    <i class="iconfont iconfont-angle-down"></i>
-                  </a>
-                {{/x-dropdown.x-trigger}}
-                <ul class="dropdown">
-                  <li {{action 'bindMappingShape' layer 'point'}}>{{t 'variable.mapping.shape.point'}}</li>
-                  <li {{action 'bindMappingShape' layer 'rect'}}>{{t 'variable.mapping.shape.rect'}}</li>
-                </ul>
-              </div>
-              <div>
-                <label>{{t "general.gradientOf"}} :</label>
-                {{#x-dropdown.x-trigger
-                  dropdownPivot="top left"
-                  triggerPivot="bottom left"}}
-                  <a class="dropdown-trigger">
-                    {{#if layer.mapping.scaleOf}}
-                    {{t (concat "variable.mapping.scaleOf." layer.mapping.scaleOf)}}
-                    {{else}}
-                    {{t "general.none"}}
-                    {{/if}}
-                    <i class="iconfont iconfont-angle-down"></i>
-                  </a>
-                {{/x-dropdown.x-trigger}}
-                <ul class="dropdown">
-                  <li {{action 'bindMappingScaleOf' layer 'size'}}>{{t 'variable.mapping.scaleOf.size'}}</li>
-                  <li {{action 'bindMappingScaleOf' layer 'fill'}}>{{t 'variable.mapping.scaleOf.fill'}}</li>
-                  <li {{action 'bindMappingScaleOf' layer null}}>{{t 'general.none'}}</li>
-                </ul>
-              </div>
-              
-              {{#if layer.mappedToText}}
-              <div>
-                <label>{{x-capitalize (t "general.label")}} :</label>
-                {{#x-dropdown.x-trigger
-                  dropdownPivot="top left"
-                  triggerPivot="bottom left"}}
-                  <a class="dropdown-trigger">
-                    {{layer.mapping.labelCol.header.value}}
-                    <i class="iconfont iconfont-angle-down"></i>
-                  </a>
-                {{/x-dropdown.x-trigger}}
-                <ul class="dropdown">
-                  {{#each model.data.columns as |col|}}
-                    <li {{action 'bindMappingLabelCol' layer col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
-                  {{/each}}
-                </ul>
-              </div>
-              {{/if}}
-              
-              <div>
-                {{color-picker value=layer.mapping.color}}
-              </div>
-              
-              {{else if layer.mappedToSurface}}
-              
-              <div>
-                <label>Motif de remplissage :</label>
-                {{#x-dropdown.x-trigger
-                  dropdownPivot="top left"
-                  triggerPivot="bottom left"}}
-                  <a class="dropdown-trigger">
-                    {{t (concat "variable.mapping.pattern." layer.mapping.pattern)}}
-                    <i class="iconfont iconfont-angle-down"></i>
-                  </a>
-                {{/x-dropdown.x-trigger}}
-                <ul class="dropdown">
-                  <li {{action 'bindMappingPattern' layer 'solid'}}>{{t 'variable.mapping.pattern.solid'}}</li>
-                  <li {{action 'bindMappingPattern' layer 'horizontal'}}>{{t 'variable.mapping.pattern.horizontal'}}</li>
-                  <li {{action 'bindMappingPattern' layer 'vertical'}}>{{t 'variable.mapping.pattern.vertical'}}</li>
-                  <li {{action 'bindMappingPattern' layer 'diagonal'}}>{{t 'variable.mapping.pattern.diagonal'}}</li>
-                </ul>
-              </div>
-              <div>
-                {{color-picker value=layer.mapping.color}}
-              </div>
-              {{/if}}
+<div class="help">
+  {{localized-tpl tpl="help/{locale}/graph/mapping"}}
+</div>
+
+<div class="small panel layers-panel">
+    <header class="filled primary">
+        <div class="title">{{t "graph.displayedVars"}}</div>
+        <div class="actions"></div>
+    </header>
+    <div class="vertical airy flow padded-v filled">
+      {{#each model.graphLayers as |layer|}}
+        <div class="vertical airy flow">
+          <div class="horizontal space-between flow layer-header">
+            <span>{{layer.varCol.header.value}}</span>
+            <div class="solid w3 text-right">
+              <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.varCol.inconsistency}}</span>
+              <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+              <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
             </div>
-          {{/each}}
-          <div class="fluid text-center">
+          </div>
+          
+          <div>
+              <label>{{x-capitalize (t "general.mappingType")}}</label>
+              {{#x-dropdown.x-trigger
+                dropdownPivot="top left"
+                triggerPivot="bottom left"}}
+                <a class="dropdown-trigger">
+                  {{#unless layer.mapping}}
+                  Choisir
+                  {{else}}
+                  {{t (concat "variable.mapping.type." layer.mapping.type)}}
+                  {{/unless}}
+                  <i class="iconfont iconfont-angle-down"></i>
+                </a>
+              {{/x-dropdown.x-trigger}}
+              <ul class="dropdown">
+                <li {{action 'bindLayerMapping' layer 'shape'}}>{{t 'variable.mapping.type.shape'}}</li>
+                {{#if layer.canBeSurface}}
+                <li {{action 'bindLayerMapping' layer 'surface'}}>{{t 'variable.mapping.type.surface'}}</li>
+                {{/if}}
+                <li {{action 'bindLayerMapping' layer 'text'}}>{{t 'variable.mapping.type.text'}}</li>
+              </ul>
+          </div>
+          
+          {{#if layer.mappedToShape}}
+          <div>
+            <label>Symbol :</label>
             {{#x-dropdown.x-trigger
               dropdownPivot="top left"
               triggerPivot="bottom left"}}
               <a class="dropdown-trigger">
-                <i class="iconfont iconfont-plus"></i> {{t "general.addAVariable"}}
+                {{t (concat "variable.mapping.shape." layer.mapping.shape)}}
+                <i class="iconfont iconfont-angle-down"></i>
+              </a>
+            {{/x-dropdown.x-trigger}}
+            <ul class="dropdown">
+              <li {{action 'bindMappingShape' layer 'point'}}>{{t 'variable.mapping.shape.point'}}</li>
+              <li {{action 'bindMappingShape' layer 'rect'}}>{{t 'variable.mapping.shape.rect'}}</li>
+            </ul>
+          </div>
+          <div>
+            <label>{{t "general.gradientOf"}} :</label>
+            {{#x-dropdown.x-trigger
+              dropdownPivot="top left"
+              triggerPivot="bottom left"}}
+              <a class="dropdown-trigger">
+                {{#if layer.mapping.scaleOf}}
+                {{t (concat "variable.mapping.scaleOf." layer.mapping.scaleOf)}}
+                {{else}}
+                {{t "general.none"}}
+                {{/if}}
+                <i class="iconfont iconfont-angle-down"></i>
+              </a>
+            {{/x-dropdown.x-trigger}}
+            <ul class="dropdown">
+              <li {{action 'bindMappingScaleOf' layer 'size'}}>{{t 'variable.mapping.scaleOf.size'}}</li>
+              <li {{action 'bindMappingScaleOf' layer 'fill'}}>{{t 'variable.mapping.scaleOf.fill'}}</li>
+              <li {{action 'bindMappingScaleOf' layer null}}>{{t 'general.none'}}</li>
+            </ul>
+          </div>
+          
+          {{#if layer.mappedToText}}
+          <div>
+            <label>{{x-capitalize (t "general.label")}} :</label>
+            {{#x-dropdown.x-trigger
+              dropdownPivot="top left"
+              triggerPivot="bottom left"}}
+              <a class="dropdown-trigger">
+                {{layer.mapping.labelCol.header.value}}
+                <i class="iconfont iconfont-angle-down"></i>
               </a>
             {{/x-dropdown.x-trigger}}
             <ul class="dropdown">
               {{#each model.data.columns as |col|}}
-                <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
+                <li {{action 'bindMappingLabelCol' layer col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
               {{/each}}
             </ul>
           </div>
+          {{/if}}
+          
+          <div>
+            {{color-picker value=layer.mapping.color}}
+          </div>
+          
+          {{else if layer.mappedToSurface}}
+          
+          <div>
+            <label>Motif de remplissage :</label>
+            {{#x-dropdown.x-trigger
+              dropdownPivot="top left"
+              triggerPivot="bottom left"}}
+              <a class="dropdown-trigger">
+                {{t (concat "variable.mapping.pattern." layer.mapping.pattern)}}
+                <i class="iconfont iconfont-angle-down"></i>
+              </a>
+            {{/x-dropdown.x-trigger}}
+            <ul class="dropdown">
+              <li {{action 'bindMappingPattern' layer 'solid'}}>{{t 'variable.mapping.pattern.solid'}}</li>
+              <li {{action 'bindMappingPattern' layer 'horizontal'}}>{{t 'variable.mapping.pattern.horizontal'}}</li>
+              <li {{action 'bindMappingPattern' layer 'vertical'}}>{{t 'variable.mapping.pattern.vertical'}}</li>
+              <li {{action 'bindMappingPattern' layer 'diagonal'}}>{{t 'variable.mapping.pattern.diagonal'}}</li>
+            </ul>
+          </div>
+          <div>
+            {{color-picker value=layer.mapping.color}}
+          </div>
+          {{/if}}
+        </div>
+      {{/each}}
+      <div class="fluid text-center">
+        {{#x-dropdown.x-trigger
+          dropdownPivot="top left"
+          triggerPivot="bottom left"}}
+          <a class="dropdown-trigger">
+            <i class="iconfont iconfont-plus"></i> {{t "general.addAVariable"}}
+          </a>
+        {{/x-dropdown.x-trigger}}
+        <ul class="dropdown">
+          {{#each model.data.columns as |col|}}
+            <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+</div>
+<!--<div class="small panel">
+    <header class="filled primary">
+        <div class="title">Contenu</div>
+        <div class="actions"><b>-</b></div>
+    </header>
+    <div class="vertical airy flow filled">
+        <div class="vertical middle flow">
+            <label class="horizontal flow">Contenu de l'article</label>
+            <textarea/>
+        </div>
+        <div class="horizontal airy middle center flow">
+            <label class="horizontal right solid flow text-right">Oui ?</label>
+            <span><input type="radio" name="group1"/><i class="-h"></i></span>
+            <label class="horizontal right solid flow text-right">Non ?</label>
+            <span><input type="radio" name="group1"/><i class="-h"></i></span>
+        </div>
+        <div class="horizontal airy middle center flow">
+            <label class="horizontal right solid flow text-right">Validé ?</label>
+            <span><input type="checkbox"/><i class="-h"></i></span>
         </div>
     </div>
-    <!--<div class="small panel">
-        <header class="filled primary">
-            <div class="title">Contenu</div>
-            <div class="actions"><b>-</b></div>
-        </header>
-        <div class="vertical airy flow filled">
-            <div class="vertical middle flow">
-                <label class="horizontal flow">Contenu de l'article</label>
-                <textarea/>
-            </div>
-            <div class="horizontal airy middle center flow">
-                <label class="horizontal right solid flow text-right">Oui ?</label>
-                <span><input type="radio" name="group1"/><i class="-h"></i></span>
-                <label class="horizontal right solid flow text-right">Non ?</label>
-                <span><input type="radio" name="group1"/><i class="-h"></i></span>
-            </div>
-            <div class="horizontal airy middle center flow">
-                <label class="horizontal right solid flow text-right">Validé ?</label>
-                <span><input type="checkbox"/><i class="-h"></i></span>
-            </div>
-        </div>
-    </div>-->
-</aside>
+</div>-->

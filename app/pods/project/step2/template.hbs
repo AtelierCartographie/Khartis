@@ -3,10 +3,10 @@
       <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.Back"}}
   {{/x-button}}
   {{#x-button class="primary btn-next" invisible=hasErrors action=(action 'next')}}
-    {{t "import.qualifyData"}} <i class="iconfont iconfont-long-arrow-right"></i>
+    {{t "navigation.openMap"}} <i class="iconfont iconfont-long-arrow-right"></i>
   {{/x-button}}
 </div>
-<div class="report">
+<div class="report vertical flow">
     <h1>{{t "import.report"}}</h1>
 
     <div class="report-message">
@@ -21,7 +21,7 @@
       {{#x-accordion}}
 
           <div class="accordion-item active">
-              <h2 class="report-title accordion-trigger">{{x-capitalize (t "general.summary")}}</h2>
+              <h2 class="report-title accordion-trigger">{{x-capitalize (t "general.summary")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
 
               <div class="accordion-wrapper">
                   <div>
@@ -64,7 +64,7 @@
           </div>
 
           <div class="accordion-item">
-              <h2 class="report-title accordion-trigger">Aperçu</h2>
+              <h2 class="report-title accordion-trigger">Aperçu <span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
               <div class="accordion-wrapper">
                   <div class="report-preview">
                       <table>

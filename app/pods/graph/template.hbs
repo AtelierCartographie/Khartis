@@ -1,26 +1,21 @@
 <div class="graph vertical flow">
-    <div class="navheader">
-      {{#if isInStateLayout}}
-        {{#x-button class="default btn-prev" action=(action 'back')}}
-            <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.chooseMap"}}
-        {{/x-button}}
-        {{#x-button class="default btn-next" action=(action 'next')}}
-          {{t "general.varMapping"}} <i class="iconfont iconfont-long-arrow-right"></i>
-        {{/x-button}}
-      {{else if isInStateMapping}}
-        {{#x-button class="default btn-prev" action=(action 'back')}}
-            <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.pageLayout"}}
-        {{/x-button}}
-      {{/if}}
-    </div>
     <div class="horizontal flow">
-        <div class="vertical-navbar">
-            <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}><i
-                    class="iconfont iconfont-map"></i></div>
-            <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'mapping'}}><i
-                    class="iconfont iconfont-sliders"></i></div>
+      <aside class="solid vertical flow">
+        {{outlet 'header'}}
+        <div class="horizontal flow">
+          <div class="vertical-navbar">
+              <div class="state-icon {{if isInStateGeovars 'selected'}}" {{action 'selectState' 'geovars'}}><i
+                      class="iconfont iconfont-map"></i></div>
+              <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}><i
+                      class="iconfont iconfont-map"></i></div>
+              <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'mapping'}}><i
+                      class="iconfont iconfont-sliders"></i></div>
+          </div>
+          <div class="airy vertical flow padded">
+            {{outlet 'sidebar'}}
+          </div>
         </div>
-      {{outlet 'sidebar'}}
+      </aside>
         <div class="stretched flow" style="position: relative;">
             <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
               {{#if basemapData}}
@@ -28,6 +23,7 @@
                 base=basemapData
                 graphLayout=model.graphLayout
                 graphLayers=model.graphLayers
+                onAskVersioning="onAskVersioning"
                 }}
 
                 {{#x-toolbar}}
@@ -51,9 +47,9 @@
                                   <i class="iconfont iconfont-redo"></i>
                               </li>
                           {{/x-tooltip}}
-                          {{#x-tooltip message="Save" position="left"}}
-                              <li>
-                                  <i class="iconfont iconfont-save"></i>
+                          {{#x-tooltip message="Déplacer" position="left"}}
+                              <li {{action 'switchEditMode' 'move'}}>
+                                  <i class="iconfont iconfont-arrows"></i>
                               </li>
                           {{/x-tooltip}}
                         </ul>
@@ -64,5 +60,5 @@
             </div>
         </div>
     </div>
-
+    
 </div>

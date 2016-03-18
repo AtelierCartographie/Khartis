@@ -1,6 +1,11 @@
+{{outlet 'header'}}
 <div class="intro">
 
     <h2 class="intro-title">{{t "general.welcomeTo"}} <span>Mapp</span>, {{t "general.onlineEditor"}}</h2>
+
+    <p>
+      {{localized-tpl tpl="help/{locale}/index"}}
+    </p>
 
     <div class="intro-actions">
       {{#if hasProject}}
@@ -19,10 +24,6 @@
           </div>
       {{/if}}
     </div>
-
-  <div style="margin-top:150px;width:350px;">
-    Output {{testValue}}
-  </div>
 
 </div>
 

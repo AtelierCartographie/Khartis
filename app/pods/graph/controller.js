@@ -18,6 +18,10 @@ export default Ember.Controller.extend({
     return this.get('state') === "layout";
   }.property('state'),
   
+  isInStateGeovars: function() {
+    return this.get('state') === "geovars";
+  }.property('state'),
+  
   isInStateMapping: function() {
     return this.get('state') === "mapping";
   }.property('state'),
@@ -110,6 +114,7 @@ export default Ember.Controller.extend({
       },
       
       onAskVersioning(type) {
+        console.log('onAskVersioning', type);
         switch (type) {
           case "undo":
             this.get('store').versions().undo();
@@ -117,7 +122,7 @@ export default Ember.Controller.extend({
           case "redo": 
             this.get('store').versions().redo();
             break;
-          case "freeze": 
+          case "freeze":
             this.get('store').versions().freeze(this.get('model').export());
             break;
         }

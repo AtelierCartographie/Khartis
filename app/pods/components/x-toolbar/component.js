@@ -20,7 +20,9 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement(){
-    this.get('triggerEl').off('click', this.toggle)
+    if (this.get('triggerEl')) {
+      this.get('triggerEl').off('click', this.toggle)
+    }
   }
 
 });

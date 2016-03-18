@@ -7,7 +7,6 @@ export default Ember.Route.extend({
   
   renderTemplate: function() {
     this.render("graph", { outlet: 'main' });
-    this.render("graph.mapping.help", {into: "application", outlet: "help"});
     this.render('graph.mapping.sidebar', {into: "graph", outlet: 'sidebar' });
   },
   

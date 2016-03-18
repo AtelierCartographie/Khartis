@@ -13,12 +13,15 @@ export default Ember.Route.extend({
           break;
         case 'graph':
           this.transitionTo(url, this.get('store').versions().current()._uuid);
-          console.log("OK graph");
           break;
         default:
           this.transitionTo(url);
       }
       
+    },
+    
+    setLocale(locale) {
+      this.set('i18n.locale', locale);
     }
     
    } 

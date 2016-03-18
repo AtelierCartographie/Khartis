@@ -82,6 +82,8 @@ var GraphLayout = Struct.extend({
 		
 	}.property("_virginDisplayed"),
 	
+  tx: 0,
+  ty: 0,
 	width: 800,
 	height: 600,
 	margin: {v: 10, h: 10},
@@ -107,6 +109,8 @@ var GraphLayout = Struct.extend({
           projection: this.get('projection'),
           backgroundColor: this.get('backgroundColor'),
           backMapColor: this.get('backMapColor'),
+          tx: this.get('tx'),
+          ty: this.get('ty'),
           width: this.get('width'),
           height: this.get('height'),
           zoom: this.get('zoom')
@@ -125,6 +129,8 @@ GraphLayout.reopenClass({
             backMapColor: json.backMapColor,
             projection: json.projection,
             width: json.width,
+            tx: json.tx,
+            ty: json.ty,
             height: json.height,
             zoom: json.zoom
         });

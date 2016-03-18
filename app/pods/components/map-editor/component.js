@@ -10,8 +10,7 @@ import MaskPattern from 'mapp/utils/mask-pattern';
 export default Ember.Component.extend({
   
   tagName: "svg",
-  attributeBindings: ['height', 'width', 'xmlns', 'xmlns:xlink', 'version'],
-  height: "100%",
+  attributeBindings: ['width', 'xmlns', 'xmlns:xlink', 'version'],
   width: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
   'xmlns:xlink': "http://www.w3.org/1999/xlink",
@@ -29,7 +28,7 @@ export default Ember.Component.extend({
   graphLayers: [],
   
   resizeInterval: null,
-
+  
 	draw: function() {
     
 		var d3g = this.d3l();
@@ -49,22 +48,73 @@ export default Ember.Component.extend({
         '$height': this.$().parent().height()
       });
     };
-    this.set('resizeInterval', setInterval($size, 800));
+    this.set('resizeInterval', setInterval($size, 600));
     $size();
     // ---------
-		
+    
 		d3g.append("rect")
 			.classed("bg", true)
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
-    d3g.append("g")
+    let mapG = d3g.append("g")
+      .attr("x", this.get('graphLayout.tx'))
+      .attr("y", this.get('graphLayout.ty'))
+      .attr("transform", d3lper.translate({tx: this.get('graphLayout.tx'), ty: this.get('graphLayout.ty')}))
+      .classed("map", true);
+    
+    mapG.append("g")
 			.classed("backmap", true);
     	
-		d3g.append("g")
+		mapG.append("g")
 			.classed("layers", true);
-			
+    
+    // DRAG & ZOOM
+    
+    var zoom = d3.behavior.zoom()
+      .scaleExtent([1, 8])
+      .on("zoom", () => {
+        let rz =  Math.round(d3.event.scale * 2) / 2;
+        if (rz != this.get('graphLayout.zoom')) {
+          this.set('graphLayout.zoom',rz);
+          this.sendAction('onAskVersioning', "freeze");
+        }
+      })
+      .scale(this.get('graphLayout.zoom'));
+
+    var drag = d3.behavior.drag()
+      .origin(() => {
+        return {x: mapG.attr('x'), y: mapG.attr('y')};
+      })
+      .on("dragstart", () => {
+        d3.event.sourceEvent.stopPropagation();
+        mapG.classed("dragging", true);
+      })
+      .on("drag", () => {
+        let bbox = mapG.node().getBBox(),
+            pos = {
+              tx: Math.min(bbox.width, Math.max(d3.event.x, -bbox.width)),
+              ty: Math.min(bbox.height, Math.max(d3.event.y, -bbox.height))
+            };
+        mapG.attr({
+         'transform': d3lper.translate({tx: pos.tx, ty: pos.ty}), 
+          x: pos.tx,
+          y: pos.ty
+        });
+      })
+      .on("dragend", () => {
+        mapG.classed("dragging", false);
+        this.get('graphLayout').setProperties({
+          tx: mapG.attr('x'),
+          ty: mapG.attr('y')
+        });
+        this.sendAction('onAskVersioning', "freeze");
+      });
+      
+    d3g.call(drag);
+    d3g.call(zoom);
+    	
 		let og = d3g.append("g")
 			.classed("offset", true);
 			
@@ -81,7 +131,6 @@ export default Ember.Component.extend({
 
 		this.projectAndDraw();
 		this.updateColors();
-
           
 	}.on("didInsertElement"),
   
@@ -371,19 +420,19 @@ export default Ember.Component.extend({
     
     let centroidSel = d3Layer
 			.selectAll(".feature")
-			.attr("transform", d => d3lper.translate(
-        projection(d.point.geometry.coordinates)[0],
-        projection(d.point.geometry.coordinates)[1]
-      ))
+			.attr("transform", d => d3lper.translate({
+        tx: projection(d.point.geometry.coordinates)[0],
+        ty: projection(d.point.geometry.coordinates)[1]
+      }))
       .data(data);
       
     let g = centroidSel.enter()
       .append("g")
 			.classed("feature", true)
-      .attr("transform", d => d3lper.translate(
-        projection(d.point.geometry.coordinates)[0],
-        projection(d.point.geometry.coordinates)[1]
-      ));
+      .attr("transform", d => d3lper.translate({
+        tx: projection(d.point.geometry.coordinates)[0],
+        ty: projection(d.point.geometry.coordinates)[1]
+      }));
     
     let shape,
         sizeFn,

@@ -1,0 +1,19 @@
+<header class="application-header filled primary">
+
+    <span class="brand">{{#link-to 'index'}}MAPP{{/link-to}}</span>
+
+    <div class="header-menu">
+
+      {{#x-dropdown.x-trigger}}
+        <a class="header-options dropdown-trigger">
+            <i><small>{{i18n.locale}}</small></i>
+        </a>
+      {{/x-dropdown.x-trigger}}
+
+      <ul class="dropdown">
+        <li {{action 'setLocale' 'fr'}}><i>fr</i></li>
+        <li {{action 'setLocale' 'en'}}><i>en</i></li>
+      </ul>
+
+    </div>
+</header>
