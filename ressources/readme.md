@@ -102,16 +102,16 @@ D - Projections
 
 Source : [D3 Extended Geographic Projections](https://github.com/d3/d3-geo-projection/)
 
-Dans un premier temps on peut définir comme projection par défaut la [Natural Earth](http://bl.ocks.org/mbostock/4479477) :
+On peut définir comme projection par défaut la [Natural Earth](http://bl.ocks.org/mbostock/4479477) :
 
     var projection = d3.geo.naturalEarth()
     .scale(167)
     .translate([width / 2, height / 2])
     .precision(.1);
 
-A discuter : 
-- la forme et le format que doit prendre la liste des projections pour que 
-    - les paramètres et le bout de code correspondant à la projection soit facilement implémentés
-    - celle-ci puisse évoluer (ajout, suppression)
-- toutes les projections ne seront pas associées à tous les fonds de carte (cf point suivant)
-- la liste classera les projections selon les propriétés préservées (équivalente, conforme, équidistante ou un mix)
+Le fichier 'Projection-list.csv' contient l'ensemble des projections à proposer. Chacune est définie par ses paramètres propres. La colonne 'Scale' indique à qu'elle échelle la projection est la plus pertinente (World ou Region).
+Pour certaines projections des paramètres doivent être modifiables par l'utilisateur : le centrage (longitude seul oulongitude et latitude ; cf colonne 'center'), la rotation (valeurs précises données).
+Les paramètres 'translate' et 'precision' ne sont pas notés dans le tableau car toujours identiques :
+
+    .translate([width / 2, height / 2])
+    .precision(.1)
