@@ -7,7 +7,9 @@
 @import "parts/breadcrumb";
 @import "parts/layers-panel";
 @import "parts/projection-panel";
+@import "parts/map";
 @import "parts/help";
+@import "parts/graph-tools";
 
 html, body {
   height: 100%;
@@ -25,7 +27,8 @@ a {
 /* flow */
 body > .ember-view:not(.popable) {
   height: 100%;
-  @extend .vertical.flow;
+  @extend %flow;
+  @extend %vertical;
 }
 
 .application-header {
@@ -39,13 +42,7 @@ body > .ember-view:not(.popable) {
 }
 
 .application-workspace {
-  overflow-y: scroll;
-}
-
-
-.import-dialog {
-  width: 50%;
-  flex-basis: auto;
+  overflow-y: auto;
 }
 
 
@@ -65,6 +62,7 @@ aside {
 
 footer {
   flex-basis: $footer-height;
+  line-height: $footer-height;
 }
 
 

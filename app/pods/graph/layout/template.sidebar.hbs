@@ -1,84 +1,52 @@
-<div class="help">
+<div class="help jumbotron markdown">
   {{localized-tpl tpl="help/{locale}/graph/layout"}}
 </div>
-<div class="small panel">
-    <header class="filled primary">
-        <div class="title">{{t "general.pageLayout"}}</div>
-        <div class="actions"></div>
-    </header>
-    <div class="vertical airy flow padded-v filled">
-        <div class="horizontal airy middle flow">
+{{#x-accordion class="tools"}}
+  <div class="accordion-item active" accordion-priority="9999">
+      <h3 class="accordion-trigger">{{x-capitalize (t "general.pageLayout")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
+      <div class="accordion-wrapper">
+        <div class="vertical airy flow padded">
+          <div class="horizontal airy middle flow">
+              <div class="horizontal middle flow">
+                  <label class="horizontal right flow w3 padded-r text-right">W</label>
+                  {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
+                  <small class="padded">px</small>
+              </div>
+              <div class="horizontal middle flow">
+                  <label class="horizontal right flow w3 padded-r text-right">H</label>
+                  {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
+                  <small class="padded">px</small>
+              </div>
+          </div>
+          <div class="horizontal airy middle flow">
             <div class="horizontal middle flow">
-                <label class="horizontal right flow w3 padded-r text-right">W</label>
-                {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
-                <small class="padded">px</small>
+                <label class="horizontal right flow solid w3 padded-r text-right">Zoom</label>
+                {{input value=model.graphLayout.zoom focus-out=(action 'onAskVersioning' 'freeze')}}
             </div>
+          </div>
+          <div class="horizontal airy middle flow">
             <div class="horizontal middle flow">
-                <label class="horizontal right flow w3 padded-r text-right">H</label>
-                {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
-                <small class="padded">px</small>
+                <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
+                {{color-picker value=model.graphLayout.backgroundColor}}
             </div>
-        </div>
-        <div class="horizontal airy middle flow">
-          <div class="horizontal middle flow">
-              <label class="horizontal right flow solid w3 padded-r text-right">Zoom</label>
-              {{input value=model.graphLayout.zoom focus-out=(action 'onAskVersioning' 'freeze')}}
           </div>
         </div>
-        <div class="horizontal airy middle flow">
-          <div class="horizontal middle flow">
-              <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
-              {{color-picker value=model.graphLayout.backgroundColor}}
-          </div>
-        </div>
-    </div>
-</div>
-<div class="small panel projection-panel">
-    <header class="filled primary">
-        <div class="title">Projection</div>
-        <div class="actions"></div>
-    </header>
-    <div class="vertical airy flow padded-v filled">
-        <div class="horizontal airy middle flow">
+      </div>
+  </div>
+  <div class="accordion-item active">
+      <h3 class="accordion-trigger">{{x-capitalize (t "general.backMap")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
+      <div class="accordion-wrapper">
+        <div class="vertical airy flow padded">
+          <div class="horizontal airy middle flow">
             <div class="horizontal middle flow">
-                {{#x-dropdown.x-trigger
-                  dropdownPivot="top left"
-                  triggerPivot="bottom left"}}
-                  <a class="dropdown-trigger">
-                      {{#unless model.graphLayout.projection}}
-                      Projection 
-                      {{else}}
-                      {{t (concat "projection." model.graphLayout.projection ".name")}}
-                      {{/unless}}
-                      <i class="iconfont iconfont-angle-down"></i>
-                  </a>
-                {{/x-dropdown.x-trigger}}
-                <ul class="dropdown">
-                  {{#each-in availableProjections as |id o|}}
-                    <li {{action 'bindProjection' id}}>
-                      <div>{{t (concat "projection." id ".name")}}</div>
-                      <div class="projection-description"><small>{{t (concat "projection." id ".description")}}</small></div>
-                    </li>
-                  {{/each-in}}
-                </ul>
+                <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
+                {{color-picker value=model.graphLayout.backMapColor}}
             </div>
-        </div>
-    </div>
-</div>
-<div class="small panel">
-    <header class="filled primary">
-        <div class="title">{{t "general.backMap"}}</div>
-        <div class="actions"></div>
-    </header>
-    <div class="vertical airy flow padded-v filled">
-        <div class="horizontal airy middle flow">
-          <div class="horizontal middle flow">
-              <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
-              {{color-picker value=model.graphLayout.backMapColor}}
           </div>
         </div>
-    </div>
-</div>
+      </div>
+  </div>
+{{/x-accordion}}
 
 <div class="navbar">
     {{#x-button class="default btn-prev" action=(action 'back')}}

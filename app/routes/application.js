@@ -2,9 +2,14 @@ import Ember from 'ember';
 
 
 export default Ember.Route.extend({
+  
+  beforeModel() {
+    console.log("before model");
+    return this.get('Dictionnary').load();
+  },
    
-   actions: {
-       
+  actions: {
+      
     navigateTo(url) {
       
       switch(url) {
@@ -24,6 +29,6 @@ export default Ember.Route.extend({
       this.set('i18n.locale', locale);
     }
     
-   } 
+  } 
     
 });

@@ -17,3 +17,18 @@
   h2 { margin: 0; }
 
 }
+
+.help.jumbotron {
+  
+  @extend .padded;
+  @extend .filled;
+  
+  font-size: 0.9em;
+  border: 1px solid greys(10%);
+
+  &.markdown {
+    h1 {font-size: 1.2em;}
+    h2 { margin: 1.1em; }
+  }
+
+}

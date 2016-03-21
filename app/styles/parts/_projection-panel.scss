@@ -1,10 +1,46 @@
 .projection-panel {
   
-  font-size: 0.9em;
+  @extend %flow;
+  @extend %horizontal;
   
-  .projection-description {
-    color: greys(70%);
+  position: absolute;
+  top:10px;
+  left:10px;
+  
+  &-items li {
+    
+    cursor:pointer;
+    
+    width:32px;
+    height:32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  &-items {
+    list-style: none;
+    padding-left:0;
+    margin:0;
+  }
+
+  &-items li {
+    cursor:pointer;
+    background-color: rgba(greys(50%), .5);
+
+    &:not(:last-child){
+      border-bottom:1px solid rgba(greys(50%), .5);
+    }
+
+    &:hover {
+      background-color: rgba(greys(50%), .2);
+    }
+  }
+  
+  .stars {
+    li { float: left; }
   }
   
 }
-

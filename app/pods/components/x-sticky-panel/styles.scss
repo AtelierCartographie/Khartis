@@ -1,0 +1,36 @@
+& {
+  
+  background-color: rgba(greys(50%), 0.2);
+  @include shadow(1);
+
+  & > .trigger {
+    cursor:pointer;
+    width:32px;
+    height:32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & > .wrapper {
+    height:0;
+    width: 0;
+    overflow:hidden;
+  }
+
+}
+
+
+&.open {
+  
+  & > .trigger i {
+    transform:rotate(90deg);
+  }
+
+  & > .wrapper {
+    height:auto;
+    width: auto;
+  }
+  
+}
