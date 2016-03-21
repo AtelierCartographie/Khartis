@@ -59,9 +59,6 @@ export default Ember.Component.extend({
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
     let mapG = d3g.append("g")
-      .attr("x", this.get('graphLayout.tx'))
-      .attr("y", this.get('graphLayout.ty'))
-      .attr("transform", d3lper.translate({tx: this.get('graphLayout.tx'), ty: this.get('graphLayout.ty')}))
       .classed("map", true);
     
     mapG.append("g")
@@ -129,6 +126,7 @@ export default Ember.Component.extend({
 		mg.append("rect")
 			.attr("fill", "none");
 
+    this.updatePosition();
 		this.projectAndDraw();
 		this.updateColors();
           
@@ -167,6 +165,15 @@ export default Ember.Component.extend({
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"));
 		
 	}.observes('graphLayout.strokeWidth'),
+  
+  updatePosition: function() {
+    
+    this.d3l().select(".map")
+      .attr("x", this.get('graphLayout.tx'))
+      .attr("y", this.get('graphLayout.ty'))
+      .attr("transform", d3lper.translate({tx: this.get('graphLayout.tx'), ty: this.get('graphLayout.ty')}));
+    
+  }.observes('graphLayout.tx', 'graphLayout.ty'),
   
   projection: function() {
     

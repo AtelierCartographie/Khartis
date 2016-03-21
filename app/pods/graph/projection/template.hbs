@@ -1,0 +1,23 @@
+<div class="configuration-panel filled padded with-relief topbar split-view">
+  <div class="titlebar">
+    <div class="title"><a>{{t "navigation.chooseProjection"}}</a> <i class="iconfont iconfont-angle-right separator"></i> Choix d'une projection</div>
+    <div class="actions">
+      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+    </div>
+  </div>
+  <div class="body">
+    <ul class="collection">
+      {{#each availableProjections as |proj|}}
+        <li {{action 'bindProjection' proj}}>
+          <div class="horizontal airy flow">
+            <img src="images/yuna.jpg" alt="" class="solid">
+            <div class="vertical flow">
+              <span class="title">{{t (concat "projection." proj.id ".name")}}</span>
+              <p class="description">{{t (concat "projection." proj.id ".description")}}</p>
+            </div>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

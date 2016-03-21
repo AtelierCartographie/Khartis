@@ -1,21 +1,12 @@
 import d3 from 'd3';
 
-const PROJECTIONS = {
-  "naturalEarth": { fn: d3.geo.naturalEarth, precision: 1 },
-  "mercator": { fn: d3.geo.mercator },
-  "orthographic": { fn: d3.geo.orthographic, rotatable: true }
-};
-
 export default {
   
-  projections: PROJECTIONS,
-  
-  computeProjection(features, width, height, fWidth, fHeight, margin, zoom, proj = "mercator") {
+  computeProjection(features, width, height, fWidth, fHeight, margin, zoom, proj) {
     
     zoom = zoom < 1 ? 1 : 1/zoom;
     
-    let projFn = PROJECTIONS[proj].fn,
-        fProjection = projFn().scale(zoom).translate([0, 0]),
+    let fProjection = proj.fn().scale(zoom).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
         pixelBounds = d3Path.bounds(features),
@@ -31,12 +22,12 @@ export default {
 
         r = Math.min(widthResolution, heightResolution);
 
-    return projFn()
+    return proj.fn()
       .center(center)
       .scale(r)
       .translate([width / 2, height / 2])
-      .precision(PROJECTIONS[proj].precision || 1)
-
+      .precision(1);
+      
   }
 
 }

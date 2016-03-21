@@ -12,7 +12,7 @@
                       class="iconfont iconfont-sliders"></i></div>
           </div>
           <div class="airy vertical flow padded">
-            {{outlet 'sidebar'}}
+            {{partial sidebar}}
           </div>
         </div>
       </aside>
@@ -31,42 +31,21 @@
               
               {{#x-sticky-panel class="projection-panel open"}}
 
-                {{#x-tooltip message="Outils" position="left"}}
+                {{#x-tooltip message="Projection" position="left"}}
                     <div class="trigger">
                         <i class="iconfont iconfont-more-horiz"></i>
                     </div>
                 {{/x-tooltip}}
-
-
-                  <div class="wrapper">
-                    <div class="padded">
-                      <h3>Projection</h3>
-                    </div>
-                    <div class="padded">
-                      {{t (concat "projection." model.graphLayout.projection ".name")}} <i class="iconfont iconfont-pencil"></i>
-                      {{x-stars value=5 class="stars"}}
-                    </div>
-                      {{#x-dropdown.x-trigger
-                        dropdownPivot="top left"
-                        triggerPivot="bottom left"}}
-                        <a class="dropdown-trigger">
-                            {{#unless model.graphLayout.projection}}
-                            Projection 
-                            {{else}}
-                            
-                            {{/unless}}
-                            <i class="iconfont iconfont-angle-down"></i>
-                        </a>
-                      {{/x-dropdown.x-trigger}}
-                      <ul class="dropdown">
-                        {{#each-in availableProjections as |id o|}}
-                          <li {{action 'bindProjection' id}}>
-                            <div>{{t (concat "projection." id ".name")}}</div>
-                            <div class="projection-description"><small>{{t (concat "projection." id ".description")}}</small></div>
-                          </li>
-                        {{/each-in}}
-                      </ul>
+                <div class="wrapper">
+                  <div class="padded">
+                    <h3>Projection</h3>
                   </div>
+                  <div class="padded">
+                    {{t (concat "projection." model.graphLayout.projection.id ".name")}}
+                    <a {{action 'navigateTo' 'graph.projection'}}><i class="iconfont iconfont-pencil"></i></a>
+                    {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
+                  </div>
+                </div>
               {{/x-sticky-panel}}
 
               {{#x-sticky-panel class="toolbar"}}
@@ -81,17 +60,17 @@
                   <div class="wrapper">
                       <ul class="toolbar-items">
                         {{#x-tooltip message="Undo" position="left"}}
-                            <li>
+                            <li {{action 'onAskVersioning' 'undo'}}>
                                 <i class="iconfont iconfont-undo"></i>
                             </li>
                         {{/x-tooltip}}
                         {{#x-tooltip message="Redo" position="left"}}
-                            <li>
+                            <li {{action 'onAskVersioning' 'redo'}}>
                                 <i class="iconfont iconfont-redo"></i>
                             </li>
                         {{/x-tooltip}}
-                        {{#x-tooltip message="Déplacer" position="left"}}
-                            <li {{action 'switchEditMode' 'move'}}>
+                        {{#x-tooltip message="Centrer" position="left"}}
+                            <li {{action 'resetTranslate'}}>
                                 <i class="iconfont iconfont-arrows"></i>
                             </li>
                         {{/x-tooltip}}
@@ -99,36 +78,8 @@
                   </div>
               {{/x-sticky-panel}}
               
-              <div class="configuration-panel filled padded with-relief topbar split-view">
-                <div class="titlebar">
-                  <div class="title"><a>Choix d'une projection </a> <i class="iconfont iconfont-angle-right separator"></i> Choix d'une projection</div>
-                  <div class="actions">
-                    <i class="iconfont iconfont-times-circle"></i>
-                  </div>
-                </div>
-                <div class="body">
-                  <ul class="collection">
-                    <li>
-                      <div class="horizontal airy flow">
-                        <img src="images/yuna.jpg" alt="" class="solid">
-                        <div class="vertical flow">
-                          <span class="title">Title</span>
-                          <p class="description">Description</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="horizontal airy flow">
-                        <img src="images/yuna.jpg" alt="" class="solid">
-                        <div class="vertical flow">
-                          <span class="title">Title</span>
-                          <p class="description">Description</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              {{outlet "configuration-panel"}}
+              
             </div>
         </div>
     </div>

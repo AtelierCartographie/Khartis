@@ -2,6 +2,13 @@ import Ember from 'ember';
 import CSV from 'npm:csv-string';
 import ab2string from 'mapp/utils/ab2string';
 import config from 'mapp/config/environment';
+import Projection from 'mapp/models/projection';
+
+let csvHeaderToJs = function(str) {
+  str = str.replace(/^\./, "")
+    .replace(/[\.\s\-]/g, "_");
+  return str.charAt(0).toLowerCase() + str.slice(1);
+}
 
 var Dictionnary = Ember.Service.extend(Ember.Evented, {
 	
@@ -34,7 +41,15 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
             return r.map( c => c.trim() );
           });
           
-          this.set('data.projections', data);
+          let headers = data[0],
+              body = data.slice(1),
+              json = body.map( r => {
+                let o = {};
+                headers.forEach( (h,i) => o[csvHeaderToJs(h)] = r[i] );
+                return o;
+              });
+          
+          this.set('data.projections', json.map( j => Projection.create(j) ));
           res(data);
           
         }

@@ -2,6 +2,8 @@ import Ember from 'ember';
 import Project from 'mapp/models/project'; 
 
 export default Ember.Route.extend({
+    
+    store: Ember.inject.service(),
   
     renderTemplate: function() {
         this.render({ outlet: 'main' });
@@ -9,7 +11,7 @@ export default Ember.Route.extend({
     },
     
     redirect(model) {
-      this.transitionTo('graph.layout');
+      //this.transitionTo('graph.layout');
     },
     
     model(params) {
@@ -22,6 +24,13 @@ export default Ember.Route.extend({
         this.transitionTo('/');
       }
       
+    },
+    
+    afterModel(model) {
+      console.log(this.get('store'));
+      this.get('store').versions()
+        .on("undo", () => { console.log("undo"); this.refresh()})
+        .on("redo", () => this.refresh());
     },
     
     setupController(controller, model) {

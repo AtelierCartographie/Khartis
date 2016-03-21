@@ -9,7 +9,7 @@ let Project = Struct.extend({
   
     data: null,
     
-    graphLayout: GraphLayout.create(),
+    graphLayout: null,
     
     graphLayers: null,
     
@@ -18,7 +18,7 @@ let Project = Struct.extend({
     init() {
       this._super();
       this.setProperties({
-        'graphLayout': GraphLayout.create(),
+        'graphLayout': GraphLayout.createDefault(),
         'graphLayers': Em.A()
       });
     },

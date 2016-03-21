@@ -4,15 +4,18 @@ import projector from 'mapp/utils/projector';
 import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
 import MappingFactory from 'mapp/models/layer-mapping';
+import Projection from 'mapp/models/projection';
 import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
   
-  state: null,
+  state: "mapping",
   
   basemapData: null,
   
-  availableProjections: projector.projections,
+  availableProjections: function() {
+    return this.get('Dictionnary.data.projections');
+  }.property('Dictionnary.data.projections'),
   
   isInStateLayout: function() {
     return this.get('state') === "layout";
@@ -24,6 +27,10 @@ export default Ember.Controller.extend({
   
   isInStateMapping: function() {
     return this.get('state') === "mapping";
+  }.property('state'),
+  
+  sidebar: function() {
+    return `graph/sidebar/${this.get('state')}`;
   }.property('state'),
   
   setup() {
@@ -70,8 +77,8 @@ export default Ember.Controller.extend({
   
   actions: {
     
-      bindProjection(projId) {
-        this.set('model.graphLayout.projection', projId);
+      bindProjection(proj) {
+        this.set('model.graphLayout.projection', Projection.create(proj.export()));
         this.send('onAskVersioning', 'freeze');
       },
       
@@ -113,6 +120,14 @@ export default Ember.Controller.extend({
         layer.set('mapping.labelCol', col);
       },
       
+      resetTranslate() {
+        this.get('model.graphLayout').setProperties({
+          tx: 0,
+          ty: 0
+        });
+        this.send("onAskVersioning", "freeze");
+      },
+      
       onAskVersioning(type) {
         console.log('onAskVersioning', type);
         switch (type) {
@@ -130,7 +145,7 @@ export default Ember.Controller.extend({
       },
       
       selectState(state) {
-        this.transitionToRoute(`graph.${state}`, this.get('model._uuid'));
+        this.set('state', state);
       },
       
       next() {

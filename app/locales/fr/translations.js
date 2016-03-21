@@ -26,7 +26,8 @@ export default {
   },
   
   "navigation": {
-    "openMap": "Ourvir la carte"
+    "openMap": "Ourvir la carte",
+    "chooseProjection": "Choisir une projection"
   },
   
   "variable.meta": {
@@ -64,12 +65,40 @@ export default {
   },
   
   "projection": {
-    "naturalEarth": {
-      "name": "Natural earth",
-      "description": "Description de la projection natural earth"
+    "atlantis": {
+      "name": "Atlantis",
+      "description": ""
+    },
+    "briesemeister": {
+      "name": "Briesemeister",
+      "description": ""
+    },
+    "interrupted_goode_homolosine": {
+      "name": "Interrupted Goode Homolosine",
+      "description": ""
+    },
+    "lambert_azimuthal_equal_area": {
+      "name": "Lambert Azimuthal Equal-Area",
+      "description": ""
+    },
+    "mollweide": {
+      "name": "Mollweide",
+      "description": ""
+    },
+    "natural_earth": {
+      "name": "Natural Earth",
+      "description": ""
     },
     "orthographic": {
-      "name": "Orhtographic",
+      "name": "Orthographic",
+      "description": ""
+    },
+    "plate_carree": {
+      "name": "Plate carrée",
+      "description": ""
+    },
+    "waterman_butterfly": {
+      "name": "Waterman butterfly",
       "description": ""
     },
     "mercator": {

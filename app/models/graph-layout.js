@@ -2,6 +2,7 @@ import Ember from 'ember';
 import d3 from 'd3';
 import d3lper from 'mapp/utils/d3lper';
 import Struct from './struct';
+import Projection from './projection';
 
 var GraphLayout = Struct.extend({
 	
@@ -56,7 +57,6 @@ var GraphLayout = Struct.extend({
 			
 		}
 		
-		
 	}.property('_virginPatternColor', 'backgroundColor'),
 	
 	virginPattern: "diagonalGrid",
@@ -89,53 +89,56 @@ var GraphLayout = Struct.extend({
 	margin: {v: 10, h: 10},
   zoom: 1,
   
-  projection: "naturalEarth",
+  projection: null,
   
 	hOffset: function(screenWidth) {
-		
 		return (screenWidth - this.get('width')) / 2;
-		
 	},
 	
 	vOffset: function(screenHeight) {
-		
 		return (screenHeight - this.get('height')) / 2;
-		
 	},
 	
   export() {
-      return this._super({
-          basemap: this.get('basemap'),
-          projection: this.get('projection'),
-          backgroundColor: this.get('backgroundColor'),
-          backMapColor: this.get('backMapColor'),
-          tx: this.get('tx'),
-          ty: this.get('ty'),
-          width: this.get('width'),
-          height: this.get('height'),
-          zoom: this.get('zoom')
-      });
+    return this._super({
+      basemap: this.get('basemap'),
+      projection: this.get('projection').export(),
+      backgroundColor: this.get('backgroundColor'),
+      backMapColor: this.get('backMapColor'),
+      tx: this.get('tx'),
+      ty: this.get('ty'),
+      width: this.get('width'),
+      height: this.get('height'),
+      zoom: this.get('zoom')
+    });
   }
   
 });
 
 GraphLayout.reopenClass({
   
-    restore(json, refs = {}) {
-        let o = this._super(json, refs);
-        o.setProperties({
-            basemap: json.basemap,
-            backgroundColor: json.backgroundColor,
-            backMapColor: json.backMapColor,
-            projection: json.projection,
-            width: json.width,
-            tx: json.tx,
-            ty: json.ty,
-            height: json.height,
-            zoom: json.zoom
-        });
-        return o;
-    }
+  createDefault() {
+    let o = GraphLayout.create({
+      projection: Projection.createDefault()
+    });
+    return o;
+  },
+  
+  restore(json, refs = {}) {
+      let o = this._super(json, refs);
+      o.setProperties({
+          basemap: json.basemap,
+          backgroundColor: json.backgroundColor,
+          backMapColor: json.backMapColor,
+          projection: Projection.restore(json.projection),
+          width: json.width,
+          tx: json.tx,
+          ty: json.ty,
+          height: json.height,
+          zoom: json.zoom
+      });
+      return o;
+  }
     
 });
 

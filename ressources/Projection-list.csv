@@ -1,11 +1,11 @@
-Name,Scale,d3.geo,.rotate,.scale,.clipAngle,.lobes,d3-link,.center,.rotate-alternative,Score area,Score angle,Score distance,Author,Year
-Atlantis,World,d3.geo.mollweide(),"[30, -45, 90]",150,,,http://bl.ocks.org/mbostock/4519975,,,4,1,2,John Bartholomew,1948
-Briesemeister,World,"d3.geo.projection(d3.geo.hammer.raw(1.75, 2))","[-10, -45]",190,,,http://bl.ocks.org/mbostock/4519926,,,4,1,2,William A. Briesemeister,1953
-Interrupted Goode Homolosine,World,d3.geo.interrupt(d3.geo.homolosine.raw),,150,,"[[ // northern hemisphere [[-180, 0], [-100, 90], [ -40, 0]], [[ -40, 0], [ 30, 90], [ 180, 0]] ], [ // southern hemisphere [[-180, 0], [-160, -90], [-100, 0]], [[-100, 0], [ -60, -90], [ -20, 0]], [[ -20, 0], [ 20, -90], [ 80, 0]], [[ 80, 0], [ 140, -90], [ 180, 0]] ]]",http://bl.ocks.org/mbostock/4448587,,,4,1,2,J. Paul Goode,1923
-Lambert Azimuthal Equal-Area,Region,d3.geo.azimuthalEqualArea(),"[0, -90]",150,180 - 1e-3,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann Lambert,1772
-Mollweide,World,d3.geo.mollweide(),,150,,,http://bl.ocks.org/mbostock/3734336,longitude,,4,1,2,Karl Mollweide,1805
-Natural Earth,World,d3.geo.naturalEarth(),,150,,,http://bl.ocks.org/mbostock/4479477,longitude,,3,2,4,Tom Patterson,2007
-Orthographic,Region,d3.geo.orthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,-,-
-Plate carrée,World,d3.geo.equirectangular(),,150,,,http://bl.ocks.org/mbostock/3757119,longitude,,2,2,4,-,-
-Waterman butterfly,World,d3.geo.polyhedron.waterman(),"[20, 0]",118,,,http://bl.ocks.org/mbostock/4458497,,"[200, 0]",3,3,3,Steve Waterman,1996
-Mercator,Region,d3.geo.mercator(),,(width + 1) / 2 / Math.PI,,,http://bl.ocks.org/mbostock/3757132,longitude and latitude,,1,4,1,Gérard Mercator,1569
+id,Name,Scale,d3.geo,.rotate,.scale,.clipAngle,.lobes,d3-link,.center,.rotate-alternative,Score area,Score angle,Score distance,Author,Year
+atlantis,Atlantis,World,d3.geo.mollweide(),"[30, -45, 90]",150,,,http://bl.ocks.org/mbostock/4519975,,,4,1,2,John Bartholomew,1948
+briesemeister,Briesemeister,World,"d3.geo.projection(d3.geo.hammer.raw(1.75, 2))","[-10, -45]",190,,,http://bl.ocks.org/mbostock/4519926,,,4,1,2,William A. Briesemeister,1953
+interrupted_goode_homolosine,Interrupted Goode Homolosine,World,d3.geo.interrupt(d3.geo.homolosine.raw),,150,,"[[ [[-180, 0], [-100, 90], [ -40, 0]], [[ -40, 0], [ 30, 90], [ 180, 0]] ], [ [[-180, 0], [-160, -90], [-100, 0]], [[-100, 0], [ -60, -90], [ -20, 0]], [[ -20, 0], [ 20, -90], [ 80, 0]], [[ 80, 0], [ 140, -90], [ 180, 0]] ]]",http://bl.ocks.org/mbostock/4448587,,,4,1,2,J. Paul Goode,1923
+lambert_azimuthal_equal_area,Lambert Azimuthal Equal-Area,Region,d3.geo.azimuthalEqualArea(),"[0, -90]",150,180 - 1e-3,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann lambert,1772
+mollweide,Mollweide,World,d3.geo.mollweide(),,150,,,http://bl.ocks.org/mbostock/3734336,longitude,,4,1,2,Karl Mollweide,1805
+natural_earth,Natural Earth,World,d3.geo.naturalEarth(),,150,,,http://bl.ocks.org/mbostock/4479477,longitude,,3,2,4,Tom Patterson,2007
+orthographic,Orthographic,Region,d3.geo.orthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,-,-
+plate_carree,Plate carrée,World,d3.geo.equirectangular(),,150,,,http://bl.ocks.org/mbostock/3757119,longitude,,2,2,4,-,-
+waterman_butterfly,Waterman butterfly,World,d3.geo.polyhedron.waterman(),"[20, 0]",118,,,http://bl.ocks.org/mbostock/4458497,,"[200, 0]",3,3,3,Steve Waterman,1996
+mercator,Mercator,Region,d3.geo.mercator(),,(width + 1) / 2 / Math.PI,,,http://bl.ocks.org/mbostock/3757132,longitude and latitude,,1,4,1,Gérard Mercator,1569

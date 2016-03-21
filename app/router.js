@@ -23,9 +23,9 @@ Router.map(function() {
     });*/
 
     this.route("graph", {path: "graph/:uuid"}, function() {
-        this.route("geovars");
-        this.route("layout");
-        this.route("mapping");
+        this.route("projection", function() {
+          this.route("edit");
+        });
     });
 
 });
