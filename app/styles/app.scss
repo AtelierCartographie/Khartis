@@ -9,7 +9,7 @@
 @import "parts/projection-panel";
 @import "parts/map";
 @import "parts/help";
-@import "parts/graph-tools";
+@import "parts/graph";
 
 html, body {
   height: 100%;
@@ -456,4 +456,8 @@ footer {
     }
 
   }
+}
+
+.stars {
+  li { float: left; }
 }

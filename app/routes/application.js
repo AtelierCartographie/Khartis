@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
-
 export default Ember.Route.extend({
+  
+  store: Ember.inject.service(),
   
   beforeModel() {
     console.log("before model");
@@ -28,6 +29,7 @@ export default Ember.Route.extend({
     setLocale(locale) {
       this.set('i18n.locale', locale);
     }
+      
     
   } 
     

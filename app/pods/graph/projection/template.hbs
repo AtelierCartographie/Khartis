@@ -1,6 +1,6 @@
-<div class="configuration-panel filled padded with-relief topbar split-view">
+<div class="configuration-panel filled padded with-relief topbar">
   <div class="titlebar">
-    <div class="title"><a>{{t "navigation.chooseProjection"}}</a> <i class="iconfont iconfont-angle-right separator"></i> Choix d'une projection</div>
+    <div class="title">{{t "navigation.chooseProjection"}}</div>
     <div class="actions">
       {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
     </div>
@@ -8,12 +8,26 @@
   <div class="body">
     <ul class="collection">
       {{#each availableProjections as |proj|}}
-        <li {{action 'bindProjection' proj}}>
+        <li class="clickable" {{action 'selectProjection' proj}}>
           <div class="horizontal airy flow">
-            <img src="images/yuna.jpg" alt="" class="solid">
+            <img src="assets/images/projection/{{proj.id}}.png" alt="" class="solid" width="230">
             <div class="vertical flow">
               <span class="title">{{t (concat "projection." proj.id ".name")}}</span>
               <p class="description">{{t (concat "projection." proj.id ".description")}}</p>
+            </div>
+            <div class="vertical solid flow w3">
+              <div>
+              <label>Préservation d'angle :</label>
+              {{x-stars value=proj.score_angle class="stars"}}
+              </div>
+              <div>
+              <label>Préservation de surface :</label>
+              {{x-stars value=proj.score_area class="stars"}}
+              </div>
+              <div>
+              <label>Préservation de distance :</label>
+              {{x-stars value=proj.score_distance class="stars"}}
+              </div>
             </div>
           </div>
         </li>

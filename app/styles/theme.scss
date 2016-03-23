@@ -28,7 +28,7 @@ small {
 }
 
 /* colors */
-.filled {
+.filled, %filled {
 
   & {
     background-color: greys(white);
@@ -79,6 +79,12 @@ small {
   border-radius: 50%;
 }
 
+.jumbotron, %jumbotron {
+  @extend %padded;
+  @extend %filled;
+  border: 1px solid greys(10%);
+}
+
 .bordered {
 
   border-width: 1px;
@@ -108,6 +114,11 @@ small {
 
 .text-danger {
   color: color(danger);
+}
+
+/* cursor */
+.clickable {
+  cursor: pointer;
 }
 
 @import "components/panel";

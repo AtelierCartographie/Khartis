@@ -6,12 +6,12 @@ export default Ember.Route.extend({
     store: Ember.inject.service(),
   
     renderTemplate: function() {
-        this.render({ outlet: 'main' });
-        this.render("index.header", {into: "graph", outlet: "header" });
+      this.render({ outlet: 'main' });
+      this.render("index.header", {into: "graph", outlet: "header" });
     },
     
     redirect(model) {
-      //this.transitionTo('graph.layout');
+      this.transitionTo('graph');
     },
     
     model(params) {
@@ -27,9 +27,8 @@ export default Ember.Route.extend({
     },
     
     afterModel(model) {
-      console.log(this.get('store'));
       this.get('store').versions()
-        .on("undo", () => { console.log("undo"); this.refresh()})
+        .on("undo", () => this.refresh())
         .on("redo", () => this.refresh());
     },
     
@@ -37,6 +36,5 @@ export default Ember.Route.extend({
       this._super(controller, model);
       controller.setup();
     }
-    
     
 });

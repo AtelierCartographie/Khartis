@@ -1,0 +1,84 @@
+<div class="configuration-panel layer filled padded with-relief topbar">
+  <div class="titlebar">
+    <div class="title">{{t "navigation.chooseVisualization"}}</div>
+    <div class="actions">
+      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+    </div>
+  </div>
+  <div class="body">
+    <ul class="collection">
+      <li class="clickable" {{action 'selectVisualization' 'quali.cat_surfaces'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-cat-surfaces.jpg">
+          </div>
+        </div>
+      </li>  
+      <li class="clickable" {{action 'selectVisualization' 'quali.cat_symboles'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quali.cat_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quali.cat_symboles.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-cat-symboles.jpg">
+          </div>
+        </div>
+      </li>  
+      <li class="clickable" {{action 'selectVisualization' 'quali.ordre_symboles'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quali.ordre_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quali.ordre_symboles.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-ordre-symboles.jpg">
+          </div>
+        </div>
+      </li>  
+      <li class="clickable" {{action 'selectVisualization' 'quali.taille_valeur'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quali.taille_valeur.name"}}</span>
+              <p class="description">{{t "visualization.quali.taille_valeur.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-Taille-Valeur.jpg">
+          </div>
+        </div>
+      </li>  
+      <li class="clickable" {{action 'selectVisualization' 'quanti.val_surfaces'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quanti.val_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.quanti.val_surfaces.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUANTI-val-surfaces.jpg">
+          </div>
+        </div>
+      </li>  
+      <li class="clickable" {{action 'selectVisualization' 'quanti.val_symboles'}}>
+        <div class="horizontal airy flow">
+          <div class="grey-box"></div>
+          <div class="vertical flow padded">
+              <span class="title">{{t "visualization.quanti.val_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quanti.val_symboles.description"}}</p>
+          </div>
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUANTI-val-symboles.jpg">
+          </div>
+        </div>
+      </li>  
+    </ul>
+  </div>
+</div>

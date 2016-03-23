@@ -67,43 +67,74 @@ export default {
   "projection": {
     "atlantis": {
       "name": "Atlantis",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "briesemeister": {
       "name": "Briesemeister",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "interrupted_goode_homolosine": {
       "name": "Interrupted Goode Homolosine",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "lambert_azimuthal_equal_area": {
       "name": "Lambert Azimuthal Equal-Area",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "mollweide": {
       "name": "Mollweide",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "natural_earth": {
       "name": "Natural Earth",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "orthographic": {
       "name": "Orthographic",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "plate_carree": {
       "name": "Plate carrée",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "waterman_butterfly": {
       "name": "Waterman butterfly",
-      "description": ""
+      "description": "Ceci est une description"
     },
     "mercator": {
       "name": "Mercator",
-      "description": ""
+      "description": "Ceci est une description"
+    }
+  },
+  
+  "visualization": {
+    "quanti": {
+      "val_surfaces": {
+        "name": "valeurs sur surfaces",
+        "description": "L'ordre des nuances respecte celui des valeurs"
+      },
+      "val_symboles": {
+        "name": "valeurs sur symboles",
+        "description": "Taille de symboles proportionnelles aux valeurs"
+      }
+    },
+    "quali": {
+      "cat_surfaces": {
+        "name": "catégories sur surfaces 1",
+        "description": "Les figurés choisis différencient les valeurs"
+      },
+      "taille_valeur": {
+        "name": "catégories sur surfaces 2",
+        "description": "L'ordre des symbols respecte celui des valeurs"
+      },
+      "cat_symboles": {
+        "name": "catégories sur symboles 1",
+        "description": "Les figurés choisis différencient les valeurs"
+      },
+      "ordre_symboles": {
+        "name": "catégories sur symboles 2",
+        "description": "L'ordre des symbols respecte celui des valeurs"
+      }
     }
   },
   

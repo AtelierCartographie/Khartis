@@ -26,6 +26,9 @@ Router.map(function() {
         this.route("projection", function() {
           this.route("edit");
         });
+        this.route("layer", {path: "layer/:layerId"}, function() {
+          this.route("edit");
+        });
     });
 
 });

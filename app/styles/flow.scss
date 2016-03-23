@@ -46,22 +46,22 @@ body {
    @include cell-size();
 
    &.stretched, &%stretched {
-        align-self: stretch;
+      align-self: stretch;
    }
 
    &.scrollable, &%scrollable {
-        flex-basis: 0;
+      flex-basis: 0;
    }
 
    &.outer, &%outer {
-        position: absolute;
-        left: 0px;
-        top: 0px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
 
-        &.full, &%full {
-            right: 0;
-            bottom: 0;
-        }
+      &.full, &%full {
+          right: 0;
+          bottom: 0;
+      }
     }
 
 }

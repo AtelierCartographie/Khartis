@@ -68,9 +68,9 @@ GraphLayer.reopenClass({
     
     createDefault(props) {
       let o = this.create(props);
-      o.setProperties({
+      /*o.setProperties({
         mapping: MappingFactory.createInstance("shape")
-      });
+      });*/
       return o;
     }
     

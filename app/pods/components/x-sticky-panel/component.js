@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   triggerEl:null,
 
   didInsertElement(){
-    var trigger = this.$('> .trigger')
+    var trigger = this.$('.sticky-trigger')
     this.set('triggerEl', trigger)
 
     this.toggle = this.toggle.bind(this)

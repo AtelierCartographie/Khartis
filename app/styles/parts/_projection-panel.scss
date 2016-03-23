@@ -7,40 +7,22 @@
   top:10px;
   left:10px;
   
-  &-items li {
-    
-    cursor:pointer;
-    
-    width:32px;
+  &.open .sticky-wrapper {
+    @extend %padded;
+    margin-left: -3.2rem;
+  }
+  
+  .title {
+    margin-left: 3.2rem -$gutter/2;
+    margin-top: -$gutter/2;
     height:32px;
 
     display: flex;
     align-items: center;
-    justify-content: center;
     
-  }
-  
-  &-items {
-    list-style: none;
-    padding-left:0;
-    margin:0;
-  }
-
-  &-items li {
-    cursor:pointer;
-    background-color: rgba(greys(50%), .5);
-
-    &:not(:last-child){
-      border-bottom:1px solid rgba(greys(50%), .5);
-    }
-
-    &:hover {
-      background-color: rgba(greys(50%), .2);
-    }
-  }
-  
-  .stars {
-    li { float: left; }
+    font-size: 1.1em;
+    font-weight: bold;
+    
   }
   
 }

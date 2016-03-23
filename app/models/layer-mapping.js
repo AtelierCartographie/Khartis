@@ -1,39 +1,41 @@
 import Ember from 'ember';
 import Struct from './struct';
 
-const SHAPE = "shape",
-      SURFACE = "surface",
-      TEXT = "text";
-
 let Mapping,
     ShapeMapping,
     SurfaceMapping,
     TextMapping;
-
+    
 let MappingFactory = Ember.Object.extend({});
 MappingFactory.reopenClass({
-  createInstance(type, props = {}) {
-    if (type === SHAPE) {
-      return ShapeMapping.create(props);
-    } else if (type === SURFACE) {
-      return SurfaceMapping.create(props);
-    } else if (type === TEXT) {
-      return TextMapping.create(props);
-    } else {
-      throw new Error(`Unknow mapping type ${type}`);
+  
+  classForType(type) {
+    switch (type) {
+      case "quali.cat_surfaces":
+        return SurfaceMapping;
+      case "quali.cat_symboles":
+        return ShapeMapping;
+      case "quali.ordre_symboles":
+        return ShapeMapping;
+      case "quali.taille_valeur":
+        return SurfaceMapping;
+      case "quanti.val_surfaces":
+        return SurfaceMapping;
+      case "quanti.val_symboles":
+        return ShapeMapping;
     }
+    throw new Error(`Unknow mapping type ${type}`);
+  },
+  
+  createInstance(type, props = {}) {
+    let o = this.classForType(type).create(props);
+    o.set('type', type);
+    return o;
   },
   restoreInstance(json, refs) {
     if (json != null) {
-      if (json.type === SHAPE) {
-        return ShapeMapping.restore(json, refs);
-      } else if (json.type === SURFACE) {
-        return SurfaceMapping.restore(json, refs);
-      } else if (json.type === TEXT) {
-        return TextMapping.restore(json, refs);
-      } else {
-        throw new Error(`Unknow mapping type ${json.type}`);
-      }
+      let o = this.classForType(json.type).restore(json, refs);
+      return o;
     } else {
       return null;
     }
@@ -59,7 +61,6 @@ Mapping.reopenClass({
 });
 
 ShapeMapping = Mapping.extend({
-  type: SHAPE,
   shape: "point",
   scaleOf: "size",
   color: "#014FF0",
@@ -88,7 +89,6 @@ ShapeMapping.reopenClass({
 });
 
 SurfaceMapping = Mapping.extend({
-  type: SURFACE,
   pattern: "solid",
   color: "#01BF40",
   export(props) {
@@ -111,7 +111,6 @@ SurfaceMapping.reopenClass({
 });
 
 TextMapping = ShapeMapping.extend({
-  type: TEXT,
   shape: "text",
   scaleOf: "size",
   color: "#014FF0",

@@ -1,0 +1,17 @@
+.graph {
+  
+  .sidebar {
+    border-right: 1px solid greys(20%);
+  }
+  
+}
+
+.tools {
+  
+  .accordion-trigger {
+    &, h3 { color: greys(60%); }
+    padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;
+    border-bottom: 1px solid greys(40%);
+  }
+  
+}

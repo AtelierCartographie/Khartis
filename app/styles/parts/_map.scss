@@ -49,6 +49,12 @@
   @extend %vertical;
   @extend %padded;
   
+  max-height: 100%;
+  
+  &.split-view {
+    max-height: 50%;
+  }
+  
   .titlebar {
     
     @extend %flow;
@@ -73,25 +79,37 @@
     
   }
   
-  .body {
+  & > .body {
     
     @extend %padded;
-    
+    overflow-y: auto;
     padding-top: $gutter;
     padding-bottom: $gutter;
     
   }
   
-  &.split-view {
-    
-    max-height: 50%;
-    
-    .body {
-      overflow-y: auto;
-    }
-    
+  & > .footer {
+    @extend %flow;
+    @extend %horizontal;
+    @extend %right;
+    @extend %airy;
+    @extend %middle;
+  }
+}
+
+.configuration-panel.layer {
+  .title {
+    font-size: 1.2em;
+    text-transform: uppercase;
   }
   
+  .grey-box {
+    margin-top: -$gutter/2;
+    margin-bottom: -$gutter/2;
+    margin-left: -$gutter/2 !important;
+    width: 10%;
+    background-color: greys(20%);
+  }
 }
 
 

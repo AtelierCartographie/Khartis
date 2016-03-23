@@ -1,0 +1,44 @@
+<div class="help jumbotron markdown">
+  {{localized-tpl tpl="help/{locale}/graph/mapping"}}
+</div>
+<div class="vertical airy flow">
+  <div class="solid center text-center">
+    {{#x-dropdown.x-trigger
+      dropdownPivot="top left"
+      triggerPivot="bottom left"}}
+      <a class="dropdown-trigger">
+        <i class="iconfont iconfont-plus"></i> {{t "general.addAVariable"}}
+      </a>
+    {{/x-dropdown.x-trigger}}
+    <ul class="dropdown">
+      {{#each model.data.columns as |col|}}
+        <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  {{#if model.graphLayers.length}}
+  <div class="jumbotron">
+    {{#drag-sort-collection provider=model.graphLayers as |layer self|}}
+    
+        <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
+          <div class="horizontal space-between flow layer-header">
+            <span>{{layer.varCol.header.value}}</span>
+            <div class="solid w4 text-right no-drag">
+              <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.varCol.inconsistency}}</span>
+              {{#if (x-eq layer editedLayer)}}
+              <span><i class="iconfont iconfont-angle-right"></i></span>
+              {{else}}
+              <a {{action 'editLayer' layer}}><i class="iconfont iconfont-pencil"></i></a>
+              <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+              <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
+              {{/if}}
+            </div>
+          </div>
+        </li>
+        
+    {{/drag-sort-collection}}
+  </div>
+  {{/if}}
+  
+</div>

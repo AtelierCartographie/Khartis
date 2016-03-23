@@ -1,9 +1,9 @@
 & {
   
-  background-color: rgba(greys(50%), 0.2);
+  background-color: rgba(greys(5%), 0.72);
   @include shadow(1);
 
-  & > .trigger {
+  & .sticky-trigger {
     cursor:pointer;
     width:32px;
     height:32px;
@@ -13,7 +13,7 @@
     justify-content: center;
   }
 
-  & > .wrapper {
+  & .sticky-wrapper {
     height:0;
     width: 0;
     overflow:hidden;
@@ -24,11 +24,11 @@
 
 &.open {
   
-  & > .trigger i {
+  & .sticky-trigger i {
     transform:rotate(90deg);
   }
 
-  & > .wrapper {
+  & .sticky-wrapper {
     height:auto;
     width: auto;
   }

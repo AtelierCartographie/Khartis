@@ -1,0 +1,27 @@
+<div class="configuration-panel filled padded with-relief topbar split-view">
+  <div class="titlebar">
+    <div class="title">{{#link-to 'graph.projection'}}{{t "navigation.chooseProjection"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i> {{t (concat "projection." model.graphLayout.projection.id ".name")}}</div>
+    <div class="actions">
+      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+    </div>
+  </div>
+  <div class="body">
+    <div class="help jumbotron markdown">
+    {{localized-tpl tpl="help/{locale}/graph/projection/edit"}}
+    </div>
+    <div class="settings">
+      {{!#if model.graphLayout.rotate}}
+      <label>Rotation</label>
+      <div class="horizontal middle flow">
+        <span class="solid padded-r">X</span>{{input value=model.graphLayout.projection.rotateX}}<span class="solid padded-r">°</span>
+        <span class="solid padded-r">Y</span>{{input value=model.graphLayout.projection.rotateY}}<span class="solid padded-r">°</span>
+      </div>
+      {{!/if}}
+      <label>Clip angle</label>
+      {{input value=model.graphLayout.projection.clipAngle}}
+    </div>
+  </div>
+  <div class="footer">
+    <div class="button filled primary" {{action 'navigateTo' 'graph'}}>Fermer</div>
+  </div>
+</div>

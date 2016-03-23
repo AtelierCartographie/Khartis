@@ -9,9 +9,11 @@ import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
   
-  state: "mapping",
+  state: "layers",
   
   basemapData: null,
+  
+  editedLayer: null,
   
   availableProjections: function() {
     return this.get('Dictionnary.data.projections');
@@ -26,7 +28,7 @@ export default Ember.Controller.extend({
   }.property('state'),
   
   isInStateMapping: function() {
-    return this.get('state') === "mapping";
+    return this.get('state') === "layers";
   }.property('state'),
   
   sidebar: function() {
@@ -77,89 +79,93 @@ export default Ember.Controller.extend({
   
   actions: {
     
-      bindProjection(proj) {
-        this.set('model.graphLayout.projection', Projection.create(proj.export()));
-        this.send('onAskVersioning', 'freeze');
-      },
-      
-      addLayer(col) {
-        this.get('model.graphLayers').addObject(GraphLayer.createDefault({
-          varCol: col,
-          geoCols: this.get('model.data.geoColumns')
-        }));
-      },
-      
-      removeLayer(layer) {
-        this.get('model.graphLayers').removeObject(layer);
-      },
-      
-      toggleLayerVisibility(layer) {
-        layer.toggleProperty('visible');
-      },
-      
-      bindLayerMapping(layer, type) {
-        layer.set('mapping', MappingFactory.createInstance(type));
-        if (type === "text") {
-          layer.set('mapping.labelCol', layer.get('varCol'));
-        }
-      },
-      
-      bindMappingScaleOf(layer, type) {
-        layer.set('mapping.scaleOf', type);
-      },
-      
-      bindMappingPattern(layer, pattern) {
-        layer.set('mapping.pattern', pattern);
-      },
-      
-      bindMappingShape(layer, shape) {
-        layer.set('mapping.shape', shape);
-      },
-      
-      bindMappingLabelCol(layer, col) {
-        layer.set('mapping.labelCol', col);
-      },
-      
-      resetTranslate() {
-        this.get('model.graphLayout').setProperties({
-          tx: 0,
-          ty: 0
-        });
-        this.send("onAskVersioning", "freeze");
-      },
-      
-      onAskVersioning(type) {
-        console.log('onAskVersioning', type);
-        switch (type) {
-          case "undo":
-            this.get('store').versions().undo();
-            break;
-          case "redo": 
-            this.get('store').versions().redo();
-            break;
-          case "freeze":
-            this.get('store').versions().freeze(this.get('model').export());
-            break;
-        }
-        
-      },
-      
-      selectState(state) {
-        this.set('state', state);
-      },
-      
-      next() {
-        this.transitionToRoute("graph.mapping", this.get('model._uuid'));
-      },
-      
-      back() {
-        if (this.get('isInStateLayout')) {
-          this.transitionToRoute("project.step4", this.get('model._uuid'));
-        } else if (this.get('isInStateMapping')) {
-          this.transitionToRoute("graph.layout", this.get('model._uuid'));
-        }
-      }
+    bindProjection(proj) {
+      this.set('model.graphLayout.projection', Projection.create(proj.export()));
+      this.send('onAskVersioning', 'freeze');
+    },
     
+    addLayer(col) {
+      let layer = GraphLayer.createDefault({
+        varCol: col,
+        geoCols: this.get('model.data.geoColumns')
+      });
+      this.get('model.graphLayers').addObject(layer);
+      this.transitionToRoute('graph.layer', layer.get('_uuid'));
+    },
+    
+    editLayer(layer) {
+      this.transitionToRoute('graph.layer.edit', layer.get('_uuid'));
+    },
+    
+    removeLayer(layer) {
+      this.get('model.graphLayers').removeObject(layer);
+    },
+    
+    toggleLayerVisibility(layer) {
+      layer.toggleProperty('visible');
+    },
+    
+    bindLayerMapping(type) {
+      this.get('editedLayer').set('mapping', MappingFactory.createInstance(type));
+      if (type === "text") {
+        this.get('editedLayer').set('mapping.labelCol', this.get('editedLayer').get('varCol'));
+      }
+    },
+    
+    bindMappingScaleOf(layer, type) {
+      layer.set('mapping.scaleOf', type);
+    },
+    
+    bindMappingPattern(layer, pattern) {
+      layer.set('mapping.pattern', pattern);
+    },
+    
+    bindMappingShape(layer, shape) {
+      layer.set('mapping.shape', shape);
+    },
+    
+    bindMappingLabelCol(layer, col) {
+      layer.set('mapping.labelCol', col);
+    },
+    
+    resetTranslate() {
+      this.get('model.graphLayout').setProperties({
+        tx: 0,
+        ty: 0
+      });
+      this.send("onAskVersioning", "freeze");
+    },
+    
+    selectState(state) {
+      this.set('state', state);
+    },
+    
+    next() {
+      this.transitionToRoute("graph.mapping", this.get('model._uuid'));
+    },
+    
+    back() {
+      if (this.get('isInStateLayout')) {
+        this.transitionToRoute("project.step4", this.get('model._uuid'));
+      } else if (this.get('isInStateMapping')) {
+        this.transitionToRoute("graph.layout", this.get('model._uuid'));
+      }
+    },
+    
+    onAskVersioning(type) {
+      switch (type) {
+        case "undo":
+          this.get('store').versions().undo();
+          break;
+        case "redo": 
+          this.get('store').versions().redo();
+          break;
+        case "freeze":
+          this.get('store').versions().freeze(this.get('model').export());
+          break;
+      }
     }
+    
+  }
   
 });

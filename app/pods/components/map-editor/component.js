@@ -29,6 +29,16 @@ export default Ember.Component.extend({
   
   resizeInterval: null,
   
+  applicationController: null,
+  
+  windowLocation: function() {
+    return window.location;
+  }.property(),
+  
+  init() {
+    this._super();
+  },
+  
 	draw: function() {
     
 		var d3g = this.d3l();
@@ -126,8 +136,8 @@ export default Ember.Component.extend({
 		mg.append("rect")
 			.attr("fill", "none");
 
-    this.updatePosition();
 		this.projectAndDraw();
+    this.updatePosition();
 		this.updateColors();
           
 	}.on("didInsertElement"),
@@ -193,7 +203,7 @@ export default Ember.Component.extend({
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin',
-    'graphLayout.projection'),
+    'graphLayout.projection._defferedChangeIndicator'),
   
 	
 	projectAndDraw: function() {
@@ -264,16 +274,19 @@ export default Ember.Component.extend({
 
 		landSel.exit().remove();
     
+    console.log("REDRAW " + window.location);
+    
     this.drawBackmap();
     this.drawLayers();
 			
-	}.observes('projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
+	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
    
    drawBackmap: function() {
     
     var uses = this.d3l().select("g.backmap")
       .selectAll("use.feature")
+      .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
       .style("fill", this.get('graphLayout.backMapColor'))
       .data(this.get('base').lands.features);
       
@@ -290,8 +303,7 @@ export default Ember.Component.extend({
     
     let self = this,
         data = this.get('graphLayers')
-          .filter( gl => gl.get('visible') && gl.get('varCol') )
-          .sort( (a,b) => a.get('mappedToShape') ? (a.get('mappedToText') ? 1:-1):-1 );
+          .filter( gl => gl.get('visible') && gl.get('mapping') && gl.get('varCol') );
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
