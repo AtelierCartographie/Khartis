@@ -11,6 +11,10 @@ export default {
     "Continue": "Continuer",
     "Validate": "Valider",
     "or": "ou",
+    "error": {
+     "one": "erreur",
+     "other": "erreurs" 
+    },
     "gradientOf": "Dégradé de",
     "pageLayout": "Mise en page",
     "varMapping": "Couplage des variables",
@@ -27,7 +31,18 @@ export default {
   
   "navigation": {
     "openMap": "Ourvir la carte",
-    "chooseProjection": "Choisir une projection"
+    "chooseProjection": "Choisir une projection",
+    "chooseVisualization": "Choix d'une visualisation",
+    "editColumn": "Edition d'une colonne",
+    
+    "sidebar": {
+      "variables": "variables",
+      "layout": "mise en page",
+      "layers": "calques",
+      "legend": "legend",
+      "export": "export"
+    }
+    
   },
   
   "variable.meta": {

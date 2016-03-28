@@ -13,9 +13,11 @@ export default Ember.Component.extend({
   max:10,
   step:null,
   scale:null,
+  
+  _tmpValue: null,
 
   didInsertElement(){
-
+    
     var slider = d3.slider().axis(true)
       .value(this.get('value'))
       .min(this.get('min'))
@@ -30,10 +32,15 @@ export default Ember.Component.extend({
     if(scale){
       slider.scale(scale)
     }
+    
+    slider.on('slide', (e, val) => this.set('_tmpValue', val));
 
-    slider.on('slide', (e, val) => this.set('value', val))
-
-    this.d3l().call(slider)
-  }
+    this.d3l().call(slider);
+    
+  },
+  
+  tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
+    this.set('value', this.get('_tmpValue'));
+  }, 50)
 
 });

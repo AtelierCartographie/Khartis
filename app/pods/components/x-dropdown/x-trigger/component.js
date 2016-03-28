@@ -13,8 +13,8 @@ export default Ember.Component.extend({
   targetEl: null,
   snapped:null,
   open: false,
-  dropdownPivot:'top right',
-  triggerPivot:'bottom right',
+  dropdownPivot:'top left',
+  triggerPivot:'bottom left',
 
   didInsertElement: function () {
 

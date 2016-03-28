@@ -31,6 +31,7 @@ let GraphLayer = Struct.extend({
   }.property('geoCols.[]'),
   
   deferredChange: Ember.debouncedObserver(
+    'varCol._defferedChangeIndicator', 'geoCols.@each._defferedChangeIndicator',
     'mapping', 'mapping.scaleOf', 'mapping.pattern', 'mapping.shape',
     'mapping.labelCol', 'mapping.color', 'visible',
     function() {

@@ -3,7 +3,7 @@ import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import d3lper from 'mapp/utils/d3lper';
 import GraphLayout from 'mapp/models/graph-layout';
-import {geoMatch} from 'mapp/utils/world-dictionary';
+import {geoMatch} from 'mapp/utils/geo-match';
 import MaskPattern from 'mapp/utils/mask-pattern';
 /* global Em */
 

@@ -4,10 +4,9 @@
 @import "theme";
 @import "pod-styles";
 @import "parts/import-csv";
-@import "parts/breadcrumb";
 @import "parts/layers-panel";
 @import "parts/projection-panel";
-@import "parts/map";
+@import "parts/configuration-panel";
 @import "parts/help";
 @import "parts/graph";
 
@@ -53,7 +52,7 @@ body > .ember-view:not(.popable) {
 
 aside {
   @extend .filled.default;
-  width: 37rem;
+  width: 38rem;
   &.empty {
     width: 0;
   }
@@ -429,33 +428,6 @@ footer {
     border-bottom:1px solid greys(10%);
   }
 
-}
-
-.graph {
-
-  .vertical-navbar {
-
-    @extend %flow;
-    @extend %vertical;
-    @extend %solid;
-    @extend .filled.contrast;
-    width: 4rem;
-
-    .state-icon {
-
-      height: 4rem;
-      line-height: 4rem;
-      text-align: center;
-      cursor: pointer;
-
-      &.selected {
-        @extend .filled.default;
-        color: $color-primary;
-      }
-
-    }
-
-  }
 }
 
 .stars {

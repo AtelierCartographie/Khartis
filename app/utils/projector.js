@@ -6,7 +6,7 @@ export default {
     
     zoom = zoom < 1 ? 1 : 1/zoom;
     
-    let fProjection = proj.fn().scale(zoom).translate([0, 0]),
+    let fProjection = proj.fn(false).scale(zoom).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
         pixelBounds = d3Path.bounds(features),

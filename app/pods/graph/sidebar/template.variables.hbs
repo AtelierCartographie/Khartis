@@ -1,0 +1,50 @@
+<div class="content">
+  <div class="help jumbotron markdown">
+    {{localized-tpl tpl="help/{locale}/graph/geovars"}}
+  </div>
+  <div class="jumbotron">
+      <div class="vertical airy flow padded-v filled">
+          <ul class="collection">
+            {{#each model.data.columns as |col|}}
+              <li class="{{if (x-eq editedColumn col) 'selected'}} {{if col.incorrectCells.length 'clickable'}}" {{action 'editColumn' col}}>
+                {{#x-tooltip message=(if col.incorrectCells.length 'Corriger' 'Aucune erreur détectée') position="right"}}
+                <div class="horizontal space-between flow layer-header">
+                  <div class="horizontal airy flow">
+                    <span>{{col.header.value}}</span>
+                  </div>
+                  <div class="fluid text-right">
+                    {{#if col.inconsistency}}
+                    <small class="text-danger">{{col.inconsistency}} {{t 'general.error' count=col.incorrectCells.length}} / {{col.body.length}}</small>
+                    {{/if}}
+                    {{#x-dropdown.x-trigger
+                      dropdownPivot="top left"
+                      triggerPivot="bottom left"}}
+                      <a class="dropdown-trigger">
+                        <span>{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</span>
+                      </a>
+                    {{/x-dropdown.x-trigger}}
+                    <ul class="dropdown">
+                      <li {{action 'bindColumnType' col 'numeric'}}><span>{{data-type-icon type="numeric"}}</span> {{t 'variable.meta.type.numeric'}}</li>
+                      <li {{action 'bindColumnType' col 'text'}}><span>{{data-type-icon type="text"}}</span> {{t 'variable.meta.type.text'}}</li>
+                      <li {{action 'bindColumnType' col 'lat'}}><span>{{data-type-icon type="lat"}}</span> {{t 'variable.meta.type.lat'}}</li>
+                      <li {{action 'bindColumnType' col 'lon'}}><span>{{data-type-icon type="lon"}}</span> {{t 'variable.meta.type.lon'}}</li>
+                      <li {{action 'bindColumnType' col 'geo'}}><span>{{data-type-icon type="geo"}}</span> {{t 'variable.meta.type.geo'}}</li>
+                      <li {{action 'bindColumnType' col null}}>{{t 'variable.meta.type.auto'}}</li>
+                    </ul>
+                  </div>
+                </div>
+                {{/x-tooltip}}
+              </li>
+            {{/each}}
+          </ul>
+      </div>
+  </div>
+</div>
+
+<div class="bottom-navbar reverse">
+  <div class="solid">
+    {{#x-button class="default btn-prev" action=(action 'next')}}
+        {{x-capitalize (t "navigation.sidebar.layout")}} <i class="iconfont iconfont-long-arrow-right"></i>
+    {{/x-button}}
+  </div>
+</div>

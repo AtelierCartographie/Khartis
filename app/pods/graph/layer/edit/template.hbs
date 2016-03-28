@@ -1,6 +1,6 @@
 <div class="configuration-panel filled padded with-relief topbar split-view">
   <div class="titlebar">
-    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseRepresentation"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i> {{t (concat "projection." model.graphLayout.projection.id ".name")}}</div>
+    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{t (concat "visualization." editedLayer.mapping.type)}}</div>
     <div class="actions">
       {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
     </div>
@@ -13,11 +13,6 @@
       <div class="vertical airy flow">
         <div class="horizontal space-between flow layer-header">
           <span>{{editedLayer.varCol.header.value}}</span>
-          <div class="solid w3 text-right">
-            <span>{{data-type-icon meta=editedLayer.varCol.meta inconsistency=editedLayer.varCol.inconsistency}}</span>
-            <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if editedLayer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-            <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
-          </div>
         </div>
         
         <div>

@@ -16,7 +16,7 @@ let Projection = Struct.extend({
     get() {
       let parts = this.get('rotate')
         .split(',');
-      if (parts.length) {
+      if (parts.length >= 1 && parts[0].length) {
         return parseInt(parts[0]
          .replace(/[\[\]]/g, "")
           .trim());
@@ -27,7 +27,7 @@ let Projection = Struct.extend({
       if (isNaN(value = parseFloat(value))) {
         value = 0;
       }
-      this.set('rotate', `[${value}, ${this.get('rotateY')}]`);
+      this.set('rotate', `[${value},${this.get('rotateY')},${this.get('rotateZ')}]`);
       return value;
     }
   }),
@@ -36,7 +36,7 @@ let Projection = Struct.extend({
     get() {
       let parts = this.get('rotate')
         .split(',');
-      if (parts.length) {
+      if (parts.length >= 2) {
         return parseInt(parts[1]
          .replace(/[\[\]]/g, "")
           .trim());
@@ -47,7 +47,27 @@ let Projection = Struct.extend({
       if (isNaN(value = parseFloat(value))) {
         value = 0;
       }
-      this.set('rotate', `[${this.get('rotateX')}, ${value}]`);
+      this.set('rotate', `[${this.get('rotateX')},${value},${this.get('rotateZ')}]`);
+      return value;
+    }
+  }),
+  
+  rotateZ: Ember.computed('rotate', {
+    get() {
+      let parts = this.get('rotate')
+        .split(',');
+      if (parts.length === 3) {
+        return parseInt(parts[2]
+         .replace(/[\[\]]/g, "")
+          .trim());
+      }
+      return 0;
+    },
+    set(key, value) {
+      if (isNaN(value = parseFloat(value))) {
+        value = 0;
+      }
+      this.set('rotate', `[${this.get('rotateX')},${this.get('rotateY')},${value}]`);
       return value;
     }
   }),
@@ -59,19 +79,21 @@ let Projection = Struct.extend({
     },
     100),
   
-  fn() {
+  fn(transform = true) {
     let d3Proj = eval(this.get('d3_geo'));
     
-    if (this.get('clipAngle')) {
-      d3Proj.clipAngle(this.compClipAngle());
-    }
-    
     if (this.get('lobes')) {
-      d3Proj.clipAngle(this.compLobes());
+      d3Proj.lobes(this.compLobes());
     }
     
-    if (this.get('rotate')) {
-      d3Proj.rotate(this.compRotate());
+    if (transform) {
+      if (this.get('clipAngle')) {
+        d3Proj.clipAngle(this.compClipAngle());
+      }
+      
+      if (this.get('rotate')) {
+        d3Proj.rotate(this.compRotate());
+      }
     }
     
     return d3Proj;
@@ -107,15 +129,6 @@ let Projection = Struct.extend({
 });
 
 Projection.reopenClass({
-  
-  createDefault() {
-    let o = Projection.create({
-      id: "mercator",
-      name: "Mercator",
-      d3_geo: "d3.geo.mercator()"
-    });
-    return o;
-  },
   
   restore(json, refs = {}) {
       let o = this._super(json, refs);

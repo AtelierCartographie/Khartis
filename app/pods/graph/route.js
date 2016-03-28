@@ -11,7 +11,11 @@ export default Ember.Route.extend({
     },
     
     redirect(model) {
-      this.transitionTo('graph');
+      if (model.get('graphLayout.projection')) {
+        this.transitionTo('graph');
+      } else {
+        this.transitionTo('graph.projection');
+      }
     },
     
     model(params) {

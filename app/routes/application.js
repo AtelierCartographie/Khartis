@@ -1,12 +1,16 @@
 import Ember from 'ember';
+import {geoMatch} from 'mapp/utils/geo-match';
 
 export default Ember.Route.extend({
   
   store: Ember.inject.service(),
   
   beforeModel() {
-    console.log("before model");
     return this.get('Dictionnary').load();
+  },
+  
+  afterModel(model) {
+    geoMatch.dic = this.get('Dictionnary.data.worldBank');
   },
    
   actions: {

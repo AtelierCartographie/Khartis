@@ -1,17 +1,133 @@
 .graph {
   
-  .sidebar {
-    border-right: 1px solid greys(20%);
+  .vertical-navbar {
+
+    @extend %flow;
+    @extend %vertical;
+    @extend %solid;
+    @extend .filled.contrast;
+    width: 4rem;
+
+    .state-icon {
+      
+      @extend %flow;
+      @extend %solid;
+      @extend %horizontal;
+      @extend %middle;
+      @extend %center;
+
+      height: 4rem;
+      line-height: 4rem;
+      text-align: center;
+      cursor: pointer;
+
+      .icon-var {
+        
+        display: inline-block;
+
+        width: 1.8rem;
+        height: 1.8rem;
+        line-height: 1.8rem;
+        text-align: center;
+        
+        border-radius: .2em;
+        
+        color: color(text);
+        
+      }
+      
+      &.selected {
+        @extend .filled.default;
+        color: $color-primary;
+        
+        .icon-var {
+          @extend .filled.primary;
+        }
+      }
+    }
+  }
+  
+  
+  .toolbar {
+  
+    position: absolute;
+    top:10px;
+    right:10px;
+    
+    &-items li {
+      
+      cursor:pointer;
+      
+      width:32px;
+      height:32px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+    
+    &-items {
+      list-style: none;
+      padding-left:0;
+      margin:0;
+    }
+
+    &-items li {
+      cursor:pointer;
+      background-color: rgba(greys(50%), .5);
+
+      &:not(:last-child){
+        border-bottom:1px solid rgba(greys(50%), .5);
+      }
+
+      &:hover {
+        background-color: rgba(greys(50%), .2);
+      }
+    }
   }
   
 }
 
-.tools {
+.sidebar {
   
-  .accordion-trigger {
-    &, h3 { color: greys(60%); }
-    padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;
-    border-bottom: 1px solid greys(40%);
+  border-right: 1px solid greys(20%);
+  
+  .content {
+    @extend %flow;
+    @extend %vertical;
+    @extend %airy;
+    @extend %padded;
+  }
+  
+  .bottom-navbar {
+    @extend %flow;
+    @extend %solid;
+    @extend %horizontal;
+    @extend %middle;
+    padding: 0.1rem 1rem 0.1rem 1rem;
+    height: 3rem;
+    background-color: greys(10%);
+    border-bottom: 1px solid greys(15%);
+    
+    div:nth-child(2) {
+      text-align: right;
+    }
+    
+    &.reverse {
+      @extend .rtl;
+    }
+    
+  }
+
+  .settings {
+    
+    .accordion-trigger {
+      &, h3 { color: greys(60%); }
+      padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;
+      border-bottom: 1px solid greys(40%);
+    }
+    
   }
   
 }

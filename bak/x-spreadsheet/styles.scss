@@ -1,0 +1,288 @@
+& {
+  @extend %flow;
+  @extend %vertical;
+  @extend %outer;
+  @extend %full;
+}
+
+$spreadsheet-cell-width: 160px !default;
+$spreadsheet-cell-height: 30px !default;
+$spreadsheet-cell-header-height: 50px !default;
+$spreadsheet-numbering-width: 40px !default;
+
+.toolbar {
+  @extend %flow;
+  @extend %horizontal;
+  @extend %solid;
+  @extend %center;
+  @extend %middle;
+  @extend %airy;
+  @extend %padded-v;
+  @extend .filled.default;
+
+  height: 60px;
+  @include depth(toolbar);
+
+  background-color: greys(10%);
+  border-bottom: 1px solid darken(greys(10%), 5%);
+  border-left: 1px solid darken(greys(10%), 5%);
+
+  .tool {
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 0.1em;
+    //
+    cursor: pointer;
+    font-weight: bold;
+    //
+    background-color: greys(20%);
+    border: 1px solid darken(greys(20%), 5%);
+    color: greys(50%);
+    font-size:2.4rem;
+
+    &:hover {
+      background: $color-warning;
+      color: greys(70%);
+    }
+  }
+}
+
+.sheet {
+
+  @extend %flow;
+  @extend .filled;
+
+  position: relative;
+  overflow: scroll;
+
+  .background {
+
+    @extend .filled.default;
+    position: absolute;
+    top: 0;left: 0;
+
+    border-top: 1px solid greys(20%);
+    border-left: 1px solid greys(20%);
+
+    line {
+      stroke: greys(20%);
+    }
+  }
+
+  & > .header {
+    @extend .filled.contrast;
+    @extend .with-relief;
+    @extend .with-relief.topbar;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-left: $spreadsheet-numbering-width;
+
+    .cell {
+      height: $spreadsheet-cell-header-height;
+      border-right: 1px solid greys(80%);
+      border-bottom: none;
+    }
+
+  }
+
+  & > .body {
+    @extend .filled;
+    position: absolute;
+    top: $spreadsheet-cell-header-height;
+    left: $spreadsheet-numbering-width;
+    margin-right: $spreadsheet-cell-width;
+    margin-bottom: $spreadsheet-cell-height;
+  }
+
+  & > .numbering, & > .dash {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .cell {
+      width: $spreadsheet-numbering-width;
+      justify-content: center;
+    }
+
+  }
+
+  & > .numbering {
+    @extend .filled.contrast;
+    @extend .with-relief;
+    @extend .with-relief.leftbar;
+    padding-top: $spreadsheet-cell-header-height;
+
+    .cell {
+      border-right: none;
+      border-bottom-color: greys(80%);
+    }
+  }
+
+  & > .dash {
+    @extend .filled.warning;
+    @extend .with-relief;
+    @extend .with-relief.leftbar;
+    .cell {
+      border: none;
+      height: $spreadsheet-cell-header-height;
+    }
+  }
+
+  .row {
+    @extend %flow;
+    @extend %horizontal;
+    position: relative;
+  }
+
+  .cell {
+
+    @extend %flow;
+    @extend %horizontal;
+    @extend %middle;
+    @extend %padded;
+    
+    position: relative;
+
+    width: $spreadsheet-cell-width;
+    height: $spreadsheet-cell-height;
+
+    border-bottom: 1px solid greys(20%);
+    border-right:  1px solid greys(30%);
+
+    .label {
+      @extend %fluid;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    input {
+      @extend %fluid;
+      border: none;
+      display: none;
+      margin-left: -$gutter/2;
+      margin-right: -$gutter/2;
+    }
+
+    &.edited input {
+      display: flex;
+    }
+    &.edited .label {
+      display: none;
+    }
+    &:focus {
+      outline: none;
+    }
+
+    // Overlapping border simulation on body cells
+    &.selected::before,
+    &.edited::before {
+
+      $border-width: 2px;
+
+      content: '';
+      position: absolute;
+      top: - $border-width;
+      left: - $border-width;
+      bottom: - $border-width;
+      right: - $border-width;
+      border: $border-width solid $color-primary;
+      background-color: transparent;
+      @include depth(disabled);
+    }
+
+    &.selected.edited:not(.header)::before {
+      border-color: $color-warning;
+      // TODO: Maybe put an 'editing icon' indicator?
+    }
+
+    // Selected header cell's border does not 'overflows'
+    &.header.selected::before {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    // Header cells ===> Top left triangle
+    //&.header.selected::before,
+    //&.header.selected.edited::before {
+    //  content: '';
+    //  background-color: transparent;
+    //
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //
+    //  height: 0;
+    //  width: 0;
+    //
+    //  border-left: 20px solid $color-primary;
+    //  border-right: 20px solid transparent;
+    //  border-bottom: 20px solid transparent;
+    //}
+
+    &.header.selected.edited {
+      background-color: transparentize($color-warning, 0.6);
+    }
+
+    &.header.selected.edited::before {
+      border: none;
+    }
+
+  }
+
+  /* RESIZE */
+
+  $resize-handle-width: 0.6rem !default;
+
+  & > .resizer {
+
+    display: none;
+    position: absolute;
+    width: $resize-handle-width;
+    height: 100%;
+
+    &.dragged {
+      display: block;
+      border-right: 1px solid $color-primary;
+    }
+
+  }
+
+  & > .resizer {
+    pointer-events: none;
+  }
+
+  & > .resizer .handle, & > .header .resize-handle {
+    @extend .filled.primary;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $resize-handle-width;
+    height: $spreadsheet-cell-header-height;
+    cursor: e-resize;
+  }
+
+  & > .header .resize-handle {
+    display: none;
+    right: -1px;
+  }
+
+  & > .header .cell:hover .resize-handle {
+    display: block;
+  }
+
+  & > .header .cell.resizing:hover .resize-handle {
+    display: none;
+  }
+
+}

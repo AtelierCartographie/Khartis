@@ -17,7 +17,8 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
   load: function() {
     
     let promises = [
-      this._loadProjections()
+      this._loadProjections(),
+      this._loadWorldBank(),
     ];
     
     return Promise.all(promises);
@@ -50,7 +51,30 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
               });
           
           this.set('data.projections', json.map( j => Projection.create(j) ));
-          res(data);
+          res(true);
+          
+        }
+        
+      };
+
+      xhr.send();
+      
+    });
+		
+	},
+  
+	_loadWorldBank: function() {
+		
+    return new Promise( (res, rej) => {
+      
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', `${config.baseURL}data/world-dictionnary.json`, true);
+
+      xhr.onload = (e) => {
+        
+        if (e.target.status == 200) {
+          this.set('data.worldBank', JSON.parse(e.target.responseText).map( x => Ember.Object.create(x)));
+          res(true);
           
         }
         

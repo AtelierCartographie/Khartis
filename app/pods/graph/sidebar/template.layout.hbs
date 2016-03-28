@@ -1,55 +1,64 @@
-<div class="help jumbotron markdown">
-  {{localized-tpl tpl="help/{locale}/graph/layout"}}
+<div class="content">
+  <div class="help jumbotron markdown">
+    {{localized-tpl tpl="help/{locale}/graph/layout"}}
+  </div>
+  {{#x-accordion class="settings"}}
+    <div class="accordion-item active" accordion-priority="9999">
+        <h3 class="accordion-trigger">{{x-capitalize (t "general.pageLayout")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
+        <div class="accordion-wrapper">
+          <div class="vertical airy flow padded">
+            <div class="horizontal airy middle flow">
+                <div class="horizontal middle flow">
+                    <label class="horizontal right flow w3 padded-r text-right">W</label>
+                    {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
+                    <small class="padded">px</small>
+                </div>
+                <div class="horizontal middle flow">
+                    <label class="horizontal right flow w3 padded-r text-right">H</label>
+                    {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
+                    <small class="padded">px</small>
+                </div>
+            </div>
+            <div class="horizontal airy middle flow">
+              <div class="horizontal middle flow">
+                  <label class="horizontal right flow solid w3 padded-r text-right">Zoom</label>
+                  {{input value=model.graphLayout.zoom focus-out=(action 'onAskVersioning' 'freeze')}}
+              </div>
+            </div>
+            <div class="horizontal airy middle flow">
+              <div class="horizontal middle flow">
+                  <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
+                  {{color-picker value=model.graphLayout.backgroundColor}}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="accordion-item active">
+        <h3 class="accordion-trigger">{{x-capitalize (t "general.backMap")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
+        <div class="accordion-wrapper">
+          <div class="vertical airy flow padded">
+            <div class="horizontal airy middle flow">
+              <div class="horizontal middle flow">
+                  <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
+                  {{color-picker value=model.graphLayout.backMapColor}}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  {{/x-accordion}}
 </div>
-{{#x-accordion class="tools"}}
-  <div class="accordion-item active" accordion-priority="9999">
-      <h3 class="accordion-trigger">{{x-capitalize (t "general.pageLayout")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
-      <div class="accordion-wrapper">
-        <div class="vertical airy flow padded">
-          <div class="horizontal airy middle flow">
-              <div class="horizontal middle flow">
-                  <label class="horizontal right flow w3 padded-r text-right">W</label>
-                  {{input value=model.graphLayout.width focus-out=(action 'onAskVersioning' 'freeze')}}
-                  <small class="padded">px</small>
-              </div>
-              <div class="horizontal middle flow">
-                  <label class="horizontal right flow w3 padded-r text-right">H</label>
-                  {{input value=model.graphLayout.height focus-out=(action 'onAskVersioning' 'freeze')}}
-                  <small class="padded">px</small>
-              </div>
-          </div>
-          <div class="horizontal airy middle flow">
-            <div class="horizontal middle flow">
-                <label class="horizontal right flow solid w3 padded-r text-right">Zoom</label>
-                {{input value=model.graphLayout.zoom focus-out=(action 'onAskVersioning' 'freeze')}}
-            </div>
-          </div>
-          <div class="horizontal airy middle flow">
-            <div class="horizontal middle flow">
-                <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
-                {{color-picker value=model.graphLayout.backgroundColor}}
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <div class="accordion-item active">
-      <h3 class="accordion-trigger">{{x-capitalize (t "general.backMap")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h3>
-      <div class="accordion-wrapper">
-        <div class="vertical airy flow padded">
-          <div class="horizontal airy middle flow">
-            <div class="horizontal middle flow">
-                <label class="horizontal right solid flow w3 padded-r text-right">Fond</label>
-                {{color-picker value=model.graphLayout.backMapColor}}
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-{{/x-accordion}}
 
-<div class="navbar">
+<div class="bottom-navbar">
+   <div class="fluid">
     {{#x-button class="default btn-prev" action=(action 'back')}}
-        <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.pageLayout"}}
+        <i class="iconfont iconfont-long-arrow-left"></i> {{x-capitalize (t "navigation.sidebar.variables")}}
     {{/x-button}}
+   </div>
+   <div class="fluid">
+    {{#x-button class="default btn-prev" action=(action 'next')}}
+        {{x-capitalize (t "navigation.sidebar.layers")}} <i class="iconfont iconfont-long-arrow-right"></i>
+    {{/x-button}}
+   </div>
 </div>

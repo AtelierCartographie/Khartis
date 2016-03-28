@@ -5,22 +5,43 @@
         {{outlet 'header'}}
         <div class="horizontal flow">
           <div class="vertical-navbar">
-              <div class="state-icon {{if isInStateGeovars 'selected'}}" {{action 'selectState' 'geovars'}}><i
-                      class="iconfont iconfont-map"></i></div>
-              <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}><i
-                      class="iconfont iconfont-map"></i></div>
-              <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'layers'}}><i
-                      class="iconfont iconfont-sliders"></i></div>
+            {{#x-tooltip message=(t 'navigation.sidebar.variables') position="right"}}
+              <div class="state-icon {{if isInStateVariables 'selected'}}" {{action 'selectState' 'variables'}}>
+                <i class="icon-var filled">V</i>
+              </div>
+            {{/x-tooltip}}
+            {{#x-tooltip message=(t 'navigation.sidebar.layout') position="right"}}
+              <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}>
+                <i class="iconfont iconfont-map"></i>
+              </div>
+            {{/x-tooltip}}
+            {{#x-tooltip message=(t 'navigation.sidebar.layers') position="right"}}
+              <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'layers'}}>
+                <i class="iconfont iconfont-sliders"></i>
+              </div>
+            {{/x-tooltip}}
+            {{#x-tooltip message=(t 'navigation.sidebar.legend') position="right"}}
+              <div class="state-icon {{if isInStateLegend 'selected'}}" {{action 'selectState' 'legend'}}>
+                <i class="iconfont iconfont-tags"></i>
+              </div>
+            {{/x-tooltip}}
+            {{#if model.graphLayout.projection}}
+            {{#x-tooltip message=(t 'navigation.sidebar.export') position="right"}}
+              <div class="state-icon {{if isInStateExport 'selected'}}" {{action 'selectState' 'export'}}>
+                <i class="iconfont iconfont-download"></i>
+              </div>
+            {{/x-tooltip}}
+            {{/if}}
           </div>
-          <div class="airy vertical flow padded sidebar">
-            {{partial sidebar}}
+          <div class="vertical space-between flow sidebar">
+            {{partial sidebarPartial}}
           </div>
         </div>
       </aside>
       
       <div class="stretched flow" style="position: relative;">
           <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
-            {{#if basemapData}}
+            {{#if (x-every basemapData model.graphLayout.projection)}}
             
               {{map-editor data=model.data
               base=basemapData
@@ -31,40 +52,42 @@
 
             {{/if}}
             
-            {{#x-sticky-panel class="projection-panel open"}}
+              {{#x-sticky-panel class="projection-panel open"}}
 
-              {{#x-tooltip message="Projection" position="left"}}
-                  <div class="sticky-trigger">
-                      <i class="iconfont iconfont-more-horiz"></i>
+                {{#x-tooltip message="Projection" position="left"}}
+                    <div class="sticky-trigger">
+                        <i class="iconfont iconfont-more-horiz"></i>
+                    </div>
+                {{/x-tooltip}}
+                <div class="sticky-wrapper">
+                  <div class="title">
+                    <div class="horizontal middle airy flow space-between">
+                      <span>Projection</span>
+                      <div {{action 'navigateTo' 'graph.projection.edit'}} class="small button filled primary">Editer <i class="iconfont iconfont-pencil"></i></div>
+                    </div>
                   </div>
-              {{/x-tooltip}}
-              <div class="sticky-wrapper">
-                <div class="title">
-                  <div class="horizontal middle flow space-between">
-                    <span>Projection</span>
-                    <div {{action 'navigateTo' 'graph.projection.edit'}} class="small button filled primary">Editer <i class="iconfont iconfont-pencil"></i></div>
+                  {{#if model.graphLayout.projection}}
+                  <div class="padded">
+                    <div>
+                    <label>Type :</label>
+                    {{t (concat "projection." model.graphLayout.projection.id ".name")}}
+                    </div>
+                    <div>
+                    <label>Préservation d'angle :</label>
+                    {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
+                    </div>
+                    <div>
+                    <label>Préservation de surface :</label>
+                    {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
+                    </div>
+                    <div>
+                    <label>Préservation de distance :</label>
+                    {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
+                    </div>
                   </div>
+                  {{/if}}
                 </div>
-                <div class="padded">
-                  <div>
-                  <label>Type :</label>
-                  {{t (concat "projection." model.graphLayout.projection.id ".name")}}
-                  </div>
-                  <div>
-                  <label>Préservation d'angle :</label>
-                  {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
-                  </div>
-                  <div>
-                  <label>Préservation de surface :</label>
-                  {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
-                  </div>
-                  <div>
-                  <label>Préservation de distance :</label>
-                  {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
-                  </div>
-                </div>
-              </div>
-            {{/x-sticky-panel}}
+              {{/x-sticky-panel}}
 
             {{#x-sticky-panel class="toolbar"}}
 
@@ -88,7 +111,7 @@
                   {{/x-tooltip}}
                   {{#x-tooltip message="Centrer" position="left"}}
                       <li {{action 'resetTranslate'}}>
-                          <i class="iconfont iconfont-arrows"></i>
+                          <i class="iconfont iconfont-crosshairs"></i>
                       </li>
                   {{/x-tooltip}}
                 </ul>

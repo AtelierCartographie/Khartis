@@ -10,6 +10,14 @@ export default Ember.Route.extend({
     this.render('graph.projection', {into: "graph", outlet: 'configuration-panel' });
   },
   
+  model(params) {
+    return this.modelFor('graph').get('graphLayout.projection');
+  },
+  
+  setupController(controller, model) {
+    //nothing
+  },
+  
   actions: {
     selectProjection(proj) {
       this.get('controller').send('bindProjection', proj);

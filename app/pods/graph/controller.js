@@ -9,11 +9,19 @@ import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
   
-  state: "layers",
+  states: [
+    "variables",
+    "layout",
+    "layers",
+    "legend",
+    "export"
+  ],
+  state: "variables",
   
   basemapData: null,
   
   editedLayer: null,
+  editedColumn: null,
   
   availableProjections: function() {
     return this.get('Dictionnary.data.projections');
@@ -23,15 +31,23 @@ export default Ember.Controller.extend({
     return this.get('state') === "layout";
   }.property('state'),
   
-  isInStateGeovars: function() {
-    return this.get('state') === "geovars";
+  isInStateVariables: function() {
+    return this.get('state') === "variables";
   }.property('state'),
   
   isInStateMapping: function() {
     return this.get('state') === "layers";
   }.property('state'),
   
-  sidebar: function() {
+  isInStateLegend: function() {
+    return this.get('state') === "legend";
+  }.property('state'),
+  
+  isInStateExport: function() {
+    return this.get('state') === "export";
+  }.property('state'),
+  
+  sidebarPartial: function() {
     return `graph/sidebar/${this.get('state')}`;
   }.property('state'),
   
@@ -82,6 +98,21 @@ export default Ember.Controller.extend({
     bindProjection(proj) {
       this.set('model.graphLayout.projection', Projection.create(proj.export()));
       this.send('onAskVersioning', 'freeze');
+    },
+    
+    editColumn(col) {
+      if (col.get('incorrectCells.length')) {
+        this.transitionToRoute('graph.column', col.get('_uuid'));
+      }
+    },
+    
+    bindColumnType(column, type) {
+      if (type != null) {
+        column.set('meta.type', type);
+        column.set('meta.manual', true);
+      } else {
+        column.set('meta.manual', false);
+      }
     },
     
     addLayer(col) {
@@ -141,15 +172,11 @@ export default Ember.Controller.extend({
     },
     
     next() {
-      this.transitionToRoute("graph.mapping", this.get('model._uuid'));
+      this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);
     },
     
     back() {
-      if (this.get('isInStateLayout')) {
-        this.transitionToRoute("project.step4", this.get('model._uuid'));
-      } else if (this.get('isInStateMapping')) {
-        this.transitionToRoute("graph.layout", this.get('model._uuid'));
-      }
+      this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
     },
     
     onAskVersioning(type) {

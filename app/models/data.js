@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Struct from './struct';
-import {geoMatch} from 'mapp/utils/world-dictionary';
+import {geoMatch} from 'mapp/utils/geo-match';
 
 let RowStruct = Struct.extend({
     header: null,
@@ -102,8 +102,12 @@ let ColumnStruct = Struct.extend({
       return this.get('cells').find( c => c.get('row.header') );
     }.property('cells.[]'),
     
+    body: function() {
+      return this.get('cells').filter( c => !c.get('row.header') );
+    }.property('cells.[]'),
+    
     deferredChange: Ember.debouncedObserver(
-      'cells.@each.value', 'meta.type', 'meta.manual', 
+      'body.@each.value', 'body.@each.correctedValue', 'meta.type', 'meta.manual', 
       function() {
         this.notifyDefferedChange();
       },
@@ -123,10 +127,10 @@ let ColumnStruct = Struct.extend({
             lon: 0
           };
           
-          this.get('cells')
-            .filter( c => !c.get('row.header') && !Ember.isEmpty(c.get('value')) )
+          this.get('body')
+            .filter( c => !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
-              if (/^[\d\,\s]+(\.\d+)?$/.test(c.get('value'))) {
+              if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
                   let match = geoMatch(c.get('value'));
@@ -148,10 +152,10 @@ let ColumnStruct = Struct.extend({
           
           if (type === "numeric") {
             let header = this.get('cells').find( c => c.get('row.header') );
-            if (/(?:lon(?:g?\.|gitude)?|lng)/i.test(header.get('value'))) {
+            if (/(?:lon(?:g?\.|gitude)?|lng|x)/i.test(header.get('value'))) {
               type = "lon";
               p[type] = 1;
-            } else if (/lat(?:\.|itude)?/i.test(header.get('value'))) {
+            } else if (/y|lat(?:\.|itude)?/i.test(header.get('value'))) {
               type = "lat";
               p[type] = 1;
             }
@@ -166,12 +170,12 @@ let ColumnStruct = Struct.extend({
     }, 100),
     
     incorrectCells: function() {
-      console.log('incorrectCells');
+      
       let p = 0,
           inconsistency = {
             "geo": (v) => geoMatch(v),
             "text": (v) => true,
-            "numeric": (v) => (/^[\d\,\s]+(\.\d+)?$/).test(v),
+            "numeric": (v) => (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+)?)$/).test(v),
             "lat": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
             "lon": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
             "lat_dms": (v) => (/^\-?1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/).test(v),
@@ -179,8 +183,8 @@ let ColumnStruct = Struct.extend({
           },
           checkFn = inconsistency[this.get('meta.type')];
       
-      let cells = this.get('cells')
-        .filter( c => !c.get('row.header') && !Ember.isEmpty(c.get('value')) )
+      let cells = this.get('body')
+        .filter( c => !Ember.isEmpty(c.get('value')) )
         .filter( (c, i, arr) => {
           return !checkFn(c.get('value')); 
         });
@@ -189,9 +193,13 @@ let ColumnStruct = Struct.extend({
       
     }.property('_defferedChangeIndicator'),
     
+    correctedCells: function() {
+      return this.get('body').filter( (c) => c.get('corrected') );
+    }.property('_defferedChangeIndicator'),
+    
     inconsistency: function() {
-      return this.get('incorrectCells.length');
-    }.property('incorrectCells.length'),
+      return this.get('incorrectCells.length') - this.get('correctedCells.length');
+    }.property('incorrectCells.length', 'correctedCells.length'),
     
     export() {
       return this._super({
@@ -224,6 +232,11 @@ let CellStruct = Struct.extend({
     column: null,
     row: null,
     value: null,
+    correctedValue: null,
+    
+    corrected: function() {
+      return !Ember.isEmpty(this.get('correctedValue'));
+    }.property('correctedValue'),
     
     index() {
       return this.get('row.cells').indexOf(this);
@@ -238,11 +251,16 @@ let CellStruct = Struct.extend({
     },
     
     postProcessedValue() {
-      if (!Ember.isEmpty(this.get('value'))) {
+      let val = this.get('corrected') ? this.get('correctedValue') : this.get('value');
+      if (!Ember.isEmpty(val)) {
         if (this.get('column.meta.type') === "numeric") {
-          return parseFloat(this.get('value').replace(/[\,\s]+/g, ""));
+          if (val.indexOf(".") === -1) {
+            return parseFloat(val.replace(/[\,\s]+/g, "."));
+          } else {
+            return parseFloat(val.replace(/[\,\s]+/g, ""));
+          }
         }
-        return this.get('value');
+        return val;
       } else {
         return null;
       }
@@ -267,9 +285,10 @@ let CellStruct = Struct.extend({
     
     export() {
       return this._super({
-          column: this.get('column._uuid'),
+          col: this.get('column._uuid'),
           row: this.get('row._uuid'),
-          value: this.get('value')
+          val: this.get('value'),
+          cval: this.get('correctedValue')
       });
     }
 });
@@ -278,8 +297,9 @@ CellStruct.reopenClass({
     restore(json, refs) {
       let o = this._super(json, refs);
       o.setProperties({
-          value: json.value,
-          column: refs[json.column],
+          value: json.val,
+          correctedValue: json.cval,
+          column: refs[json.col],
           row: refs[json.row]
       });
       return o;

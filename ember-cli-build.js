@@ -11,8 +11,8 @@ module.exports = function(defaults) {
   });
   
   app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
-  app.import("bower_components/jquery-minicolors/jquery.minicolors.min.js");
-  app.import("bower_components/jquery-minicolors/jquery.minicolors.css");
+  app.import("bower_components/spectrum/spectrum.js");
+  app.import("bower_components/spectrum/spectrum.css");
   app.import("vendor/d3.geo.polyhedron.min.js");
   
   // Use `app.import` to add additional libraries to the generated

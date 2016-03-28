@@ -2,29 +2,27 @@ import Ember from 'ember';
 
 export default Ember.TextField.extend({
 
-	type: 'minicolors',
-	attributeBindings: ['name'],
-	classNames: ["panel-input"],
+	type: 'text',
+  
+  showInput: true,
+  
+  liveRendering: true,
+  
 	didInsertElement: function() {
-		this.$().minicolors({
-            animationSpeed: 10,
-            animationEasing: 'swing',
-            change: null,
-            changeDelay: 100,
-            control: 'hue',
-            dataUris: true,
-            defaultValue: '',
-            hide: null,
-            hideSpeed: 0,
-            inline: false,
-            letterCase: 'lowercase',
-            opacity: false,
-            position: 'bottom left',
-            show: null,
-            showSpeed: 0,
-            theme: 'default'
-        });
-	}
-
+		this.$().spectrum({
+      showInput: this.get('showInput'),
+      preferredFormat: "hex",
+      move: (color) => {
+        if (this.get('liveRendering')) {
+          this.set('value', color.toHexString());
+        }
+      }
+    });
+	},
+  
+  valueChange: function() {
+    this.$().spectrum("set", this.get('value'));
+  }.observes('value')
+  
 });
 

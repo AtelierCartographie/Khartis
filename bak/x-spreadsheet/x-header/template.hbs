@@ -1,0 +1,10 @@
+<span class="label">{{cell.value}}</span>
+{{#if cell.state.sheet.edited}}
+{{input value=cell.value enter="onInputEnter" focus-out="onInputBlur" key-up="onKeyUp"}}
+{{/if}}
+<div class="meta-icons">
+    {{data-type-icon meta=cell.column.meta inconsistency=cell.column.inconsistency}}
+    <div class=""></div>
+    <div class=""></div>
+</div>
+<div class="resize-handle"></div>

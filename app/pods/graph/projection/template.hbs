@@ -2,7 +2,7 @@
   <div class="titlebar">
     <div class="title">{{t "navigation.chooseProjection"}}</div>
     <div class="actions">
-      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+      {{#if model.graphLayout.projection}}{{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}{{/if}}
     </div>
   </div>
   <div class="body">

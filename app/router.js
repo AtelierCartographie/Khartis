@@ -29,6 +29,7 @@ Router.map(function() {
         this.route("layer", {path: "layer/:layerId"}, function() {
           this.route("edit");
         });
+        this.route("column", {path: "column/:columnId"});
     });
 
 });

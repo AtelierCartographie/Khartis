@@ -102,7 +102,7 @@ var GraphLayout = Struct.extend({
   export() {
     return this._super({
       basemap: this.get('basemap'),
-      projection: this.get('projection').export(),
+      projection: this.get('projection') ? this.get('projection').export() : null,
       backgroundColor: this.get('backgroundColor'),
       backMapColor: this.get('backMapColor'),
       tx: this.get('tx'),
@@ -119,7 +119,7 @@ GraphLayout.reopenClass({
   
   createDefault() {
     let o = GraphLayout.create({
-      projection: Projection.createDefault()
+      projection: null
     });
     return o;
   },
@@ -130,7 +130,7 @@ GraphLayout.reopenClass({
           basemap: json.basemap,
           backgroundColor: json.backgroundColor,
           backMapColor: json.backMapColor,
-          projection: Projection.restore(json.projection),
+          projection: json.projection ? Projection.restore(json.projection) : null,
           width: json.width,
           tx: json.tx,
           ty: json.ty,

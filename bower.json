@@ -15,7 +15,7 @@
     "ember-cli-codemirror-shim": "~0.0.1",
     "d3": "~3.5.12",
     "d3-geo-projection": "~0.2.16",
-    "jquery-minicolors": "~2.2.3"
+    "spectrum": "~1.8.0"
   },
   "resolutions": {
     "ember": "2.2.0"

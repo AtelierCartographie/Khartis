@@ -1,0 +1,71 @@
+{{#if hasToolbar}}
+<div class="toolbar">
+    <div class="tool add-row-icon" {{action 'addRow'}} >
+        <i class="iconfont iconfont-add-row"></i>
+    </div>
+    <div class="tool add-column-icon" {{action 'addColumn'}} >
+        <i class="iconfont iconfont-add-col"></i>
+    </div>
+    <div class="tool save" {{action 'save'}}>
+        <i class="iconfont iconfont-save"></i>
+    </div>
+    {{#if canUndo}}
+    <div class="tool restore" {{action 'undo'}} >
+        <i class="iconfont iconfont-undo"></i>
+    </div>
+    {{/if}}
+    {{#if canRedo}}
+    <div class="tool restore" {{action 'redo'}} >
+        <i class="iconfont iconfont-redo"></i>
+    </div>
+    {{/if}}
+</div>
+{{/if}}
+<div class="sheet">
+    <svg class="background"></svg>
+    <div class="body">
+        {{#each data.body as |row|}}
+            <div class="row">
+                {{#each row.cells as |cell|}}
+                    {{x-spreadsheet.x-cell cell=cell
+                        edit-start="startEditCell"
+                        edit-end="endEditCell"
+                        select-start="startSelectCell"
+                        select-end="endSelectCell"
+                        move-selection="moveCellSelection"
+                        cycle-selection="cycleCellSelection"
+                    }}
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+
+    <div class="numbering">
+        {{#each data.body as |row i|}}
+            <div class="row"><div class="cell">{{i}}</div></div>
+        {{/each}}
+    </div>
+    {{#x-spreadsheet.h-resizer minWidth=colsMinWidth apply-resize="onApplyResize" as |resizer|}}
+    <div class="header">
+        <div class="row">
+            {{#each data.header.cells as |cell|}}
+                {{x-spreadsheet.x-header cell=cell
+                    edit-start="startEditCell"
+                    edit-end="endEditCell"
+                    select-start="startSelectCell"
+                    select-end="endSelectCell"
+                    move-selection="moveCellSelection"
+                    cycle-selection="cycleCellSelection"
+                    mouse-enter="onMouseEnterHeader"
+                    mouse-leave="onMouseLeaveHeader"
+                    start-resize=(action 'onStartResizeHeader' target=resizer)
+                }}
+            {{/each}}
+        </div>
+    </div>
+    {{/x-spreadsheet.h-resizer}}
+    <div class="dash">
+        <div class="row"><div class="cell">#</div></div>
+    </div>
+
+</div>

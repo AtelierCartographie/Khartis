@@ -17,18 +17,18 @@ App = Ember.Application.extend({
 
 loadInitializers(App, config.modulePrefix);
 
-Ember.Component.reopen({
+Ember.Component.reopen({  
   d3l: function() {
     return d3.select(this.$()[0]);
   }
 });
 
 Ember.debouncedObserver = function() {
-  let args = Array.prototype.slice.call(arguments),
-      fn = args.reverse()[1],
-      time = args.reverse()[0],
-      keys = args.slice(0, args.length-2);
-
+  let args = (Array.prototype.slice.call(arguments)).reverse(),
+      fn = args[1],
+      time = args[0],
+      keys = args.slice(2);
+      
   let debouncer = function() {
     Em.run.debounce(this, fn, time);
   };

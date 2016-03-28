@@ -1,0 +1,21 @@
+<div class="content">
+  <div class="help jumbotron markdown">
+    {{localized-tpl tpl="help/{locale}/graph/legend"}}
+  </div>
+  <div>
+    Ceci est la configuration de la légende
+  </div>
+</div>
+
+<div class="bottom-navbar">
+  <div class="fluid">
+    {{#x-button class="default btn-prev" action=(action 'back')}}
+        <i class="iconfont iconfont-long-arrow-left"></i> {{x-capitalize (t "navigation.sidebar.layers")}}
+    {{/x-button}}
+  </div>
+  <div class="fuild">
+    {{#x-button class="default btn-prev" action=(action 'next')}}
+        {{x-capitalize (t "navigation.sidebar.export")}} <i class="iconfont iconfont-long-arrow-right"></i>
+    {{/x-button}}
+  </div>
+</div>
