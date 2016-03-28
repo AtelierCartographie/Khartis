@@ -80,15 +80,17 @@ export default Ember.Component.extend({
     // DRAG & ZOOM
     
     var zoom = d3.behavior.zoom()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 10])
       .on("zoom", () => {
-        let rz =  Math.round(d3.event.scale * 2) / 2;
+        let rz =  Math.round(d3.event.scale * 4) / 4;
         if (rz != this.get('graphLayout.zoom')) {
           this.set('graphLayout.zoom',rz);
           this.sendAction('onAskVersioning', "freeze");
         }
       })
       .scale(this.get('graphLayout.zoom'));
+      
+    this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
 
     var drag = d3.behavior.drag()
       .origin(() => {
@@ -274,8 +276,6 @@ export default Ember.Component.extend({
 
 		landSel.exit().remove();
     
-    console.log("REDRAW " + window.location);
-    
     this.drawBackmap();
     this.drawLayers();
 			
@@ -303,7 +303,8 @@ export default Ember.Component.extend({
     
     let self = this,
         data = this.get('graphLayers')
-          .filter( gl => gl.get('visible') && gl.get('mapping') && gl.get('varCol') );
+          .filter( gl => gl.get('visible') && gl.get('mapping') && gl.get('varCol') )
+          .reverse();
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
@@ -313,7 +314,7 @@ export default Ember.Component.extend({
       .attr("stroke", this.get("graphLayout.stroke"))
       .classed("layer", true);
     
-    sel.exit().remove();
+    sel.order().exit().remove();
     
     sel.each(function(d, index) {
       d.index = index;

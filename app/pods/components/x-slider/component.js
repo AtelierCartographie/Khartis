@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import d3 from 'd3';
-import 'mapp/utils/d3slider'
-/* global $ */
 
 export default Ember.Component.extend({
 
@@ -11,29 +9,47 @@ export default Ember.Component.extend({
   value:0,
   min:0,
   max:10,
-  step:null,
-  scale:null,
+  ticks: null,
+  tickValues: null,
+  
+  tickAppend: null,
+  tickFormat: ",.2f",
   
   _tmpValue: null,
-
+  
   didInsertElement(){
     
-    var slider = d3.slider().axis(true)
+    var slider = d3.slider()
       .value(this.get('value'))
       .min(this.get('min'))
-      .max(this.get('max'))
+      .max(this.get('max'));
 
-    var step = this.get('step')
-    if(step && typeof step === 'number'){
-      slider.step(step)
-    }
-
-    var scale = this.get('scale')
-    if(scale){
-      slider.scale(scale)
+    if (this.get('tickValues')) {
+      slider.tickValues(this.get('tickValues'));
     }
     
-    slider.on('slide', (e, val) => this.set('_tmpValue', val));
+    if (this.get('ticks')) {
+      slider.ticks(this.get('ticks'));
+    }
+    
+    let formatter = (d) => d;
+    if (this.get('tickFormat')) {
+      formatter = (d) => d3.format(this.get('tickFormat'))(d);
+    }
+    
+    if (this.get('tickAppend') != null) {
+      slider.tickFormat( (d) => {
+        return formatter(d) + this.get('tickAppend');
+      } );
+    } else {
+      slider.tickFormat( (d) => {
+        return formatter(d);
+      } );
+    }
+    
+    slider.callback( (s) => this.set('_tmpValue', s.value()) );
+    
+    this.addObserver('value', () => slider.setValue(this.get('value')) );
 
     this.d3l().call(slider);
     

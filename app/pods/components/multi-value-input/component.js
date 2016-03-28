@@ -19,7 +19,7 @@ export default AbstractComponent.extend({
                 
                 var min = fields.reduce((min, field) => {
                     
-                    let parts = x.get(field).split(' ');
+                    let parts = x.get(field).split(/[\s']/);
                     
                     for (var i = 0; i < parts.length; i++) {
                         

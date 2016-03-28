@@ -6,22 +6,28 @@
     </div>
   </div>
   <div class="body">
-    <div class="help jumbotron markdown">
-    {{localized-tpl tpl="help/{locale}/graph/projection/edit"}}
-    </div>
     <div class="settings horizontal center flow">
-        <div class="solid vertical airy flow w6">
-          {{!#if model.graphLayout.rotate}}
+      <div class="solid vertical flow w6">
+        <div class="fluid text-center">
+          <h3>Paramètres de la projection</h3>
+        </div>
+        <div>
+          <label>Zoom</label>
+          {{x-slider class="fluid" value=model.graphLayout.zoom min=1 max=10}}
+        </div>
+        <div>
           <label>Rotation</label>
           <div class="horizontal middle flow">
-            <div class="horizontal flow"><span class="solid padded-r">X</span>{{x-slider class="fluid" value=model.graphLayout.projection.rotateX min=-180 max=180}}<span class="solid padded-r">°</span></div>
-            <div class="horizontal flow"><span class="solid padded-r">Y</span>{{x-slider class="fluid" value=model.graphLayout.projection.rotateY min=-180 max=180}}<span class="solid padded-r">°</span></div>
-            <div class="horizontal flow"><span class="solid padded-r">Z</span>{{x-slider class="fluid" value=model.graphLayout.projection.rotateZ min=-180 max=180}}<span class="solid padded-r">°</span></div>
+            <div class="horizontal middle solid flow w4"><span class="solid padded-r">X</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateX min=-180 max=180}}</div>
+            <div class="horizontal middle solid flow w4"><span class="solid padded-r">Y</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateY min=-180 max=180}}</div>
+            <div class="horizontal middle solid flow w4"><span class="solid padded-r">Z</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateZ min=-180 max=180}}</div>
           </div>
-          {{!/if}}
-          <label>Clip angle</label>
-          {{input value=model.graphLayout.projection.clipAngle}}
         </div>
+        <div>
+          <label>Clip angle</label>
+          {{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateZ min=-180 max=180}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="footer">

@@ -13,6 +13,8 @@ let Project = Struct.extend({
     
     graphLayers: null,
     
+    title: "",
+    
     report: null,
     
     init() {
@@ -38,7 +40,8 @@ let Project = Struct.extend({
       return this._super({
         data: this.get('data') ? this.get('data').export() : null,
         graphLayout: this.get('graphLayout').export(),
-        graphLayers: this.get('graphLayers').map( gl => gl.export() )
+        graphLayers: this.get('graphLayers').map( gl => gl.export() ),
+        title: this.get('title')
       });
     }
     
@@ -57,7 +60,8 @@ Project.reopenClass({
         o.setProperties({
             data: DataStruct.restore(json.data, refs),
             graphLayout: GraphLayout.restore(json.graphLayout, refs),
-            graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) )
+            graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) ),
+            title: json.title
         });
         return o;
     }

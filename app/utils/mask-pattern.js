@@ -96,12 +96,14 @@ let lines = function(opts = {}) {
       defs.append("mask")
         .attr({
           id: `mask-${id()}`,
-          width: "100%",
-          height: "100%"
+          width: "10000",
+          height: "10000"
         })
         .append("rect").attr({
-          width: "100%",
-          height: "100%"
+          x: "-5000",
+          y: "-5000",
+          width: "10000",
+          height: "10000"
         })
         .style("fill", `url(${window.location}#pattern-${id()})`);
           

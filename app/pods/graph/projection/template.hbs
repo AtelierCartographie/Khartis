@@ -10,7 +10,9 @@
       {{#each availableProjections as |proj|}}
         <li class="clickable" {{action 'selectProjection' proj}}>
           <div class="horizontal airy flow">
-            <img src="assets/images/projection/{{proj.id}}.png" alt="" class="solid" width="230">
+            <div class="caption">
+              <img src="assets/images/projection/{{proj.id}}.png" alt="" class="solid" height="100">
+            </div>
             <div class="vertical flow">
               <span class="title">{{t (concat "projection." proj.id ".name")}}</span>
               <p class="description">{{t (concat "projection." proj.id ".description")}}</p>

@@ -123,7 +123,10 @@
   .settings {
     
     .accordion-trigger {
-      &, h3 { color: greys(60%); }
+      & {
+        color: greys(70%);
+        font-size: 1em;
+      }
       padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;
       border-bottom: 1px solid greys(40%);
     }

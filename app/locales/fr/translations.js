@@ -26,7 +26,8 @@ export default {
     "none": "aucun",
     "summary": "summary",
     "mappingType": "type de couplage",
-    "backMap": "Fond de carte"
+    "backMap": "Fond de carte",
+    "mapTitle": "Titre de la carte"
   },
   
   "navigation": {

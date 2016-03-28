@@ -120,7 +120,7 @@ export default Ember.Controller.extend({
         varCol: col,
         geoCols: this.get('model.data.geoColumns')
       });
-      this.get('model.graphLayers').addObject(layer);
+      this.get('model.graphLayers').unshiftObject(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },
     
