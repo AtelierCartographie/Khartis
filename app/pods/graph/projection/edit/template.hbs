@@ -1,12 +1,43 @@
-<div class="configuration-panel filled padded with-relief topbar split-view">
+<div class="configuration-panel projection padded with-relief topbar split-view">
   <div class="titlebar">
     <div class="title">{{#link-to 'graph.projection'}}{{t "navigation.chooseProjection"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i> {{t (concat "projection." model.graphLayout.projection.id ".name")}}</div>
     <div class="actions">
-      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
     </div>
   </div>
   <div class="body">
-    <div class="settings horizontal center flow">
+    <div class="settings horizontal center airy flow">
+      <div class="solid vertical flow w6">
+        <div class="fluid text-center">
+          <h3>Information sur la projection</h3>
+        </div>
+        <div class="vertical padded flow infos">
+          <div>
+            <label>Nom :</label>
+            {{t (concat "projection." model.graphLayout.projection.id ".name")}}
+          </div>
+          <div>
+            <label>Description :</label>
+            {{t (concat "projection." model.graphLayout.projection.id ".description")}}
+          </div>
+          <div>
+            <label>Auteur :</label>
+            {{model.graphLayout.projection.author}} ({{model.graphLayout.projection.year}})
+          </div>
+          <div>
+            <label>Préservation d'angle :</label>
+            {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
+          </div>
+          <div>
+            <label>Préservation de surface :</label>
+            {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
+          </div>
+          <div>
+            <label>Préservation de distance :</label>
+            {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
+          </div>
+        </div>
+      </div>
       <div class="solid vertical flow w6">
         <div class="fluid text-center">
           <h3>Paramètres de la projection</h3>
@@ -23,14 +54,7 @@
             <div class="horizontal middle solid flow w4"><span class="solid padded-r">Z</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateZ min=-180 max=180}}</div>
           </div>
         </div>
-        <div>
-          <label>Clip angle</label>
-          {{x-slider class="fluid" tickAppend="°" tickFormat=",.1f" value=model.graphLayout.projection.rotateZ min=-180 max=180}}
-        </div>
       </div>
     </div>
-  </div>
-  <div class="footer">
-    <div class="button filled primary" {{action 'navigateTo' 'graph'}}>Fermer</div>
   </div>
 </div>

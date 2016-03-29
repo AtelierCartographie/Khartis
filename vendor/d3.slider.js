@@ -1,4 +1,4 @@
-d3.slider = function module() {
+d3.slider = function module(round) {
   "use strict";
 
   var div, min = 0, max = 100, svg, svgGroup, value = null, classPrefix, axis, 
@@ -17,8 +17,12 @@ d3.slider = function module() {
                                                 + margin.right);
                                                 
       value = value != null ? value : min; 
-      scale = d3.scale.linear().domain([min, max]).range([0, width])
-      .clamp(true);
+      scale = d3.scale.linear().domain([min, max]).clamp(true);
+      if (round) {
+        scale.rangeRound([0, width]);
+      } else {
+        scale.range([0, width]);
+      }
       
       // SVG 
       svg = div.append("svg")

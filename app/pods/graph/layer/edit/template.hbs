@@ -1,8 +1,8 @@
 <div class="configuration-panel filled padded with-relief topbar split-view">
   <div class="titlebar">
-    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{t (concat "visualization." editedLayer.mapping.type)}}</div>
+    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
     <div class="actions">
-      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
+      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
     </div>
   </div>
   <div class="body">
@@ -24,7 +24,7 @@
                 {{#unless editedLayer.mapping}}
                 Choisir
                 {{else}}
-                {{t (concat "variable.mapping.type." editedLayer.mapping.type)}}
+                {{t (concat "variable.mapping.type." editedLayer.mapping.type ".name")}}
                 {{/unless}}
                 <i class="iconfont iconfont-angle-down"></i>
               </a>

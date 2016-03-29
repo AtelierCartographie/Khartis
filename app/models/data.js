@@ -152,10 +152,10 @@ let ColumnStruct = Struct.extend({
           
           if (type === "numeric") {
             let header = this.get('cells').find( c => c.get('row.header') );
-            if (/(?:lon(?:g?\.|gitude)?|lng|x)/i.test(header.get('value'))) {
+            if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(header.get('value'))) {
               type = "lon";
               p[type] = 1;
-            } else if (/y|lat(?:\.|itude)?/i.test(header.get('value'))) {
+            } else if (/^y|lat(?:\.|itude)?$/i.test(header.get('value'))) {
               type = "lat";
               p[type] = 1;
             }

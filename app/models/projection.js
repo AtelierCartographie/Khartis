@@ -122,7 +122,9 @@ let Projection = Struct.extend({
       lobes: this.get('lobes'),
       score_angle: this.get('score_angle'),
       score_area: this.get('score_area'),
-      score_distance: this.get('score_distance')
+      score_distance: this.get('score_distance'),
+      author: this.get('author'),
+      year: this.get('year')
     });
   }
   
@@ -142,7 +144,9 @@ Projection.reopenClass({
         lobes: json.lobes,
         score_angle: json.score_angle,
         score_area: json.score_area,
-        score_distance: json.score_distance
+        score_distance: json.score_distance,
+        author: json.author,
+        year: json.year
       });
       return o;
   }

@@ -9,6 +9,9 @@
   @extend %vertical;
   @extend %padded;
   
+  background-color: rgba(255, 255, 255, 0.9);
+  opacity: 0.96;
+  
   max-height: 100%;
   
   &.split-view {
@@ -84,5 +87,11 @@
   }
 }
 
+.configuration-panel.projection {
 
+  .infos {
+    border-right: 1px solid greys(40%);
+  }
+  
+}
 

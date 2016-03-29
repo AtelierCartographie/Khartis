@@ -47,8 +47,16 @@ export default Ember.Component.extend({
 		// = DEFS =
 		// ========
 		
-		d3g.append("defs");
-			
+		let defs = d3g.append("defs");
+    
+    defs.append("path")
+      .datum({type: "Sphere"})
+      .attr("id", "sphere");
+
+    defs.append("clipPath")
+      .attr("id", "clip")
+      .append("use");
+    
 		// ---------
 		
     // HANDLE RESIZE
@@ -263,15 +271,26 @@ export default Ember.Component.extend({
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
 		
-		let landSel = this.d3l().select("defs")
+    let defs = this.d3l().select("defs");
+    
+    defs.select("#sphere")
+      .datum({type: "Sphere"})
+      .attr("d", path);
+
+    defs.select("#clip use")
+      .attr("xlink:href", `${window.location}#sphere`);
+    
+		let landSel = defs
 			.selectAll("path.feature")
 			.attr("d", path)
+      .attr("clip-path", `url(${window.location}#clip)`)
       .data(this.get('base').lands.features);
       
     landSel.enter()
       .append("path")
 			.attr("d", path)
       .attr("id", (d) => `f-path-${d.id}`)
+      .attr("clip-path", `url(${window.location}#clip)`)
 			.classed("feature", true);
 
 		landSel.exit().remove();

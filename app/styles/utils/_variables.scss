@@ -41,6 +41,11 @@ $colors: (
     tint: lighten(#F44336, $tint-shade-multiplier),
     base:#F44336,
     shade: darken(#F44336, $tint-shade-multiplier)
+  ),
+  star:(
+    tint: lighten(#f1c40f, $tint-shade-multiplier),
+    base: #f1c40f,
+    shade: darken(#f1c40f, $tint-shade-multiplier)
   )
 );
 

@@ -21,10 +21,12 @@ export default Ember.Route.extend({
   
   setupController(controller, model) {
     controller.set('editedColumn', model);
+    this.set('controller.displayProjection', false);
   },
   
   deactivate() {
     this.set('controller.editedColumn', null);
+    this.set('controller.displayProjection', true);
   }
     
 });

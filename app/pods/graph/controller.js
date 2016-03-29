@@ -22,6 +22,7 @@ export default Ember.Controller.extend({
   
   editedLayer: null,
   editedColumn: null,
+  displayProjection: true,
   
   availableProjections: function() {
     return this.get('Dictionnary.data.projections');

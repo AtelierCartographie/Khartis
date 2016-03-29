@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   
   didInsertElement(){
     
-    var slider = d3.slider()
+    var slider = d3.slider(true)
       .value(this.get('value'))
       .min(this.get('min'))
       .max(this.get('max'));

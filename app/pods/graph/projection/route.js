@@ -15,7 +15,11 @@ export default Ember.Route.extend({
   },
   
   setupController(controller, model) {
-    //nothing
+    this.set('controller.displayProjection', false);
+  },
+  
+  deactivate() {
+    this.set('controller.displayProjection', true);
   },
   
   actions: {
