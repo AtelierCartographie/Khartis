@@ -62,7 +62,7 @@ export default Ember.Component.extend({
         
         this.$().parents().on("scroll."+this.elementId, () => {
           
-          this.$('.suggestions').css({
+          this.$('.suggestions-wrapper').css({
             visibility: "hidden"
           });
           this.positionSuggestions()
@@ -167,7 +167,7 @@ export default Ember.Component.extend({
             'width': this.$().width() + "px"
         });
         
-        this.$('.suggestions').css({
+        this.$('.suggestions-wrapper').css({
             'width': this.$().width() + "px"
         });
         
@@ -179,18 +179,15 @@ export default Ember.Component.extend({
       
       Ember.run.later(this, () => {
         
-        this.$('.suggestions').css({
-            visibility: "visible"
-          });
-        
         let top = this.$().offset().top + this.$().height() + 1;
-      
+        
         if (top + this.$('.suggestions').height() > $(window).height()) {
           top = this.$().offset().top - this.$('.suggestions').height() - 1;
         }
         
-        this.$('.suggestions').css({
-          top: top
+        this.$('.suggestions-wrapper').css({
+          top: top,
+          visibility: "visible"
         });
         
       });

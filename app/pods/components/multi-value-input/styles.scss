@@ -80,14 +80,14 @@
 
   .suggestions-wrapper {
     display: none;
+    position: fixed;
+    z-index: 998;
     $bg: rgb(244, 244, 245);
     .suggestions {
-      z-index: 998;
       background: rgba(darken($bg, 4%), 0.89);
       background: linear-gradient(to bottom, rgba(darken($bg, 4%), 0.89), rgba(darken($bg, 2%), 0.89) 3%, rgba(lighten($bg, 2%), 0.94) 25%, rgba($bg, 0.89) 100%);
       box-shadow: 0 1px 10px 0 rgba(15, 15, 15, 0.12), 0 1px 18px 0 rgba(15, 15, 15, 0.10), 0 3px 5px -1px rgba(15, 15, 15, 0.18);
       width: 100%;
-      position: fixed;
       max-height: 250px;
       overflow-y: scroll;
       border-bottom-left-radius: 2px;

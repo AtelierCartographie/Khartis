@@ -17,17 +17,19 @@ export default AbstractComponent.extend({
                     fields = Em.A([fields]);
                 }
                 
-                var min = fields.reduce((min, field) => {
+                let min = fields.reduce((m, field) => {
                     
-                    let parts = x.get(field).split(/[\s']/);
+                    let str = x.get(field),
+                        parts = str.split(/[\s']/);
                     
-                    for (var i = 0; i < parts.length; i++) {
+                    for (let i = 0, l = 0; i < parts.length; i++) {
                         
-                        min = Math.min(min, TolerentLevenshtein(parts.slice(i).join(' '), this.get('query')));
+                        m = Math.min(m, TolerentLevenshtein(str.substring(l+i), this.get('query')));
+                        l += parts[i].length;
                         
                     }
                     
-                    return min;
+                    return m;
                     
                 }, 1000);
 
@@ -40,7 +42,7 @@ export default AbstractComponent.extend({
 
             resolve(
                 levenshteined.filter( x => {
-                    return (x.lv <= Math.log(Math.pow(this.get('query').length+1, 4/5))) 
+                    return (x.lv <= 2); //Math.log(Math.pow(this.get('query').length+1, 4/5))) 
                 }).sortBy('lv').map( x => x.val )
             );
 
@@ -58,9 +60,9 @@ var TolerentLevenshtein = function(a, b) {
     
     if (a.length > b.length + tolerance) {
         a = a.substring(0, b.length + tolerance);
-    } else if (b.length > a.length + tolerance) {
+    }/* else if (b.length > a.length + tolerance) {
         b = b.substring(0, a.length + tolerance);
-    }
+    }*/
     
     return Levenshtein(a, b);
 };
