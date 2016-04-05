@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     this.handleOuterClick = this.handleOuterClick.bind(this)
 
     trigger.on('click', this.toggle)
-    dropdown.on('click', this.toggle)
+    //dropdown.on('click', this.toggle)
   },
 
 
@@ -38,7 +38,7 @@ export default Ember.Component.extend({
       var target = e.target
 
       do {
-        if($(target).is(dropdown) || $(target).is(trigger)) {
+        if($(target).is(trigger)) {
           break
         }
       } while(target = target.parentNode)
@@ -52,9 +52,10 @@ export default Ember.Component.extend({
       this.hide()
   },
 
-  toggle(){
+  toggle(e){
     var isOpen = this.get('open')
     isOpen ? this.hide() : this.show()
+    e.stopImmediatePropagation();
   },
 
   show(){

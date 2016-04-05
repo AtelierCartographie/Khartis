@@ -29,8 +29,8 @@ Struct.reopenClass({
           yield `${ ( time = new Date().getTime() ).toString(32) }${ ( i = ( t == time ? i+1 : 0*(t = time) ) ).toString(32) }`;
       }
     })(),
-    restore(json, refs) {
-      return refs[json._uuid] = this.create({_uuid: json._uuid});
+    restore(json, refs, opts = {}) {
+        return refs[json._uuid] = this.create(Object.assign({_uuid: json._uuid}, opts));
     }
 });
 

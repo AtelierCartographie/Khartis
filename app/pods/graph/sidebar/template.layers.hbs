@@ -32,17 +32,17 @@
                   <i class="iconfont iconfont-question"></i>
                 {{/if}}
                 </span>
-                <span class="layer-name">{{layer.varCol.header.value}}</span>
+                <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
               </div>
               <div class="solid w4 text-right no-drag">
-                <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.varCol.inconsistency}}</span>
-                {{#if (x-eq layer editedLayer)}}
-                <span><i class="iconfont iconfont-angle-right"></i></span>
-                {{else}}
-                <a {{action 'editLayer' layer}}><i class="iconfont iconfont-pencil"></i></a>
+                <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</span>
+                {{#x-button action=(action 'editLayer' layer) disabled=(x-eq layer editedLayer)}}
+                  <i class="iconfont iconfont-pencil"></i>
+                {{/x-button}}
                 <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                <a {{action 'removeLayer' layer}}><i class="iconfont iconfont-close"></i></a>
-                {{/if}}
+                {{#x-button action=(action 'removeLayer' layer) disabled=(x-eq layer editedLayer)}}
+                  <i class="iconfont iconfont-close"></i>
+                {{/x-button}}
               </div>
             </div>
           </li>

@@ -6,10 +6,10 @@ export default {
     
     zoom = zoom < 1 ? 1 : 1/zoom;
     
-    let fProjection = proj.fn(false).scale(zoom).translate([0, 0]),
+    let fProjection = proj.fn(false).scale(zoom).precision(0.1).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
-        pixelBounds = d3Path.bounds(features),
+        pixelBounds = d3Path.bounds(features ? features : {type: "Sphere"}),
         pixelBoundsWidth = pixelBounds[1][0] - pixelBounds[0][0],
         pixelBoundsHeight = pixelBounds[1][1] - pixelBounds[0][1],
     
@@ -17,16 +17,19 @@ export default {
         centerY = pixelBounds[0][1] + pixelBoundsHeight / 2,
         center = fProjection.invert([centerX, centerY]),
 
-        widthResolution = (fWidth - margin.h*2) / pixelBoundsWidth,
-        heightResolution = (fHeight - margin.v*2) / pixelBoundsHeight,
+        widthResolution = (fWidth - margin.get('h')) / pixelBoundsWidth,
+        heightResolution = (fHeight - margin.get('v')) / pixelBoundsHeight,
 
         r = Math.min(widthResolution, heightResolution);
 
     return proj.fn()
       .center(center)
       .scale(r)
-      .translate([width / 2, height / 2])
-      .precision(1);
+      .translate([
+        (width + (margin.get('l') - margin.get('r'))) / 2,
+        (height + (margin.get('t') - margin.get('b'))) / 2
+      ])
+      .precision(0.1);
       
   }
 

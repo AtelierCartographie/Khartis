@@ -1,0 +1,55 @@
+& {
+  
+  $axis-top: 24px;
+  $axis-height: 6px;
+  $dragger-size: 16px;
+  
+  position: relative;
+  height: 50px;
+  
+  .dragger {
+    
+    $size: $dragger-size;
+    position: absolute;
+    top: $axis-top + ($axis-height - $size)/2;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    border: 1px solid color(primary);
+    background-color: white;
+    box-sizing: content-box;
+    
+    cursor: pointer;
+    
+    & .inside {
+      $insize: 8px;
+      position: absolute;
+      width: $insize;
+      height: $insize;
+      left: ($size - $insize)/2;
+      top: ($size - $insize)/2;
+      border-radius: 50%;
+      background-color: color(danger);
+    }
+    
+    & .tick {
+      position: absolute;
+      top: -1.5em;
+      left: 0px;
+      width: 1px;
+      overflow-x: visible;
+      text-align: center;
+      font-size: 0.8em;
+    }
+    
+  }
+  
+  .axis {
+    position: absolute;
+    top: $axis-top;
+    height: $axis-height;
+    margin-left: $dragger-size / 2;
+    margin-right: $dragger-size / 2;
+  }
+  
+}

@@ -133,8 +133,7 @@ let Projection = Struct.extend({
 Projection.reopenClass({
   
   restore(json, refs = {}) {
-      let o = this._super(json, refs);
-      o.setProperties({
+      return this._super(json, refs, {
         id: json.id,
         name: json.name,
         d3_geo: json.d3_geo,
@@ -148,7 +147,6 @@ Projection.reopenClass({
         author: json.author,
         year: json.year
       });
-      return o;
   }
   
 });

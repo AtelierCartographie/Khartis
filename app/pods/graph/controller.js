@@ -3,7 +3,6 @@ import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
-import MappingFactory from 'mapp/models/layer-mapping';
 import Projection from 'mapp/models/projection';
 import topojson from 'npm:topojson';
 
@@ -117,10 +116,7 @@ export default Ember.Controller.extend({
     },
     
     addLayer(col) {
-      let layer = GraphLayer.createDefault({
-        varCol: col,
-        geoCols: this.get('model.data.geoColumns')
-      });
+      let layer = GraphLayer.createDefault(col, this.get('model.data.geoColumns'));
       this.get('model.graphLayers').unshiftObject(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },
@@ -138,10 +134,7 @@ export default Ember.Controller.extend({
     },
     
     bindLayerMapping(type) {
-      this.get('editedLayer').set('mapping', MappingFactory.createInstance(type));
-      if (type === "text") {
-        this.get('editedLayer').set('mapping.labelCol', this.get('editedLayer').get('varCol'));
-      }
+      this.set('editedLayer.mapping.type', type);
     },
     
     bindMappingScaleOf(layer, type) {

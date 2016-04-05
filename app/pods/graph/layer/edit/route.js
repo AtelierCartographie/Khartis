@@ -7,7 +7,7 @@ export default Ember.Route.extend({
   
   renderTemplate: function() {
     this.render("graph", { outlet: 'main' });
-    this.render('graph.layer.edit', {into: "graph", outlet: 'configuration-panel' });
+    this.render("graph.layer.edit", { into: "graph", outlet: 'configuration-panel' });
   },
   
   model(params) {

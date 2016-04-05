@@ -2,7 +2,9 @@
   <div class="titlebar">
     <div class="title">{{t "navigation.chooseProjection"}}</div>
     <div class="actions">
-      {{#if model.graphLayout.projection}}{{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}{{/if}}
+      {{#if model.graphLayout.projection}}
+        {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
+      {{/if}}
     </div>
   </div>
   <div class="body">

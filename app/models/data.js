@@ -37,11 +37,12 @@ RowStruct.reopenClass({
         return o;
     },
     restore(json, refs) {
-        let o = this._super(json, refs);
+        let o = this._super(json, refs, {
+          header: json.header,
+          layout: json.layout
+        });
         o.setProperties({
-            header: json.header,
-            layout: json.layout,
-            cells: json.cells.map( c => CellStruct.restore(c, refs) )
+          cells: json.cells.map( c => CellStruct.restore(c, refs) )
         });
         return o;
     }
@@ -62,12 +63,10 @@ let ColumnMeta = Struct.extend({
 
 ColumnMeta.reopenClass({
   restore(json, refs) {
-      let o = this._super(json, refs);
-      o.setProperties({
+      return this._super(json, refs, {
           type: json.type,
           manual: json.manual
       });
-      return o;
     }
 });
 
@@ -151,7 +150,7 @@ let ColumnStruct = Struct.extend({
           }, null);
           
           if (type === "numeric") {
-            let header = this.get('cells').find( c => c.get('row.header') );
+            let header = this.get('header');
             if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(header.get('value'))) {
               type = "lon";
               p[type] = 1;
@@ -215,16 +214,14 @@ let ColumnStruct = Struct.extend({
 
 ColumnStruct.reopenClass({
     restore(json, refs) {
-        let o = this._super(json, refs);
-        o.setProperties({
-            layout: {
+        return this._super(json, refs, {
+          layout: {
               sheet: {
                 width: json.layout.sheet.width
               }
             },
             meta: ColumnMeta.restore(json.meta, refs)
         });
-        return o;
     }
 });
 
@@ -281,7 +278,7 @@ let CellStruct = Struct.extend({
       if (this.get('column')) {
           this.get('column').visit(this);
       }
-    }.observes('column').on('init'),
+    }.observes('column').on("init"),
     
     export() {
       return this._super({
@@ -295,14 +292,12 @@ let CellStruct = Struct.extend({
 
 CellStruct.reopenClass({
     restore(json, refs) {
-      let o = this._super(json, refs);
-      o.setProperties({
-          value: json.val,
-          correctedValue: json.cval,
-          column: refs[json.col],
-          row: refs[json.row]
+      return this._super(json, refs, {
+        value: json.val,
+        correctedValue: json.cval,
+        column: refs[json.col],
+        row: refs[json.row]
       });
-      return o;
     }
 });
 
@@ -491,12 +486,10 @@ DataStruct.reopenClass({
         
     },
     restore(json, refs = {}) {
-        let o = this._super(json, refs);
-        o.setProperties({
-            columns: json.columns.map( x => ColumnStruct.restore(x, refs) ),
-            rows: json.rows.map( x => RowStruct.restore(x, refs) )
+        return this._super(json, refs, {
+          columns: json.columns.map( x => ColumnStruct.restore(x, refs) ),
+          rows: json.rows.map( x => RowStruct.restore(x, refs) )
         });
-        return o;
     }
 });
 

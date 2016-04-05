@@ -16,7 +16,7 @@
                     "name_UN_AR"
                    ];
 
-let _cache = {},
+let _cache = new Map(),
     _find = function(str) {
       
       let strEq = (s1, s2) => {
@@ -27,20 +27,19 @@ let _cache = {},
       
       let dic = geoMatch.dic,
           key = str,
-          o = _cache[key] >= 0 ? dic[_cache[key]] : undefined;
+          idx = _cache.get(key),
+          o = idx >= 0 ? dic[idx] : undefined;
       
       if (o === undefined) {
       
-        for (let i = 0; i < dic.length; i++) {
+        for (let l = dic.length, i = 0; i < l; i++) {
           if (NAME_KEYS.some( (k) => strEq(dic[i][k], str) )) {
-            _cache[key] = i;
+            _cache.set(key, i);
             o = dic[i];
             break;
           }
         }
         
-      } else {
-        console.log("cached");
       }
       
       return o;

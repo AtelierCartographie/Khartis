@@ -201,7 +201,7 @@ export default Ember.Component.extend({
 		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
     
     return projector.computeProjection(
-			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get("base.lands"),
+			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
 			w,
 			h,
 			this.get('graphLayout.width'),
@@ -263,10 +263,10 @@ export default Ember.Component.extend({
 			.attr("transform", "translate("+this.get('graphLayout').hOffset(w)
 				+", "+this.get('graphLayout').vOffset(h)+")")
 			.selectAll("rect")
-			.attr("x", this.get('graphLayout.margin.h'))
-			.attr("y", this.get('graphLayout.margin.v'))
-			.attr("width", this.get('graphLayout.width') - 2*this.get('graphLayout.margin.h'))
-			.attr("height", this.get('graphLayout.height') - 2*this.get('graphLayout.margin.v'))
+			.attr("x", this.get('graphLayout.margin.l'))
+			.attr("y", this.get('graphLayout.margin.t'))
+			.attr("width", this.get('graphLayout.width') - this.get('graphLayout.margin.h'))
+			.attr("height", this.get('graphLayout.height') - this.get('graphLayout.margin.v'))
       .attr("stroke-width", "1")
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
@@ -302,6 +302,12 @@ export default Ember.Component.extend({
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
    
    drawBackmap: function() {
+     
+    this.d3l().select("g.backmap").append("use")
+      .attr("class", "stroke")
+      .style("fill", "none")
+      .style("stroke", "black")
+      .attr("xlink:href", `${window.location}#sphere`);
     
     var uses = this.d3l().select("g.backmap")
       .selectAll("use.feature")
@@ -315,6 +321,8 @@ export default Ember.Component.extend({
 			.attr("stroke", this.get("graphLayout.stroke"))
       .style("fill", this.get('graphLayout.backMapColor'))
 			.classed("feature", true);
+      
+   
     
   }.observes('graphLayout.backMapColor'),
   
