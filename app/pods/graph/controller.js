@@ -153,6 +153,14 @@ export default Ember.Controller.extend({
       layer.set('mapping.labelCol', col);
     },
     
+    bindScaleIntervalType(scale, type) {
+      scale.set('intervalType', type);
+    },
+    
+    bind(root, prop, value) {
+      root.set(prop, value);
+    },
+    
     resetTranslate() {
       this.get('model.graphLayout').setProperties({
         tx: 0,

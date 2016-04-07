@@ -1,0 +1,11 @@
+& {
+  
+  @extend %flow;
+  @extend %horizontal;
+  
+  .swatch {
+    width: 10px;
+    height: 10px;
+  }
+  
+}

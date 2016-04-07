@@ -322,15 +322,13 @@ export default Ember.Component.extend({
       .style("fill", this.get('graphLayout.backMapColor'))
 			.classed("feature", true);
       
-   
-    
   }.observes('graphLayout.backMapColor'),
   
   drawLayers: function() {
     
     let self = this,
         data = this.get('graphLayers')
-          .filter( gl => gl.get('visible') && gl.get('mapping') && gl.get('varCol') )
+          .filter( gl => gl.get('visible') && gl.get('mapping') && gl.get('mapping.varCol') )
           .reverse();
     
     let sel = this.d3l().select("g.layers")
@@ -352,10 +350,10 @@ export default Ember.Component.extend({
   
 	mapData: function(d3Layer, graphLayer) {
     
-    let geoCols = graphLayer.get('geoCols'),
-        varCol = graphLayer.get('varCol'),
+    let geoCols = graphLayer.get('mapping.geoCols'),
+        varCol = graphLayer.get('mapping.varCol'),
         data = [];
-        
+    
     if (geoCols.length === 1) {
       
       data = varCol.get('cells').map( (cell, index) => {
@@ -376,9 +374,10 @@ export default Ember.Component.extend({
         
       }).filter( d => d !== undefined );
       
-      if (graphLayer.get('mappedToSurface')) {
+      
+      if (graphLayer.get('mapping.visualization.type') === "surface") {
         this.mapPath(d3Layer, data, graphLayer);
-      } else if (graphLayer.get('mappedToShape')) {
+      } else if (graphLayer.get('mapping.visualization.type') === "symbol") {
         this.mapShape(d3Layer, data, graphLayer);
       }
       
@@ -421,21 +420,18 @@ export default Ember.Component.extend({
   
   mapPath: function(d3Layer, data, graphLayer) {
 		
-    let scale = scale = d3.scale[graphLayer.scaleType()]();
+    let scale = graphLayer.get('mapping').getD3Scale();
 		
-		scale.domain(d3.extent(data, c => c.value));
-    scale.range([graphLayer.get('mapping.color'), "#f9aa0f"]);
-    
     d3Layer.selectAll("*").remove();
       
     let uses = d3Layer.selectAll(".feature")
       .data(data);
     
     let maskUrl = "none";
-    if (!(graphLayer.get('mapping.pattern') === "solid")) {
+    if (!(graphLayer.get('mapping.visualization.pattern') === "solid")) {
       
       let t = MaskPattern.lines({
-        orientation: [ graphLayer.get('mapping.pattern')  ]
+        orientation: [ graphLayer.get('mapping.visualization.pattern')  ]
       });
       this.d3l().call(t);
       maskUrl = `url(${t.url()})`;

@@ -1,10 +1,10 @@
 let lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
-      size = 10,
+      size = opts.size || 10,
       stroke = "#909090",
       strokeWidth = opts.stroke || 2,
-      id = () => `${orientation.join('-').replace('/', '')}-${strokeWidth}`,
+      id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "-")}`,
       path = function(orientation) {
         switch (orientation) {
           case "0of8":

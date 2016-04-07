@@ -5,6 +5,13 @@ let SymbolVisualization = Struct.extend({
   type: "symbol",
   colors: null,
   
+  deferredChange: Ember.debouncedObserver(
+    'type', 'colors',
+    function() {
+      this.notifyDefferedChange();
+    },
+    50),
+  
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),

@@ -4,7 +4,14 @@ let SurfaceVisualization = Struct.extend({
   
   type: "surface",
   pattern: "solid",
-  colors: null,
+  colors: "BuGn",
+  
+  deferredChange: Ember.debouncedObserver(
+    'colors', 'pattern',
+    function() {
+      this.notifyDefferedChange();
+    },
+    50),
   
   export(props) {
     return this._super(Object.assign({

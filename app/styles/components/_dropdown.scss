@@ -13,18 +13,19 @@
   opacity: 0;
   position: absolute;
   pointer-events: none;
+  max-height: 300px;
   @include shadow(1);
 
   > li {
     color: black;
-    padding: .8rem 1.2rem;
+    padding: $gutter/2 1.2rem $gutter/2 1.2rem;
     cursor: pointer;
     width: 100%;
     text-align: left;
 
     a {
       font-size:1.4rem;
-      color: black !important; // TODO: too much specificity on the framework
+      color: color(text);
       text-decoration: none;
     }
 
@@ -36,6 +37,7 @@
       min-height: 0;
       height: 1px;
     }
+    
   }
 
   >li:not(:last-child){

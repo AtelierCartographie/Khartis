@@ -3,6 +3,7 @@ import Struct from '../struct';
 import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixin from './mixins/value';
+import Colorbrewer from 'mapp/utils/colorbrewer';
 
 let Mapping = Struct.extend({
   
@@ -22,6 +23,20 @@ let Mapping = Struct.extend({
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
   }.property('varCol._defferedChangeIndicator'),
+  
+  
+  colorSet: function() {
+    
+    let name = this.get('visualization.colors'),
+        master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
+    
+    if (!name || !master[name]) {
+      this.set('visualization.colors', name = Object.keys(master)[0]);
+    }
+    
+    return master[name][this.get('scale.classes')];
+    
+  }.property('visualization.colors', 'scale.classes', 'scale.diverging'),
   
   init() {
     this._super();
@@ -52,12 +67,17 @@ let Mapping = Struct.extend({
     }
   }.observes('type').on("init"),
   
+  getD3Scale() {
+    throw new Error("not implemented. Should be overrided by mixin");
+  },
+  
   deferredChange: Ember.debouncedObserver(
     'varCol._defferedChangeIndicator', 'geoCols.@each._defferedChangeIndicator',
+    'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();
     },
-    100),
+    50),
   
   export(props) {
     return this._super(Object.assign({
