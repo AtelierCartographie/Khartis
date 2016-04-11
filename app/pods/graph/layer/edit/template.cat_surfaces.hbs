@@ -1,0 +1,34 @@
+<div class="configuration-panel filled padded with-relief topbar split-view">
+  <div class="titlebar">
+    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
+    <div class="actions">
+      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
+    </div>
+  </div>
+  <div class="body">
+    <div class="settings vertical flow">
+      <div>
+          <label>Catégories</label>
+          <ul class="collection">
+          {{#each editedLayer.mapping.rules as |rule|}}
+          <li>
+            <div class="horizontal space-between flow layer-header">
+              <div class="horizontal airy flow">
+                {{#if rule.emptyValue}}
+                  <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span>
+                {{else}}
+                  <span class="varname">{{rule.label}}</span>
+                {{/if}}
+              </div>
+              <div class="solid w4 text-right no-drag">
+                <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                {{color-picker value=rule.color}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

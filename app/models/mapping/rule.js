@@ -14,6 +14,13 @@ let Rule = Struct.extend({
     return this.get('label') === Rule.EMPTY_VALUE;
   }.property('label'),
   
+  deferredChange: Ember.debouncedObserver(
+    'color', 'visible',
+    function() {
+      this.notifyDefferedChange();
+    },
+    50),
+  
   export(props) {
     return this._super(Object.assign({
       cells: this.get('cells') ? this.get('cells').map( c => c._uuid ) : null,

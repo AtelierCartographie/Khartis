@@ -3,6 +3,7 @@ import Struct from '../struct';
 import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixin from './mixins/value';
+import CategorieMixin from './mixins/categorie';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
 import MaskPattern from 'mapp/utils/mask-pattern';
@@ -69,7 +70,9 @@ let Mapping = Struct.extend({
   configure: function() {
     switch (this.get('type')) {
       case "quali.cat_surfaces":
-        throw new Error(`Implementation is missing`);
+        this.set('visualization', VisualizationFactory.createInstance("surface"));
+        this.reopen(CategorieMixin);
+        break;
       case "quali.cat_symboles":
         throw new Error(`Implementation is missing`);
       case "quali.ordre_symboles":
@@ -106,7 +109,7 @@ let Mapping = Struct.extend({
       
       let rule = rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false;
       if (rule) {
-        if (mode === "fill") {
+        if (mode === "fill" && rule.get('visible')) {
           return rule.color;
         } else {
           return "none";
@@ -124,7 +127,7 @@ let Mapping = Struct.extend({
   deferredChange: Ember.debouncedObserver(
     'varCol._defferedChangeIndicator', 'geoCols.@each._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
-    'rules.@each.color',
+    'rules.@each._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();
     },
