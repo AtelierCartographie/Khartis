@@ -1,41 +1,68 @@
 import Ember from 'ember';
+import Rule from '../rule';
 
 export default Ember.Mixin.create({
   
   values: function() {
     return this.get('varCol.body')
-      .filter( c => !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1)
+      .filter( c => !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
+        && !isNaN(c.postProcessedValue()))
       .map( c => c.postProcessedValue() );
   }.property('varCol'),
   
-  exceptions: null,
-  
-  generateExceptions() {
-    let exceptions = this.get('varCol.body')
-      .filter( c => c => !Ember.isEmpty(c.get('value')) || this.get('varCol.incorrectCells').indexOf(c) === 1 )
-      .map( c => {
-        return {cell: c, visible: true, color: "#CCCCCC"};
-      })
-    this.set("exceptions", exceptions);
+  generateRules() {
+    
+    if (!this.get('rules')) {
+      let ruleMap = this.get('varCol.body')
+        .filter( c => this.get('varCol.incorrectCells').indexOf(c) !== -1 )
+        .reduce( (m, c) => {
+          let val = !Ember.isEmpty(c.get('value')) ? c.get('value') : Rule.EMPTY_VALUE;
+          if (!m.has(val)) {
+            m.set(val, Rule.create({cells: Em.A([c]), label: val, visible: true, color: "#CCCCCC"}));
+          } else {
+            m.get(val).get('cells').addObject(c);
+          }
+          return m;
+        }, new Map());
+      this.set("rules", [...ruleMap.values()]);
+    }
   },
   
   intervals: function() {
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]', 'scale._defferedChangeIndicator'),
   
-  getD3Scale() {
+  getScaleOf(type) {
+    
+    const NONE = {fn: function() {}};
+    NONE.fn.url = () => "none";
     
     let ext = d3.extent(this.get('values')),
-        intervals = this.get('intervals').concat([ext[1]]);
-    
-    let s = d3.scale.threshold()
-      .domain(intervals)
-      .range(this.get('colorSet'));
+        intervals = this.get('intervals'),
+        range;
+        
+    if (this.get('visualization.pattern')) {
       
-    window.s = s;
+      if (type === "texture") {
+        range = this.get('patternModifiers');
+      } else if (type === "color") {
+        range = Array.from({length: intervals.length+1}, () => this.get('visualization.patternColor'));
+      }
+      
+    } else if (this.get('visualization.colors')) {
+      
+      if (type === "texture") {
+        range = Array.from({length: intervals.length+1}, () => NONE);
+      } else if (type === "color") {
+        range = this.get('colorSet');
+      }
+      
+    }
     
-    return s;
-    
+    return d3.scale.threshold()
+      .domain(intervals)
+      .range(range);
+      
   },
   
   distribution: function() {

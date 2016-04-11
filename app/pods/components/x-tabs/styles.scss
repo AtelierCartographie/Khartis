@@ -1,0 +1,32 @@
+& {
+  
+  .tabs {
+    
+    @extend %flow;
+    @extend %horizontal;
+    
+    padding: 0;
+    
+    li {
+      
+      @extend %fluid;
+      
+      list-style-type: none;
+      
+      text-align: center;
+      cursor: pointer;
+      
+      &.active {
+        border-bottom: 2px solid color(primary);
+        cursor: default;
+      }
+    }
+    
+  }
+  
+  .tab-pane {
+    display: none;
+    &.active { display: block; }
+  }
+  
+}

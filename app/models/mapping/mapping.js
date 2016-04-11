@@ -4,6 +4,8 @@ import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixin from './mixins/value';
 import Colorbrewer from 'mapp/utils/colorbrewer';
+import Rule from './rule';
+import MaskPattern from 'mapp/utils/mask-pattern';
 
 let Mapping = Struct.extend({
   
@@ -15,6 +17,8 @@ let Mapping = Struct.extend({
   varCol: null,
   geoCols: null,
   
+  rules: null,
+  
   canBeSurface: function() {
     return this.get('geoCols').length === 1
       && this.get('geoCols')[0].get('meta.type') === "geo";
@@ -23,7 +27,6 @@ let Mapping = Struct.extend({
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
   }.property('varCol._defferedChangeIndicator'),
-  
   
   colorSet: function() {
     
@@ -36,12 +39,32 @@ let Mapping = Struct.extend({
     
     return master[name][this.get('scale.classes')];
     
-  }.property('visualization.colors', 'scale.classes', 'scale.diverging'),
+  }.property('visualization.colors', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
+  
+  patternModifiers: function() {
+    
+    return Array.from({length: this.get('scale.classes')}, (v, i) => {
+      let teta = i < this.get('scale.classesBeforeBreak') ? 90 : 0,
+          stroke = i;
+      return {
+        teta: teta,
+        stroke: stroke,
+        fn: MaskPattern.lines({
+          orientation: [ this.get('visualization.pattern.angle') + teta ],
+          stroke: [ this.get('visualization.pattern.stroke') + stroke  ]
+        })
+      };
+    });
+    
+  }.property('visualization.pattern', 'scale.classes',
+  'scale.classesBeforeBreak', 'scale.diverging'),
   
   init() {
     this._super();
     this.set('scale', Scale.create());
   },
+  
+  generateRules() {},
   
   configure: function() {
     switch (this.get('type')) {
@@ -65,15 +88,43 @@ let Mapping = Struct.extend({
         this.set('visualization', null);
         break;
     }
+    this.generateRules();
   }.observes('type').on("init"),
   
-  getD3Scale() {
+  getScaleOf(type) {
     throw new Error("not implemented. Should be overrided by mixin");
+  },
+  
+  fn() {
+    
+    let colorScale = this.getScaleOf("color"),
+        textureScale = this.getScaleOf("texture"),
+        rules = this.get('rules'),
+        visualization = this.get('visualization');
+    
+    return function(cell, mode) {
+      
+      let rule = rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false;
+      if (rule) {
+        if (mode === "fill") {
+          return rule.color;
+        } else {
+          return "none";
+        }
+      } else {
+        
+          return mode === "texture" ? 
+            textureScale(cell.postProcessedValue()).fn.url() 
+            : colorScale(cell.postProcessedValue());
+      }
+      
+    }
   },
   
   deferredChange: Ember.debouncedObserver(
     'varCol._defferedChangeIndicator', 'geoCols.@each._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
+    'rules.@each.color',
     function() {
       this.notifyDefferedChange();
     },
@@ -85,7 +136,8 @@ let Mapping = Struct.extend({
       scale: this.get('scale') ? this.get('scale').export() : null,
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
-      geoCols: this.get('geoCols') ? this.get('geoCols').map(gc => gc.get('_uuid')) : null
+      geoCols: this.get('geoCols') ? this.get('geoCols').map(gc => gc.get('_uuid')) : null,
+      rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
   }
   
@@ -99,7 +151,8 @@ Mapping.reopenClass({
       scale: json.scale != null ? Scale.restore(json.scale, refs) : null,
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
-      geoCols: json.geoCols ? json.geoCols.map( gc => refs[gc] ) : null
+      geoCols: json.geoCols ? json.geoCols.map( gc => refs[gc] ) : null,
+      rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
     });
   }
   

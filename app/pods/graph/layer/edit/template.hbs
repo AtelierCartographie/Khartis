@@ -6,92 +6,131 @@
     </div>
   </div>
   <div class="body">
-    <div class="settings horizontal center airy flow">
-      <div class="solid vertical airy flow w6">
-        <div>
-            <label>Méthode de séparation</label>
-            {{#x-dropdown.x-trigger}}
-                {{#unless editedLayer.mapping.scale.intervalType}}
-                Choisir
-                {{else}}
-                {{editedLayer.mapping.scale.intervalType}}
-                {{!t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType ".name")}}
-                {{/unless}}
-                <i class="iconfont iconfont-angle-down"></i>
-            {{/x-dropdown.x-trigger}}
-            <ul class="dropdown">
-              <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'variable.mapping.interval.type.regular'}}</li>
-              <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'variable.mapping.interval.type.mean'}}</li>
-              <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'variable.mapping.interval.type.quantile'}}</li>
-            </ul>
+    <div class="settings vertical flow">
+      <div class="horizontal flow">
+        <div class="solid vertical airy flow w6">
+          <div>
+              <label>Méthode de séparation</label>
+              {{#x-dropdown.x-trigger}}
+                  {{#unless editedLayer.mapping.scale.intervalType}}
+                  Choisir
+                  {{else}}
+                  {{editedLayer.mapping.scale.intervalType}}
+                  {{!t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType ".name")}}
+                  {{/unless}}
+                  <i class="iconfont iconfont-angle-down"></i>
+              {{/x-dropdown.x-trigger}}
+              <ul class="dropdown">
+                <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'variable.mapping.interval.type.regular'}}</li>
+                <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'variable.mapping.interval.type.mean'}}</li>
+                <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'variable.mapping.interval.type.quantile'}}</li>
+              </ul>
+          </div>
+          <div>
+              <label>Nombre de classes</label>
+              {{#x-dropdown.x-trigger}}
+                  {{editedLayer.mapping.scale.classes}}
+                  <i class="iconfont iconfont-angle-down"></i>
+              {{/x-dropdown.x-trigger}}
+              <ul class="dropdown">
+                {{#each editedLayer.mapping.scale.possibleClasses as |count|}}
+                  <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
+                {{/each}}
+              </ul>
+          </div>
+          <div>
+              <label>Value break</label>
+              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak}}
+          </div>
+          {{#if editedLayer.mapping.scale.diverging}}
+          <div>
+              <label>Nombre de classes avant rupture</label>
+              {{#x-dropdown.x-trigger}}
+                  {{editedLayer.mapping.scale.classesBeforeBreak}}
+                  <i class="iconfont iconfont-angle-down"></i>
+              {{/x-dropdown.x-trigger}}
+              <ul class="dropdown">
+                {{#each editedLayer.mapping.scale.possibleClassesBeforeBreak as |count|}}
+                  <li {{action 'bind' editedLayer.mapping.scale 'classesBeforeBreak' count}}>{{count}}</li>
+                {{/each}}
+              </ul>
+          </div>
+          {{/if}}
         </div>
-        <div>
-            <label>Nombre de classes</label>
-            {{#x-dropdown.x-trigger}}
-                {{editedLayer.mapping.scale.classes}}
-                <i class="iconfont iconfont-angle-down"></i>
-            {{/x-dropdown.x-trigger}}
-            <ul class="dropdown">
-              {{#each editedLayer.mapping.scale.possibleClasses as |count|}}
-                <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
-              {{/each}}
-            </ul>
-        </div>
-        <div>
-            <label>Value break</label>
-            {{input value=editedLayer.mapping.scale.valueBreak}}
-        </div>
-        {{#if editedLayer.mapping.scale.diverging}}
-        <div>
-            <label>Nombre de classes avant rupture</label>
-            {{#x-dropdown.x-trigger}}
-                {{editedLayer.mapping.scale.classesBeforeBreak}}
-                <i class="iconfont iconfont-angle-down"></i>
-            {{/x-dropdown.x-trigger}}
-            <ul class="dropdown">
-              {{#each editedLayer.mapping.scale.possibleClassesBeforeBreak as |count|}}
-                <li {{action 'bind' editedLayer.mapping.scale 'classesBeforeBreak' count}}>{{count}}</li>
-              {{/each}}
-            </ul>
-        </div>
-        {{/if}}
-         <div>
-            <div class="vertical breakable flow" style="height: 100px">
-            {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
-              {{#each brewer.availableColorSets as |colorSet|}}
-                <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
-                  {{color-swatch colors=colorSet.colors}}
-                </div>
-              {{/each}}
-              {{#each brewer.availablePatterns as |pattern|}}
-                <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern.name}}>
-                  {{pattern-swatch pattern=pattern.name stroke=pattern.stroke count=editedLayer.mapping.scale.classes}}
-                </div>
-              {{/each}}
-            {{/o-wrap.brewer}}
-            </div>
-        </div>
-        <div>
-            <label>Absence de données</label>
-            <ul class="collection">
-            {{#each editedLayer.mapping.exceptions as |exception|}}
-             <li>
-               <div class="horizontal space-between flow layer-header">
-                <div class="horizontal airy flow">
-                  <span class="varname">{{exception.cell.value}}</span>
-                </div>
-                <div class="solid w4 text-right no-drag">
-                  <a {{action 'toggleExceptionVisibility' exception}}><i class="iconfont {{if exception.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                  {{color-picker value=exception.color}}
-                </div>
-              </div>
-             </li>
-            {{/each}}
-            </ul>
+        <div class="solid vertical flow w6">
+          {{distribution-bars mapping=editedLayer.mapping}}
         </div>
       </div>
-      <div class="solid vertical flow w6">
-        {{distribution-bars mapping=editedLayer.mapping}}
+      <div>
+        <div>
+            {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+            {{#x-tabs}}
+                <ul class="tabs brewer-tabs">
+                  <li tab-id="color-swatchs">Couleurs</li>
+                  <li tab-id="texture-swatchs">Hachures</li>
+                </ul>
+                <div class="panes">
+                  <div class="tab-pane {{if editedLayer.mapping.visualization.colors 'active'}}" id="color-swatchs">
+                    <div class="vertical breakable flow swatchs" style="height: 100px">
+                      {{#each brewer.availableColorSets as |colorSet|}}
+                        <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
+                          {{color-swatch
+                            class=(if (x-eq colorSet.key editedLayer.mapping.visualization.colors) 'selected')
+                            colors=colorSet.colors
+                          }}
+                        </div>
+                      {{/each}}
+                    </div>
+                  </div>
+                  <div class="tab-pane {{if editedLayer.mapping.visualization.pattern 'active'}}" id="texture-swatchs">
+                    <div class="horizontal flow">
+                      <div class="vertical breakable flow w8" style="height: 100px">
+                        {{#each brewer.availablePatterns as |pattern|}}
+                          <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
+                            {{pattern-swatch angle=pattern.angle
+                              classBreak=editedLayer.mapping.scale.classesBeforeBreak
+                              stroke=pattern.stroke
+                              count=editedLayer.mapping.scale.classes
+                              color=editedLayer.mapping.visualization.patternColor
+                              class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
+                            }}
+                          </div>
+                        {{/each}}
+                      </div>
+                      <div class="vertical airy middle center flow">
+                        <label>Couleur des hachures</label>
+                        <div class="solid">
+                        {{color-picker value=editedLayer.mapping.visualization.patternColor}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {{/x-tabs}}
+            {{/o-wrap.brewer}}
+          </div>
+          <div>
+              <label>Absence de données</label>
+              <ul class="collection">
+              {{#each editedLayer.mapping.rules as |rule|}}
+              <li>
+                <div class="horizontal space-between flow layer-header">
+                  <div class="horizontal airy flow">
+                    {{#if rule.emptyValue}}
+                      <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span>
+                    {{else}}
+                      <span class="varname">{{rule.label}}</span>
+                    {{/if}}
+                  </div>
+                  <div class="solid w4 text-right no-drag">
+                    <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                    {{color-picker value=rule.color}}
+                  </div>
+                </div>
+              </li>
+              {{/each}}
+              </ul>
+          </div>
       </div>
     </div>
   </div>

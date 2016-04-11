@@ -364,6 +364,7 @@ export default Ember.Component.extend({
           return {
             id: match.value.iso_a2,
             value: val,
+            cell: cell,
             index: index,
             surface: this.get('base').lands.features.find( f => f.id === match.value.iso_a2),
             point: this.get('base').centroids.features.find( f => f.id === match.value.iso_a2)
@@ -419,34 +420,32 @@ export default Ember.Component.extend({
   },
   
   mapPath: function(d3Layer, data, graphLayer) {
-		
-    let scale = graphLayer.get('mapping').getD3Scale();
+    
+    let mapping = graphLayer.get('mapping'),
+        converter = mapping.fn();
 		
     d3Layer.selectAll("*").remove();
       
     let uses = d3Layer.selectAll(".feature")
       .data(data);
     
-    let maskUrl = "none";
-    if (!(graphLayer.get('mapping.visualization.pattern') === "solid")) {
+    if (graphLayer.get('mapping.visualization.pattern') != null) {
       
-      let t = MaskPattern.lines({
-        orientation: [ graphLayer.get('mapping.visualization.pattern')  ]
+      graphLayer.get('mapping.patternModifiers').forEach( pm => {
+        this.d3l().call(pm.fn);
       });
-      this.d3l().call(t);
-      maskUrl = `url(${t.url()})`;
       
     }
 
-    uses.enter().append("use")
+    let sel = uses.enter().append("use")
       .attr("xlink:xlink:href", d => `${window.location}#f-path-${d.id}`)
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"))
 			.attr("stroke", this.get("graphLayout.stroke"))
+			.classed("feature", true)
       .style({
-        "fill": d => { return d.value != null ? scale(d.value) : "none"; },
-        "mask": maskUrl
-      })
-			.classed("feature", true);
+        "fill": d => converter(d.cell, "fill"),
+        "mask": d => `url(${converter(d.cell, "texture")})`
+      });
 
 		uses.exit().remove();
 			

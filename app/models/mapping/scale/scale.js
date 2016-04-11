@@ -11,18 +11,26 @@ let Scale = Struct.extend({
   classesBeforeBreak: 0,
   
   diverging: function() {
-    return this.get('valueBreak') != null;
+    return !Ember.isEmpty(this.get('valueBreak'));
   }.property('valueBreak'),
   
   valueBreakChange: function() {
-    if (this.get('valueBreak') == null) {
-      this.set('classesBeforeBreak', 0);
-    } else if (!this.get('classesBeforeBreak')) {
-      this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
-    } else if (this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {
-      this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
+    
+    if (this.get('possibleClasses').indexOf(this.get('classes')) === -1) {
+      this.set('classes', 2);
     }
-  }.observes('valueBreak', 'classes', 'possibleClassesBeforeBreak'),
+    
+    if (!this.get('diverging')) {
+      this.set('classesBeforeBreak', 0);
+    } else {
+      if (!this.get('classesBeforeBreak')) {
+        this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
+      } else if (this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {
+        this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
+      }
+    }
+    
+  }.observes('intervalType', 'valueBreak', 'diverging', 'classes', 'possibleClassesBeforeBreak'),
   
   possibleClasses: function() {
     if (this.get('intervalType') === "regular" || this.get('intervalType') === "quantile") {
@@ -33,14 +41,14 @@ let Scale = Struct.extend({
   }.property('intervalType'),
   
   possibleClassesBeforeBreak: function() {
-    return this.get('possibleClasses').slice(0, this.get('possibleClasses').indexOf(this.get('classes')));
-  }.property('classes'),
-  
-  intervalChange: function() {
-    if (this.get('possibleClasses').indexOf(this.get('classes')) === -1) {
-      this.set('classes', 2);
+    let lgt = this.get('possibleClasses').indexOf(this.get('classes'));
+    if (this.get('intervalType') === "regular" || this.get('intervalType') === "quantile") {
+      return Array.from({length: lgt+1}, (v, i) => (i+1));
+    } else if (this.get('intervalType') === "mean") {
+      return [1].concat(this.get('possibleClasses').slice(0, lgt));
     }
-  }.observes('intervalType'),
+    
+  }.property('classes', 'intervalType'),
   
   deferredChange: Ember.debouncedObserver(
     'intervalType', 'classes', 'valueBreak',
@@ -92,7 +100,7 @@ let Scale = Struct.extend({
     
     let intervals;
     
-    if (!Ember.isEmpty(this.get('valueBreak'))) {
+    if (this.get('diverging')) {
       intervals = calc(
         this.get('intervalType'),
         this.get('classesBeforeBreak'),

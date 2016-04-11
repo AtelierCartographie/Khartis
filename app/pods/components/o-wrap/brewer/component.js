@@ -4,7 +4,7 @@ import Colorbrewer from 'mapp/utils/colorbrewer';
 
 export default WrapperAbstract.extend({
   
-  patterns: ["horizontal", "vertical", "1of8", "2of8", "diagonal"],
+  angles: [0, 45, 90, 135],
 
   availableColorSets: function() {
     let master = this.get('obj.scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential,
@@ -20,11 +20,12 @@ export default WrapperAbstract.extend({
   }.property('obj.scale._defferedChangeIndicator'),
   
   availablePatterns: function() {
-    return this.patterns.reduce( (arr, name) => {
+    return this.angles.reduce( (arr, angle) => {
       for (var i = 1; i <= 3; i++) {
         arr.push({
-          name: name,
-          stroke: i
+          angle: angle,
+          stroke: i,
+          key: `${angle}-${i}`
         });
       }
       return arr; 

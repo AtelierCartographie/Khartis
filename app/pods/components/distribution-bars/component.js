@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   drawDistribution: function() {
     
     let dist = this.get('mapping.distribution'),
-        colorScale = this.get('mapping').getD3Scale(),
+        colorScale = this.get('mapping').getScaleOf("color"),
         values = [...dist.values()],
         margin = {top: 15, right: 15, bottom: 20, left: 35, betweenBars: 2},
 		    width = this.$().width() - margin.left - margin.right,
@@ -39,7 +39,7 @@ export default Ember.Component.extend({
 			
 		let x = d3.scale.linear()
       .rangeRound([0, width])
-      .domain(d3.extent(values.map( v => v.val)));
+      .domain(d3.extent(values.map( v => v.val )));
 			
 		let y = d3.scale.linear()
       .range([height, 0])
@@ -82,7 +82,6 @@ export default Ember.Component.extend({
         };
         
       });
-		  
 		bindAttr = (_) => {
         _.attr({
           x: d => x(d.val),
@@ -90,7 +89,7 @@ export default Ember.Component.extend({
           width: "1px",
           height: d => height - y(d.qty)
         }).style({
-           stroke: (d) => colorScale(d.val)
+          stroke: (d) => colorScale(d.val)
         })
       };
       

@@ -11,11 +11,15 @@ export default Ember.Component.extend({
   'xmlns:xlink': "http://www.w3.org/1999/xlink",
   version: '1.1',
   
-  pattern: null,
+  angle: null,
   
   stroke: null,
   
   count: 0,
+  
+  classBreak: 0,
+  
+  color: null,
   
   draw: function() {
     
@@ -31,13 +35,13 @@ export default Ember.Component.extend({
     return Array.from({length: this.get('count')}, (v, i) => {
       return {
         fn: MaskPattern.lines({
-              orientation: [ this.get('pattern') ],
+              orientation: [ this.get('angle') + (i < this.get('classBreak') ? 90 : 0)],
               stroke: this.get('stroke') + i/4,
               size: this.get('stroke') + 2
             })
       };
     })
-  }.property('count', 'pattern', 'stroke'),
+  }.property('count', 'angle', 'stroke'),
   
   drawMasks: function() {
     
@@ -49,7 +53,8 @@ export default Ember.Component.extend({
         width: (100/this.get('count'))+"%",
         height: "100%"
       }).style({
-        mask: (d) => `url(${d.fn.url()})` 
+        mask: (d) => `url(${d.fn.url()})`,
+        fill: this.get('color')
       })
     };
     
@@ -65,6 +70,6 @@ export default Ember.Component.extend({
       
     sel.exit().remove();
     
-  }.observes('masks.[]')
+  }.observes('masks.[]', 'color')
   
 });

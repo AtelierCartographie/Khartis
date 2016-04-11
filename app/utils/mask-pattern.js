@@ -6,51 +6,49 @@ let lines = function(opts = {}) {
       strokeWidth = opts.stroke || 2,
       id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "-")}`,
       path = function(orientation) {
-        switch (orientation) {
-          case "0of8":
+        switch (orientation % 180) {
+          case 0:
+            return (function(s) {
+              return "M 0," + (s / 2) + " l " + s + ",0";
+            })(size);
+          case 45:
+            return (function(s) {
+              return "M 0," + s + " l " + s + "," + (-s) + " M " + (-s / 4) + "," + (s / 4) + " l " + (s / 2) + "," + (-s / 2) + "\nM " + (3 / 4 * s) + "," + (5 / 4 * s) + " l " + (s / 2) + "," + (-s / 2);
+            })(size);
+          case 90:
             return (function(s) {
               return "M " + (s / 2) + ", 0 l 0, " + s;
             })(size);
-          case "vertical":
+          case 135:
             return (function(s) {
-              return "M " + (s / 2) + ", 0 l 0, " + s;
+              return "M 0,0 l " + s + "," + s + " M " + (-s / 4) + "," + (3 / 4 * s) + " l " + (s / 2) + "," + (s / 2) + "\nM " + (s * 3 / 4) + "," + (-s / 4) + " l " + (s / 2) + "," + (s / 2);
             })(size);
-          case "1of8":
+          /*case "1of8":
             return (function(s) {
               return "M " + (s / 4) + ",0 l " + (s / 2) + "," + s + " M " + (-s / 4) + ",0 l " + (s / 2) + "," + s + "\nM " + (s * 3 / 4) + ",0 l " + (s / 2) + "," + s;
             })(size);
           case "2of8":
             return (function(s) {
               return "M 0," + s + " l " + s + "," + (-s) + " M " + (-s / 4) + "," + (s / 4) + " l " + (s / 2) + "," + (-s / 2) + "\nM " + (3 / 4 * s) + "," + (5 / 4 * s) + " l " + (s / 2) + "," + (-s / 2);
-            })(size);
-          case "diagonal":
-            return (function(s) {
-              return "M 0," + s + " l " + s + "," + (-s) + " M " + (-s / 4) + "," + (s / 4) + " l " + (s / 2) + "," + (-s / 2) + "\nM " + (3 / 4 * s) + "," + (5 / 4 * s) + " l " + (s / 2) + "," + (-s / 2);
-            })(size);
-          case "3of8":
+            })(size);*/
+          
+          /*case "3of8":
             return (function(s) {
               return "M 0," + (3 / 4 * s) + " l " + s + "," + (-s / 2) + " M 0," + (s / 4) + " l " + s + "," + (-s / 2) + "\nM 0," + (s * 5 / 4) + " l " + s + "," + (-s / 2);
-            })(size);
-          case "4of8":
+            })(size);*/
+          /*case "4of8":
             return (function(s) {
               return "M 0," + (s / 2) + " l " + s + ",0";
-            })(size);
-          case "horizontal":
-            return (function(s) {
-              return "M 0," + (s / 2) + " l " + s + ",0";
-            })(size);
-          case "5of8":
+            })(size);*/
+          
+          /*case "5of8":
             return (function(s) {
               return "M 0," + (-s / 4) + " l " + s + "," + (s / 2) + "M 0," + (s / 4) + " l " + s + "," + (s / 2) + "\nM 0," + (s * 3 / 4) + " l " + s + "," + (s / 2);
-            })(size);
-          case "6of8":
-            return (function(s) {
-              return "M 0,0 l " + s + "," + s + " M " + (-s / 4) + "," + (3 / 4 * s) + " l " + (s / 2) + "," + (s / 2) + "\nM " + (s * 3 / 4) + "," + (-s / 4) + " l " + (s / 2) + "," + (s / 2);
-            })(size);
-          case "7of8":
+            })(size);*/
+          /*case "7of8":
             return (function(s) {
               return "M " + (-s / 4) + ",0 l " + (s / 2) + "," + s + " M " + (s / 4) + ",0 l " + (s / 2) + "," + s + "\nM " + (s * 3 / 4) + ",0 l " + (s / 2) + "," + s;
-            })(size);
+            })(size);*/
           default:
             return (function(s) {
               return "M " + (s / 2) + ", 0 l 0, " + s;

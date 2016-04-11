@@ -161,6 +161,10 @@ export default Ember.Controller.extend({
       root.set(prop, value);
     },
     
+    toggleRuleVisibility(rule) {
+      rule.toggleProperty('visible');
+    },
+    
     resetTranslate() {
       this.get('model.graphLayout').setProperties({
         tx: 0,
