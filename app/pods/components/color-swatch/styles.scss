@@ -8,10 +8,10 @@
     height: 10px;
   }
   
-  border: 1px solid greys(10%);
+  border: 2px solid greys(10%);
   
   &.selected {
-    border: 1px solid color(primary);
+    border: 2px solid color(primary);
   }
   
 }

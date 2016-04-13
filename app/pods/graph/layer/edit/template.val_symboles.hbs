@@ -22,6 +22,7 @@
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
                 {{#facet.list}}
+                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'linear'}}>{{t 'variable.mapping.interval.type.linear'}}</li>
                   <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'variable.mapping.interval.type.regular'}}</li>
                   <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'variable.mapping.interval.type.mean'}}</li>
                   <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'variable.mapping.interval.type.quantile'}}</li>

@@ -247,21 +247,23 @@ let CellStruct = Struct.extend({
       return this.index() === this.get('row.cells').length - 1;
     },
     
-    postProcessedValue() {
+    postProcessedValue: function() {
       let val = this.get('corrected') ? this.get('correctedValue') : this.get('value');
       if (!Ember.isEmpty(val)) {
-        if (this.get('column.meta.type') === "numeric") {
+        if (["numeric", "lon", "lat"].indexOf(this.get('column.meta.type')) !== -1) {
           if (val.indexOf(".") === -1) {
             return parseFloat(val.replace(/[\,\s]+/g, "."));
           } else {
             return parseFloat(val.replace(/[\,\s]+/g, ""));
           }
+        } else if (this.get('column.meta.type') === "geo") {
+          return geoMatch(val);
         }
         return val;
       } else {
         return null;
       }
-    },
+    }.property('value', 'column.meta.type', 'corrected', 'correctedValue'),
     
     init() {
       this._super();

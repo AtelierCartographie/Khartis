@@ -32,4 +32,5 @@ export default WrapperAbstract.extend({
     }, []);
   }.property('obj.scale._defferedChangeIndicator')
   
+  
 });

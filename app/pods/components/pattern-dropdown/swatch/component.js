@@ -13,10 +13,6 @@ export default Ember.Component.extend({
   
   pattern: null,
   
-  count: 0,
-  
-  classBreak: 0,
-  
   color: null,
   
   draw: function() {
@@ -30,14 +26,16 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   masks: function() {
-    return Array.from({length: this.get('count')}, (v, i) => {
-      return {
+    if (this.get('pattern')) {
+      return [{
         fn: MaskPattern.lines({
-              orientation: [ this.get('pattern.angle') + (i < this.get('classBreak') ? 90 : 0)],
-              stroke: this.get('pattern.stroke') + i / 4,
+              orientation: [ this.get('pattern.angle') ],
+              stroke: this.get('pattern.stroke')
             })
-      };
-    });
+      }];
+    } else {
+      return [{fn: MaskPattern.NONE}];
+    }
   }.property('count', 'pattern'),
   
   drawMasks: function() {
@@ -46,15 +44,15 @@ export default Ember.Component.extend({
     
     let bindAttr = (_) => {
       _.attr({
-        x: (d,i) => (i*(100/this.get('count')))+"%",
-        width: (100/this.get('count'))+"%",
+        x: 0,
+        width: "100%",
         height: "100%"
       }).style({
+        fill: this.get('color'),
         mask: (d) => {
           svg.call(d.fn);
-          return `url(${d.fn.url()})`
-        },
-        fill: this.get('color')
+          return `url(${d.fn.url('swatch')})`;
+        }
       })
     };
     

@@ -7,7 +7,14 @@
   </div>
   <div class="body">
     <div class="settings vertical flow">
+      {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
+      {{#if (x-greater editedLayer.mapping.rules.length 8)}}
+      <div class="filled warning padded">
+        Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+      </div>
+      {{/if}}
       <div>
+          {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
           <label>Catégories</label>
           <ul class="collection">
           {{#each editedLayer.mapping.rules as |rule|}}
@@ -20,15 +27,21 @@
                   <span class="varname">{{rule.label}}</span>
                 {{/if}}
               </div>
-              <div class="solid w4 text-right no-drag">
+              <div class="horizontal solid right airy flow w4 text-right">
                 <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
                 {{color-picker value=rule.color}}
+                {{pattern-dropdown patterns=brewer.availablePatterns value=rule.pattern color=rule.color}}
               </div>
+            </div>
+            <div class="flow" style="height: 4px;">
+            {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
             </div>
           </li>
           {{/each}}
           </ul>
+          {{/o-wrap.brewer}}
       </div>
+      {{/o-wrap.rules}}
     </div>
   </div>
 </div>

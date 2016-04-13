@@ -1,10 +1,16 @@
 & {
   
+  $border: 0.2rem;
+  
   display: block;
-  height: 10px;
+  height: 1.4rem + $border;
+  
+  border: $border solid greys(10%);
+  
+  cursor: pointer;
   
   &.selected {
-    border: 1px solid color(primary);
+    border: $border solid color(primary);
   }
   
 }

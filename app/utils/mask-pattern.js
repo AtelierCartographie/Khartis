@@ -2,8 +2,9 @@ let lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
       size = opts.size || 10,
-      stroke = "#909090",
+      stroke = "#FFFFFF",
       strokeWidth = opts.stroke || 2,
+      scale = opts.scale || 1,
       id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "-")}`,
       path = function(orientation) {
         switch (orientation % 180) {
@@ -82,7 +83,7 @@ let lines = function(opts = {}) {
           d: path(orientation[i]),
           "stroke-width": strokeWidth,
           "shape-rendering": shapeRendering,
-          stroke: stroke,
+          "stroke": stroke,
           "stroke-linecap": "square"
         });
       }
@@ -101,7 +102,8 @@ let lines = function(opts = {}) {
           x: "-5000",
           y: "-5000",
           width: "10000",
-          height: "10000"
+          height: "10000",
+          transform: `scale(${scale})`
         })
         .style("fill", `url(${window.location}#pattern-${id()})`);
           
@@ -109,14 +111,15 @@ let lines = function(opts = {}) {
         
   }
   
-  proc.url = function() {
-   return window.location+"#mask-"+id();
+  proc.url = function(ns = null) {
+   return `${window.location}#mask${ns ? ns+"-" : ""}-${id()}`;
   }
   
   return proc;
    
 };
 
+const NONE = function() {};
+NONE.url = () => "none";
 
-
-export default {lines};
+export default {lines, NONE};

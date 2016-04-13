@@ -8,14 +8,20 @@ let Rule = Struct.extend({
   cells: null,
   label: null,
   color: "#CCCCCC",
+  pattern: null,
   visible: true,
+  shape: "line",
   
   emptyValue: function() {
     return this.get('label') === Rule.EMPTY_VALUE;
   }.property('label'),
   
+  qty: function() {
+    return this.get('cells').length;
+  }.property('cells.[]'),
+  
   deferredChange: Ember.debouncedObserver(
-    'color', 'visible',
+    'color', 'visible', 'pattern',
     function() {
       this.notifyDefferedChange();
     },
@@ -26,7 +32,9 @@ let Rule = Struct.extend({
       cells: this.get('cells') ? this.get('cells').map( c => c._uuid ) : null,
       label: this.get('label'),
       color: this.get('color'),
-      visible: this.get('visible')
+      pattern: this.get('pattern'),
+      visible: this.get('visible'),
+      shape: this.get('shape')
     }, props))
   }
   
@@ -37,14 +45,14 @@ Rule.reopenClass({
   EMPTY_VALUE: "no_value",
   
   restore(json, refs = {}) {
-    let o = this._super(json, refs);
-    o.setProperties({
+    return this._super(json, refs, {
       cells: json.cells ? json.cells.map( cId => refs[cId] ) : null,
       label: json.label,
       color: json.color,
-      visible: json.visible
+      pattern: json.pattern,
+      visible: json.visible,
+      shape: json.shape
     });
-    return o;
   }
 });
 

@@ -1,14 +1,19 @@
 import Ember from 'ember';
 import Rule from '../rule';
+import MaskPattern from 'mapp/utils/mask-pattern';
 
-export default Ember.Mixin.create({
+let DataMixin = Ember.Mixin.create({
   
   values: function() {
     return this.get('varCol.body')
       .filter( c => !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
-        && !isNaN(c.postProcessedValue()))
-      .map( c => c.postProcessedValue() );
+        && !isNaN(c.get('postProcessedValue')))
+      .map( c => c.get('postProcessedValue') );
   }.property('varCol'),
+  
+  maxValue: function() {
+    return Math.max.apply(this, this.get('values'));
+  }.property('values'),
   
   generateRules() {
     
@@ -18,7 +23,7 @@ export default Ember.Mixin.create({
         .reduce( (m, c) => {
           let val = !Ember.isEmpty(c.get('value')) ? c.get('value') : Rule.EMPTY_VALUE;
           if (!m.has(val)) {
-            m.set(val, Rule.create({cells: Em.A([c]), label: val, visible: true, color: "#CCCCCC"}));
+            m.set(val, Rule.create({cells: Em.A([c]), label: val, visible: true, color: "#dddddd"}));
           } else {
             m.get(val).get('cells').addObject(c);
           }
@@ -31,39 +36,6 @@ export default Ember.Mixin.create({
   intervals: function() {
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]', 'scale._defferedChangeIndicator'),
-  
-  getScaleOf(type) {
-    
-    const NONE = {fn: function() {}};
-    NONE.fn.url = () => "none";
-    
-    let ext = d3.extent(this.get('values')),
-        intervals = this.get('intervals'),
-        range;
-        
-    if (this.get('visualization.pattern')) {
-      
-      if (type === "texture") {
-        range = this.get('patternModifiers');
-      } else if (type === "color") {
-        range = Array.from({length: intervals.length+1}, () => this.get('visualization.patternColor'));
-      }
-      
-    } else if (this.get('visualization.colors')) {
-      
-      if (type === "texture") {
-        range = Array.from({length: intervals.length+1}, () => NONE);
-      } else if (type === "color") {
-        range = this.get('colorSet');
-      }
-      
-    }
-    
-    return d3.scale.threshold()
-      .domain(intervals)
-      .range(range);
-      
-  },
   
   distribution: function() {
       
@@ -79,3 +51,101 @@ export default Ember.Mixin.create({
   }.property('values.[]'),
   
 });
+
+
+let SurfaceMixin = Ember.Mixin.create({
+  
+  getScaleOf(type) {
+    
+    let ext = d3.extent(this.get('values')),
+        intervals = this.get('intervals'),
+        d3Scale,
+        range,
+        rangeLength;
+        
+    if (this.get('scale.intervalType') === "linear") {
+      d3Scale = d3.scale.linear();
+      rangeLength = intervals.length; //2
+    } else {
+      d3Scale = d3.scale.threshold();
+      rangeLength = intervals.length + 1;
+    };
+        
+    if (this.get('visualization.pattern')) {
+      
+      if (type === "texture") {
+        range = this.get('patternModifiers');
+      } else if (type === "color") {
+        range = Array.from({length: rangeLength}, () => this.get('visualization.patternColor'));
+      }
+      
+    } else if (this.get('visualization.colors')) {
+      
+      if (type === "texture") {
+        range = Array.from({length: rangeLength}, () => {fn: MaskPattern.NONE});
+      } else if (type === "color") {
+        range = this.get('colorSet');
+      }
+      
+    }
+    
+    return d3Scale
+      .domain(intervals)
+      .range(range);
+      
+  }
+  
+});
+
+let SymbolMixin = Ember.Mixin.create({
+  
+  getScaleOf(type) {
+    
+    let ext = d3.extent(this.get('values')),
+        intervals = this.get('intervals'),
+        contrastScale = this.get('scale.contrastScale'),
+        visualization = this.get('visualization'),
+        d3Scale,
+        domain,
+        range;
+        
+    if (type === "size") {
+      
+      contrastScale.domain(d3.extent(this.get('values')))
+        .range([visualization.get('minSize'), visualization.get('maxSize')]);
+      
+      if (this.get('scale.intervalType') === "linear") {
+        d3Scale = contrastScale;
+        range = contrastScale.range();
+        domain = contrastScale.domain();
+      } else {
+        d3Scale = d3.scale.threshold();
+        range = Array.from({length: intervals.length}, (v, i) => contrastScale(intervals[i]));
+        range.push(contrastScale(this.get('maxValue')));
+        domain = intervals;
+        console.log(range, intervals);
+      };
+      
+      
+    } else if (type === "color") {
+      
+      d3Scale = d3.scale.threshold()
+      
+      if (this.get('scale.diverging')) {
+        range = this.get('visualization').colorStops(this.get('scale.diverging'));
+        domain = [this.get('scale.valueBreak')];
+      } else {
+        range = this.get('visualization').colorStops();
+        domain = [];
+      }
+      
+    }
+    
+    return d3Scale.domain(domain).range(range);
+      
+  }
+  
+});
+
+
+export default {Data: DataMixin, Surface: SurfaceMixin, Symbol: SymbolMixin};

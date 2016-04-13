@@ -3,10 +3,22 @@ import Struct from 'mapp/models/struct';
 let SymbolVisualization = Struct.extend({
   
   type: "symbol",
-  colors: null,
+  color: "red",
+  colorBeforeBreak: "blue",
+  shape: "circle",
+  minSize: 2,
+  maxSize: 10,
+  
+  colorStops(diverging) {
+    if (diverging) {
+      return [this.get('colorBeforeBreak'), this.get('color')];
+    } else {
+      return [this.get('color')];
+    }
+  },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'colors',
+    'type', 'color', 'minSize', 'maxSize',
     function() {
       this.notifyDefferedChange();
     },
@@ -15,7 +27,10 @@ let SymbolVisualization = Struct.extend({
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),
-      colors: this.get('colors')
+      color: this.get('color'),
+      shape: this.get('shape'),
+      minSize: this.get('minSize'),
+      maxSize: this.get('maxSize')
     }, props));
   }
   
@@ -23,10 +38,12 @@ let SymbolVisualization = Struct.extend({
 
 SymbolVisualization.reopenClass({
   restore(json, refs = {}) {
-    let o = this._super(json, refs);
-    o.setProperties({
+    let o = this._super(json, refs, {
       type: json.type,
-      colors: json.colors
+      color: json.color,
+      shape: json.shape,
+      minSize: json.minSize,
+      maxSize: json.maxSize
     });
     return o;
   }

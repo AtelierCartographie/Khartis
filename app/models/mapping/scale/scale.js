@@ -9,6 +9,7 @@ let Scale = Struct.extend({
   intervalType: "mean",
   valueBreak: null,
   classesBeforeBreak: 0,
+  contrast: 0.5,
   
   diverging: function() {
     return !Ember.isEmpty(this.get('valueBreak'));
@@ -37,6 +38,8 @@ let Scale = Struct.extend({
       return Array.from({length: 7}, (v, i) => (i+2));
     } else if (this.get('intervalType') === "mean") {
       return Array.from({length: 3}, (v, i) => Math.pow(2, (i+1)));
+    } else {
+      return []; //linear
     }
   }.property('intervalType'),
   
@@ -46,13 +49,19 @@ let Scale = Struct.extend({
       return Array.from({length: lgt+1}, (v, i) => (i+1));
     } else if (this.get('intervalType') === "mean") {
       return [1].concat(this.get('possibleClasses').slice(0, lgt));
+    } else {
+      return [];
     }
     
   }.property('classes', 'intervalType'),
   
+  contrastScale: function() {
+    return d3.scale.pow().exponent(this.get('contrast'));
+  }.property('contrast'),
+  
   deferredChange: Ember.debouncedObserver(
     'intervalType', 'classes', 'valueBreak',
-    'classesBeforeBreak',
+    'classesBeforeBreak', 'contrast',
     function() {
       this.notifyDefferedChange();
     },
@@ -94,6 +103,8 @@ let Scale = Struct.extend({
         
         return means;
         
+      } else if (intervalType === "linear") {
+        return ext;
       }
       
     };
@@ -125,7 +136,12 @@ let Scale = Struct.extend({
   
   export(props) {
     return this._super(Object.assign({
-      type: this.get('type')
+      type: this.get('type'),
+      classes: this.get('classes'),
+      intervalType: this.get('intervalType'),
+      valueBreak: this.get('valueBreak'),
+      classesBeforeBreak: this.get('classesBeforeBreak'),
+      contrast: this.get('contrast')
     }, props));
   }
   
@@ -135,7 +151,12 @@ Scale.reopenClass({
   restore(json, refs = {}) {
     let o = this._super(json, refs);
     o.setProperties({
-      type: json.type
+      type: json.type,
+      classes: json.classes,
+      intervalType: json.intervalType,
+      valueBreak: json.valueBreak,
+      classesBeforeBreak: json.classesBeforeBreak,
+      contrast: json.contrast
     });
     return o;
   }

@@ -2,8 +2,8 @@ import Ember from 'ember';
 import Struct from '../struct';
 import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
-import ValueMixin from './mixins/value';
-import CategorieMixin from './mixins/categorie';
+import ValueMixins from './mixins/value';
+import CategoryMixins from './mixins/category';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
 import MaskPattern from 'mapp/utils/mask-pattern';
@@ -42,19 +42,26 @@ let Mapping = Struct.extend({
     
   }.property('visualization.colors', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
   
+  generatePattern({angle, stroke}) {
+    return {
+      angle: angle,
+      stroke: stroke,
+      fn: MaskPattern.lines({
+        orientation: [ angle ],
+        stroke: [ stroke  ]
+      })
+    };
+  },
+  
   patternModifiers: function() {
     
     return Array.from({length: this.get('scale.classes')}, (v, i) => {
       let teta = i < this.get('scale.classesBeforeBreak') ? 90 : 0,
           stroke = i;
-      return {
-        teta: teta,
-        stroke: stroke,
-        fn: MaskPattern.lines({
-          orientation: [ this.get('visualization.pattern.angle') + teta ],
-          stroke: [ this.get('visualization.pattern.stroke') + stroke  ]
-        })
-      };
+      return this.generatePattern({
+          angle: this.get('visualization.pattern.angle') + teta,
+          stroke: this.get('visualization.pattern.stroke') + stroke
+        });
     });
     
   }.property('visualization.pattern', 'scale.classes',
@@ -71,7 +78,8 @@ let Mapping = Struct.extend({
     switch (this.get('type')) {
       case "quali.cat_surfaces":
         this.set('visualization', VisualizationFactory.createInstance("surface"));
-        this.reopen(CategorieMixin);
+        this.reopen(CategoryMixins.Data);
+        this.reopen(CategoryMixins.Surface);
         break;
       case "quali.cat_symboles":
         throw new Error(`Implementation is missing`);
@@ -81,11 +89,13 @@ let Mapping = Struct.extend({
         throw new Error(`Implementation is missing`);
       case "quanti.val_surfaces":
         this.set('visualization', VisualizationFactory.createInstance("surface"));
-        this.reopen(ValueMixin);
+        this.reopen(ValueMixins.Data);
+        this.reopen(ValueMixins.Surface);
         break;
       case "quanti.val_symboles":
         this.set('visualization', VisualizationFactory.createInstance("symbol"));
-        this.reopen(ValueMixin);
+        this.reopen(ValueMixins.Data);
+        this.reopen(ValueMixins.Symbol);
         break;
       default:
         this.set('visualization', null);
@@ -100,8 +110,7 @@ let Mapping = Struct.extend({
   
   fn() {
     
-    let colorScale = this.getScaleOf("color"),
-        textureScale = this.getScaleOf("texture"),
+    let self = this,
         rules = this.get('rules'),
         visualization = this.get('visualization');
     
@@ -109,16 +118,28 @@ let Mapping = Struct.extend({
       
       let rule = rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false;
       if (rule) {
-        if (mode === "fill" && rule.get('visible')) {
-          return rule.color;
-        } else {
-          return "none";
-        }
-      } else {
         
-          return mode === "texture" ? 
-            textureScale(cell.postProcessedValue()).fn.url() 
-            : colorScale(cell.postProcessedValue());
+        if (mode === "fill") {
+          return rule.get('visible') ? rule.color : "none";
+        } else if (mode === "texture" && rule.get('pattern')) {
+          return rule.get('visible') ? self.generatePattern(rule.get('pattern')) : {fn: MaskPattern.NONE};
+        } else if (mode === "size") {
+          return visualization.get('minSize');
+        } else if (mode === "shape") {
+          return rule.get('shape');
+        }
+        
+      } else {
+        switch (mode) {
+          case "texture":
+            return self.getScaleOf("texture")(cell.get('postProcessedValue'));
+          case "fill":
+            return self.getScaleOf("color")(cell.get('postProcessedValue'));
+          case "size":
+            return self.getScaleOf("size")(cell.get('postProcessedValue'));
+          case "shape":
+            return visualization.get('shape');
+        }
       }
       
     }
