@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Rule from '../rule';
-import MaskPattern from 'mapp/utils/mask-pattern';
+import PatternMaker from 'mapp/utils/pattern-maker';
+/* global d3 */
 
 let DataMixin = Ember.Mixin.create({
   
@@ -82,7 +83,7 @@ let SurfaceMixin = Ember.Mixin.create({
     } else if (this.get('visualization.colors')) {
       
       if (type === "texture") {
-        range = Array.from({length: rangeLength}, () => {fn: MaskPattern.NONE});
+        range = Array.from({length: rangeLength}, () => {fn: PatternMaker.NONE});
       } else if (type === "color") {
         range = this.get('colorSet');
       }
@@ -123,7 +124,6 @@ let SymbolMixin = Ember.Mixin.create({
         range = Array.from({length: intervals.length}, (v, i) => contrastScale(intervals[i]));
         range.push(contrastScale(this.get('maxValue')));
         domain = intervals;
-        console.log(range, intervals);
       };
       
       

@@ -6,7 +6,7 @@ import ValueMixins from './mixins/value';
 import CategoryMixins from './mixins/category';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
-import MaskPattern from 'mapp/utils/mask-pattern';
+import PatternMaker from 'mapp/utils/pattern-maker';
 
 let Mapping = Struct.extend({
   
@@ -46,7 +46,7 @@ let Mapping = Struct.extend({
     return {
       angle: angle,
       stroke: stroke,
-      fn: MaskPattern.lines({
+      fn: PatternMaker.lines({
         orientation: [ angle ],
         stroke: [ stroke  ]
       })
@@ -122,7 +122,7 @@ let Mapping = Struct.extend({
         if (mode === "fill") {
           return rule.get('visible') ? rule.color : "none";
         } else if (mode === "texture" && rule.get('pattern')) {
-          return rule.get('visible') ? self.generatePattern(rule.get('pattern')) : {fn: MaskPattern.NONE};
+          return rule.get('visible') ? self.generatePattern(rule.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "size") {
           return visualization.get('minSize');
         } else if (mode === "shape") {

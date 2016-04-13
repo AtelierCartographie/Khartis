@@ -29,6 +29,7 @@
                 {{/facet.list}}
               {{/x-dropdown-plus}}
           </div>
+          {{#if editedLayer.mapping.scale.possibleClasses.length}}
           <div>
               <label>Nombre de classes</label>
               {{#x-dropdown-plus as |facet|}}
@@ -43,11 +44,12 @@
                 {{/facet.list}}
               {{/x-dropdown-plus}}
           </div>
+          {{/if}}
           <div>
               <label>Value break</label>
               {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak}}
           </div>
-          {{#if editedLayer.mapping.scale.diverging}}
+          {{#if (x-every editedLayer.mapping.scale.possibleClasses.length editedLayer.mapping.scale.diverging)}}
           <div>
               <label>Nombre de classes avant rupture</label>
               {{#x-dropdown-plus as |facet|}}
@@ -63,6 +65,31 @@
               {{/x-dropdown-plus}}
           </div>
           {{/if}}
+          <div>
+              <label>Contraste</label>
+              {{#x-dropdown-plus as |facet|}}
+                {{#facet.trigger}}
+                  {{t (concat 'variable.mapping.contrast.' editedLayer.mapping.scale.contrast)}}
+                  <i class="iconfont iconfont-angle-down"></i>
+                {{/facet.trigger}}
+                {{#facet.list}}
+                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'cube_root'}}>{{t 'variable.mapping.contrast.cube_root'}}</li>
+                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'sqrt'}}>{{t 'variable.mapping.contrast.sqrt'}}</li>
+                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'identity'}}>{{t 'variable.mapping.contrast.identity'}}</li>
+                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'square'}}>{{t 'variable.mapping.contrast.square'}}</li>
+                {{/facet.list}}
+              {{/x-dropdown-plus}}
+          </div>
+          <div>
+              {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
+              <label>Forme</label>
+              {{shape-dropdown
+                shapes=shapeSelection.availableShapes
+                value=editedLayer.mapping.visualization.shape
+                color=editedLayer.mapping.visualization.color
+              }}
+              {{/o-wrap.shape-selection}}
+          </div>
         </div>
         <div class="solid vertical flow w6">
           {{distribution-bars mapping=editedLayer.mapping}}

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import MaskPattern from 'mapp/utils/mask-pattern';
+import PatternMaker from 'mapp/utils/pattern-maker';
 /* global $ */
 
 export default Ember.Component.extend({
@@ -32,7 +32,7 @@ export default Ember.Component.extend({
   masks: function() {
     return Array.from({length: this.get('count')}, (v, i) => {
       return {
-        fn: MaskPattern.lines({
+        fn: PatternMaker.lines({
               orientation: [ this.get('pattern.angle') + (i < this.get('classBreak') ? 90 : 0)],
               stroke: this.get('pattern.stroke') + i / 4,
             })

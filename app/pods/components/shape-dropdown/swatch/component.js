@@ -1,6 +1,5 @@
 import Ember from 'ember';
-import PatternMaker from 'mapp/utils/pattern-maker';
-/* global $ */
+import SymbolMaker from 'mapp/utils/symbol-maker';
 
 export default Ember.Component.extend({
   
@@ -11,7 +10,7 @@ export default Ember.Component.extend({
   'xmlns:xlink': "http://www.w3.org/1999/xlink",
   version: '1.1',
   
-  pattern: null,
+  shape: null,
   
   color: null,
   
@@ -21,53 +20,40 @@ export default Ember.Component.extend({
     this.d3l().append("g")
       .classed("swatchs", true);
       
-    this.drawMasks();
+    this.drawSymbol();
     
   }.on("didInsertElement"),
   
-  masks: function() {
-    if (this.get('pattern')) {
-      return [{
-        fn: PatternMaker.lines({
-              orientation: [ this.get('pattern.angle') ],
-              stroke: this.get('pattern.stroke')
-            })
-      }];
-    } else {
-      return [{fn: PatternMaker.NONE}];
-    }
-  }.property('count', 'pattern'),
-  
-  drawMasks: function() {
+  drawSymbol: function() {
     
-    let svg = this.d3l();
+    let svg = this.d3l(),
+        symbol = SymbolMaker.symbol({name: this.get('shape')});
+          
+    symbol.call(svg);
     
     let bindAttr = (_) => {
       _.attr({
+        "xlink:xlink:href": symbol.url(),
         x: 0,
         width: "100%",
         height: "100%"
       }).style({
-        fill: this.get('color'),
-        mask: (d) => {
-          svg.call(d.fn);
-          return `url(${d.fn.url('swatch')})`;
-        }
-      })
+        fill: this.get('color')
+      });
     };
     
     let sel = this.d3l().select("g.swatchs")
-      .selectAll("rect.swatch")
-      .data(this.get('masks'))
+      .selectAll("use.swatch")
+      .data([this.get('shape')])
       .call(bindAttr);
       
     sel.enter()
-      .append("rect")
+      .append("use")
       .classed("swatch", true)
       .call(bindAttr);
       
     sel.exit().remove();
     
-  }.observes('masks.[]', 'color')
+  }.observes('shape', 'color')
   
 });

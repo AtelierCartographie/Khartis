@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Rule from '../rule';
-import MaskPattern from 'mapp/utils/mask-pattern';
+import PatternMaker from 'mapp/utils/pattern-maker';
 
 let DataMixin = Ember.Mixin.create({
   
@@ -57,7 +57,7 @@ let DataMixin = Ember.Mixin.create({
 let SurfaceMixin = Ember.Mixin.create({
   
   getScaleOf(type) {
-    return () => MaskPattern.NONE;
+    return () => PatternMaker.NONE;
   }
   
 });
@@ -65,7 +65,7 @@ let SurfaceMixin = Ember.Mixin.create({
 let SymbolMixin = Ember.Mixin.create({
   
   getScaleOf(type) {
-    return () => MaskPattern.NONE;
+    return () => PatternMaker.NONE;
   }
   
 });

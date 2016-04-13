@@ -4,7 +4,8 @@ import projector from 'mapp/utils/projector';
 import d3lper from 'mapp/utils/d3lper';
 import GraphLayout from 'mapp/models/graph-layout';
 import {geoMatch} from 'mapp/utils/geo-match';
-import MaskPattern from 'mapp/utils/mask-pattern';
+import PatternMaker from 'mapp/utils/pattern-maker';
+import SymbolMaker from 'mapp/utils/symbol-maker';
 /* global Em */
 
 export default Ember.Component.extend({
@@ -504,21 +505,24 @@ export default Ember.Component.extend({
           shape = converter(d.cell, "shape"),
           r = converter(d.cell, "size"),
           fill = converter(d.cell, "fill"),
-          el;
+          symbol = SymbolMaker.symbol({name: shape});
       
-      if (shape === "circle") {
+      symbol.call(svg);
+      
+      let el = _.append("use").attr("xlink:xlink:href", symbol.url());
+      
+      if (shape === "bar") {
         
-        el = _.append("circle")
-         .attr({
-            "cx": 0,
-            "cy": 0,
-            "r": r
+         el.attr({
+            "width": mapping.get('visualization.minSize'),
+            "height": r*r,
+            "x": -mapping.get('visualization.minSize') / 2,
+            "y": -r*r
           });
         
       } else {
         
-          el = _.append(shape)
-          .attr({
+          el.attr({
             "width": r*2,
             "height": r*2,
             "x": d => -r,
@@ -528,7 +532,9 @@ export default Ember.Component.extend({
       }
       
       el.style({
-          "fill": fill
+          "fill": fill,
+          "stroke": "black",
+          "stroke-width": "2px"
         })
         .classed("shape", true);
       

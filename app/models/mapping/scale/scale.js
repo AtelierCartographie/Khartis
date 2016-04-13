@@ -1,6 +1,13 @@
 import Ember from 'ember';
 import Struct from 'mapp/models/struct';
 
+let CONTRASTS = {
+  "sqrt": 0.5,
+  "cube_root": 1/3,
+  "identity": 1,
+  "square": 2
+};
+
 let Scale = Struct.extend({
   
   type: null,
@@ -9,7 +16,7 @@ let Scale = Struct.extend({
   intervalType: "mean",
   valueBreak: null,
   classesBeforeBreak: 0,
-  contrast: 0.5,
+  contrast: "sqrt",
   
   diverging: function() {
     return !Ember.isEmpty(this.get('valueBreak'));
@@ -50,13 +57,12 @@ let Scale = Struct.extend({
     } else if (this.get('intervalType') === "mean") {
       return [1].concat(this.get('possibleClasses').slice(0, lgt));
     } else {
-      return [];
+      return []; //linear
     }
-    
   }.property('classes', 'intervalType'),
   
   contrastScale: function() {
-    return d3.scale.pow().exponent(this.get('contrast'));
+    return d3.scale.pow().exponent(CONTRASTS[this.get('contrast')]);
   }.property('contrast'),
   
   deferredChange: Ember.debouncedObserver(
