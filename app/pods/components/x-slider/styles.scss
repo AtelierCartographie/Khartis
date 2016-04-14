@@ -34,12 +34,30 @@
     
     & .tick {
       position: absolute;
-      top: -1.5em;
+      top: -1.6em;
       left: 0px;
       width: 1px;
       overflow-x: visible;
-      text-align: center;
       font-size: 0.8em;
+      
+      input {
+        border: none;
+        background: none;
+        width: 60px;
+        padding-left: 0;
+        padding-top: 0.1rem;
+        padding-bottom: 0.2rem;
+        padding-right: 0;
+        height: 1.3em;
+        text-align: center;
+        margin-left: -30px + ( $dragger-size / 2);
+        
+        background: white;
+        border: 1px solid #ddd;
+        @extend .with-relief;
+        
+      }
+      
     }
     
   }

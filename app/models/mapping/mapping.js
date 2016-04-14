@@ -55,6 +55,9 @@ let Mapping = Struct.extend({
   
   init() {
     this._super();
+    if (!this.get('scale')) {
+      this.set('scale', Scale.create());
+    }
   },
   
   configure: function() {
@@ -64,8 +67,10 @@ let Mapping = Struct.extend({
         this.reopen(CategoryMixins.Surface);
         break;
       case "quali.cat_symboles":
-        throw new Error(`Implementation is missing`);
-      case "quali.ordre_symboles":
+        this.reopen(CategoryMixins.Data);
+        this.reopen(CategoryMixins.Symbol);
+        break;
+      case "quali.ordre_symbols":
         throw new Error(`Implementation is missing`);
       case "quali.taille_valeur":
         throw new Error(`Implementation is missing`);
@@ -90,11 +95,9 @@ let Mapping = Struct.extend({
   },
   
   generateRules() {
-    throw new Error("not implemented. Should be overrided by mixin");
   },
   
   generateVisualization() {
-    throw new Error("not implemented. Should be overrided by mixin");
   },
   
   fn() {
@@ -115,7 +118,7 @@ let Mapping = Struct.extend({
         } else if (mode === "size") {
           return visualization.get('minSize');
         } else if (mode === "shape") {
-          return rule.get('shape');
+          return rule.get('visible') ? rule.get('shape') : null;
         }
         
       } else {

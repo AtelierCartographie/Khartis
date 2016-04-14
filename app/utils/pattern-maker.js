@@ -3,9 +3,9 @@ let lines = function(opts = {}) {
       shapeRendering = "auto",
       size = opts.size || 10,
       stroke = "#FFFFFF",
-      strokeWidth = opts.stroke || 2,
+      strokeWidth = opts.stroke,
       scale = opts.scale || 1,
-      id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "-")}`,
+      id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "_")}`,
       maskId,
       patternId,
       path = function(orientation) {
@@ -96,22 +96,24 @@ let lines = function(opts = {}) {
     
     if (mask.empty()) {
       
-      defs.append("mask")
+      mask = defs.append("mask")
         .attr({
           id: maskId,
           width: "10000",
           height: "10000"
-        })
-        .append("rect").attr({
+        });
+      
+      mask.append("rect").attr({
           x: "-5000",
           y: "-5000",
           width: "10000",
           height: "10000",
           transform: `scale(${scale})`
-        })
-        .style("fill", `url(${window.location}#pattern-${maskId})`);
-          
+        });
+        
     }
+    
+    mask.style("fill", `url(${window.location}#pattern-${maskId})`);
         
   }
   

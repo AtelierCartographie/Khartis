@@ -135,6 +135,18 @@ export default Ember.Component.extend({
       left: scale(this.get('value')) + "px"
     });
     
-  }.observes('value')
+  }.observes('value'),
+  
+  actions: {
+    inputFocusOut(val) {
+      
+      let newVal = val.replace(/[^\d\-]+/g, "");
+      
+      if (!isNaN(parseFloat(newVal))) {
+        this.set('_tmpValue', val.replace(/[^\d\-]+/g, ""));
+      }
+      
+    }
+  }
 
 });

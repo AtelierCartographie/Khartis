@@ -93,6 +93,45 @@ export default Ember.Controller.extend({
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
   
+  exportSVG() {
+    
+    try {
+        var isFileSaverSupported = !!new Blob();
+    } catch (e) {
+        alert("blob not supported");
+    }
+
+    let node = d3.select("svg.map-editor")
+        .attr("title", this.get('model.title'))
+        .node().cloneNode(true);
+        
+    let d3Node = d3.select(node)
+    
+    let x = d3Node.selectAll("g.offset line.vertical-left").attr("x1"),
+        y = d3Node.selectAll("g.offset line.horizontal-top").attr("y1"),
+        w = d3Node.selectAll("g.offset line.vertical-right").attr("x1") - x,
+        h = d3Node.selectAll("g.offset line.horizontal-bottom").attr("y1") - y;
+    
+    d3Node.attr({
+      width: this.get('model.graphLayout.width'),
+      height: this.get('model.graphLayout.height'),
+      viewBox: `${x} ${y} ${w} ${h}`
+    });
+    
+    d3Node.selectAll("g.margin,g.offset").remove();
+        
+    let html = d3Node.node()
+      .outerHTML
+      .replace(/http:[^\)"]*?#/g, "#")
+      .replace(/NS\d+\:/g, "xlink:");
+
+    var blob = new Blob([html], {type: "image/svg+xml"});
+    saveAs(blob, "export_mapp.svg");
+    
+    d3Node.remove();
+    
+  },
+  
   actions: {
     
     bindProjection(proj) {
@@ -171,6 +210,10 @@ export default Ember.Controller.extend({
         ty: 0
       });
       this.send("onAskVersioning", "freeze");
+    },
+    
+    export() {
+      this.exportSVG();
     },
     
     selectState(state) {

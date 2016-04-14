@@ -11,6 +11,9 @@ let Projection = Struct.extend({
   scale: null,
   clipAngle: null,
   lobes: null,
+  translation_x: 1,
+  translation_y: 1,
+  translation_z: 1,
   
   rotateX: Ember.computed('rotate', {
     get() {
@@ -124,7 +127,10 @@ let Projection = Struct.extend({
       score_area: this.get('score_area'),
       score_distance: this.get('score_distance'),
       author: this.get('author'),
-      year: this.get('year')
+      year: this.get('year'),
+      translation_x: this.get('translation_x'),
+      translation_y: this.get('translation_y'),
+      translation_z: this.get('translation_z')
     });
   }
   
@@ -145,7 +151,10 @@ Projection.reopenClass({
         score_area: json.score_area,
         score_distance: json.score_distance,
         author: json.author,
-        year: json.year
+        year: json.year,
+        translation_x: json.translation_x,
+        translation_y: json.translation_y,
+        translation_z: json.translation_z
       });
   }
   

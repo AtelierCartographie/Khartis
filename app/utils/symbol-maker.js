@@ -85,12 +85,15 @@ let symbol = function(opts = {}) {
     
   }
   
-  proc.url = function(ns = null) {
-   return `${window.location}#${ns ? ns+"-" : ""}${id}`;
+  proc.url = function() {
+   return `${window.location}#${id}`;
   }
   
   return proc;
    
 };
 
-export default {symbol};
+const NONE = function() {};
+NONE.url = () => "none";
+
+export default {symbol, NONE};

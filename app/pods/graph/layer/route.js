@@ -30,7 +30,7 @@ export default Ember.Route.extend({
   },
   
   actions: {
-    selectVisualization(type) {
+    selectMapping(type) {
       this.get('controller').send('bindLayerMapping', type);
       Ember.run.later(this, () => {
         this.transitionTo('graph.layer.edit');

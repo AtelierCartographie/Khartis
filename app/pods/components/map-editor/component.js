@@ -11,10 +11,10 @@ import SymbolMaker from 'mapp/utils/symbol-maker';
 export default Ember.Component.extend({
   
   tagName: "svg",
-  attributeBindings: ['width', 'xmlns', 'xmlns:xlink', 'version'],
+  attributeBindings: ['width', 'xmlns', 'version'],
+  classNames: ["map-editor"],
   width: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
-  'xmlns:xlink': "http://www.w3.org/1999/xlink",
   version: '1.1',
   
   $width: null,
@@ -43,6 +43,8 @@ export default Ember.Component.extend({
 	draw: function() {
     
 		var d3g = this.d3l();
+    
+    d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
 		
 		// ========
 		// = DEFS =
@@ -249,16 +251,16 @@ export default Ember.Component.extend({
 		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.vertical-left")
-			.attr("x1", w - this.get('graphLayout').hOffset(w))
-			.attr("y1", 0)
-			.attr("x2", w - this.get('graphLayout').hOffset(w))
-			.attr("y2", h)
-		  .attr("stroke-width", "1");
-			
-		this.d3l().selectAll("g.offset line.vertical-right")
 			.attr("x1", this.get('graphLayout').hOffset(w))
 			.attr("y1", 0)
 			.attr("x2", this.get('graphLayout').hOffset(w))
+			.attr("y2", h)
+		  .attr("stroke-width", "1");
+      
+		this.d3l().selectAll("g.offset line.vertical-right")
+			.attr("x1", w - this.get('graphLayout').hOffset(w))
+			.attr("y1", 0)
+			.attr("x2", w - this.get('graphLayout').hOffset(w))
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
 		
@@ -534,39 +536,44 @@ export default Ember.Component.extend({
       let _ = d3.select(this),
           shape = converter(d.cell, "shape"),
           r = converter(d.cell, "size"),
-          fill = converter(d.cell, "fill"),
-          symbol = SymbolMaker.symbol({name: shape});
-      
-      symbol.call(svg);
-      
-      let el = _.append("use").attr("xlink:xlink:href", symbol.url());
-      
-      if (shape === "bar") {
+          fill = converter(d.cell, "fill");
+          
+      if (shape) {
         
-         el.attr({
-            "width": mapping.get('visualization.minSize'),
-            "height": r*r,
-            "x": -mapping.get('visualization.minSize') / 2,
-            "y": -r*r
-          });
+        let symbol = SymbolMaker.symbol({name: shape});
+      
+        symbol.call(svg);
+      
+        let el = _.append("use").attr("xlink:href", symbol.url());
         
-      } else {
-        
+        if (shape === "bar") {
+          
           el.attr({
-            "width": r*2,
-            "height": r*2,
-            "x": d => -r,
-            "y": d => -r
-          });
+              "width": mapping.get('visualization.minSize'),
+              "height": r*r,
+              "x": -mapping.get('visualization.minSize') / 2,
+              "y": -r*r
+            });
+          
+        } else {
+          
+            el.attr({
+              "width": r*2,
+              "height": r*2,
+              "x": d => -r,
+              "y": d => -r
+            });
+            
+        }
+        
+        el.style({
+            "fill": fill,
+            "stroke": "black",
+            "stroke-width": "2px"
+          })
+          .classed("shape", true);
           
       }
-      
-      el.style({
-          "fill": fill,
-          "stroke": "black",
-          "stroke-width": "2px"
-        })
-        .classed("shape", true);
       
     };
     

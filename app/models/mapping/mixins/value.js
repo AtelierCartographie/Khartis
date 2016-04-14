@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Rule from '../rule';
+import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'mapp/utils/pattern-maker';
 /* global d3 */
 

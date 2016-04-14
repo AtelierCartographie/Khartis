@@ -1,0 +1,58 @@
+<div class="configuration-panel filled padded with-relief topbar split-view">
+  <div class="titlebar">
+    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
+    <div class="actions">
+      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
+    </div>
+  </div>
+  <div class="body">
+    <div class="settings vertical flow">
+      {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
+      {{#if (x-greater editedLayer.mapping.rules.length 8)}}
+      <div class="filled warning padded">
+        Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+      </div>
+      {{/if}}
+      <div>
+        <Label>Taille des symbols</Label>
+        {{x-slider class="fluid" value=editedLayer.mapping.visualization.minSize min=4 max=editedLayer.mapping.visualization.maxSize}}
+      </div>
+      <div>
+          {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+          {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
+          <label>Catégories</label>
+          <ul class="collection">
+          {{#each editedLayer.mapping.rules as |rule|}}
+          <li>
+            <div class="horizontal space-between flow layer-header">
+              <div class="horizontal airy flow">
+                {{#if rule.emptyValue}}
+                  <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span>
+                {{else}}
+                  <span class="varname">{{rule.label}}</span>
+                {{/if}}
+              </div>
+              <div class="horizontal solid right airy flow w4 text-right">
+                <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                {{color-picker value=rule.color}}
+              <label>Forme</label>
+              {{shape-dropdown
+                shapes=shapeSelection.availableShapes
+                value=rule.shape
+                color=rule.color
+              }}
+              </div>
+            </div>
+            <div class="flow" style="height: 4px;">
+            {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
+            </div>
+          </li>
+          {{/each}}
+          </ul>
+          {{/o-wrap.shape-selection}}
+          {{/o-wrap.brewer}}
+      </div>
+      {{/o-wrap.rules}}
+    </div>
+  </div>
+</div>

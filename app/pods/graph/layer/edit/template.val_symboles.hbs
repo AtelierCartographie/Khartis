@@ -90,6 +90,14 @@
               }}
               {{/o-wrap.shape-selection}}
           </div>
+          <div>
+            {{color-picker value=editedLayer.mapping.visualization.color}}
+          </div>
+          {{#if editedLayer.mapping.scale.diverging}}
+          <div>
+            {{color-picker value=editedLayer.mapping.visualization.colorBeforeBreak}}
+          </div>
+          {{/if}}
         </div>
         <div class="solid vertical flow w6">
           {{distribution-bars mapping=editedLayer.mapping}}

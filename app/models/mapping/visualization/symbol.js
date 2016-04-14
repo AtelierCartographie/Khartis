@@ -7,7 +7,7 @@ let SymbolVisualization = Struct.extend({
   colorBeforeBreak: "blue",
   shape: "star",
   minSize: 4,
-  maxSize: 12,
+  maxSize: 10,
   
   colorStops(diverging) {
     if (diverging) {
@@ -18,7 +18,8 @@ let SymbolVisualization = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'color', 'minSize', 'maxSize', 'shape',
+    'type', 'color', 'colorBeforeBreak', 'minSize',
+    'maxSize', 'shape',
     function() {
       this.notifyDefferedChange();
     },

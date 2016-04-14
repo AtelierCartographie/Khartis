@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   
   model(params) {
     let layer = this.modelFor('graph.layer');
-    if (layer.get('mapping')) {
+    if (layer.get('mapping.type')) {
       return layer;
     } else {
       this.transitionTo('graph.layer');

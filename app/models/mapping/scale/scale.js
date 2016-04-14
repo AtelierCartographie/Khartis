@@ -152,13 +152,6 @@ let Scale = Struct.extend({
 
 Scale.reopenClass({
   
-  create(p) {
-    try {
-      throw new Error();
-    } catch (e) { console.log(e); }
-    return this._super(p);
-  },
-  
   restore(json, refs = {}) {
     let o = this._super(json, refs, {
       classes: json.classes,
