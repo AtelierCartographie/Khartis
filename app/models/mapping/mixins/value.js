@@ -56,6 +56,26 @@ let DataMixin = Ember.Mixin.create({
 
 let SurfaceMixin = Ember.Mixin.create({
   
+  generateVisualization() {
+    if (!this.get('visualization')) {
+      this.set('visualization', VisualizationFactory.createInstance("surface"));
+    }
+  },
+  
+  patternModifiers: function() {
+    
+    return Array.from({length: this.get('scale.classes')}, (v, i) => {
+      let teta = i < this.get('scale.classesBeforeBreak') ? 90 : 0,
+          stroke = i;
+      return this.generatePattern({
+          angle: this.get('visualization.pattern.angle') + teta,
+          stroke: this.get('visualization.pattern.stroke') + stroke
+        });
+    });
+    
+  }.property('visualization.pattern', 'scale.classes',
+  'scale.classesBeforeBreak', 'scale.diverging'),
+  
   getScaleOf(type) {
     
     let ext = d3.extent(this.get('values')),
@@ -99,6 +119,12 @@ let SurfaceMixin = Ember.Mixin.create({
 });
 
 let SymbolMixin = Ember.Mixin.create({
+  
+  generateVisualization() {
+    if (!this.get('visualization')) {
+      this.set('visualization', VisualizationFactory.createInstance("symbol"));
+    }
+  },
   
   getScaleOf(type) {
     

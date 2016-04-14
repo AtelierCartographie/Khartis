@@ -16,8 +16,7 @@
                   {{#unless editedLayer.mapping.scale.intervalType}}
                   Choisir
                   {{else}}
-                  {{editedLayer.mapping.scale.intervalType}}
-                  {{!t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType ".name")}}
+                  {{t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType)}}
                   {{/unless}}
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}

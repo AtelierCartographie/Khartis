@@ -56,6 +56,12 @@ let DataMixin = Ember.Mixin.create({
 
 let SurfaceMixin = Ember.Mixin.create({
   
+  generateVisualization() {
+    if (!this.get('visualization')) {
+      this.set('visualization', VisualizationFactory.createInstance("surface"));
+    }
+  },
+  
   getScaleOf(type) {
     return () => PatternMaker.NONE;
   }
@@ -63,6 +69,12 @@ let SurfaceMixin = Ember.Mixin.create({
 });
 
 let SymbolMixin = Ember.Mixin.create({
+  
+  generateVisualization() {
+    if (!this.get('visualization')) {
+      this.set('visualization', VisualizationFactory.createInstance("symbol"));
+    }
+  },
   
   getScaleOf(type) {
     return () => PatternMaker.NONE;

@@ -53,31 +53,13 @@ let Mapping = Struct.extend({
     };
   },
   
-  patternModifiers: function() {
-    
-    return Array.from({length: this.get('scale.classes')}, (v, i) => {
-      let teta = i < this.get('scale.classesBeforeBreak') ? 90 : 0,
-          stroke = i;
-      return this.generatePattern({
-          angle: this.get('visualization.pattern.angle') + teta,
-          stroke: this.get('visualization.pattern.stroke') + stroke
-        });
-    });
-    
-  }.property('visualization.pattern', 'scale.classes',
-  'scale.classesBeforeBreak', 'scale.diverging'),
-  
   init() {
     this._super();
-    this.set('scale', Scale.create());
   },
-  
-  generateRules() {},
   
   configure: function() {
     switch (this.get('type')) {
       case "quali.cat_surfaces":
-        this.set('visualization', VisualizationFactory.createInstance("surface"));
         this.reopen(CategoryMixins.Data);
         this.reopen(CategoryMixins.Surface);
         break;
@@ -88,12 +70,10 @@ let Mapping = Struct.extend({
       case "quali.taille_valeur":
         throw new Error(`Implementation is missing`);
       case "quanti.val_surfaces":
-        this.set('visualization', VisualizationFactory.createInstance("surface"));
         this.reopen(ValueMixins.Data);
         this.reopen(ValueMixins.Surface);
         break;
       case "quanti.val_symboles":
-        this.set('visualization', VisualizationFactory.createInstance("symbol"));
         this.reopen(ValueMixins.Data);
         this.reopen(ValueMixins.Symbol);
         break;
@@ -101,10 +81,19 @@ let Mapping = Struct.extend({
         this.set('visualization', null);
         break;
     }
+    this.generateVisualization();
     this.generateRules();
   }.observes('type').on("init"),
   
   getScaleOf(type) {
+    throw new Error("not implemented. Should be overrided by mixin");
+  },
+  
+  generateRules() {
+    throw new Error("not implemented. Should be overrided by mixin");
+  },
+  
+  generateVisualization() {
     throw new Error("not implemented. Should be overrided by mixin");
   },
   

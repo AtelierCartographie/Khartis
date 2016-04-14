@@ -40,14 +40,20 @@ export default Ember.Component.extend({
   tagName: '',
   position: 'bottom',
   offset:5,
-  positionClassName: '',
+  
+  positionClassName: function() {
 
-  computePosition (){
+    var position = positionsMap[this.get('position')];
+    var [v, h] = position.split(' ');
 
-    var position = positionsMap[this.get('position')]
-    var [v, h] = position.split(' ')
+    return /middle/.test(v) ? h : v;
+    
+  }.property('position'),
 
-    this.set('positionClassName', /middle/.test(v) ? h : v)
+  computePosition () {
+
+    var position = positionsMap[this.get('position')];
+    var [v, h] = position.split(' ');
 
     return {
       tooltip: `${getOpposite(v)} ${getOpposite(h)}`,
@@ -55,22 +61,26 @@ export default Ember.Component.extend({
     }
   },
 
-  didInsertElement: function () {
+  draw: function () {
 
     const tooltip = this.$()
     const trigger = tooltip.next()
 
     this.triggerEl = trigger
     this.tooltipEl = tooltip
-    this.positions =  this.computePosition()
-    this.computedOffset = getOffset(this.get('position'), this.get('offset'))
+    
+    Ember.run.later(this, () => {
+      this.positions =  this.computePosition();
+      this.computedOffset = getOffset(this.get('position'), this.get('offset'));
+    });
 
     const show = this.show.bind(this);
     const hide = this.hide.bind(this);
 
     tooltip.appendTo($(document.body))
     trigger.hover(show, hide)
-  },
+    
+  }.on("didInsertElement"),
 
   '$': function () {
     return $("#" + this.elementId);

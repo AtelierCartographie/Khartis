@@ -51,8 +51,10 @@ export default Ember.Component.extend({
 		let defs = d3g.append("defs");
     
     defs.append("path")
-      .datum({type: "Sphere"})
       .attr("id", "sphere");
+      
+   defs.append("path")
+      .attr("id", "grid");
 
     defs.append("clipPath")
       .attr("id", "clip")
@@ -277,10 +279,14 @@ export default Ember.Component.extend({
     defs.select("#sphere")
       .datum({type: "Sphere"})
       .attr("d", path);
+    
+    defs.select("#grid")
+      .datum(d3.geo.graticule())
+      .attr("d", path);
 
     defs.select("#clip use")
       .attr("xlink:href", `${window.location}#sphere`);
-    
+      
 		let landSel = defs
 			.selectAll("path.feature")
 			.attr("d", path)
@@ -296,32 +302,56 @@ export default Ember.Component.extend({
 
 		landSel.exit().remove();
     
+    this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
 			
 	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
    
-   drawBackmap: function() {
+   drawGrid: function() {
      
-    let sphere = this.d3l().select("g.backmap")
+     let sphere = this.d3l().select("g.backmap")
       .selectAll("use.sphere");
     
     if (sphere.empty()) {
       sphere = this.d3l().select("g.backmap").append("use")
         .style({
           "fill": "none",
-          "stroke": "black"
+          "stroke": this.get('graphLayout.gridColor')
         })
         .attr({
-          "class": "stroke",
           "xlink:href": `${window.location}#sphere`
         })
         .classed("sphere", true);
+        
     } else {
       sphere.attr("xlink:href", `${window.location}#sphere`);
     }
-      
+    
+    
+    let grid = this.d3l().select("g.backmap")
+      .selectAll("use.grid");
+    
+    if (grid.empty()) {
+      grid = this.d3l().select("g.backmap").append("use")
+        .style({
+          "fill": "none",
+          "stroke": this.get('graphLayout.gridColor')
+        })
+        .attr({
+          "xlink:href": `${window.location}#grid`
+        })
+        .classed("grid", true);
+        
+    } else {
+      grid.attr("xlink:href", `${window.location}#grid`);
+    }
+     
+   }.observes('graphLayout.gridColor'),
+   
+   drawBackmap: function() {
+     
     let bindAttr = (_) => {
       _.attr({
         "xlink:xlink:href": d => `${window.location}#f-path-${d.id}`,
@@ -467,7 +497,7 @@ export default Ember.Component.extend({
           "mask": d => {
             let mask = converter(d.cell, "texture");
           
-            if (mask && mask.fn.url() != "none") {
+            if (mask && mask.fn != PatternMaker.NONE) {
               svg.call(mask.fn);
               return `url(${mask.fn.url()})`;
             } else {

@@ -53,6 +53,7 @@ var GraphLayout = Struct.extend({
 	
 	backgroundColor: "#F7F7F7",
   backMapColor: "#ededed",
+  gridColor: "#e1e3ee",
 	
 	autoCenter: false,
 	
@@ -147,6 +148,7 @@ var GraphLayout = Struct.extend({
       margin: this.get('margin') ? this.get('margin').export() : null,
       backgroundColor: this.get('backgroundColor'),
       backMapColor: this.get('backMapColor'),
+      gridColor: this.get('gridColor'),
       tx: this.get('tx'),
       ty: this.get('ty'),
       width: this.get('width'),
@@ -167,18 +169,18 @@ GraphLayout.reopenClass({
   },
   
   restore(json, refs = {}) {
-      let o = this._super(json, refs);
-      o.setProperties({
-          basemap: json.basemap,
-          backgroundColor: json.backgroundColor,
-          backMapColor: json.backMapColor,
-          projection: json.projection ? Projection.restore(json.projection) : null,
-          margin: json.margin ? Margin.restore(json.margin) : null,
-          width: json.width,
-          tx: json.tx,
-          ty: json.ty,
-          height: json.height,
-          zoom: json.zoom
+      let o = this._super(json, refs, {
+        basemap: json.basemap,
+        backgroundColor: json.backgroundColor,
+        backMapColor: json.backMapColor,
+        gridColor: json.gridColor,
+        projection: json.projection ? Projection.restore(json.projection) : null,
+        margin: json.margin ? Margin.restore(json.margin) : null,
+        width: json.width,
+        tx: json.tx,
+        ty: json.ty,
+        height: json.height,
+        zoom: json.zoom
       });
       return o;
   }

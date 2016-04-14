@@ -6,6 +6,8 @@ let lines = function(opts = {}) {
       strokeWidth = opts.stroke || 2,
       scale = opts.scale || 1,
       id = () => `${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "-")}`,
+      maskId,
+      patternId,
       path = function(orientation) {
         switch (orientation % 180) {
           case 0:
@@ -59,20 +61,22 @@ let lines = function(opts = {}) {
       
   let proc = function() {
     
+    maskId = `mask-${this.attr('id')}-${id()}`;
+    
     let defs = this.selectAll("defs");
     
     if (defs.empty()) {
       defs = this.append("defs");
     }
       
-    let pattern = defs.selectAll(`#pattern-${id()}`),
-        mask = defs.selectAll(`#mask-${id()}`);
+    let pattern = defs.selectAll(`#pattern-${maskId}`),
+        mask = defs.selectAll(`#${maskId}`);
     
     if (pattern.empty()) {
       
       pattern = defs.append("pattern")
         .attr({
-          id: `pattern-${id()}`,
+          id: `pattern-${maskId}`,
           patternUnits: "userSpaceOnUse",
           width: size,
           height: size
@@ -94,7 +98,7 @@ let lines = function(opts = {}) {
       
       defs.append("mask")
         .attr({
-          id: `mask-${id()}`,
+          id: maskId,
           width: "10000",
           height: "10000"
         })
@@ -105,14 +109,17 @@ let lines = function(opts = {}) {
           height: "10000",
           transform: `scale(${scale})`
         })
-        .style("fill", `url(${window.location}#pattern-${id()})`);
+        .style("fill", `url(${window.location}#pattern-${maskId})`);
           
     }
         
   }
   
-  proc.url = function(ns = null) {
-   return `${window.location}#mask${ns ? ns+"-" : ""}${id()}`;
+  proc.url = function() {
+    if (!maskId) {
+      throw new Error("Pattern not attached to svg element");
+    }
+   return `${window.location}#${maskId}`;
   }
   
   return proc;

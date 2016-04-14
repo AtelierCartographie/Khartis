@@ -10,8 +10,6 @@ let CONTRASTS = {
 
 let Scale = Struct.extend({
   
-  type: null,
-  
   classes: 8,
   intervalType: "mean",
   valueBreak: null,
@@ -142,7 +140,6 @@ let Scale = Struct.extend({
   
   export(props) {
     return this._super(Object.assign({
-      type: this.get('type'),
       classes: this.get('classes'),
       intervalType: this.get('intervalType'),
       valueBreak: this.get('valueBreak'),
@@ -154,10 +151,16 @@ let Scale = Struct.extend({
 });
 
 Scale.reopenClass({
+  
+  create(p) {
+    try {
+      throw new Error();
+    } catch (e) { console.log(e); }
+    return this._super(p);
+  },
+  
   restore(json, refs = {}) {
-    let o = this._super(json, refs);
-    o.setProperties({
-      type: json.type,
+    let o = this._super(json, refs, {
       classes: json.classes,
       intervalType: json.intervalType,
       valueBreak: json.valueBreak,
