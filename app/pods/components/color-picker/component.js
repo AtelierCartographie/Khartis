@@ -6,6 +6,8 @@ export default Ember.TextField.extend({
   
   showInput: true,
   
+  stroke: false,
+  
   liveRendering: true,
   showPalette: true,
   palette: [
@@ -25,6 +27,10 @@ export default Ember.TextField.extend({
       preferredFormat: "hex",
       palette: this.get('palette'),
       showPalette: this.get('showPalette'),
+      replacerIcon: "<i class=\"iconfont iconfont-angle-down\"></i>",
+      borderPreview: this.get('stroke'),
+      backgroundPreview: !this.get('stroke'),
+      replacerClassName: this.get('stroke') ? 'of-stroke' : 'of-fill',
       move: (color) => {
         if (this.get('liveRendering')) {
           this.set('value', color.toHexString());

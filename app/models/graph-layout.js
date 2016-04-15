@@ -162,9 +162,7 @@ var GraphLayout = Struct.extend({
 GraphLayout.reopenClass({
   
   createDefault() {
-    let o = GraphLayout.create({
-      projection: null
-    });
+    let o = GraphLayout.create({});
     return o;
   },
   

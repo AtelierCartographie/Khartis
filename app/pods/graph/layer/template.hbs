@@ -7,6 +7,7 @@
   </div>
   <div class="body">
     <ul class="collection">
+      {{#if editedLayer.mapping.canBeSurface}}
       <li class="clickable" {{action 'selectMapping' 'quali.cat_surfaces'}}>
         <div class="horizontal airy flow">
           <div class="caption">
@@ -17,7 +18,8 @@
               <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
           </div>
         </div>
-      </li>  
+      </li>
+      {{/if}}
       <li class="clickable" {{action 'selectMapping' 'quali.cat_symboles'}}>
         <div class="horizontal airy flow">
           <div class="caption">
@@ -50,7 +52,9 @@
               <p class="description">{{t "visualization.quali.taille_valeur.description"}}</p>
           </div>
         </div>
-      </li>  
+      </li>
+      {{#if editedLayer.mapping.canBeMappedAsValue}}
+      {{#if editedLayer.mapping.canBeSurface}}
       <li class="clickable" {{action 'selectMapping' 'quanti.val_surfaces'}}>
         <div class="horizontal airy flow">
           <div class="caption">
@@ -62,6 +66,7 @@
           </div>
         </div>
       </li>
+      {{/if}}
       <li class="clickable" {{action 'selectMapping' 'quanti.val_symboles'}}>
         <div class="horizontal airy flow">
           <div class="caption">
@@ -73,6 +78,7 @@
           </div>
         </div>
       </li>
+      {{/if}}
     </ul>
   </div>
 </div>

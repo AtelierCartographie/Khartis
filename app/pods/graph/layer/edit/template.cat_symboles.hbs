@@ -18,6 +18,10 @@
         {{x-slider class="fluid" value=editedLayer.mapping.visualization.minSize min=4 max=editedLayer.mapping.visualization.maxSize}}
       </div>
       <div>
+        <Label>Epaisseur du trait</Label>
+        {{x-slider class="fluid" value=editedLayer.mapping.visualization.stroke min=0 max=6}}
+      </div>
+      <div>
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
           {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
           <label>Catégories</label>
@@ -34,13 +38,13 @@
               </div>
               <div class="horizontal solid right airy flow w4 text-right">
                 <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                {{shape-dropdown
+                  shapes=shapeSelection.availableShapes
+                  value=rule.shape
+                  color=rule.color
+                }}
                 {{color-picker value=rule.color}}
-              <label>Forme</label>
-              {{shape-dropdown
-                shapes=shapeSelection.availableShapes
-                value=rule.shape
-                color=rule.color
-              }}
+                {{color-picker stroke=true value=rule.strokeColor}}
               </div>
             </div>
             <div class="flow" style="height: 4px;">

@@ -155,7 +155,7 @@ export default Ember.Controller.extend({
     },
     
     addLayer(col) {
-      let layer = GraphLayer.createDefault(col, this.get('model.data.geoColumns'));
+      let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
       this.get('model.graphLayers').unshiftObject(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },

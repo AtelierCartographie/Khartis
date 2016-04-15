@@ -16,6 +16,10 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'fr'
     },
+    
+    projection: {
+      default: "natural_earth"
+    },
 
     APP: {
       // Here you can pass flags/options to your application instance

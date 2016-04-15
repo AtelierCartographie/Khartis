@@ -10,7 +10,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "M0,0 100,0 100,100 0,100"
               },
-              viewBox: "0 0 100 100"
+              viewBox: [0, 0, 100, 100]
             };
           case "bar":
             return {
@@ -18,7 +18,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "M0,0 25,0 25,100 0,100"
               },
-              viewBox: "0 0 25 100"
+              viewBox: [0, 0, 25, 100]
             };
           case "line":
             return {
@@ -26,7 +26,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "M0,0 100,0 100,10 0,10"
               },
-              viewBox: "0 0 100 10"
+              viewBox: [0, 0, 100, 10]
             };
           case "star":
             return {
@@ -34,7 +34,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "m131,0l32,94l99,0l-79,59l28,94l-80,-56l-80,56l28,-94l-79,-59l99,0l32,-94l0,0z"
               },
-              viewBox: "0 0 262 250"
+              viewBox: [0, 0, 262, 250]
             };
           case "times":
             return {
@@ -42,7 +42,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "m260,211q0,8 -6,14l-29,29q-6,6 -14,6t-14,-6l-64,-64l-64,64q-6,6 -14,6t-14,-6l-29,-29q-6,-6 -6,-14t6,-14l64,-64l-64,-64q-6,-6 -6,-14t6,-14l29,-29q6,-6 14,-6t14,6l64,64l64,-64q6,-6 14,-6t14,6l29,29q6,6 6,14t-6,14l-64,64l64,64q6,6 6,14z"
               },
-              viewBox: "0 0 262 262"
+              viewBox: [0, 0, 262, 262]
             };
           case "circle":
             return {
@@ -52,7 +52,7 @@ let symbol = function(opts = {}) {
                 cx: 10,
                 cy: 10
               },
-              viewBox: "0 0 20 20"
+              viewBox: [0, 0, 20, 20]
             };
           default:
             throw new Error("unable to generate symbol with name "+name);
@@ -71,18 +71,27 @@ let symbol = function(opts = {}) {
     
     if (symbol.empty()) {
       
-      let conf = factory(name);
+      let conf = factory(name),
+          max = Math.max.apply(this, conf.viewBox),
+          shift = 0.1*max;
       
       symbol = defs.append("symbol")
         .attr({
           id: id,
-          viewBox: conf.viewBox
+          viewBox: Array.from([-shift, -shift, shift, shift], (v, i) => v + conf.viewBox[i]).join(' ')
         });
       
       symbol.append(conf.tag).attr(conf.attrs);
       
     }
     
+  }
+  
+  proc.scale = function(v, w) {
+    let conf = factory(name),
+          max = Math.max.apply(this, conf.viewBox);
+    
+    return v / (w / max);
   }
   
   proc.url = function() {

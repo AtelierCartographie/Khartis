@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Project from 'mapp/models/project'; 
+import config from 'mapp/config/environment';
 
 export default Ember.Route.extend({
     
@@ -11,11 +12,7 @@ export default Ember.Route.extend({
     },
     
     redirect(model) {
-      if (model.get('graphLayout.projection')) {
-        this.transitionTo('graph');
-      } else {
-        this.transitionTo('graph.projection');
-      }
+      this.transitionTo('graph');
     },
     
     model(params) {
@@ -31,9 +28,19 @@ export default Ember.Route.extend({
     },
     
     afterModel(model) {
+      
+      if (!model.get('graphLayout.projection')) {
+        model.set('graphLayout.projection', this.get('Dictionnary.data.projections').find( p => p.id === config.projection.default ));
+      }
+      console.log(!model.get('geoDef'), model.get('data.availableGeoDefs'));
+      if (!model.get('geoDef') && model.get('data.availableGeoDefs').length > 0) {
+        model.set('geoDef', model.get('data.availableGeoDefs').objectAt(0));
+      }
+      
       this.get('store').versions()
         .on("undo", () => this.refresh())
         .on("redo", () => this.refresh());
+        
     },
     
     setupController(controller, model) {

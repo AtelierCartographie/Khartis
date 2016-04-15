@@ -1,0 +1,15 @@
+& {
+  & + .of-stroke {
+    .sp-preview-inner {
+      margin: 2.5px 2.5px 2.5px 2.5px;
+      border-width: 3px;
+      border-style: solid;
+    }
+  }
+  
+  & + .sp-replacer {
+    background-color: #f2f2f2;
+    border: solid 1px #5d7691;
+    padding: 3px;
+  }
+}

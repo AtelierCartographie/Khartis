@@ -6,6 +6,8 @@ let SymbolVisualization = Struct.extend({
   color: "red",
   colorBeforeBreak: "blue",
   shape: "star",
+  strokeColor: "#404040",
+  stroke: 2,
   minSize: 4,
   maxSize: 10,
   
@@ -18,7 +20,7 @@ let SymbolVisualization = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'color', 'colorBeforeBreak', 'minSize',
+    'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak', 'minSize',
     'maxSize', 'shape',
     function() {
       this.notifyDefferedChange();
@@ -30,6 +32,8 @@ let SymbolVisualization = Struct.extend({
       type: this.get('type'),
       color: this.get('color'),
       shape: this.get('shape'),
+      strokeColor: this.get('strokeColor'),
+      stroke: this.get('stroke'),
       minSize: this.get('minSize'),
       maxSize: this.get('maxSize')
     }, props));
@@ -43,6 +47,8 @@ SymbolVisualization.reopenClass({
       type: json.type,
       color: json.color,
       shape: json.shape,
+      strokeColor: json.strokeColor,
+      stroke: json.stroke,
       minSize: json.minSize,
       maxSize: json.maxSize
     });

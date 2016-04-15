@@ -12,8 +12,6 @@ Router.map(function() {
     this.route("project", {path:"project/:uuid"}, function(){
         this.route("step1");
         this.route("step2");
-        this.route("step3");
-        this.route("step4");
     });
 
     /*this.route("spreadsheet", {path: "spreadsheet/:uuid"}, function() {

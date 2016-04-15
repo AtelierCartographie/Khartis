@@ -386,13 +386,13 @@ export default Ember.Component.extend({
           .reverse();
           
     let bindAttr = (_) => {
-      _.attr("stroke", this.get("graphLayout.stroke"))
+      _.attr("stroke-width", d => d.get("mapping.visualization.stroke"))
        .style("opacity", d => d.get('opactity'));
     };
     
     let sel = this.d3l().select("g.layers")
       .selectAll("g.layer")
-      .data(data)
+      .data(data, d => d._uuid)
       .call(bindAttr);
     
     sel.enter().append("g")
@@ -410,17 +410,17 @@ export default Ember.Component.extend({
   
 	mapData: function(d3Layer, graphLayer) {
     
-    let geoCols = graphLayer.get('mapping.geoCols'),
+    let geoDef = graphLayer.get('mapping.geoDef'),
         varCol = graphLayer.get('mapping.varCol'),
         data = [];
     
-    if (geoCols.length === 1) {
+    if (geoDef.get('isGeoRef')) {
       
       data = varCol.get('body').map( (cell, index) => {
         
-        let geoData = geoCols[0].get('body').objectAt(index).get('postProcessedValue'),
+        let geoData = geoDef.get('geo').get('body').objectAt(index).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
-        if (!cell.get('row.header') && geoData && val != null) {
+        if (geoData) {
           return {
             id: geoData.value.iso_a2,
             value: val,
@@ -442,17 +442,15 @@ export default Ember.Component.extend({
         this.mapShape(d3Layer, data, graphLayer);
       }
       
-    } else if (geoCols.length === 2 && geoCols[0] && geoCols[1]) {
+    } else if (geoDef.get('isLatLon')) {
       
-      data = varCol.get('cells').map( (cell, index) => {
+      data = varCol.get('body').map( (cell, index) => {
         
         let val = cell.get('postProcessedValue'),
-            lon = geoCols[0].get('cells').objectAt(index).get('postProcessedValue'),
-            lat = geoCols[1].get('cells').objectAt(index).get('postProcessedValue');
+            lon = geoDef.get('lon').get('body').objectAt(index).get('postProcessedValue'),
+            lat = geoDef.get('lat').get('body').objectAt(index).get('postProcessedValue');
         
-        if (!cell.get('row.header') 
-          && val != null 
-          && !Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
+        if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
           return {
             id: `coord-${index}`,
             value: val,
@@ -523,6 +521,7 @@ export default Ember.Component.extend({
 			
 	},
   
+  
    mapShape: function(d3Layer, data, graphLayer) {
 		
     let projection = this.get('projection'),
@@ -536,7 +535,8 @@ export default Ember.Component.extend({
       let _ = d3.select(this),
           shape = converter(d.cell, "shape"),
           r = converter(d.cell, "size"),
-          fill = converter(d.cell, "fill");
+          fill = converter(d.cell, "fill"),
+          strokeColor = converter(d.cell, "strokeColor");
           
       if (shape) {
         
@@ -561,15 +561,15 @@ export default Ember.Component.extend({
               "width": r*2,
               "height": r*2,
               "x": d => -r,
-              "y": d => -r
+              "y": d => -r,
+              "stroke-width": symbol.scale(mapping.get('visualization.stroke'), r*2)
             });
             
         }
         
         el.style({
             "fill": fill,
-            "stroke": "black",
-            "stroke-width": "2px"
+            "stroke": strokeColor
           })
           .classed("shape", true);
           
@@ -591,7 +591,7 @@ export default Ember.Component.extend({
     };
     
     let centroidSel = d3Layer
-			.selectAll(".feature")
+			.selectAll("g.feature")
       .data(sortedData)
       .call(bindAttr);
       

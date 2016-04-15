@@ -43,11 +43,11 @@ GraphLayer.reopenClass({
       });
   },
   
-  createDefault(varCol, geoCols, props = {}) {
+  createDefault(varCol, geoDef, props = {}) {
     let o = this.create(Object.assign({
       mapping: Mapping.create({
         varCol: varCol,
-        geoCols: geoCols
+        geoDef: geoDef
       })
     }, props));
     return o;

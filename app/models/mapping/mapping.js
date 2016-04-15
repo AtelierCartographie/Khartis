@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Struct from '../struct';
+import GeoDef from '../geo-def';
 import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixins from './mixins/value';
@@ -16,14 +17,13 @@ let Mapping = Struct.extend({
   visualization: null,
   
   varCol: null,
-  geoCols: null,
+  geoDef: null,
   
   rules: null,
   
   canBeSurface: function() {
-    return this.get('geoCols').length === 1
-      && this.get('geoCols')[0].get('meta.type') === "geo";
-  }.property('geoCols.[]'),
+    return this.get('geoDef.isGeoRef');
+  }.property('geoDef.isGeoRef'),
   
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
@@ -119,6 +119,8 @@ let Mapping = Struct.extend({
           return visualization.get('minSize');
         } else if (mode === "shape") {
           return rule.get('visible') ? rule.get('shape') : null;
+        } else if (mode === "strokeColor") {
+          return rule.get('visible') ? rule.get('strokeColor') : null;
         }
         
       } else {
@@ -131,6 +133,8 @@ let Mapping = Struct.extend({
             return self.getScaleOf("size")(cell.get('postProcessedValue'));
           case "shape":
             return visualization.get('shape');
+          case "strokeColor":
+            return visualization.get('strokeColor');
         }
       }
       
@@ -138,7 +142,7 @@ let Mapping = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
-    'varCol._defferedChangeIndicator', 'geoCols.@each._defferedChangeIndicator',
+    'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator',
     function() {
@@ -152,7 +156,7 @@ let Mapping = Struct.extend({
       scale: this.get('scale') ? this.get('scale').export() : null,
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
-      geoCols: this.get('geoCols') ? this.get('geoCols').map(gc => gc.get('_uuid')) : null,
+      geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
   }
@@ -167,7 +171,7 @@ Mapping.reopenClass({
       scale: json.scale != null ? Scale.restore(json.scale, refs) : null,
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
-      geoCols: json.geoCols ? json.geoCols.map( gc => refs[gc] ) : null,
+      geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
       rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
     });
   }

@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import Struct from './struct';
+import GeoDef from './geo-def';
 import {geoMatch} from 'mapp/utils/geo-match';
+/* global d3 */
 
 let RowStruct = Struct.extend({
     header: null,
@@ -110,9 +112,9 @@ let ColumnStruct = Struct.extend({
       function() {
         this.notifyDefferedChange();
       },
-      100),
+      50),
     
-    autoDetectDataType: Ember.debouncedObserver('cells.@each.value', 'meta.manual', function() {
+    autoDetectDataType: Ember.debouncedObserver('cells.@each._defferedChangeIndicator', 'meta.manual', function() {
         
         if (!this.get('meta.manual')) {
           
@@ -166,7 +168,7 @@ let ColumnStruct = Struct.extend({
           
         }
         
-    }, 100),
+    }, 50),
     
     incorrectCells: function() {
       
@@ -276,6 +278,13 @@ let CellStruct = Struct.extend({
       });
     },
     
+    deferredChange: Ember.debouncedObserver(
+      'value', 'correctedValue',
+      function() {
+        this.notifyDefferedChange();
+      },
+      50),
+    
     onColumnChange: function() {
       if (this.get('column')) {
           this.get('column').visit(this);
@@ -316,40 +325,66 @@ let DataStruct = Struct.extend({
       return this.get('rows').filter( r => !r.get('header') );
     }.property('rows.[]'),
     
-    geoColumns: function() {
-      
-      let sortedCols = this.get('columns').filter( 
-        col => ["geo", "lat", "lon", "lat_dms", "lon_dms"].indexOf(col.get('meta.type')) >= 0
-      ).sort( (a,b) => a.get('inconsistency') > b.get('inconsistency') ? 1 : -1 );
-      
-      if (sortedCols[0]) {
-        switch (sortedCols[0].get('meta.type')) {
-          case "geo":
-            return [sortedCols[0]];
-          case "lat":
-            let lon = sortedCols.find( c => c.get('meta.type') === "lon" );
-            return [lon, sortedCols[0]];
-          case "lon":
-            let lat = sortedCols.find( c => c.get('meta.type') === "lat" );
-            return [sortedCols[0], lat];
-          case "lat_dms":
-            let lonDms = sortedCols.find( c => c.get('meta.type') === "lon_dms" );
-            return [lonDms, sortedCols[0]];
-          case "lon_dms":
-            let latDms = sortedCols.find( c => c.get('meta.type') === "lat_dms" );
-            return [sortedCols[0], latDms];
-          default:
-            throw new Error(`Unknow geo colum type ${sortedCols[0].get('meta.type')}`);
-        }
-      }
-      
-      return [];
-        
-    }.property('columns.[]', 'columns.@each._defferedChangeIndicator'),
-    
     size: function() {
       return this.get('rows').length * this.get('columns').length;
     },
+    
+    availableGeoDefs: function() {
+      
+      let sortedCols = this.get('columns').filter( 
+            col => ["geo", "lat", "lon", "lat_dms", "lon_dms"].indexOf(col.get('meta.type')) >= 0
+          ).sort( (a,b) => d3.ascending(a.get('inconsistency'), b.get('inconsistency')) ),
+          seen = [];
+      
+      return sortedCols.reduce( (arr, col, i) => {
+        
+        if (seen.indexOf(col) === -1) {
+        
+          let lat, lon;
+        
+          switch (col.get('meta.type')) {
+            case "geo":
+              arr.push(GeoDef.createWithColumns({geo: col}));
+              break;
+            case "lat":
+              lon = sortedCols.slice(i).find( c => c.get('meta.type') === "lon" );
+              if (lon) {
+                seen.push(lon);
+                arr.push(GeoDef.createWithColumns({lat: col, lon: lon}));
+              }
+              break;
+            case "lon":
+              lat = sortedCols.slice(i).find( c => c.get('meta.type') === "lat" );
+              if (lat) {
+                seen.push(lat);
+                arr.push(GeoDef.createWithColumns({lat: lat, lon: col}));
+              }
+              break;
+            case "lat_dms":
+              lon = sortedCols.slice(i).find( c => c.get('meta.type') === "lon_dms" );
+              if (lon) {
+                seen.push(lon);
+                arr.push(GeoDef.createWithColumns({lat: col, lon: lon}));
+              }
+              break;
+            case "lon_dms":
+              lat = sortedCols.slice(i).find( c => c.get('meta.type') === "lat_dms" );
+              if (lat) {
+                seen.push(lat);
+                arr.push(GeoDef.createWithColumns({lat: lat, lon: col}));
+              }
+              break;
+            default:
+              throw new Error(`Unknow geo colum type ${sortedCols[0].get('meta.type')}`);
+          }
+          
+        }
+        
+        return arr;
+        
+      }, Em.A() ); 
+        
+    }.property('columns', 'columns.@each._defferedChangeIndicator'),
     
     selectedCell() {
       for (let row of this.get('rows')) {
@@ -463,6 +498,7 @@ let DataStruct = Struct.extend({
 });
 
 DataStruct.reopenClass({
+  
     createFromRawData(data) {
         
         let columns = [],
