@@ -30,7 +30,8 @@
               <p class="description">{{t "visualization.quali.cat_symboles.description"}}</p>
           </div>
         </div>
-      </li>  
+      </li>
+      {{#if false}}
       <li class="clickable" {{action 'selectMapping' 'quali.ordre_symboles'}}>
         <div class="horizontal airy flow">
           <div class="caption">
@@ -53,6 +54,7 @@
           </div>
         </div>
       </li>
+      {{/if}}
       {{#if editedLayer.mapping.canBeMappedAsValue}}
       {{#if editedLayer.mapping.canBeSurface}}
       <li class="clickable" {{action 'selectMapping' 'quanti.val_surfaces'}}>

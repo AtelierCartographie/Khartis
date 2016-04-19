@@ -89,6 +89,9 @@ export default Ember.Component.extend({
     	
 		mapG.append("g")
 			.classed("layers", true);
+      
+    d3g.append("g")
+			.classed("legend", true);
     
     // DRAG & ZOOM
     
@@ -307,6 +310,7 @@ export default Ember.Component.extend({
     this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
+    this.drawLegend();
 			
 	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
 	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
@@ -322,15 +326,15 @@ export default Ember.Component.extend({
           "fill": "none",
           "stroke": this.get('graphLayout.gridColor')
         })
-        .attr({
-          "xlink:href": `${window.location}#sphere`
-        })
         .classed("sphere", true);
         
-    } else {
-      sphere.attr("xlink:href", `${window.location}#sphere`);
     }
     
+    sphere.attr({
+      "xlink:href": `${window.location}#sphere`,
+    }).style({
+      "opacity": this.get('graphLayout.showGrid') ? 1 : 0
+    });
     
     let grid = this.d3l().select("g.backmap")
       .selectAll("use.grid");
@@ -341,16 +345,17 @@ export default Ember.Component.extend({
           "fill": "none",
           "stroke": this.get('graphLayout.gridColor')
         })
-        .attr({
-          "xlink:href": `${window.location}#grid`
-        })
         .classed("grid", true);
         
-    } else {
-      grid.attr("xlink:href", `${window.location}#grid`);
     }
+    
+    grid.attr({
+      "xlink:href": `${window.location}#grid`,
+    }).style({
+      "opacity": this.get('graphLayout.showGrid') ? 1 : 0
+    });
      
-   }.observes('graphLayout.gridColor'),
+   }.observes('graphLayout.gridColor', 'graphLayout.showGrid'),
    
    drawBackmap: function() {
      
@@ -387,7 +392,7 @@ export default Ember.Component.extend({
           
     let bindAttr = (_) => {
       _.attr("stroke-width", d => d.get("mapping.visualization.stroke"))
-       .style("opacity", d => d.get('opactity'));
+       .style("opacity", d => d.get('opacity'));
     };
     
     let sel = this.d3l().select("g.layers")
@@ -603,6 +608,100 @@ export default Ember.Component.extend({
     centroidSel.order().exit().remove();
 
 	},
+  
+  drawLegend: function() {
+    
+    let w = Math.max(this.get('$width'), this.get('graphLayout.width')),
+		    h = Math.max(this.get('$height'), this.get('graphLayout.height')),
+        padding = 2,
+        width = (w - 2*this.get('graphLayout').hOffset(w)) / 2;
+    
+    let sel = this.d3l().selectAll("g.legend")
+      .attr("transform", d3lper.translate({
+        tx: w / 2 - width / 2,
+        ty: h - this.get('graphLayout').vOffset(h) - 100
+      }))
+      .style({
+        opacity: this.get('graphLayout.showLegend') ? 0.9 : 0
+      });
+    
+    if (sel.selectAll("rect").empty()) {
+      sel.append("rect")
+        .attr({
+          "x": 0,
+          "y": 0,
+          "width": width,
+          "height": "5.5em"
+        })
+        .classed("legend-background", true);
+    }
+    
+    let bindAttr = (_) => {
+      
+      _.each( function(d, i) {
+        
+        if (!d.get('displayable')) {
+          return;
+        }
+        
+        let el = d3.select(this),
+            label = el.selectAll("text");
+        
+        if (label.empty()) {
+          label = el.append("text")
+            .classed("title", true);
+        }
+        
+        label.text(d.get('mapping.varCol.header.value'))
+          .attr({
+            "x": "2em",
+            "y": `${i+1}em`
+          });
+          
+        let appendLabel = (_) => {
+          
+          _.append("text")
+            .text( d => d.get('label') )
+            .attr({
+              "x": (d, i) => (Math.floor(i/3) * 10 + 2) + "em",
+              "y": (d, i) => `${(i % 3 + 0.5) + 2}em`
+            });
+            
+          _.append("rect")
+            .attr({
+              "x": (d, i) => (Math.floor(i/3) * 10 + 0.5) + "em",
+              "y": (d, i) => `${(i % 3 + 0.5) + 1.5}em`,
+              "width": "1em",
+              "height": "1em",
+              "fill": d => d.get('color')
+            });
+          
+        };
+        
+        if (d.get('mapping.rules')) {
+          el.selectAll("g.intervals")
+            .data(d.get('mapping.rules').slice(0, 8))
+            .enter()
+            .call(appendLabel);
+        }
+        
+      });
+      
+    };
+    
+    sel = sel.selectAll("g.legend-label")
+      .data(this.get('graphLayers'))
+      .call(bindAttr);
+      
+    sel.enter()
+      .append("g")
+      .classed("legend-label", true)
+      .call(bindAttr);
+      
+    sel.exit().remove();
+    
+  }.observes('graphLayout.showLegend')
+  
   
   /*drawText: function() {
       

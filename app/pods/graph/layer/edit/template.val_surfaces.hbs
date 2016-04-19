@@ -41,9 +41,9 @@
                 {{/facet.list}}
               {{/x-dropdown-plus}}
           </div>
-          <div>
-              <label>Value break</label>
-              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak}}
+           <div class="horizontal airy flow">
+              <label>Séparation des valeurs</label>
+              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input"}}
           </div>
           {{#if editedLayer.mapping.scale.diverging}}
           <div>
@@ -113,6 +113,7 @@
             {{/x-tabs}}
             {{/o-wrap.brewer}}
           </div>
+          {{#if editedLayer.mapping.rules.length}}
           <div>
               <label>Absence de données</label>
               <ul class="collection">
@@ -121,7 +122,7 @@
                 <div class="horizontal space-between flow layer-header">
                   <div class="horizontal airy flow">
                     {{#if rule.emptyValue}}
-                      <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
+                      <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
                     {{else}}
                       <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
                     {{/if}}
@@ -135,6 +136,7 @@
               {{/each}}
               </ul>
           </div>
+          {{/if}}
       </div>
     </div>
   </div>

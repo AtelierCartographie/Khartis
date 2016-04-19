@@ -87,7 +87,8 @@ export default Ember.Controller.extend({
   layoutChange: function() {
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
-    'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor'),
+    'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
+    'graphLayout.showGrid', 'graphLayout.showLegend'),
   
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');

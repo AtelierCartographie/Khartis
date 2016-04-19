@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="body">
-    <div class="settings vertical flow">
+    <div class="settings vertical airy flow">
       {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
       {{#if (x-greater editedLayer.mapping.rules.length 8)}}
       <div class="filled warning padded">
@@ -22,7 +22,7 @@
             <div class="horizontal space-between flow layer-header">
               <div class="horizontal airy flow">
                 {{#if rule.emptyValue}}
-                  <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span>
+                  <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
                 {{else}}
                   <span class="varname">{{rule.label}}</span>
                 {{/if}}
@@ -33,7 +33,7 @@
                 {{pattern-dropdown patterns=brewer.availablePatterns value=rule.pattern color=rule.color}}
               </div>
             </div>
-            <div class="flow" style="height: 4px;">
+            <div class="flow" style="height: 6px; padding: 2px;">
             {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
             </div>
           </li>

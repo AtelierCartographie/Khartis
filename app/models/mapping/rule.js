@@ -11,7 +11,7 @@ let Rule = Struct.extend({
   strokeColor: "#404040",
   pattern: null,
   visible: true,
-  shape: "circle",
+  shape: null,
   
   emptyValue: function() {
     return this.get('label') === Rule.EMPTY_VALUE;

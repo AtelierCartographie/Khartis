@@ -73,7 +73,7 @@ let symbol = function(opts = {}) {
       
       let conf = factory(name),
           max = Math.max.apply(this, conf.viewBox),
-          shift = 0.1*max;
+          shift = 0.2*max;
       
       symbol = defs.append("symbol")
         .attr({

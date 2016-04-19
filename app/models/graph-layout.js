@@ -7,9 +7,9 @@ import Projection from './projection';
 var Margin = Struct.extend({
   
   l: 5,
-  r: 25,
+  r: 5,
   t: 5,
-  b: 65,
+  b: 5,
   
   h: function() {
     return this.get('l') + this.get('r');
@@ -53,7 +53,11 @@ var GraphLayout = Struct.extend({
 	
 	backgroundColor: "#F7F7F7",
   backMapColor: "#ededed",
+  
+  showGrid: true,
   gridColor: "#e1e3ee",
+  
+  showLegend: false,
 	
 	autoCenter: false,
 	
@@ -153,7 +157,9 @@ var GraphLayout = Struct.extend({
       ty: this.get('ty'),
       width: this.get('width'),
       height: this.get('height'),
-      zoom: this.get('zoom')
+      zoom: this.get('zoom'),
+      showGrid: this.get('showGrid'),
+      showLegend: this.get('showLegend')
     });
   }
   
@@ -178,7 +184,9 @@ GraphLayout.reopenClass({
         tx: json.tx,
         ty: json.ty,
         height: json.height,
-        zoom: json.zoom
+        zoom: json.zoom,
+        showGrid: json.showGrid,
+        showLegend: json.showLegend
       });
       return o;
   }

@@ -13,7 +13,7 @@ let Projection = Struct.extend({
   lobes: null,
   translation_x: 1,
   translation_y: 1,
-  translation_z: 1,
+  rotation_z: 1,
   
   rotateX: Ember.computed('rotate', {
     get() {
@@ -130,7 +130,7 @@ let Projection = Struct.extend({
       year: this.get('year'),
       translation_x: this.get('translation_x'),
       translation_y: this.get('translation_y'),
-      translation_z: this.get('translation_z')
+      rotation_z: this.get('rotation_z')
     });
   }
   
@@ -154,7 +154,7 @@ Projection.reopenClass({
         year: json.year,
         translation_x: json.translation_x,
         translation_y: json.translation_y,
-        translation_z: json.translation_z
+        rotation_z: json.rotation_z
       });
   }
   

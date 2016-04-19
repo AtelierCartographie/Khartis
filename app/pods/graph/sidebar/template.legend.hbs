@@ -3,7 +3,15 @@
     {{localized-tpl tpl="help/{locale}/graph/legend"}}
   </div>
   <div>
-    Ceci est la configuration de la légende
+    <div class="horizontal middle flow">
+        {{#if model.graphLayers.length}}
+        <label class="horizontal solid flow padded-r">Afficher la légende</label>
+        <div class="fluid">
+          {{input type="checkbox" checked=model.graphLayout.showLegend}}
+          <div class="-h"></div>
+        </div>
+        {{/if}}
+    </div>
   </div>
 </div>
 

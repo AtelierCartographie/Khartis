@@ -21,7 +21,7 @@ export default {
         heightResolution = (fHeight - margin.get('v')) / pixelBoundsHeight,
 
         r = Math.min(widthResolution, heightResolution);
-
+    
     return proj.fn()
       .center(center)
       .scale(r)
@@ -33,4 +33,4 @@ export default {
       
   }
 
-}
+};

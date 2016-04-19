@@ -21,7 +21,8 @@ let DataMixin = Ember.Mixin.create({
           cells: dist.cells,
           label: dist.val,
           visible: true,
-          color: scale(i)
+          color: scale(i),
+          shape: "circle"
         }));
        
       this.set("rules", rules);

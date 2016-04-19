@@ -13,13 +13,21 @@
         Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
       </div>
       {{/if}}
-      <div>
-        <Label>Taille des symbols</Label>
-        {{x-slider class="fluid" value=editedLayer.mapping.visualization.minSize min=4 max=editedLayer.mapping.visualization.maxSize}}
+      <div class="horizontal airy flow">
+        <div class="horizontal airy middle flow">
+          <Label>Taille des symbols</Label>
+          {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=editedLayer.mapping.visualization.maxSize}}
+        </div>
+        <div class="horizontal airy middle flow">
+          <Label>Epaisseur du trait</Label>
+          {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
+        </div>
       </div>
-      <div>
-        <Label>Epaisseur du trait</Label>
-        {{x-slider class="fluid" value=editedLayer.mapping.visualization.stroke min=0 max=6}}
+      <div class="horizontal airy flow">
+        <div class="horizontal airy middle solid flow w6">
+          <Label>Opacité</Label>
+          {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
+        </div>
       </div>
       <div>
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
@@ -31,7 +39,7 @@
             <div class="horizontal space-between flow layer-header">
               <div class="horizontal airy flow">
                 {{#if rule.emptyValue}}
-                  <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span>
+                  <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
                 {{else}}
                   <span class="varname">{{rule.label}}</span>
                 {{/if}}
@@ -47,7 +55,7 @@
                 {{color-picker stroke=true value=rule.strokeColor}}
               </div>
             </div>
-            <div class="flow" style="height: 4px;">
+             <div class="flow" style="height: 6px; padding: 2px;">
             {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
             </div>
           </li>

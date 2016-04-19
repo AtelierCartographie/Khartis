@@ -45,9 +45,9 @@
               {{/x-dropdown-plus}}
           </div>
           {{/if}}
-          <div>
-              <label>Value break</label>
-              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak}}
+          <div class="horizontal airy flow">
+              <label>Séparation des valeurs</label>
+              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input"}}
           </div>
           {{#if (x-every editedLayer.mapping.scale.possibleClasses.length editedLayer.mapping.scale.diverging)}}
           <div>
@@ -80,99 +80,68 @@
                 {{/facet.list}}
               {{/x-dropdown-plus}}
           </div>
-          <div>
-              {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
+          <div class="horizontal airy flow">
+              <div>
+                <Label>Taille du plus petit symbol</Label>
+                {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=8}}
+              </div>
+              <div>
+                <Label>Taille du plus grand symbol</Label>
+                {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.minSize max=12}}
+              </div>
+          </div>
+          <div class="horizontal airy middle flow">
+             {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
               <label>Forme</label>
               {{shape-dropdown
                 shapes=shapeSelection.availableShapes
                 value=editedLayer.mapping.visualization.shape
                 color=editedLayer.mapping.visualization.color
               }}
-              {{/o-wrap.shape-selection}}
-          </div>
-          <div>
+            {{/o-wrap.shape-selection}}
             {{color-picker value=editedLayer.mapping.visualization.color}}
+            {{#if editedLayer.mapping.scale.diverging}}
+              {{color-picker value=editedLayer.mapping.visualization.colorBeforeBreak}}
+            {{/if}}
+            <div class="horizontal airy middle solid flow w3">
+              <Label>Epaisseur du trait</Label>
+              {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=4}}
+            </div>
           </div>
-          {{#if editedLayer.mapping.scale.diverging}}
-          <div>
-            {{color-picker value=editedLayer.mapping.visualization.colorBeforeBreak}}
+          <div class="horizontal airy middle solid flow w4">
+              <Label>Opacité</Label>
+              {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
           </div>
-          {{/if}}
         </div>
+        
         <div class="solid vertical flow w6">
           {{distribution-bars mapping=editedLayer.mapping}}
         </div>
       </div>
+      {{#if editedLayer.mapping.rules.length}}
       <div>
-        <div>
-            {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
-            {{#x-tabs}}
-                <ul class="tabs brewer-tabs">
-                  <li tab-id="color-swatchs">Couleurs</li>
-                  <li tab-id="texture-swatchs">Hachures</li>
-                </ul>
-                <div class="panes">
-                  <div class="tab-pane {{if editedLayer.mapping.visualization.colors 'active'}}" id="color-swatchs">
-                    <div class="vertical breakable flow swatchs" style="height: 100px">
-                      {{#each brewer.availableColorSets as |colorSet|}}
-                        <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
-                          {{color-swatch
-                            class=(if (x-eq colorSet.key editedLayer.mapping.visualization.colors) 'selected')
-                            colors=colorSet.colors
-                          }}
-                        </div>
-                      {{/each}}
-                    </div>
-                  </div>
-                  <div class="tab-pane {{if editedLayer.mapping.visualization.pattern 'active'}}" id="texture-swatchs">
-                    <div class="horizontal flow">
-                      <div class="vertical breakable flow w8" style="height: 100px">
-                        {{#each brewer.availablePatterns as |pattern|}}
-                          <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
-                            {{pattern-swatch pattern=pattern
-                              classBreak=editedLayer.mapping.scale.classesBeforeBreak
-                              count=editedLayer.mapping.scale.classes
-                              color=editedLayer.mapping.visualization.patternColor
-                              class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
-                            }}
-                          </div>
-                        {{/each}}
-                      </div>
-                      <div class="vertical airy middle center flow">
-                        <label>Couleur des hachures</label>
-                        <div class="solid">
-                        {{color-picker value=editedLayer.mapping.visualization.patternColor}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            {{/x-tabs}}
-            {{/o-wrap.brewer}}
-          </div>
-          <div>
-              <label>Absence de données</label>
-              <ul class="collection">
-              {{#each editedLayer.mapping.rules as |rule|}}
-              <li>
-                <div class="horizontal space-between flow layer-header">
-                  <div class="horizontal airy flow">
-                    {{#if rule.emptyValue}}
-                      <span class="varname">{{t (concat 'mapping.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
-                    {{else}}
-                      <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
-                    {{/if}}
-                  </div>
-                  <div class="solid w4 text-right no-drag">
-                    <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                    {{color-picker value=rule.color}}
-                  </div>
-                </div>
-              </li>
-              {{/each}}
-              </ul>
-          </div>
+          <label>Absence de données</label>
+          <ul class="collection">
+          {{#each editedLayer.mapping.rules as |rule|}}
+          <li>
+            <div class="horizontal space-between flow layer-header">
+              <div class="horizontal airy flow">
+                {{#if rule.emptyValue}}
+                  <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
+                {{else}}
+                  <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
+                {{/if}}
+              </div>
+              <div class="solid w4 text-right no-drag">
+                <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                {{color-picker value=rule.color}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          </ul>
       </div>
+      {{/if}}
     </div>
   </div>
 </div>

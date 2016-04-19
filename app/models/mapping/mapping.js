@@ -118,7 +118,7 @@ let Mapping = Struct.extend({
         } else if (mode === "size") {
           return visualization.get('minSize');
         } else if (mode === "shape") {
-          return rule.get('visible') ? rule.get('shape') : null;
+          return rule.get('visible') ? (rule.get('shape') ? rule.get('shape') : visualization.get('shape') ) : null;
         } else if (mode === "strokeColor") {
           return rule.get('visible') ? rule.get('strokeColor') : null;
         }

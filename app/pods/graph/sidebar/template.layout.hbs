@@ -24,6 +24,13 @@
                 <label class="horizontal right solid flow w2 padded-r text-right">Fond</label>
                 {{color-picker value=model.graphLayout.backMapColor}}
             </div>
+            <div class="horizontal middle flow">
+                <label class="horizontal solid flow padded-r">Afficher la grille</label>
+                <div class="fluid">
+                  {{input type="checkbox" checked=model.graphLayout.showGrid}}
+                  <div class="-h"></div>
+                </div>
+            </div>
           </div>
         </div>
     </div>

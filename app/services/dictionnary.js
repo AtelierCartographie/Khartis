@@ -44,13 +44,13 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
           
           let headers = data[0],
               body = data.slice(1),
-              json = body.map( r => {
+              projs = body.map( r => {
                 let o = {};
                 headers.forEach( (h,i) => o[csvHeaderToJs(h)] = r[i] );
-                return o;
+                return Projection.create(o);
               });
           
-          this.set('data.projections', json.map( j => Projection.create(j) ));
+          this.set('data.projections', projs);
           res(true);
           
         }

@@ -18,6 +18,8 @@ export default Ember.Component.extend({
   
   _tmpValue: null,
   
+  band: null,
+  
   displayedValue: function() {
     
     let d3format = (d) => d,
@@ -115,11 +117,51 @@ export default Ember.Component.extend({
         scale = this.get('scale'),
         pos = Math.max(0, Math.min(scale.range()[1], d3.event.x));
     
-    this.d3l().selectAll(".dragger").style({
-      left: pos + "px"
-    });
+    this.set('_tmpValue', this.stepValue(scale.invert(pos)));
     
-    this.set('_tmpValue', scale.invert(pos));
+    this.translate(this.get('_tmpValue'));
+    
+  },
+  
+  stepValue(val) {
+    
+    let scale = this.get('scale'),
+        band = this.get('band');
+        
+    if (band) {
+
+      if (val === scale.domain()[0] || val === scale.domain()[1]) {
+        return val;
+      }
+
+      var alignValue = val;
+      
+      var valModStep = (val - scale.domain()[0]) % band;
+      alignValue = val - valModStep;
+
+      if (Math.abs(valModStep) * 2 >= band) {
+        alignValue += (valModStep > 0) ? band : -band;
+      }
+      
+      return alignValue;
+      
+    } else {
+      
+      return val;
+      
+    }
+
+  },
+  
+  translate(val) {
+    
+    let translate = this.get('scale')(this.stepValue(val)) + "px";
+    
+    this.d3l().selectAll(".dragger").style({
+      "-webkit-transform":`translateX(${translate})`,
+      "-ms-transform":`translateX(${translate})`,
+      "transform":`translateX(${translate})`
+    });
     
   },
   
@@ -131,9 +173,7 @@ export default Ember.Component.extend({
     
     let scale = this.get('scale'); 
     
-    this.d3l().selectAll(".dragger").style({
-      left: scale(this.get('value')) + "px"
-    });
+    this.translate(this.get('value'));
     
   }.observes('value'),
   
@@ -143,7 +183,7 @@ export default Ember.Component.extend({
       let newVal = val.replace(/[^\d\-]+/g, "");
       
       if (!isNaN(parseFloat(newVal))) {
-        this.set('_tmpValue', val.replace(/[^\d\-]+/g, ""));
+        this.set('_tmpValue', newVal);
       }
       
     }

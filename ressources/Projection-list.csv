@@ -2,7 +2,7 @@ id,Name,Scale,d3.geo,.rotate,.scale,.clipAngle,.lobes,d3-link,.center,.rotate-al
 atlantis,Atlantis,World,d3.geo.mollweide(),"[30, -45, 90]",150,,,http://bl.ocks.org/mbostock/4519975,,,4,1,2,John Bartholomew,1948,1,1,1
 briesemeister,Briesemeister,World,"d3.geo.projection(d3.geo.hammer.raw(1.75, 2))","[-10, -45]",190,,,http://bl.ocks.org/mbostock/4519926,,,4,1,2,William A. Briesemeister,1953,1,0,0
 interrupted_goode_homolosine,Interrupted Goode Homolosine,World,d3.geo.interrupt(d3.geo.homolosine.raw),,150,,"[[ [[-180, 0], [-100, 90], [ -40, 0]], [[ -40, 0], [ 30, 90], [ 180, 0]] ], [ [[-180, 0], [-160, -90], [-100, 0]], [[-100, 0], [ -60, -90], [ -20, 0]], [[ -20, 0], [ 20, -90], [ 80, 0]], [[ 80, 0], [ 140, -90], [ 180, 0]] ]]",http://bl.ocks.org/mbostock/4448587,,,4,1,2,J. Paul Goode,1923,1,0,0
-lambert_azimuthal_equal_area,Lambert Azimuthal Equal-Area,Region,d3.geo.azimuthalEqualArea(),"[0, -90]",150,180 - 1e-3,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann lambert,1772,1,1,1
+lambert_azimuthal_equal_area,Lambert Azimuthal Equal-Area,Region,d3.geo.projection(d3.geo.hammer.raw(1)),"[0, -90]",150,180 - 1e-3,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann lambert,1772,1,1,1
 mollweide,Mollweide,World,d3.geo.mollweide(),,150,,,http://bl.ocks.org/mbostock/3734336,longitude,,4,1,2,Karl Mollweide,1805,1,0,0
 natural_earth,Natural Earth,World,d3.geo.naturalEarth(),,150,,,http://bl.ocks.org/mbostock/4479477,longitude,,3,2,4,Tom Patterson,2007,1,0,0
 orthographic,Orthographic,Region,d3.geo.orthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,0,0,1,1,1

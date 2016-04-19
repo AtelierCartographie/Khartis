@@ -77,6 +77,23 @@ export default {
       "point": "point",
       "rect": "carré",
       "text": "text"
+    },
+    "interval": {
+      "type": {
+        "regular": "intervalles réguliers",
+        "mean": "moyennes emboitées",
+        "quantile": "quantiles",
+        "linear": "aucune"
+      }
+    },
+    "rule": {
+      "no_value": "(aucune valeur)"
+    },
+    "contrast": {
+      "sqrt": "racine carrée",
+      "cube_root": "racine cubique",
+      "identity": "linéaire",
+      "square": "carré"
     }
   },
   

@@ -15,7 +15,7 @@
   max-height: 100%;
   
   &.split-view {
-    max-height: 50%;
+    max-height: 60%;
   }
   
   .titlebar {
@@ -24,6 +24,7 @@
     @extend %horizontal;
     @extend %space-between;
     @extend %padded;
+    @extend %solid;
     
     border-bottom: 1px solid greys(30%);
     
@@ -93,5 +94,11 @@
     border-right: 1px solid greys(40%);
   }
   
+}
+
+.configuration-panel {
+  .value-break-input {
+    width: 80px;
+  }
 }
 

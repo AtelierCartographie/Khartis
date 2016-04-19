@@ -81,7 +81,12 @@ export default Ember.Component.extend({
     trigger.hover(show, hide)
     
   }.on("didInsertElement"),
-
+  
+  cleanup: function() {
+    this.tooltipEl.css("display", "none");
+  }.on("willDestroyElement"),
+	
+  
   '$': function () {
     return $("#" + this.elementId);
   },

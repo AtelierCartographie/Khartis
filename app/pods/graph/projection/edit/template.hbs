@@ -2,16 +2,17 @@
   <div class="titlebar">
     <div class="title">{{#link-to 'graph.projection'}}{{t "navigation.chooseProjection"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i> {{t (concat "projection." model.graphLayout.projection.id ".name")}}</div>
     <div class="actions">
+      {{#link-to 'graph.projection'}}<div class="small button filled default" {{action 'navigateTo' 'graph.projection'}}>Changer de projection</div>{{/link-to}}
       {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
     </div>
   </div>
   <div class="body">
     <div class="settings horizontal center airy flow">
       <div class="solid vertical flow w6">
-        <div class="fluid text-center">
+        <div class="solid text-center">
           <h3>Information sur la projection</h3>
         </div>
-        <div class="vertical padded flow infos">
+        <div class="vertical padded space-around flow infos">
           <div>
             <label>Nom :</label>
             {{t (concat "projection." model.graphLayout.projection.id ".name")}}
@@ -39,21 +40,34 @@
         </div>
       </div>
       <div class="solid vertical flow w6">
-        <div class="fluid text-center">
+        <div class="solid text-center">
           <h3>Paramètres de la projection</h3>
         </div>
         <div>
           <label>Zoom</label>
-          {{x-slider class="fluid" value=model.graphLayout.zoom min=1 max=10}}
+          {{x-slider class="fluid" band=0.5 value=model.graphLayout.zoom min=1 max=10}}
         </div>
+        {{#if (x-some (x-eq model.graphLayout.projection.translation_x 1) (x-eq model.graphLayout.projection.translation_y 1))}}
+        <div>
+          <label>Centrage</label>
+          <div class="horizontal middle flow">
+            {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
+            <div class="horizontal middle solid flow w6"><span class="solid padded-r">Lon.</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}</div>
+            {{/if}}
+            {{#if (x-eq model.graphLayout.projection.translation_y 1)}}
+            <div class="horizontal middle solid flow w6"><span class="solid padded-r">Lat.</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateY min=-180 max=180}}</div>
+            {{/if}}
+          </div>
+        </div>
+        {{/if}}
+        {{#if (x-eq model.graphLayout.projection.rotation_z 1)}}
         <div>
           <label>Rotation</label>
           <div class="horizontal middle flow">
-            <div class="horizontal middle solid flow w4"><span class="solid padded-r">X</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" value=model.graphLayout.projection.rotateX min=-180 max=180}}</div>
-            <div class="horizontal middle solid flow w4"><span class="solid padded-r">Y</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" value=model.graphLayout.projection.rotateY min=-180 max=180}}</div>
-            <div class="horizontal middle solid flow w4"><span class="solid padded-r">Z</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" value=model.graphLayout.projection.rotateZ min=-180 max=180}}</div>
+            <div class="horizontal middle solid flow w6"><span class="solid padded-r">Z</span>{{x-slider class="fluid" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-180 max=180}}</div>
           </div>
         </div>
+        {{/if}}
       </div>
     </div>
   </div>
