@@ -9,6 +9,7 @@
 @import "parts/configuration-panel";
 @import "parts/help";
 @import "parts/graph";
+@import "parts/browser-check";
 
 html, body {
   height: 100%;
@@ -457,4 +458,12 @@ footer {
   box-shadow: none;
   transition: none;
   text-shadow: none;
+}
+
+/**
+  Fix occasional width bug on Chrome
+*/
+.state-icon,
+.graph.vertical.flow > .horizontal.flow {
+  width:100%;
 }
