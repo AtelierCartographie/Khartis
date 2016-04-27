@@ -7,6 +7,9 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     babel: {
       includePolyfill: true
+    },
+    fingerprint: {
+      exclude: ['assets/images/']
     }
   });
   
