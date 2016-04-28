@@ -113,7 +113,7 @@ let lines = function(opts = {}) {
         
     }
     
-    mask.style("fill", `url(${window.location}#pattern-${maskId})`);
+    mask.attr("fill", `url(${window.location}#pattern-${maskId})`);
         
   }
   
@@ -128,7 +128,57 @@ let lines = function(opts = {}) {
    
 };
 
+let Composer = function(){};
+
+Composer.prototype.compose = function(diverging, reverse, classes, before, angle, baseStroke) {
+  
+  let res;
+  
+  if (diverging) {
+    
+    let left = Array.from({length: before}, (v, i) => {
+          return this.build({
+              angle: angle + 90,
+              stroke: baseStroke + i
+            });
+        }),
+        right = Array.from({length: classes - before}, (v, i) => {
+          return this.build({
+              angle: angle,
+              stroke: baseStroke + i
+            });
+        });
+    
+    reverse ? right.reverse() : left.reverse();
+    
+    res = left.concat(right);
+    
+  } else {
+    res = Array.from({length: classes}, (v, i) => {
+      return this.build({
+          angle: angle,
+          stroke: baseStroke + i
+        });
+    });
+    reverse ? res.reverse() : void(0);
+  }
+  
+  return res;
+  
+};
+  
+Composer.prototype.build = function({angle, stroke}) {
+  return {
+    angle: angle,
+    stroke: stroke,
+    fn: lines({
+      orientation: [ angle ],
+      stroke: [ stroke  ]
+    })
+  };
+};
+
 const NONE = function() {};
 NONE.url = () => "none";
 
-export default {lines, NONE};
+export default {lines, NONE, Composer: new Composer()};

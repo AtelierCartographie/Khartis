@@ -5,19 +5,29 @@ import Colorbrewer from 'mapp/utils/colorbrewer';
 export default WrapperAbstract.extend({
   
   angles: [0, 45, 90, 135],
-
+  
   availableColorSets: function() {
     let master = this.get('obj.scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential,
         classes = this.get('obj.scale.classes');
     
       return Object.keys(master).map( k => {
+        
+        let colors = Colorbrewer.Composer.compose(
+          k.split(","), 
+          this.get('obj.scale.diverging'),
+          this.get('obj.visualization.reverse'), 
+          this.get('obj.scale.classes'),
+          this.get('obj.scale.classesBeforeBreak')
+        );
+        
         return {
-          colors: master[k][classes],
+          colors: colors,
           key: k
         };
+        
       }).filter( x => x.colors != null );
     
-  }.property('obj.scale._defferedChangeIndicator'),
+  }.property('obj.visualization._defferedChangeIndicator', 'obj.scale._defferedChangeIndicator'),
   
   availablePatterns: function() {
     return this.angles.reduce( (arr, angle) => {

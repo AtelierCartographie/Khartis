@@ -27,15 +27,12 @@ a {
 /* flow */
 body > .ember-view:not(.popable) {
   height: 100%;
-  @extend %flow;
-  @extend %vertical;
+  @include flow(vertical);
 }
 
 .application-header {
   @include depth(header);
-  @extend %flow;
-  @extend %solid;
-  @extend %space-between;
+  @include flow(solid, space-between);
   align-items: stretch;
   flex-basis: $header-height;
   padding: 0 2em;
@@ -81,8 +78,7 @@ footer {
   transition: width 150ms ease-out;
 
   .tool {
-    @extend %flow;
-    @extend %solid;
+    @include flow(solid);
     height: 5rem;
     width: 100%;
     align-self: stretch;
@@ -141,11 +137,7 @@ footer {
 }
 
 .navheader {
-
-  @extend %flow;
-  @extend %solid;
-  @extend %horizontal;
-  @extend %space-between;
+  @include flow(horizontal, solid, space-between);
   padding: 0.1rem 1rem 0.1rem 1rem;
   height: 3rem;
   background-color: greys(10%);
@@ -325,9 +317,8 @@ footer {
     margin: 0;
 
     li {
-
-      @extend %flow;
-      @extend %horizontal;
+      @include flow();
+      
       border-bottom: 1px solid greys(20%);
       padding-top: 0.8rem;
       padding-bottom: 0.8rem;
@@ -365,7 +356,7 @@ footer {
   }
 
   .column-configuration {
-    @extend %flow;
+    @include flow();
     min-height: 25rem;
     background-color: greys(5%);
   }

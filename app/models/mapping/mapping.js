@@ -32,26 +32,17 @@ let Mapping = Struct.extend({
   colorSet: function() {
     
     let name = this.get('visualization.colors'),
-        master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
+        master = Colorbrewer.sequential;
     
-    if (!name || !master[name]) {
-      this.set('visualization.colors', name = Object.keys(master)[0]);
-    }
+    return Colorbrewer.Composer.compose(
+      name.split(","), 
+      this.get('scale.diverging'),
+      this.get('visualization.reverse'), 
+      this.get('scale.classes'),
+      this.get('scale.classesBeforeBreak')
+    );
     
-    return master[name][this.get('scale.classes')];
-    
-  }.property('visualization.colors', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
-  
-  generatePattern({angle, stroke}) {
-    return {
-      angle: angle,
-      stroke: stroke,
-      fn: PatternMaker.lines({
-        orientation: [ angle ],
-        stroke: [ stroke  ]
-      })
-    };
-  },
+  }.property('visualization.colors', 'visualization.reverse', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
   
   init() {
     this._super();
@@ -114,7 +105,7 @@ let Mapping = Struct.extend({
         if (mode === "fill") {
           return rule.get('visible') ? rule.color : "none";
         } else if (mode === "texture" && rule.get('pattern')) {
-          return rule.get('visible') ? self.generatePattern(rule.get('pattern')) : {fn: PatternMaker.NONE};
+          return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "size") {
           return visualization.get('minSize');
         } else if (mode === "shape") {
@@ -144,7 +135,7 @@ let Mapping = Struct.extend({
   deferredChange: Ember.debouncedObserver(
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
-    'rules.@each._defferedChangeIndicator',
+    'rules.@each._defferedChangeIndicator', 'colorSet',
     function() {
       this.notifyDefferedChange();
     },

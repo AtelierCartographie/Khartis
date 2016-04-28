@@ -18,6 +18,8 @@ $viewport-min-width: 102.4rem !default;
     }
 }
 
+
+
 *, :after, :before {
     box-sizing: border-box;
 }
@@ -72,6 +74,111 @@ body {
    flex-shrink: 0;
 }
 
+@mixin flow($traits...) {
+  $fluid: 1;
+  $orientation: horizontal;
+  $reverse: 0;
+  display: flex;
+  @each $trait in $traits {
+    @if $trait == horizontal {
+      $orientation: horizontal;
+    } @else if $trait == vertical {
+      $orientation: vertical;
+    } @else if $trait == breakable {
+      flex-wrap: wrap;
+    } @else if $trait == breakable-reverse {
+      flex-wrap: wrap-reverse;
+      $reverse: 1;
+    } @else if $trait == space-between {
+      justify-content: space-between;
+    } @else if $trait == space-around {
+      justify-content: space-around;
+    } @else if $trait == solid {
+      $fluid: 0;
+    }
+  }
+  @if $fluid == 1 {
+    @extend %fluid;
+  } @else {
+    @extend %solid;
+  }
+  
+  @if $orientation == horizontal {
+    @include flow-horizontal($traits);
+  } @else if $orientation == vertical {
+    @include flow-vertical($traits, $reverse);
+  }
+}
+
+@mixin flow-horizontal($traits) {
+  @extend .flow.horizontal;
+  flex-direction: row;
+  $unparsed: 0;
+  @each $trait in $traits {
+    @if $trait == airy {
+      & > * {
+        margin-left: $gutter/2;
+        margin-right: $gutter/2;
+        &:first-child { margin-left: 0; }
+        &:last-child { margin-right: 0; }
+      }
+    } @else if $trait == center {
+      justify-content: center;
+    } @else if $trait == middle {
+      align-items: center;
+    } @else if $trait == left {
+      justify-content: flex-start;
+    } @else if $trait == right {
+      justify-content: flex-end;
+    } @else if $trait == top {
+      flex-direction: row;
+    } @else if $trait == bottom {
+      flex-direction: row-reverse;
+    } @else if $trait == rtl {
+      flex-direction: row-reverse;
+    } @else if $trait == baseline {
+      align-items: baseline;
+    }
+  }
+}
+
+@mixin flow-vertical($traits, $reverse: 0) {
+  @extend .flow.vertical;
+  flex-direction: column;
+  @each $trait in $traits {
+    @if $trait == airy {
+      & > * {
+        margin-top: $gutter/2;
+        margin-bottom: $gutter/2;
+        &:first-child { margin-top: 0; }
+        &:last-child { margin-bottom: 0; }
+      }
+    } @else if $trait == center {
+      align-items: center;
+    } @else if $trait == middle {
+      justify-content: center;
+    } @else if $trait == left {
+      @if $reverse == 1 {
+        align-items: flex-end;
+      } @else {
+        align-items: flex-start;
+      }
+    } @else if $trait == right {
+      @if $reverse == 1 {
+        align-items: flex-start;
+      } @else {
+        align-items: flex-end;
+      }
+    } @else if $trait == top {
+      justify-content: flex-start;
+    } @else if $trait == bottom {
+      justify-content: flex-end;
+    } @else if $trait == btt {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
 .flow, %flow {
     @extend %fluid;
     display: flex;
@@ -85,10 +192,9 @@ body {
     }
 
     &.vertical, &%vertical {
-        display:         flex;
         flex-direction: column;
 
-        &.btp, %btp {
+        &.btt, %btt {
             flex-direction: column-reverse;
         }
 
@@ -138,7 +244,6 @@ body {
     }
 
     &.horizontal, &%horizontal {
-        display: flex;
         flex-direction: row;
 
         &.rtl, &%rtl {
@@ -192,38 +297,65 @@ body {
 
 /* shortcuts */
 
-.padded-l, %padded-l {
-    padding-left: $gutter / 2;
+@mixin padded($size) {
+  
+  .padded-l, %padded-l {
+    padding-left: $size;
+    & > *.overflows { margin-left: -$size; }
+  }
+
+  .padded-r, %padded-r {
+    padding-right: $size;
+    & > *.overflows { margin-right: -$size; }
+  }
+
+  .padded-t, %padded-t {
+    padding-top: $size;
+    & > *.overflows { margin-top: -$size; }
+  }
+
+  .padded-b, %padded-b {
+    padding-bottom: $size;
+    & > *.overflows { margin-bottom: -$size; }
+  }
+
+  .padded, %padded {
+    padding-left: $size;
+    padding-right: $size;
+    padding-top: $size;
+    padding-bottom: $size;
+    & > *.overflows {
+      margin-left: -$size;
+      margin-right: -$size;
+      margin-top: -$size;
+      margin-bottom: -$size;
+    }
+  }
+
+  .padded-h, %padded-h {
+    padding-left: $size;
+    padding-right: $size;
+    & > *.overflows {
+      margin-left: -$size;
+      margin-right: -$size;
+    }
+  }
+
+  .padded-v, %padded-v {
+    padding-top: $size;
+    padding-bottom: $size;
+    & > *.overflows {
+      margin-top: -$size;
+      margin-bottom: -$size;
+    }
+  }
+  
 }
 
-.padded-r, %padded-r {
-    padding-right: $gutter / 2;
-}
+@include padded($gutter / 2);
 
-.padded-t, %padded-t {
-    padding-top: $gutter / 2;
-}
+.pad2 { @include padded($gutter); }
 
-.padded-b, %padded-b {
-    padding-bottom: $gutter / 2;
-}
-
-.padded, %padded {
-    @extend %padded-l;
-    @extend %padded-r;
-    @extend %padded-t;
-    @extend %padded-b;
-}
-
-.padded-h, %padded-h {
-    @extend %padded-l;
-    @extend %padded-r;
-}
-
-.padded-v, %padded-v {
-    @extend %padded-t;
-    @extend %padded-b;
-}
 
 /* Misc */
 

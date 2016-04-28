@@ -61,6 +61,10 @@
               {{/x-dropdown-plus}}
           </div>
           {{/if}}
+          <div>
+             <label>Inverser ?</label>
+             {{input type="checkbox" checked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div>
+          </div>
         </div>
         <div class="solid vertical flow w6">
           {{distribution-bars mapping=editedLayer.mapping}}
@@ -96,6 +100,7 @@
                               classBreak=editedLayer.mapping.scale.classesBeforeBreak
                               count=editedLayer.mapping.scale.classes
                               color=editedLayer.mapping.visualization.patternColor
+                              reverse=editedLayer.mapping.visualization.reverse
                               class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
                             }}
                           </div>

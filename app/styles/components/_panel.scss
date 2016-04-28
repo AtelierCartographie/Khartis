@@ -5,10 +5,7 @@ $dialog-footer-height: 3.6rem !default;
     
     & > header {
         
-        @extend %flow;
-        @extend %horizontal;
-        @extend %space-between;
-        @extend %middle;
+        @include flow(horizontal, space-between, middle);
         
         height: $dialog-header-height;
         padding: 0px $gutter 0px $gutter;

@@ -69,8 +69,8 @@
       display: inline-block;
       margin-left: 2px;
       cursor: pointer;
-      @extend .icon;
-      @extend .icon-trash;
+      @extend .icon !optional;
+      @extend .icon-trash !optional;
     }
   }
 
@@ -136,7 +136,7 @@
 
 .multi-value-input-wrapper {
   position: relative;
-  @extend .clearfix;
+  //@extend .clearfix;
 }
 
 .multi-value-input.multiple-selections input {

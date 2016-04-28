@@ -8,7 +8,7 @@ let symbol = function(opts = {}) {
             return {
               tag: "path",
               attrs: {
-                d: "M0,0 100,0 100,100 0,100"
+                d: "M0,0 100,0 100,100 0,100 0,0"
               },
               viewBox: [0, 0, 100, 100]
             };
@@ -78,7 +78,7 @@ let symbol = function(opts = {}) {
       symbol = defs.append("symbol")
         .attr({
           id: id,
-          viewBox: Array.from([-shift, -shift, shift, shift], (v, i) => v + conf.viewBox[i]).join(' ')
+          viewBox: Array.from([-shift, -shift, 2*shift, 2*shift], (v, i) => v + conf.viewBox[i]).join(' ')
         });
       
       symbol.append(conf.tag).attr(conf.attrs);

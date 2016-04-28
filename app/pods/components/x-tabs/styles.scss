@@ -2,8 +2,7 @@
   
   .tabs {
     
-    @extend %flow;
-    @extend %horizontal;
+    @include flow();
     
     padding: 0;
     

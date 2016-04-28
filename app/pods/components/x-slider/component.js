@@ -109,18 +109,15 @@ export default Ember.Component.extend({
   }.on('didInsertElement'),
   
   moveDragger() {
-    
-    let margin = {
-          l: parseInt( this.$(".axis").css("marginLeft") ),
-          r: parseInt( this.$(".axis").css("marginRight") )
-        },
-        scale = this.get('scale'),
-        pos = Math.max(0, Math.min(scale.range()[1], d3.event.x));
-    
-    this.set('_tmpValue', this.stepValue(scale.invert(pos)));
-    
-    this.translate(this.get('_tmpValue'));
-    
+      let scale = this.get('scale'),
+           pos = Math.max(0, Math.min(scale.range()[1], d3.event.x)),
+           tmpVal = this.stepValue(scale.invert(pos));
+      
+      this.translate(tmpVal);
+      
+      if (this.get('_tmpValue') != tmpVal) {
+        this.set('_tmpValue', tmpVal);
+      }
   },
   
   stepValue(val) {
@@ -167,7 +164,7 @@ export default Ember.Component.extend({
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 50),
+  }, 300),
   
   valueChange: function() {
     

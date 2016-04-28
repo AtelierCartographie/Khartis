@@ -66,12 +66,17 @@ export default Ember.Component.extend({
 		
     // HANDLE RESIZE
     let $size = () => {
-      this.setProperties({
-        '$width': this.$().parent().width(),
-        '$height': this.$().parent().height()
-      });
+      let $width = this.$().parent().width(),
+          $height = this.$().parent().height();
+      
+      if ($width != this.get('$width') || $height != this.get('$height')) {
+        this.setProperties({
+          '$width': this.$().parent().width(),
+          '$height': this.$().parent().height()
+        });
+      }
     };
-    this.set('resizeInterval', setInterval($size, 600));
+    this.set('resizeInterval', setInterval($size, 500));
     $size();
     // ---------
     
@@ -154,6 +159,7 @@ export default Ember.Component.extend({
 		mg.append("rect")
 			.attr("fill", "none");
 
+    this.updateMargins();
 		this.projectAndDraw();
     this.updatePosition();
 		this.updateColors();
@@ -203,33 +209,9 @@ export default Ember.Component.extend({
     
   }.observes('graphLayout.tx', 'graphLayout.ty'),
   
-  projection: function() {
+  updateMargins: function() {
     
-    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
-		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
-    
-    return projector.computeProjection(
-			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
-			w,
-			h,
-			this.get('graphLayout.width'),
-			this.get('graphLayout.height'),
-			this.get('graphLayout.margin'),
-      this.get('graphLayout.zoom'),
-			this.get('graphLayout.projection')
-		);
-    
-  }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin',
-    'graphLayout.projection._defferedChangeIndicator'),
-  
-	
-	projectAndDraw: function() {
-    
-    var path = d3.geo.path();
-		path.projection(this.get('projection'));
-		
-		// ===========
+    // ===========
 		// = VIEWBOX =
 		// ===========
 		
@@ -278,6 +260,37 @@ export default Ember.Component.extend({
       .attr("stroke-width", "1")
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
+      
+      this.drawLegend();
+    
+  }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
+    'graphLayout.margin.h',  'graphLayout.margin.v'),
+  
+  projection: function() {
+    
+    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
+		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+    
+    return projector.computeProjection(
+			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
+			w,
+			h,
+			this.get('graphLayout.width'),
+			this.get('graphLayout.height'),
+			this.get('graphLayout.margin'),
+      this.get('graphLayout.zoom'),
+			this.get('graphLayout.projection')
+		);
+    
+  }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
+    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin',
+    'graphLayout.projection._defferedChangeIndicator'),
+  
+	
+	projectAndDraw: function() {
+    
+    var path = d3.geo.path();
+		path.projection(this.get('projection'));
 		
     let defs = this.d3l().select("defs");
     
@@ -310,10 +323,8 @@ export default Ember.Component.extend({
     this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
-    this.drawLegend();
 			
-	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed', 'graphLayout.width',
-	 'graphLayout.height', 'graphLayout.margin.h',  'graphLayout.margin.v'),
+	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed'),
    
    drawGrid: function() {
      
@@ -495,10 +506,7 @@ export default Ember.Component.extend({
       _.attr({
           "xlink:xlink:href": d => `${window.location}#f-path-${d.id}`,
           "stroke-width": this.get("graphLayout.strokeWidth"),
-          "stroke": this.get("graphLayout.stroke")
-        })
-        .style({
-          "fill": d => converter(d.cell, "fill"),
+          "stroke": this.get("graphLayout.stroke"),
           "mask": d => {
             let mask = converter(d.cell, "texture");
           
@@ -509,6 +517,9 @@ export default Ember.Component.extend({
               return null;
             }
           }
+        })
+        .style({
+          "fill": d => converter(d.cell, "fill")
         });
       
     };
@@ -700,7 +711,7 @@ export default Ember.Component.extend({
       
     sel.exit().remove();
     
-  }.observes('graphLayout.showLegend')
+  }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
   
   
   /*drawText: function() {

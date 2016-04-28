@@ -55,6 +55,7 @@ export default Ember.Controller.extend({
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
         let j = JSON.parse(json);
+        topojson.presimplify(j);
         this.set('basemapData', {
           lands: topojson.feature(j, j.objects.land),
           centroids: topojson.feature(j, j.objects.centroid)
@@ -124,6 +125,7 @@ export default Ember.Controller.extend({
     let html = d3Node.node()
       .outerHTML
       .replace(/http:[^\)"]*?#/g, "#")
+      .replace(/&quot;/, "")
       .replace(/NS\d+\:/g, "xlink:");
 
     var blob = new Blob([html], {type: "image/svg+xml"});
@@ -198,6 +200,7 @@ export default Ember.Controller.extend({
     },
     
     bind(root, prop, value) {
+      console.log(prop, value);
       root.set(prop, value);
     },
     

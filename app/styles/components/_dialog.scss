@@ -8,23 +8,13 @@ $dialog-footer-height: 3.6rem !default;
     
     & > footer {
         
-        @extend %flow;
-        @extend %horizontal;
-        @extend %right;
-        @extend %airy;
-        @extend %middle;
+        @include flow(horizontal, right, middle, airy);
         
         height: $dialog-footer-height;
         padding: 0px $gutter 0px $gutter;
         
         & > .button {
-            
-            @extend %flow;
-            @extend %horizontal;
-            @extend %solid;
-            @extend %middle;
-            @extend %center;
-            
+            @include flow(horizontal, solid, middle, center);
         }
         
     }

@@ -1,7 +1,6 @@
 .accordion-item {
   & .accordion-trigger {
-    @extend %flow;
-    @extend %space-between;
+    @include flow(space-between);
     
     .icon-closed {
       display: inline-block;

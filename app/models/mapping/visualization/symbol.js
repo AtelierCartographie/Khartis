@@ -8,7 +8,7 @@ let SymbolVisualization = Struct.extend({
   shape: "star",
   strokeColor: "#404040",
   stroke: 2,
-  minSize: 4,
+  minSize: 5,
   maxSize: 10,
   
   colorStops(diverging) {

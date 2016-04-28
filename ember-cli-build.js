@@ -17,8 +17,6 @@ module.exports = function(defaults) {
   app.import("bower_components/spectrum/spectrum.js");
   app.import("bower_components/spectrum/spectrum.css");
   app.import("vendor/d3.geo.polyhedron.min.js");
-  app.import("vendor/d3.slider.js");
-  app.import("vendor/d3.slider.css");
   app.import("vendor/FileSaver.js");
   
   // Use `app.import` to add additional libraries to the generated

@@ -1,7 +1,6 @@
 & {
   
-  @extend %flow;
-  @extend %horizontal;
+  @include flow(horizontal);
   
   .swatch {
     width: 10px;

@@ -5,8 +5,7 @@
   left: 0px;
   right: 0px;
   
-  @extend %flow;
-  @extend %vertical;
+  @include flow(vertical);
   @extend %padded;
   
   background-color: rgba(255, 255, 255, 0.9);
@@ -20,11 +19,8 @@
   
   .titlebar {
     
-    @extend %flow;
-    @extend %horizontal;
-    @extend %space-between;
+    @include flow(space-between, solid);
     @extend %padded;
-    @extend %solid;
     
     border-bottom: 1px solid greys(30%);
     
@@ -64,11 +60,7 @@
   }
   
   & > .footer {
-    @extend %flow;
-    @extend %horizontal;
-    @extend %right;
-    @extend %airy;
-    @extend %middle;
+    @include flow(right, middle, airy);
   }
 }
 

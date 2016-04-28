@@ -19,6 +19,8 @@ export default Ember.Component.extend({
   
   color: null,
   
+  reverse: false,
+  
   draw: function() {
     
     this.d3l().append("defs");
@@ -30,15 +32,15 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   masks: function() {
-    return Array.from({length: this.get('count')}, (v, i) => {
-      return {
-        fn: PatternMaker.lines({
-              orientation: [ this.get('pattern.angle') + (i < this.get('classBreak') ? 90 : 0)],
-              stroke: this.get('pattern.stroke') + i / 4,
-            })
-      };
-    });
-  }.property('count', 'pattern'),
+    return PatternMaker.Composer.compose(
+      this.get('classBreak'),
+      this.get('reverse'),
+      this.get('count'),
+      this.get('classBreak'),
+      this.get('pattern.angle'),
+      this.get('pattern.stroke')
+    );
+  }.property('count', 'pattern', 'reverse'),
   
   drawMasks: function() {
     

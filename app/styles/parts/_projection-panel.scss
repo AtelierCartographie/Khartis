@@ -1,7 +1,6 @@
 .projection-panel {
   
-  @extend %flow;
-  @extend %horizontal;
+  @include flow();
   
   position: absolute;
   top:10px;

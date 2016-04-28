@@ -1,5 +1,6 @@
 // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
-export default {
+let brewer = {
+
   sequential: {
     BuGn: {
       2: ["#e5f5f9", "#2ca25f"],
@@ -177,6 +178,14 @@ export default {
   },
   
   diverging: {
+    "BuGn,BuPu": undefined,
+    "GnBu,OrRd": undefined,
+    "PuBu,PuRd": undefined,
+    "RdPu,YlGn": undefined,
+    "YlGnBu,YlOrRd": undefined
+  }
+  
+  /*diverging: {
     PuOr: {
       3: ["#f1a340","#f7f7f7","#998ec3"],
       4: ["#e66101","#fdb863","#b2abd2","#5e3c99"],
@@ -272,6 +281,40 @@ export default {
       10: ["#9e0142","#d53e4f","#f46d43","#fdae61","#fee08b","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2"],
       11: ["#9e0142","#d53e4f","#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2"]
     }
-  }
+  }*/
   
 };
+
+brewer.Composer = {
+  
+  compose(palettes, diverging, reverse, classes, before) {
+      
+    let master = brewer.sequential,
+        res = null;
+    
+    if (palettes.length > 1 && diverging) {
+      
+      let leftClasses = Math.max(before, 2),
+          rightClasses = Math.max(classes - before, 2),
+          left = master[palettes[0]][leftClasses].slice(0),
+          right = master[palettes[1]][rightClasses].slice(0);
+      
+      reverse ? right.reverse() : left.reverse();
+      
+      left = left.slice(0, left.length - (leftClasses - before));
+      right = right.slice(0, right.length - (rightClasses - (classes - before)));
+      
+      res = left.concat(right);
+      
+    } else {
+      res = master[palettes[0]][classes].slice(0);
+      reverse ? res.reverse() : void(0);
+    }
+    
+    return res;
+    
+  }
+
+};
+
+export default brewer;

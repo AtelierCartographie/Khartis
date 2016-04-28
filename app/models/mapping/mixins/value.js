@@ -65,14 +65,14 @@ let SurfaceMixin = Ember.Mixin.create({
   
   patternModifiers: function() {
     
-    return Array.from({length: this.get('scale.classes')}, (v, i) => {
-      let teta = i < this.get('scale.classesBeforeBreak') ? 90 : 0,
-          stroke = i;
-      return this.generatePattern({
-          angle: this.get('visualization.pattern.angle') + teta,
-          stroke: this.get('visualization.pattern.stroke') + stroke
-        });
-    });
+    return PatternMaker.Composer.compose(
+      this.get('scale.diverging'),
+      this.get('visualization.reverse'),
+      this.get('scale.classes'),
+      this.get('scale.classesBeforeBreak'),
+      this.get('visualization.pattern.angle'),
+      this.get('visualization.pattern.stroke')
+    );
     
   }.property('visualization.pattern', 'scale.classes',
   'scale.classesBeforeBreak', 'scale.diverging'),

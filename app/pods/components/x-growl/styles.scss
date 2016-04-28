@@ -9,11 +9,7 @@
 }
 
 .growl-stack {
-    @extend %flow;
-    @extend %vertical;
-    @extend %center;
-    @extend %middle;
-    @extend %airy;
+    @include flow(vertical, center, middle, airy);
 }
 
 .growl-message {
