@@ -115,7 +115,7 @@ export default Ember.Component.extend({
 
     var drag = d3.behavior.drag()
       .origin(() => {
-        return {x: mapG.attr('x'), y: mapG.attr('y')};
+        return {x: mapG.attr('tx'), y: mapG.attr('ty')};
       })
       .on("dragstart", () => {
         d3.event.sourceEvent.stopPropagation();
@@ -129,15 +129,15 @@ export default Ember.Component.extend({
             };
         mapG.attr({
          'transform': d3lper.translate({tx: pos.tx, ty: pos.ty}), 
-          x: pos.tx,
-          y: pos.ty
+          tx: pos.tx,
+          ty: pos.ty
         });
       })
       .on("dragend", () => {
         mapG.classed("dragging", false);
         this.get('graphLayout').setProperties({
-          tx: mapG.attr('x'),
-          ty: mapG.attr('y')
+          tx: mapG.attr('tx'),
+          ty: mapG.attr('ty')
         });
         this.sendAction('onAskVersioning', "freeze");
       });
@@ -203,8 +203,8 @@ export default Ember.Component.extend({
   updatePosition: function() {
     
     this.d3l().select(".map")
-      .attr("x", this.get('graphLayout.tx'))
-      .attr("y", this.get('graphLayout.ty'))
+      .attr("tx", this.get('graphLayout.tx'))
+      .attr("ty", this.get('graphLayout.ty'))
       .attr("transform", d3lper.translate({tx: this.get('graphLayout.tx'), ty: this.get('graphLayout.ty')}));
     
   }.observes('graphLayout.tx', 'graphLayout.ty'),
@@ -453,9 +453,9 @@ export default Ember.Component.extend({
       
       
       if (graphLayer.get('mapping.visualization.type') === "surface") {
-        this.mapPath(d3Layer, data, graphLayer);
+        this.mapSurface(d3Layer, data, graphLayer);
       } else if (graphLayer.get('mapping.visualization.type') === "symbol") {
-        this.mapShape(d3Layer, data, graphLayer);
+        this.mapSymbol(d3Layer, data, graphLayer);
       }
       
     } else if (geoDef.get('isLatLon')) {
@@ -488,14 +488,14 @@ export default Ember.Component.extend({
       }).filter( d => d !== undefined );
       
       if (graphLayer.get('mapping.visualization.type') === "symbol") {
-        this.mapShape(d3Layer, data, graphLayer);
+        this.mapSymbol(d3Layer, data, graphLayer);
       }
       
     }
     
   },
   
-  mapPath: function(d3Layer, data, graphLayer) {
+  mapSurface: function(d3Layer, data, graphLayer) {
     
     let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
@@ -538,7 +538,7 @@ export default Ember.Component.extend({
 	},
   
   
-   mapShape: function(d3Layer, data, graphLayer) {
+   mapSymbol: function(d3Layer, data, graphLayer) {
 		
     let projection = this.get('projection'),
         svg = this.d3l(),
@@ -583,7 +583,7 @@ export default Ember.Component.extend({
             
         }
         
-        el.style({
+        el.attr({
             "fill": fill,
             "stroke": strokeColor
           })

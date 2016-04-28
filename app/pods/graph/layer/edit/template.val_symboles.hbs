@@ -16,8 +16,7 @@
                   {{#unless editedLayer.mapping.scale.intervalType}}
                   Choisir
                   {{else}}
-                  {{editedLayer.mapping.scale.intervalType}}
-                  {{!t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType ".name")}}
+                  {{t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType)}}
                   {{/unless}}
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
@@ -95,16 +94,16 @@
                 color=editedLayer.mapping.visualization.color
               }}
             {{/o-wrap.shape-selection}}
-            {{color-picker value=editedLayer.mapping.visualization.color}}
             {{#if editedLayer.mapping.scale.diverging}}
               {{color-picker value=editedLayer.mapping.visualization.colorBeforeBreak}}
             {{/if}}
-            <div class="horizontal airy middle solid flow w3">
-              <Label>Epaisseur du trait</Label>
-              {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=4}}
-            </div>
+            {{color-picker value=editedLayer.mapping.visualization.color}}
           </div>
-          <div class="horizontal airy middle solid flow w4">
+          <div class="horizontal airy middle solid flow w5">
+              <Label>Epaisseur du trait</Label>
+              {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=5}}
+          </div>
+          <div class="horizontal airy middle solid flow w5">
               <Label>Opacité</Label>
               {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
           </div>

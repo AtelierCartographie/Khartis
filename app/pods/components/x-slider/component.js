@@ -164,7 +164,7 @@ export default Ember.Component.extend({
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 300),
+  }, 250),
   
   valueChange: function() {
     
