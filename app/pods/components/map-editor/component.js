@@ -647,9 +647,9 @@ export default Ember.Component.extend({
         })
         .attr("fill", "white");
     
-    let bindAttr = (_) => {
+    let bindLayer = (_) => {
       
-      _.attr("flow-css", "flow: vertical; stretch: true; layout: fluid;");
+      _.attr("flow-css", "flow: vertical; stretch: true; layout: fluid; margin-top: 16");
       
       _.each( function(d, i) {
         
@@ -661,22 +661,36 @@ export default Ember.Component.extend({
             label = el.selectAll("text.title");
         
         if (label.empty()) {
-          label = el.append("g").append("text")
-            .classed("title", true)
-            .attr("flow-css", "height: 16");
+          label = el.append("g")
+            .attr("flow-css", "margin-bottom: 10")
+            .append("text")
+            .classed("title", true);
         }
         
         label.text(d.get('mapping.varCol.header.value'));
           
         let appendSurfaceIntervalLabel = function(val, i) {
           
-          let formatter = d3.format("0.2f");
+          let formatter = d3.format("0.2f"),
+              r = 17/2
           
           d3.select(this).append("rect")
             .attr({
+              y: -r,
               "width": 25,
-              "height": 17,
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
+              "height": 2*r,
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001),
+              "mask": () => {
+                
+                let mask = d.get('mapping').getScaleOf("texture")(val - 0.0000001)
+                if (mask && mask.fn != PatternMaker.NONE) {
+                  svg.call(mask.fn);
+                  return `url(${mask.fn.url()})`;
+                } else {
+                  return null;
+                }
+              },
+              stroke: "#F0F0F0"
             });
             
           let g = d3.select(this).append("g");
@@ -685,9 +699,9 @@ export default Ember.Component.extend({
             
             g.append("line").attr({
               x1: -10,
-              y1: -3,
+              y1: -(r + 2),
               x2: 5,
-              y2: -3,
+              y2: -(r + 2),
               stroke: "black"
             });
             
@@ -695,7 +709,7 @@ export default Ember.Component.extend({
               .text( formatter(d.get('mapping.extent')[0]) )
               .attr({
                 x: 10,
-                y: -3,
+                y:  -(r + 2),
                 "font-size": "0.75em"
               });
             
@@ -703,9 +717,9 @@ export default Ember.Component.extend({
           
           g.append("line").attr({
               x1: -10,
-              y1: 20,
+              y1: r + 2,
               x2: 5,
-              y2: 20,
+              y2: r + 2,
               stroke: "black"
             });
           
@@ -713,7 +727,7 @@ export default Ember.Component.extend({
             .text( v => formatter(v) )
             .attr({
               x: 10,
-              y: 20,
+              y: r + 2,
               "font-size": "0.75em"
             });
           
@@ -746,9 +760,9 @@ export default Ember.Component.extend({
             
             g.append("line").attr({
               x1: -10,
-              y1: -3,
+              y1: -(r + 2),
               x2: 5,
-              y2: -3,
+              y2: -(r + 2),
               stroke: "black"
             });
             
@@ -756,7 +770,7 @@ export default Ember.Component.extend({
               .text( formatter(d.get('mapping.extent')[0]) )
               .attr({
                 x: 10,
-                y: -3,
+                y: -(r + 2),
                 "font-size": "0.75em"
               });
             
@@ -764,9 +778,9 @@ export default Ember.Component.extend({
           
           g.append("line").attr({
               x1: -10,
-              y1: 20,
+              y1: r + 2,
               x2: 5,
-              y2: 20,
+              y2: r + 2,
               stroke: "black"
             });
           
@@ -774,28 +788,72 @@ export default Ember.Component.extend({
             .text( v => formatter(v) )
             .attr({
               x: 10,
-              y: 20,
+              y: r + 2,
               "font-size": "0.75em"
             });
           
         };
         
-        let appendRuleLabel = (_el) => {
+        let appendRuleLabel = function(rule, i) {
           
-          _el.append("rect")
-            .attr({
-              "width": 25,
-              "height": 17,
-              "fill": d => d.get('color')
-            });
+          let r;
+          
+          if (d.get('mapping.visualization.type') === "symbol") {
             
+            r = d.get('mapping.visualization.minSize');
+            let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape');
+            
+            let symbol = SymbolMaker.symbol({name: shape});
+      
+            symbol.call(svg);
+            
+            d3.select(this).append("use")
+              .attr({
+                "xlink:href": symbol.url(),
+                "width": r*2,
+                "height": r*2,
+                "x": d => -r,
+                "y": d => -r,
+                "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r*2),
+                "stroke": rule.get('strokeColor'),
+                "fill": rule.get('color')
+              });
+              
+          } else {
+            
+            r = 17/2;
+            
+            let mask = rule.get('pattern') ? PatternMaker.Composer.build(rule.get('pattern')) : null;
+            if (mask && mask.fn != PatternMaker.NONE) {
+              svg.call(mask.fn);
+            }
+            
+            d3.select(this).append("rect")
+              .attr({
+                y: -r,
+                "width": 25,
+                "height": 2*r,
+                "fill": rule.get('color'),
+                "mask": mask ? `url(${mask.fn.url()})` : null
+              });
+            
+          }
           
-          _el.append("g")
-            .append("text")
-            .text( d => d.get('label') )
+          let g = d3.select(this).append("g");
+          
+          g.append("line").attr({
+              x1: -10,
+              y1: 0,
+              x2: 5,
+              y2: 0,
+              stroke: "black"
+            });
+          
+          g.append("text")
+            .text( rule.get('label') )
             .attr({
               x: 10,
-              y: "0.75em",
+              y: 0,
               "font-size": "0.75em"
             })
           
@@ -803,32 +861,49 @@ export default Ember.Component.extend({
         
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           
-          let intervals = d.get('mapping.intervals');
+          let intervals = d.get('mapping.intervals').slice();
           intervals.push(d.get('mapping.extent')[1]); //push max
           
           let sel = el.selectAll("g.interval")
+            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel)
             .data(intervals);
             
           sel.enter()
             .append("g")
             .classed("interval", true)
-            .attr("flow-css", "flow: horizontal; stretch: true; height: 23")
+            .attr("flow-css", "flow: horizontal; stretch: true;")
             .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel);
           
           sel.exit().remove();
+          
+          if (d.get('mapping.rules')) {
+            
+            el.append("g")
+              .attr("flow-css", "margin-top: 5; margin-bottom: 20")
+              .append("line")
+                .attr({
+                  x1: 0,
+                  y1: 0,
+                  x2: 50,
+                  y2: 0,
+                  stroke: "#BBBBBB"
+                });
+            
+          }
           
         }
         
         if (d.get('mapping.rules')) {
           
           let sel = el.selectAll("g.rule")
-            .data(d.get('mapping.rules').slice(0, 8));
+            .each(appendRuleLabel)
+            .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10));
             
           sel.enter()
             .append("g")
             .classed("rule", true)
-            .attr("flow-css", "flow: horizontal; stretch: true")
-            .call(appendRuleLabel);
+            .attr("flow-css", (r, i) => `flow: horizontal; stretch: true; margin-top: ${ i > 0 ? 4 : 0 }` )
+            .each(appendRuleLabel);
             
           sel.exit().remove();
           
@@ -840,12 +915,12 @@ export default Ember.Component.extend({
     
     sel = container.selectAll("g.legend-label")
       .data(this.get('graphLayers'))
-      .call(bindAttr);
+      .call(bindLayer);
       
     sel.enter()
       .append("g")
       .classed("legend-label", true)
-      .call(bindAttr);
+      .call(bindLayer);
       
     sel.exit().remove();
     

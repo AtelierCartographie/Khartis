@@ -99,21 +99,21 @@ let lines = function(opts = {}) {
       mask = defs.append("mask")
         .attr({
           id: maskId,
-          width: "10000",
-          height: "10000"
+          width: 2048,
+          height: 2048
         });
       
       mask.append("rect").attr({
-          x: "-5000",
-          y: "-5000",
-          width: "10000",
-          height: "10000",
+          x: -1024,
+          y: -1024,
+          width: 2048,
+          height: 2048,
           transform: `scale(${scale})`
-        });
+          
+        })
+        .attr("fill", `url(${window.location}#pattern-${maskId})`);
         
     }
-    
-    mask.attr("fill", `url(${window.location}#pattern-${maskId})`);
         
   }
   

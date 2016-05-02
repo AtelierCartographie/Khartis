@@ -26,10 +26,10 @@ export default {
       "height": function(val, bbox) { bbox.height =  cssPx(val) },
       "stretch": function(val) { return val; },
       "wrap": function(val) { return val; },
-      /*"margin-bottom": function(val, bbox) { bbox.height += parseInt(val.replace("px", "")); },
-      "margin-top": function(val, bbox) { bbox.y += cssPx(val); bbox.height += cssPx(val); },
-      "margin-left": function(val, bbox) { bbox.x += cssPx(val); bbox.width += cssPx(val); },
-      "margin-right": function(val, bbox) { bbox.width += cssPx(val); },*/
+      "margin-bottom": function(val, bbox) { bbox.height += parseInt(val.replace("px", "")); },
+      "margin-top": function(val, bbox) { bbox.height += cssPx(val); },
+      "margin-left": function(val, bbox) { bbox.width += cssPx(val); },
+      "margin-right": function(val, bbox) { bbox.width += cssPx(val); },
       "padding-bottom": function(val, bbox, padBox) { padBox.b = cssPx(val); },
       "padding-top": function(val, bbox, padBox) { padBox.t = cssPx(val); },
       "padding-left": function(val, bbox, padBox) { padBox.l = cssPx(val); },
@@ -65,9 +65,12 @@ export default {
         return this.instructions.find( inst => inst.name === prop );
       };
       CSSProcessor.prototype.hasProperty = function(prop, val) {
-        let inst = this.get(prop),
-            vals = val instanceof Array ? val : [val];
-        return inst && vals.indexOf(inst.val) !== -1;
+        if (val !== undefined) {
+          let inst = this.get(prop),
+              vals = val instanceof Array ? val : [val];
+          return inst && vals.indexOf(inst.val) !== -1;
+        }
+        return this.get(prop) != null;
       };
       
       return new CSSProcessor(instructions);
@@ -141,6 +144,8 @@ export default {
 
           bbox[coordAttr] = pos;
           
+          
+          
           if (elDesc.css.hasProperty('wrap', ["true", "1"]) && bbox[coordAttr] + bbox[sizeAttr] > elDesc.bbox[sizeAttr]) {
             crossShift = crossMax;
             bbox[coordAttr] = pos = 0;
@@ -154,9 +159,16 @@ export default {
           bbox.x += elDesc.padBox.l;
           bbox.y += elDesc.padBox.t;
           
-          let d3l = d3.select(this);
+          //apply margin
+          if (css.hasProperty('margin-top')) {
+            bbox.y += cssPx(css.get('margin-top').val);
+          }
           
-          d3l.attr("transform", `translate(${bbox.x}, ${bbox.y})`);
+          if (css.hasProperty('margin-left')) {
+            bbox.x += cssPx(css.get('margin-left').val);
+          }
+          
+          let d3l = d3.select(this).attr("transform", `translate(${bbox.x}, ${bbox.y})`)
           
           if (css.hasProperty('stretch', ["1", "true"])) {
             bbox[crossSizeAttr] =  elDesc.bbox[crossSizeAttr] - (elDesc.padBox[crossPadBefore] + elDesc.padBox[crossPadAfter]);
