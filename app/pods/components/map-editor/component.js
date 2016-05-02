@@ -6,6 +6,7 @@ import GraphLayout from 'mapp/models/graph-layout';
 import {geoMatch} from 'mapp/utils/geo-match';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
+import ValueMixin from "mapp/models/mapping/mixins/value";
 /* global Em */
 
 export default Ember.Component.extend({
@@ -622,32 +623,33 @@ export default Ember.Component.extend({
   
   drawLegend: function() {
     
-    let w = Math.max(this.get('$width'), this.get('graphLayout.width')),
+    let svg = this.d3l(),
+        w = Math.max(this.get('$width'), this.get('graphLayout.width')),
 		    h = Math.max(this.get('$height'), this.get('graphLayout.height')),
         padding = 2,
         width = (w - 2*this.get('graphLayout').hOffset(w)) / 2;
     
     let sel = this.d3l().selectAll("g.legend")
-      .attr("transform", d3lper.translate({
-        tx: w / 2 - width / 2,
-        ty: h - this.get('graphLayout').vOffset(h) - 100
-      }))
+      .attr("transform", d3lper.translate({tx: (w - width) / 2, ty: h - 300}))
       .style({
         opacity: this.get('graphLayout.showLegend') ? 0.9 : 0
       });
     
-    if (sel.selectAll("rect").empty()) {
-      sel.append("rect")
+    
+    let container = sel.append("g")
+      .attr("flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);
+      
+    container.append("rect")
         .attr({
+          "flow-css": "layout: fill",
           "x": 0,
-          "y": 0,
-          "width": width,
-          "height": "5.5em"
+          "y": 0
         })
-        .classed("legend-background", true);
-    }
+        .attr("fill", "white");
     
     let bindAttr = (_) => {
+      
+      _.attr("flow-css", "flow: vertical; stretch: true; layout: fluid;");
       
       _.each( function(d, i) {
         
@@ -656,51 +658,187 @@ export default Ember.Component.extend({
         }
         
         let el = d3.select(this),
-            label = el.selectAll("text");
+            label = el.selectAll("text.title");
         
         if (label.empty()) {
-          label = el.append("text")
-            .classed("title", true);
+          label = el.append("g").append("text")
+            .classed("title", true)
+            .attr("flow-css", "height: 16");
         }
         
-        label.text(d.get('mapping.varCol.header.value'))
-          .attr({
-            "x": "2em",
-            "y": `${i+1}em`
-          });
+        label.text(d.get('mapping.varCol.header.value'));
           
-        let appendLabel = (_) => {
+        let appendSurfaceIntervalLabel = function(val, i) {
           
-          _.append("text")
-            .text( d => d.get('label') )
+          let formatter = d3.format("0.2f");
+          
+          d3.select(this).append("rect")
             .attr({
-              "x": (d, i) => (Math.floor(i/3) * 10 + 2) + "em",
-              "y": (d, i) => `${(i % 3 + 0.5) + 2}em`
+              "width": 25,
+              "height": 17,
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
             });
             
-          _.append("rect")
+          let g = d3.select(this).append("g");
+            
+          if (i === 0) {
+            
+            g.append("line").attr({
+              x1: -10,
+              y1: -3,
+              x2: 5,
+              y2: -3,
+              stroke: "black"
+            });
+            
+            g.append("text")
+              .text( formatter(d.get('mapping.extent')[0]) )
+              .attr({
+                x: 10,
+                y: -3,
+                "font-size": "0.75em"
+              });
+            
+          }
+          
+          g.append("line").attr({
+              x1: -10,
+              y1: 20,
+              x2: 5,
+              y2: 20,
+              stroke: "black"
+            });
+          
+          g.append("text")
+            .text( v => formatter(v) )
             .attr({
-              "x": (d, i) => (Math.floor(i/3) * 10 + 0.5) + "em",
-              "y": (d, i) => `${(i % 3 + 0.5) + 1.5}em`,
-              "width": "1em",
-              "height": "1em",
-              "fill": d => d.get('color')
+              x: 10,
+              y: 20,
+              "font-size": "0.75em"
             });
           
         };
         
+        let appendSymbolIntervalLabel = function(val, i) {
+          
+          let formatter = d3.format("0.2f"),
+              r = d.get('mapping').getScaleOf('size')(val - 0.0000001);
+          
+          let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+      
+          symbol.call(svg);
+          
+          d3.select(this).append("use")
+            .attr({
+              "xlink:href": symbol.url(),
+              "width": r*2,
+              "height": r*2,
+              "x": d => -r,
+              "y": d => -r,
+              "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r*2),
+              "stroke": d.get('mapping.visualization.strokeColor'),
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
+            });
+            
+          let g = d3.select(this).append("g");
+            
+          if (i === 0) {
+            
+            g.append("line").attr({
+              x1: -10,
+              y1: -3,
+              x2: 5,
+              y2: -3,
+              stroke: "black"
+            });
+            
+            g.append("text")
+              .text( formatter(d.get('mapping.extent')[0]) )
+              .attr({
+                x: 10,
+                y: -3,
+                "font-size": "0.75em"
+              });
+            
+          }
+          
+          g.append("line").attr({
+              x1: -10,
+              y1: 20,
+              x2: 5,
+              y2: 20,
+              stroke: "black"
+            });
+          
+          g.append("text")
+            .text( v => formatter(v) )
+            .attr({
+              x: 10,
+              y: 20,
+              "font-size": "0.75em"
+            });
+          
+        };
+        
+        let appendRuleLabel = (_el) => {
+          
+          _el.append("rect")
+            .attr({
+              "width": 25,
+              "height": 17,
+              "fill": d => d.get('color')
+            });
+            
+          
+          _el.append("g")
+            .append("text")
+            .text( d => d.get('label') )
+            .attr({
+              x: 10,
+              y: "0.75em",
+              "font-size": "0.75em"
+            })
+          
+        };
+        
+        if (ValueMixin.Data.detect(d.get('mapping'))) {
+          
+          let intervals = d.get('mapping.intervals');
+          intervals.push(d.get('mapping.extent')[1]); //push max
+          
+          let sel = el.selectAll("g.interval")
+            .data(intervals);
+            
+          sel.enter()
+            .append("g")
+            .classed("interval", true)
+            .attr("flow-css", "flow: horizontal; stretch: true; height: 23")
+            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel);
+          
+          sel.exit().remove();
+          
+        }
+        
         if (d.get('mapping.rules')) {
-          el.selectAll("g.intervals")
-            .data(d.get('mapping.rules').slice(0, 8))
-            .enter()
-            .call(appendLabel);
+          
+          let sel = el.selectAll("g.rule")
+            .data(d.get('mapping.rules').slice(0, 8));
+            
+          sel.enter()
+            .append("g")
+            .classed("rule", true)
+            .attr("flow-css", "flow: horizontal; stretch: true")
+            .call(appendRuleLabel);
+            
+          sel.exit().remove();
+          
         }
         
       });
       
     };
     
-    sel = sel.selectAll("g.legend-label")
+    sel = container.selectAll("g.legend-label")
       .data(this.get('graphLayers'))
       .call(bindAttr);
       
@@ -711,7 +849,41 @@ export default Ember.Component.extend({
       
     sel.exit().remove();
     
-  }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
+    container.call(d3lper.flow);
+    
+    //this.test();
+    
+  }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
+  
+  test() {
+    
+    let parent = this.d3l().append("g")
+      .attr("flow-css", "flow: vertical; width: 100; height: 150");
+    
+    for (let i = 0; i < 10; i++) {
+      let w = Math.sqrt(i) * 100
+      let g = parent.append("g")
+        .attr("flow-css", `flow: horizontal; width: ${w}; height: 50`);
+        
+      let col1 = g.append("g")
+        .attr("flow-css", "flow: horizontal; layout: fluid; stretch: 1; padding-top: 15px");
+        
+      let col2 = g.append("g")
+        .attr("flow-css", "flow: horizontal; layout: fluid; stretch: 1; padding-top: 15px");
+        
+      col1.append("rect")
+        .attr("fill", "red")
+        .attr("flow-css", "layout: fluid; height: 50px; stretch: 1");
+        
+      col2.append("rect")
+        .attr("fill", "blue")
+        .attr("flow-css", "layout: fluid; stretch: 1");
+        
+    }
+   
+   parent.call(d3lper.flow);  
+    
+  }
   
   
   /*drawText: function() {

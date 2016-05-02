@@ -39,6 +39,10 @@ let DataMixin = Ember.Mixin.create({
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]', 'scale._defferedChangeIndicator'),
   
+  extent: function() {
+    return d3.extent(this.get('values'));
+  }.property('values.[]'),
+  
   distribution: function() {
       
     return this.get('values').reduce( (dist, v) => {
