@@ -130,10 +130,12 @@ var GraphLayout = Struct.extend({
 	
   tx: 0,
   ty: 0,
-	width: 800,
-	height: 600,
+	width: 1024,
+	height: 768,
 	margin: Margin.create(),
   zoom: 1,
+  legendTx: null,
+  legendTy: null,
   
   projection: null,
   
@@ -159,7 +161,9 @@ var GraphLayout = Struct.extend({
       height: this.get('height'),
       zoom: this.get('zoom'),
       showGrid: this.get('showGrid'),
-      showLegend: this.get('showLegend')
+      showLegend: this.get('showLegend'),
+      legendTx: this.get('legendTx'),
+      legendTy: this.get('legendTy')
     });
   }
   
@@ -186,7 +190,9 @@ GraphLayout.reopenClass({
         height: json.height,
         zoom: json.zoom,
         showGrid: json.showGrid,
-        showLegend: json.showLegend
+        showLegend: json.showLegend,
+        legendTx: json.legendTx,
+        legendTy: json.legendTy
       });
       return o;
   }

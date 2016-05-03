@@ -26,10 +26,10 @@ export default {
       "height": function(val, bbox) { bbox.height =  cssPx(val) },
       "stretch": function(val) { return val; },
       "wrap": function(val) { return val; },
-      "margin-bottom": function(val, bbox) { bbox.height += parseInt(val.replace("px", "")); },
-      "margin-top": function(val, bbox) { bbox.height += cssPx(val); },
-      "margin-left": function(val, bbox) { bbox.width += cssPx(val); },
-      "margin-right": function(val, bbox) { bbox.width += cssPx(val); },
+      "margin-bottom": function(val, bbox) { /*bbox.height += cssPx(val);*/ },
+      "margin-top": function(val, bbox) { /*bbox.height += cssPx(val);*/ },
+      "margin-left": function(val, bbox) { /*bbox.width += cssPx(val);*/ },
+      "margin-right": function(val, bbox) { /*bbox.width += cssPx(val);*/ },
       "padding-bottom": function(val, bbox, padBox) { padBox.b = cssPx(val); },
       "padding-top": function(val, bbox, padBox) { padBox.t = cssPx(val); },
       "padding-left": function(val, bbox, padBox) { padBox.l = cssPx(val); },
@@ -141,14 +141,12 @@ export default {
        if (computedBBoxs.has(this)) {
         
           let {bbox, padBox, css} = getDescriptor(this);
-
-          bbox[coordAttr] = pos;
           
+          let dCoord = bbox[coordAttr];
           
-          
-          if (elDesc.css.hasProperty('wrap', ["true", "1"]) && bbox[coordAttr] + bbox[sizeAttr] > elDesc.bbox[sizeAttr]) {
+          if (elDesc.css.hasProperty('wrap', ["true", "1"]) &&  pos + bbox[sizeAttr] > elDesc.bbox[sizeAttr]) {
             crossShift = crossMax;
-            bbox[coordAttr] = pos = 0;
+            pos = 0;
             crossMax = 0;
           }
           
@@ -159,14 +157,22 @@ export default {
           bbox.x += elDesc.padBox.l;
           bbox.y += elDesc.padBox.t;
           
-          //apply margin
+          //apply margin before
           if (css.hasProperty('margin-top')) {
             bbox.y += cssPx(css.get('margin-top').val);
+            if (coordAttr === "y") {
+              pos += cssPx(css.get('margin-top').val);
+            }
           }
           
           if (css.hasProperty('margin-left')) {
             bbox.x += cssPx(css.get('margin-left').val);
+            if (coordAttr === "x") {
+              pos += cssPx(css.get('margin-left').val);
+            }
           }
+          
+          bbox[coordAttr] = pos;
           
           let d3l = d3.select(this).attr("transform", `translate(${bbox.x}, ${bbox.y})`)
           
@@ -175,7 +181,20 @@ export default {
             d3l.attr(crossSizeAttr, bbox[crossSizeAttr]);
           }
           
-          pos += bbox[sizeAttr];
+          //apply margin after
+          if (css.hasProperty('margin-bottom')) {
+            if (coordAttr === "y") {
+              pos += cssPx(css.get('margin-bottom').val);
+            }
+          }
+          
+          if (css.hasProperty('margin-right')) {
+            if (coordAttr === "x") {
+              pos += cssPx(css.get('margin-right').val);
+            }
+          }
+          
+          pos += (bbox[sizeAttr] + dCoord);
           
        }
        
@@ -184,9 +203,12 @@ export default {
       setTimeout(function() {
         let postDisplayBBox = el.getBBox();
         [...recomputableBBoxs.entries()].forEach( e => {
+          let {padBox} = getDescriptor(e[0]);
           d3.select(e[0]).attr({
-            width: postDisplayBBox.width,
-            height: postDisplayBBox.height
+            x: -padBox.l,
+            y: -padBox.t,
+            width: postDisplayBBox.width + padBox.l + padBox.r,
+            height: postDisplayBBox.height + padBox.t + padBox.b
           });
         });
       }, 100);
@@ -214,6 +236,35 @@ export default {
       traverse(_.node());
     }
     
+  },
+  
+  wrapText: function(text, width)  {
+    console.log(width);
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y);
+          if (!isNaN(dy)) {
+            tspan.attr("dy", dy + "em");
+          }
+          console.log(text, words, tspan);
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
+      }
+    });
   }
 	
 	

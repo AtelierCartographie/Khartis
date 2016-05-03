@@ -96,18 +96,20 @@ let lines = function(opts = {}) {
     
     if (mask.empty()) {
       
+      let size = 4096;
+      
       mask = defs.append("mask")
         .attr({
           id: maskId,
-          width: 2048,
-          height: 2048
+          width: 4096,
+          height: 4096
         });
       
       mask.append("rect").attr({
-          x: -1024,
-          y: -1024,
-          width: 2048,
-          height: 2048,
+          x: -(4096/2),
+          y: -(4096/2),
+          width: 4096,
+          height: 4096,
           transform: `scale(${scale})`
           
         })
