@@ -29,6 +29,8 @@ export default Ember.Component.extend(LegendFeature, {
   
   graphLayers: [],
   
+  title: null,
+  
   resizeInterval: null,
   
   applicationController: null,
@@ -97,6 +99,9 @@ export default Ember.Component.extend(LegendFeature, {
 			.classed("layers", true);
       
     this.legendInit();
+    
+    d3g.append("text")
+      .classed("title", true);
       
     // DRAG & ZOOM
     
@@ -161,6 +166,7 @@ export default Ember.Component.extend(LegendFeature, {
 			.attr("fill", "none");
 
     this.updateMargins();
+    this.drawTitle();
 		this.projectAndDraw();
     this.updatePosition();
 		this.updateColors();
@@ -336,8 +342,24 @@ export default Ember.Component.extend(LegendFeature, {
     this.drawLayers();
 			
 	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed'),
+  
+  drawTitle: function() {
+    
+    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
+    var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+    
+    this.d3l().select("text.title")
+      .text(this.get('title'))
+      .attr({
+        "text-anchor": "middle",
+        "font-size": "1.6em",
+        x: w / 2,
+        y: this.get('graphLayout').vOffset(h) + 32
+      });
    
-   drawGrid: function() {
+  }.observes('title', "$width", "$height"),
+   
+  drawGrid: function() {
      
      let sphere = this.d3l().select("g.backmap")
       .selectAll("use.sphere");

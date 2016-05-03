@@ -253,7 +253,6 @@ export default {
           if (!isNaN(dy)) {
             tspan.attr("dy", dy + "em");
           }
-          console.log(text, words, tspan);
       while (word = words.pop()) {
         line.push(word);
         tspan.text(line.join(" "));
