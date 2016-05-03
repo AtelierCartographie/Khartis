@@ -126,13 +126,20 @@
 
 svg {
   
-  .legend .legend-background {
-    fill: white;
-    stroke: black;
+  .map {
+    cursor: -webkit-grab;
+    cursor: grab;
+    &.dragging {
+      cursor: -webkit-grabbing;
+      cursor: grabbing;
+    }
   }
   
-  .legend .title {
-    font-weight: bold;
+  .legend {
+    cursor: move;
+    &.dragging {
+      cursor: grab;
+    }
   }
   
 }

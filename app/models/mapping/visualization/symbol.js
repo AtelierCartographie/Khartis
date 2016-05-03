@@ -25,7 +25,7 @@ let SymbolVisualization = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    10),
   
   export(props) {
     return this._super(Object.assign({

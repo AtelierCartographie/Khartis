@@ -69,7 +69,7 @@ let Scale = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    10),
   
   getIntervals: function(values) {
     

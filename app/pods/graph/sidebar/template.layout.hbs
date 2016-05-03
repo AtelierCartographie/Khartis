@@ -21,6 +21,10 @@
                 <span>Carte du monde</span>
             </div>
             <div class="horizontal middle flow">
+                <label class="horizontal right solid flow w3 padded-r text-right">Précision</label>
+                {{x-slider class="fluid" band=0.5 value=model.graphLayout.precision min=1 max=4}}
+            </div>
+            <div class="horizontal middle flow">
                 <label class="horizontal right solid flow w2 padded-r text-right">Fond</label>
                 {{color-picker value=model.graphLayout.backMapColor}}
             </div>

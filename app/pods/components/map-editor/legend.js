@@ -408,7 +408,7 @@ export default Ember.Mixin.create({
     
     container.call(d3lper.flow);
     
-    this.updateLegendPosition();
+    //this.updateLegendPosition();
     
   }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
   

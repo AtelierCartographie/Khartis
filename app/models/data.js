@@ -112,7 +112,7 @@ let ColumnStruct = Struct.extend({
       function() {
         this.notifyDefferedChange();
       },
-      50),
+      10),
     
     autoDetectDataType: Ember.debouncedObserver('cells.@each._defferedChangeIndicator', 'meta.manual', function() {
         

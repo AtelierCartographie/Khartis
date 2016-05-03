@@ -135,6 +135,10 @@ export default Ember.Controller.extend({
     
   },
   
+  freeze: function() {
+    this.get('store').versions().freeze(this.get('model').export());
+  },
+  
   actions: {
     
     bindProjection(proj) {
@@ -241,7 +245,7 @@ export default Ember.Controller.extend({
           this.get('store').versions().redo();
           break;
         case "freeze":
-          this.get('store').versions().freeze(this.get('model').export());
+          Ember.run.debounce(this, this.freeze, 1000);
           break;
       }
     }

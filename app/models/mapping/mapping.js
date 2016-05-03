@@ -95,11 +95,16 @@ let Mapping = Struct.extend({
     
     let self = this,
         rules = this.get('rules'),
-        visualization = this.get('visualization');
+        visualization = this.get('visualization'),
+        ruleForCell = new Map();
     
     return function(cell, mode) {
       
-      let rule = rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false;
+      if (!ruleForCell.has(cell)) {
+        ruleForCell.set(cell, rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false);
+      }
+      
+      let rule = ruleForCell.get(cell);
       if (rule) {
         
         if (mode === "fill") {

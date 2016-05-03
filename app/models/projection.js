@@ -80,7 +80,7 @@ let Projection = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    100),
+    10),
   
   fn(transform = true) {
     let d3Proj = eval(this.get('d3_geo'));

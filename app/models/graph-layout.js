@@ -134,6 +134,7 @@ var GraphLayout = Struct.extend({
 	height: 768,
 	margin: Margin.create(),
   zoom: 1,
+  precision: 2,
   legendTx: null,
   legendTy: null,
   
@@ -160,6 +161,7 @@ var GraphLayout = Struct.extend({
       width: this.get('width'),
       height: this.get('height'),
       zoom: this.get('zoom'),
+      precision: this.get('precision'),
       showGrid: this.get('showGrid'),
       showLegend: this.get('showLegend'),
       legendTx: this.get('legendTx'),
@@ -189,6 +191,7 @@ GraphLayout.reopenClass({
         ty: json.ty,
         height: json.height,
         zoom: json.zoom,
+        precision: json.precision,
         showGrid: json.showGrid,
         showLegend: json.showLegend,
         legendTx: json.legendTx,

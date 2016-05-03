@@ -15,7 +15,7 @@ let SurfaceVisualization = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    10),
     
   patternChange: function() {
     if (this.get('pattern') != null) {

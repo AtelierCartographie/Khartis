@@ -59,7 +59,7 @@ let GeoDef = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    10),
   
   
   export() {

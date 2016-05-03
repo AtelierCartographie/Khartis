@@ -284,22 +284,23 @@ export default Ember.Component.extend(LegendFeature, {
 		);
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin',
+    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin', 'graphLayout.precision',
     'graphLayout.projection._defferedChangeIndicator'),
   
 	
 	projectAndDraw: function() {
     
-    var simplify = d3.geo.transform({
-      point: function(x, y, z) {
-        if (z >= 10) this.stream.point(x, y);
-      }
-    });
-    
     var path = d3.geo.path(),
-        proj = this.get('projection');
-		path.projection({stream: function(s) { return simplify.stream(proj.stream(s)); }});
+        proj = this.get('projection'),
+        precision = this.get('graphLayout.precision'),
+        simplify = d3.geo.transform({
+          point: function(x, y, z) {
+            if (z > 1/(precision*0.5)) this.stream.point(x, y);
+          }
+        });
 		
+    path.projection(proj);
+    
     let defs = this.d3l().select("defs");
     
     defs.select("#sphere")
@@ -312,6 +313,8 @@ export default Ember.Component.extend(LegendFeature, {
 
     defs.select("#clip use")
       .attr("xlink:href", `${window.location}#sphere`);
+      
+    path.projection({stream: function(s) { return simplify.stream(proj.stream(s)); }});
       
 		let landSel = defs
 			.selectAll("path.feature")
@@ -380,7 +383,7 @@ export default Ember.Component.extend(LegendFeature, {
      
     let bindAttr = (_) => {
       _.attr({
-        "xlink:xlink:href": d => `${window.location}#f-path-${d.id}`,
+        "xlink:href": d => `${window.location}#f-path-${d.id}`,
       })
       .style({
         "fill": this.get('graphLayout.backMapColor'),
@@ -512,7 +515,7 @@ export default Ember.Component.extend(LegendFeature, {
     let bindAttr = (_) => {
       
       _.attr({
-          "xlink:xlink:href": d => `${window.location}#f-path-${d.id}`,
+          "xlink:href": d => `${window.location}#f-path-${d.id}`,
           "stroke-width": this.get("graphLayout.strokeWidth"),
           "stroke": this.get("graphLayout.stroke"),
           "mask": d => {
