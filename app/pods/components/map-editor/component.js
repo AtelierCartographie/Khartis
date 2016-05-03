@@ -268,8 +268,6 @@ export default Ember.Component.extend(LegendFeature, {
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
       
-      this.drawLegend();
-    
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
     'graphLayout.margin.h',  'graphLayout.margin.v'),
   

@@ -81,7 +81,6 @@ export default Ember.Mixin.create({
         opacity: this.get('graphLayout.showLegend') ? 0.9 : 0
       });
     
-    
     let container = sel.append("g")
       .attr("flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);
       
@@ -408,7 +407,7 @@ export default Ember.Mixin.create({
     
     container.call(d3lper.flow);
     
-    //this.updateLegendPosition();
+    this.updateLegendPosition();
     
   }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
   
