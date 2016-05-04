@@ -12,8 +12,9 @@ let GraphLayer = Struct.extend({
   opacity: 1,
   
   displayable: function() {
-    return this.get('visible') && this.get('mapping') && this.get('mapping.varCol');
-  }.property('mapping', 'visible'),
+    return this.get('visible') && this.get('mapping')
+    && this.get('mapping.type') && this.get('mapping.varCol');
+  }.property('mapping', 'mapping.type', 'visible'),
   
   deferredChange: Ember.debouncedObserver(
     'mapping', 'mapping._defferedChangeIndicator',

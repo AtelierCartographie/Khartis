@@ -133,10 +133,6 @@ export default Ember.Mixin.create({
       
       _.each( function(d, i) {
         
-        if (!d.get('displayable')) {
-          return;
-        }
-        
         let el = d3.select(this),
             textOffset = 24;
         
@@ -408,7 +404,7 @@ export default Ember.Mixin.create({
           
         }
         
-        if (d.get('mapping.rules').length) {
+        if (d.get('mapping.rules') && d.get('mapping.rules').length) {
           
           let sel = el.selectAll("g.rule")
             .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10))
@@ -429,7 +425,7 @@ export default Ember.Mixin.create({
     };
     
     let sel = containerG.selectAll("g.legend-label")
-      .data(this.get('graphLayers'))
+      .data(this.get('graphLayers').filter( gl => gl.get('displayable') ))
       .call(bindLayer);
       
     sel.enter()

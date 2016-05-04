@@ -138,6 +138,7 @@ let Mapping = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
+    'type',
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet',
