@@ -104,15 +104,14 @@ export default Ember.Controller.extend({
     }
 
     let node = d3.select("svg.map-editor")
-        .attr("title", this.get('model.title'))
         .node().cloneNode(true);
         
     let d3Node = d3.select(node)
     
     let x = d3Node.selectAll("g.offset line.vertical-left").attr("x1"),
         y = d3Node.selectAll("g.offset line.horizontal-top").attr("y1"),
-        w = d3Node.selectAll("g.offset line.vertical-right").attr("x1") - x,
-        h = d3Node.selectAll("g.offset line.horizontal-bottom").attr("y1") - y;
+        w = this.get('model.graphLayout.width'),
+        h = this.get('model.graphLayout.height');
     
     d3Node.attr({
       width: this.get('model.graphLayout.width'),
@@ -121,7 +120,21 @@ export default Ember.Controller.extend({
     });
     
     d3Node.selectAll("g.margin,g.offset").remove();
-        
+    
+    d3Node.select("defs")
+      .append("clipPath")
+      .attr("id", "view-clip")
+      .append("rect")
+      .attr({
+        x: 0,
+        y: 0,
+        width: w,
+        height: h
+      });
+      
+    d3Node.select(".map")
+      .attr("clip-path", "url(#view-clip)");
+              
     let html = d3Node.node()
       .outerHTML
       .replace(/http:[^\)"]*?#/g, "#")
@@ -226,6 +239,7 @@ export default Ember.Controller.extend({
     
     selectState(state) {
       this.set('state', state);
+      this.transitionToRoute('graph');
     },
     
     next() {

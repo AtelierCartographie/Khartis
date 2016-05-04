@@ -92,7 +92,7 @@
               {{/x-sticky-panel}}
             {{/if}}
 
-            {{#x-sticky-panel class="toolbar"}}
+            {{#x-sticky-panel class="toolbar open"}}
 
               {{#x-tooltip message="Outils" position="left"}}
                   <div class="sticky-trigger">
@@ -102,16 +102,6 @@
 
               <div class="sticky-wrapper">
                 <ul class="toolbar-items">
-                  {{#x-tooltip message="Undo" position="left"}}
-                      <li {{action 'onAskVersioning' 'undo'}}>
-                          <i class="iconfont iconfont-undo"></i>
-                      </li>
-                  {{/x-tooltip}}
-                  {{#x-tooltip message="Redo" position="left"}}
-                      <li {{action 'onAskVersioning' 'redo'}}>
-                          <i class="iconfont iconfont-redo"></i>
-                      </li>
-                  {{/x-tooltip}}
                   {{#x-tooltip message="Centrer" position="left"}}
                       <li {{action 'resetTranslate'}}>
                           <i class="iconfont iconfont-crosshairs"></i>

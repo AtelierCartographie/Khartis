@@ -31,6 +31,8 @@ export default Ember.Component.extend(LegendFeature, {
   
   title: null,
   
+  trueSize: false,
+  
   resizeInterval: null,
   
   applicationController: null,
@@ -108,7 +110,7 @@ export default Ember.Component.extend(LegendFeature, {
     var zoom = d3.behavior.zoom()
       .scaleExtent([1, 10])
       .on("zoom", () => {
-        let rz =  Math.round(d3.event.scale * 4) / 4;
+        let rz =  Math.round(d3.event.scale * 2) / 2;
         if (rz != this.get('graphLayout.zoom')) {
           this.set('graphLayout.zoom',rz);
           this.sendAction('onAskVersioning', "freeze");
@@ -150,7 +152,6 @@ export default Ember.Component.extend(LegendFeature, {
     d3g.call(drag);
     d3g.call(zoom);
     
-    
 		let og = d3g.append("g")
 			.classed("offset", true);
 			
@@ -176,6 +177,20 @@ export default Ember.Component.extend(LegendFeature, {
   cleanup: function() {
     clearInterval(this.get('resizeInterval'));
   }.on("willDestroyElement"),
+  
+  getSize() {
+    if (!this.get('trueSize')) {
+      return {
+        w: Math.max(this.get('$width'), this.get('graphLayout.width')),
+        h: Math.max(this.get('$height'), this.get('graphLayout.height'))
+      };
+    } else {
+      return {
+        w: this.get('$width'),
+        h: this.get('$height')
+      };
+    }
+  },
 	
 	updateColors: function() {
 		
@@ -222,8 +237,7 @@ export default Ember.Component.extend(LegendFeature, {
 		// = VIEWBOX =
 		// ===========
 		
-		var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
-		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+		let {w, h} = this.getSize();
 		
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
@@ -268,13 +282,20 @@ export default Ember.Component.extend(LegendFeature, {
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
       
+    this.d3l().select("rect.bg")
+      .attr({
+        x: 0,
+        y: 0,
+        width: w,
+        height: h
+      });
+      
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
     'graphLayout.margin.h',  'graphLayout.margin.v'),
   
   projection: function() {
     
-    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
-		var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+    let {w, h} = this.getSize();
     
     return projector.computeProjection(
 			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
@@ -294,7 +315,9 @@ export default Ember.Component.extend(LegendFeature, {
 	
 	projectAndDraw: function() {
     
-    var path = d3.geo.path(),
+    let {w, h} = this.getSize();
+    
+    let path = d3.geo.path(),
         proj = this.get('projection'),
         precision = this.get('graphLayout.precision'),
         simplify = d3.geo.transform({
@@ -343,8 +366,7 @@ export default Ember.Component.extend(LegendFeature, {
   
   drawTitle: function() {
     
-    var w = Math.max(this.get('$width'), this.get('graphLayout.width'));
-    var h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+    let {w, h} = this.getSize();
     
     this.d3l().select("text.title")
       .text(this.get('title'))
@@ -354,6 +376,8 @@ export default Ember.Component.extend(LegendFeature, {
         x: w / 2,
         y: this.get('graphLayout').vOffset(h) + 32
       });
+      
+   this.d3l().attr("title", this.get('title'));
    
   }.observes('title', "$width", "$height"),
    

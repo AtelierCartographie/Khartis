@@ -3,11 +3,19 @@
     {{localized-tpl tpl="help/{locale}/graph/legend"}}
   </div>
   <div>
-    <div class="horizontal middle flow">
+    <div class="vertical flow">
         {{#if model.graphLayers.length}}
-        <label class="horizontal solid flow padded-r">Afficher la légende</label>
-        <div class="fluid">
-          {{input type="checkbox" checked=model.graphLayout.showLegend}}<div class="-h"></div>
+        <div class="horizontal middle flow">
+          <label class="horizontal solid flow padded-r">Afficher la légende</label>
+          <div class="fluid">
+            {{input type="checkbox" checked=model.graphLayout.showLegend}}<div class="-h"></div>
+          </div>
+        </div>
+        {{/if}}
+        {{#if model.graphLayout.showLegend}}
+        <div class="horizontal middle flow">
+          <label class="horizontal right solid flow w3 padded-r text-right">Opacité</label>
+          {{x-slider class="fluid" band=0.1 value=model.graphLayout.legendOpacity min=0 max=1}}
         </div>
         {{/if}}
     </div>

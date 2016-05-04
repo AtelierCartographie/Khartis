@@ -55,6 +55,19 @@ if( isEverGreen() === false){
 
     return Em.observer.apply(this, keys.concat([debouncer]));
   };
+  
+  Ember.debouncedObserverImmediate = function() {
+    let args = (Array.prototype.slice.call(arguments)).reverse(),
+      fn = args[1],
+      time = args[0],
+      keys = args.slice(2);
+
+    let debouncer = function() {
+      Em.run.debounce(this, fn, time, true);
+    };
+
+    return Em.observer.apply(this, keys.concat([debouncer]));
+  };
 
 }
 

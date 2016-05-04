@@ -12,8 +12,9 @@ export default Ember.Mixin.create({
       .classed("legend", true);
     
     //LEGEND DRAG
-    var drag = d3.behavior.drag()
+    let drag = d3.behavior.drag()
       .origin(() => {
+        console.log("origine", legendG.attr('tx'));
         return {x: legendG.attr('tx'), y: legendG.attr('ty')};
       })
       .on("dragstart", () => {
@@ -21,10 +22,10 @@ export default Ember.Mixin.create({
         legendG.classed("dragging", true);
       })
       .on("drag", () => {
-        let bbox = this.d3l().select(".map").node().getBBox(),
+        let bbox = this.d3l().select(".bg").node().getBBox(),
             pos = {
-              tx: Math.min(bbox.width, Math.max(d3.event.x, -bbox.width)),
-              ty: Math.min(bbox.height, Math.max(d3.event.y, -bbox.height))
+              tx: Math.min(bbox.width-2, Math.max(d3.event.x, 0)),
+              ty: Math.min(bbox.height-10, Math.max(d3.event.y, 0))
             };
         legendG.attr({
          'transform': d3lper.translate(pos), 
@@ -41,34 +42,56 @@ export default Ember.Mixin.create({
         this.sendAction('onAskVersioning', "freeze");
       });
       
-    legendG.call(drag);
-    console.log("init");
     this.updateLegendPosition();
+    this.updateLegendOpacity();
+    legendG.call(drag);
     
   },
   
   updateLegendPosition: function() {
     
-    let legendG = this.d3l().select(".legend"),
+    let legendG = this.d3l().select("g.legend"),
+        legendContentG = legendG.select("g.legend-content"),
         t = {tx: this.get('graphLayout.legendTx'), ty: this.get('graphLayout.legendTy')};
     
-    if (this.get('graphLayout.legendTx') === null || this.get('graphLayout.legendTy') === null) {
+    if (t.tx === null || t.ty === null) {
       
-      console.log(legendG);
       let bbox = legendG.node().getBBox(),
-          w = Math.max(this.get('$width'), this.get('graphLayout.width')),
-		      h = Math.max(this.get('$height'), this.get('graphLayout.height'));
+          {w, h} = this.getSize();
       
       t.tx = (w - bbox.width) / 2;
       t.ty = h - this.get('graphLayout').vOffset(h) - bbox.height;
       
     }
     
-    legendG.attr("tx", this.get('graphLayout.legendTx'))
-      .attr("ty", this.get('graphLayout.legendTy'))
-      .attr("transform", d3lper.translate(t));
+    legendG.attr({
+        "tx": t.tx,
+        "ty": t.ty,
+        "transform": d3lper.translate(t)
+      });
+      
+    if (!legendContentG.empty()) {
+      
+      let bbox = legendContentG.node().getBBox();
+      
+      legendG.select("rect.legend-bg")
+        .attr({
+          width: bbox.width + 18,
+          height: bbox.height + 20
+        });
+        
+    }
+      
+    
     
   }.observes('graphLayout.legendTx', 'graphLayout.legendTy'),
+  
+  updateLegendOpacity: function() {
+    
+    this.d3l().selectAll("g.legend rect.legend-bg")
+      .style("opacity", this.get('graphLayout.legendOpacity'));
+      
+  }.observes('graphLayout.legendOpacity'),
   
   drawLegend: function() {
     
@@ -76,25 +99,37 @@ export default Ember.Mixin.create({
         layers = this.get('graphLayers'),
         width = layers.length * 120;
     
-    let sel = this.d3l().selectAll("g.legend")
-      .style({
-        opacity: this.get('graphLayout.showLegend') ? 0.9 : 0
-      });
-    
-    let container = sel.append("g")
-      .attr("flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);
+    let legendG = this.d3l().selectAll("g.legend");
       
-    container.append("rect")
+    let containerG = legendG.selectAll("g.legend-content"),
+        bgG = legendG.selectAll("rect.legend-bg");
+    
+    if (!this.get('graphLayout.showLegend')) {
+      containerG.remove();
+      bgG.remove();
+      return;
+    }
+    
+    if (bgG.empty()) {
+      bgG = legendG.append("rect")
+        .classed("legend-bg", true)
         .attr({
-          "flow-css": "layout: fill; padding-left: 20; padding-top: 10; padding-right: 10; padding-bottom: 10",
-          "x": 0,
-          "y": 0
+          "x": -18,
+          "y": -5
         })
         .attr("fill", "white");
+    }
+    
+    if (containerG.empty()) {
+      containerG = legendG.append("g")
+        .classed("legend-content", true);
+    }
+    
+    containerG.attr("flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);  
     
     let bindLayer = (_) => {
       
-      _.attr("flow-css", "flow: vertical; stretch: true; layout: fluid; margin-top: 16");
+      _.attr("flow-css", "flow: vertical; stretch: true; margin-right: 34; margin-top: 16");
       
       _.each( function(d, i) {
         
@@ -103,19 +138,18 @@ export default Ember.Mixin.create({
         }
         
         let el = d3.select(this),
-            textOffset = 24,
-            label = el.selectAll("text.title");
+            textOffset = 24;
         
-        if (label.empty()) {
-          label = el.append("g")
-            .attr("flow-css", "margin-bottom: 16")
-            .append("text")
-            .style({
-             "font-size": "14px",
-             "font-weight": "bold"
-            })
-            .call(d3lper.wrapText, 30);
-        }
+        el.selectAll("*").remove();
+          
+        let label = el.append("g")
+          .attr("flow-css", "margin-bottom: 16")
+          .append("text")
+          .classed("legend-title", true)
+          .style({
+            "font-size": "14px",
+            "font-weight": "bold"
+          });
         
         label.text(d.get('mapping.varCol.header.value'));
           
@@ -346,8 +380,8 @@ export default Ember.Mixin.create({
           }
           
           let sel = el.selectAll("g.interval")
-            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel)
-            .data(intervals);
+            .data(intervals)
+            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel);
             
           sel.enter()
             .append("g")
@@ -357,7 +391,7 @@ export default Ember.Mixin.create({
           
           sel.exit().remove();
           
-          if (d.get('mapping.rules')) {
+          if (d.get('mapping.rules').length) {
             
             el.append("g")
               .attr("flow-css", "margin-top: 10; margin-bottom: 10")
@@ -374,11 +408,11 @@ export default Ember.Mixin.create({
           
         }
         
-        if (d.get('mapping.rules')) {
+        if (d.get('mapping.rules').length) {
           
           let sel = el.selectAll("g.rule")
-            .each(appendRuleLabel)
-            .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10));
+            .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10))
+            .each(appendRuleLabel);
             
           sel.enter()
             .append("g")
@@ -394,7 +428,7 @@ export default Ember.Mixin.create({
       
     };
     
-    sel = container.selectAll("g.legend-label")
+    let sel = containerG.selectAll("g.legend-label")
       .data(this.get('graphLayers'))
       .call(bindLayer);
       
@@ -405,9 +439,11 @@ export default Ember.Mixin.create({
       
     sel.exit().remove();
     
-    container.call(d3lper.flow);
+    containerG.call(d3lper.flow);
     
-    this.updateLegendPosition();
+    Ember.run.later(() => {
+      this.updateLegendPosition();
+    });
     
   }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
   

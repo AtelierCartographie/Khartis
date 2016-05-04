@@ -1,0 +1,15 @@
+input {
+  width: 30px;
+  border: none;
+  background: none;
+  border-bottom: 1px solid greys(20%);
+  text-align: right;
+  font-size: 12px;
+  padding-right: 1px;
+  margin-left: -$gutter / 2 ;
+}
+
+.unite {
+  display: inline-block;
+  padding-top: $gutter / 4;
+}

@@ -137,6 +137,7 @@ var GraphLayout = Struct.extend({
   precision: 2.5,
   legendTx: null,
   legendTy: null,
+  legendOpacity: 0.9,
   
   projection: null,
   
@@ -165,7 +166,8 @@ var GraphLayout = Struct.extend({
       showGrid: this.get('showGrid'),
       showLegend: this.get('showLegend'),
       legendTx: this.get('legendTx'),
-      legendTy: this.get('legendTy')
+      legendTy: this.get('legendTy'),
+      legendOpacity: this.get('legendOpacity')
     });
   }
   
@@ -195,7 +197,8 @@ GraphLayout.reopenClass({
         showGrid: json.showGrid,
         showLegend: json.showLegend,
         legendTx: json.legendTx,
-        legendTy: json.legendTy
+        legendTy: json.legendTy,
+        legendOpacity: json.legendOpacity
       });
       return o;
   }

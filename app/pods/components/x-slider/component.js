@@ -14,6 +14,8 @@ export default Ember.Component.extend({
   tickAppend: null,
   tickFormat: ",.2f",
   
+  displayTick: true,
+  
   scale: null,
   
   _tmpValue: null,
@@ -70,12 +72,6 @@ export default Ember.Component.extend({
       .style("left", "0px")
       .style("width", width + "px");
       
-    // Range rect
-    svg.append("rect")
-      .classed("rangeRect", true)
-      .attr("width", "100%")
-      .attr("height", "5px");
-      
     // Axis      
     var axis = d3.svg.axis()
       .scale(scale)
@@ -125,6 +121,8 @@ export default Ember.Component.extend({
     let scale = this.get('scale'),
         band = this.get('band');
         
+    val = Math.min(this.get('max'), Math.max(this.get('min'), val));
+        
     if (band) {
 
       if (val === scale.domain()[0] || val === scale.domain()[1]) {
@@ -164,26 +162,16 @@ export default Ember.Component.extend({
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 250),
+  }, 150),
   
   valueChange: function() {
     
-    let scale = this.get('scale'); 
-    
-    this.translate(this.get('value'));
-    
-  }.observes('value'),
-  
-  actions: {
-    inputFocusOut(val) {
-      
-      let newVal = val.replace(/[^\d\-]+/g, "");
-      
-      if (!isNaN(parseFloat(newVal))) {
-        this.set('_tmpValue', newVal);
-      }
-      
+    let val = this.stepValue(this.get('value'));
+    if (val != this.get('value')) {
+      this.set('_tmpValue', val);
     }
-  }
+    this.translate(val);
+    
+  }.observes('value')
 
 });
