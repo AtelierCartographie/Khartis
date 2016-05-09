@@ -69,12 +69,16 @@ export default Ember.Controller.extend({
 
     parseCsvContent() {
       
-      //set loader
-      
       CSV.readAll(this.get('model.csv'), (data) => {
-        //stop loader
-        this.get('model.project').importRawData(data);
-        this.transitionToRoute('project.step2', 'new');
+        
+        if (data.length === 0) {
+          this.get('ModalManager')
+            .show('error', "Impossible d'importer le CSV",
+              "Erreur lors de l'importation", 'Fermer');
+        } else {
+          this.get('model.project').importRawData(data);
+          this.transitionToRoute('project.step2', 'new');
+        }
       });
       
     },

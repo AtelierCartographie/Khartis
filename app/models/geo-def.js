@@ -18,8 +18,8 @@ let GeoDef = Struct.extend({
   
   isLatLon: function() {
     return this.get('columns').length === 2 
-      && this.get('columns')[0].get('meta.type') === "lat"
-      && this.get('columns')[1].get('meta.type') === "lon" ;
+      && (this.get('columns')[0].get('meta.type') === "lat" || this.get('columns')[0].get('meta.type') === "lat_dms")
+      && (this.get('columns')[1].get('meta.type') === "lon" || this.get('columns')[1].get('meta.type') === "lon_dms");
   }.property('columns.[]'),
   
   label: function() {

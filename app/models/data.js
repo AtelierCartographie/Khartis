@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Struct from './struct';
 import GeoDef from './geo-def';
 import {geoMatch} from 'mapp/utils/geo-match';
+import deg2dec from 'mapp/utils/deg2dec';
 /* global d3 */
 
 let RowStruct = Struct.extend({
@@ -131,22 +132,23 @@ let ColumnStruct = Struct.extend({
           this.get('body')
             .filter( c => !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
+              console.log(c.get('value'));
               if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
                   let match = geoMatch(c.get('value'));
                   if (match) {
                     p.geo += 1/arr.length;
-                  } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/.test(c.get('value'))) {
+                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)?$/.test(c.get('value'))) {
                     p.lat_dms += 1/arr.length;
-                  } else if (/^1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/.test(c.get('value'))) {
+                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)?$/.test(c.get('value'))) {
                     p.lon_dms += 1/arr.length;
                   } else {
                     p.text += 1/arr.length;
                   }
               }
             });
-
+          
           let type = Object.keys(p).reduce( (r, key) => {
             return r == null || p[key] > p[r] ? key : r;
           }, null);
@@ -177,10 +179,10 @@ let ColumnStruct = Struct.extend({
             "geo": (v) => geoMatch(v),
             "text": (v) => true,
             "numeric": (v) => (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+)?)$/).test(v),
-            "lat": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
-            "lon": (v) => (/^\-?[\d\,\s]+(\.\d+)?$/).test(v),
-            "lat_dms": (v) => (/^\-?1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(N|S)?$/).test(v),
-            "lon_dms": (v) => (/^\-?1?[1-9]{1,2}°(\s*[1-6]?[1-9]')(\s*[1-6]?[1-9]")?(E|W)?$/).test(v)
+            "lat": (v) => (/^\-?[\d\s]+([\,\.]\d+)?$/).test(v) && Math.abs(parseFloat(v.replace(",", "."))) < 90,
+            "lon": (v) => (/^\-?[\d\s]+([\.\,]\d+)?$/).test(v) && Math.abs(parseFloat(v.replace(",", "."))) < 180,
+            "lat_dms": (v) => (/^\-?1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)?$/).test(v),
+            "lon_dms": (v) => (/^\-?1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)?$/).test(v)
           },
           checkFn = inconsistency[this.get('meta.type')];
       
@@ -260,6 +262,8 @@ let CellStruct = Struct.extend({
           }
         } else if (this.get('column.meta.type') === "geo") {
           return geoMatch(val);
+        } else if (["lon_dms", "lat_dms"].indexOf(this.get('column.meta.type')) !== -1) {
+          return deg2dec(val);
         }
         return val;
       } else {
@@ -455,6 +459,7 @@ let DataStruct = Struct.extend({
     },
     
     analyseHeader(report) {
+      console.log(this.get('body'));
       if (this.get('header.cells').some( c => Ember.isEmpty(c.get('value')) )) {
         report.errors.push("import.error.header.emptyCell");
       }
