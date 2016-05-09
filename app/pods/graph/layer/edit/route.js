@@ -13,7 +13,20 @@ export default Ember.Route.extend({
   model(params) {
     let layer = this.modelFor('graph.layer');
     if (layer.get('mapping.type')) {
-      return layer;
+      
+      if (layer.get('mapping.rules').length > 30) {
+        return this.get('ModalManager')
+          .show('confirm', "Ce calque contient beaucoup de valeurs et cela pourra nuire aux performances de l'application. Voulez-vous continuer ?",
+            "Attention", 'Oui', 'Annuler')
+          .then(() => {
+            return layer;
+          }).catch( () => {
+            this.transitionTo('graph.layer');
+          });
+      } else {
+        return layer;
+      }
+      
     } else {
       this.transitionTo('graph.layer');
     }
