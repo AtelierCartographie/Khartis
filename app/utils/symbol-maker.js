@@ -34,7 +34,7 @@ let symbol = function(opts = {}) {
               attrs: {
                 d: "m131,0l32,94l99,0l-79,59l28,94l-80,-56l-80,56l28,-94l-79,-59l99,0l32,-94l0,0z"
               },
-              viewBox: [0, 0, 262, 250]
+              viewBox: [0, 0, 262, 282]
             };
           case "times":
             return {

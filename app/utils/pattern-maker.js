@@ -1,7 +1,7 @@
 let lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
-      size = opts.size || 10,
+      size = opts.size || 12,
       stroke = "#FFFFFF",
       strokeWidth = opts.stroke,
       scale = opts.scale || 1,

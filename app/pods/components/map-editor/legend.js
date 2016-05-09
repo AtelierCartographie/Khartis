@@ -58,6 +58,10 @@ export default Ember.Mixin.create({
         legendContentG = legendG.select("g.legend-content"),
         t = {x: this.get('graphLayout.legendTx'), y: this.get('graphLayout.legendTy')};
     
+    if (!legendG.node()) {
+      return;
+    }
+    
     if (t.x === null || t.y === null) {
       
       let bbox = legendG.node().getBBox(),
@@ -141,7 +145,8 @@ export default Ember.Mixin.create({
       _.each( function(d, i) {
         
         let el = d3.select(this),
-            textOffset = 24;
+            textOffset = (d.get('mapping.visualization.type') === "symbol" ?
+              d.get('mapping.visualization.maxSize') : 10) + 14;
         
         el.selectAll("*").remove();
           
@@ -275,25 +280,64 @@ export default Ember.Mixin.create({
             
           }
           
-          if (!(i === 0 && d.get('mapping.scale.intervalType') === "linear")) {
+          g.append("line").attr({
+              x1: -r.x,
+              y1: 2*r.y + 2,
+              x2: textOffset - 6 - r.x,
+              y2: 2*r.y + 2,
+              stroke: "black"
+            });
           
-            g.append("line").attr({
-                x1: -r.x,
-                y1: 2*r.y + 2,
-                x2: textOffset - 6 - r.x,
-                y2: 2*r.y + 2,
-                stroke: "black"
-              });
-            
-            g.append("text")
-              .text( v => formatter(v) )
-              .attr({
-                x: textOffset - r.x,
-                y: 2*r.y + 2,
-                "font-size": "0.75em"
-              });
+          g.append("text")
+            .text( v => formatter(v) )
+            .attr({
+              x: textOffset - r.x,
+              y: 2*r.y + 2,
+              "font-size": "0.75em"
+            });
               
-          }
+          
+        };
+        
+        let appendSymbolIntervalLinearLabel = function(val, i) {
+          
+          let formatter = d3.format("0.2f"),
+              r = {x: d.get('mapping').getScaleOf('size')(val - 0.0000001), y: d.get('mapping').getScaleOf('size')(val - 0.0000001)};
+          
+          let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+      
+          symbol.call(svg);
+          
+          let g = d3.select(this).append("g");
+          
+          g.append("use")
+            .attr({
+              "xlink:href": symbol.url(),
+              "width": r.x*2,
+              "height": r.y*2,
+              "transform": d3lper.translate({tx: -r.x, ty: 0}),
+              "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
+              "stroke": d.get('mapping.visualization.strokeColor'),
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
+            });
+            
+          g = d3.select(this).append("g");
+          
+          g.append("line").attr({
+              x1: -r.x,
+              y1: r.y,
+              x2: textOffset - 6 - r.x,
+              y2: r.y,
+              stroke: "black"
+            });
+          
+          g.append("text")
+            .text( v => formatter(v) )
+            .attr({
+              x: textOffset - r.x,
+              y: r.y,
+              "font-size": "0.75em"
+            })
           
         };
         
@@ -376,21 +420,43 @@ export default Ember.Mixin.create({
         
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           
-          let intervals = d.get('mapping.intervals').slice();
+          let intervals = d.get('mapping.intervals').slice(),
+              fn;
           
-          if (!d.get('mapping.scale.intervalType') === "linear") {
-            intervals.push(d.get('mapping.extent')[1]); //push max
+          if (ValueMixin.Surface.detect(d.get('mapping'))) {
+            fn = appendSurfaceIntervalLabel;
+          } else {
+            if (d.get('mapping.scale.intervalType') === "linear") {
+              fn = appendSymbolIntervalLinearLabel;
+              if (d.get('mapping.values').length > 2) {
+                let steps = Math.min(d.get('mapping.values').length - 2, 3),
+                    i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps,
+                    nearest = Array.from({length: steps}, (v, idx) => d.get('mapping.extent')[0] + i*idx)
+                      .reduce( (arr, v) => {
+                        let nVal = d.get('mapping').findNearestValue(v);
+                        if (arr.indexOf(nVal) === -1 && intervals.indexOf(nVal) === -1) {
+                          arr.push(nVal);
+                        }
+                        return arr;
+                      }, []);
+                      
+                 Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
+              }
+            } else {
+              fn = appendSymbolIntervalLabel;
+              intervals.push(d.get('mapping.extent')[1]); //push max
+            }
           }
           
           let sel = el.selectAll("g.interval")
             .data(intervals)
-            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel);
+            .each(fn);
             
           sel.enter()
             .append("g")
             .classed("interval", true)
             .attr("flow-css", "flow: horizontal; stretch: true;")
-            .each(ValueMixin.Surface.detect(d.get('mapping')) ? appendSurfaceIntervalLabel : appendSymbolIntervalLabel);
+            .each(fn);
           
           sel.exit().remove();
           
@@ -446,6 +512,7 @@ export default Ember.Mixin.create({
     
     Ember.run.later(() => {
       this.updateLegendPosition();
+      this.updateLegendOpacity();
     });
     
   }.observes('graphLayout.showLegend', 'graphLayers.[]',

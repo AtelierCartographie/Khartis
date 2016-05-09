@@ -17,6 +17,20 @@ let DataMixin = Ember.Mixin.create({
     return Math.max.apply(this, this.get('values'));
   }.property('values'),
   
+  findNearestValue(val) {
+    
+    let distance = Number.MAX_VALUE - 1;
+    return this.get('values').reduce( (nearest, value) => {
+      let _distance = Math.abs(value - val);
+      if (_distance < distance) {
+        nearest = value;
+        distance = _distance;
+      }
+      return nearest;
+    });
+    
+  },
+  
   generateRules() {
     
     if (!this.get('rules')) {

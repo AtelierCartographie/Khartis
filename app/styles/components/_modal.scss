@@ -178,7 +178,7 @@ $modal-sm: 300px;
 
 .modal-header {
   background-color: hsl(0, 0%, 96%);
-  @extend .clearfix;
+  @include clearfix;
 }
 
 

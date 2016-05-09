@@ -185,7 +185,12 @@ export default Ember.Controller.extend({
     },
     
     removeLayer(layer) {
-      this.get('model.graphLayers').removeObject(layer);
+      this.get('ModalManager')
+        .show('confirm', "Êtes vous sur de vouloir supprimer ce calque ?",
+          "Confirmation de suppression", 'Oui', 'Annuler')
+        .then(() => {
+          this.get('model.graphLayers').removeObject(layer);
+        });
     },
     
     toggleLayerVisibility(layer) {
