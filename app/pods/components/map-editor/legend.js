@@ -35,9 +35,13 @@ export default Ember.Mixin.create({
       })
       .on("dragend", () => {
         legendG.classed("dragging", false);
+        let t = this.getViewboxTransform()({
+          x: legendG.attr('tx'),
+          y: legendG.attr('ty')
+        });
         this.get('graphLayout').setProperties({
-          legendTx: legendG.attr('tx'),
-          legendTy: legendG.attr('ty')
+          legendTx: t.x,
+          legendTy: t.y
         });
         this.sendAction('onAskVersioning', "freeze");
       });
@@ -52,22 +56,26 @@ export default Ember.Mixin.create({
     
     let legendG = this.d3l().select("g.legend"),
         legendContentG = legendG.select("g.legend-content"),
-        t = {tx: this.get('graphLayout.legendTx'), ty: this.get('graphLayout.legendTy')};
+        t = {x: this.get('graphLayout.legendTx'), y: this.get('graphLayout.legendTy')};
     
-    if (t.tx === null || t.ty === null) {
+    if (t.x === null || t.y === null) {
       
       let bbox = legendG.node().getBBox(),
           {w, h} = this.getSize();
       
-      t.tx = (w - bbox.width) / 2;
-      t.ty = h - this.get('graphLayout').vOffset(h) - bbox.height;
+      t.x = (w - bbox.width) / 2;
+      t.y = h - this.get('graphLayout').vOffset(h) - bbox.height;
+      
+    } else {
+      
+      t = this.getViewboxTransform().invert(t);
       
     }
     
     legendG.attr({
-        "tx": t.tx,
-        "ty": t.ty,
-        "transform": d3lper.translate(t)
+        "tx": t.x,
+        "ty": t.y,
+        "transform": d3lper.translate({tx: t.x, ty: t.y})
       });
       
     if (!legendContentG.empty()) {
@@ -81,10 +89,9 @@ export default Ember.Mixin.create({
         });
         
     }
-      
     
-    
-  }.observes('graphLayout.legendTx', 'graphLayout.legendTy'),
+  }.observes('$width', '$height',
+    'graphLayout.legendTx', 'graphLayout.legendTy'),
   
   updateLegendOpacity: function() {
     
@@ -441,7 +448,8 @@ export default Ember.Mixin.create({
       this.updateLegendPosition();
     });
     
-  }.observes('graphLayout.showLegend', 'graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator')
+  }.observes('graphLayout.showLegend', 'graphLayers.[]',
+    'graphLayers.@each._defferedChangeIndicator')
   
   
 });

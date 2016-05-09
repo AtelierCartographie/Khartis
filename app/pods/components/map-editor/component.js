@@ -191,6 +191,34 @@ export default Ember.Component.extend(LegendFeature, {
       };
     }
   },
+  
+  getViewboxTransform() {
+    
+    let {w, h} = this.getSize(),
+        l = this.get('graphLayout').hOffset(w),
+        t = this.get('graphLayout').vOffset(h);
+        
+    let transform = function({x, y}) {
+      
+      return {
+        x: x - l,
+        y: y - t
+      };
+      
+    };
+    
+    transform.invert = function({x, y}) {
+      
+      return {
+        x: x + l,
+        y: y + t
+      };
+      
+    }
+    
+    return transform;
+    
+  },
 	
 	updateColors: function() {
 		
