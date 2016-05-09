@@ -4,6 +4,10 @@
   border-radius: 2px;
   text-align: center;
   cursor: pointer;
+
+  // <button> element override.
+  outline:none;
+  border:none;
 }
 
 .button:hover {

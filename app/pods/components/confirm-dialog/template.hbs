@@ -1,0 +1,19 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h4 class="modal-title">{{{title}}}</h4>
+	  </div>
+	  <div class="modal-body">
+	    {{{message}}}
+	  </div>
+	  <div class="modal-footer">
+          {{#if cancelLabel}}
+          <button class="button small filled default pull-left" {{action 'cancel'}}>{{cancelLabel}}</button>
+          {{/if}}
+          <button class="button small filled default" {{action 'reject'}}>{{rejectLabel}}</button>
+          {{#if acceptLabel}}
+          <button class="button small danger filled" {{action 'accept'}}>{{acceptLabel}}</button>
+          {{/if}}
+	  </div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
