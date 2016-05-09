@@ -1,4 +1,6 @@
+
 @import 'utils/variables';
+@import 'utils/mixins';
 @import "normalize";
 @import "flow";
 @import "theme";
@@ -318,7 +320,7 @@ footer {
 
     li {
       @include flow();
-      
+
       border-bottom: 1px solid greys(20%);
       padding-top: 0.8rem;
       padding-bottom: 0.8rem;
@@ -429,7 +431,7 @@ footer {
 /*color picker customization*/
 .sp-container {
   padding: 2px;
-  
+
 }
 
 .sp-picker-container {

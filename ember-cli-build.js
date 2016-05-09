@@ -12,13 +12,14 @@ module.exports = function(defaults) {
       exclude: ['assets/images/']
     }
   });
-  
+
   app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
   app.import("bower_components/spectrum/spectrum.js");
   app.import("bower_components/spectrum/spectrum.css");
+  app.import("bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js");
   app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
-  
+
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
@@ -31,14 +32,14 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
-  
+
   // Resources to be included in public folder
   var dicts = new Funnel('ressources', {
       srcDir: '/',
       include: ['**/Projection-list.csv', '**/Dictionary-country-territory.json'],
       destDir: '/data'
    });
-   
+
    var maps = new Funnel('ressources/basemap', {
       srcDir: '/',
       include: ['**/*.json'],
@@ -46,5 +47,5 @@ module.exports = function(defaults) {
    });
 
   return app.toTree([maps, dicts]);
-  
+
 };

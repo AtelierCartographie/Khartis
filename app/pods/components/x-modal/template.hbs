@@ -1,0 +1,17 @@
+<div class="modal-dialog {{if large 'modal-lg'}}">
+    {{#if visible}}
+	<div class="modal-content">
+	  <div class="modal-header">
+          {{yield (x-facet 'headIcon') this}}
+          <h4 class="modal-title">{{title}}</h4>
+          {{yield (x-facet 'headNote') this}}
+	  </div>
+	  <div class="modal-body">
+	    {{yield (x-facet 'body') this}}
+	  </div>
+	  <div class="modal-footer">
+		  {{yield (x-facet 'footer') this}}
+	  </div>
+	</div><!-- /.modal-content -->
+    {{/if}}
+</div><!-- /.modal-dialog -->
