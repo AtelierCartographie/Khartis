@@ -132,7 +132,6 @@ let ColumnStruct = Struct.extend({
           this.get('body')
             .filter( c => !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
-              console.log(c.get('value'));
               if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {

@@ -350,7 +350,7 @@ export default Ember.Component.extend(LegendFeature, {
         precision = this.get('graphLayout.precision'),
         simplify = d3.geo.transform({
           point: function(x, y, z) {
-            if (z > 1/(precision*0.5)) this.stream.point(x, y);
+            /*if (z > 1/(precision*0.5)) */this.stream.point(x, y);
           }
         });
 		

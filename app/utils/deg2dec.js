@@ -36,10 +36,8 @@ export default function(value) {
     var deg = parseFloat(matches[1]);
     var min = parseFloat(matches[2]);
     var sec = parseFloat(matches[3]);
-    var direction = matches[4];
+    var direction = matches.length === 5 ? matches[4] : null;
     
-    console.log(deg, min, sec, direction);
-
     if (isNaN(deg) || isNaN(min) || isNaN(sec)) {
         return NaN;
     }
