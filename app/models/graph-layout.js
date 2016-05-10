@@ -131,7 +131,7 @@ var GraphLayout = Struct.extend({
   tx: 0,
   ty: 0,
 	width: 1024,
-	height: 768,
+	height: 700,
 	margin: Margin.create(),
   zoom: 1,
   precision: 2.5,

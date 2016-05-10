@@ -102,9 +102,15 @@ export default Ember.Component.extend({
     var trigger = this.get('triggerEl')
 
     // Make sure document click will not leak
-    $(document).off('click', this.handleOuterClick)
-    trigger.off('click', this.toggle)
-    dropdown.off('click', this.toggle)
+    $(document).off('click', this.handleOuterClick);
+    
+    if (trigger) {
+      trigger.off('click', this.toggle);
+    }
+    
+    if (dropdown) {
+      dropdown.off('click', this.toggle)
+    }
 
     if(this.get('snapped')){
       this.get('snapped').dispose()

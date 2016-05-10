@@ -150,7 +150,7 @@ export default Ember.Component.extend({
   
   translate(val) {
     
-    let translate = this.get('scale')(this.stepValue(val)) + "px";
+    let translate = this.get('scale')(val) + "px";
     
     this.d3l().selectAll(".dragger").style({
       "-webkit-transform":`translateX(${translate})`,

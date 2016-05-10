@@ -36,7 +36,7 @@ export default function(value) {
     var deg = parseFloat(matches[1]);
     var min = parseFloat(matches[2]);
     var sec = parseFloat(matches[3]);
-    var direction = parseFloat(matches[4]);
+    var direction = matches[4];
     
     console.log(deg, min, sec, direction);
 

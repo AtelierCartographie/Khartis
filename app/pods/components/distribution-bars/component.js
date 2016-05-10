@@ -3,6 +3,10 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   
   tagName: "svg",
+  attributeBindings: ['width', 'xmlns', 'version'],
+  width: "100%",
+  xmlns: 'http://www.w3.org/2000/svg',
+  version: '1.1',
   
   mapping: null,
   
@@ -11,7 +15,12 @@ export default Ember.Component.extend({
     let stack = this.d3l()
 			.append("g")
       .classed("stack", true);
-			//.attr("transform", "translate("+margin.left+", "+margin.top+")");
+    
+    stack.append("g")
+      .attr("class", "x axis");
+      
+    stack.append("g")
+      .attr("class", "y axis");
     
     stack.append("g")
       .classed("bars", true);
@@ -28,15 +37,15 @@ export default Ember.Component.extend({
     let dist = this.get('mapping.distribution'),
         colorScale = this.get('mapping').getScaleOf("color"),
         values = [...dist.values()],
-        margin = {top: 15, right: 15, bottom: 20, left: 35, betweenBars: 2},
+        margin = {top: 16, right: 16, bottom: 28, left: 36, betweenBars: 2},
 		    width = this.$().width() - margin.left - margin.right,
 		    height = this.$().height() - margin.top - margin.bottom,
         bindAttr,
         sel;
-			
+        
 		let stack = this.d3l().select("g.stack")
 			.attr("transform", "translate("+margin.left+", "+margin.top+")");
-			
+	
 		let x = d3.scale.linear()
       .rangeRound([0, width])
       .domain(d3.extent(values.map( v => v.val )));
@@ -55,14 +64,12 @@ export default Ember.Component.extend({
       .ticks(2)
       .orient("left");
 			
-    stack.append("g")
-      .attr("class", "x axis")
+    stack.select("g.x.axis")
       .attr("transform", "translate(0," + (height+2) + ")")
       .call(xAxis);
 	
-		stack.append("g")
+		stack.select("g.y.axis")
 		  .attr("transform", "translate(-3, 0)")
-		  .attr("class", "y axis")
 		  .call(yAxis);
 		  /*.append("text")
 		  .attr("transform", "rotate(-90)")
@@ -133,7 +140,7 @@ export default Ember.Component.extend({
       .append("line")
       .call(bindAttr)
       .classed("interval", true)
-      .style("stroke", "red");
+      .style("stroke", "#B0B0B0");
     
     sel.exit().remove();
     

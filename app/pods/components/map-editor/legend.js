@@ -68,7 +68,7 @@ export default Ember.Mixin.create({
           {w, h} = this.getSize();
       
       t.x = (w - bbox.width) / 2;
-      t.y = h - this.get('graphLayout').vOffset(h) - bbox.height;
+      t.y = h - this.get('graphLayout').vOffset(h) - bbox.height - 16;
       
     } else {
       
@@ -145,8 +145,9 @@ export default Ember.Mixin.create({
       _.each( function(d, i) {
         
         let el = d3.select(this),
-            textOffset = (d.get('mapping.visualization.type') === "symbol" ?
-              d.get('mapping.visualization.maxSize') : 10) + 14;
+            xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
+              d.get('mapping.visualization.maxSize') : 10),
+            textOffset = xOrigin + 14;
         
         el.selectAll("*").remove();
           
@@ -154,6 +155,7 @@ export default Ember.Mixin.create({
           .attr("flow-css", "margin-bottom: 16")
           .append("text")
           .classed("legend-title", true)
+          .attr("transform", d3lper.translate({tx: -xOrigin/2}))
           .style({
             "font-size": "14px",
             "font-weight": "bold"
@@ -163,7 +165,7 @@ export default Ember.Mixin.create({
           
         let appendSurfaceIntervalLabel = function(val, i) {
           
-          let formatter = d3.format("0.2f"),
+          let formatter = d3.format("0.5g"),
               r = {x: 24/2, y: 16/2};
               
           let g = d3.select(this).append("g");
@@ -238,7 +240,7 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLabel = function(val, i) {
           
-          let formatter = d3.format("0.2f"),
+          let formatter = d3.format("0.3g"),
               r = {x: d.get('mapping').getScaleOf('size')(val - 0.0000001), y: d.get('mapping').getScaleOf('size')(val - 0.0000001)};
           
           let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
@@ -301,7 +303,7 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLinearLabel = function(val, i) {
           
-          let formatter = d3.format("0.2f"),
+          let formatter = d3.format("0.3g"),
               r = {x: d.get('mapping').getScaleOf('size')(val - 0.0000001), y: d.get('mapping').getScaleOf('size')(val - 0.0000001)};
           
           let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});

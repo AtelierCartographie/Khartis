@@ -2,6 +2,7 @@
   <div class="titlebar">
     <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
     <div class="actions">
+      {{#link-to 'graph.layer'}}<div class="small button filled default" {{action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{/link-to}}
       {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
     </div>
   </div>
@@ -80,7 +81,7 @@
                 </ul>
                 <div class="panes">
                   <div class="tab-pane {{if editedLayer.mapping.visualization.colors 'active'}}" id="color-swatchs">
-                    <div class="vertical breakable flow swatchs" style="height: 100px">
+                    <div class="vertical breakable flow swatchs" style="height: 160px">
                       {{#each brewer.availableColorSets as |colorSet|}}
                         <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
                           {{color-swatch
