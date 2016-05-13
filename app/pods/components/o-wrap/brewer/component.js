@@ -13,7 +13,7 @@ export default WrapperAbstract.extend({
       return Object.keys(master).map( k => {
         
         let colors = Colorbrewer.Composer.compose(
-          k.split(","), 
+          k, 
           this.get('obj.scale.diverging'),
           this.get('obj.visualization.reverse'), 
           this.get('obj.scale.classes'),

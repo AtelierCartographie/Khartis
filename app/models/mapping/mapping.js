@@ -35,7 +35,7 @@ let Mapping = Struct.extend({
         master = Colorbrewer.sequential;
     
     return Colorbrewer.Composer.compose(
-      name.split(","), 
+      name, 
       this.get('scale.diverging'),
       this.get('visualization.reverse'), 
       this.get('scale.classes'),

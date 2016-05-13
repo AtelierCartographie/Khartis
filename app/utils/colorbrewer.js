@@ -176,15 +176,15 @@ let brewer = {
       9: ["#ffffff","#f0f0f0","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#252525","#000000"]
     }
   },
-  
-  diverging: {
+
+  /*diverging: {
     "BuGn,BuPu": undefined,
     "GnBu,OrRd": undefined,
     "PuBu,PuRd": undefined,
     "RdPu,YlGn": undefined,
     "YlGnBu,YlOrRd": undefined
-  }
-  
+  }*/
+
   /*diverging: {
     PuOr: {
       3: ["#f1a340","#f7f7f7","#998ec3"],
@@ -282,37 +282,173 @@ let brewer = {
       11: ["#9e0142","#d53e4f","#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2"]
     }
   }*/
-  
+
+  diverging: {
+    PRGn: {
+        2: {
+            1: ["#a068b0","#60ab69"],
+        },
+        3: {
+            1: ["#a068b0","#d9f0d3","#60ab69"],
+            2: ["#a068b0","#e7d4e8","#60ab69"],
+        },
+        4: {
+            1: ["#a068b0","#d9f0d3","#7ebc82","#008837"],
+            2: ["#a068b0","#e7d4e8","#d9f0d3","#60ab69"],
+            3: ["#7b3294","#b282be","#e7d4e8","#60ab69"],
+        },
+        5: {
+            1: ["#a068b0","#d9f0d3","#9ecd9d","#60ab69","#008837"],
+            2: ["#a068b0","#e7d4e8","#d9f0d3","#7ebc82","#008837"],
+            3: ["#7b3294","#b282be","#e7d4e8","#d9f0d3","#60ab69"],
+            4: ["#7b3294","#a068b0","#c49ecc","#e7d4e8","#60ab69"],
+        },
+        6: {
+            1: ["#a068b0","#d9f0d3","#acd6aa","#7ebc82","#4fa25c","#008837"],
+            2: ["#a068b0","#e7d4e8","#d9f0d3","#9ecd9d","#60ab69","#008837"],
+            3: ["#7b3294","#b282be","#e7d4e8","#d9f0d3","#7ebc82","#008837"],
+            4: ["#7b3294","#a068b0","#c49ecc","#e7d4e8","#d9f0d3","#60ab69"],
+            5: ["#7b3294","#975ba9","#b282be","#cdabd3","#e7d4e8","#60ab69"],
+        },
+        7: {
+            1: ["#a068b0","#d9f0d3","#a2cfa1","#70ad75","#418a4e","#18662f","#00441b"],
+            2: ["#a068b0","#e7d4e8","#d9f0d3","#acd6aa","#7ebc82","#4fa25c","#008837"],
+            3: ["#7b3294","#b282be","#e7d4e8","#d9f0d3","#9ecd9d","#60ab69","#008837"],
+            4: ["#7b3294","#a068b0","#c49ecc","#e7d4e8","#d9f0d3","#7ebc82","#008837"],
+            5: ["#7b3294","#975ba9","#b282be","#cdabd3","#e7d4e8","#d9f0d3","#60ab69"],
+            6: ["#40004b","#652774","#884f96","#a979b3","#c9a6cf","#e7d4e8","#60ab69"],
+        },
+        8: {
+            1: ["#a068b0","#d9f0d3","#abd5aa","#7fb883","#589b61","#347e44","#12612c","#00441b"],
+            2: ["#a068b0","#e7d4e8","#d9f0d3","#a2cfa1","#70ad75","#418a4e","#18662f","#00441b"],
+            3: ["#7b3294","#b282be","#e7d4e8","#d9f0d3","#acd6aa","#7ebc82","#4fa25c","#008837"],
+            4: ["#7b3294","#a068b0","#c49ecc","#e7d4e8","#d9f0d3","#9ecd9d","#60ab69","#008837"],
+            5: ["#7b3294","#975ba9","#b282be","#cdabd3","#e7d4e8","#d9f0d3","#7ebc82","#008837"],
+            6: ["#40004b","#652774","#884f96","#a979b3","#c9a6cf","#e7d4e8","#d9f0d3","#60ab69"],
+            7: ["#40004b","#5f216d","#7c418b","#9864a5","#b387bd","#ceaed3","#e7d4e8","#60ab69"],
+        }
+    },
+    BlRd: {
+        2: {
+            1: ["#6997c8","#e36453"],
+        },
+        3: {
+            1: ["#6997c8","#fddbc7","#e36453"],
+            2: ["#6997c8","#deebf7","#e36453"],
+        },
+        4: {
+            1: ["#6997c8","#fddbc7","#ec836f","#ca0020"],
+            2: ["#6997c8","#deebf7","#fddbc7","#e36453"],
+            3: ["#0571b0","#88acd3","#deebf7","#e36453"],
+        },
+        5: {
+            1: ["#6997c8","#fddbc7","#f4a08b","#e36453","#ca0020"],
+            2: ["#6997c8","#deebf7","#fddbc7","#ec836f","#ca0020"],
+            3: ["#0571b0","#88acd3","#deebf7","#fddbc7","#e36453"],
+            4: ["#0571b0","#6997c8","#a6c1df","#deebf7","#e36453"],
+        },
+        6: {
+            1: ["#6997c8","#fddbc7","#f7b09a","#ec836f","#dd5446","#ca0020"],
+            2: ["#6997c8","#deebf7","#fddbc7","#f4a08b","#e36453","#ca0020"],
+            3: ["#0571b0","#88acd3","#deebf7","#fddbc7","#ec836f","#ca0020"],
+            4: ["#0571b0","#6997c8","#a6c1df","#deebf7","#fddbc7","#e36453"],
+            5: ["#0571b0","#588ec2","#88acd3","#b3cbe5","#deebf7","#e36453"],
+        },
+        7: {
+            1: ["#6997c8","#fddbc7","#f3a994","#de7968","#c14b44","#991f2b","#67001f"],
+            2: ["#6997c8","#deebf7","#fddbc7","#f7b09a","#ec836f","#dd5446","#ca0020"],
+            3: ["#0571b0","#88acd3","#deebf7","#fddbc7","#f4a08b","#e36453","#ca0020"],
+            4: ["#0571b0","#6997c8","#a6c1df","#deebf7","#fddbc7","#ec836f","#ca0020"],
+            5: ["#0571b0","#588ec2","#88acd3","#b3cbe5","#deebf7","#fddbc7","#e36453"],
+            6: ["#053061","#225387","#4c77a9","#7b9dc6","#abc4e0","#deebf7","#e36453"],
+        },
+        8: {
+            1: ["#6997c8","#fddbc7","#f6b19c","#e68976","#d16155","#b43c3a","#921728","#67001f"],
+            2: ["#6997c8","#deebf7","#fddbc7","#f3a994","#de7968","#c14b44","#991f2b","#67001f"],
+            3: ["#0571b0","#88acd3","#deebf7","#fddbc7","#f7b09a","#ec836f","#dd5446","#ca0020"],
+            4: ["#0571b0","#6997c8","#a6c1df","#deebf7","#fddbc7","#f4a08b","#e36453","#ca0020"],
+            5: ["#0571b0","#588ec2","#88acd3","#b3cbe5","#deebf7","#fddbc7","#ec836f","#ca0020"],
+            6: ["#053061","#225387","#4c77a9","#7b9dc6","#abc4e0","#deebf7","#fddbc7","#e36453"],
+            7: ["#053061","#1c4d82","#3e6b9e","#6389b8","#8ba9cf","#b3cae4","#deebf7","#e36453"],
+        }
+    },
+    BGBr: {
+        2: {
+            1: ["#59a696","#c48c52"],
+        },
+        3: {
+            1: ["#59a696","#f6e8c3","#c48c52"],
+            2: ["#59a696","#c7eae5","#c48c52"],
+        },
+        4: {
+            1: ["#59a696","#f6e8c3","#d2a36d","#a6611a"],
+            2: ["#59a696","#c7eae5","#f6e8c3","#c48c52"],
+            3: ["#018571","#75b7a9","#c7eae5","#c48c52"],
+        },
+        5: {
+            1: ["#59a696","#f6e8c3","#dfb989","#c48c52","#a6611a"],
+            2: ["#59a696","#c7eae5","#f6e8c3","#d2a36d","#a6611a"],
+            3: ["#018571","#75b7a9","#c7eae5","#f6e8c3","#c48c52"],
+            4: ["#018571","#59a696","#90c8bc","#c7eae5","#c48c52"],
+        },
+        6: {
+            1: ["#59a696","#f6e8c3","#e5c597","#d2a36d","#bd8245","#a6611a"],
+            2: ["#59a696","#c7eae5","#f6e8c3","#dfb989","#c48c52","#a6611a"],
+            3: ["#018571","#75b7a9","#c7eae5","#f6e8c3","#d2a36d","#a6611a"],
+            4: ["#018571","#59a696","#90c8bc","#c7eae5","#f6e8c3","#c48c52"],
+            5: ["#018571","#499d8c","#75b7a9","#9fd1c7","#c7eae5","#c48c52"],
+        },
+        7: {
+            1: ["#59a696","#f6e8c3","#dfbe8f","#c39461","#a36f3a","#7e4d1a","#543005"],
+            2: ["#59a696","#c7eae5","#f6e8c3","#e5c597","#d2a36d","#bd8245","#a6611a"],
+            3: ["#018571","#75b7a9","#c7eae5","#f6e8c3","#dfb989","#c48c52","#a6611a"],
+            4: ["#018571","#59a696","#90c8bc","#c7eae5","#f6e8c3","#d2a36d","#a6611a"],
+            5: ["#018571","#499d8c","#75b7a9","#9fd1c7","#c7eae5","#f6e8c3","#c48c52"],
+            6: ["#003c30","#145e4f","#388171","#62a496","#93c7bd","#c7eae5","#c48c52"],
+        },
+        8: {
+            1: ["#59a696","#f6e8c3","#e3c497","#cda16f","#b3824c","#97632e","#764815","#543005"],
+            2: ["#59a696","#c7eae5","#f6e8c3","#dfbe8f","#c39461","#a36f3a","#7e4d1a","#543005"],
+            3: ["#018571","#75b7a9","#c7eae5","#f6e8c3","#e5c597","#d2a36d","#bd8245","#a6611a"],
+            4: ["#018571","#59a696","#90c8bc","#c7eae5","#f6e8c3","#dfb989","#c48c52","#a6611a"],
+            5: ["#018571","#499d8c","#75b7a9","#9fd1c7","#c7eae5","#f6e8c3","#d2a36d","#a6611a"],
+            6: ["#003c30","#145e4f","#388171","#62a496","#93c7bd","#c7eae5","#f6e8c3","#c48c52"],
+            7: ["#003c30","#0e584a","#2c7566","#4d9284","#72afa2","#9bcdc3","#c7eae5","#c48c52"],
+        }
+    }
+  }
 };
 
+// Reverse-duplicate each diverging palette
+Object.keys(brewer.diverging).forEach(function(pid){
+  var rev_pid = pid.replace(/^(..)(.*)$/, '$2$1');
+  brewer.diverging[rev_pid] = {};
+  Object.keys(brewer.diverging[pid]).forEach(function(n){
+    brewer.diverging[rev_pid][n] = {};
+    Object.keys(brewer.diverging[pid][n]).forEach(function(m){
+      brewer.diverging[rev_pid][n][n-m] = brewer.diverging[pid][n][m].slice(0).reverse();
+    });
+  });
+});
+
 brewer.Composer = {
-  
-  compose(palettes, diverging, reverse, classes, before) {
-      
-    let master = brewer.sequential,
-        res = null;
-    
-    if (palettes.length > 1 && diverging) {
-      
-      let leftClasses = Math.max(before, 2),
-          rightClasses = Math.max(classes - before, 2),
-          left = master[palettes[0]][leftClasses].slice(0),
-          right = master[palettes[1]][rightClasses].slice(0);
-      
-      reverse ? right.reverse() : left.reverse();
-      
-      left = left.slice(0, left.length - (leftClasses - before));
-      right = right.slice(0, right.length - (rightClasses - (classes - before)));
-      
-      res = left.concat(right);
-      
+
+  compose(palette, diverging, reverse, classes, before) {
+
+    let res = null;
+
+    if (diverging) {
+      res = brewer.diverging[palette][classes][before].slice(0);
+      if (reverse) {
+        res = res.slice(0, before).reverse().concat(res.slice(before, classes).reverse());
+      }
     } else {
-      res = master[palettes[0]][classes].slice(0);
+      res = brewer.sequential[palette][classes].slice(0);
       reverse ? res.reverse() : void(0);
     }
-    
+
     return res;
-    
+
   }
 
 };
