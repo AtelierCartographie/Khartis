@@ -147,7 +147,10 @@ export default Ember.Mixin.create({
         let el = d3.select(this),
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
               d.get('mapping.visualization.maxSize') : 10),
-            textOffset = xOrigin + 14;
+            textOffset = xOrigin + 14,
+            formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
+        
+        console.log(d.get('mapping.maxValuePrecision'));
         
         el.selectAll("*").remove();
           
@@ -165,8 +168,7 @@ export default Ember.Mixin.create({
           
         let appendSurfaceIntervalLabel = function(val, i) {
           
-          let formatter = d3.format("0.5g"),
-              r = {x: 24/2, y: 16/2};
+          let r = {x: 24/2, y: 16/2};
               
           let g = d3.select(this).append("g");
           
@@ -184,10 +186,10 @@ export default Ember.Mixin.create({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "width": 2*r.x,
               "height": 2*r.y,
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001),
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "mask": () => {
                 
-                let mask = d.get('mapping').getScaleOf("texture")(val - 0.0000001)
+                let mask = d.get('mapping').getScaleOf("texture")(val - 0.000000001)
                 if (mask && mask.fn != PatternMaker.NONE) {
                   svg.call(mask.fn);
                   return `url(${mask.fn.url()})`;
@@ -240,10 +242,8 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLabel = function(val, i) {
           
-          let formatter = d3.format("0.3g"),
-              r = {x: d.get('mapping').getScaleOf('size')(val - 0.0000001), y: d.get('mapping').getScaleOf('size')(val - 0.0000001)};
-          
-          let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+          let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
+              symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
       
           symbol.call(svg);
           
@@ -257,7 +257,7 @@ export default Ember.Mixin.create({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
               "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001)
             });
             
           g = d3.select(this).append("g");
@@ -303,10 +303,8 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLinearLabel = function(val, i) {
           
-          let formatter = d3.format("0.3g"),
-              r = {x: d.get('mapping').getScaleOf('size')(val - 0.0000001), y: d.get('mapping').getScaleOf('size')(val - 0.0000001)};
-          
-          let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+          let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
+              symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
       
           symbol.call(svg);
           
@@ -320,7 +318,7 @@ export default Ember.Mixin.create({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
               "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.0000001)
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001)
             });
             
           g = d3.select(this).append("g");
@@ -349,7 +347,7 @@ export default Ember.Mixin.create({
           
           if (d.get('mapping.visualization.type') === "symbol") {
             
-            r = {x: d.get('mapping.visualization.minSize'), y: d.get('mapping.visualization.minSize')};
+            let r = {x: d.get('mapping.visualization.minSize'), y: d.get('mapping.visualization.minSize')};
             let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape');
             
             let symbol = SymbolMaker.symbol({name: shape});
@@ -457,7 +455,7 @@ export default Ember.Mixin.create({
           sel.enter()
             .append("g")
             .classed("interval", true)
-            .attr("flow-css", "flow: horizontal; stretch: true;")
+            .attr("flow-css", (r, i) => `flow: horizontal; stretch: true; margin-top: ${ i > 0 ? 2 : 0 }`)
             .each(fn);
           
           sel.exit().remove();

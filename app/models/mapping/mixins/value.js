@@ -31,6 +31,29 @@ let DataMixin = Ember.Mixin.create({
     
   },
   
+  clampValueBreak: function() {
+    
+    if (this.get('scale.valueBreak') != null) {
+      if (this.get('scale.valueBreak') < this.get('extent')[0]) {
+        this.set('scale.valueBreak', this.get('extent')[0]);
+      } else if (this.get('scale.valueBreak') > this.get('extent')[1]) {
+        this.set('scale.valueBreak', this.get('extent')[1]);
+      }
+    }
+    
+  }.observes('scale.valueBreak'),
+  
+  maxValuePrecision: function() {
+    return this.get('values').reduce( (p, v) => {
+      if (isFinite(v)) {
+        let e = 1;
+        while (Math.round(v * e) / e !== v) e *= 10;
+        return Math.max(Math.log(e) / Math.LN10, p);
+      }
+      return p;
+    }, 0);
+  }.property('values'),
+  
   generateRules() {
     
     if (!this.get('rules')) {

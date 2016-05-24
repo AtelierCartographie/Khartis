@@ -35,8 +35,6 @@ export default Ember.Component.extend(LegendFeature, {
   
   resizeInterval: null,
   
-  applicationController: null,
-  
   windowLocation: function() {
     return window.location;
   }.property(),
@@ -110,9 +108,14 @@ export default Ember.Component.extend(LegendFeature, {
     var zoom = d3.behavior.zoom()
       .scaleExtent([1, 10])
       .on("zoom", () => {
-        let rz =  Math.round(d3.event.scale * 2) / 2;
+        let [tx, ty] = d3.event.translate,
+            rz =  Math.round(parseFloat(d3.event.scale) * 2) / 2;
         if (rz != this.get('graphLayout.zoom')) {
-          this.set('graphLayout.zoom',rz);
+          this.get('graphLayout').setProperties({
+            tx: tx,
+            ty: ty
+          });
+          this.set('graphLayout.zoom', rz);
           this.sendAction('onAskVersioning', "freeze");
         }
       })

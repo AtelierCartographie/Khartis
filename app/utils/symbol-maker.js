@@ -85,18 +85,18 @@ let symbol = function(opts = {}) {
       
     }
     
-  }
+  };
   
   proc.scale = function(v, w) {
     let conf = factory(name),
           max = Math.max.apply(this, conf.viewBox);
     
     return v / (w / max);
-  }
+  };
   
   proc.url = function() {
    return `${window.location}#${id}`;
-  }
+  };
   
   return proc;
    
