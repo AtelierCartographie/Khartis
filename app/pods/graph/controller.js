@@ -59,6 +59,13 @@ export default Ember.Controller.extend({
         topojson.presimplify(j);
         this.set('basemapData', {
           lands: topojson.feature(j, j.objects.land),
+          borders: topojson.mesh(j, j.objects.border, function(a, b) {
+              console.log(a.properties.featurecla);
+              return a.properties.featurecla === "International"; 
+            }),
+          bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
+              return a.properties.featurecla === "Disputed"; 
+            }),
           centroids: topojson.feature(j, j.objects.centroid)
         });
       });

@@ -150,8 +150,6 @@ export default Ember.Mixin.create({
             textOffset = xOrigin + 14,
             formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
         
-        console.log(d.get('mapping.maxValuePrecision'));
-        
         el.selectAll("*").remove();
           
         let label = el.append("g")
