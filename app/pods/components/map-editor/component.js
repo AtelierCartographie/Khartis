@@ -530,8 +530,6 @@ export default Ember.Component.extend(LegendFeature, {
       .datum(this.get('base').land)
       .attr("d", this.get('projectedPath'))
       .style({
-        "stroke-width": 1,
-        "stroke": this.get("graphLayout.stroke"),
         "fill": this.get('graphLayout.backMapColor')
       });
     
