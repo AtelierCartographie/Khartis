@@ -7,6 +7,7 @@ import {geoMatch} from 'mapp/utils/geo-match';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
 import LegendFeature from './legend';
+import {isChrome} from 'mapp/utils/browser-check';
 /* global Em */
 
 let landSelSet = new Set();
@@ -137,7 +138,7 @@ export default Ember.Component.extend(LegendFeature, {
             translate = d3.event.translate;
         
         let _ = this.get('projection').scale() / s,
-            __ = scale/_,
+            rs = scale/_,
             tx = this.get('projection').translate()[0] - t[0] * _,
             ty = this.get('projection').translate()[1] - t[1] * _;
 
@@ -149,11 +150,14 @@ export default Ember.Component.extend(LegendFeature, {
           })
           .transition().duration(500).ease("cubic-out")
           .attr({
-            "transform": `${d3lper.translate({tx: translate[0] - tx*__, ty: translate[1] - ty*__})} scale(${scale/_})`
+            "transform": `${d3lper.translate({tx: translate[0] - tx*rs, ty: translate[1] - ty*rs})} scale(${rs})`
           })
           .each("end", () => {
             
             mapG.attr("transform", null);
+            
+            mapG.selectAll("g.layers .shape")
+              .attr("transform", null);
             
             let tx = t[0] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("tx")),
                 ty = t[1] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("ty"));
@@ -163,6 +167,19 @@ export default Ember.Component.extend(LegendFeature, {
             this.projectAndDraw();
             
           });
+        
+        if (isChrome()) {
+          mapG.selectAll("g.layers .shape").each(function() {
+            
+            let el = d3.select(this),
+              elBox = el.node().getBBox(),
+              cx = elBox.x + elBox.width / 2,
+              cy = elBox.y + elBox.height / 2;
+          
+            el.attr("transform", `${d3lper.translate({tx: -cx*(1/rs-1), ty: -cy*(1/rs-1)})} scale(${1/rs})`);
+            
+          });
+        }
        
         /*console.log(d3.event.scale);
         let [tx, ty] = d3.event.translate,
@@ -777,10 +794,10 @@ export default Ember.Component.extend(LegendFeature, {
       
     centroidSel.order().exit().remove();
 
-	},
+	}
   
   
-  test() {
+  /*test() {
     
     let parent = this.d3l().append("g")
       .attr("flow-css", "flow: vertical; width: 100; height: 150");
@@ -808,7 +825,7 @@ export default Ember.Component.extend(LegendFeature, {
    
    parent.call(d3lper.flow);  
     
-  }
+  }*/
   
   
   /*drawText: function() {

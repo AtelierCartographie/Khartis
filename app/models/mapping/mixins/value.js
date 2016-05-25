@@ -13,6 +13,10 @@ let DataMixin = Ember.Mixin.create({
       .map( c => c.get('postProcessedValue') );
   }.property('varCol'),
   
+  absValues: function() {
+    return this.get('values').map( v => Math.abs(v) );
+  }.property('values'),
+  
   maxValue: function() {
     return Math.max.apply(this, this.get('values'));
   }.property('values'),
@@ -176,20 +180,24 @@ let SymbolMixin = Ember.Mixin.create({
         visualization = this.get('visualization'),
         d3Scale,
         domain,
+        transform = _ => d3Scale(_),
         range;
         
     if (type === "size") {
       
-      contrastScale.domain(d3.extent(this.get('values')))
-        .range([visualization.get('minSize'), visualization.get('maxSize')]);
+      contrastScale.domain(ext)
+        .range([0, visualization.get('maxSize')]);
       
       if (this.get('scale.intervalType') === "linear") {
         d3Scale = contrastScale;
         range = contrastScale.range();
         domain = contrastScale.domain();
+        transform = _ => d3Scale(Math.abs(_));
       } else {
         d3Scale = d3.scale.threshold();
-        range = Array.from({length: intervals.length}, (v, i) => contrastScale(intervals[i]));
+        range = Array.from({length: intervals.length},
+            (v, i) => contrastScale(Math.abs(intervals[i]))
+          );
         range.push(contrastScale(this.get('maxValue')));
         domain = intervals;
       };
@@ -209,7 +217,9 @@ let SymbolMixin = Ember.Mixin.create({
       
     }
     
-    return d3Scale.domain(domain).range(range);
+    d3Scale.domain(domain).range(range);
+    
+    return transform;
       
   }
   
