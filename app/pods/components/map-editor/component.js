@@ -9,6 +9,8 @@ import SymbolMaker from 'mapp/utils/symbol-maker';
 import LegendFeature from './legend';
 /* global Em */
 
+let landSelSet = new Set();
+
 export default Ember.Component.extend(LegendFeature, {
   
   tagName: "svg",
@@ -58,7 +60,7 @@ export default Ember.Component.extend(LegendFeature, {
     defs.append("path")
       .attr("id", "sphere");
       
-   defs.append("path")
+    defs.append("path")
       .attr("id", "grid");
 
     defs.append("clipPath")
@@ -93,19 +95,28 @@ export default Ember.Component.extend(LegendFeature, {
       .classed("map", true);
     
     let backMap = mapG.append("g")
-			.classed("backmap", true)
+			.classed("backmap", true);
       
-    backMap.append("g")
-      .classed("lands", true);
+    backMap.append("use")
+      .classed("sphere", true);
+      
+    backMap.append("use")
+      .classed("grid", true);
       
     backMap.append("path")
-      .classed("borders", true);
-      
-    backMap.append("path")
-      .classed("borders-disputed", true);
+      .classed("land", true);
     	
 		mapG.append("g")
 			.classed("layers", true);
+    
+    let bordersMap = mapG.append("g")
+      .classed("borders", true);
+      
+    bordersMap.append("path")
+      .classed("borders", true);
+      
+    bordersMap.append("path")
+      .classed("borders-disputed", true);
       
     this.legendInit();
     
@@ -121,14 +132,38 @@ export default Ember.Component.extend(LegendFeature, {
     var zoom = d3.behavior.zoom()
       .scaleExtent([1, 10])
       .on("zoom", () => {
-        console.log("zoom", s, d3.event.scale);
-        console.log(s * d3.event.scale);
-        var tx = t[0] * d3.event.scale + d3.event.translate[0],
-            ty = t[1] * d3.event.scale + d3.event.translate[1];
-        this.get('projection').translate([tx, ty]).scale(s * d3.event.scale);
         
-        Ember.run.debounce(this, this.projectAndDraw, 20, true);
+        let scale = d3.event.scale,
+            translate = d3.event.translate;
         
+        let _ = this.get('projection').scale() / s,
+            __ = scale/_,
+            tx = this.get('projection').translate()[0] - t[0] * _,
+            ty = this.get('projection').translate()[1] - t[1] * _;
+
+        mapG
+          .attr({
+            tx: translate[0],
+            ty: translate[1],
+            s: scale
+          })
+          .transition().duration(500).ease("cubic-out")
+          .attr({
+            "transform": `${d3lper.translate({tx: translate[0] - tx*__, ty: translate[1] - ty*__})} scale(${scale/_})`
+          })
+          .each("end", () => {
+            
+            mapG.attr("transform", null);
+            
+            let tx = t[0] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("tx")),
+                ty = t[1] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("ty"));
+                
+            this.get('projection').translate([tx, ty]).scale(s * parseFloat(mapG.attr("s")));
+        
+            this.projectAndDraw();
+            
+          });
+       
         /*console.log(d3.event.scale);
         let [tx, ty] = d3.event.translate,
             rz =  Math.round(parseFloat(d3.event.scale) * 2) / 2;
@@ -387,13 +422,7 @@ export default Ember.Component.extend(LegendFeature, {
     let path = this.get('projectedPath'),
         proj = this.get('projection'),
         precision = this.get('graphLayout.precision'),
-        simplify = d3.geo.transform({
-          point: function(x, y, z) {
-            /*if (z > 1/(precision*0.5)) */this.stream.point(x, y);
-          }
-        });
-		
-    let defs = this.d3l().select("defs");
+        defs = this.d3l().select("defs");
     
     defs.select("#sphere")
       .datum({type: "Sphere"})
@@ -407,30 +436,45 @@ export default Ember.Component.extend(LegendFeature, {
     defs.select("#clip use")
       .attr("xlink:href", `${window.location}#sphere`);
       
-    path.projection({stream: function(s) { return simplify.stream(proj.stream(s)); }});
+    defs.selectAll("path.feature")
+      .attr("d", path);
       
-		let landSel = defs
-			.selectAll("path.feature")
-      .data(this.get('base').lands.features);
-      
-    landSel
-			.attr("d", path)
+    this.d3l().select("g.map")
       .attr("clip-path", `url(${window.location}#clip)`);
       
-    landSel.enter()
-      .append("path")
-			.attr("d", path)
-      .attr("id", (d) => `f-path-${d.id}`)
-      .attr("clip-path", `url(${window.location}#clip)`)
-			.classed("feature", true);
-
-		landSel.exit().remove();
-    
     this.drawGrid();
     this.drawBackmap();
-    //this.drawLayers();
+    this.drawLayers();
 			
 	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed'),
+  
+  registerLandSel(id) {
+    
+    landSelSet.add(id);
+    return `${window.location}#f-path-${id}`;
+    
+  },
+  
+  drawLandSel() {
+    
+    let features = this.get('base').lands.features.filter( 
+          f => landSelSet.has(f.id)
+        ),
+        path = this.get('projectedPath');
+    
+    let sel = this.d3l().select("defs").selectAll("path.feature")
+      .data(features)
+      .attr("d", path);
+      
+    sel.enter()
+      .append("path")
+      .attr("d", path)
+      .attr("id", (d) => `f-path-${d.id}`)
+      .classed("feature", true);
+     
+    sel.exit().remove();
+    
+  },
   
   drawTitle: function() {
     
@@ -451,43 +495,30 @@ export default Ember.Component.extend(LegendFeature, {
    
   drawGrid: function() {
      
-     let sphere = this.d3l().select("g.backmap")
-      .selectAll("use.sphere");
-    
-    if (sphere.empty()) {
-      sphere = this.d3l().select("g.backmap").append("use")
-        .style({
-          "fill": "none",
-          "stroke": this.get('graphLayout.gridColor')
-        })
-        .classed("sphere", true);
-        
-    }
-    
-    sphere.attr({
+    let sphere = this.d3l().select("g.backmap").selectAll("use.sphere"),
+        grid = this.d3l().select("g.backmap").selectAll("use.grid");
+
+    sphere.style({
+      "fill": "none",
+      "stroke": this.get('graphLayout.gridColor')
+    })
+    .attr({
       "xlink:href": `${window.location}#sphere`,
     }).style({
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
-    });
-    
-    let grid = this.d3l().select("g.backmap")
-      .selectAll("use.grid");
-    
-    if (grid.empty()) {
-      grid = this.d3l().select("g.backmap").append("use")
-        .style({
-          "fill": "none",
-          "stroke": this.get('graphLayout.gridColor')
-        })
-        .classed("grid", true);
-        
-    }
-    
-    grid.attr({
+    })
+    .classed("sphere", true);
+  
+    grid.style({
+      "fill": "none",
+      "stroke": this.get('graphLayout.gridColor')
+    })
+    .attr({
       "xlink:href": `${window.location}#grid`,
     }).style({
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
-    });
+    })
+    .classed("grid", true);
      
    }.observes('graphLayout.gridColor', 'graphLayout.showGrid'),
    
@@ -495,29 +526,16 @@ export default Ember.Component.extend(LegendFeature, {
     
     let d3l = this.d3l();
     
-    let bindAttr = (_) => {
-      _.attr({
-        "xlink:href": d => `${window.location}#f-path-${d.id}`,
-      })
+    d3l.select("g.backmap path.land")
+      .datum(this.get('base').land)
+      .attr("d", this.get('projectedPath'))
       .style({
-        "fill": this.get('graphLayout.backMapColor'),
-        "stroke-width": this.get("graphLayout.strokeWidth"),
-        "stroke": "none"
+        "stroke-width": 1,
+        "stroke": this.get("graphLayout.stroke"),
+        "fill": this.get('graphLayout.backMapColor')
       });
-    };
     
-    var uses = d3l.select("g.backmap g.lands")
-      .selectAll("use.feature")
-      .data(this.get('base').lands.features)
-      .call(bindAttr);
-      
-    uses.enter().append("use")
-			.classed("feature", true)
-      .call(bindAttr);
-      
-    uses.exit().remove();
-    
-    d3l.select("g.backmap path.borders")
+    d3l.select("g.borders path.borders")
       .datum(this.get('base').borders)
       .attr("d", this.get('projectedPath'))
       .style({
@@ -526,7 +544,7 @@ export default Ember.Component.extend(LegendFeature, {
         "fill": "none"
       });
       
-    d3l.select("g.backmap path.borders-disputed")
+    d3l.select("g.borders path.borders-disputed")
       .datum(this.get('base').bordersDisputed)
       .attr("d", this.get('projectedPath'))
       .style({
@@ -565,6 +583,8 @@ export default Ember.Component.extend(LegendFeature, {
       d.index = index;
       self.mapData(d3.select(this), d);
     });
+    
+    this.drawLandSel();
     
   }.observes('graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
   
@@ -648,9 +668,7 @@ export default Ember.Component.extend(LegendFeature, {
     let bindAttr = (_) => {
       
       _.attr({
-          "xlink:href": d => `${window.location}#f-path-${d.id}`,
-          "stroke-width": this.get("graphLayout.strokeWidth"),
-          "stroke": this.get("graphLayout.stroke"),
+          "xlink:href": d => this.registerLandSel(d.id),
           "mask": d => {
             let mask = converter(d.cell, "texture");
           

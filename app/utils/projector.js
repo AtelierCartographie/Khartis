@@ -28,7 +28,7 @@ export default {
     return proj.fn()
       .center(center)
       .scale(r)
-      .clipExtent([[0, 0], [fWidth, fHeight]])
+      //.clipExtent([[0, 0], [fWidth, fHeight]])
       .translate([
         (width + (margin.get('l') - margin.get('r'))) / 2,
         (height + (margin.get('t') - margin.get('b'))) / 2

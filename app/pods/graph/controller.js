@@ -56,8 +56,9 @@ export default Ember.Controller.extend({
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
         let j = JSON.parse(json);
-        topojson.presimplify(j);
+        console.log(j.objects);
         this.set('basemapData', {
+          land: topojson.merge(j, j.objects.land.geometries),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
               console.log(a.properties.featurecla);
