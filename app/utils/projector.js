@@ -2,12 +2,9 @@ import d3 from 'd3';
 
 export default {
   
-  computeProjection(features, width, height, fWidth, fHeight, margin, zoom, proj,
-    tx, ty) {
+  computeProjection(features, width, height, fWidth, fHeight, margin, proj) {
     
-    zoom = zoom < 1 ? 1 : 1/zoom;
-    
-    let fProjection = proj.fn(false).scale(zoom).precision(0.1).translate([0, 0]),
+    let fProjection = proj.fn(false).scale(1).precision(0.1).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
         pixelBounds = d3Path.bounds(features ? features : {type: "Sphere"}),
@@ -22,19 +19,22 @@ export default {
         heightResolution = (fHeight - margin.get('v')) / pixelBoundsHeight,
 
         r = Math.min(widthResolution, heightResolution);
-        
-        console.log(r);
     
-    return proj.fn()
+    let projection = proj.fn()
       .center(center)
-      .scale(r)
       //.clipExtent([[0, 0], [fWidth, fHeight]])
       .translate([
         (width + (margin.get('l') - margin.get('r'))) / 2,
         (height + (margin.get('t') - margin.get('b'))) / 2
       ])
       .precision(0.1);
-      
+    
+    //store initial resolution and translate for future scale
+    projection.resolution = r;
+    projection.initialTranslate = projection.translate();
+    
+    return projection;
+    
   }
 
 };

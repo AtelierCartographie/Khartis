@@ -125,109 +125,18 @@ export default Ember.Component.extend(LegendFeature, {
       .classed("title", true);
       
     // DRAG & ZOOM
-    
-    
-    let t = this.get('projection').translate(),
-        s = this.get('projection').scale();
-
     var zoom = d3.behavior.zoom()
-      .scaleExtent([1, 10])
+      .scaleExtent([1, 12])
       .on("zoom", () => {
         
-        let scale = d3.event.scale,
-            translate = d3.event.translate;
-        
-        let _ = this.get('projection').scale() / s,
-            rs = scale/_,
-            tx = this.get('projection').translate()[0] - t[0] * _,
-            ty = this.get('projection').translate()[1] - t[1] * _;
-
-        mapG
-          .attr({
-            tx: translate[0],
-            ty: translate[1],
-            s: scale
-          })
-          .transition().duration(500).ease("cubic-out")
-          .attr({
-            "transform": `${d3lper.translate({tx: translate[0] - tx*rs, ty: translate[1] - ty*rs})} scale(${rs})`
-          })
-          .each("end", () => {
-            
-            mapG.attr("transform", null);
-            
-            mapG.selectAll("g.layers .shape")
-              .attr("transform", null);
-            
-            let tx = t[0] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("tx")),
-                ty = t[1] * parseFloat(mapG.attr("s")) + parseFloat(mapG.attr("ty"));
-                
-            this.get('projection').translate([tx, ty]).scale(s * parseFloat(mapG.attr("s")));
-        
-            this.projectAndDraw();
-            
-          });
-        
-        if (isChrome()) {
-          mapG.selectAll("g.layers .shape").each(function() {
-            
-            let el = d3.select(this),
-              elBox = el.node().getBBox(),
-              cx = elBox.x + elBox.width / 2,
-              cy = elBox.y + elBox.height / 2;
-          
-            el.attr("transform", `${d3lper.translate({tx: -cx*(1/rs-1), ty: -cy*(1/rs-1)})} scale(${1/rs})`);
-            
-          });
-        }
-       
-        /*console.log(d3.event.scale);
-        let [tx, ty] = d3.event.translate,
-            rz =  Math.round(parseFloat(d3.event.scale) * 2) / 2;
-        if (rz != this.get('graphLayout.zoom')) {
-          this.get('graphLayout').setProperties({
-            tx: tx,
-            ty: ty
-          });
-          //this.set('graphLayout.zoom', rz);
-          this.sendAction('onAskVersioning', "freeze");
-        }*/
+        this.zoomAndDrag(d3.event.scale, d3.event.translate);
+ 
       })
-      //.translate(t)
+      .translate([this.get('graphLayout.tx'), this.get('graphLayout.ty')])
       .scale(this.get('graphLayout.zoom'));
       
-    //this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
+    this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
 
-    var drag = d3.behavior.drag()
-      .origin(() => {
-        return {x: mapG.attr('tx'), y: mapG.attr('ty')};
-      })
-      .on("dragstart", () => {
-        d3.event.sourceEvent.stopPropagation();
-        mapG.classed("dragging", true);
-      })
-      .on("drag", () => {
-        let bbox = mapG.node().getBBox(),
-            pos = {
-              tx: Math.min(bbox.width, Math.max(d3.event.x, -bbox.width)),
-              ty: Math.min(bbox.height, Math.max(d3.event.y, -bbox.height))
-            };
-        /*mapG.attr({
-         'transform': d3lper.translate(pos), 
-          tx: pos.tx,
-          ty: pos.ty
-        });*/
-      })
-      .on("dragend", () => {
-        mapG.classed("dragging", false);
-        this.get('graphLayout').setProperties({
-          tx: mapG.attr('tx'),
-          ty: mapG.attr('ty')
-        });
-        this.sendAction('onAskVersioning', "freeze");
-      });
-      
-    //d3g.call(drag);
     d3g.call(zoom);
     
 		let og = d3g.append("g")
@@ -247,7 +156,6 @@ export default Ember.Component.extend(LegendFeature, {
     this.updateMargins();
     this.drawTitle();
 		this.projectAndDraw();
-    this.updatePosition();
 		this.updateColors();
           
 	}.on("didInsertElement"),
@@ -328,15 +236,6 @@ export default Ember.Component.extend(LegendFeature, {
 		
 	}.observes('graphLayout.strokeWidth'),
   
-  updatePosition: function() {
-    
-    /*this.d3l().select(".map")
-      .attr("tx", this.get('graphLayout.tx'))
-      .attr("ty", this.get('graphLayout.ty'))
-      .attr("transform", d3lper.translate({tx: this.get('graphLayout.tx'), ty: this.get('graphLayout.ty')}));*/
-    
-  }.observes('graphLayout.tx', 'graphLayout.ty'),
-  
   updateMargins: function() {
     
     // ===========
@@ -401,24 +300,100 @@ export default Ember.Component.extend(LegendFeature, {
   
   projection: function() {
     
-    let {w, h} = this.getSize();
+    let {w, h} = this.getSize(),
+        projection = projector.computeProjection(
+          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
+          w,
+          h,
+          this.get('graphLayout.width'),
+          this.get('graphLayout.height'),
+          this.get('graphLayout.margin'),
+          this.get('graphLayout.projection')
+        );
+        
+    this.scaleProjection(projection);
     
-    return projector.computeProjection(
-			this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
-			w,
-			h,
-			this.get('graphLayout.width'),
-			this.get('graphLayout.height'),
-			this.get('graphLayout.margin'),
-      this.get('graphLayout.zoom'),
-			this.get('graphLayout.projection'),
-      this.get('graphLayout.tx'),
-      this.get('graphLayout.ty')
-		);
+    return projection; 
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.zoom', 'graphLayout.margin', 'graphLayout.precision',
+    'graphLayout.height', 'graphLayout.margin', 'graphLayout.precision',
     'graphLayout.projection._defferedChangeIndicator'),
+    
+  scaleProjection: function(projection) {
+    
+    projection
+      .translate([
+          projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx'),
+          projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')
+        ])
+      .scale(projection.resolution * this.get('graphLayout.zoom'));
+      
+  },
+  
+  zoomAndDrag(scale, translate) {
+    
+    console.log(scale, translate);
+    
+    let mapG = this.d3l().select("g.map"),
+        projection = this.get('projection'),
+        t = projection.initialTranslate,
+        ds = projection.scale() / projection.resolution,
+        rs = scale/ds,
+        tx = projection.translate()[0] - t[0] * ds,
+        ty = projection.translate()[1] - t[1] * ds;
+        
+    let commit = () => {
+        
+      mapG.attr("transform", null)
+        .selectAll("g.layers .shape")
+        .attr("transform", null);
+      
+      this.get('graphLayout').setProperties({
+        zoom: parseFloat(mapG.attr("s")),
+        tx: parseFloat(mapG.attr("tx")),
+        ty: parseFloat(mapG.attr("ty"))
+      });
+          
+      this.scaleProjection(projection);
+      this.projectAndDraw();
+      
+    };
+
+    mapG
+      .attr({
+        tx: translate[0],
+        ty: translate[1],
+        s: scale
+      })
+      .transition().duration(500).ease("cubic-out")
+      .attr({
+        "transform": `${d3lper.translate({tx: translate[0] - tx*rs, ty: translate[1] - ty*rs})} scale(${rs})`
+      })
+      .each("end", () => { commit(); });
+    
+    if (isChrome()) {
+      mapG.selectAll("g.layers .shape").each(function() {
+        
+        let el = d3.select(this),
+          elBox = el.node().getBBox(),
+          cx = elBox.x + elBox.width / 2,
+          cy = elBox.y + elBox.height / 2;
+      
+        el.attr("transform", `${d3lper.translate({tx: -cx*(1/rs-1), ty: -cy*(1/rs-1)})} scale(${1/rs})`);
+        
+      });
+    }
+    
+  },
+  
+  zoomAndDragChange: function() {
+    
+    this.zoomAndDrag(
+      this.get('graphLayout.zoom'),
+      [this.get('graphLayout.tx'), this.get('graphLayout.ty')]
+      );
+    
+  }.observes('graphLayout.zoom'),
     
   projectedPath: function() {
     
