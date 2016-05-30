@@ -1,3 +1,26 @@
+<aside class="application-sidebar solid vertical flow">
+
+    {{outlet 'header'}}
+
+    <div class="vertical flow">
+
+        <ul class="application-nav text-center flow">
+            <li class="active">1.{{t 'navigation.sidebar.data'}}</li>
+            <li>2.{{t 'navigation.sidebar.visualisations'}}</li>
+            <li>3.{{t 'navigation.sidebar.export'}}</li>
+        </ul>
+
+        <div class="sidebar-content flow vertical">
+
+            <div class="help">{{outlet 'help'}}</div>
+            {{outlet 'sidebar'}}
+
+        </div>
+
+    </div>
+
+</aside>
+
 <div class="step-import">
   {{outlet 'main'}}
 </div>

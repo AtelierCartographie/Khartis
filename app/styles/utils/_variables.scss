@@ -29,13 +29,13 @@ $colors: (
   ),
 
   success:(
-    tint: lighten(#0f9d58, $tint-shade-multiplier),
-    base: #0f9d58,
+    tint: #E3EED5,
+    base:  #6D9F36,
     shade: darken(#0f9d58, $tint-shade-multiplier),
   ),
   warning: (
-    tint: lighten(#FF9800, $tint-shade-multiplier),
-    base:#FF9800,
+    tint: #F6EAD7,
+    base: #CE8525,
     shade: darken(#FF9800, $tint-shade-multiplier)
   ),
   danger:(
