@@ -245,10 +245,10 @@ export default Ember.Controller.extend({
     
     resetTranslate() {
       this.get('model.graphLayout').setProperties({
+        zoom: 1,
         tx: 0,
         ty: 0
       });
-      this.send("onAskVersioning", "freeze");
     },
     
     export() {
