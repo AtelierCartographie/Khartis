@@ -1,26 +1,27 @@
-.help.sidebar {
-  $width: 400px;
-  width: $width;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  transition: width 150ms ease-out;
-  background-color: greys(5%);
-  border-left: 1px solid greys(10%);
-
-  .inner {
-    padding: 2em;
-    width: $width;
-  }
-
-  h2 { margin: 0; }
-
-}
+//.help.sidebar {
+//  $width: 400px;
+//  width: $width;
+//  overflow: hidden;
+//  position: relative;
+//  display: flex;
+//  flex-direction: column;
+//  transition: width 150ms ease-out;
+//  background-color: greys(5%);
+//  border-left: 1px solid greys(10%);
+//
+//  .inner {
+//    padding: 2em;
+//    width: $width;
+//  }
+//
+//  h2 { margin: 0; }
+//
+//}
 
 .help {
-  
-  font-size: 0.9em;
+
+  font-size: 1.3rem;
+  font-style: italic;
 
   &.markdown {
     h1 {font-size: 1.2em;}

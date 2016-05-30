@@ -11,6 +11,7 @@ export default {
     "Continue": "Continuer",
     "Validate": "Valider",
     "or": "ou",
+    "and": "et",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
@@ -35,13 +36,15 @@ export default {
     "chooseProjection": "Choisir une projection",
     "chooseVisualization": "Choix d'une visualisation",
     "editColumn": "Edition d'une colonne",
-    
+
     "sidebar": {
-      "variables": "variables",
-      "layout": "mise en page",
-      "layers": "calques",
-      "legend": "legend",
-      "export": "export"
+      "data" : "Données",
+      "visualisations" : "Visualisations",
+      "variables": "Variables",
+      "layout": "Mise en page",
+      "layers": "Calques",
+      "legend": "Légende",
+      "export": "Export"
     }
     
   },
@@ -188,13 +191,16 @@ export default {
   },
   
   "import": {
+    "preview": "Aperçu",
     "report": "Rapport d'importation",
     "editor.paste.csv": "collez ici le csv à importer",
     "editor.upload.file": "téléversez un fichier",
+    "editor.importTitle": "Importer un fichier csv",
+    "testDataSetTitle" : "Jeux de données test",
     "startImport": "Lancer l'importation",
     "qualifyData": "Qualifier les données",
-    "success": "L'importation a été réalisée avec succés. Les données sont prêtes à être intégrées.",
-    "fatal": "Impossible d'importer les données, veuillez éditer votre csv",
+    "success": "Importation réalisée avec succés",
+    "fatal": "Impossible de continuer, veuillez éditer votre csv",
     "warningsMessage": {
       "one": "anomalie non bloquante",
       "other": "anomalies non bloquantes"

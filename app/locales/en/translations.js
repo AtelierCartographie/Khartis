@@ -11,6 +11,7 @@ export default {
     "Continue": "Continue",
     "Validate": "Validate",
     "or": "or",
+    "and": "and",
     "gradientOf": "Gradient of",
     "pageLayout": "Page layout",
     "varMapping": "Variable mapping",
@@ -23,6 +24,24 @@ export default {
     "summary": "summary",
     "mappingType": "mapping type",
     "backMap": "Back map"
+  },
+
+  "navigation": {
+    "openMap": "Open the map",
+    "chooseProjection": "Choose a projection",
+    "chooseVisualization": "Choose a visualization",
+    "editColumn": "Column Editing",
+
+    "sidebar": {
+      "data" : "Data",
+      "visualisations" : "Visualizations",
+      "variables": "variables",
+      "layout": "Layout",
+      "layers": "Layers",
+      "legend": "Legend",
+      "export": "Export"
+    }
+
   },
   
   "variable.meta": {
@@ -91,9 +110,12 @@ export default {
   },
   
   "import": {
+    "preview": "Preview",
     "report": "Import report",
     "editor.paste.csv": "paste here the csv to import",
     "editor.upload.file": "upload a file",
+    "editor.importTitle": "Import a csv file",
+    "testDataSetTitle" : "Test Dataset",
     "startImport": "Start import",
     "qualifyData": "Qualify data",
     "success": "Import has been successfull. Data are ready to be processed.",

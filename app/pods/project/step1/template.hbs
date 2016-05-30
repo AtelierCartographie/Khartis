@@ -1,10 +1,10 @@
 <div class="importer">
 
-    <h1>Importation des données</h1>
+    <h1 class="title">{{t 'import.editor.importTitle'}}</h1>
 
-    <p class="csv-description">
-        Ici un texte bref sur le rôle de l'importation
-    </p>
+    <!--<p class="csv-description">-->
+        <!--Ici un texte bref sur le rôle de l'importation-->
+    <!--</p>-->
 
     <div class="vertical airy padded filled default flow">
       <div class="label">
@@ -26,13 +26,16 @@
       </ul>
   {{/if}}
 
+
+    <div class="import-samples">
+        <h2 class="title">{{t "import.testDataSetTitle"}}</h2>
+        <ul>
+            {{#each testDataSets as |set|}}
+                <li class="text-center" {{action 'selectDataSet' set}}>{{set.name}}</li>
+            {{/each}}
+        </ul>
+    </div>
+
 </div>
 
-<div class="import-samples">
-    <h2>Utilisez un jeu de test</h2>
-    <ul>
-        {{#each testDataSets as |set|}}
-        <li class="text-center" {{action 'selectDataSet' set}}>{{set.name}}</li>
-        {{/each}}
-    </ul>
-</div>
+

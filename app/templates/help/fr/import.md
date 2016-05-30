@@ -1,4 +1,1 @@
-# Ceci est une aide markdown
-Cette aide s'affiche dans la vue d'édtion "import de données"
-- element 1
-- element 2
+Aide de l’étape ‘Import’. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
