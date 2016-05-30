@@ -24,9 +24,10 @@ $colors: (
   ),
   primary: (
     tint: lighten(#4285f4, $tint-shade-multiplier),
-    base: #4285f4,
+    base: #B29D8D,
     shade: darken(#4285f4, $tint-shade-multiplier)
   ),
+
   success:(
     tint: lighten(#0f9d58, $tint-shade-multiplier),
     base: #0f9d58,
@@ -46,6 +47,20 @@ $colors: (
     tint: lighten(#f1c40f, $tint-shade-multiplier),
     base: #f1c40f,
     shade: darken(#f1c40f, $tint-shade-multiplier)
+  ),
+
+  // Theme
+  variable: (
+    base:#D9D0C8
+  ),
+  titles: (
+    base: #977864
+  ),
+  volet1: (
+    base:#F3F3F3
+  ),
+  volet2:(
+    base: #E4E4E4
   )
 );
 

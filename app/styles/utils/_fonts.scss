@@ -1,0 +1,47 @@
+// Roboto Bold
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/roboto-bold-webfont.woff2') format('woff2'),
+  url('fonts/roboto-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+// Roboto italic
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/roboto-italic-webfont.woff2') format('woff2'),
+  url('fonts/roboto-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+// Roboto Regular
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/roboto-regular-webfont.woff2') format('woff2'),
+  url('fonts/roboto-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'CabinSketch';
+  src: url('fonts/cabinsketch-bold-webfont.woff2') format('woff2'),
+  url('fonts/cabinsketch-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+
+}
+
+
+@font-face {
+  font-family: 'CabinSketch';
+  src: url('fonts/cabinsketch-regular-webfont.woff2') format('woff2'),
+  url('fonts/cabinsketch-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
