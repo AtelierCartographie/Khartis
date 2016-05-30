@@ -4,15 +4,13 @@
 
     <div class="header-menu">
 
-      {{#x-dropdown.x-trigger}}
-        <a class="header-options dropdown-trigger">
-            <i><small>{{i18n.locale}}</small></i>
-        </a>
+      {{#x-dropdown.x-trigger dropdownPivot='top right' triggerPivot='bottom right'}}
+        <span class="header-options">{{i18n.locale}}</span>
       {{/x-dropdown.x-trigger}}
 
       <ul class="dropdown">
-        <li {{action 'setLocale' 'fr'}}><i>fr</i></li>
-        <li {{action 'setLocale' 'en'}}><i>en</i></li>
+        <li {{action 'setLocale' 'fr'}}>fr</li>
+        <li {{action 'setLocale' 'en'}}>en</li>
       </ul>
 
     </div>
