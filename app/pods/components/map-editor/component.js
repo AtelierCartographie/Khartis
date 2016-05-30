@@ -411,7 +411,7 @@ export default Ember.Component.extend(LegendFeature, {
         ty: _translate[1],
         s: scale
       })
-      .transition().duration(400).ease("cubic-out")
+      .transition().duration(500).ease("cubic-out")
       .attr({
         "transform": `${d3lper.translate({tx: _translate[0] - tx, ty: _translate[1] - ty})} scale(${rs})`
       })

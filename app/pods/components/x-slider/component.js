@@ -66,7 +66,7 @@ export default Ember.Component.extend({
     
     let scale = this.get('scale');
     
-    scale.range([0, width]);
+    scale.range([0, width-6]);
     
     let svg = this.d3l().select(".axis")
       .style("left", "0px")
@@ -75,25 +75,38 @@ export default Ember.Component.extend({
     // Axis      
     var axis = d3.svg.axis()
       .scale(scale)
-      .orient("bottom");
-    
-    if (this.get('ticks')) {
-      axis.ticks(this.get('ticks'));
-      axis.tickSize(tickSize);
-    } else if (this.get('tickValues')) {
-      axis.tickValues(this.get('tickValues'));
-      axis.tickSize(tickSize);
-    } else {
-      axis.ticks(0);
-      axis.tickSize(0);
-    }
-    
-   /* if (tickFormat) {
-      axis.tickFormat(tickFormat);
-    }*/
-    
+      .orient("bottom")
+      .tickSize(0)
+      .ticks(0);
+      
     this.d3l().select(".axis").append("g")
+      .attr("transform", "translate(3,3)")
       .call(axis);
+      
+    if (this.get('band') != null) {
+      
+      let bandPx = scale(this.get('min')+this.get('band')) - scale(this.get('min'));
+      
+      if (bandPx > 5) {
+        this.d3l().select(".axis g")
+          .append("line")
+          .classed("ticks", true)
+          .attr({
+            x1: bandPx,
+            y1: 0,
+            x2: width - 6,
+            y2: 0
+          })
+          .attr("stroke-dasharray", `1, ${bandPx-1}`)
+          .style("stroke", "white");
+      }
+      
+    }
+      
+    /*this.d3l().select(".axis").selectAll("path, g.tick")
+      .sort((a, b) => a === undefined || a > b ? 1:-1)
+      .selectAll("g.tick line")
+      .attr("transform", "translate(0, -3)");*/
       
     // Enable dragger drag 
     var dragBehaviour = d3.behavior.drag();

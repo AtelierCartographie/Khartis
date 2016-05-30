@@ -1,7 +1,7 @@
 & {
   
   $axis-top: 24px;
-  $axis-height: 3px;
+  $axis-height: 5px;
   $dragger-size: 16px;
   
   position: relative;
@@ -14,16 +14,14 @@
     top: $axis-top + ($axis-height - $size)/2;
     width: $size;
     height: $size;
-    border-radius: 50%;
-    border: 1px solid color(primary);
-    background-color: white;
+    background-color: none;
     box-sizing: content-box;
     transition: 0.08s ease-in;
     
     cursor: pointer;
     
     & .inside {
-      $insize: 8px;
+      $insize: 14px;
       position: absolute;
       width: $insize;
       height: $insize;
@@ -66,13 +64,23 @@
   .axis {
     position: absolute;
     top: $axis-top;
-    height: $axis-height;
     margin-left: $dragger-size / 2;
     margin-right: $dragger-size / 2;
     
-    .domain {
-      fill: greys(60%);
+    path.domain {
+      fill: none;
+      stroke: greys(60%);
+      stroke-width: $axis-height;
+      stroke-linecap: round;
     }
+    
+    line.ticks {
+      fill: none;
+      stroke: white;
+      stroke-width: $axis-height;
+      pointer-events: none;
+    }
+    
   }
   
 }
