@@ -64,6 +64,7 @@
   .axis {
     position: absolute;
     top: $axis-top;
+    height: 16px;
     margin-left: $dragger-size / 2;
     margin-right: $dragger-size / 2;
     

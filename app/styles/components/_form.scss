@@ -21,7 +21,7 @@ input[type=search], textarea, .select-box {
     transition: all .3s;
     overflow: auto;
     padding: $gutter/2 $gutter/2;
-    height: calc(#{$line-height} + #{$gutter});
+    height: 20px;
     
 }
 
@@ -84,14 +84,14 @@ input[type=checkbox] + .-h:before, input[type=checkbox] + .-h:after {
     width: 1.2rem;
     height: 1.2rem;
     z-index: 0;
-    border: 2px solid #26a69a;
+    border: 2px solid color(primary);
     border-radius: 1px;
     transition: .2s;
     box-sizing: border-box;
 }
 
 input[type=checkbox]:checked + .-h:before {
-    background-color: #26a69a;
+    background-color: color(primary);
 }
 
 input[type=checkbox]:checked + .-h:after {
@@ -100,9 +100,9 @@ input[type=checkbox]:checked + .-h:after {
     width: 0.7rem;
     height: 1.2rem;
     border-top: 0.1rem solid transparent;
-    border-left: 0.1rem solid transparent;
-    border-right: 0.1rem solid white;
-    border-bottom: 0.1rem solid white;
+    border-left: 0.15rem solid transparent;
+    border-right: 0.15rem solid white;
+    border-bottom: 0.15rem solid white;
     -webkit-transform: rotate(40deg);
     transform: rotate(40deg);
     -webkit-backface-visibility: hidden;

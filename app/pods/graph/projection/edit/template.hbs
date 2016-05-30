@@ -45,7 +45,7 @@
         </div>
         <div>
           <label>Zoom</label>
-          {{x-slider-editable class="fluid" band=1 value=model.graphLayout.zoom min=1 max=10}}
+          {{x-slider-editable class="fluid" band=0.5 value=model.graphLayout.zoom min=1 max=10}}
         </div>
         {{#if (x-some (x-eq model.graphLayout.projection.translation_x 1) (x-eq model.graphLayout.projection.translation_y 1))}}
         <div>

@@ -8,8 +8,26 @@
   }
   
   & + .sp-replacer {
-    background-color: #f2f2f2;
-    border: solid 1px #5d7691;
-    padding: 3px;
+    
+    background-color: white;
+    border-radius: 2px;
+    border: none;
+    height: 20px;
+    padding: 4px;
+    
+    .sp-preview {
+      height: 12px;
+      width: 18px;
+      border: #EEEEEE;
+      margin-right: 4px;
+    }
+    
+    .sp-dd {
+      margin-top: -6px;
+      font-size: 20px;
+      padding: 0;
+      line-height: 20px;
+    }
+    
   }
 }
