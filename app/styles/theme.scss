@@ -116,6 +116,13 @@ small {
   color: color(danger);
 }
 
+.title {
+  color: color(titles);
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 /* cursor */
 .clickable {
   cursor: pointer;

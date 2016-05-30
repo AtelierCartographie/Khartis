@@ -1,94 +1,29 @@
-<div class="navheader">
-  {{#x-button class="default btn-prev" invisible=(x-not model.csv) action=(action 'back')}}
-      <i class="iconfont iconfont-long-arrow-left"></i> {{t "general.Back"}}
-  {{/x-button}}
-  {{#x-button class="primary btn-next" invisible=hasErrors action=(action 'next')}}
-    {{t "navigation.openMap"}} <i class="iconfont iconfont-long-arrow-right"></i>
-  {{/x-button}}
-</div>
-<div class="report vertical flow">
-    <h1>{{t "import.report"}}</h1>
 
-    <div class="report-message">
-      {{#unless hasErrors}}
-          <i class="iconfont iconfont-check-circle text-success"></i> {{t "import.success"}}
-      {{else}}
-          <i class="iconfont iconfont-times-circle text-danger"></i> {{t "import.fatal"}}
-      {{/unless}}
-    </div>
+<div class="report vertical flow">
 
     <div class="vertical airy padded flow">
-      {{#x-accordion}}
+        <h2 class="title">{{t 'import.preview'}}</h2>
 
-          <div class="accordion-item active" accordion-priority="9999">
-              <h2 class="report-title accordion-trigger">{{x-capitalize (t "general.summary")}}<span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
-
-              <div class="accordion-wrapper">
-                  <div>
-                      <ul>
-                          <li>
-                              <div class="horizontal flow">
-                                  <div class="solid w6">
-                                      <b class="text-success">{{model.project.data.rows.length}}</b> {{t "import.rowCount"}}
-                                  </div>
-                                  <div class="solid w6">
-                                      <b class="text-success">{{model.project.data.columns.length}}</b> {{t "import.colCount"}}
-                                  </div>
-                              </div>
-                          </li>
-                        {{#if (x-some hasWarnings hasErrors)}}
-                          {{#if hasWarnings}}
-                              <li class="warnings">
-                                  <b class="text-warning">{{model.project.report.warnings.length}}</b> {{t "import.warningsMessage" count=model.project.report.warnings.length}}
-                                  <ul class="error-explenation">
-                                    {{#each model.project.report.warnings as |warning|}}
-                                        <li><i class="iconfont iconfont-warning text-warning"></i> {{t warning}}</li>
-                                    {{/each}}
-                                  </ul>
-                              </li>
-                          {{/if}}
-                          {{#if hasErrors}}
-                              <li class="errors">
-                                  <b class="text-danger">{{model.project.report.errors.length}}</b> {{t "import.errorsMessage" count=model.project.report.errors.length}}
-                                  <ul class="error-explenation">
-                                    {{#each model.project.report.errors as |error|}}
-                                        <li><i class="iconfont iconfont-times-circle text-danger"></i> {{t error}}</li>
-                                    {{/each}}
-                                  </ul>
-                              </li>
-                          {{/if}}
-                        {{/if}}
-                      </ul>
-                  </div>
-              </div>
-          </div>
-
-          <div class="accordion-item active">
-              <h2 class="report-title accordion-trigger">Aperçu <span class="iconfont iconfont-angle-right icon-closed"></span><span class="iconfont iconfont-angle-down icon-open"></span></h2>
-              <div class="accordion-wrapper">
-                  <div class="report-preview">
-                      <table>
-                          <thead>
-                          <tr>
-                            {{#each model.project.data.header.cells as |cell|}}
-                                <th>{{cell.value}}</th>
+        <div class="report-preview">
+            <table>
+                <thead>
+                    <tr>
+                        {{#each model.project.data.header.cells as |cell|}}
+                            <th>{{cell.value}}</th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each bodyPreview as |row|}}
+                        <tr>
+                            {{#each row.cells as |cell|}}
+                                <td>{{cell.value}}</td>
                             {{/each}}
-                          </tr>
-                          </thead>
-                          <tbody>
-                          {{#each bodyPreview as |row|}}
-                              <tr>
-                                {{#each row.cells as |cell|}}
-                                    <td>{{cell.value}}</td>
-                                {{/each}}
-                              </tr>
-                          {{/each}}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-      {{/x-accordion}}
-    </div>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
 
+    </div>
 </div>

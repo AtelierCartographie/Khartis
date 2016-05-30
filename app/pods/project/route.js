@@ -3,21 +3,21 @@ import Project from 'mapp/models/project';
 import {DataStruct} from 'mapp/models/data';
 
 export default Ember.Route.extend({
-  
+
   renderTemplate: function () {
     this.render("project.help", {into: "application", outlet: "help"});
-    this.render("index.header", { outlet: "header" });
+    this.render("index.header", {outlet: "header" });
     this.render({outlet: "main"});
   },
-  
+
   redirect(model) {
     if (model.get('project.data.rows').length === 0) {
       this.transitionTo('project.step1', 'new');
     }
   },
-  
+
   model(params) {
-    
+
     if (params.uuid === "new") {
       let project = Project.createEmpty();
       return Ember.Object.create({
@@ -35,17 +35,19 @@ export default Ember.Route.extend({
         this.transitionTo('/');
       }
     }
-    
+
   },
-  
+
   setupController(controller, model) {
     this._super(controller, model);
     this.controllerFor('project').set('currentState', 'import');
   },
-  
-  
+
+
   actions: {
-    
+    next(){
+      
+    }
   }
-  
+
 });
