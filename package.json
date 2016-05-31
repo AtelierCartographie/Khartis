@@ -48,7 +48,7 @@
     "ember-normalize": "0.0.9",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.0.2",
-    "ivy-codemirror": "^1.3.0",
+    "ivy-codemirror": "git://github.com/IvyApp/ivy-codemirror.git#master",
     "text-encoding": "^0.5.2"
   },
   "dependencies": {

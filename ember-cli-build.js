@@ -19,6 +19,7 @@ module.exports = function(defaults) {
   app.import("bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js");
   app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
+  app.import("vendor/codemirror-placeholder.js");
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

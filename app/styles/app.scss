@@ -512,6 +512,16 @@ footer {
   text-shadow: none;
 }
 
+/* Codemirror */
+
+.CodeMirror {
+  border: 1px solid #ddd;
+}
+
+.CodeMirror-placeholder.CodeMirror-placeholder {
+  color: greys(60%);
+}
+
 
 /**
   Fix occasional width bug on Chrome

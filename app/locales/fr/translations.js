@@ -1,22 +1,81 @@
 export default {
   
   "general": {
-    "welcomeTo": "Bienvenue dans",
-    "onlineEditor": "outil de création de cartes en ligne",
-    "Next": "Suivant",
-    "Back": "Retour",
-    "Submit": "Envoyer",
-    "Cancel": "Annuler",
-    "Import": "Importer",
-    "Continue": "Continuer",
-    "Validate": "Valider",
+    "next": "suivant",
+    "back": "retour",
+    "submit": "envoyer",
+    "cancel": "annuler",
+    "import": "importer",
+    "continue": "continuer",
+    "validate": "valider",
     "or": "ou",
     "and": "et",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
+    }
+  },
+  
+  "project": {
+   
+    "resume": "reprendre le projet en cours",
+    
+    "step1": {
+      "title": {
+        "importCsv": "importer un fichier csv",
+        "testData": "jeux de données de test"
+      },
+      "pasteCsv": "coller ici vos données ou glisser un fichier csv"
     },
-    "gradientOf": "Dégradé de",
+    
+    "step2": {
+      "title": {
+        "preview": "aperçu des données"
+      },
+      "import": {
+        "success": "importation réalisée avec succés",
+        "fatal": "impossible de continuer, veuillez éditer votre csv",
+        "warningsMessage": {
+          "one": "anomalie non bloquante",
+          "other": "anomalies non bloquantes"
+        },
+        "warning": {
+          "trim": "certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
+        },
+        "errorsMessage": {
+          "one": "anomalie bloquante",
+          "other": "anomalies bloquantes"
+        },
+        "error": {
+          "header.emptyCell": "l'entête semble incorrecte : certaines cellules sont vides.",
+          "oneColumn": "une seule colonne a été trouvée",
+          "colNumber": "csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
+        },
+        "rowCount": {
+          "one": "ligne importée",
+          "other": "lignes importées"
+        },
+        "colCount": {
+          "one": "colonnes importée",
+          "other": "colonnes importées"
+        }
+      }
+    }
+    
+  },
+  
+  "navigation": {
+
+    "sidebar": {
+      "data" : "données",
+      "visualisations" : "visualisations",
+      "export": "export"
+    }
+    
+  }
+  
+  
+    /*"gradientOf": "Dégradé de",
     "pageLayout": "Mise en page",
     "varMapping": "Couplage des variables",
     "addAVariable": "ajouter une variable",
@@ -28,9 +87,9 @@ export default {
     "summary": "summary",
     "mappingType": "type de couplage",
     "backMap": "Fond de carte",
-    "mapTitle": "Titre de la carte"
-  },
+    "mapTitle": "Titre de la carte"*/
   
+ /* 
   "navigation": {
     "openMap": "Ourvir la carte",
     "chooseProjection": "Choisir une projection",
@@ -224,7 +283,7 @@ export default {
   "spreadsheet": {
     "sidebar.title": "Edition des données",
     "sidebar.p1": "Cette interface vous permet d'éditer les données qui serviront de base à votre création graphique."
-  }
+  }*/
   // "some.translation.key": "Text for some.translation.key",
   //
   // "a": {

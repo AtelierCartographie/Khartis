@@ -11,7 +11,7 @@
     "loader.js": "^3.5.0",
     "qunit": "~1.20.0",
     "normalize.css": "3.0.3",
-    "codemirror": "~4.8.0",
+    "codemirror": "~5.13.0",
     "ember-cli-codemirror-shim": "~0.0.1",
     "d3": "~3.5.12",
     "d3-geo-projection": "~0.2.16",

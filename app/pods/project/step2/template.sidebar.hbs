@@ -1,19 +1,17 @@
-<!--<h1>{{!t "import.report"}}</h1>-->
-
 <div class="report vertical flow">
 
     <div class="report-message {{if hasErrors 'warning' 'success'}}">
         {{#unless hasErrors}}
-            {{t "import.success"}}
+            {{x-capitalize (t "project.step2.import.success")}}
         {{else}}
-            {{t "import.fatal"}}
+            {{x-capitalize (t "project.step2.import.fatal")}}
         {{/unless}}
     </div>
 
     <div class="padded-l">
-        <b class="text-success">{{model.project.data.rows.length}}</b> {{t "import.rowCount"}}
+        <b class="{{if hasErrors 'text-danger' 'text-success'}}">{{model.project.data.rows.length}}</b> {{t "project.step2.import.rowCount" count=model.project.data.rows.length}}
         {{t 'general.and'}}
-        <b class="text-success">{{model.project.data.columns.length}}</b> {{t "import.colCount"}}
+        <b class="{{if hasErrors 'text-danger' 'text-success'}}">{{model.project.data.columns.length}}</b> {{t "project.step2.import.colCount" count=model.project.data.columns.length}}
     </div>
 
     <ul>
@@ -24,7 +22,7 @@
                 <li>
                     <div class="warning report-message">
                         <b class="text-warning">{{model.project.report.warnings.length}}</b>
-                        {{t "import.warningsMessage" count=model.project.report.warnings.length}}
+                        {{x-capitalize (t "project.step2.import.warningsMessage" count=model.project.report.warnings.length)}}
                     </div>
                     <ul class="error-explenation">
                         {{#each model.project.report.warnings as |warning|}}
@@ -37,18 +35,14 @@
             {{/if}}
 
             {{#if hasErrors}}
-                <li class="warning report-message">
-
+                <li>
                     <div class="warning report-message">
-                        <b class="text-warning">{{model.project.report.errors.length}}</b>
-                        {{t "import.errorsMessage" count=model.project.report.errors.length}}
-
+                      <b class="text-warning">{{model.project.report.errors.length}}</b>
+                      {{x-capitalize (t "project.step2.import.errorsMessage" count=model.project.report.errors.length)}}
                     </div>
-
                     <ul class="error-explenation">
                         {{#each model.project.report.errors as |error|}}
-                            <li>{{t error}}</li>
-                            <!--<li><i class="iconfont iconfont-times-circle text-danger"></i> {{!t error}}</li>-->
+                            <li>{{t (concat 'project.step2.' error)}}</li>
                         {{/each}}
                     </ul>
                 </li>
@@ -61,7 +55,7 @@
 
 <div class="navheader">
     {{#x-button class="default btn-prev btn-arrow" invisible=(x-not model.csv) action=(action 'back')}}
-        <i class="iconfont iconfont-angle-left"></i> {{!t "general.Back"}}
+        <i class="iconfont iconfont-angle-left"></i> {{!t "general.back"}}
     {{/x-button}}
     {{#x-button class="primary btn-next btn-arrow" invisible=hasErrors action=(action 'next')}}
         {{!t "navigation.openMap"}} <i class="iconfont iconfont-angle-right"></i>

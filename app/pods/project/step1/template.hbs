@@ -1,34 +1,42 @@
 <div class="importer">
 
-    <h1 class="title">{{t 'import.editor.importTitle'}}</h1>
+    <h1 class="title">{{x-capitalize (t 'project.step1.title.importCsv')}}</h1>
 
-    <!--<p class="csv-description">-->
-        <!--Ici un texte bref sur le rôle de l'importation-->
-    <!--</p>-->
-
-    <div class="vertical airy padded filled default flow">
-      <div class="label">
-        {{x-capitalize (t "import.editor.paste.csv")}} {{t "general.or"}} {{file-loader label=(t "import.editor.upload.file") class="text-primary import-button" onContentLoaded="loadCsv"}}
+    <div class="vertical airy flow">
+      
+      <div class="vertical airy flow">
+        <div class="filled">
+        {{!#file-loader class="text-primary import-button" onContentLoaded="loadCsv"}}
+        {{ivy-codemirror
+          value=model.csv
+          valueUpdated=(action (mut model.csv))
+          options=(hash placeholder=(x-capitalize (t "project.step1.pasteCsv")) lineNumbers=true)
+        }}
+        {{!/file-loader}}
+        </div>
       </div>
-      <div class="filled">
-      {{ivy-codemirror value=model.csv lineNumbers=true}}
+      
+      <div class="horizontal airy flow">
+        {{#x-button class="solid filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+            {{x-capitalize (t "general.next")}}
+        {{/x-button}}
+        {{#x-button class="solid filled default" action=(action 'resumeProject')}}
+            {{x-capitalize (t "project.resume")}}
+        {{/x-button}}
       </div>
-      {{#x-button class="text-success btn-next" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
-        {{t "import.startImport"}} <i class="iconfont iconfont-long-arrow-right"></i>
-      {{/x-button}}
+    
     </div>
 
-  {{#if importReport.length}}
+    {{#if importReport.length}}
       <ul>
         {{#each importReport as |err|}}
             <li>{{err}}</li>
         {{/each}}
       </ul>
-  {{/if}}
-
+    {{/if}}
 
     <div class="import-samples">
-        <h2 class="title">{{t "import.testDataSetTitle"}}</h2>
+        <h2 class="title">{{x-capitalize (t 'project.step1.title.testData')}}</h2>
         <ul>
             {{#each testDataSets as |set|}}
                 <li class="text-center" {{action 'selectDataSet' set}}>{{set.name}}</li>
