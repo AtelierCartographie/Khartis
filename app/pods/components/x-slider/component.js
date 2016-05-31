@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import d3 from 'd3';
 
+const DRAGGER_SIZE = 14;
+
 export default Ember.Component.extend({
 
   tagName: 'div',
@@ -9,6 +11,7 @@ export default Ember.Component.extend({
   min:0,
   max:10,
   ticks: 3,
+  
   tickValues: null,
   
   tickAppend: null,
@@ -21,25 +24,6 @@ export default Ember.Component.extend({
   _tmpValue: null,
   
   band: null,
-  
-  displayedValue: function() {
-    
-    let d3format = (d) => d,
-        formatter;
-        
-    if (this.get('tickFormat')) {
-      d3format = (d) => d3.format(this.get('tickFormat'))(d);
-    }
-    
-    if (this.get('tickAppend') != null) {
-        formatter = (d) => d3format(d) + this.get('tickAppend');
-    } else {
-        formatter = (d) => d3format(d);
-    }
-    
-    return formatter(this.get('_tmpValue'));
-    
-  }.property('_tmpValue', 'value', 'tickFormat', 'tickAppend'),
   
   setup: function() {
     
@@ -58,29 +42,34 @@ export default Ember.Component.extend({
   draw: function() {
     
     let margin = {
-          l: parseInt( this.$(".axis").css("marginLeft") ),
-          r: parseInt( this.$(".axis").css("marginRight") )
+          l: parseInt( this.$(".slider").css("marginLeft") ),
+          r: parseInt( this.$(".slider").css("marginRight") )
         },
         tickSize = 6,
         width = (this.$().width() - (margin.l + margin.r));
     
     let scale = this.get('scale');
     
-    scale.range([0, width-6]);
+    scale.range([0, width-DRAGGER_SIZE]);
     
-    let svg = this.d3l().select(".axis")
+    let svg = this.d3l().select(".slider")
       .style("left", "0px")
       .style("width", width + "px");
-      
+    
+    let sliderG = this.d3l().select(".slider")
+      .append("g")
+      .attr("transform", "translate(0, 16)");
+    
     // Axis      
     var axis = d3.svg.axis()
       .scale(scale)
       .orient("bottom")
       .tickSize(0)
       .ticks(0);
-      
-    this.d3l().select(".axis").append("g")
-      .attr("transform", "translate(3,3)")
+    
+    sliderG.append("g")
+      .classed("axis", true)
+      .attr("transform", `translate(${DRAGGER_SIZE/2},0)`)
       .call(axis);
       
     if (this.get('band') != null) {
@@ -88,13 +77,13 @@ export default Ember.Component.extend({
       let bandPx = scale(this.get('min')+this.get('band')) - scale(this.get('min'));
       
       if (bandPx > 5) {
-        this.d3l().select(".axis g")
+        sliderG.select(".axis")
           .append("line")
           .classed("ticks", true)
           .attr({
             x1: bandPx,
             y1: 0,
-            x2: width - 6,
+            x2: width - DRAGGER_SIZE,
             y2: 0
           })
           .attr("stroke-dasharray", `1, ${bandPx-1}`)
@@ -102,16 +91,32 @@ export default Ember.Component.extend({
       }
       
     }
+    
+    // Dragger
+    let dragger = sliderG.append("g")
+      .classed("dragger", true);
       
-    /*this.d3l().select(".axis").selectAll("path, g.tick")
-      .sort((a, b) => a === undefined || a > b ? 1:-1)
-      .selectAll("g.tick line")
-      .attr("transform", "translate(0, -3)");*/
+    dragger.append("circle")
+      .attr({
+        r: DRAGGER_SIZE / 2,
+        cx: 0,
+        cy: 0
+      });
+    
+    if (this.get('displayTick')) {  
+      dragger.append("text")
+        .classed("value", true)
+        .attr({
+          x: 0,
+          y: -8,
+          "text-anchor": "middle"
+        });
+    }
       
     // Enable dragger drag 
     var dragBehaviour = d3.behavior.drag();
     dragBehaviour.on("drag", this.moveDragger.bind(this));
-    this.d3l().select(".dragger").call(dragBehaviour);
+    dragger.call(dragBehaviour);
     
     this.valueChange();
     
@@ -163,19 +168,43 @@ export default Ember.Component.extend({
   
   translate(val) {
     
-    let translate = this.get('scale')(val) + "px";
+    let translate = this.get('scale')(val) + DRAGGER_SIZE / 2;
     
-    this.d3l().selectAll(".dragger").style({
-      "-webkit-transform":`translateX(${translate})`,
-      "-ms-transform":`translateX(${translate})`,
-      "transform":`translateX(${translate})`
-    });
+    this.displayValue();
+    
+    this.d3l().selectAll(".slider .dragger")
+      .transition()
+      .ease("cubic-out")
+      .duration(100)
+      .attr("transform", `translate(${translate}, 0)`);
+    
+  },
+  
+  displayValue: function() {
+    
+    let d3format = (d) => d,
+        formatter;
+        
+    if (this.get('tickFormat')) {
+      d3format = (d) => d3.format(this.get('tickFormat'))(d);
+    }
+    
+    if (this.get('tickAppend') != null) {
+        formatter = (d) => d3format(d) + this.get('tickAppend');
+    } else {
+        formatter = (d) => d3format(d);
+    }
+    
+    if (this.$()) {
+      this.d3l().selectAll(".slider .dragger text")
+        .text(formatter(this.get('_tmpValue')));
+    }
     
   },
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 150),
+  }, 100),
   
   valueChange: function() {
     

@@ -1,85 +1,45 @@
 & {
   
-  $axis-top: 24px;
+  $axis-top: 10px;
   $axis-height: 5px;
-  $dragger-size: 16px;
   
   position: relative;
   height: 50px;
   
-  .dragger {
+  .slider {
     
-    $size: $dragger-size;
     position: absolute;
-    top: $axis-top + ($axis-height - $size)/2;
-    width: $size;
-    height: $size;
-    background-color: none;
-    box-sizing: content-box;
-    transition: 0.08s ease-in;
+    top: $axis-top;
+    height: 24px;
     
-    cursor: pointer;
+    g.dragger {
     
-    & .inside {
-      $insize: 14px;
-      position: absolute;
-      width: $insize;
-      height: $insize;
-      left: ($size - $insize)/2;
-      top: ($size - $insize)/2;
-      border-radius: 50%;
-      background-color: color(primary);
-    }
-    
-    & .tick {
-      position: absolute;
-      top: -1.6em;
-      left: 0px;
-      width: 1px;
-      overflow-x: visible;
-      font-size: 0.8em;
+      fill: color(primary);
+      cursor: pointer;
       
-      input {
-        border: none;
-        background: none;
-        width: 60px;
-        padding-left: 0;
-        padding-top: 0.1rem;
-        padding-bottom: 0.2rem;
-        padding-right: 0;
-        height: 1.3em;
-        text-align: center;
-        margin-left: -30px + ( $dragger-size / 2);
-        
-        background: white;
-        border: 1px solid #ddd;
-        @extend .with-relief;
-        
+      .value {
+        fill: #404040;
+        font-size: 10px;
       }
       
     }
     
-  }
-  
-  .axis {
-    position: absolute;
-    top: $axis-top;
-    height: 16px;
-    margin-left: $dragger-size / 2;
-    margin-right: $dragger-size / 2;
-    
-    path.domain {
-      fill: none;
-      stroke: greys(60%);
-      stroke-width: $axis-height;
-      stroke-linecap: round;
-    }
-    
-    line.ticks {
-      fill: none;
-      stroke: white;
-      stroke-width: $axis-height;
-      pointer-events: none;
+    g.axis {
+      
+      path.domain {
+        fill: none;
+        stroke: greys(60%);
+        stroke-width: $axis-height;
+        stroke-linecap: round;
+      }
+      
+      line.ticks {
+        fill: none;
+        stroke: white;
+        stroke-width: $axis-height;
+        pointer-events: none;
+      }
+      
     }
     
   }

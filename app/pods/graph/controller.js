@@ -175,15 +175,6 @@ export default Ember.Controller.extend({
       }
     },
     
-    bindColumnType(column, type) {
-      if (type != null) {
-        column.set('meta.type', type);
-        column.set('meta.manual', true);
-      } else {
-        column.set('meta.manual', false);
-      }
-    },
-    
     addLayer(col) {
       let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
       this.get('model.graphLayers').unshiftObject(layer);

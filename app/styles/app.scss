@@ -369,6 +369,12 @@ footer {
     color: color(warning);
     border-left: 2px solid color(warning);
   }
+  
+  .report-message.danger {
+    background-color: color(warning, 'tint');
+    color: color(danger);
+    border-left: 2px solid color(danger);
+  }
 
   ul.column-list {
     margin: 0;
