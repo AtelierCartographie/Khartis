@@ -8,6 +8,7 @@ import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
 import LegendFeature from './legend';
 import {isChrome} from 'mapp/utils/browser-check';
+import zoom2 from 'mapp/utils/d3-zoom2';
 /* global Em */
 
 let landSelSet = new Set();
@@ -128,12 +129,11 @@ export default Ember.Component.extend(LegendFeature, {
       .classed("title", true);
       
     // DRAG & ZOOM
-    var zoom = d3.behavior.zoom()
+    var zoom = zoom2()
       .scaleExtent([1, 12])
-      .on("zoom", () => {
+      .on("zoom", (scale, translate) => {
         
-        let scale = Math.floor(d3.event.scale*10)/10,
-            targetPoint = d3.mouse(mapG.node());
+        let targetPoint = d3.mouse(mapG.node());
         
         this.zoomAndDrag(scale, targetPoint);
  
