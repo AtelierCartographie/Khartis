@@ -15,6 +15,8 @@ let landSelSet = new Set();
 
 let _translate0,
     _translate;
+    
+let zoom;
 
 export default Ember.Component.extend(LegendFeature, {
   
@@ -129,13 +131,11 @@ export default Ember.Component.extend(LegendFeature, {
       .classed("title", true);
       
     // DRAG & ZOOM
-    var zoom = zoom2()
+    zoom = zoom2()
       .scaleExtent([1, 12])
       .on("zoom", (scale, translate) => {
         
-        let targetPoint = d3.mouse(mapG.node());
-        
-        this.zoomAndDrag(scale, targetPoint);
+        this.zoomAndDrag(scale, translate);
  
       })
       .translate([this.get('graphLayout.tx'), this.get('graphLayout.ty')])
@@ -339,7 +339,7 @@ export default Ember.Component.extend(LegendFeature, {
       
   },
   
-  zoomAndDrag(scale, targetPoint) {
+  zoomAndDrag(scale, translate) {
     
     let mapG = this.d3l().select("g.map"),
         projection = this.get('projection'),
@@ -349,50 +349,11 @@ export default Ember.Component.extend(LegendFeature, {
         tx = projection.translate()[0]*rs - t[0] * scale,
         ty = projection.translate()[1]*rs - t[1] * scale;
     
-    if (targetPoint === undefined) {
-        
-        let container = this.d3l().node(),
-            rect = container.getBoundingClientRect();
-        
-        targetPoint = [
-          rect.width / 2,
-          rect.height / 2
-        ];
-            
-    }
-        
-    let translateTo = function(p, l) {
-      l = [l[0] * scale + _translate[0], l[1] * scale + _translate[1]];
-      return [
-        p[0] - l[0] + _translate[0],
-        p[1] - l[1] + _translate[1]
-      ];
-    };
-  
-    if (!_translate) {
-      _translate = [
-        this.get('graphLayout.tx'),
-        this.get('graphLayout.ty')
-      ];
-    }
-    
-    if (!_translate0) {
-      _translate0 = [(targetPoint[0] - _translate[0]) / ds, (targetPoint[1] - _translate[1]) / ds];
-    }
-    
-    _translate = translateTo(
-      [targetPoint[0], targetPoint[1]],
-      _translate0
-    );
-      
-    
     let commit = () => {
         
       mapG.attr("transform", null)
         .selectAll("g.layers .shape")
         .attr("transform", null);
-      
-      _translate0 = undefined;
       
       this.get('graphLayout').setProperties({
         zoom: parseFloat(mapG.attr("s")),
@@ -407,13 +368,13 @@ export default Ember.Component.extend(LegendFeature, {
 
     mapG
       .attr({
-        tx: _translate[0],
-        ty: _translate[1],
+        tx: translate[0],
+        ty: translate[1],
         s: scale
       })
       .transition().duration(500).ease("cubic-out")
       .attr({
-        "transform": `${d3lper.translate({tx: _translate[0] - tx, ty: _translate[1] - ty})} scale(${rs})`
+        "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })
       .each("end", () => { commit(); });
     
@@ -435,9 +396,12 @@ export default Ember.Component.extend(LegendFeature, {
   zoomAndDragChange: function() {
    
     if (parseFloat(this.d3l().select("g.map").attr("s")) != this.get('graphLayout.zoom')) {
-      this.zoomAndDrag(
-          this.get('graphLayout.zoom')
-          );
+      
+      let container = this.d3l().node(),
+          rect = container.getBoundingClientRect();
+        
+      zoom.toPoint(this.get('graphLayout.zoom'), rect.width / 2, rect.height / 2);
+      
     }
     
   }.observes('graphLayout.zoom'),

@@ -80,6 +80,13 @@ export default function() {
     dispatcher.on("zoom", listener);
     return zoom;
   };
+  
+  zoom.toPoint = function(s, x, y) {
+    if (!translate0) translate0 = location([x, y]);
+    scaleTo(s);
+    translateTo([x, y], translate0);
+    dispatch();
+  };
 
   function location(p) {
     return [(p[0] - translate[0]) / scale, (p[1] - translate[1]) / scale];
@@ -106,14 +113,14 @@ export default function() {
 
   function dispatch() {
     rescale();
-    d3.event.preventDefault();
-    console.log("dispatcher");
+    if (d3.event) {
+      d3.event.preventDefault();
+    }
     dispatcher.zoom.apply(this, [scale, translate]);
   }
 
   function mousedown() {
     var target = this,
-        //event_ = event.of(target, arguments),
         eventTarget = d3.event.target,
         moved = 0,
         w = d3.select(window).on("mousemove.zoom", mousemove).on("mouseup.zoom", mouseup),
