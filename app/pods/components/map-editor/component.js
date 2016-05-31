@@ -133,6 +133,7 @@ export default Ember.Component.extend(LegendFeature, {
     // DRAG & ZOOM
     zoom = zoom2()
       .scaleExtent([1, 12])
+      .band(0.5)
       .on("zoom", (scale, translate) => {
         
         this.zoomAndDrag(scale, translate);

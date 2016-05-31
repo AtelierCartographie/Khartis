@@ -11,10 +11,12 @@ export default function() {
   var translate = [0, 0],
       translate0, // translate when we started zooming (to avoid drift)
       translateExtent = d3_behavior_zoomUnboundedTranslate,
+      absScale = 1,
       scale = 1,
       scale0, // scale when we started touching
       scaleExtent = d3_behavior_zoomUnboundedScale,
       dispatcher = d3.dispatch("zoom"),
+      band = 0.001,
       x0,
       x1,
       y0,
@@ -45,7 +47,7 @@ export default function() {
 
   zoom.scale = function(x) {
     if (!arguments.length) return scale;
-    scale = +x;
+    absScale = scale = +x;
     rescale();
     return zoom;
   };
@@ -76,6 +78,11 @@ export default function() {
     return zoom;
   };
   
+  zoom.band = function(b) {
+    band = b;
+    return zoom;
+  }
+  
   zoom.on = function(type, listener) {
     dispatcher.on("zoom", listener);
     return zoom;
@@ -97,7 +104,8 @@ export default function() {
   }
 
   function scaleTo(s) {
-    scale = Math.max(scaleExtent[0], Math.min(scaleExtent[1], s));
+    absScale = Math.max(scaleExtent[0], Math.min(scaleExtent[1], s));
+    scale = stepScaleValue(absScale);
   }
 
   function translateTo(p, l) {
@@ -105,6 +113,33 @@ export default function() {
     translate[0] = Math.max(translateExtent[0][0], Math.min(translateExtent[1][0], p[0] - l[0] + translate[0]));
     translate[1] = Math.max(translateExtent[0][1], Math.min(translateExtent[1][1], p[1] - l[1] + translate[1]));
   }
+  
+  function stepScaleValue(val) {
+    
+    if (band > 0) {
+
+      if (val === scaleExtent[0] || val === scaleExtent[1]) {
+        return val;
+      }
+
+      let alignValue = val,
+          valModStep = (val - scaleExtent[0]) % band;
+          
+      alignValue = val - valModStep;
+
+      if (Math.abs(valModStep) * 2 >= band) {
+        alignValue += (valModStep > 0) ? band : -band;
+      }
+      
+      return alignValue;
+      
+    } else {
+      
+      return val;
+      
+    }
+
+  };
 
   function rescale() {
     if (x1) x1.domain(x0.range().map(function(x) { return (x - translate[0]) / scale; }).map(x0.invert));
@@ -155,7 +190,7 @@ export default function() {
 
   function mousewheel() {
     if (!translate0) translate0 = location(d3.mouse(this));
-    scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .002) * scale);
+    scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .002) * absScale);
     translateTo(d3.mouse(this), translate0);
     dispatch();
   }
