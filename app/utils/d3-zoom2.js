@@ -94,6 +94,15 @@ export default function() {
     translateTo([x, y], translate0);
     dispatch();
   };
+  
+  zoom.toScaleAndTranslate = function(s, tx, ty) {
+    //if (!translate0) translate0 = location([x, y]);
+    scaleTo(s);
+    translate[0] = tx;
+    translate[1] = ty;
+    dispatch();
+  };
+    
 
   function location(p) {
     return [(p[0] - translate[0]) / scale, (p[1] - translate[1]) / scale];

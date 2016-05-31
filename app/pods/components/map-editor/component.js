@@ -350,34 +350,37 @@ export default Ember.Component.extend(LegendFeature, {
         tx = projection.translate()[0]*rs - t[0] * scale,
         ty = projection.translate()[1]*rs - t[1] * scale;
     
-    let commit = () => {
-        
-      mapG.attr("transform", null)
-        .selectAll("g.layers .shape")
-        .attr("transform", null);
-      
-      this.get('graphLayout').setProperties({
-        zoom: parseFloat(mapG.attr("s")),
-        tx: parseFloat(mapG.attr("tx")),
-        ty: parseFloat(mapG.attr("ty"))
-      });
-          
-      this.scaleProjection(projection);
-      this.projectAndDraw();
-      
-    };
-
     mapG
       .attr({
         tx: translate[0],
         ty: translate[1],
         s: scale
       })
-      .transition().duration(500).ease("cubic-out")
+      .transition().duration(400).ease("cubic-out")
       .attr({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })
-      .each("end", () => { commit(); });
+      .each("end", () => {
+        
+        mapG.attr("transform", null)
+          .selectAll("g.layers .shape")
+          .attr("transform", null);
+        
+        this.get('graphLayout').beginPropertyChanges();
+        
+        this.get('graphLayout').setProperties({
+          zoom: parseFloat(mapG.attr("s")),
+          tx: parseFloat(mapG.attr("tx")),
+          ty: parseFloat(mapG.attr("ty"))
+        });
+        
+        this.scaleProjection(projection);
+        
+        this.get('graphLayout').endPropertyChanges();
+        
+        this.projectAndDraw();
+        
+      });
     
     if (isChrome()) {
       mapG.selectAll("g.layers .shape").each(function() {
@@ -395,17 +398,38 @@ export default Ember.Component.extend(LegendFeature, {
   },
   
   zoomAndDragChange: function() {
+    
+    let projection = this.get('projection'),
+        ds = projection.scale() / projection.resolution,
+        rs = this.get('graphLayout.zoom')/ds,
+        tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
+        ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
+        shiftX = tx - this.get('graphLayout.tx'),
+        shiftY = ty - this.get('graphLayout.ty');
    
-    if (parseFloat(this.d3l().select("g.map").attr("s")) != this.get('graphLayout.zoom')) {
+    if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
+        || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
       
       let container = this.d3l().node(),
           rect = container.getBoundingClientRect();
-        
-      zoom.toPoint(this.get('graphLayout.zoom'), rect.width / 2, rect.height / 2);
+      
+      if (Math.abs(shiftX) <= 0.1 && Math.abs(shiftY) <= 0.1) {
+        zoom.toPoint(
+          this.get('graphLayout.zoom'),
+          rect.width / 2 + shiftX*this.get('graphLayout.zoom'),
+          rect.height / 2 + shiftY*this.get('graphLayout.zoom')
+        );
+      } else {
+        zoom.toScaleAndTranslate(
+          this.get('graphLayout.zoom'),
+          this.get('graphLayout.tx'),
+          this.get('graphLayout.ty')
+        );
+      }
       
     }
     
-  }.observes('graphLayout.zoom'),
+  }.observes('graphLayout.zoom', 'graphLayout.tx', 'graphLayout.ty'),
     
   projectedPath: function() {
     
