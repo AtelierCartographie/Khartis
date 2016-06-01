@@ -266,11 +266,11 @@ body {
         }
 
         &.top, &%top {
-            flex-direction: row;
+            align-items: flex-start;
         }
 
         &.bottom, &%bottom {
-            flex-direction: row-reverse;
+            align-items: flex-end;
         }
 
         &.left, &%left {

@@ -72,6 +72,10 @@ small {
       color: greys(white);
     }
   }
+  
+  &.volet2 {
+    background-color: color(volet2);
+  }
 
 }
 

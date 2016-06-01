@@ -39,8 +39,31 @@
         </div>
       </aside>
       
-      <div class="stretched flow" style="position: relative;">
-          <div style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px">
+      <div class="stretched vertical flow">
+          <header class="application-header filled volet2 horizontal flow">
+            <div class="horizontal bottom space-between solid flow w4 padded-v">
+              {{#if model.graphLayout.projection}}
+                <div class="vertical bottom solid flow padded-h">
+                  <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
+                </div>
+                <div class="horizontal right solid flow">
+                  <div class="vertical bottom flow padded-h">
+                    <label>surface</label>
+                    {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
+                  </div>
+                  <div class="vertical bottom flow padded-h">
+                    <label>distance</label>
+                    {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
+                  </div>
+                  <div class="vertical bottom flow padded-h">
+                    <label>angle</label>
+                    {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
+                  </div>
+                </div>
+              {{/if}}
+             </div>
+          </header>
+          <div class="fluid" style="position: relative;">
             {{#if (x-every basemapData model.graphLayout.projection)}}
             
               {{map-editor data=model.data

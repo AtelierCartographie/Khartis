@@ -139,13 +139,19 @@ export default Ember.Component.extend(LegendFeature, {
         this.zoomAndDrag(scale, translate);
  
       })
-      .translate([this.get('graphLayout.tx'), this.get('graphLayout.ty')])
       .scale(this.get('graphLayout.zoom'));
     
     this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
-    this.addObserver('graphLayout.tx', 'graphLayout.ty',
-      () => zoom.translate([this.get('graphLayout.tx'), this.get('graphLayout.ty')])
-    );
+    
+    let updateTxTy = () => {
+      let p = this.get('projection');
+      zoom.translate([
+        p.initialTranslate[0]*this.get('graphLayout.tx'),
+        p.initialTranslate[1]*this.get('graphLayout.ty')
+      ]);
+    }
+    this.addObserver('graphLayout.tx', 'graphLayout.ty', updateTxTy);
+    updateTxTy();
 
     d3g.call(zoom);
     
@@ -333,8 +339,8 @@ export default Ember.Component.extend(LegendFeature, {
     
     projection
       .translate([
-          projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx'),
-          projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')
+          projection.initialTranslate[0]*(this.get('graphLayout.zoom')+this.get('graphLayout.tx')),
+          projection.initialTranslate[1]*(this.get('graphLayout.zoom')+this.get('graphLayout.ty'))
         ])
       .scale(projection.resolution * this.get('graphLayout.zoom'));
       
@@ -370,8 +376,8 @@ export default Ember.Component.extend(LegendFeature, {
         
         this.get('graphLayout').setProperties({
           zoom: parseFloat(mapG.attr("s")),
-          tx: parseFloat(mapG.attr("tx")),
-          ty: parseFloat(mapG.attr("ty"))
+          tx: parseFloat(mapG.attr("tx")) / t[0],
+          ty: parseFloat(mapG.attr("ty")) / t[1]
         });
         
         this.scaleProjection(projection);
@@ -395,6 +401,7 @@ export default Ember.Component.extend(LegendFeature, {
       });
     }
     
+    
   },
   
   zoomAndDragChange: function() {
@@ -403,8 +410,8 @@ export default Ember.Component.extend(LegendFeature, {
         ds = projection.scale() / projection.resolution,
         tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
         ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
-        shiftX = tx - this.get('graphLayout.tx'),
-        shiftY = ty - this.get('graphLayout.ty');
+        shiftX = tx - this.get('graphLayout.tx')*projection.initialTranslate[0],
+        shiftY = ty - this.get('graphLayout.ty')*projection.initialTranslate[1];
    
     if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
         || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
@@ -415,14 +422,14 @@ export default Ember.Component.extend(LegendFeature, {
       if (Math.abs(shiftX) <= 0.1 && Math.abs(shiftY) <= 0.1) {
         zoom.toPoint(
           this.get('graphLayout.zoom'),
-          rect.width / 2 + shiftX*this.get('graphLayout.zoom'),
-          rect.height / 2 + shiftY*this.get('graphLayout.zoom')
+          rect.width / 2,
+          rect.height / 2
         );
       } else {
         zoom.toScaleAndTranslate(
           this.get('graphLayout.zoom'),
-          this.get('graphLayout.tx'),
-          this.get('graphLayout.ty')
+          this.get('graphLayout.tx')*projection.initialTranslate[0],
+          this.get('graphLayout.ty')*projection.initialTranslate[1]
         );
       }
       
