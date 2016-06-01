@@ -1,46 +1,14 @@
+{{outlet 'sidebar'}}
+{{!outlet 'sidebar-sub'}}
+
 <div class="graph vertical flow">
+
     <div class="horizontal flow">
-      
-      <aside class="solid vertical flow">
-        {{outlet 'header'}}
-        <div class="horizontal flow">
-          <div class="vertical-navbar">
-            {{#x-tooltip message=(t 'navigation.sidebar.variables') position="right"}}
-              <div class="state-icon {{if isInStateVariables 'selected'}}" {{action 'selectState' 'variables'}}>
-                <i class="icon-var filled">V</i>
-              </div>
-            {{/x-tooltip}}
-            {{#x-tooltip message=(t 'navigation.sidebar.layout') position="right"}}
-              <div class="state-icon {{if isInStateLayout 'selected'}}" {{action 'selectState' 'layout'}}>
-                <i class="iconfont iconfont-map"></i>
-              </div>
-            {{/x-tooltip}}
-            {{#x-tooltip message=(t 'navigation.sidebar.layers') position="right"}}
-              <div class="state-icon {{if isInStateMapping 'selected'}}" {{action 'selectState' 'layers'}}>
-                <i class="iconfont iconfont-sliders"></i>
-              </div>
-            {{/x-tooltip}}
-            {{#x-tooltip message=(t 'navigation.sidebar.legend') position="right"}}
-              <div class="state-icon {{if isInStateLegend 'selected'}}" {{action 'selectState' 'legend'}}>
-                <i class="iconfont iconfont-tags"></i>
-              </div>
-            {{/x-tooltip}}
-            {{#if model.graphLayout.projection}}
-            {{#x-tooltip message=(t 'navigation.sidebar.export') position="right"}}
-              <div class="state-icon {{if isInStateExport 'selected'}}" {{action 'selectState' 'export'}}>
-                <i class="iconfont iconfont-download"></i>
-              </div>
-            {{/x-tooltip}}
-            {{/if}}
-          </div>
-          <div class="vertical space-between flow sidebar">
-            {{partial sidebarPartial}}
-          </div>
-        </div>
-      </aside>
-      
+
       <div class="stretched vertical flow">
+
           <header class="filled volet2 horizontal flow">
+
             <div class="horizontal bottom space-between solid airy flow padded-v">
               {{#if model.graphLayout.projection}}
                 <div class="vertical bottom solid flow padded-h" style="width: 120px">
@@ -63,6 +31,7 @@
                 <div {{action 'toggleProjection'}} class=" solid button"> <i class="iconfont iconfont-angle-down"></i></div>
               {{/if}}
             </div>
+
             <div class="horizontal bottom space-between solid flow w6 padded">
                 {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
                 <div class="vertical flow">
@@ -83,15 +52,17 @@
                 </div>
                 {{/if}}
             </div>
+
             <div class="horizontal bottom airy flow padded-v">
               <div class="button">+</div>
               <div class="button">-</div>
               <div class="button"><i class="iconfont iconfont-crosshairs"></i></div>
             </div>
           </header>
+
           <div class="fluid" style="position: relative;">
             {{#if (x-every basemapData model.graphLayout.projection)}}
-            
+
               {{map-editor data=model.data
               base=basemapData
               graphLayout=model.graphLayout
@@ -101,9 +72,9 @@
               }}
 
             {{/if}}
-            
+
             {{outlet "configuration-panel"}}
-            
+
           </div>
         </div>
     </div>
