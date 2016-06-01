@@ -24,6 +24,10 @@ export default Ember.Controller.extend({
   
   importReport: null,
   
+  canResumeProject: function() {
+    return this.get('store').has();
+  }.property('store'),
+  
   parsable: function() {
     return this.get('model.csv') && this.get('model.csv').length > 0;
   }.property('model.csv'),
@@ -47,11 +51,10 @@ export default Ember.Controller.extend({
           return r.map( c => c.trim() );
         });
         
-        let project = Project.create({
-          data: DataStruct.createFromRawData(data)
-        });
-        this.get('store').persist(project);
-        this.transitionToRoute('graph', project.get('_uuid'));
+        let project = Project.create();
+        project.importRawData(data);
+        this.set('model.project', project);
+        this.transitionToRoute('project.step2', "new");
         
       }
       

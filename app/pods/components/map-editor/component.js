@@ -401,7 +401,6 @@ export default Ember.Component.extend(LegendFeature, {
     
     let projection = this.get('projection'),
         ds = projection.scale() / projection.resolution,
-        rs = this.get('graphLayout.zoom')/ds,
         tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
         ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
         shiftX = tx - this.get('graphLayout.tx'),

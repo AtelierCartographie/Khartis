@@ -51,7 +51,8 @@
     
     <div>
       <h3>Colonne de référence géographique</h3>
-      <div class="vertical airy flow padded-v filled">
+      <ul class="collection">
+        <li>
         {{#if model.project.data.availableGeoDefs.length}}
         {{#x-dropdown-plus as |facet|}}
           {{#facet.trigger}}
@@ -75,44 +76,43 @@
         {{else}}
         Aucune colonne géoréférençable n'a été trouvée
         {{/if}}
-        <ul class="collection">
-          {{#each model.project.data.columns as |col|}}
-            <li class="{{if (x-eq editedColumn col) 'selected'}} {{if col.incorrectCells.length 'clickable'}}" {{action 'editColumn' col}}>
-              {{#x-tooltip message=(if col.inconsistency 'Corriger' 'Aucune erreur détectée') position="right"}}
-              <div class="horizontal space-between flow">
-                <div class="horizontal airy flow">
-                  <span>{{col.header.value}}</span>
-                </div>
-                <div class="fluid text-right">
-                  {{#if col.inconsistency}}
-                  <small class="text-danger">{{col.inconsistency}} {{t 'general.error' count=col.incorrectCells.length}} / {{col.body.length}}</small>
-                  {{/if}}
-                  {{#x-dropdown-plus as |facet|}}
-                    {{#facet.trigger}}
-                      <span>{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</span>
-                    {{/facet.trigger}}
-                    {{#facet.list}}
-                      <li {{action 'bindColumnType' col 'numeric'}}><span>{{data-type-icon type="numeric"}}</span> {{t 'variable.meta.type.numeric'}}</li>
-                      <li {{action 'bindColumnType' col 'text'}}><span>{{data-type-icon type="text"}}</span> {{t 'variable.meta.type.text'}}</li>
-                      <li {{action 'bindColumnType' col 'lat'}}><span>{{data-type-icon type="lat"}}</span> {{t 'variable.meta.type.lat'}}</li>
-                      <li {{action 'bindColumnType' col 'lon'}}><span>{{data-type-icon type="lon"}}</span> {{t 'variable.meta.type.lon'}}</li>
-                      <li {{action 'bindColumnType' col 'geo'}}><span>{{data-type-icon type="geo"}}</span> {{t 'variable.meta.type.geo'}}</li>
-                      <li {{action 'bindColumnType' col null}}>{{t 'variable.meta.type.auto'}}</li>
-                    {{/facet.list}}
-                  {{/x-dropdown-plus}}
-                </div>
+        </li>
+        {{#each model.project.data.columns as |col|}}
+          <li class="{{if (x-eq editedColumn col) 'selected'}} {{if col.incorrectCells.length 'clickable'}}" {{action 'editColumn' col}}>
+            {{#x-tooltip message=(if col.inconsistency 'Corriger' 'Aucune erreur détectée') position="right"}}
+            <div class="horizontal space-between flow">
+              <div class="horizontal airy flow">
+                <span>{{col.header.value}}</span>
               </div>
-              {{/x-tooltip}}
-            </li>
-          {{/each}}
-        </ul>
-     </div>
+              <div class="fluid text-right">
+                {{#if col.inconsistency}}
+                <small class="text-danger">{{col.inconsistency}} {{t 'general.error' count=col.incorrectCells.length}} / {{col.body.length}}</small>
+                {{/if}}
+                {{#x-dropdown-plus as |facet|}}
+                  {{#facet.trigger}}
+                    <span>{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</span>
+                  {{/facet.trigger}}
+                  {{#facet.list}}
+                    <li {{action 'bindColumnType' col 'numeric'}}><span>{{data-type-icon type="numeric"}}</span> {{t 'variable.meta.type.numeric'}}</li>
+                    <li {{action 'bindColumnType' col 'text'}}><span>{{data-type-icon type="text"}}</span> {{t 'variable.meta.type.text'}}</li>
+                    <li {{action 'bindColumnType' col 'lat'}}><span>{{data-type-icon type="lat"}}</span> {{t 'variable.meta.type.lat'}}</li>
+                    <li {{action 'bindColumnType' col 'lon'}}><span>{{data-type-icon type="lon"}}</span> {{t 'variable.meta.type.lon'}}</li>
+                    <li {{action 'bindColumnType' col 'geo'}}><span>{{data-type-icon type="geo"}}</span> {{t 'variable.meta.type.geo'}}</li>
+                    <li {{action 'bindColumnType' col null}}>{{t 'variable.meta.type.auto'}}</li>
+                  {{/facet.list}}
+                {{/x-dropdown-plus}}
+              </div>
+            </div>
+            {{/x-tooltip}}
+          </li>
+        {{/each}}
+      </ul>
   </div>
 </div>
 
 
 <div class="navheader">
-    {{#x-button class="default btn-prev btn-arrow" invisible=(x-not model.csv) action=(action 'back')}}
+    {{#x-button class="default btn-prev btn-arrow" action=(action 'back')}}
         <i class="iconfont iconfont-angle-left"></i> {{!t "general.back"}}
     {{/x-button}}
     {{#x-button class="primary btn-next btn-arrow" invisible=hasErrors action=(action 'next')}}

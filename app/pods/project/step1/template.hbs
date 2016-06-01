@@ -20,9 +20,11 @@
         {{#x-button class="solid filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
             {{x-capitalize (t "general.next")}}
         {{/x-button}}
+        {{#if canResumeProject}}
         {{#x-button class="solid filled default" action=(action 'resumeProject')}}
             {{x-capitalize (t "project.resume")}}
         {{/x-button}}
+        {{/if}}
       </div>
     
     </div>

@@ -68,7 +68,7 @@ Project.reopenClass({
         o.setProperties({
           data: DataStruct.restore(json.data, refs),
           graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) ),
-          geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
+          geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null
         });
         return o;
     }

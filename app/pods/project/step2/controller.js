@@ -32,9 +32,8 @@ export default Ember.Controller.extend({
     },
     
     editColumn(col) {
-      throw new Error("to be implemented");
       if (col.get('incorrectCells.length')) {
-        this.transitionToRoute('graph.column', col.get('_uuid'));
+        this.transitionToRoute('project.step2.column', col.get('_uuid'));
       }
     },
 
