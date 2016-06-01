@@ -8,15 +8,16 @@
     text-align: center;
     position: relative; // tooltip
 
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
 
     border-radius: .2em;
     margin: 2px;
-    
-    &.geo, &.coord {
-      font-size: 1.9rem;
-    }
+
+    font-size: 1.8rem;
+    //&.geo, &.coord {
+    //  font-size: 1.9rem;
+    //}
     
     &.geo::before {
       content: " ";

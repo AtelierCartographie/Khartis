@@ -121,7 +121,13 @@ small {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 1.5rem;
+
+  &.underlined {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid color(titles);
+  }
 }
+
 
 /* cursor */
 .clickable {

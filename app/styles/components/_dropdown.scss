@@ -17,6 +17,9 @@
   @include shadow(1);
 
   > li {
+
+    display: flex;
+    align-items: center;
     color: black;
     padding: $gutter/2 1.2rem $gutter/2 1.2rem;
     cursor: pointer;
@@ -50,3 +53,6 @@
   opacity: 1;
 }
 
+.dropdown-icon {
+  flex: 0 0 5rem;
+}
