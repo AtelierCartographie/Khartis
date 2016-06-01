@@ -463,6 +463,25 @@ footer {
 
   }
 
+  .collection {
+
+    border: none;
+
+    & > li:first-child {
+      background-color: color(titles);
+      color: #FFF;
+      margin-bottom: 3rem;
+    }
+
+
+    & > li {
+      padding: 0.5rem;
+      background-color: color(variable);
+      margin-bottom: 0.5rem;
+    }
+
+  }
+
 }
 
 .report .dropdown {
@@ -562,6 +581,7 @@ footer {
   width: 100%;
 }
 
+
 .column-editor {
   position: relative;
 }
@@ -582,7 +602,7 @@ footer {
     margin-right:0.7rem;
   }
 
-  .cell-value, .cell-new-value input {
+  .cell-value, .cell-new-value input, .selected-value {
     font-size:1.2rem;
   }
 
@@ -590,5 +610,12 @@ footer {
     min-width: initial;
   }
 
+  .selected-value {
+    line-height: 23px;
+  }
+
+  .selected-value .icon {
+    line-height: 19px;
+  }
 }
 
