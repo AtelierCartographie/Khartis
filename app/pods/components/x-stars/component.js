@@ -6,11 +6,18 @@ export default Ember.Component.extend({
   tagName: "ul",
   
   value: 0,
+  max: null,
+  
+  clampLeft: 0,
+  
+  iconFalse: null,
+  iconTrue: "iconfont-star",
   
   stars: function() {
-    let arr = Em.A();
-    for (let i = 0; i < this.get('value'); i++) {
-      arr.push(true);
+    let arr = Em.A(),
+        max = this.get('max')+this.get('clampLeft') || this.get('value');
+    for (let i = this.get('clampLeft'); i < max; i++) {
+      arr.push(i <= this.get('value'));
     }
     return arr;
   }.property('value')

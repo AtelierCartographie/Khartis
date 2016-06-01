@@ -1,3 +1,9 @@
 {{#each stars as |star|}}
-<li><i class="iconfont iconfont-star"></i></li>
+<li>
+  {{#if star}}
+  <i class="iconfont {{iconTrue}}"></i>
+  {{else if iconFalse}}
+  <i class="iconfont {{iconFalse}}"></i>
+  {{/if}}
+</li>
 {{/each}}

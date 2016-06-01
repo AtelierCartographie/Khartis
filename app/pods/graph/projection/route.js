@@ -15,20 +15,24 @@ export default Ember.Route.extend({
   },
   
   setupController(controller, model) {
-    this.set('controller.displayProjection', false);
   },
   
   deactivate() {
-    this.set('controller.displayProjection', true);
   },
   
   actions: {
+    
     selectProjection(proj) {
       this.get('controller').send('bindProjection', proj);
       Ember.run.later(this, () => {
-        this.transitionTo('graph.projection.edit');
+        this.transitionTo('graph');
       });
+    },
+    
+    toggleProjection() {
+      this.transitionTo('graph');
     }
+    
   }
 
 });

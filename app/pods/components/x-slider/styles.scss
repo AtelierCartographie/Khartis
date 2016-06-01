@@ -4,12 +4,12 @@
   $axis-height: 5px;
   
   position: relative;
-  height: 50px;
+  height: auto;
   
   .slider {
     
     position: absolute;
-    top: $axis-top;
+    top: -15px;
     height: 24px;
     
     g.dragger {

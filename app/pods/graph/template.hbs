@@ -40,28 +40,54 @@
       </aside>
       
       <div class="stretched vertical flow">
-          <header class="application-header filled volet2 horizontal flow">
-            <div class="horizontal bottom space-between solid flow w4 padded-v">
+          <header class="filled volet2 horizontal flow">
+            <div class="horizontal bottom space-between solid airy flow padded-v">
               {{#if model.graphLayout.projection}}
-                <div class="vertical bottom solid flow padded-h">
+                <div class="vertical bottom solid flow padded-h" style="width: 120px">
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
                 </div>
-                <div class="horizontal right solid flow">
-                  <div class="vertical bottom flow padded-h">
+                <div class="horizontal bottom solid flow" style="width: 200px">
+                  <div class="vertical solid flow w4">
                     <label>surface</label>
-                    {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_area iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
                   </div>
-                  <div class="vertical bottom flow padded-h">
+                  <div class="vertical solid flow w4">
                     <label>distance</label>
-                    {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_distance iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
                   </div>
-                  <div class="vertical bottom flow padded-h">
+                  <div class="vertical solid flow w4">
                     <label>angle</label>
-                    {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_angle iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                 </div>
+                <div {{action 'toggleProjection'}} class=" solid button"> <i class="iconfont iconfont-angle-down"></i></div>
               {{/if}}
-             </div>
+            </div>
+            <div class="horizontal bottom space-between solid flow w6 padded">
+                {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
+                <div class="vertical flow">
+                  <label>Longitude</label>
+                  {{x-slider-editable class="fluid" tickAppend="°" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}
+                </div>
+                {{/if}}
+                {{#if (x-eq model.graphLayout.projection.translation_y 1)}}
+                <div class="vertical flow">
+                  <label>Latitude</label>
+                  {{x-slider-editable class="fluid" tickAppend="°" band=1 value=model.graphLayout.projection.rotateY min=-180 max=180}}
+                </div>
+                {{/if}}
+                {{#if (x-eq model.graphLayout.projection.rotation_z 1)}}
+                <div class="vertical flow">
+                  <label>Rotation</label>
+                  {{x-slider-editable class="fluid" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-180 max=180}}
+                </div>
+                {{/if}}
+            </div>
+            <div class="horizontal bottom airy flow padded-v">
+              <div class="button">+</div>
+              <div class="button">-</div>
+              <div class="button"><i class="iconfont iconfont-crosshairs"></i></div>
+            </div>
           </header>
           <div class="fluid" style="position: relative;">
             {{#if (x-every basemapData model.graphLayout.projection)}}
@@ -75,65 +101,6 @@
               }}
 
             {{/if}}
-            
-            {{#if displayProjection}}
-              {{#x-sticky-panel class="projection-panel open"}}
-
-                {{#x-tooltip message="Projection" position="left"}}
-                    <div class="sticky-trigger">
-                        <i class="iconfont iconfont-more-horiz"></i>
-                    </div>
-                {{/x-tooltip}}
-                <div class="sticky-wrapper">
-                  <div class="title">
-                    <div class="horizontal middle airy flow space-between">
-                      <span>Projection</span>
-                      <div {{action 'navigateTo' 'graph.projection.edit'}} class="small button filled primary">Editer <i class="iconfont iconfont-pencil"></i></div>
-                    </div>
-                  </div>
-                  {{#if model.graphLayout.projection}}
-                  <div class="padded">
-                    <div>
-                    <label>Type :</label>
-                    {{t (concat "projection." model.graphLayout.projection.id ".name")}}
-                    </div>
-                    <div>
-                    <label>Préservation d'angle :</label>
-                    {{x-stars value=model.graphLayout.projection.score_angle class="stars"}}
-                    </div>
-                    <div>
-                    <label>Préservation de surface :</label>
-                    {{x-stars value=model.graphLayout.projection.score_area class="stars"}}
-                    </div>
-                    <div>
-                    <label>Préservation de distance :</label>
-                    {{x-stars value=model.graphLayout.projection.score_distance class="stars"}}
-                    </div>
-                  </div>
-                  {{/if}}
-                </div>
-              {{/x-sticky-panel}}
-            {{/if}}
-
-            {{#x-sticky-panel class="toolbar open"}}
-
-              {{#x-tooltip message="Outils" position="left"}}
-                  <div class="sticky-trigger">
-                      <i class="iconfont iconfont-more-horiz"></i>
-                  </div>
-              {{/x-tooltip}}
-
-              <div class="sticky-wrapper">
-                <ul class="toolbar-items">
-                  {{#x-tooltip message="Centrer" position="left"}}
-                      <li {{action 'resetTranslate'}}>
-                          <i class="iconfont iconfont-crosshairs"></i>
-                      </li>
-                  {{/x-tooltip}}
-                </ul>
-              </div>
-              
-            {{/x-sticky-panel}}
             
             {{outlet "configuration-panel"}}
             

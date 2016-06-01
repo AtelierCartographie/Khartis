@@ -21,12 +21,10 @@ export default Ember.Route.extend({
   
   setupController(controller, model) {
     controller.set('editedLayer', model);
-    this.set('controller.displayProjection', false);
   },
   
   deactivate() {
     this.set('controller.editedLayer', null);
-    this.set('controller.displayProjection', true);
   },
   
   actions: {

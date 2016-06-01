@@ -3,24 +3,18 @@
   @include flow();
   
   position: absolute;
-  top:10px;
-  left:10px;
+  top:0px;
+  left:0px;
   
-  &.open .sticky-wrapper {
-    @extend %padded;
-    margin-left: -3.2rem;
-  }
+  max-height: 80%;
   
-  .title {
-    margin-left: 3.2rem -$gutter/2;
-    margin-top: -$gutter/2;
-    height:32px;
-
-    display: flex;
-    align-items: center;
+  & > .body {
     
-    font-size: 1.1em;
-    font-weight: bold;
+    overflow-y: auto;
+    
+    .collection {
+      border: none;
+    }
     
   }
   
