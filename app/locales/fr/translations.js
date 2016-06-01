@@ -8,6 +8,8 @@ export default {
     "import": "importer",
     "continue": "continuer",
     "validate": "valider",
+    "open": "Ouvrir",
+    "close": "Fermer",
     "or": "ou",
     "and": "et",
     "error": {
@@ -66,12 +68,25 @@ export default {
   
   "navigation": {
 
+    "editColumn": "Edition d'une colonne",
+
     "sidebar": {
       "data" : "données",
       "visualisations" : "visualisations",
       "export": "export"
     }
     
+  },
+
+  "variable.meta": {
+    "type": {
+      "text": "text",
+      "numeric": "numérique",
+      "geo": "code géographique",
+      "lat": "latitude",
+      "lon": "longitude",
+      "auto": "automatique"
+    }
   },
   
   "projection": {

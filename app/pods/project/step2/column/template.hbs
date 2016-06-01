@@ -1,52 +1,61 @@
-<div class="padded">
-  <div class="titlebar">
-    <div class="title">{{t "navigation.editColumn"}} <span class="separator">|</span> {{editedColumn.header.value}}</div>
-    <div class="actions">
-      {{#link-to 'project.step2'}}<div class="small button filled default">Fermer</div>{{/link-to}}
-    </div>
-  </div>
-  <div class="body">
-    <div class="vertical airy flow">
-      <div class="jumbotron">
-      Certaines cellules n'ont pas été reconnues
-      </div>
-      <div class="settings horizontal center flow">
-        <div class="solid vertical airy flow w6">
-        {{#o-wrap.column obj=editedColumn as |oCol|}}
-          {{#each oCol.groupedIncorrectCells as |group|}}
-            {{#o-wrap.cell-correction obj=group.cell siblings=group.siblings as |oCell|}}
-              <div class="horizontal airy flow">
-                <div class="solid w5 cell-value text-right">
-                  {{oCell.obj.value}}
-                </div>
-                <div class="solid w2 bind-value-arrow text-center"><i class="iconfont iconfont-long-arrow-right"></i></div>
-                <div class="solid w5 cell-new-value">
-                  {{#if (x-eq editedColumn.meta.type 'geo')}}
-                  {{#multi-value-input uniqueSelection=oCell.worldBankValue selectionMaxLength=1 suggestionProvider=oCell.worldBank filterField=oCell.worldBankNameKey queryMinLength=0 as |facet o this|}}
-                      {{#if facet.isSuggestionRow}}
-                          {{#unless (is-empty (get o oCell.worldBankNameKey))}}
-                          {{get o oCell.worldBankNameKey}}
-                          {{else}}
-                          {{get o 'name_ISO_EN'}}
-                          {{/unless}}
-                      {{else if facet.isSelectedValue}}
-                          {{#unless (is-empty (get o oCell.worldBankNameKey))}}
-                          {{get o oCell.worldBankNameKey}}
-                          {{else}}
-                          {{get o 'name_ISO_EN'}}
-                          {{/unless}}
-                      {{/if}}
-                  {{/multi-value-input}}
-                  {{else}}
-                    {{input value=oCell.obj.correctedValue}}
-                  {{/if}}
-                </div>
-              </div>
-            {{/o-wrap.cell-correction}}
-          {{/each}}
-        {{/o-wrap.column}}
+<div class="sidebar-scroll-wrapper column-editor padded">
+
+    {{#link-to 'project.step2' class="column-editor-close-button"}}<div class="small button filled default">{{t 'general.close'}}</div>{{/link-to}}
+
+    <div class="title underlined">{{t "navigation.editColumn"}} <span class="separator">|</span> {{editedColumn.header.value}}</div>
+
+      <div class="body vertical airy flow">
+
+          <div>Certaines cellules n'ont pas été reconnues</div>
+
+          <div class="settings horizontal center flow">
+
+            <div class="solid vertical airy flow w12">
+                {{#o-wrap.column obj=editedColumn as |oCol|}}
+
+                    {{#each oCol.groupedIncorrectCells as |group|}}
+                        {{#o-wrap.cell-correction obj=group.cell siblings=group.siblings as |oCell|}}
+
+                            <div class="horizontal airy flow column-editor-row">
+
+                                <div class="solid w5 cell-value"> {{oCell.obj.value}} </div>
+
+                                <div class="solid w1 bind-value-arrow text-center">
+                                    <i class="iconfont iconfont-long-arrow-right"></i>
+                                </div>
+
+                                <div class="solid w5 cell-new-value">
+                                    {{#if (x-eq editedColumn.meta.type 'geo')}}
+
+                                      {{#multi-value-input  uniqueSelection=oCell.worldBankValue selectionMaxLength=1 suggestionProvider=oCell.worldBank filterField=oCell.worldBankNameKey queryMinLength=0 as |facet o this|}}
+                                          {{#if facet.isSuggestionRow}}
+                                              {{#unless (is-empty (get o oCell.worldBankNameKey))}}
+                                              {{get o oCell.worldBankNameKey}}
+                                              {{else}}
+                                              {{get o 'name_ISO_EN'}}
+                                              {{/unless}}
+                                          {{else if facet.isSelectedValue}}
+                                              {{#unless (is-empty (get o oCell.worldBankNameKey))}}
+                                              {{get o oCell.worldBankNameKey}}
+                                              {{else}}
+                                              {{get o 'name_ISO_EN'}}
+                                              {{/unless}}
+                                          {{/if}}
+                                      {{/multi-value-input}}
+
+                                    {{else}}
+                                        {{input value=oCell.obj.correctedValue}}
+                                    {{/if}}
+                                </div>
+
+                            </div>
+
+                        {{/o-wrap.cell-correction}}
+                    {{/each}}
+
+                {{/o-wrap.column}}
+            </div>
+          </div>
+
         </div>
-      </div>
-    </div>
-  </div>
 </div>

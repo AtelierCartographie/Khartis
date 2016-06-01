@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   renderTemplate: function() {
     this.render("index.sidebar", {outlet: "sidebar"});
     this.render("project.step2.sidebar", {into: "index.sidebar", outlet: "sidebar"});
-    this.render("project.step2.help", {into: "index.sidebar", outlet: "help"});
+    this.render("project.step2.help", {into: "project.step2.sidebar", outlet: "help"});
     this.render("index.header", {into: "index.sidebar", outlet: "header" });
     //this.render("", {outlet: "sidebar-sub"});
     this.render({ outlet: "main" });

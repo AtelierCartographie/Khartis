@@ -1,17 +1,25 @@
 .collection {
   
-  border: 1px solid #e0e0e0;
+  //border: 1px solid #e0e0e0;
   border-radius: 2px;
   overflow: hidden;
   padding: 0;
+
+  & > li:first-child {
+    background-color: color(titles);
+    color: #FFF;
+    margin-bottom: 3rem;
+  }
   
   & > li {
     
     @extend %padded;
     
     list-style-type: none;
-    background-color: #fff;
-    border-bottom: 1px solid #e0e0e0;
+    background-color: color(variable);
+    //background-color: #fff;
+    //border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 0.5rem;
     
     &.clickable:hover {
       background-color: greys(10%);

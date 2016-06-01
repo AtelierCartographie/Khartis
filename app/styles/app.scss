@@ -55,10 +55,24 @@ body > .ember-view:not(.popable) {
   background-color: color(volet1);
 }
 
+.sidebar-scroll-wrapper {
+  overflow: auto;
+  padding: 0 $gutter;
+  //position: relative;
+
+  &.padded {
+    padding: 4rem $gutter $gutter;  /* 4rem = Eyeballed alignment with sidebar content */
+  }
+}
+
+
 .application-sidebar-sub {
   background-color: color(volet2);
 }
 
+.application-sidebar-sub .body {
+  margin-top: 1rem;
+}
 
 .application-workspace {
   overflow-y: auto;
@@ -76,11 +90,6 @@ aside {
     flex: 0;
   }
 }
-
-.sidebar-content {
-  padding:0 $gutter;
-}
-
 
 .application-nav {
 
@@ -207,7 +216,7 @@ footer {
 
 .navheader {
   @include flow(horizontal, solid, space-between);
-  padding: 0.1rem 1rem 0.1rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 
@@ -342,6 +351,9 @@ footer {
 
 
 .report {
+
+  flex-shrink: 0;
+
   ul {
     padding-left: 0;
     list-style: none;
@@ -376,7 +388,7 @@ footer {
     color: color(warning);
     border-left: 2px solid color(warning);
   }
-  
+
   .report-message.danger {
     background-color: color(warning, 'tint');
     color: color(danger);
@@ -424,6 +436,8 @@ footer {
 
   }
 
+
+
   .column-configuration {
     @include flow();
     min-height: 25rem;
@@ -451,6 +465,10 @@ footer {
 
 }
 
+.report .dropdown {
+  min-width:300px;
+}
+
 
 .report .accordion-wrapper > div {
   padding: 2rem;
@@ -465,7 +483,7 @@ footer {
   & table {
     position: relative;
   }
-  
+
   & tr:nth-child(even){
     background-color: greys(5%);
   }
@@ -543,3 +561,34 @@ footer {
 .graph.vertical.flow > .horizontal.flow {
   width: 100%;
 }
+
+.column-editor {
+  position: relative;
+}
+
+.column-editor-row  {
+
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+
+  .bind-value-arrow.bind-value-arrow,
+  .cell-value.cell-value,
+  .cell-new-value.cell-new-value {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .bind-value-arrow.bind-value-arrow {
+    margin-right:0.7rem;
+  }
+
+  .cell-value, .cell-new-value input {
+    font-size:1.2rem;
+  }
+
+  .cell-new-value input {
+    min-width: initial;
+  }
+
+}
+
