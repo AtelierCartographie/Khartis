@@ -41,6 +41,22 @@ export default Ember.Component.extend({
   
   draw: function() {
     
+    this.$().bind('DOMSubtreeModified', function() {
+      console.log("change");
+    });
+    
+    /*var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var observer = new MutationObserver(function(mutations) {
+      console.log("changed");
+      mutations.forEach(function(mutation) {
+        console.log(mutation.type, mutation.addedNodes)
+      });
+    });
+    
+    observer.observe(this.$()[0], {
+      attributes: true
+    });*/
+    
     let margin = {
           l: parseInt( this.$(".slider").css("marginLeft") ),
           r: parseInt( this.$(".slider").css("marginRight") )
@@ -204,7 +220,7 @@ export default Ember.Component.extend({
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 100),
+  }, 30),
   
   valueChange: function() {
     

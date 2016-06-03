@@ -17,15 +17,15 @@
                 <div class="horizontal bottom solid flow" style="width: 200px">
                   <div class="vertical solid flow w4">
                     <label>surface</label>
-                    {{x-stars value=model.graphLayout.projection.score_area iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_area iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                   <div class="vertical solid flow w4">
                     <label>distance</label>
-                    {{x-stars value=model.graphLayout.projection.score_distance iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_distance iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                   <div class="vertical solid flow w4">
                     <label>angle</label>
-                    {{x-stars value=model.graphLayout.projection.score_angle iconFalse="iconfont-star-o" max=3 clampLeft=1 class="stars"}}
+                    {{x-stars value=model.graphLayout.projection.score_angle iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                 </div>
                 <div {{action 'toggleProjection'}} class=" solid button"> <i class="iconfont iconfont-angle-down"></i></div>
