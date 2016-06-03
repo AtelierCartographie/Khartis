@@ -9,7 +9,7 @@
 
           <header class="filled volet2 horizontal flow graph-topbar">
 
-            <div class="horizontal bottom space-between solid airy flow padded-v">
+            <div class="horizontal bottom space-between solid airy flow">
               {{#if model.graphLayout.projection}}
                 <div class="vertical bottom solid flow padded-h" style="width: 120px">
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
@@ -32,7 +32,7 @@
               {{/if}}
             </div>
 
-            <div class="horizontal bottom space-between solid flow w6 padded">
+            <div class="horizontal bottom space-between solid flow w6 padded-h">
                 {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
                 <div class="vertical flow">
                   <label>Longitude</label>
@@ -53,7 +53,7 @@
                 {{/if}}
             </div>
 
-            <div class="horizontal bottom airy flow padded-v">
+            <div class="horizontal bottom airy flow padded-h">
               <div class="button">+</div>
               <div class="button">-</div>
               <div class="button"><i class="iconfont iconfont-crosshairs"></i></div>

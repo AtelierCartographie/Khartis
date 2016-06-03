@@ -1,9 +1,14 @@
 .graph {
   
   .graph-topbar {
+    
+    flex-basis: 5.6rem;
+    padding-bottom: $gutter / 4;
+    
     .proj-slider {
       margin-top: -5px;
     }
+    
   }
   
   /* TODO : REMOVE */
