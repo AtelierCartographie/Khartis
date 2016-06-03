@@ -28,7 +28,7 @@
                     {{x-stars value=model.graphLayout.projection.score_angle iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                 </div>
-                <div {{action 'toggleProjection'}} class=" solid button"> <i class="iconfont iconfont-angle-down"></i></div>
+                <div {{action 'toggleProjection'}} class="solid button padded-r toggle-projection-button"> <i class="iconfont iconfont-angle-down"></i></div>
               {{/if}}
             </div>
 
@@ -53,10 +53,10 @@
                 {{/if}}
             </div>
 
-            <div class="horizontal bottom airy flow padded-h">
-              <div class="button control-button"><i class="iconfont iconfont-minus"></i></div>
-              <div class="button control-button"><i class="iconfont iconfont-plus"></i></div>
-              <div class="button control-button"><i class="iconfont iconfont-move"></i></div>
+            <div class="horizontal bottom flow control-buttons">
+              <div class="button control-button" {{action 'zoomMoins'}}><i class="iconfont iconfont-minus"></i></div>
+              <div class="button control-button" {{action 'zoomPlus'}}><i class="iconfont iconfont-plus"></i></div>
+              <div class="button control-button zoom" {{action 'resetTranslate'}}><i class="iconfont iconfont-move"></i></div>
             </div>
           </header>
 
@@ -64,11 +64,11 @@
             {{#if (x-every basemapData model.graphLayout.projection)}}
 
               {{map-editor data=model.data
-              base=basemapData
-              graphLayout=model.graphLayout
-              graphLayers=model.graphLayers
-              title=model.title
-              onAskVersioning="onAskVersioning"
+                base=basemapData
+                graphLayout=model.graphLayout
+                graphLayers=model.graphLayers
+                title=model.title
+                onAskVersioning="onAskVersioning"
               }}
 
             {{/if}}

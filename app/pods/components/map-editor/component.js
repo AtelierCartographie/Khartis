@@ -85,8 +85,7 @@ export default Ember.Component.extend(LegendFeature, {
       
     vm.append("path")
       .attr({
-        "fill-rule": "evenodd",
-        "opacity": 0.5
+        "fill-rule": "evenodd"
       })
       .style("fill", "white");
     
@@ -145,13 +144,14 @@ export default Ember.Component.extend(LegendFeature, {
 			.classed("fg", true)
       .attr("width", "100%")
       .attr("height", "100%")
+      .attr("opacity", 0.8)
       .attr("mask", `url(${window.location}#viewport-mask)`)
       .attr("fill", this.get('graphLayout.backgroundColor'));
       
     this.legendInit();
     
     d3g.append("text")
-      .classed("title", true);
+      .classed("map-title", true);
       
     // DRAG & ZOOM
     zoom = zoom2()
@@ -286,11 +286,13 @@ export default Ember.Component.extend(LegendFeature, {
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
     
-    // fb mask
+    // fg mask
     let vOf = this.get('graphLayout').vOffset(h),
         hOf = this.get('graphLayout').hOffset(w),
+        m = this.get('graphLayout.margin'),
         outer = `M 0 0, ${w} 0, ${w} ${h}, 0 ${h} Z`,
-        inner =  `M ${hOf} ${vOf}, ${w - hOf} ${vOf}, ${w - hOf} ${h - vOf}, ${hOf} ${h - vOf}Z`;
+        inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
+                   ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
         
     this.d3l().select("defs #viewport-mask path")
       .attr("d", `${outer} ${inner}`);
@@ -449,14 +451,16 @@ export default Ember.Component.extend(LegendFeature, {
     if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
         || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
       
-      let container = this.d3l().node(),
-          rect = container.getBoundingClientRect();
-      
+      let {w, h} = this.getSize(),
+		      vOf = this.get('graphLayout').vOffset(h),
+          hOf = this.get('graphLayout').hOffset(w),
+          m = this.get('graphLayout.margin');
+       
       if (Math.abs(shiftX) <= 0.1 && Math.abs(shiftY) <= 0.1) {
         zoom.toPoint(
           this.get('graphLayout.zoom'),
-          rect.width / 2,
-          rect.height / 2
+          (w - 2*hOf - m.l - m.t) / 2 + hOf + m.l,
+          (h - 2*vOf - m.t - m.b) / 2 + vOf + m.t
         );
       } else {
         zoom.toScaleAndTranslate(
@@ -547,13 +551,12 @@ export default Ember.Component.extend(LegendFeature, {
     
     let {w, h} = this.getSize();
     
-    this.d3l().select("text.title")
+    this.d3l().select("text.map-title")
       .text(this.get('title'))
       .attr({
-        "text-anchor": "middle",
-        "font-size": "1.6em",
-        x: w / 2,
-        y: this.get('graphLayout').vOffset(h) + 32
+        "font-size": "2em",
+        x: this.get('graphLayout').hOffset(w) + this.get('graphLayout.margin.l'),
+        y: this.get('graphLayout').vOffset(h) + this.get('graphLayout.margin.t') - 5
       });
       
    this.d3l().attr("title", this.get('title'));

@@ -1,13 +1,10 @@
-<div class="content">
-  <div class="help jumbotron markdown">
-    {{localized-tpl tpl="help/{locale}/graph/layers"}}
-  </div>
+<div class="content layers-column">
   <div class="vertical airy flow layers">
     <div class="solid center text-center">
       {{#if model.geoDef}}
       {{#x-dropdown-plus as |facet|}}
         {{#facet.trigger}}
-           <i class="iconfont iconfont-plus"></i> {{t "general.addAVariable"}}
+            <div class="button add-variable-button "><i class="iconfont iconfont-plus-thin"></i></div>
         {{/facet.trigger}}
         {{#facet.list}}
           {{#each model.data.columns as |col|}}
@@ -23,7 +20,6 @@
     </div>
 
     {{#if model.graphLayers.length}}
-    <div class="jumbotron">
       {{#drag-sort-collection provider=model.graphLayers as |layer self|}}
       
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
@@ -52,21 +48,7 @@
           </li>
           
       {{/drag-sort-collection}}
-    </div>
     {{/if}}
     
   </div>
-</div>
-
-<div class="bottom-navbar">
-    <div class="fluid">
-      {{#x-button class="default btn-prev" action=(action 'back')}}
-          <i class="iconfont iconfont-long-arrow-left"></i> {{x-capitalize (t "navigation.sidebar.layout")}}
-      {{/x-button}}
-    </div>
-    <div class="fluid">
-      {{#x-button class="default btn-prev" action=(action 'next')}}
-          {{x-capitalize (t "navigation.sidebar.legend")}} <i class="iconfont iconfont-long-arrow-right"></i>
-      {{/x-button}}
-    </div>
 </div>

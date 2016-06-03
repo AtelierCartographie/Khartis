@@ -8,8 +8,8 @@ var Margin = Struct.extend({
   
   l: 12,
   r: 12,
-  t: 12,
-  b: 12,
+  t: 30,
+  b: 200,
   
   h: function() {
     return this.get('l') + this.get('r');

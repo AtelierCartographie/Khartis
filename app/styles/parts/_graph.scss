@@ -3,11 +3,43 @@
   .graph-topbar {
     
     height: 5.6rem;
-    padding-bottom: $gutter / 4;
+    
+    & > * {
+      padding-bottom: $gutter / 4;
+    }
+    
+    & > *:nth-child(2n) {
+      border-left: 3px solid white;
+      border-right: 3px solid white;
+    }
     
     .proj-slider {
       margin-top: -5px;
     }
+    
+    .toggle-projection-button {
+      font-size: 2rem;
+      line-height: 1em;
+    }
+    
+    .control-buttons {
+      @extend %padded-h;
+      padding-bottom: $gutter / 4;
+      .control-button {
+        border: 1px solid #000;
+        border-radius: 0;
+        line-height: 1em;
+        font-size: 1.8rem;
+        width: 2.6rem;
+        height: 2.6rem;
+        padding: 0.2rem 0.2rem;
+        margin-right: 0.2rem;
+        &.zoom {
+          margin-left: $gutter / 2;
+        }
+      }
+    }
+    
     
   }
   

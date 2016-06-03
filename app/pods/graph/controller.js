@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
     "legend",
     "export"
   ],
-  state: "variables",
+  state: "layers",
   
   basemapData: null,
   
@@ -48,7 +48,7 @@ export default Ember.Controller.extend({
   }.property('state'),
   
   sidebarPartial: function() {
-    return `graph/sidebar/${this.get('state')}`;
+    return `graph/_sidebar/${this.get('state')}`;
   }.property('state'),
   
   setup() {
@@ -239,6 +239,18 @@ export default Ember.Controller.extend({
         tx: 0,
         ty: 0
       });
+    },
+    
+    zoomPlus() {
+      if (this.get('model.graphLayout.zoom') < 12) {
+        this.incrementProperty('model.graphLayout.zoom');
+      }
+    },
+    
+    zoomMoins() {
+      if (this.get('model.graphLayout.zoom') > 0) {
+        this.decrementProperty('model.graphLayout.zoom');
+      }
     },
     
     export() {

@@ -16,7 +16,7 @@ let Project = Struct.extend({
     
     geoDef: null,
     
-    title: "",
+    title: "Titre de la carte",
     
     //transient
     report: null,
