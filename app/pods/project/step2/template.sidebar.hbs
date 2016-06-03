@@ -52,20 +52,22 @@
                 {{/if}}
             {{/if}}
         </ul>
+    </div>
 
-        <div>
 
-            <h3 class="title underlined">Colonne de référence géographique</h3>
+    <div class="geo-ref-column">
 
-            <ul class="collection">
+        <h3 class="title underlined">Colonne de référence géographique</h3>
+
+        <ul class="collection">
 
                 <li>
                     {{#if model.project.data.availableGeoDefs.length}}
                         {{#x-dropdown-plus as |facet|}}
                             {{#facet.trigger}}
                                 {{#if model.project.geoDef}}
-                                    <span>{{data-type-icon type=model.project.geoDef.type inconsistency=model.geoDef.inconsistency}}</span>
-                                    <span>{{model.project.geoDef.label}}</span>
+                                    <span class="dropdown-icon">{{data-type-icon type=model.project.geoDef.type inconsistency=model.geoDef.inconsistency}}</span>
+                                    <span class="dropdown-label">{{model.project.geoDef.label}}</span>
                                 {{else}}
                                     Choisir
                                 {{/if}}
@@ -131,8 +133,6 @@
             </ul>
 
         </div>
-
-    </div><!-- End report -->
 
 </div><!-- End scrollbar-wrapper -->
 
