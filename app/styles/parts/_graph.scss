@@ -1,6 +1,13 @@
 .graph {
   
-  .vertical-navbar {
+  .graph-topbar {
+    .proj-slider {
+      margin-top: -5px;
+    }
+  }
+  
+  /* TODO : REMOVE */
+  /*.vertical-navbar {
 
     @include flow(vertical, solid);
     @extend .filled.contrast;
@@ -39,7 +46,7 @@
         }
       }
     }
-  }
+  }*/
   
   
   .toolbar {
