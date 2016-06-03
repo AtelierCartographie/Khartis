@@ -58,7 +58,6 @@ body > .ember-view:not(.popable) {
 .sidebar-scroll-wrapper {
   overflow: auto;
   padding: 0 $gutter;
-  //position: relative;
 
   &.padded {
     padding: 4rem $gutter $gutter;  /* 4rem = Eyeballed alignment with sidebar content */
@@ -436,8 +435,6 @@ footer {
 
   }
 
-
-
   .column-configuration {
     @include flow();
     min-height: 25rem;
@@ -463,18 +460,55 @@ footer {
 
   }
 
+}
+
+
+.geo-ref-column {
+
+  .dropdown {
+    min-width:300px;
+  }
+
+  .accordion-wrapper > div {
+    padding: 2rem;
+  }
+
   .collection {
 
+    margin-right: -20px;
+
+    overflow: auto;
     border: none;
+
+    & > li.selected {
+      margin-right: 0;
+      padding-right:  2.5rem;
+      background-color: color(volet2);
+      color:color(titles);
+    }
 
     & > li:first-child {
       background-color: color(titles);
       color: #FFF;
       margin-bottom: 3rem;
+
+      .dropdown-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .dropdown-label {
+        flex:1;
+      }
+
+      .dropdown-icon {
+        width : 16%;
+      }
     }
 
-
     & > li {
+      margin-right:20px;
       padding: 0.5rem;
       background-color: color(variable);
       margin-bottom: 0.5rem;
@@ -482,15 +516,6 @@ footer {
 
   }
 
-}
-
-.report .dropdown {
-  min-width:300px;
-}
-
-
-.report .accordion-wrapper > div {
-  padding: 2rem;
 }
 
 
