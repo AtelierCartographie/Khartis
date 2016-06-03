@@ -6,10 +6,10 @@ import Projection from './projection';
 
 var Margin = Struct.extend({
   
-  l: 5,
-  r: 5,
-  t: 5,
-  b: 5,
+  l: 12,
+  r: 12,
+  t: 12,
+  b: 12,
   
   h: function() {
     return this.get('l') + this.get('r');

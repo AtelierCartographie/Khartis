@@ -74,6 +74,22 @@ export default Ember.Component.extend(LegendFeature, {
       .attr("id", "clip")
       .append("use");
     
+    let vm = defs.append("mask")
+      .attr({
+        id: "viewport-mask",
+        x: 0,
+        y: 0,
+        width: "500",
+        height: "500"
+      });
+      
+    vm.append("path")
+      .attr({
+        "fill-rule": "evenodd",
+        "opacity": 0.5
+      })
+      .style("fill", "white");
+    
 		// ---------
 		
     // HANDLE RESIZE
@@ -124,6 +140,13 @@ export default Ember.Component.extend(LegendFeature, {
       
     bordersMap.append("path")
       .classed("borders-disputed", true);
+      
+    d3g.append("rect")
+			.classed("fg", true)
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("mask", `url(${window.location}#viewport-mask)`)
+      .attr("fill", this.get('graphLayout.backgroundColor'));
       
     this.legendInit();
     
@@ -262,38 +285,48 @@ export default Ember.Component.extend(LegendFeature, {
 		
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
+    
+    // fb mask
+    let vOf = this.get('graphLayout').vOffset(h),
+        hOf = this.get('graphLayout').hOffset(w),
+        outer = `M 0 0, ${w} 0, ${w} ${h}, 0 ${h} Z`,
+        inner =  `M ${hOf} ${vOf}, ${w - hOf} ${vOf}, ${w - hOf} ${h - vOf}, ${hOf} ${h - vOf}Z`;
+        
+    this.d3l().select("defs #viewport-mask path")
+      .attr("d", `${outer} ${inner}`);
+    
+    // ===========
 		
 		this.d3l().selectAll("g.offset line.horizontal-top")
 			.attr("x1", 0)
-			.attr("y1", this.get('graphLayout').vOffset(h))
+			.attr("y1", vOf)
 			.attr("x2", w)
-			.attr("y2", this.get('graphLayout').vOffset(h))
+			.attr("y2", vOf)
 		  .attr("stroke-width", "1");
     
 		this.d3l().selectAll("g.offset line.horizontal-bottom")
 			.attr("x1", 0)
-			.attr("y1", h - this.get('graphLayout').vOffset(h))
+			.attr("y1", h - vOf)
 			.attr("x2", w)
-			.attr("y2", h - this.get('graphLayout').vOffset(h))
+			.attr("y2", h - vOf)
 		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.vertical-left")
-			.attr("x1", this.get('graphLayout').hOffset(w))
+			.attr("x1", hOf)
 			.attr("y1", 0)
-			.attr("x2", this.get('graphLayout').hOffset(w))
+			.attr("x2", hOf)
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
       
 		this.d3l().selectAll("g.offset line.vertical-right")
-			.attr("x1", w - this.get('graphLayout').hOffset(w))
+			.attr("x1", w - hOf)
 			.attr("y1", 0)
-			.attr("x2", w - this.get('graphLayout').hOffset(w))
+			.attr("x2", w - hOf)
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
 		
 		this.d3l().select("g.margin")
-			.attr("transform", "translate("+this.get('graphLayout').hOffset(w)
-				+", "+this.get('graphLayout').vOffset(h)+")")
+			.attr("transform", `translate(${hOf}, ${vOf})`)
 			.selectAll("rect")
 			.attr("x", this.get('graphLayout.margin.l'))
 			.attr("y", this.get('graphLayout.margin.t'))
