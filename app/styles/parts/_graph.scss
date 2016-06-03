@@ -2,95 +2,13 @@
   
   .graph-topbar {
     
-    flex-basis: 5.6rem;
+    height: 5.6rem;
     padding-bottom: $gutter / 4;
     
     .proj-slider {
       margin-top: -5px;
     }
     
-  }
-  
-  /* TODO : REMOVE */
-  /*.vertical-navbar {
-
-    @include flow(vertical, solid);
-    @extend .filled.contrast;
-    width: 4rem;
-
-    .state-icon {
-      
-      @include flow(solid, middle, center);
-
-      height: 4rem;
-      line-height: 4rem;
-      text-align: center;
-      cursor: pointer;
-
-      .icon-var {
-        
-        display: inline-block;
-
-        width: 1.8rem;
-        height: 1.8rem;
-        line-height: 1.8rem;
-        text-align: center;
-        
-        border-radius: .2em;
-        
-        color: color(text);
-        
-      }
-      
-      &.selected {
-        @extend .filled.default;
-        color: $color-primary;
-        
-        .icon-var {
-          @extend .filled.primary;
-        }
-      }
-    }
-  }*/
-  
-  
-  .toolbar {
-  
-    position: absolute;
-    top:10px;
-    right:10px;
-    
-    &-items li {
-      
-      cursor:pointer;
-      
-      width:32px;
-      height:32px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-    }
-    
-    &-items {
-      list-style: none;
-      padding-left:0;
-      margin:0;
-    }
-
-    &-items li {
-      cursor:pointer;
-      background-color: rgba(greys(50%), .5);
-
-      &:not(:last-child){
-        border-bottom:1px solid rgba(greys(50%), .5);
-      }
-
-      &:hover {
-        background-color: rgba(greys(50%), .2);
-      }
-    }
   }
   
 }
