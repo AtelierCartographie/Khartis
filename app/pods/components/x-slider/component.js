@@ -34,6 +34,10 @@ export default Ember.Component.extend({
   
   tranform: IDENTITY,
   
+  resizeInterval: null,
+  $width: null,
+  $height: null,
+  
   setup: function() {
     
     this.set('_tmpValue', this.get('value'));
@@ -47,6 +51,30 @@ export default Ember.Component.extend({
     }
     
   }.on("init"),
+  
+  initResizeHandler: function() {
+    
+    // HANDLE RESIZE
+    let $size = () => {
+      let $width = this.$().parent().width(),
+          $height = this.$().parent().height();
+      
+      if ($width != this.get('$width') || $height != this.get('$height')) {
+        this.setProperties({
+          '$width': this.$().parent().width(),
+          '$height': this.$().parent().height()
+        });
+      }
+    };
+    this.set('resizeInterval', setInterval($size, 500));
+    $size();
+    // ---------
+    
+  }.on("didInsertElement"),
+  
+  cleanup: function() {
+    clearInterval(this.get('resizeInterval'));
+  }.on("willDestroyElement"),
   
   draw: function() {
     
@@ -130,6 +158,14 @@ export default Ember.Component.extend({
     this.valueChange();
     
   }.on('didInsertElement'),
+  
+  onResize: function() {
+    
+    this.d3l().selectAll(".slider *").remove();
+    
+    this.draw();
+    
+  }.observes('$width', '$height'),
   
   moveDragger() {
       let scale = this.get('scale'),
