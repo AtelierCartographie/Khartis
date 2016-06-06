@@ -1,69 +1,82 @@
 <div class="padded edit-layer">
-  <div class="title">Choix d'une visualization</div>
+  <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
   <div class="body">
     <ul class="collection">
       <li class="layer">
         <div class="horizontal flow">
           <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
+            <img src="assets/images/viz/100x100px-QUANTI-val_symboles.jpg">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.type.quali.cat_surfaces.description"}}</p>
           </div>
         </div>
       </li>
     </ul>
   </div>
-  <div class="title underlined">Diagramme de fréquences</div>
+  <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram')}}</div>
   <div class="body">
     <div class="settings vertical flow">
       <div class="horizontal flow">
         {{distribution-bars mapping=editedLayer.mapping}}
       </div>
-        <div class="solid vertical airy flow w6">
-          <div>
-              <label>Méthode de séparation</label>
-              {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
-                  {{#unless editedLayer.mapping.scale.intervalType}}
-                  Choisir
-                  {{else}}
-                  {{t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType)}}
-                  {{/unless}}
-                  <i class="iconfont iconfont-angle-down"></i>
-                {{/facet.trigger}}
-                {{#facet.list}}
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'linear'}}>{{t 'variable.mapping.interval.type.linear'}}</li>
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'variable.mapping.interval.type.regular'}}</li>
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'variable.mapping.interval.type.mean'}}</li>
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'variable.mapping.interval.type.quantile'}}</li>
-                {{/facet.list}}
-              {{/x-dropdown-plus}}
+      <div class="solid vertical flow">
+        {{#x-tabs}}
+        <ul class="tabs brewer-tabs">
+          <li tab-id="color-swatchs">uniques</li>
+          <li tab-id="texture-swatchs">regroupés en classes</li>
+        </ul>
+        <div class="panes">
+          <div class="tab-pane">
+              <div class="horizontal middle flow">
+                <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
+                <div class="solid w7">
+                  {{#x-dropdown-plus as |facet|}}
+                    {{#facet.trigger class="filled padded-h w8"}}
+                      {{#unless editedLayer.mapping.scale.intervalType}}
+                      Choisir
+                      {{else}}
+                      {{t (concat "visualization.settings.discretization.type." editedLayer.mapping.scale.intervalType)}}
+                      {{/unless}}
+                      <i class="iconfont iconfont-angle-down"></i>
+                    {{/facet.trigger}}
+                    {{#facet.list}}
+                      <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'visualization.settings.discretization.type.regular'}}</li>
+                      <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'visualization.settings.discretization.type.mean'}}</li>
+                      <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'visualization.settings.discretization.type.quantile'}}</li>
+                    {{/facet.list}}
+                  {{/x-dropdown-plus}}
+                </div>
+              </div>
+              <div class="horizontal middle flow">
+                <label class="solid w5">{{x-capitalize (t 'visualization.settings.classes')}}</label>
+                <div class="solid w7">
+                  {{#x-dropdown-plus as |facet|}}
+                    {{#facet.trigger class="filled padded-h"}}
+                      {{editedLayer.mapping.scale.classes}}
+                      <i class="iconfont iconfont-angle-down"></i>
+                    {{/facet.trigger}}
+                    {{#facet.list}}
+                      {{#each editedLayer.mapping.scale.possibleClasses as |count|}}
+                        <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
+                      {{/each}}
+                    {{/facet.list}}
+                  {{/x-dropdown-plus}}
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane"></div>
           </div>
-          {{#if editedLayer.mapping.scale.possibleClasses.length}}
-          <div>
-              <label>Nombre de classes</label>
-              {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
-                  {{editedLayer.mapping.scale.classes}}
-                  <i class="iconfont iconfont-angle-down"></i>
-                {{/facet.trigger}}
-                {{#facet.list}}
-                  {{#each editedLayer.mapping.scale.possibleClasses as |count|}}
-                    <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
-                  {{/each}}
-                {{/facet.list}}
-              {{/x-dropdown-plus}}
-          </div>
-          {{/if}}
-          <div class="horizontal airy flow">
-              <label>Séparation des valeurs</label>
-              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input"}}
-          </div>
-          {{#if (x-every editedLayer.mapping.scale.possibleClasses.length editedLayer.mapping.scale.diverging)}}
-          <div>
-              <label>Nombre de classes avant rupture</label>
+          {{/x-tabs}}
+          
+          
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}}</label>
+            <div class="horizontal solid half-airy flow w7">
+              <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
+              {{#if (x-every editedLayer.mapping.scale.possibleClasses.length editedLayer.mapping.scale.diverging)}}
+              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input solid w4"}}
               {{#x-dropdown-plus as |facet|}}
                 {{#facet.trigger}}
                   {{editedLayer.mapping.scale.classesBeforeBreak}}
@@ -75,54 +88,52 @@
                   {{/each}}
                 {{/facet.list}}
               {{/x-dropdown-plus}}
+              {{/if}}
+            </div>
           </div>
-          {{/if}}
-          <div>
-              <label>Contraste</label>
-              {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
-                  {{t (concat 'variable.mapping.contrast.' editedLayer.mapping.scale.contrast)}}
-                  <i class="iconfont iconfont-angle-down"></i>
-                {{/facet.trigger}}
-                {{#facet.list}}
-                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'cube_root'}}>{{t 'variable.mapping.contrast.cube_root'}}</li>
-                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'sqrt'}}>{{t 'variable.mapping.contrast.sqrt'}}</li>
-                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'identity'}}>{{t 'variable.mapping.contrast.identity'}}</li>
-                  <li {{action 'bind' editedLayer.mapping.scale 'contrast' 'square'}}>{{t 'variable.mapping.contrast.square'}}</li>
-                {{/facet.list}}
-              {{/x-dropdown-plus}}
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>cercle</div>
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>carré</div>
+            </div>
           </div>
-          <div class="horizontal airy flow">
-              <div>
-                <Label>Taille du plus grand symbol</Label>
-                {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.minSize max=24}}
-              </div>
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+            {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.minSize max=24}}
+            </div>
           </div>
-          <div class="horizontal airy middle flow">
-             {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
-              <label>Forme</label>
-              {{shape-dropdown
-                shapes=shapeSelection.availableShapes
-                value=editedLayer.mapping.visualization.shape
-                color=editedLayer.mapping.visualization.color
-              }}
-            {{/o-wrap.shape-selection}}
-            {{#if editedLayer.mapping.scale.diverging}}
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+              {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=0 max=3}}
+            </div>
+          </div>
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=(x-ternary editedLayer.mapping.scale.diverging 2 1))}}</label>
+            <div class="horizontal half-airy solid flow w7">
+              {{#if editedLayer.mapping.scale.diverging}}
               {{color-picker value=editedLayer.mapping.visualization.colorBeforeBreak}}
-            {{/if}}
-            {{color-picker value=editedLayer.mapping.visualization.color}}
+              {{/if}}
+              {{color-picker value=editedLayer.mapping.visualization.color}}
+            </div>
           </div>
-          <div class="horizontal airy middle solid flow w5">
-              <Label>Epaisseur du trait</Label>
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.stroke')}}</label>
+            <div class="horizontal half-airy solid flow w7">
               {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=5}}
+            </div>
           </div>
-          <div class="horizontal airy middle solid flow w5">
-              <Label>Opacité</Label>
-              {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
+          <div class="horizontal middle flow">
+            <Label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</Label>
+            <div class="horizontal half-airy solid flow w7">
+              {{x-slider class="fluid" band=0.05 value=editedLayer.opacity min=0 max=1}}
+            </div>
           </div>
         </div>
-        
       </div>
+      
       {{#if editedLayer.mapping.rules.length}}
       <div>
           <label>Absence de données</label>

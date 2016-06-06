@@ -5,7 +5,7 @@ let SymbolVisualization = Struct.extend({
   type: "symbol",
   color: "red",
   colorBeforeBreak: "blue",
-  shape: "star",
+  shape: "circle",
   strokeColor: "#404040",
   stroke: 2,
   minSize: 5,

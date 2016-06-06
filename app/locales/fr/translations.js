@@ -133,35 +133,63 @@ export default {
   },
   
   "visualization": {
-    "quanti": {
-      "val_surfaces": {
-        "name": "valeurs sur surfaces",
-        "description": "L'ordre des nuances respecte celui des valeurs"
-      },
-      "val_symboles": {
-        "name": "valeurs sur symboles",
-        "description": "Taille de symboles proportionnelles aux valeurs"
-      }
+    "title": {
+      "choose": "choix d'une visualisation"
     },
-    "quali": {
-      "cat_surfaces": {
-        "name": "catégories sur surfaces 1",
-        "description": "Les figurés choisis différencient les valeurs"
+    "settings": {
+      "diagram": "diagramme de fréquences",
+      "discretization": {
+        "title": "discrétisation",
+        "type": {
+          "regular": "intervalles réguliers",
+          "mean": "moyennes emboitées",
+          "quantile": "quantiles",
+          "linear": "aucune"
+        }
       },
-      "taille_valeur": {
-        "name": "catégories sur surfaces 2",
-        "description": "L'ordre des symbols respecte celui des valeurs"
+      "classes": "classes",
+      "breakValue": "valeur de rupture",
+      "shape": "forme",
+      "size": "taille",
+      "contrast": "contraste",
+      "color": {
+        "one": "couleur",
+        "other": "couleurs"
       },
-      "cat_symboles": {
-        "name": "catégories sur symboles 1",
-        "description": "Les figurés choisis différencient les valeurs"
+      "stroke": "contour",
+      "opacity": "opacité"
+    },
+    "type": {
+      "quanti": {
+        "val_surfaces": {
+          "name": "valeurs > surfaces",
+          "description": "l'ordre des nuances respecte celui des valeurs"
+        },
+        "val_symboles": {
+          "name": "valeurs > symboles",
+          "description": "taille de symboles proportionnelles aux valeurs"
+        }
       },
-      "ordre_symboles": {
-        "name": "catégories sur symboles 2",
-        "description": "L'ordre des symbols respecte celui des valeurs"
+      "quali": {
+        "cat_surfaces": {
+          "name": "catégories > surfaces",
+          "description": "les figurés choisis différencient les valeurs"
+        },
+        "taille_valeur": {
+          "name": "catégories sur surfaces 2",
+          "description": "l'ordre des symbols respecte celui des valeurs"
+        },
+        "cat_symboles": {
+          "name": "catégories > symboles",
+          "description": "les figurés choisis différencient les valeurs"
+        },
+        "ordre_symboles": {
+          "name": "catégories sur symboles 2",
+          "description": "l'ordre des symbols respecte celui des valeurs"
+        }
       }
     }
-  }
+  },
   
   
     /*"gradientOf": "Dégradé de",

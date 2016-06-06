@@ -24,7 +24,7 @@ export default Ember.Component.extend({
   tickAppend: null,
   tickFormat: ",.2f",
   
-  displayTick: true,
+  displayTick: false,
   
   scale: null,
   
@@ -32,7 +32,7 @@ export default Ember.Component.extend({
   
   band: null,
   
-  tranform: IDENTITY,
+  transform: IDENTITY,
   
   resizeInterval: null,
   $width: null,
@@ -213,7 +213,7 @@ export default Ember.Component.extend({
   
   translate(val) {
     
-    let translate = this.get('scale')(this.transform.invert(val)) + DRAGGER_SIZE / 2;
+    let translate = this.get('scale')(this.get('transform').invert(val)) + DRAGGER_SIZE / 2;
     
     this.displayValue();
     
@@ -249,7 +249,7 @@ export default Ember.Component.extend({
   
   tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
     this.set('value', this.get('_tmpValue'));
-  }, 30),
+  }, 120),
   
   valueChange: function() {
     

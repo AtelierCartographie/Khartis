@@ -2,10 +2,10 @@ import Ember from 'ember';
 import Struct from 'mapp/models/struct';
 
 let CONTRASTS = {
-  "sqrt": 0.5,
-  "cube_root": 1/3,
-  "identity": 1,
-  "square": 2
+  0: 1/3,
+  1: 0.5,
+  2: 1,
+  3: 2
 };
 
 let Scale = Struct.extend({
@@ -14,7 +14,7 @@ let Scale = Struct.extend({
   intervalType: "mean",
   valueBreak: null,
   classesBeforeBreak: 0,
-  contrast: "sqrt",
+  contrast: 1,
   
   diverging: function() {
     return !Ember.isEmpty(this.get('valueBreak'));
