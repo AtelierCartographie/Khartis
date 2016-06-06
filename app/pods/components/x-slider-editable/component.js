@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
 
+const IDENTITY = function(val) {
+  return val;
+}
+IDENTITY.invert = function(val) {
+  return val;
+}
+
 export default Ember.Component.extend({
   
   value:0,
@@ -11,6 +18,8 @@ export default Ember.Component.extend({
   inputValue: null,
   
   tickAppend: null,
+  
+  transform: IDENTITY,
   
   valueChange: function() {
     this.set('inputValue', this.get('value'));

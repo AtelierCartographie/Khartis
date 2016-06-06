@@ -1,82 +1,77 @@
-<div class="configuration-panel layer filled padded with-relief topbar">
-  <div class="titlebar">
-    <div class="title">{{t "navigation.chooseVisualization"}}</div>
-    <div class="actions">
-      {{#link-to 'graph'}}<i class="iconfont iconfont-times-circle"></i>{{/link-to}}
-    </div>
-  </div>
+<div class="layers padded">
+  <div class="title">Choix d'une visualization</div>
   <div class="body">
     <ul class="collection">
-      {{#if editedLayer.mapping.canBeSurface}}
-      <li class="clickable" {{action 'selectMapping' 'quali.cat_surfaces'}}>
-        <div class="horizontal airy flow">
-          <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
-          </div>
-          <div class="vertical flow padded">
-              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
-          </div>
-        </div>
-      </li>
-      {{/if}}
-      <li class="clickable" {{action 'selectMapping' 'quali.cat_symboles'}}>
-        <div class="horizontal airy flow">
-          <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-cat_symboles.jpg">
-          </div>
-          <div class="vertical flow padded">
-              <span class="title">{{t "visualization.quali.cat_symboles.name"}}</span>
-              <p class="description">{{t "visualization.quali.cat_symboles.description"}}</p>
-          </div>
-        </div>
-      </li>
-      {{#if false}}
-      <li class="clickable" {{action 'selectMapping' 'quali.ordre_symboles'}}>
-        <div class="horizontal airy flow">
-          <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-ordre_symboles.jpg">
-          </div>
-          <div class="vertical flow padded">
-              <span class="title">{{t "visualization.quali.ordre_symboles.name"}}</span>
-              <p class="description">{{t "visualization.quali.ordre_symboles.description"}}</p>
-          </div>
-        </div>
-      </li>  
-      <li class="clickable" {{action 'selectMapping' 'quali.taille_valeur'}}>
-        <div class="horizontal airy flow">
-          <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-Taille_Valeur.jpg">
-          </div>
-          <div class="vertical flow padded">
-              <span class="title">{{t "visualization.quali.taille_valeur.name"}}</span>
-              <p class="description">{{t "visualization.quali.taille_valeur.description"}}</p>
-          </div>
-        </div>
-      </li>
-      {{/if}}
       {{#if editedLayer.mapping.canBeMappedAsValue}}
+      <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles'}}>
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUANTI-val_symboles.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quanti.val_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quanti.val_symboles.description"}}</p>
+          </div>
+        </div>
+      </li>
       {{#if editedLayer.mapping.canBeSurface}}
-      <li class="clickable" {{action 'selectMapping' 'quanti.val_surfaces'}}>
-        <div class="horizontal airy flow">
+      <li class="clickable layer" {{action 'selectMapping' 'quanti.val_surfaces'}}>
+        <div class="horizontal flow">
           <div class="caption">
             <img src="assets/images/viz/100x100px-QUANTI-val_surfaces.jpg">
           </div>
-          <div class="vertical flow padded">
+          <div class="vertical stretched middle flow padded-h content">
               <span class="title">{{t "visualization.quanti.val_surfaces.name"}}</span>
               <p class="description">{{t "visualization.quanti.val_surfaces.description"}}</p>
           </div>
         </div>
       </li>
       {{/if}}
-      <li class="clickable" {{action 'selectMapping' 'quanti.val_symboles'}}>
-        <div class="horizontal airy flow">
+      {{/if}}
+      <li class="clickable layer" {{action 'selectMapping' 'quali.cat_symboles'}}>
+        <div class="horizontal flow">
           <div class="caption">
-            <img src="assets/images/viz/100x100px-QUANTI-val_symboles.jpg">
+            <img src="assets/images/viz/100x100px-QUALI-cat_symboles.jpg">
           </div>
-          <div class="vertical flow padded">
-              <span class="title">{{t "visualization.quanti.val_symboles.name"}}</span>
-              <p class="description">{{t "visualization.quanti.val_symboles.description"}}</p>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quali.cat_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quali.cat_symboles.description"}}</p>
+          </div>
+        </div>
+      </li>
+      {{#if editedLayer.mapping.canBeSurface}}
+      <li class="clickable layer" {{action 'selectMapping' 'quali.cat_surfaces'}}>
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
+          </div>
+        </div>
+      </li>
+      {{/if}}
+      {{#if false}}
+      <li class="clickable layer" {{action 'selectMapping' 'quali.ordre_symboles'}}>
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-ordre_symboles.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quali.ordre_symboles.name"}}</span>
+              <p class="description">{{t "visualization.quali.ordre_symboles.description"}}</p>
+          </div>
+        </div>
+      </li>  
+      <li class="clickable layer" {{action 'selectMapping' 'quali.taille_valeur'}}>
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-Taille_Valeur.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quali.taille_valeur.name"}}</span>
+              <p class="description">{{t "visualization.quali.taille_valeur.description"}}</p>
           </div>
         </div>
       </li>

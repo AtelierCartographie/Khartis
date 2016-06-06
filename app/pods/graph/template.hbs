@@ -1,5 +1,5 @@
 {{outlet 'sidebar'}}
-{{!outlet 'sidebar-sub'}}
+{{outlet 'sidebar-sub'}}
 
 <div class="graph vertical flow">
 
@@ -36,19 +36,19 @@
                 {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
                 <div class="vertical flow">
                   <label>Longitude</label>
-                  {{x-slider-editable class="proj-slider fluid" tickAppend="°" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}
+                  {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.translation_y 1)}}
                 <div class="vertical flow">
                   <label>Latitude</label>
-                  {{x-slider-editable class="proj-slider fluid" tickAppend="°" band=1 value=model.graphLayout.projection.rotateY min=-180 max=180}}
+                  {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" band=1 value=model.graphLayout.projection.rotateY min=-180 max=180}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.rotation_z 1)}}
                 <div class="vertical flow">
                   <label>Rotation</label>
-                  {{x-slider-editable class="proj-slider fluid" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-180 max=180}}
+                  {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-180 max=180}}
                 </div>
                 {{/if}}
             </div>

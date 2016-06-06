@@ -4,4 +4,37 @@
     font-size: 0.9em;  
   }
   
+  .layer {
+    
+    border: none;
+    
+    .content {
+      border-top: 1px solid greys(20%);
+    }
+    
+    &:first-child {
+      .content {
+        border-top: 1px solid color(primary);
+      }
+    }
+    
+    
+    
+    .caption {
+      height: 5.4rem;
+      img { height: 5.4rem; }
+    }
+    
+    .title {
+      color: color(text);
+    }
+    
+    .description {
+      font-size: 0.9em;
+      line-height: 1.1em;
+    }
+    
+  }
+  
+  
 }

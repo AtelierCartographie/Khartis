@@ -570,12 +570,11 @@ export default Ember.Component.extend(LegendFeature, {
 
     sphere.style({
       "fill": "none",
-      "stroke": this.get('graphLayout.gridColor')
+      "stroke": this.get('graphLayout.gridColor'),
+      "stroke-width": 3
     })
     .attr({
       "xlink:href": `${window.location}#sphere`,
-    }).style({
-      "opacity": this.get('graphLayout.showGrid') ? 1 : 0
     })
     .classed("sphere", true);
   

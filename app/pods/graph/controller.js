@@ -24,7 +24,8 @@ export default Ember.Controller.extend({
   editedColumn: null,
   
   availableProjections: function() {
-    return this.get('Dictionnary.data.projections');
+    return this.get('Dictionnary.data.projections')
+      .filter( p => p.id !== "lambert_azimuthal_equal_area");
   }.property('Dictionnary.data.projections'),
   
   isInStateLayout: function() {
@@ -60,7 +61,6 @@ export default Ember.Controller.extend({
           land: topojson.merge(j, j.objects.land.geometries),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
-              console.log(a.properties.featurecla);
               return a.properties.featurecla === "International"; 
             }),
           bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
@@ -160,6 +160,17 @@ export default Ember.Controller.extend({
   freeze: function() {
     this.get('store').versions().freeze(this.get('model').export());
   },
+  
+  invertSliderFn: function() {
+    let fn = function(val) {
+      return -val;
+    }
+    fn.invert = function(val) {
+      return -val;
+    }
+
+    return fn;
+  }.property(),
   
   actions: {
     

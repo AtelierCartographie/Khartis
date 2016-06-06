@@ -7,8 +7,6 @@
 
   & > li {
     
-    @extend %padded;
-    
     list-style-type: none;
     background-color: #fff;
     border-bottom: 1px solid #e0e0e0;

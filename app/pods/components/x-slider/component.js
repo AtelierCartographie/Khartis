@@ -3,6 +3,13 @@ import d3 from 'd3';
 
 const DRAGGER_SIZE = 14;
 
+const IDENTITY = function(val) {
+  return val;
+}
+IDENTITY.invert = function(val) {
+  return val;
+}
+
 export default Ember.Component.extend({
 
   tagName: 'div',
@@ -25,6 +32,8 @@ export default Ember.Component.extend({
   
   band: null,
   
+  tranform: IDENTITY,
+  
   setup: function() {
     
     this.set('_tmpValue', this.get('value'));
@@ -40,22 +49,6 @@ export default Ember.Component.extend({
   }.on("init"),
   
   draw: function() {
-    
-    this.$().bind('DOMSubtreeModified', function() {
-      console.log("change");
-    });
-    
-    /*var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    var observer = new MutationObserver(function(mutations) {
-      console.log("changed");
-      mutations.forEach(function(mutation) {
-        console.log(mutation.type, mutation.addedNodes)
-      });
-    });
-    
-    observer.observe(this.$()[0], {
-      attributes: true
-    });*/
     
     let margin = {
           l: parseInt( this.$(".slider").css("marginLeft") ),
@@ -141,7 +134,7 @@ export default Ember.Component.extend({
   moveDragger() {
       let scale = this.get('scale'),
            pos = Math.max(0, Math.min(scale.range()[1], d3.event.x)),
-           tmpVal = this.stepValue(scale.invert(pos));
+           tmpVal = this.stepValue(this.transform(scale.invert(pos)));
       
       this.translate(tmpVal);
       
@@ -154,7 +147,7 @@ export default Ember.Component.extend({
     
     let scale = this.get('scale'),
         band = this.get('band');
-        
+    
     val = Math.min(this.get('max'), Math.max(this.get('min'), val));
         
     if (band) {
@@ -184,7 +177,7 @@ export default Ember.Component.extend({
   
   translate(val) {
     
-    let translate = this.get('scale')(val) + DRAGGER_SIZE / 2;
+    let translate = this.get('scale')(this.transform.invert(val)) + DRAGGER_SIZE / 2;
     
     this.displayValue();
     
