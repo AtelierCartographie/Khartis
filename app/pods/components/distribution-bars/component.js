@@ -10,11 +10,23 @@ export default Ember.Component.extend({
   
   mapping: null,
   
+  margin: {top: 16, right: 16, bottom: 56, left: 50, betweenBars: 2},
+  
+  xLabel: "valeurs",
+  yLabel: "fréquences",
+  
   draw: function() {
+    
+    let width = this.$().width(),
+        height = this.$().height(),
+        margin = this.get('margin');
     
     let stack = this.d3l()
 			.append("g")
       .classed("stack", true);
+      
+    stack.append("g")
+      .attr("class", "grid");
     
     stack.append("g")
       .attr("class", "x axis");
@@ -27,6 +39,19 @@ export default Ember.Component.extend({
     
     stack.append("g")
       .classed("intervals", true);
+      
+    // now add titles to the axes
+    stack.append("text")
+        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ (-margin.left/2) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .attr("class", "axis-label")
+        .text(this.get('yLabel'));
+
+    stack.append("text")
+        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ ((width-margin.left)/2) +","+(height-(margin.bottom/2))+")")  // centre below axis
+        .attr("class", "axis-label")
+        .text(this.get('xLabel'));
     
     this.drawDistribution();
 			
@@ -37,7 +62,7 @@ export default Ember.Component.extend({
     let dist = this.get('mapping.distribution'),
         colorScale = this.get('mapping').getScaleOf("color"),
         values = [...dist.values()],
-        margin = {top: 16, right: 16, bottom: 28, left: 36, betweenBars: 2},
+        margin = this.get('margin'),
 		    width = this.$().width() - margin.left - margin.right,
 		    height = this.$().height() - margin.top - margin.bottom,
         bindAttr,
@@ -56,12 +81,11 @@ export default Ember.Component.extend({
 			
 		let xAxis = d3.svg.axis()
       .scale(x)
-      .ticks(2)
       .orient("bottom");
 			
 		let yAxis = d3.svg.axis()
       .scale(y)
-      .ticks(2)
+      .ticks(y.domain()[1])
       .orient("left");
 			
     stack.select("g.x.axis")
@@ -71,12 +95,6 @@ export default Ember.Component.extend({
 		stack.select("g.y.axis")
 		  .attr("transform", "translate(-3, 0)")
 		  .call(yAxis);
-		  /*.append("text")
-		  .attr("transform", "rotate(-90)")
-		  .attr("y", 5)
-		  .attr("dy", ".71em")
-		  .style("text-anchor", "end")
-		  .text("H(m)");*/
       
     let data = values
       .sort( (a, b) => d3.ascending(a.val, b.val) )
@@ -125,7 +143,7 @@ export default Ember.Component.extend({
           x1: (d) => x(d.val),
           x2: (d) => x(d.val),
           y1: -10,
-          y2: height+10
+          y2: height+2
         }).style({
           "stroke-width": (d) => d.val == this.get('mapping.scale.valueBreak') ? "2px" : "1px"
         })
@@ -139,8 +157,40 @@ export default Ember.Component.extend({
     sel.enter()
       .append("line")
       .call(bindAttr)
-      .classed("interval", true)
-      .style("stroke", "#B0B0B0");
+      .classed("interval", true);
+    
+    sel.exit().remove();
+    
+    /* ticks orientation */
+    stack.selectAll(".x.axis text")
+      .attr("transform", function(d) {
+          let dy = d3.select(this).attr("dy");
+          console.log(dy);
+          return "rotate(-90)translate(-20," + (this.getBBox().height-4)*-1 + ")";
+      });
+    
+    /*draw grid*/
+    
+    bindAttr = (_) => {
+      _.attr({
+        transform: d => d3.select(d).attr("transform")
+      });
+    };
+    
+    sel = stack.select(".grid")
+      .selectAll(".grid-el")
+      .data(stack.selectAll(".y.axis .tick")[0])
+      .call(bindAttr);
+      
+    sel.enter()
+      .append("g")
+      .classed("grid-el", true)
+      .call(bindAttr)
+      .append("line")
+      .attr({
+        x2: width,
+        y2: 0
+      });
     
     sel.exit().remove();
     

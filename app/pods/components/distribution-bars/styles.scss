@@ -1,8 +1,5 @@
 & {
   
-  background-color: #FAFAFA;
-  border: 1px solid #EFEFEF;
-  
   height: 180px;
   
   .axis {
@@ -13,11 +10,28 @@
   .axis line,
   .axis path {
     fill: none;
-    stroke: #000;
+    stroke: greys(60%);
+  }
+  
+  .axis-label {
+    font-size: 0.8em;
+  }
+  
+  .tick text {
+    fill: greys(60%);
+    font-size: 0.9em;
+  }
+  
+  .interval {
+    stroke: greys(80%);
   }
   
   .bar {
     fill: color(primary);
+  }
+  
+  .grid .grid-el line {
+    stroke: white;
   }
   
 }

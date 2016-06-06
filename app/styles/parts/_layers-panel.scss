@@ -1,9 +1,5 @@
-.layers {
-  
-  .collection .layer-name {
-    font-size: 0.9em;  
-  }
-  
+.layers, .edit-layer {
+ 
   .layer {
     
     border: none;
@@ -37,4 +33,8 @@
   }
   
   
+}
+
+.edit-layer .layer {
+  background-color: color(variable);
 }

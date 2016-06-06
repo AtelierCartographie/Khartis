@@ -1,14 +1,26 @@
-<div class="padded">
-  <div class="titlebar">
-    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
-    <div class="actions">
-      {{#link-to 'graph.layer'}}<div class="small button filled default" {{action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{/link-to}}
-      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
-    </div>
+<div class="padded edit-layer">
+  <div class="title">Choix d'une visualization</div>
+  <div class="body">
+    <ul class="collection">
+      <li class="layer">
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
+  <div class="title underlined">Diagramme de fréquences</div>
   <div class="body">
     <div class="settings vertical flow">
       <div class="horizontal flow">
+        {{distribution-bars mapping=editedLayer.mapping}}
+      </div>
         <div class="solid vertical airy flow w6">
           <div>
               <label>Méthode de séparation</label>
@@ -110,9 +122,6 @@
           </div>
         </div>
         
-        <div class="solid vertical flow w6">
-          {{distribution-bars mapping=editedLayer.mapping}}
-        </div>
       </div>
       {{#if editedLayer.mapping.rules.length}}
       <div>
@@ -139,5 +148,4 @@
       </div>
       {{/if}}
     </div>
-  </div>
 </div>
