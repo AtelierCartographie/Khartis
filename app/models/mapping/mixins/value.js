@@ -200,6 +200,7 @@ let SymbolMixin = Ember.Mixin.create({
           );
         range.push(contrastScale(this.get('maxValue')));
         domain = intervals;
+        transform = _ => d3Scale(Math.abs(_));
       };
       
       

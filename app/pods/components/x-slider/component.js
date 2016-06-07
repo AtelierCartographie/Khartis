@@ -42,13 +42,11 @@ export default Ember.Component.extend({
     
     this.set('_tmpValue', this.get('value'));
     
-    if (!this.get('scale')) {
-      this.set('scale',
-        d3.scale.linear()
-          .domain([this.get('min'), this.get('max')])
-          .clamp(true)
-      );
-    }
+    this.set('scale',
+      d3.scale.linear()
+        .domain([this.get('min'), this.get('max')])
+        .clamp(true)
+    );
     
   }.on("init"),
   
@@ -73,6 +71,7 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   cleanup: function() {
+    console.log("cleanup");
     clearInterval(this.get('resizeInterval'));
   }.on("willDestroyElement"),
   
@@ -90,12 +89,12 @@ export default Ember.Component.extend({
     scale.range([0, width-DRAGGER_SIZE]);
     
     let svg = this.d3l().select(".slider")
-      .style("left", "0px")
-      .style("width", width + "px");
+      .style("left", "-8px")
+      .style("width", (width+12) + "px");
     
     let sliderG = this.d3l().select(".slider")
       .append("g")
-      .attr("transform", "translate(0, 16)");
+      .attr("transform", "translate(6, 16)");
     
     // Axis      
     var axis = d3.svg.axis()
@@ -158,14 +157,20 @@ export default Ember.Component.extend({
     this.valueChange();
     
   }.on('didInsertElement'),
+
+  redraw() {
+    this.d3l().selectAll(".slider *").remove();
+    this.draw();
+  },
   
   onResize: function() {
-    
-    this.d3l().selectAll(".slider *").remove();
-    
-    this.draw();
-    
+    this.redraw();
   }.observes('$width', '$height'),
+
+  onMinMaxChange: function() {
+    this.setup();
+    this.redraw();
+  }.observes('min', 'max'),
   
   moveDragger() {
       let scale = this.get('scale'),

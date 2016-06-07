@@ -22,13 +22,13 @@
         {{distribution-bars mapping=editedLayer.mapping}}
       </div>
       <div class="solid vertical flow">
-        {{#x-tabs}}
+        {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
         <ul class="tabs brewer-tabs">
-          <li tab-id="color-swatchs">uniques</li>
-          <li tab-id="texture-swatchs">regroupés en classes</li>
+          <li tab-id="linear-tab">uniques</li>
+          <li tab-id="classes-tab">regroupés en classes</li>
         </ul>
         <div class="panes">
-          <div class="tab-pane">
+          <div id="classes-tab" class="tab-pane {{unless (x-eq editedLayer.mapping.scale.intervalType 'linear') 'active'}}">
               <div class="horizontal middle flow">
                 <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
                 <div class="solid w7">
@@ -66,28 +66,27 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane"></div>
+            <div id="linear-tab" class="tab-pane {{if (x-eq editedLayer.mapping.scale.intervalType 'linear') 'active'}}"></div>
           </div>
           {{/x-tabs}}
           
           
           <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}}</label>
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
               <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
-              {{#if (x-every editedLayer.mapping.scale.possibleClasses.length editedLayer.mapping.scale.diverging)}}
-              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input solid w4"}}
-              {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
-                  {{editedLayer.mapping.scale.classesBeforeBreak}}
-                  <i class="iconfont iconfont-angle-down"></i>
-                {{/facet.trigger}}
-                {{#facet.list}}
-                  {{#each editedLayer.mapping.scale.possibleClassesBeforeBreak as |count|}}
-                    <li {{action 'bind' editedLayer.mapping.scale 'classesBeforeBreak' count}}>{{count}}</li>
-                  {{/each}}
-                {{/facet.list}}
-              {{/x-dropdown-plus}}
+              {{#if editedLayer.mapping.scale.diverging}}
+                {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input solid w4"}}
+                {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
+                  {{#o-wrap.classes-before-break
+                    classes=editedLayer.mapping.scale.classesBeforeBreak
+                    totalClasses=editedLayer.mapping.scale.classes
+                    possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
+                    {{#if wrap.editable}}
+                    {{x-slider class="fluid" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{/if}}
+                  {{/o-wrap.classes-before-break}}
+                {{/unless}}
               {{/if}}
             </div>
           </div>

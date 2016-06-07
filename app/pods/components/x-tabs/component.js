@@ -45,6 +45,8 @@ export default Ember.Component.extend({
       let $el = $(el);
       $el.toggleClass("active", activeItem && $el.attr("tab-id") === activeItem.id);
     });
+
+    this.sendAction("onActiveItemChange", activeItem.id);
     
   }.observes('activeItem')
   

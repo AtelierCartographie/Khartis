@@ -29,9 +29,8 @@ let Scale = Struct.extend({
     if (!this.get('diverging')) {
       this.set('classesBeforeBreak', 0);
     } else {
-      if (!this.get('classesBeforeBreak')) {
-        this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
-      } else if (this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {
+      if (!this.get('classesBeforeBreak')
+          || this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {
         this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
       }
     }
