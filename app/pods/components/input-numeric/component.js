@@ -15,7 +15,7 @@ export default Ember.TextField.extend({
 
         set(key, val) {
             let v = parseFloat(val);
-            v = !isNaN(v) ? v : null;
+            v = !isNaN(v) ? v : '';
             return this.set('value', `${v}`);
         }
 

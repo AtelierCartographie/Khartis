@@ -33,7 +33,7 @@ let DataMixin = Ember.Mixin.create({
       
     }
 
-  }.observes('values', 'scale.diverging'),
+  },
 
   maxValue: function() {
     return Math.max.apply(this, this.get('values'));
@@ -97,6 +97,7 @@ let DataMixin = Ember.Mixin.create({
   },
   
   intervals: function() {
+    this.initDivergence();
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]', 'scale._defferedChangeIndicator'),
   
@@ -218,9 +219,10 @@ let SymbolMixin = Ember.Mixin.create({
             (v, i) => contrastScale(Math.abs(intervals[i]))
           );
         range.push(contrastScale(this.get('maxValue')));
-        domain = intervals;
+        range.sort(d3.ascending);
+        domain = intervals.map( v => Math.abs(v) ).sort(d3.ascending);
       };
-      
+
       transform = _ => d3Scale(Math.abs(_));
       
     } else if (type === "color") {
