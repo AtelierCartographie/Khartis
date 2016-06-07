@@ -16,9 +16,7 @@ let Scale = Struct.extend({
   classesBeforeBreak: 0,
   contrast: 1,
   
-  diverging: function() {
-    return !Ember.isEmpty(this.get('valueBreak'));
-  }.property('valueBreak'),
+  diverging: false,
   
   valueBreakChange: function() {
     
@@ -115,15 +113,17 @@ let Scale = Struct.extend({
     let intervals;
     
     if (this.get('diverging')) {
+      let vb = parseFloat(this.get('valueBreak'));
+      vb = isNaN(vb) ? 0 : vb;
       intervals = calc(
         this.get('intervalType'),
         this.get('classesBeforeBreak'),
-        [undefined, parseFloat(this.get('valueBreak'))]
-      ).concat([this.get('valueBreak')])
+        [undefined, vb]
+      ).concat([vb])
        .concat(calc(
           this.get('intervalType'),
           this.get('classes') - this.get('classesBeforeBreak'),
-          [parseFloat(this.get('valueBreak')), undefined]
+          [vb, undefined]
         ));
     } else {
       intervals = calc(
@@ -132,7 +132,7 @@ let Scale = Struct.extend({
         [undefined, undefined]
       );
     }
-    
+
     return intervals;
     
   },
@@ -143,7 +143,8 @@ let Scale = Struct.extend({
       intervalType: this.get('intervalType'),
       valueBreak: this.get('valueBreak'),
       classesBeforeBreak: this.get('classesBeforeBreak'),
-      contrast: this.get('contrast')
+      contrast: this.get('contrast'),
+      diverging: this.get('diverging')
     }, props));
   }
   
@@ -157,7 +158,8 @@ Scale.reopenClass({
       intervalType: json.intervalType,
       valueBreak: json.valueBreak,
       classesBeforeBreak: json.classesBeforeBreak,
-      contrast: json.contrast
+      contrast: json.contrast,
+      diverging: json.diverging
     });
     return o;
   }

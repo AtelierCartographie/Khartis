@@ -9,12 +9,14 @@ export default Ember.TextField.extend({
     numericValue: Ember.computed('value', {
 
         get() {
-            return this.get('value') != null && this.get('value') !== '' ? parseFloat(this.get('value')) : null;
+          let v = parseFloat(this.get('value'));
+          return !isNaN(v) ? v : null;
         },
 
         set(key, val) {
-            this.set('value', val != null ? val + '' : '');
-            return this.get('value');
+            let v = parseFloat(val);
+            v = !isNaN(v) ? v : null;
+            return this.set('value', `${v}`);
         }
 
     }),

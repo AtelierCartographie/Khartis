@@ -251,6 +251,7 @@ let CellStruct = Struct.extend({
     },
     
     postProcessedValue: function() {
+      console.log(this.get('column.meta.type'));
       let val = this.get('corrected') ? this.get('correctedValue') : this.get('value');
       if (!Ember.isEmpty(val)) {
         if (["numeric", "lon", "lat"].indexOf(this.get('column.meta.type')) !== -1) {

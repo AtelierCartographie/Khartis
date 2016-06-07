@@ -8,19 +8,37 @@ let DataMixin = Ember.Mixin.create({
   
   values: function() {
     return this.get('varCol.body')
-      .filter( c => !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
-        && !isNaN(c.get('postProcessedValue')))
+      .filter( c => {
+        return !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
+        && !isNaN(c.get('postProcessedValue'))
+      })
       .map( c => c.get('postProcessedValue') );
   }.property('varCol'),
   
   absValues: function() {
     return this.get('values').map( v => Math.abs(v) );
   }.property('values'),
-  
+
+  shouldDiverge: function() {
+    return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
+  }.property('values'),
+
+  initDivergence: function() {
+    
+    if (this.get('shouldDiverge') && !this.get('scale.diverging')) {
+      this.get('scale').setProperties({
+        diverging: true,
+        valueBreak: 0
+      });
+      
+    }
+
+  }.observes('values', 'scale.diverging'),
+
   maxValue: function() {
     return Math.max.apply(this, this.get('values'));
   }.property('values'),
-  
+
   findNearestValue(val) {
     
     let distance = Number.MAX_VALUE - 1;
@@ -36,16 +54,18 @@ let DataMixin = Ember.Mixin.create({
   },
   
   clampValueBreak: function() {
-    
-    if (this.get('scale.valueBreak') != null) {
+
+    if (!this.get('scale.valueBreak') != null) {
       if (this.get('scale.valueBreak') < this.get('extent')[0]) {
         this.set('scale.valueBreak', this.get('extent')[0]);
       } else if (this.get('scale.valueBreak') > this.get('extent')[1]) {
         this.set('scale.valueBreak', this.get('extent')[1]);
       }
+    } else if (this.get('scale.diverging')) {
+      this.set('scale.valueBreak', 0);
     }
     
-  }.observes('scale.valueBreak'),
+  },
   
   maxValuePrecision: function() {
     return this.get('values').reduce( (p, v) => {
@@ -187,12 +207,11 @@ let SymbolMixin = Ember.Mixin.create({
       
       contrastScale.domain(ext)
         .range([0, visualization.get('maxSize')]);
-      
+
       if (this.get('scale.intervalType') === "linear") {
         d3Scale = contrastScale;
         range = contrastScale.range();
         domain = contrastScale.domain();
-        transform = _ => d3Scale(Math.abs(_));
       } else {
         d3Scale = d3.scale.threshold();
         range = Array.from({length: intervals.length},
@@ -200,9 +219,9 @@ let SymbolMixin = Ember.Mixin.create({
           );
         range.push(contrastScale(this.get('maxValue')));
         domain = intervals;
-        transform = _ => d3Scale(Math.abs(_));
       };
       
+      transform = _ => d3Scale(Math.abs(_));
       
     } else if (type === "color") {
       

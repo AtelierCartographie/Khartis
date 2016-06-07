@@ -165,7 +165,6 @@ export default Ember.Component.extend({
     stack.selectAll(".x.axis text")
       .attr("transform", function(d) {
           let dy = d3.select(this).attr("dy");
-          console.log(dy);
           return "rotate(-90)translate(-20," + (this.getBBox().height-4)*-1 + ")";
       });
     

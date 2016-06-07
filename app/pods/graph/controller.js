@@ -56,7 +56,6 @@ export default Ember.Controller.extend({
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
         let j = JSON.parse(json);
-        console.log(j.objects);
         this.set('basemapData', {
           land: topojson.merge(j, j.objects.land.geometries),
           lands: topojson.feature(j, j.objects.land),
@@ -234,7 +233,6 @@ export default Ember.Controller.extend({
     
     bindScaleIntervalType(scale, type) {
       scale.set('intervalType', type);
-      console.log(this.get('editedLayer.mapping.scale.intervalType'));
     },
     
     bind(root, prop, value) {
@@ -266,12 +264,15 @@ export default Ember.Controller.extend({
     },
 
     onIntervalTypeTabChange(id) {
-      console.log(id);
       if (id === "linear-tab") {
         this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'linear');
       } else {
         this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'regular');
       }
+    },
+
+    onValueBreakFocusOut() {
+      this.get('editedLayer.mapping').clampValueBreak();
     },
     
     export() {
