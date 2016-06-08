@@ -1,4 +1,10 @@
 .graph {
+
+  overflow-x: hidden;
+
+  .body.expanded {
+    margin-right: -300px;
+  }
   
   .graph-topbar {
     

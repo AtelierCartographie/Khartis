@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'mapp/utils/pattern-maker';
+import Colorbrewer from 'mapp/utils/colorbrewer';
 /* global d3 */
 
 let DataMixin = Ember.Mixin.create({
@@ -24,15 +25,12 @@ let DataMixin = Ember.Mixin.create({
   }.property('values'),
 
   initDivergence: function() {
-    
     if (this.get('shouldDiverge') && !this.get('scale.diverging')) {
       this.get('scale').setProperties({
         diverging: true,
         valueBreak: 0
       });
-      
     }
-
   },
 
   maxValue: function() {
@@ -40,7 +38,6 @@ let DataMixin = Ember.Mixin.create({
   }.property('values'),
 
   findNearestValue(val) {
-    
     let distance = Number.MAX_VALUE - 1;
     return this.get('values').reduce( (nearest, value) => {
       let _distance = Math.abs(value - val);
@@ -50,7 +47,6 @@ let DataMixin = Ember.Mixin.create({
       }
       return nearest;
     });
-    
   },
   
   clampValueBreak: function() {
@@ -128,6 +124,15 @@ let SurfaceMixin = Ember.Mixin.create({
       this.set('visualization', VisualizationFactory.createInstance("surface"));
     }
   },
+
+  divergingChange: function() {
+
+    let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
+    if (!master[this.get('visualization.colors')]) {
+      this.set('visualization.colors', Object.keys(master)[0]);
+    }
+
+  }.observes('scale.diverging'),
   
   patternModifiers: function() {
     

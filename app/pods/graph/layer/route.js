@@ -23,10 +23,13 @@ export default Ember.Route.extend({
   
   setupController(controller, model) {
     controller.set('editedLayer', model);
+    controller.set('sidebarSubExpanded', true);
   },
   
+
   deactivate() {
     this.set('controller.editedLayer', null);
+    this.set('controller.sidebarSubExpanded', false);
   },
   
   actions: {

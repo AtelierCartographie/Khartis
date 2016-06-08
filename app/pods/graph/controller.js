@@ -19,6 +19,8 @@ export default Ember.Controller.extend({
   state: "layers",
   
   basemapData: null,
+
+  sidebarSubExpanded: false,
   
   editedLayer: null,
   editedColumn: null,
@@ -38,10 +40,6 @@ export default Ember.Controller.extend({
   
   isInStateMapping: function() {
     return this.get('state') === "layers";
-  }.property('state'),
-  
-  isInStateLegend: function() {
-    return this.get('state') === "legend";
   }.property('state'),
   
   isInStateExport: function() {

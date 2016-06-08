@@ -31,11 +31,8 @@ let Mapping = Struct.extend({
   
   colorSet: function() {
     
-    let name = this.get('visualization.colors'),
-        master = Colorbrewer.sequential;
-    
     return Colorbrewer.Composer.compose(
-      name, 
+      this.get('visualization.colors'), 
       this.get('scale.diverging'),
       this.get('visualization.reverse'), 
       this.get('scale.classes'),
