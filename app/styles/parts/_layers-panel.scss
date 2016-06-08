@@ -1,40 +1,61 @@
 .layers, .edit-layer {
- 
+
   .layer {
-    
+
     border: none;
-    
+
     .content {
       border-top: 1px solid greys(20%);
     }
-    
+
     &:first-child {
       .content {
         border-top: 1px solid color(primary);
       }
     }
-    
-    
-    
+
+
+
     .caption {
       height: 5.4rem;
       img { height: 5.4rem; }
     }
-    
+
     .title {
       color: color(text);
     }
-    
+
     .description {
       font-size: 0.9em;
       line-height: 1.1em;
     }
-    
+
   }
-  
-  
+
+
 }
 
 .edit-layer .layer {
   background-color: color(variable);
+}
+
+// Controls adjustements
+
+.btn-switch-group .button:not(.selected){
+  background-color: greys(30%);
+}
+
+// V center checkbox (must be on container)
+.offset-checkbox {
+  margin-top:2px;
+}
+
+// V center slider (must be on container)
+.offset-slider .slider.slider /* ! */{
+  top: -5px;
+}
+
+// Fixed Height + padding bug on firefox
+input[type=text].padding-fix {
+  padding:.1rem 1rem;
 }

@@ -74,12 +74,12 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
-              <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
+              <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
               {{#if editedLayer.mapping.scale.diverging}}
                 {{input-numeric
                   readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
                   numericValue=editedLayer.mapping.scale.valueBreak
-                  class="value-break-input solid w4"
+                  class="value-break-input solid w4 padding-fix"
                   focus-out=(action 'onValueBreakFocusOut')}}
                 {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
                   {{#o-wrap.classes-before-break
@@ -87,7 +87,7 @@
                     totalClasses=editedLayer.mapping.scale.classes
                     possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
-                    {{x-slider class="fluid" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{x-slider class="fluid offset-slider" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
                 {{/unless}}
@@ -96,7 +96,7 @@
           </div>
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape')}}</label>
-            <div class="horizontal half-airy solid flow w7">
+            <div class="horizontal half-airy solid flow w7 btn-switch-group">
               <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>cercle</div>
               <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>carré</div>
             </div>
