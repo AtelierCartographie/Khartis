@@ -1,37 +1,52 @@
-<div class="padded">
-  <div class="titlebar">
-    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
-    <div class="actions">
-      {{#link-to 'graph.layer'}}<div class="small button filled default" {{action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{/link-to}}
-      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
-    </div>
+<div class="padded edit-layer">
+  <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
+  <div class="body">
+    <ul class="collection">
+      <li class="layer">
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="assets/images/viz/100x100px-QUANTI-val_surfaces.jpg">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.type.quanti.val_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.type.quanti.val_surfaces.description"}}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
+  <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram')}}</div>
   <div class="body">
     <div class="settings vertical flow">
       <div class="horizontal flow">
-        <div class="solid vertical airy flow w6">
-          <div>
-              <label>Méthode de séparation</label>
+        {{distribution-bars mapping=editedLayer.mapping}}
+      </div>
+      <div class="solid vertical flow">
+        <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
+            <div class="solid w7">
               {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
+                {{#facet.trigger class="filled padded-h w8"}}
                   {{#unless editedLayer.mapping.scale.intervalType}}
                   Choisir
                   {{else}}
-                  {{t (concat "variable.mapping.interval.type." editedLayer.mapping.scale.intervalType)}}
+                  {{t (concat "visualization.settings.discretization.type." editedLayer.mapping.scale.intervalType)}}
                   {{/unless}}
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
                 {{#facet.list}}
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'variable.mapping.interval.type.regular'}}</li>
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'variable.mapping.interval.type.mean'}}</li>
-                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'variable.mapping.interval.type.quantile'}}</li>
+                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'regular'}}>{{t 'visualization.settings.discretization.type.regular'}}</li>
+                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'mean'}}>{{t 'visualization.settings.discretization.type.mean'}}</li>
+                  <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'visualization.settings.discretization.type.quantile'}}</li>
                 {{/facet.list}}
               {{/x-dropdown-plus}}
+            </div>
           </div>
-          <div>
-              <label>Nombre de classes</label>
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.classes')}}</label>
+            <div class="solid w7">
               {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
+                {{#facet.trigger class="filled padded-h"}}
                   {{editedLayer.mapping.scale.classes}}
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
@@ -41,84 +56,90 @@
                   {{/each}}
                 {{/facet.list}}
               {{/x-dropdown-plus}}
+            </div>
           </div>
-           <div class="horizontal airy flow">
-              <label>Séparation des valeurs</label>
-              {{input-numeric numericValue=editedLayer.mapping.scale.valueBreak class="value-break-input"}}
+
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
+            <div class="horizontal solid half-airy flow w7">
+              <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
+              {{#if editedLayer.mapping.scale.diverging}}
+                {{input-numeric
+                  editable=editedLayer.mapping.shouldDiverge
+                  numericValue=editedLayer.mapping.scale.valueBreak
+                  class="value-break-input solid w4"
+                  focus-out=(action 'onValueBreakFocusOut')}}
+                {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
+                  {{#o-wrap.classes-before-break
+                    classes=editedLayer.mapping.scale.classesBeforeBreak
+                    totalClasses=editedLayer.mapping.scale.classes
+                    possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
+                    {{#if wrap.editable}}
+                    {{x-slider class="fluid" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{/if}}
+                  {{/o-wrap.classes-before-break}}
+                {{/unless}}
+              {{/if}}
+            </div>
           </div>
-          {{#if editedLayer.mapping.scale.diverging}}
-          <div>
-              <label>Nombre de classes avant rupture</label>
+
+          {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}} ?</label>
+            <div class="horizontal half-airy solid flow w7">
               {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger}}
-                  {{editedLayer.mapping.scale.classesBeforeBreak}}
+                {{#facet.trigger class="filled"}}
+                  {{color-swatch
+                    colors=(get brewer.availableColorSetsMap editedLayer.mapping.visualization.colors)
+                  }}
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
                 {{#facet.list}}
-                  {{#each editedLayer.mapping.scale.possibleClassesBeforeBreak as |count|}}
-                    <li {{action 'bind' editedLayer.mapping.scale 'classesBeforeBreak' count}}>{{count}}</li>
+                  {{#each brewer.availableColorSets as |colorSet|}}
+                    <li {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
+                      {{color-swatch
+                        colors=colorSet.colors
+                      }}
+                    </li>
                   {{/each}}
                 {{/facet.list}}
               {{/x-dropdown-plus}}
+            </div>
           </div>
-          {{/if}}
-          <div>
-             <label>Inverser ?</label>
-             {{input type="checkbox" checked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div>
-          </div>
-        </div>
-        <div class="solid vertical flow w6">
-          {{distribution-bars mapping=editedLayer.mapping}}
-        </div>
-      </div>
-      <div>
-        <div>
-            {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
-            {{#x-tabs}}
-                <ul class="tabs brewer-tabs">
-                  <li tab-id="color-swatchs">Couleurs</li>
-                  <li tab-id="texture-swatchs">Hachures</li>
+
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
+            <div class="horizontal half-airy solid flow w7">
+              {{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div>
+              {{#if editedLayer.mapping.usePattern}}
+                <ul>
+                  {{log editedLayer.mapping.visualization.pattern.key}}
+                  {{#each brewer.availablePatterns as |pattern|}}
+                    <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
+                      {{pattern-swatch pattern=pattern
+                        classBreak=editedLayer.mapping.scale.classesBeforeBreak
+                        count=1
+                        color=editedLayer.mapping.patternColor
+                        reverse=editedLayer.mapping.visualization.reverse
+                        class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
+                      }}
+                    </li>
+                  {{/each}}
                 </ul>
-                <div class="panes">
-                  <div class="tab-pane {{if editedLayer.mapping.visualization.colors 'active'}}" id="color-swatchs">
-                    <div class="vertical breakable flow swatchs" style="height: 160px">
-                      {{#each brewer.availableColorSets as |colorSet|}}
-                        <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
-                          {{color-swatch
-                            class=(if (x-eq colorSet.key editedLayer.mapping.visualization.colors) 'selected')
-                            colors=colorSet.colors
-                          }}
-                        </div>
-                      {{/each}}
-                    </div>
-                  </div>
-                  <div class="tab-pane {{if editedLayer.mapping.visualization.pattern 'active'}}" id="texture-swatchs">
-                    <div class="horizontal flow">
-                      <div class="vertical breakable flow w8" style="height: 100px">
-                        {{#each brewer.availablePatterns as |pattern|}}
-                          <div class="solid w3 padded" {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
-                            {{pattern-swatch pattern=pattern
-                              classBreak=editedLayer.mapping.scale.classesBeforeBreak
-                              count=editedLayer.mapping.scale.classes
-                              color=editedLayer.mapping.visualization.patternColor
-                              reverse=editedLayer.mapping.visualization.reverse
-                              class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
-                            }}
-                          </div>
-                        {{/each}}
-                      </div>
-                      <div class="vertical airy middle center flow">
-                        <label>Couleur des hachures</label>
-                        <div class="solid">
-                        {{color-picker value=editedLayer.mapping.visualization.patternColor}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            {{/x-tabs}}
-            {{/o-wrap.brewer}}
+              {{/if}}
+            </div>
           </div>
+
+          {{/o-wrap.brewer}}
+
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.reverse')}} ?</label>
+            <div class="horizontal half-airy solid flow w7">
+            {{input type="checkbox" checked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div>
+            </div>
+          </div>
+
           {{#if editedLayer.mapping.rules.length}}
           <div>
               <label>Absence de données</label>

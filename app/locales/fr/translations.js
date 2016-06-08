@@ -156,6 +156,11 @@ export default {
         "one": "couleur",
         "other": "couleurs"
       },
+      "pattern": {
+        "one": "hachure",
+        "other": "hachures"
+      },
+      "reverse": "inverser",
       "stroke": "contour",
       "opacity": "opacité"
     },

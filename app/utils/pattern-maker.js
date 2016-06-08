@@ -152,14 +152,14 @@ Composer.prototype.compose = function(diverging, reverse, classes, before, angle
           return this.build({
               type: "circles",
               angle: angle + 90,
-              stroke: baseStroke + i
+              stroke: baseStroke + Math.pow(i, 2)
             });
         }),
         right = Array.from({length: classes - before}, (v, i) => {
           return this.build({
               type: "lines",
               angle: angle,
-              stroke: baseStroke + i
+              stroke: baseStroke + Math.pow(i, 2)
             });
         });
     
@@ -172,7 +172,8 @@ Composer.prototype.compose = function(diverging, reverse, classes, before, angle
       return this.build({
           type: "lines",
           angle: angle,
-          stroke: baseStroke + i
+          stroke: baseStroke + Math.pow(i, 2),
+          size: 6*i
         });
     });
     reverse ? res.reverse() : void(0);
@@ -182,13 +183,16 @@ Composer.prototype.compose = function(diverging, reverse, classes, before, angle
   
 };
   
-Composer.prototype.build = function({angle, stroke, type}) {
+Composer.prototype.build = function({angle, stroke, type, size}) {
+  size = size || 12;
   return {
     angle: angle,
     stroke: stroke,
+    key: `${angle}-${stroke}`,
     fn: Pattern[type]({
       orientation: [ angle ],
-      stroke: stroke
+      stroke: stroke,
+      size: size
     })
   };
 };

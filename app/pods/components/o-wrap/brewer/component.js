@@ -1,5 +1,6 @@
 import WrapperAbstract from '../-abstract/component';
 import Colorbrewer from 'mapp/utils/colorbrewer';
+import PatternMaker from 'mapp/utils/pattern-maker';
 /* global Em */
 
 export default WrapperAbstract.extend({
@@ -28,18 +29,22 @@ export default WrapperAbstract.extend({
       }).filter( x => x.colors != null );
     
   }.property('obj.visualization._defferedChangeIndicator', 'obj.scale._defferedChangeIndicator'),
+
+  availableColorSetsMap: function() {
+    return this.get('availableColorSets').reduce( (o, c) => {
+      o[c.key] = c.colors;
+      return o;
+    }, {});
+  }.property('availableColorSets.[]'),
   
   availablePatterns: function() {
-    return this.angles.reduce( (arr, angle) => {
-      for (var i = 1; i <= 3; i++) {
-        arr.push({
+    return this.angles.map( (angle) => {
+        return PatternMaker.Composer.build({
           angle: angle,
-          stroke: i,
-          key: `${angle}-${i}`
+          stroke: 1,
+          type: "lines"
         });
-      }
-      return arr; 
-    }, []);
+    });
   }.property('obj.scale._defferedChangeIndicator')
   
   
