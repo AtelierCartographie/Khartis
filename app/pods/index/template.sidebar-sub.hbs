@@ -2,7 +2,12 @@
 
     <div class="application-header filled primary"></div>
 
-    <div class="vertical flow">
+    <div class="vertical flow" style="overflow:auto;position:relative">
+
+      <div class="sidebar-sub-close">
+          <i class="iconfont iconfont-close"></i>
+      </div>
+
       {{outlet 'sidebar-sub-content'}}
     </div>
 
