@@ -138,6 +138,8 @@ export default {
     },
     "settings": {
       "diagram": "diagramme de fréquences",
+      "title" : "Réglages",
+      "categories" : "Catégories",
       "discretization": {
         "title": "discrétisation",
         "type": {
