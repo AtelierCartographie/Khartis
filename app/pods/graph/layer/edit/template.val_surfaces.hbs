@@ -65,7 +65,7 @@
               <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
               {{#if editedLayer.mapping.scale.diverging}}
                 {{input-numeric
-                  editable=editedLayer.mapping.shouldDiverge
+                  readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
                   numericValue=editedLayer.mapping.scale.valueBreak
                   class="value-break-input solid w4"
                   focus-out=(action 'onValueBreakFocusOut')}}
