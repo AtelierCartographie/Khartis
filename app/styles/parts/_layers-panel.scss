@@ -109,3 +109,88 @@ input[type=text].padding-fix {
   }
 
 }
+
+// Categories
+.categories-list {
+
+  > li {
+    //height: 35px;
+    display: flex;
+    align-items: stretch;
+    margin-bottom : 0.5rem;
+  }
+
+  .categories-controls {
+    flex: 1;
+    display: flex;
+  }
+
+  .categories-control {
+    flex: 1;
+    background-color: #F5F5F5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // SP
+    .sp-replacer {
+      background-color: transparent !important;
+    }
+
+
+    &.categories-shape-control {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    // Dropdown
+    .dropdown-trigger {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        font-size: 2.1rem;
+      }
+
+    }
+  }
+
+  .categories-control:not(:first-child){
+    margin-left: 0.3rem;
+  }
+
+  .categories-name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.8rem;
+    font-size: 1.7rem;
+    color: #000;
+  }
+
+  .toggle-visibility {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translate(0, -50%);
+    font-size: 1.4rem;
+  }
+
+  .categories-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .categories-progress .bar {
+    background-color: #000;
+  }
+
+}

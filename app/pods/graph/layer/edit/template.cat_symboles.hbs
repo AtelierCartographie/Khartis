@@ -1,71 +1,121 @@
-<div class="padded">
-  <div class="titlebar">
-    <div class="title">{{#link-to 'graph.layer'}}{{t "navigation.chooseVisualization"}}{{/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>
-    <div class="actions">
-      {{#link-to 'graph.layer'}}<div class="small button filled default" {{action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{/link-to}}
-      {{#link-to 'graph'}}<div class="small button filled default" {{action 'navigateTo' 'graph'}}>Fermer</div>{{/link-to}}
+<div class="padded edit-layer">
+    <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
+
+    <div class="body">
+        <ul class="collection">
+            <li class="layer">
+                <div class="horizontal flow">
+                    <div class="caption">
+                        <img src="assets/images/viz/100x100px-QUALI-cat_symboles.jpg">
+                    </div>
+                    <div class="vertical stretched middle flow padded-h content">
+                        <span class="title">{{t "visualization.type.quali.cat_symboles.name"}}</span>
+                        <p class="description">{{t "visualization.type.quali.cat_symboles.description"}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+
+        {{#if (x-greater editedLayer.mapping.rules.length 8)}}
+            <div class="filled warning padded" style="margin-bottom:2rem;">
+                Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+            </div>
+        {{/if}}
     </div>
-  </div>
+
+  <!--<div class="titlebar">-->
+    <!--<div class="title">{{!#link-to 'graph.layer'}}{{!t "navigation.chooseVisualization"}}{{!/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{!x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>-->
+    <!--<div class="actions">-->
+      <!--{{!#link-to 'graph.layer'}}<div class="small button filled default" {{!action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{!/link-to}}-->
+      <!--{{!#link-to 'graph'}}<div class="small button filled default" {{!action 'navigateTo' 'graph'}}>Fermer</div>{{!/link-to}}-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
+
   <div class="body">
+
     <div class="settings vertical flow">
+
+      <div class="solid vertical flow">
+
       {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
-      {{#if (x-greater editedLayer.mapping.rules.length 8)}}
-      <div class="filled warning padded">
-        Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
-      </div>
-      {{/if}}
-      <div class="horizontal airy flow">
-        <div class="horizontal airy middle flow">
-          <Label>Taille des symbols</Label>
-          {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}
-        </div>
-        <div class="horizontal airy middle flow">
-          <Label>Epaisseur du trait</Label>
-          {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
-        </div>
-      </div>
-      <div class="horizontal airy flow">
-        <div class="horizontal airy middle solid flow w6">
-          <Label>Opacité</Label>
-          {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
-        </div>
-      </div>
+
+          <!--<div class="horizontal middle flow">-->
+              <!--<label class="solid w5">Taille des symboles</label>-->
+              <!--<div class="horizontal half-airy solid flow w7">-->
+                  <!--{{!x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}-->
+              <!--</div>-->
+          <!--</div>-->
+
+          <div class="horizontal middle flow">
+              <label class="solid w5">Epaisseur du trait</label>
+              <div class="horizontal half-airy solid flow w7">
+                  {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
+              </div>
+          </div>
+
+          <div class="horizontal middle flow">
+              <label class="solid w5">Opacité</label>
+              <div class="horizontal half-airy solid flow w7">
+                  {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
+              </div>
+          </div>
+
       <div>
+
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
           {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
-          <label>Catégories</label>
-          <ul class="collection">
-          {{#each editedLayer.mapping.rules as |rule|}}
-          <li>
-            <div class="horizontal space-between flow layer-header">
-              <div class="horizontal airy flow">
-                {{#if rule.emptyValue}}
-                  <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
-                {{else}}
-                  <span class="varname">{{rule.label}}</span>
-                {{/if}}
-              </div>
-              <div class="horizontal solid right airy flow w4 text-right">
-                <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                {{shape-dropdown
-                  shapes=shapeSelection.availableShapes
-                  value=rule.shape
-                  color=rule.color
-                }}
-                {{color-picker value=rule.color}}
-                {{color-picker stroke=true value=rule.strokeColor}}
-              </div>
-            </div>
-             <div class="flow" style="height: 6px; padding: 2px;">
-            {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
-            </div>
-          </li>
-          {{/each}}
+
+          <div class="title underlined">{{x-capitalize (t 'visualization.settings.categories')}}</div>
+
+            <ul class="collection categories-list">
+                {{#each editedLayer.mapping.rules as |rule|}}
+                    <li>
+
+                       <div class="categories-name">
+
+                           {{#if rule.emptyValue}}
+                                <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
+                           {{else}}
+                                <span class="varname">{{rule.label}}</span>
+                           {{/if}}
+
+                           <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+
+                           <div class="flow">
+                                {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                           </div>
+                        </div>
+
+                        <div class="categories-controls">
+
+                            <div class="categories-control categories-shape-control">
+                                {{shape-dropdown shapes=shapeSelection.availableShapes value=rule.shape  color=rule.color }}
+                            </div>
+
+                            <div class="categories-control categories-fill-color-control">
+                                {{color-picker value=rule.color}}
+                            </div>
+
+                            <div class="categories-control categories-shape-size-control">
+                                {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}
+                            </div>
+
+                        </div>
+                    </li>
+                {{/each}}
           </ul>
           {{/o-wrap.shape-selection}}
           {{/o-wrap.brewer}}
       </div>
       {{/o-wrap.rules}}
+      </div>
     </div>
   </div>
 </div>
+
+<!--TODO: Blocks spacing-->
+<!--TODO: Scrollbar -->
