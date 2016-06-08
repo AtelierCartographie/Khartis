@@ -64,9 +64,17 @@ body > .ember-view:not(.popable) {
   }
 }
 
+.sidebar-sub-close {
+  padding: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  cursor:pointer;
+}
 
 .application-sidebar-sub {
   background-color: color(volet2);
+  overflow: hidden;
 }
 
 .application-sidebar-sub .body {
