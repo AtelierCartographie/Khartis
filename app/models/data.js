@@ -119,14 +119,24 @@ let ColumnStruct = Struct.extend({
         
         if (!this.get('meta.manual')) {
           
-          var p = {
-            text: 0,
-            numeric: 0,
-            geo: 0,
-            lat_dms: 0,
-            lon_dms: 0,
-            lat: 0,
-            lon: 0
+          let headerText = this.get('header').get('value'),
+              p = {
+                text: 0,
+                numeric: 0,
+                geo: 0,
+                lat_dms: 0,
+                lon_dms: 0,
+                lat: 0,
+                lon: 0
+              };
+
+          let coordTypeFromHeader = function() {
+            if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(headerText)) {
+              return "lon";
+            } else if (/^y|lat(?:\.|itude)?$/i.test(headerText)) {
+              return "lat";
+            }
+            return undefined;
           };
           
           this.get('body')
@@ -138,10 +148,18 @@ let ColumnStruct = Struct.extend({
                   let match = geoMatch(c.get('value'));
                   if (match) {
                     p.geo += 1/arr.length;
-                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)?$/.test(c.get('value'))) {
+                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
                     p.lat_dms += 1/arr.length;
-                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)?$/.test(c.get('value'))) {
+                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)$/.test(c.get('value'))) {
                     p.lon_dms += 1/arr.length;
+                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?$/.test(c.get('value'))) {
+                    let type = coordTypeFromHeader();
+                    if (type !== undefined) {
+                      type = type+"_dms";
+                    } else {
+                      type = "text";
+                    }
+                    p[type] += 1/arr.length;
                   } else {
                     p.text += 1/arr.length;
                   }
@@ -153,12 +171,8 @@ let ColumnStruct = Struct.extend({
           }, null);
           
           if (type === "numeric") {
-            let header = this.get('header');
-            if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(header.get('value'))) {
-              type = "lon";
-              p[type] = 1;
-            } else if (/^y|lat(?:\.|itude)?$/i.test(header.get('value'))) {
-              type = "lat";
+            type = coordTypeFromHeader();
+            if (type !== undefined) {
               p[type] = 1;
             }
           }
@@ -413,7 +427,6 @@ let DataStruct = Struct.extend({
       this.get('rows').insertAt(index + shift, RowStruct.createWithModel(row));
     },
     
-    //TODO : non testé
     removeRow(row) {
       this.get('rows').removeObject(row);
     },

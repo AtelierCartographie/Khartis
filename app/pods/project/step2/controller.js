@@ -16,6 +16,12 @@ export default Ember.Controller.extend({
     return this.get('model.project.data.body').slice(0, 10);
   }.property('model.project.data.body.[]'),
 
+  setupGeoDef: function() {
+    if (!this.get('model.project.geoDef') && this.get('model.project.data.availableGeoDefs').length) {
+      this.set('model.project.geoDef', this.get('model.project.data.availableGeoDefs').objectAt(0));
+    }
+  }.observes('model.project.data.availableGeoDefs.[]'),
+
   actions: {
     
     bindColumnType(column, type) {
