@@ -81,7 +81,7 @@ export default Ember.Component.extend({
       
       drag.on("dragend", function(d, i) {
 
-        if (!self.get('wasDragged')) {
+        if (!self.get('wasDragged') && !$(d3.event.sourceEvent.target).parents(".no-drag-click").length) {
           self.sendAction('onClick', i);
         }
 

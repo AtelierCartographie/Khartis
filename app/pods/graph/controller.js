@@ -42,6 +42,10 @@ export default Ember.Controller.extend({
   sidebarActiveTab: function() {
     return this.get('state');
   }.property('state'),
+
+  hasNextState: function() {
+    return this.get('states').indexOf(this.get('state')) < (this.get('states').length - 1);
+  }.property('state'),
   
   setup() {
     this.loadBasemap(this.get('model.graphLayout.basemap'))
@@ -280,7 +284,11 @@ export default Ember.Controller.extend({
     },
     
     back() {
-      this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
+      if (this.get('states').indexOf(this.get('state')) > 0) {
+        this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
+      } else {
+        this.send('navigateToProject');
+      }
     },
 
     navigateToProject() {
