@@ -13,7 +13,7 @@ let Scale = Struct.extend({
   classes: 8,
   intervalType: "mean",
   valueBreak: null,
-  classesBeforeBreak: 0,
+  classesBeforeBreak: 1,
   contrast: 1,
   
   diverging: false,
@@ -25,7 +25,7 @@ let Scale = Struct.extend({
     }
     
     if (!this.get('diverging')) {
-      this.set('classesBeforeBreak', 0);
+      this.set('classesBeforeBreak', 1);
     } else {
       if (!this.get('classesBeforeBreak')
           || this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {

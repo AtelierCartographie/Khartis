@@ -8,7 +8,8 @@
   
   li.dragged  {
     position: absolute;
-    width: 100%;
+    right: 0px;
+    left: 0px;
     z-index: 9999;
     cursor: grabbing !important;
   }

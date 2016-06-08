@@ -20,7 +20,7 @@
     </div>
 
     {{#if model.graphLayers.length}}
-      {{#drag-sort-collection provider=model.graphLayers as |layer self|}}
+      {{#drag-sort-collection provider=model.graphLayers onClick=(action 'editLayer') as |layer self|}}
       
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
             <div class="horizontal space-between flow layer-header">
@@ -35,9 +35,6 @@
                 {{/if}}
                 </span>
                 <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</span>
-                {{#x-button action=(action 'editLayer' layer) disabled=(x-eq layer editedLayer)}}
-                  <i class="iconfont iconfont-pencil"></i>
-                {{/x-button}}
                 <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
                 {{#x-button action=(action 'removeLayer' layer) disabled=(x-eq layer editedLayer)}}
                   <i class="iconfont iconfont-trash"></i>

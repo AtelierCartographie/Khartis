@@ -15,11 +15,7 @@ export default Ember.Component.extend({
   
   count: 0,
   
-  classBreak: 0,
-  
-  color: null,
-  
-  reverse: false,
+  mapping: null,
   
   draw: function() {
     
@@ -32,8 +28,9 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   masks: function() {
+    console.log("masks");
     let r = [];
-    if (this.get('diverging')) {
+    if (this.get('mapping.scale.diverging')) {
       r.push(
         PatternMaker.Composer.build({
           angle: this.get('pattern.angle'),
@@ -50,7 +47,7 @@ export default Ember.Component.extend({
       })
     );
     return r;
-  }.property('count', 'pattern', 'reverse', 'diverging'),
+  }.property('count', 'pattern', 'mapping.scale.diverging'),
   
   drawMasks: function() {
     
@@ -66,7 +63,13 @@ export default Ember.Component.extend({
           svg.call(d.fn);
           return `url(${d.fn.url()})`
         },
-        fill: this.get('color')
+        fill: (d, i) => {
+          if (this.get('mapping.scale.diverging')) {
+            return this.get(i === 0 ? 'mapping.patternColorReverse' : 'mapping.patternColor');
+          } else {
+            return this.get('mapping.patternColor');
+          } 
+        }
       })
     };
     
@@ -81,7 +84,22 @@ export default Ember.Component.extend({
       .call(bindAttr);
       
     sel.exit().remove();
+
+    sel = this.d3l().select("g.swatchs")
+      .selectAll("line")
+      .data(this.get('masks').slice(1));
+
+    sel.enter()
+      .append("line")
+      .attr({
+        x1: "50%",
+        x2: "50%",
+        y2: "100%",
+        stroke: "#404040"
+      });
+
+    sel.exit().remove();
     
-  }.observes('masks.[]', 'color')
+  }.observes('masks.[]', 'mapping.scale.diverging', 'mapping.patternColor')
   
 });

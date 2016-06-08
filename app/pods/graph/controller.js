@@ -188,8 +188,8 @@ export default Ember.Controller.extend({
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },
     
-    editLayer(layer) {
-      this.transitionToRoute('graph.layer.edit', layer.get('_uuid'));
+    editLayer(layerIndex) {
+      this.transitionToRoute('graph.layer.edit', this.get('model.graphLayers').objectAt(layerIndex).get('_uuid'));
     },
     
     removeLayer(layer) {

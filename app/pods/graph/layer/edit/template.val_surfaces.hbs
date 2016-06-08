@@ -117,11 +117,8 @@
                   {{#each brewer.availablePatterns as |pattern|}}
                     <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
                       {{pattern-swatch pattern=pattern
-                        classBreak=editedLayer.mapping.scale.classesBeforeBreak
                         count=1
-                        diverging=editedLayer.mapping.scale.diverging
-                        color=editedLayer.mapping.patternColor
-                        reverse=editedLayer.mapping.visualization.reverse
+                        mapping=editedLayer.mapping
                         class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
                       }}
                     </li>

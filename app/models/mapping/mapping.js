@@ -30,7 +30,12 @@ let Mapping = Struct.extend({
   }.property('varCol._defferedChangeIndicator'),
   
   colorSet: function() {
-    
+
+    let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
+    if (!master[this.get('visualization.colors')]) {
+      this.set('visualization.colors', Object.keys(master)[0]);
+    }
+
     return Colorbrewer.Composer.compose(
       this.get('visualization.colors'), 
       this.get('scale.diverging'),

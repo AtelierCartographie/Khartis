@@ -125,15 +125,6 @@ let SurfaceMixin = Ember.Mixin.create({
     }
   },
 
-  divergingChange: function() {
-
-    let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
-    if (!master[this.get('visualization.colors')]) {
-      this.set('visualization.colors', Object.keys(master)[0]);
-    }
-
-  }.observes('scale.diverging'),
-  
   patternModifiers: function() {
     
     return PatternMaker.Composer.compose(

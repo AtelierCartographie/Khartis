@@ -95,6 +95,10 @@ export default Ember.Component.extend({
       });
       
       this.d3l().selectAll("li")
+        .on("click", (d, i) => {
+          if (/*$(d3.event.sourceEvent.target).parents(".no-drag").length ||*/ d3.event.defaultPrevented) return;
+          this.sendAction('onClick', i);
+        })
         .call(drag);
       
     });
