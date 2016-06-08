@@ -491,7 +491,6 @@ footer {
       margin-right: 0;
       padding-right:  2.5rem;
       background-color: color(volet2);
-      color:color(titles);
     }
 
     & > li {
@@ -528,6 +527,9 @@ footer {
       margin-bottom: 0.5rem;
       padding: 0.5rem;
     }
+    & > li.selected {
+      color:color(titles);
+    }
   }
 }
 
@@ -540,13 +542,26 @@ footer {
       padding: 0.2rem 0.5rem 0.2rem 0.5rem;
     }
 
-    .layer-visualization-icon {
-      display: block;
-      img {
-        display: inline-block;
-        vertical-align: middle;
-      }
+    & > li.selected a {
+      color:color(text);
     }
+
+    & > li {
+
+      .layer-visualization-icon {
+        display: block;
+        img {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+
+      &.selected .layer-visualization-icon {
+        display: none;
+      }
+
+    }
+    
 
   }
   
