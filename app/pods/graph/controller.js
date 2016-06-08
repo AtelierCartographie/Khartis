@@ -10,13 +10,10 @@ import topojson from 'npm:topojson';
 export default Ember.Controller.extend({
   
   states: [
-    "variables",
-    "layout",
-    "layers",
-    "legend",
+    "visualizations",
     "export"
   ],
-  state: "layers",
+  state: "visualizations",
   
   basemapData: null,
 
@@ -30,16 +27,8 @@ export default Ember.Controller.extend({
       .filter( p => p.id !== "lambert_azimuthal_equal_area");
   }.property('Dictionnary.data.projections'),
   
-  isInStateLayout: function() {
-    return this.get('state') === "layout";
-  }.property('state'),
-  
-  isInStateVariables: function() {
-    return this.get('state') === "variables";
-  }.property('state'),
-  
-  isInStateMapping: function() {
-    return this.get('state') === "layers";
+  isInStateVisualization: function() {
+    return this.get('state') === "visualizations";
   }.property('state'),
   
   isInStateExport: function() {
@@ -48,6 +37,10 @@ export default Ember.Controller.extend({
   
   sidebarPartial: function() {
     return `graph/_sidebar/${this.get('state')}`;
+  }.property('state'),
+
+  sidebarActiveTab: function() {
+    return this.get('state');
   }.property('state'),
   
   setup() {
@@ -288,6 +281,18 @@ export default Ember.Controller.extend({
     
     back() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
+    },
+
+    navigateToProject() {
+      this.transitionToRoute('project.step2', this.get('model._uuid'));
+    },
+
+    navigateToVisualizations() {
+      this.send('selectState', 'visualizations');
+    },
+
+    navigateToExport() {
+      this.send('selectState', 'export');
     },
     
     onAskVersioning(type) {
