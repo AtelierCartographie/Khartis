@@ -17,11 +17,27 @@
             </li>
         </ul>
 
-
         {{#if (x-greater editedLayer.mapping.rules.length 8)}}
-            <div class="filled warning padded" style="margin-bottom:2rem;">
-                Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+        <div class="report">
+            <div class="warning report-message">
+                <b class="text-warning">1</b>
+                {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
             </div>
+            <div class="error-explenation">
+              <p>
+                {{x-capitalize (t "visualization.warning.rule.count.explenation")}}
+              </p>
+              <p>
+                {{x-capitalize (t "visualization.warning.rule.count.help._")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.1")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.2")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.3")}}
+              </p>
+            </div>
+            <div class="horizontal right flow">
+              <a href="#" class="small button filled">En savoir plus</a>
+            </div>
+        </div>
         {{/if}}
     </div>
 
@@ -96,7 +112,7 @@
                     <div class="categories-name categories-surface">
 
                         {{#if rule.emptyValue}}
-                            <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
+                            <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
                         {{else}}
                             <span class="varname">{{rule.label}}</span>
                         {{/if}}

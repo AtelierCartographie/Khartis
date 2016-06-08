@@ -195,6 +195,21 @@ export default {
           "description": "l'ordre des symbols respecte celui des valeurs"
         }
       }
+    },
+    "rule": {
+      "no_value": "(aucune valeur)"
+    },
+    "warning": {
+      "rule.count": {
+        "title": "anomalie non bloquante",
+        "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
+        "help": {
+          "_": "Veuillez vous assurer de visualiser :",
+          "1": "1 / du texte (données nominales)",
+          "2": "2 / des nombres (données ordinales)",
+          "3": "3 / moins de 12 catégories à la fois"
+        }
+      }
     }
   },
   
