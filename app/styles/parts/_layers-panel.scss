@@ -59,3 +59,53 @@
 input[type=text].padding-fix {
   padding:.1rem 1rem;
 }
+
+// Swatches dropdown
+.layer-color-selector {
+
+  .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    padding: 0.1rem 1rem;
+    margin-left: 0 !important;
+  }
+
+  .layer-color-swatch {
+    border: none;
+    margin-right: .5rem;
+  }
+
+  .swatch {
+    width:15px;
+    height:13px;
+  }
+
+}
+
+// Patterns selector
+.layer-pattern-selector {
+
+  display: flex;
+  align-items: center;
+
+  .layer-pattern-swatch {
+    margin: 0;
+    margin-left: 1rem;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+
+  .layer-pattern-swatch li {
+    margin-right:0.5rem;
+  }
+
+  .layer-pattern-swatch svg {
+    border:1px solid greys(30%);
+
+    &.selected {
+      border: 0.2rem solid #B29D8D;
+    }
+  }
+
+}

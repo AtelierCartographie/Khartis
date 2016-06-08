@@ -62,12 +62,12 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
-              <span>{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
+              <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
               {{#if editedLayer.mapping.scale.diverging}}
                 {{input-numeric
                   readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
                   numericValue=editedLayer.mapping.scale.valueBreak
-                  class="value-break-input solid w4"
+                  class="value-break-input solid w4 padding-fix"
                   focus-out=(action 'onValueBreakFocusOut')}}
                 {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
                   {{#o-wrap.classes-before-break
@@ -75,7 +75,7 @@
                     totalClasses=editedLayer.mapping.scale.classes
                     possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
-                    {{x-slider class="fluid" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{x-slider class="fluid offset-slider" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
                 {{/unless}}
@@ -87,10 +87,10 @@
 
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}} ?</label>
-            <div class="horizontal half-airy solid flow w7">
+            <div class="horizontal half-airy solid flow w7 layer-color-selector">
               {{#x-dropdown-plus as |facet|}}
                 {{#facet.trigger class="filled"}}
-                  {{color-swatch
+                  {{color-swatch class="layer-color-swatch"
                     colors=(get brewer.availableColorSetsMap editedLayer.mapping.visualization.colors)
                   }}
                   <i class="iconfont iconfont-angle-down"></i>
@@ -98,9 +98,7 @@
                 {{#facet.list}}
                   {{#each brewer.availableColorSets as |colorSet|}}
                     <li {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
-                      {{color-swatch
-                        colors=colorSet.colors
-                      }}
+                      {{color-swatch class="layer-color-swatch" colors=colorSet.colors}}
                     </li>
                   {{/each}}
                 {{/facet.list}}
@@ -110,10 +108,12 @@
 
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
-            <div class="horizontal half-airy solid flow w7">
-              {{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div>
+            <div class="horizontal half-airy solid flow w7" class="layer-pattern-selector">
+              <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div></span>
+
               {{#if editedLayer.mapping.usePattern}}
-                <ul>
+                <ul class="layer-pattern-swatch">
+                  {{log editedLayer.mapping.visualization.pattern.key}}
                   {{#each brewer.availablePatterns as |pattern|}}
                     <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
                       {{pattern-swatch pattern=pattern
@@ -133,7 +133,7 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.reverse')}} ?</label>
             <div class="horizontal half-airy solid flow w7">
-            {{input type="checkbox" checked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div>
+                <span class="offset-checkbox">{{input type="checkbox" hecked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div></span>
             </div>
           </div>
 
