@@ -365,7 +365,6 @@ footer {
   .error-explenation {
     margin-left: 0.3em;
     padding-left: 0.5em;
-    //border-left: 1px solid greys(20%);
     font-size: 1.3rem;
     color: greys(90%);
   }
@@ -489,7 +488,6 @@ footer {
 
     & > li {
       margin-right:20px;
-      padding: 0.5rem;
       background-color: color(variable);
     }
 
@@ -520,8 +518,30 @@ footer {
     }
      & > li {
       margin-bottom: 0.5rem;
+      padding: 0.5rem;
     }
   }
+}
+
+.layers-column {
+
+  .collection {
+
+    & > li {
+      margin-bottom: 0.5rem;
+      padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    }
+
+    .layer-visualization-icon {
+      display: block;
+      img {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+  }
+  
 }
 
 

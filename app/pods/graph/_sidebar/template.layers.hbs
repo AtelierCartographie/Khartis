@@ -24,11 +24,11 @@
       
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
             <div class="horizontal space-between flow layer-header">
-              <div class="horizontal airy flow">
+              <div class="horizontal airy baseline flow">
                 {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
                 <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
               </div>
-              <div class="solid w4 text-right no-drag">
+              <div class="solid horizontal baseline half-airy right flow w4 padded-r no-drag">
                 <span class="layer-visualization-icon">
                 {{#if layer.mapping.type}}
                   {{visualization-icon type=layer.mapping.type}}
@@ -36,7 +36,7 @@
                 </span>
                 <span>{{data-type-icon meta=layer.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</span>
                 <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                {{#x-button action=(action 'removeLayer' layer) disabled=(x-eq layer editedLayer)}}
+                {{#x-button tagName="a" action=(action 'removeLayer' layer) disabled=(x-eq layer editedLayer)}}
                   <i class="iconfont iconfont-trash"></i>
                 {{/x-button}}
               </div>

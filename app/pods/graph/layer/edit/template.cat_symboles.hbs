@@ -16,25 +16,28 @@
             </li>
         </ul>
 
-        <div class="report">
         {{#if (x-greater editedLayer.mapping.rules.length 8)}}
+        <div class="report">
             <div class="warning report-message">
                 <b class="text-warning">1</b>
-                {{x-capitalize (t "project.step2.import.warningsMessage" count=1)}}
+                {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
             </div>
             <div class="error-explenation">
               <p>
-                Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+                {{x-capitalize (t "visualization.warning.rule.count.explenation")}}
               </p>
               <p>
-                Veuillez vous assurer de visualiser :<br/>
-                1 / du texte (données nominales)<br/>
-                2 / des nombres (données ordinales)<br/>
-                3 / moins de 12 catégories à la fois
+                {{x-capitalize (t "visualization.warning.rule.count.help._")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.1")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.2")}}<br/>
+                {{x-capitalize (t "visualization.warning.rule.count.help.3")}}
               </p>
             </div>
-        {{/if}}
+            <div class="horizontal right flow">
+              <a href="#" class="small button filled">En savoir plus</a>
+            </div>
         </div>
+        {{/if}}
     </div>
 
   <!--<div class="titlebar">-->
@@ -91,7 +94,7 @@
                        <div class="categories-name">
 
                            {{#if rule.emptyValue}}
-                                <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
+                                <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
                            {{else}}
                                 <span class="varname">{{rule.label}}</span>
                            {{/if}}
