@@ -172,6 +172,10 @@ input[type=text].padding-fix {
     padding: 0.8rem;
     font-size: 1.7rem;
     color: #000;
+
+    &.categories-surface {
+      flex:3;
+    }
   }
 
   .toggle-visibility {
