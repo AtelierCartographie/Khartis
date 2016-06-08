@@ -152,6 +152,10 @@ let SurfaceMixin = Ember.Mixin.create({
     return this.get('colorSet')[this.get('visualization.reverse') ? 0 : this.get('colorSet').length - 1];
   }.property('colorSet.[]'),
 
+  patternColorReverse: function() {
+    return this.get('colorSet')[this.get('visualization.reverse') ? this.get('colorSet').length - 1 : 0];
+  }.property('colorSet.[]'),
+
   usePattern: Ember.computed('visualization.pattern', {
     get() {
       return this.get('visualization.pattern') != null;
@@ -194,7 +198,13 @@ let SurfaceMixin = Ember.Mixin.create({
       if (type === "texture") {
         range = this.get('patternModifiers');
       } else if (type === "color") {
-        range = Array.from({length: rangeLength}, () => this.get('patternColor'));
+        if (this.get('scale.diverging')) {
+          range = Array.from({length: rangeLength}, (v, i) => {
+            return (i < this.get('scale.classesBeforeBreak')) ? this.get('patternColorReverse') : this.get('patternColor');
+          });
+        } else {
+          range = Array.from({length: rangeLength}, () => this.get('patternColor'));
+        }
       }
       
     } else if (this.get('visualization.colors')) {

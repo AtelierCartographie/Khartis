@@ -487,6 +487,19 @@ footer {
       color:color(titles);
     }
 
+    & > li {
+      margin-right:20px;
+      padding: 0.5rem;
+      background-color: color(variable);
+      margin-bottom: 0.5rem;
+    }
+
+  }
+
+}
+
+.geo-ref-column {
+  .collection {
     & > li:first-child {
       background-color: color(titles);
       color: #FFF;
@@ -506,16 +519,7 @@ footer {
         width : 16%;
       }
     }
-
-    & > li {
-      margin-right:20px;
-      padding: 0.5rem;
-      background-color: color(variable);
-      margin-bottom: 0.5rem;
-    }
-
   }
-
 }
 
 

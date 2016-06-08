@@ -152,14 +152,16 @@ Composer.prototype.compose = function(diverging, reverse, classes, before, angle
           return this.build({
               type: "circles",
               angle: angle + 90,
-              stroke: baseStroke + Math.pow(i, 2)
+              stroke: baseStroke + Math.pow(before - i, 2),
+              size: 6*(before - i)
             });
         }),
         right = Array.from({length: classes - before}, (v, i) => {
           return this.build({
               type: "lines",
               angle: angle,
-              stroke: baseStroke + Math.pow(i, 2)
+              stroke: baseStroke + Math.pow(i, 2),
+              size: 6*i
             });
         });
     

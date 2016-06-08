@@ -114,12 +114,12 @@
               {{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div>
               {{#if editedLayer.mapping.usePattern}}
                 <ul>
-                  {{log editedLayer.mapping.visualization.pattern.key}}
                   {{#each brewer.availablePatterns as |pattern|}}
                     <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
                       {{pattern-swatch pattern=pattern
                         classBreak=editedLayer.mapping.scale.classesBeforeBreak
                         count=1
+                        diverging=editedLayer.mapping.scale.diverging
                         color=editedLayer.mapping.patternColor
                         reverse=editedLayer.mapping.visualization.reverse
                         class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')

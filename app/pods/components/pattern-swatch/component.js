@@ -32,15 +32,25 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   masks: function() {
-    return PatternMaker.Composer.compose(
-      this.get('classBreak'),
-      this.get('reverse'),
-      this.get('count'),
-      this.get('classBreak'),
-      this.get('pattern.angle'),
-      this.get('pattern.stroke')
+    let r = [];
+    if (this.get('diverging')) {
+      r.push(
+        PatternMaker.Composer.build({
+          angle: this.get('pattern.angle'),
+          stroke: this.get('pattern.stroke'),
+          type: "circles"
+        })
+      )
+    }
+    r.push(
+      PatternMaker.Composer.build({
+        angle: this.get('pattern.angle'),
+        stroke: this.get('pattern.stroke'),
+        type: "lines"
+      })
     );
-  }.property('count', 'pattern', 'reverse'),
+    return r;
+  }.property('count', 'pattern', 'reverse', 'diverging'),
   
   drawMasks: function() {
     
@@ -48,8 +58,8 @@ export default Ember.Component.extend({
     
     let bindAttr = (_) => {
       _.attr({
-        x: (d,i) => (i*(100/this.get('count')))+"%",
-        width: (100/this.get('count'))+"%",
+        x: (d,i) => (i*(100/this.get('masks').length))+"%",
+        width: (100/this.get('masks').length)+"%",
         height: "100%"
       }).style({
         mask: (d) => {
