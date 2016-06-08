@@ -491,7 +491,6 @@ footer {
       margin-right:20px;
       padding: 0.5rem;
       background-color: color(variable);
-      margin-bottom: 0.5rem;
     }
 
   }
@@ -518,6 +517,9 @@ footer {
       .dropdown-icon {
         width : 16%;
       }
+    }
+     & > li {
+      margin-bottom: 0.5rem;
     }
   }
 }

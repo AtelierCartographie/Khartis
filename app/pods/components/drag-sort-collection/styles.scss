@@ -3,7 +3,7 @@
   position: relative;
   
   li {
-    cursor: move !important;
+    cursor: pointer;
   }
   
   li.dragged  {
@@ -11,7 +11,7 @@
     right: 0px;
     left: 0px;
     z-index: 9999;
-    cursor: grabbing !important;
+    cursor: move !important;
   }
   
 }

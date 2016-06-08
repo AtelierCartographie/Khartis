@@ -7,6 +7,8 @@ export default Ember.Component.extend({
   classNames: ["collection", "drag-sort"],
   
   provider: null,
+
+  wasDragged: false,
   
   onInsert: function() {
     
@@ -60,14 +62,16 @@ export default Ember.Component.extend({
       drag.on("dragstart", function() {
         if (!$(d3.event.sourceEvent.target).parents(".no-drag").length) {
           d3.event.sourceEvent.stopPropagation();
-          d3.select(this).classed("dragged", true);
-          shiftOveredEl.call(this, $(this).position().top);
+          self.set('wasDragged', false);
         }
       });
       
       drag.on("drag", function() {
-        if (!$(this).hasClass('dragged')) return;
-        
+
+        d3.select(this).classed("dragged", true);
+        d3.select(this).classed("will-drag", false);
+        self.set('wasDragged', true);
+
         shiftOveredEl.call(this, d3.event.y);
         
         $(this).css({
@@ -75,8 +79,12 @@ export default Ember.Component.extend({
         });
       });
       
-      drag.on("dragend", function() {
-        if (!$(this).hasClass('dragged')) return;
+      drag.on("dragend", function(d, i) {
+
+        if (!self.get('wasDragged')) {
+          self.sendAction('onClick', i);
+        }
+
         let {index} = shiftOveredEl.call(this, $(this).position().top),
             cur = $(this).index(),
             o = self.get('provider').objectAt(cur);
@@ -86,6 +94,7 @@ export default Ember.Component.extend({
         }
         
         d3.select(this).classed("dragged", false);
+        d3.select(this).classed("will-drag", false);
         
         $(this).siblings().css({
           "margin-top": 0,
@@ -95,10 +104,6 @@ export default Ember.Component.extend({
       });
       
       this.d3l().selectAll("li")
-        .on("click", (d, i) => {
-          if (/*$(d3.event.sourceEvent.target).parents(".no-drag").length ||*/ d3.event.defaultPrevented) return;
-          this.sendAction('onClick', i);
-        })
         .call(drag);
       
     });
