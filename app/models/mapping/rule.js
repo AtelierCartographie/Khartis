@@ -9,6 +9,7 @@ let Rule = Struct.extend({
   label: null,
   color: "#CCCCCC",
   strokeColor: "#404040",
+  maxSize: 2,
   pattern: null,
   visible: true,
   shape: null,
