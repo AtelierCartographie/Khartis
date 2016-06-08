@@ -9,7 +9,7 @@ let Rule = Struct.extend({
   label: null,
   color: "#CCCCCC",
   strokeColor: "#404040",
-  maxSize: 2,
+  size: 2,
   pattern: null,
   visible: true,
   shape: null,
@@ -24,7 +24,7 @@ let Rule = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'color', 'strokeColor', 'visible',
-    'pattern', 'shape',
+    'pattern', 'shape', 'size',
     function() {
       this.notifyDefferedChange();
     },
@@ -38,7 +38,8 @@ let Rule = Struct.extend({
       strokeColor: this.get('strokeColor'),
       pattern: this.get('pattern'),
       visible: this.get('visible'),
-      shape: this.get('shape')
+      shape: this.get('shape'),
+      size: this.get('size')
     }, props))
   }
   
@@ -56,7 +57,8 @@ Rule.reopenClass({
       strokeColor: json.strokeColor,
       pattern: json.pattern,
       visible: json.visible,
-      shape: json.shape
+      shape: json.shape,
+      size: json.size
     });
   }
 });
