@@ -16,12 +16,25 @@
             </li>
         </ul>
 
-
+        <div class="report">
         {{#if (x-greater editedLayer.mapping.rules.length 8)}}
-            <div class="filled warning padded" style="margin-bottom:2rem;">
+            <div class="warning report-message">
+                <b class="text-warning">1</b>
+                {{x-capitalize (t "project.step2.import.warningsMessage" count=1)}}
+            </div>
+            <div class="error-explenation">
+              <p>
                 Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+              </p>
+              <p>
+                Veuillez vous assurer de visualiser :<br/>
+                1 / du texte (données nominales)<br/>
+                2 / des nombres (données ordinales)<br/>
+                3 / moins de 12 catégories à la fois
+              </p>
             </div>
         {{/if}}
+        </div>
     </div>
 
   <!--<div class="titlebar">-->
