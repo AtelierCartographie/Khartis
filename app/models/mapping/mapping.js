@@ -114,7 +114,7 @@ let Mapping = Struct.extend({
         } else if (mode === "texture" && rule.get('pattern')) {
           return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "size") {
-          return visualization.get('minSize');
+          return rule.get('maxSize');
         } else if (mode === "shape") {
           return rule.get('visible') ? (rule.get('shape') ? rule.get('shape') : visualization.get('shape') ) : null;
         } else if (mode === "strokeColor") {

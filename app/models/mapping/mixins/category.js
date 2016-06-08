@@ -22,6 +22,7 @@ let DataMixin = Ember.Mixin.create({
           label: dist.val,
           visible: true,
           color: scale(i),
+          size: this.get('visualization.maxSize'),
           shape: "circle"
         }));
        
