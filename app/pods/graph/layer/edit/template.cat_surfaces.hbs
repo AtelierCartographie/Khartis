@@ -1,58 +1,129 @@
-<div class="padded">
-  <div class="title">Choix d'une visualization</div>
-  <div class="body">
-    <ul class="collection">
-      <li class="layer">
-        <div class="horizontal flow">
-          <div class="caption">
-            <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
-          </div>
-          <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.quali.cat_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.quali.cat_surfaces.description"}}</p>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="title">Diagramme de fréquences</div>
-  <div class="body">
+<div class="padded edit-layer">
+
+    <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
+
+    <div class="body">
+        <ul class="collection">
+            <li class="layer">
+                <div class="horizontal flow">
+                    <div class="caption">
+                        <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
+                    </div>
+                    <div class="vertical stretched middle flow padded-h content">
+                        <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
+                        <p class="description">{{t "visualization.type.quali.cat_surfaces.description"}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+
+        {{#if (x-greater editedLayer.mapping.rules.length 8)}}
+            <div class="filled warning padded" style="margin-bottom:2rem;">
+                Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+            </div>
+        {{/if}}
+    </div>
+
+
+    <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
+
+    <div class="body">
+
     <div class="settings vertical airy flow">
+
       {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
-      {{#if (x-greater editedLayer.mapping.rules.length 8)}}
-      <div class="filled warning padded">
-        Attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.
+      {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+
+          <div class="solid vertical flow">
+
+          <div class="horizontal middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}} ?</label>
+              <div class="horizontal half-airy solid flow w7 layer-color-selector">
+                  {{#x-dropdown-plus as |facet|}}
+                      {{#facet.trigger class="filled"}}
+                          {{color-swatch class="layer-color-swatch"
+                          colors=(get brewer.availableColorSetsMap editedLayer.mapping.visualization.colors)
+                          }}
+                          <i class="iconfont iconfont-angle-down"></i>
+                      {{/facet.trigger}}
+                      {{#facet.list}}
+                          {{#each brewer.availableColorSets as |colorSet|}}
+                              <li {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
+                                  {{color-swatch class="layer-color-swatch" colors=colorSet.colors}}
+                              </li>
+                          {{/each}}
+                      {{/facet.list}}
+                  {{/x-dropdown-plus}}
+              </div>
+          </div>
+
+          <div class="horizontal middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
+              <div class="horizontal half-airy solid flow w7" class="layer-pattern-selector">
+                  <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div></span>
+
+                  {{#if editedLayer.mapping.usePattern}}
+                      <ul class="layer-pattern-swatch">
+                          {{log editedLayer.mapping.visualization.pattern.key}}
+                          {{#each brewer.availablePatterns as |pattern|}}
+                              <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
+                                  {{pattern-swatch pattern=pattern
+                                  count=1
+                                  mapping=editedLayer.mapping
+                                  class=(if (x-eq pattern.key editedLayer.mapping.visualization.pattern.key) 'selected')
+                                  }}
+                              </li>
+                          {{/each}}
+                      </ul>
+                  {{/if}}
+              </div>
+          </div>
+
       </div>
-      {{/if}}
+
+
       <div>
-          {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
-          <label>Catégories</label>
-          <ul class="collection">
-          {{#each editedLayer.mapping.rules as |rule|}}
-          <li>
-            <div class="horizontal space-between flow layer-header">
-              <div class="horizontal airy flow">
-                {{#if rule.emptyValue}}
-                  <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
-                {{else}}
-                  <span class="varname">{{rule.label}}</span>
-                {{/if}}
-              </div>
-              <div class="horizontal solid right airy flow w4 text-right">
-                <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                {{color-picker value=rule.color}}
-                {{pattern-dropdown patterns=brewer.availablePatterns value=rule.pattern color=rule.color}}
-              </div>
-            </div>
-            <div class="flow" style="height: 6px; padding: 2px;">
-            {{x-progress class="fluid" value=rule.qty max=rulesWrap.maxQty}}
-            </div>
-          </li>
-          {{/each}}
+
+          <div class="title underlined">{{x-capitalize (t 'visualization.settings.categories')}}</div>
+
+          <ul class="collection categories-list">
+
+              {{#each editedLayer.mapping.rules as |rule|}}
+
+                  <li>
+
+                    <div class="categories-name categories-surface">
+
+                        {{#if rule.emptyValue}}
+                            <span class="varname">{{t (concat 'variable.mapping.rule.' rule.label)}}</span>
+                        {{else}}
+                            <span class="varname">{{rule.label}}</span>
+                        {{/if}}
+
+                        <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+
+                        <div class="flow">
+                            {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                        </div>
+
+                    </div>
+
+                    <div class="categories-controls">
+                        <div class="categories-control categories-fill-color-control">
+                            {{color-picker value=rule.color}}
+                        </div>
+                    </div>
+
+                  </li>
+
+              {{/each}}
           </ul>
-          {{/o-wrap.brewer}}
+
       </div>
+      {{/o-wrap.brewer}}
       {{/o-wrap.rules}}
+
     </div>
   </div>
 </div>
