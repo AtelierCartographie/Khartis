@@ -17,8 +17,7 @@ let Project = Struct.extend({
     geoDef: null,
     
     title: "Titre de la carte",
-    
-    //transient
+
     report: null,
     
     init() {
@@ -46,7 +45,8 @@ let Project = Struct.extend({
         graphLayout: this.get('graphLayout').export(),
         graphLayers: this.get('graphLayers').map( gl => gl.export() ),
         geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
-        title: this.get('title')
+        title: this.get('title'),
+        report: this.get('report')
       });
     }
     
@@ -68,7 +68,8 @@ Project.reopenClass({
         o.setProperties({
           data: DataStruct.restore(json.data, refs),
           graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) ),
-          geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null
+          geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
+          report: json.report
         });
         return o;
     }

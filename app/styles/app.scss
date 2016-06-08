@@ -115,7 +115,7 @@ aside {
   }
 
   li.active,
-  li:hover {
+  li:hover:not(.disabled) {
     border-bottom: 3px solid color(titles);
   }
 
