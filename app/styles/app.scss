@@ -53,6 +53,7 @@ body > .ember-view:not(.popable) {
 
 .application-sidebar {
   background-color: color(volet1);
+  overflow: hidden;
 }
 
 .sidebar-scroll-wrapper {
@@ -86,8 +87,8 @@ body > .ember-view:not(.popable) {
   overflow-y: auto;
 }
 
-.sidebar-content.flow.vertical {
-  overflow: hidden;
+.sidebar-content{
+  overflow: auto;
 }
 
 .paste-csv-area:focus {
