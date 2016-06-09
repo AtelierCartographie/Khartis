@@ -34,6 +34,8 @@ export default {
       "padding-top": function(val, bbox, padBox) { padBox.t = cssPx(val); },
       "padding-left": function(val, bbox, padBox) { padBox.l = cssPx(val); },
       "padding-right": function(val, bbox, padBox) { padBox.r = cssPx(val); },
+      "min-width": function(val, bbox) { if (bbox.width < cssPx(val)) bbox.width = cssPx(val) },
+      "min-height": function(val, bbox) { if (bbox.height < cssPx(val)) bbox.height = cssPx(val) }
     };
     
     function cssPx(val) { return parseInt(val.replace("px", "")); }

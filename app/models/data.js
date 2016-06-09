@@ -171,9 +171,9 @@ let ColumnStruct = Struct.extend({
           }, null);
           
           if (type === "numeric") {
-            type = coordTypeFromHeader();
-            if (type !== undefined) {
-              p[type] = 1;
+            let ntype = coordTypeFromHeader();
+            if (ntype !== undefined) {
+              p[type = ntype] = 1;
             }
           }
           
@@ -198,7 +198,7 @@ let ColumnStruct = Struct.extend({
             "lon_dms": (v) => (/^\-?1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)?$/).test(v)
           },
           checkFn = inconsistency[this.get('meta.type')];
-      
+
       let cells = this.get('body')
         .filter( c => !Ember.isEmpty(c.get('value')) )
         .filter( (c, i, arr) => {

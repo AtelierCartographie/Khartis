@@ -142,6 +142,10 @@ var GraphLayout = Struct.extend({
   legendOpacity: 0.9,
   
   projection: null,
+
+  showLegendChange: function() {
+    this.set('margin.b', this.get('showLegend') ? 200 : 30);
+  }.observes('showLegend').on("init"),
   
 	hOffset: function(screenWidth) {
 		return (screenWidth - this.get('width')) / 2;

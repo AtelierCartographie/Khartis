@@ -86,7 +86,7 @@ let Scale = Struct.extend({
           .range(Array.from({length: classes}, (v,i) => i))
           .quantiles();
       } else if (intervalType === "mean") {
-        
+
         let means = [],
             mean = (ext) => {
               return d3.mean(vals.filter( v => isInside(ext, v) ));
@@ -129,11 +129,11 @@ let Scale = Struct.extend({
     } else {
       intervals = calc(
         this.get('intervalType'),
-        this.get('classes') - this.get('classesBeforeBreak'),
+        this.get('classes'),
         [undefined, undefined]
       );
     }
-
+    
     return intervals;
     
   },
