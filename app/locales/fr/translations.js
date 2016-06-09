@@ -12,6 +12,7 @@ export default {
     "close": "Fermer",
     "or": "ou",
     "and": "et",
+    "download": "télécharger",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
@@ -212,6 +213,30 @@ export default {
       }
     }
   },
+
+  "export": {
+    "title": {
+      "legend": "légende",
+      "labels": "étiquettes",
+      "styles": "habillage",
+      "sizes": "dimensions",
+      "export": "export"
+    },
+    "placeholder": {
+      "mapTitle": "titre de la carte",
+      "dataSource": "source des données",
+      "author": "auteur",
+      "comment": "commentaire"
+    },
+    "settings": {
+      "showLegend": "afficher",
+      "width": "largeur",
+      "height": "hauteur",
+      "borders": "frontières",
+      "grid": "graticules",
+      "background": "fond de carte"
+    }
+  }
   
   
     /*"gradientOf": "Dégradé de",

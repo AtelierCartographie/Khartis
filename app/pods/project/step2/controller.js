@@ -16,6 +16,12 @@ export default Ember.Controller.extend({
     return this.get('model.project.data.body').slice(0, 10);
   }.property('model.project.data.body.[]'),
 
+  setupGeoDef: function() {
+    if (!this.get('model.project.geoDef') && this.get('model.project.data.availableGeoDefs').length) {
+      this.set('model.project.geoDef', this.get('model.project.data.availableGeoDefs').objectAt(0));
+    }
+  }.observes('model.project.data.availableGeoDefs.[]'),
+
   actions: {
     
     bindColumnType(column, type) {
@@ -35,6 +41,10 @@ export default Ember.Controller.extend({
       if (col.get('incorrectCells.length')) {
         this.transitionToRoute('project.step2.column', col.get('_uuid'));
       }
+    },
+
+    closeSidebarSub() {
+      this.transitionToRoute('project.step2');
     },
 
     back() {

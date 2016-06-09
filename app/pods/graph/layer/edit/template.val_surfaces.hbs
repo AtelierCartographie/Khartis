@@ -111,7 +111,7 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
             <div class="horizontal half-airy solid flow w7" class="layer-pattern-selector">
-              <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div></span>
+              <span class="offset-checkbox solid">{{input type="checkbox" checked=editedLayer.mapping.usePattern}}<div class="-h"></div></span>
 
               {{#if editedLayer.mapping.usePattern}}
                 <ul class="layer-pattern-swatch">
@@ -135,7 +135,7 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.reverse')}} ?</label>
             <div class="horizontal half-airy solid flow w7">
-                <span class="offset-checkbox">{{input type="checkbox" hecked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div></span>
+                <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.visualization.reverse}}<div class="-h"></div></span>
             </div>
           </div>
 

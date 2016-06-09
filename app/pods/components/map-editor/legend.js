@@ -147,7 +147,7 @@ export default Ember.Mixin.create({
         let el = d3.select(this),
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
               d.get('mapping.visualization.maxSize') : 10),
-            textOffset = xOrigin + 14,
+            textOffset = xOrigin + 16,
             formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
         
         el.selectAll("*").remove();
@@ -215,6 +215,7 @@ export default Ember.Mixin.create({
               .attr({
                 x: textOffset - r.x,
                 y:  -2,
+                dy: "0.3em",
                 "font-size": "0.75em"
               });
             
@@ -233,6 +234,7 @@ export default Ember.Mixin.create({
             .attr({
               x: textOffset - r.x,
               y: 2*r.y + 2,
+              dy: "0.3em",
               "font-size": "0.75em"
             });
           
@@ -275,6 +277,7 @@ export default Ember.Mixin.create({
               .attr({
                 x: textOffset - r.x,
                 y: -2,
+                dy: "0.3em",
                 "font-size": "0.75em"
               });
             
@@ -282,9 +285,9 @@ export default Ember.Mixin.create({
           
           g.append("line").attr({
               x1: -r.x,
-              y1: 2*r.y + 2,
+              y1: Math.max(2*r.y + 2, 10),
               x2: textOffset - 6 - r.x,
-              y2: 2*r.y + 2,
+              y2: Math.max(2*r.y + 2, 10),
               stroke: "black"
             });
           
@@ -292,7 +295,8 @@ export default Ember.Mixin.create({
             .text( v => formatter(v) )
             .attr({
               x: textOffset - r.x,
-              y: 2*r.y + 2,
+              y: Math.max(2*r.y + 2, 10),
+              dy: "0.3em",
               "font-size": "0.75em"
             });
               
@@ -334,6 +338,7 @@ export default Ember.Mixin.create({
             .attr({
               x: textOffset - r.x,
               y: r.y,
+              dy: "0.3em",
               "font-size": "0.75em"
             })
           
@@ -344,16 +349,17 @@ export default Ember.Mixin.create({
           let r;
           
           if (d.get('mapping.visualization.type') === "symbol") {
-            
-            let r = {x: d.get('mapping.visualization.minSize'), y: d.get('mapping.visualization.minSize')};
+
             let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape');
+            
+            r = {x: rule.get('size'), y: rule.get('size')};
             
             let symbol = SymbolMaker.symbol({name: shape});
       
             symbol.call(svg);
             
             let g = d3.select(this).append("g");
-            
+
             g.append("use")
               .attr({
                 "xlink:href": symbol.url(),
@@ -398,22 +404,33 @@ export default Ember.Mixin.create({
           
           let g = d3.select(this).append("g");
           
-          g.append("line").attr({
+          /*g.append("line").attr({
               x1: -r.x,
               y1: r.y,
               x2: textOffset - 6 - r.x,
               y2: r.y,
               stroke: "black"
-            });
+            });*/
           
           g.append("text")
             .text( rule.get('label') )
             .attr({
               x: textOffset - r.x,
               y: r.y,
+              dy: "0.3em",
               "font-size": "0.75em"
             })
           
+        };
+
+        //regroupe les intervales si l'écart est minime
+        let compressIntervals = function(intervals) {
+          return intervals.reduce( (arr, v) => {
+            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.000001) {
+              arr.push(v);
+            }
+            return arr;
+          }, []);
         };
         
         if (ValueMixin.Data.detect(d.get('mapping'))) {
@@ -423,6 +440,8 @@ export default Ember.Mixin.create({
           
           if (ValueMixin.Surface.detect(d.get('mapping'))) {
             fn = appendSurfaceIntervalLabel;
+            intervals.push(d.get('mapping.extent')[1]); //push max
+            intervals = compressIntervals(intervals);
           } else {
             if (d.get('mapping.scale.intervalType') === "linear") {
               fn = appendSymbolIntervalLinearLabel;
@@ -439,10 +458,12 @@ export default Ember.Mixin.create({
                       }, []);
                       
                  Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
+                 intervals = compressIntervals(intervals);
               }
             } else {
               fn = appendSymbolIntervalLabel;
               intervals.push(d.get('mapping.extent')[1]); //push max
+              intervals = compressIntervals(intervals);
             }
           }
           

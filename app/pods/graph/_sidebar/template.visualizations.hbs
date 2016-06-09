@@ -1,0 +1,53 @@
+<div class="content layers-column">
+  <div class="vertical airy flow layers">
+    <div class="solid center text-center">
+      {{#if model.geoDef}}
+      {{#x-dropdown-plus as |facet|}}
+        {{#facet.trigger}}
+            <div class="button add-variable-button "><i class="iconfont iconfont-plus-thin"></i></div>
+        {{/facet.trigger}}
+        {{#facet.list}}
+          {{#each model.data.columns as |col|}}
+          <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
+          {{/each}}
+        {{/facet.list}}
+      {{/x-dropdown-plus}}
+      {{else}}
+      <div class="filled warning padded">
+        Il est nécessaire de sélectionner une colonne de référence géographique pour ajouter de nouveaux calques
+      </div>
+      {{/if}}
+    </div>
+
+    {{#if model.graphLayers.length}}
+      {{#drag-sort-collection provider=model.graphLayers onClick=(action 'editLayer') as |layer self|}}
+      
+          <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
+            <div class="horizontal space-between flow layer-header">
+              <div class="horizontal airy baseline flow">
+                {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
+                <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
+              </div>
+              <div class="solid horizontal baseline half-airy right flow w4">
+                <span class="layer-visualization-icon">
+                {{#if layer.mapping.type}}
+                  {{visualization-icon type=layer.mapping.type}}
+                {{/if}}
+                </span>
+                <span class="no-drag no-drag-click">
+                  <a {{action 'toggleLayerVisibility' layer}}><i class="iconfont {{if layer.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                </span>
+                <span class="no-drag no-drag-click">
+                  {{#x-button tagName="a" action=(action 'removeLayer' layer) disabled=(x-eq layer editedLayer)}}
+                    <i class="iconfont iconfont-trash"></i>
+                  {{/x-button}}
+                </span>
+              </div>
+            </div>
+          </li>
+          
+      {{/drag-sort-collection}}
+    {{/if}}
+    
+  </div>
+</div>

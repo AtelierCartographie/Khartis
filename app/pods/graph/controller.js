@@ -42,6 +42,14 @@ export default Ember.Controller.extend({
   sidebarActiveTab: function() {
     return this.get('state');
   }.property('state'),
+
+  hasNextState: function() {
+    return this.get('states').indexOf(this.get('state')) < (this.get('states').length - 1);
+  }.property('state'),
+
+  helpTemplate: function() {
+    return `help/{locale}/graph/${this.get('state')}`;
+  }.property('state'),
   
   setup() {
     this.loadBasemap(this.get('model.graphLayout.basemap'))
@@ -88,13 +96,23 @@ export default Ember.Controller.extend({
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
-    'graphLayout.showGrid', 'graphLayout.showLegend'),
+    'graphLayout.showGrid', 'graphLayout.showLegend', 'graphLayout.showBorders'),
   
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
   
   exportSVG() {
+    var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
+    saveAs(blob, "export_mapp.svg");
+  },
+
+  exportPNG() {
+    var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
+    saveAs(blob, "export_mapp.svg");
+  },
+
+  exportAsHTML() {
     
     try {
         var isFileSaverSupported = !!new Blob();
@@ -140,10 +158,9 @@ export default Ember.Controller.extend({
       .replace(/&quot;/, "")
       .replace(/NS\d+\:/g, "xlink:");
 
-    var blob = new Blob([html], {type: "image/svg+xml"});
-    saveAs(blob, "export_mapp.svg");
-    
     d3Node.remove();
+
+    return html;
     
   },
   
@@ -233,6 +250,18 @@ export default Ember.Controller.extend({
     toggleRuleVisibility(rule) {
       rule.toggleProperty('visible');
     },
+
+    toggleBordersVisibility() {
+      this.toggleProperty('model.graphLayout.showBorders');
+    },
+
+    toggleGridVisibility() {
+      this.toggleProperty('model.graphLayout.showGrid');
+    },
+
+    toggleLegendVisibility() {
+      this.toggleProperty('model.graphLayout.showLegend');
+    },
     
     resetTranslate() {
       this.get('model.graphLayout').setProperties({
@@ -266,8 +295,12 @@ export default Ember.Controller.extend({
       this.get('editedLayer.mapping').clampValueBreak();
     },
     
-    export() {
-      this.exportSVG();
+    export(format) {
+      if (format === "svg") {
+        this.exportSVG();
+      } else {
+        this.exportPNG();
+      }
     },
     
     selectState(state) {
@@ -280,7 +313,15 @@ export default Ember.Controller.extend({
     },
     
     back() {
-      this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
+      if (this.get('states').indexOf(this.get('state')) > 0) {
+        this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
+      } else {
+        this.send('navigateToProject');
+      }
+    },
+
+    closeSidebarSub() {
+      this.transitionToRoute('graph');
     },
 
     navigateToProject() {

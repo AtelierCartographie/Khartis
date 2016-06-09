@@ -17,6 +17,9 @@ let Project = Struct.extend({
     geoDef: null,
     
     title: "Titre de la carte",
+    dataSource: null,
+    author: null,
+    comment: null,
 
     report: null,
     
@@ -46,6 +49,9 @@ let Project = Struct.extend({
         graphLayers: this.get('graphLayers').map( gl => gl.export() ),
         geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
         title: this.get('title'),
+        dataSource: this.get('dataSource'),
+        author: this.get('author'),
+        comment: this.get('comment'),
         report: this.get('report')
       });
     }
@@ -63,6 +69,9 @@ Project.reopenClass({
     restore(json, refs = {}) {
         let o = this._super(json, refs, {
           title: json.title,
+          dataSource: json.dataSource,
+          author: json.author,
+          comment: json.comment,
           graphLayout: GraphLayout.restore(json.graphLayout, refs)
         });
         o.setProperties({

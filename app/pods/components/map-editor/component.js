@@ -39,6 +39,8 @@ export default Ember.Component.extend(LegendFeature, {
   graphLayers: [],
   
   title: null,
+  dataSource: null,
+  author: null,
   
   trueSize: false,
   
@@ -152,6 +154,13 @@ export default Ember.Component.extend(LegendFeature, {
     
     d3g.append("text")
       .classed("map-title", true);
+
+    d3g.append("text")
+      .classed("map-dataSource", true);
+
+    d3g.append("g")
+      .classed("map-author", true)
+      .append("text");
       
     // DRAG & ZOOM
     zoom = zoom2()
@@ -560,8 +569,30 @@ export default Ember.Component.extend(LegendFeature, {
       });
       
    this.d3l().attr("title", this.get('title'));
+
+   this.d3l().select("text.map-dataSource")
+      .text(this.get('dataSource'))
+      .attr({
+        "font-size": "0.8em",
+        "text-anchor": "end",
+        x: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') - 1,
+        y: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + 11
+      });
+
+
+    this.d3l().select("g.map-author")
+      .attr("transform", d3lper.translate({
+        tx: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') + 11,
+        ty: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') - 1
+      }))
+      .select("text")
+      .text(this.get('author'))
+      .attr("transform", "rotate(-90)")
+      .attr({
+        "font-size": "0.8em"
+      });
    
-  }.observes('title', "$width", "$height"),
+  }.observes('title', 'dataSource', 'author', "$width", "$height"),
    
   drawGrid: function() {
      
@@ -603,7 +634,7 @@ export default Ember.Component.extend(LegendFeature, {
       });
     
     d3l.select("g.borders path.borders")
-      .datum(this.get('base').borders)
+      .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
       .attr("d", this.get('projectedPath'))
       .style({
         "stroke-width": 1,
@@ -612,7 +643,7 @@ export default Ember.Component.extend(LegendFeature, {
       });
       
     d3l.select("g.borders path.borders-disputed")
-      .datum(this.get('base').bordersDisputed)
+      .datum(this.get('graphLayout.showBorders') ? this.get('base').bordersDisputed : null)
       .attr("d", this.get('projectedPath'))
       .style({
         "stroke-width": 1,
@@ -621,7 +652,7 @@ export default Ember.Component.extend(LegendFeature, {
         "fill": "none"
       });
     
-  }.observes('graphLayout.backMapColor'),
+  }.observes('graphLayout.backMapColor', 'graphLayout.showBorders', 'graphLayout.stroke'),
   
   drawLayers: function() {
     

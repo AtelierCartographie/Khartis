@@ -36,6 +36,8 @@ let Mapping = Struct.extend({
       this.set('visualization.colors', Object.keys(master)[0]);
     }
 
+    console.log("colorSet");
+
     return Colorbrewer.Composer.compose(
       this.get('visualization.colors'), 
       this.get('scale.diverging'),
