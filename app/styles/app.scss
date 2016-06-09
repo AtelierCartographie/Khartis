@@ -85,6 +85,9 @@ body > .ember-view:not(.popable) {
   overflow-y: auto;
 }
 
+.sidebar-content.flow.vertical {
+  overflow: hidden;
+}
 
 .paste-csv-area:focus {
   height: 200px;
