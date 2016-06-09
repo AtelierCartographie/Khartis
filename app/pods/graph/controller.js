@@ -108,8 +108,18 @@ export default Ember.Controller.extend({
   },
 
   exportPNG() {
-    var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
-    saveAs(blob, "export_mapp.svg");
+
+    let data = new FormData();
+    data.append("content", this.exportAsHTML());
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://slave.apyx.fr:9876/', true);
+    xhr.responseType="blob";
+    xhr.onload = function () {
+        saveAs(this.response, "export_mapp.png");
+    };
+    xhr.send(data);
+
   },
 
   exportAsHTML() {
@@ -123,7 +133,7 @@ export default Ember.Controller.extend({
     let node = d3.select("svg.map-editor")
         .node().cloneNode(true);
         
-    let d3Node = d3.select(node)
+    let d3Node = d3.select(node);
     
     let x = d3Node.selectAll("g.offset line.vertical-left").attr("x1"),
         y = d3Node.selectAll("g.offset line.horizontal-top").attr("y1"),
@@ -135,10 +145,11 @@ export default Ember.Controller.extend({
       height: this.get('model.graphLayout.height'),
       viewBox: `${x} ${y} ${w} ${h}`
     });
-    
+
     d3Node.selectAll("g.margin,g.offset").remove();
+    d3Node.selectAll("rect.fg").remove();
     
-    d3Node.select("defs")
+    /*d3Node.select("defs")
       .append("clipPath")
       .attr("id", "view-clip")
       .append("rect")
@@ -147,10 +158,10 @@ export default Ember.Controller.extend({
         y: 0,
         width: w,
         height: h
-      });
+      });*/
       
     d3Node.select(".map")
-      .attr("clip-path", "url(#view-clip)");
+      .attr("clip-path", "url(#viewport-clip)");
               
     let html = d3Node.node()
       .outerHTML

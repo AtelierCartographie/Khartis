@@ -59,6 +59,7 @@ export default Ember.Component.extend(LegendFeature, {
 		var d3g = this.d3l();
     
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    d3g.style("font-family", "verdana");
 		
 		// ========
 		// = DEFS =
@@ -84,12 +85,18 @@ export default Ember.Component.extend(LegendFeature, {
         width: "500",
         height: "500"
       });
-      
+
     vm.append("path")
       .attr({
         "fill-rule": "evenodd"
       })
       .style("fill", "white");
+
+    defs.append("clipPath")
+      .attr({
+        id: "viewport-clip",
+      })
+      .append("path");
     
 		// ---------
 		
@@ -305,6 +312,9 @@ export default Ember.Component.extend(LegendFeature, {
         
     this.d3l().select("defs #viewport-mask path")
       .attr("d", `${outer} ${inner}`);
+
+    this.d3l().select("defs #viewport-clip path")
+      .attr("d", `${inner}`);
     
     // ===========
 		
