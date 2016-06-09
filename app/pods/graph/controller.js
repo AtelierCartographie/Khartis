@@ -46,6 +46,10 @@ export default Ember.Controller.extend({
   hasNextState: function() {
     return this.get('states').indexOf(this.get('state')) < (this.get('states').length - 1);
   }.property('state'),
+
+  helpTemplate: function() {
+    return `help/{locale}/graph/${this.get('state')}`;
+  }.property('state'),
   
   setup() {
     this.loadBasemap(this.get('model.graphLayout.basemap'))
