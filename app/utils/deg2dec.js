@@ -44,7 +44,5 @@ export default function(value) {
     
     let d = (direction === "S" || direction === "W") ? -1 : 1;
 
-    console.log((deg + (min / 60.0) + (sec / 3600))*d);
-
     return (deg + (min / 60.0) + (sec / 3600))*d;
 }

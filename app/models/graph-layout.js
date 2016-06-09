@@ -6,8 +6,8 @@ import Projection from './projection';
 
 var Margin = Struct.extend({
   
-  l: 12,
-  r: 12,
+  l: 16,
+  r: 16,
   t: 30,
   b: 200,
   
@@ -54,6 +54,8 @@ var GraphLayout = Struct.extend({
 	backgroundColor: "#F7F7F7",
   backMapColor: "#ededed",
   
+  showBorders: true,
+
   showGrid: true,
   gridColor: "#e1e3ee",
   
@@ -163,6 +165,7 @@ var GraphLayout = Struct.extend({
       height: this.get('height'),
       zoom: this.get('zoom'),
       precision: this.get('precision'),
+      showBorders: this.get('showBorders'),
       showGrid: this.get('showGrid'),
       showLegend: this.get('showLegend'),
       legendTx: this.get('legendTx'),
@@ -194,6 +197,7 @@ GraphLayout.reopenClass({
         height: json.height,
         zoom: json.zoom,
         precision: json.precision,
+        showBorders: json.showBorders,
         showGrid: json.showGrid,
         showLegend: json.showLegend,
         legendTx: json.legendTx,

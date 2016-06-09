@@ -1,17 +1,73 @@
-<div class="content">
-  <div class="help jumbotron markdown">
-    {{localized-tpl tpl="help/{locale}/graph/export"}}
-  </div>
-  <div>
-    Page export
-    {{x-button class="filled success" action=(action 'export') label="Exporter"}}
-  </div>
-</div>
+<div class="content export-column">
+  <div class="vertical airy flow">
 
-<div class="bottom-navbar">
-    <div class="fluid">
-      {{#x-button class="default btn-prev" action=(action 'back')}}
-          <i class="iconfont iconfont-long-arrow-left"></i> {{x-capitalize (t "navigation.sidebar.legend")}}
-      {{/x-button}}
+    <div class="half-airy vertical flow">
+      {{input value=model.title placeholder=(t 'export.placeholder.mapTitle')}}
+      {{input value=model.dataSource placeholder=(t 'export.placeholder.dataSource')}}
+      {{input value=model.author placeholder=(t 'export.placeholder.author')}}
+      {{input value=model.comment placeholder=(t 'export.placeholder.comment')}}
     </div>
+
+    <div class="title underlined">{{x-capitalize (t 'export.title.legend')}}</div>
+    <div class="settings vertical flow">
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.showLegend')}} ?</label>
+        <div class="horizontal solid half-airy flow w7">
+          <a {{action 'toggleLegendVisibility'}}><i class="iconfont {{if model.graphLayout.showLegend 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <!--<div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
+    <div class="settings vertical flow">
+
+    </div>-->
+    
+    <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
+    <div class="settings vertical flow">
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.borders')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{color-picker value=model.graphLayout.stroke}}
+          <a {{action 'toggleBordersVisibility'}}><i class="iconfont {{if model.graphLayout.showBorders 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.grid')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{color-picker value=model.graphLayout.gridColor}}
+          <a {{action 'toggleGridVisibility' layer}}><i class="iconfont {{if model.graphLayout.showGrid 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.background')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{color-picker value=model.graphLayout.backMapColor}}
+        </div>
+      </div>
+    </div>
+    
+    <div class="title underlined">{{x-capitalize (t 'export.title.sizes')}} {{t 'general.and'}} {{t 'export.title.export'}}</div>
+    <div class="settings vertical flow">
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.width')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{input value=model.graphLayout.width class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'export.settings.height')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{input value=model.graphLayout.height class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w5">{{x-capitalize (t 'general.download')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          {{x-button class="small filled primary" action=(action 'export' 'svg') label="SVG"}}
+          {{x-button class="small filled primary" action=(action 'export' 'png') label="PNG"}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
