@@ -320,6 +320,10 @@ export default Ember.Controller.extend({
       }
     },
 
+    closeSidebarSub() {
+      this.transitionToRoute('graph');
+    },
+
     navigateToProject() {
       this.transitionToRoute('project.step2', this.get('model._uuid'));
     },

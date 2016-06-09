@@ -5,7 +5,7 @@
     <div class="vertical flow" style="overflow:auto;position:relative">
 
       <div class="sidebar-sub-close">
-          <i class="iconfont iconfont-close"></i>
+          <a {{action 'closeSidebarSub'}}><i class="iconfont iconfont-close"></i></a>
       </div>
 
       {{outlet 'sidebar-sub-content'}}

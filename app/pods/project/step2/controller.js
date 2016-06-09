@@ -43,6 +43,10 @@ export default Ember.Controller.extend({
       }
     },
 
+    closeSidebarSub() {
+      this.transitionToRoute('project.step2');
+    },
+
     back() {
       this.transitionToRoute('project.step1');
     },

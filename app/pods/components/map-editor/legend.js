@@ -404,13 +404,13 @@ export default Ember.Mixin.create({
           
           let g = d3.select(this).append("g");
           
-          g.append("line").attr({
+          /*g.append("line").attr({
               x1: -r.x,
               y1: r.y,
               x2: textOffset - 6 - r.x,
               y2: r.y,
               stroke: "black"
-            });
+            });*/
           
           g.append("text")
             .text( rule.get('label') )
@@ -426,7 +426,7 @@ export default Ember.Mixin.create({
         //regroupe les intervales si l'écart est minime
         let compressIntervals = function(intervals) {
           return intervals.reduce( (arr, v) => {
-            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.000000001) {
+            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.000001) {
               arr.push(v);
             }
             return arr;
