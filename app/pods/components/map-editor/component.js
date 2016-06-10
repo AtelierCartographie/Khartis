@@ -6,19 +6,16 @@ import GraphLayout from 'mapp/models/graph-layout';
 import {geoMatch} from 'mapp/utils/geo-match';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
+import ViewportFeature from './viewport';
 import LegendFeature from './legend';
-import {isChrome} from 'mapp/utils/browser-check';
-import zoom2 from 'mapp/utils/d3-zoom2';
+import ZoomFeature from './zoom';
+
 /* global Em */
 
 let landSelSet = new Set();
 
-let _translate0,
-    _translate;
-    
-let zoom;
-
-export default Ember.Component.extend(LegendFeature, {
+export default Ember.Component.extend(ViewportFeature, LegendFeature,
+  ZoomFeature, {
   
   tagName: "svg",
   attributeBindings: ['width', 'xmlns', 'version'],
@@ -77,27 +74,6 @@ export default Ember.Component.extend(LegendFeature, {
       .attr("id", "clip")
       .append("use");
     
-    let vm = defs.append("mask")
-      .attr({
-        id: "viewport-mask",
-        x: 0,
-        y: 0,
-        width: "500",
-        height: "500"
-      });
-
-    vm.append("path")
-      .attr({
-        "fill-rule": "evenodd"
-      })
-      .style("fill", "white");
-
-    defs.append("clipPath")
-      .attr({
-        id: "viewport-clip",
-      })
-      .append("path");
-    
 		// ---------
 		
     // HANDLE RESIZE
@@ -149,14 +125,8 @@ export default Ember.Component.extend(LegendFeature, {
     bordersMap.append("path")
       .classed("borders-disputed", true);
       
-    d3g.append("rect")
-			.classed("fg", true)
-      .attr("width", "100%")
-      .attr("height", "100%")
-      .attr("opacity", 0.8)
-      .attr("mask", `url(${window.location}#viewport-mask)`)
-      .attr("fill", this.get('graphLayout.backgroundColor'));
-      
+    this.viewportInit(defs, d3g);
+    this.zoomInit(d3g);
     this.legendInit();
     
     d3g.append("text")
@@ -169,46 +139,6 @@ export default Ember.Component.extend(LegendFeature, {
       .classed("map-author", true)
       .append("text");
       
-    // DRAG & ZOOM
-    zoom = zoom2()
-      .scaleExtent([1, 12])
-      .band(0.5)
-      .on("zoom", (scale, translate) => {
-        
-        this.zoomAndDrag(scale, translate);
- 
-      })
-      .scale(this.get('graphLayout.zoom'));
-    
-    this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
-    
-    let updateTxTy = () => {
-      let p = this.get('projection');
-      zoom.translate([
-        p.initialTranslate[0]*this.get('graphLayout.tx'),
-        p.initialTranslate[1]*this.get('graphLayout.ty')
-      ]);
-    }
-    this.addObserver('graphLayout.tx', 'graphLayout.ty', updateTxTy);
-    updateTxTy();
-
-    d3g.call(zoom);
-    
-		let og = d3g.append("g")
-			.classed("offset", true);
-			
-		og.append("line").classed("horizontal-top", true);
-		og.append("line").classed("horizontal-bottom", true);
-		og.append("line").classed("vertical-left", true);
-		og.append("line").classed("vertical-right", true);
-		
-		let mg = d3g.append("g")
-			.classed("margin", true);
-			
-		mg.append("rect")
-			.attr("fill", "none");
-
-    this.updateMargins();
     this.drawTitle();
 		this.projectAndDraw();
 		this.updateColors();
@@ -291,83 +221,6 @@ export default Ember.Component.extend(LegendFeature, {
 		
 	}.observes('graphLayout.strokeWidth'),
   
-  updateMargins: function() {
-    
-    // ===========
-		// = VIEWBOX =
-		// ===========
-		
-		let {w, h} = this.getSize();
-		
-		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
-		// ===========
-    
-    // fg mask
-    let vOf = this.get('graphLayout').vOffset(h),
-        hOf = this.get('graphLayout').hOffset(w),
-        m = this.get('graphLayout.margin'),
-        outer = `M 0 0, ${w} 0, ${w} ${h}, 0 ${h} Z`,
-        inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
-                   ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
-        
-    this.d3l().select("defs #viewport-mask path")
-      .attr("d", `${outer} ${inner}`);
-
-    this.d3l().select("defs #viewport-clip path")
-      .attr("d", `${inner}`);
-    
-    // ===========
-		
-		this.d3l().selectAll("g.offset line.horizontal-top")
-			.attr("x1", 0)
-			.attr("y1", vOf)
-			.attr("x2", w)
-			.attr("y2", vOf)
-		  .attr("stroke-width", "1");
-    
-		this.d3l().selectAll("g.offset line.horizontal-bottom")
-			.attr("x1", 0)
-			.attr("y1", h - vOf)
-			.attr("x2", w)
-			.attr("y2", h - vOf)
-		  .attr("stroke-width", "1");
-			
-		this.d3l().selectAll("g.offset line.vertical-left")
-			.attr("x1", hOf)
-			.attr("y1", 0)
-			.attr("x2", hOf)
-			.attr("y2", h)
-		  .attr("stroke-width", "1");
-      
-		this.d3l().selectAll("g.offset line.vertical-right")
-			.attr("x1", w - hOf)
-			.attr("y1", 0)
-			.attr("x2", w - hOf)
-			.attr("y2", h)
-		  .attr("stroke-width", "1");
-		
-		this.d3l().select("g.margin")
-			.attr("transform", `translate(${hOf}, ${vOf})`)
-			.selectAll("rect")
-			.attr("x", this.get('graphLayout.margin.l'))
-			.attr("y", this.get('graphLayout.margin.t'))
-			.attr("width", this.get('graphLayout.width') - this.get('graphLayout.margin.h'))
-			.attr("height", this.get('graphLayout.height') - this.get('graphLayout.margin.v'))
-      .attr("stroke-width", "1")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-dasharray", "1, 3");
-      
-    this.d3l().select("rect.bg")
-      .attr({
-        x: 0,
-        y: 0,
-        width: w,
-        height: h
-      });
-      
-  }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v'),
-  
   projection: function() {
     
     let {w, h} = this.getSize(),
@@ -400,99 +253,6 @@ export default Ember.Component.extend(LegendFeature, {
       
   },
   
-  zoomAndDrag(scale, translate) {
-    
-    let mapG = this.d3l().select("g.map"),
-        projection = this.get('projection'),
-        t = projection.initialTranslate,
-        ds = projection.scale() / projection.resolution,
-        rs = scale/ds,
-        tx = projection.translate()[0]*rs - t[0] * scale,
-        ty = projection.translate()[1]*rs - t[1] * scale;
-    
-    mapG
-      .attr({
-        tx: translate[0],
-        ty: translate[1],
-        s: scale
-      })
-      .transition().duration(400).ease("cubic-out")
-      .attr({
-        "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
-      })
-      .each("end", () => {
-        
-        mapG.attr("transform", null)
-          .selectAll("g.layers .shape")
-          .attr("transform", null);
-        
-        this.get('graphLayout').beginPropertyChanges();
-        
-        this.get('graphLayout').setProperties({
-          zoom: parseFloat(mapG.attr("s")),
-          tx: parseFloat(mapG.attr("tx")) / t[0],
-          ty: parseFloat(mapG.attr("ty")) / t[1]
-        });
-        
-        this.scaleProjection(projection);
-        
-        this.get('graphLayout').endPropertyChanges();
-        
-        this.projectAndDraw();
-        
-      });
-    
-    if (isChrome()) {
-      mapG.selectAll("g.layers .shape").each(function() {
-        
-        let el = d3.select(this),
-          elBox = el.node().getBBox(),
-          cx = elBox.x + elBox.width / 2,
-          cy = elBox.y + elBox.height / 2;
-      
-        el.attr("transform", `${d3lper.translate({tx: -cx*(1/rs-1), ty: -cy*(1/rs-1)})} scale(${1/rs})`);
-        
-      });
-    }
-    
-    
-  },
-  
-  zoomAndDragChange: function() {
-    
-    let projection = this.get('projection'),
-        ds = projection.scale() / projection.resolution,
-        tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
-        ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
-        shiftX = tx - this.get('graphLayout.tx')*projection.initialTranslate[0],
-        shiftY = ty - this.get('graphLayout.ty')*projection.initialTranslate[1];
-   
-    if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
-        || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
-      
-      let {w, h} = this.getSize(),
-		      vOf = this.get('graphLayout').vOffset(h),
-          hOf = this.get('graphLayout').hOffset(w),
-          m = this.get('graphLayout.margin');
-       
-      if (Math.abs(shiftX) <= 0.1 && Math.abs(shiftY) <= 0.1) {
-        zoom.toPoint(
-          this.get('graphLayout.zoom'),
-          (w - 2*hOf - m.l - m.t) / 2 + hOf + m.l,
-          (h - 2*vOf - m.t - m.b) / 2 + vOf + m.t
-        );
-      } else {
-        zoom.toScaleAndTranslate(
-          this.get('graphLayout.zoom'),
-          this.get('graphLayout.tx')*projection.initialTranslate[0],
-          this.get('graphLayout.ty')*projection.initialTranslate[1]
-        );
-      }
-      
-    }
-    
-  }.observes('graphLayout.zoom', 'graphLayout.tx', 'graphLayout.ty'),
-    
   projectedPath: function() {
     
     let path = d3.geo.path(),
