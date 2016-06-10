@@ -1,0 +1,22 @@
+.application-nav {
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid greys(30%);
+  font-size: 1.3rem;
+
+  flex: 0 0 2.8rem;
+
+  li {
+    cursor: pointer;
+    flex: 1;
+    padding: 0.2rem 0;
+  }
+
+  li.active,
+  li:hover:not(.disabled) {
+    border-bottom: 3px solid color(titles);
+  }
+
+}
