@@ -237,19 +237,24 @@ let SymbolMixin = Ember.Mixin.create({
         
     if (type === "size") {
       
-      contrastScale.domain(ext)
-        .range([0, visualization.get('maxSize')]);
+      
 
       if (this.get('scale.intervalType') === "linear") {
+
+        contrastScale.domain(ext)
+          .range([0, visualization.get('maxSize')]);
+
         d3Scale = contrastScale;
         range = contrastScale.range();
         domain = contrastScale.domain();
+
       } else {
         d3Scale = d3.scale.threshold();
         range = Array.from({length: intervals.length},
-            (v, i) => contrastScale(Math.abs(intervals[i]))
+            (v, i) => Math.pow(Math.abs(i - (this.get('diverging') ? this.get('scale.classBeforeBreak') : 0)), 2)
           );
-        range.push(contrastScale(this.get('maxValue')));
+        range.push(Math.pow(intervals.length, 2));
+        console.log(range);
         range.sort(d3.ascending);
         domain = intervals.map( v => Math.abs(v) ).sort(d3.ascending);
       };
