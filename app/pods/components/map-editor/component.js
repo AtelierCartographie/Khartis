@@ -239,7 +239,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     return projection; 
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.margin', 'graphLayout.precision',
+    'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
     'graphLayout.projection._defferedChangeIndicator'),
     
   scaleProjection: function(projection) {

@@ -17,6 +17,13 @@ var Margin = Struct.extend({
   v: function() {
     return this.get('t') + this.get('b');
   }.property('t', 'b'),
+
+  deferredChange: Ember.debouncedObserver(
+    'l', 'r', 't', 'b', 'h', 'v',
+    function() {
+      this.notifyDefferedChange();
+    },
+    50),
   
   export() {
     return this._super({
@@ -139,7 +146,7 @@ var GraphLayout = Struct.extend({
   precision: 2.5,
   legendTx: null,
   legendTy: null,
-  legendOpacity: 0.9,
+  legendOpacity: 0.85,
   
   projection: null,
 
