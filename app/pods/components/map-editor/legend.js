@@ -6,7 +6,7 @@ import ValueMixin from 'mapp/models/mapping/mixins/value';
 
 export default Ember.Mixin.create({
   
-  legendInit: function() {
+  legendInit() {
     
     let legendG = this.d3l().append("g")
       .classed("legend", true);
@@ -14,7 +14,6 @@ export default Ember.Mixin.create({
     //LEGEND DRAG
     let drag = d3.behavior.drag()
       .origin(() => {
-        console.log("origine", legendG.attr('tx'));
         return {x: legendG.attr('tx'), y: legendG.attr('ty')};
       })
       .on("dragstart", () => {
