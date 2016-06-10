@@ -1,6 +1,6 @@
 
 // TODO: lang-switcher
-.header-menu {
+.lang-switcher {
 
 
   display: flex;
@@ -35,8 +35,7 @@
     background-color: greys(5%);
   }
 
-  // TODO: lang-switcher-item
-  .header-options {
+  .lang-switcher-item {
     position: relative;
   }
 }

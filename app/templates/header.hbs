@@ -2,11 +2,11 @@
 
     <span class="brand" >{{#link-to 'index'}}MAPP{{/link-to}}</span>
 
-    <div class="header-menu">
+    <div class="lang-switcher">
 
       {{#x-dropdown-plus dropdownPivot='top right' triggerPivot='bottom right' as |facet|}}
         {{#facet.trigger}}
-        <span class="header-options">{{i18n.locale}}</span>
+        <span class="lang-switcher-item">{{i18n.locale}}</span>
         {{/facet.trigger}}
         {{#facet.list}}
           <li {{action 'setLocale' 'fr'}}>fr</li>

@@ -46,3 +46,163 @@
   cursor:pointer;
   z-index: 2;
 }
+
+.geo-ref-column, .layers-column {
+
+  .dropdown {
+    min-width:300px;
+  }
+
+  .accordion-wrapper > div {
+    padding: 2rem;
+  }
+
+  .collection {
+
+    margin-right: -20px;
+
+    overflow: auto;
+    border: none;
+
+    & > li.selected {
+      margin-right: 0;
+      padding-right:  2.5rem;
+      background-color: color(volet2);
+    }
+
+    & > li {
+      margin-right: 20px;
+      background-color: color(variable);
+    }
+
+  }
+
+}
+
+.geo-ref-column {
+
+  .collection {
+
+    & > li:first-child {
+      background-color: color(titles);
+      color: #FFF;
+      margin-bottom: 3rem;
+
+      .dropdown-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .dropdown-label {
+        flex:1;
+      }
+
+      .dropdown-icon {
+        width : 16%;
+      }
+    }
+
+    & > li {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+    }
+
+    & > li.selected {
+      color: color(titles);
+    }
+  }
+}
+
+
+.layers-column {
+
+  .collection > li {
+
+      margin-bottom: 0.5rem;
+      padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+
+      .layer-visualization-icon {
+        display: block;
+        img {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+
+      &.selected .layer-visualization-icon {
+        display: none;
+      }
+  }
+
+  .collection > li.selected a {
+    color:color(text);
+  }
+}
+
+
+
+.report {
+
+  flex-shrink: 0;
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li.warnings, li.errors {
+    margin-top: 1em;
+  }
+
+  .error-explenation {
+    margin-left: 0.3em;
+    padding-left: 0.5em;
+    font-size: 1.3rem;
+    color: greys(90%);
+  }
+
+  .report-message {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .report-message.success {
+    background-color: color(success, 'tint');
+    color: color(success);
+    border-left: 2px solid color(success);
+  }
+
+  .report-message.warning {
+    background-color: color(warning, 'tint');
+    color: color(warning);
+    border-left: 2px solid color(warning);
+  }
+
+  .report-message.danger {
+    background-color: color(warning, 'tint');
+    color: color(danger);
+    border-left: 2px solid color(danger);
+  }
+
+  .map-card {
+    border: 1px solid greys(20%);
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: greys(10%);
+    }
+
+    .iconfont {
+      font-size: 6em;
+    }
+
+    .label {
+      text-align: center;
+    }
+
+  }
+
+}
