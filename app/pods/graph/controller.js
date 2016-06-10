@@ -170,7 +170,7 @@ export default Ember.Controller.extend({
         height: h
       });*/
       
-    d3Node.select(".map")
+    d3Node.select(".outer-map")
       .attr("clip-path", "url(#viewport-clip)");
               
     let html = d3Node.node()

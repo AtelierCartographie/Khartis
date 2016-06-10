@@ -99,6 +99,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
     let mapG = d3g.append("g")
+      .classed("outer-map", true)
+      .append("g")
       .classed("map", true);
     
     let backMap = mapG.append("g")
