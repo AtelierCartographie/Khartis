@@ -5,8 +5,6 @@ import {DataStruct} from 'mapp/models/data';
 export default Ember.Route.extend({
 
   renderTemplate: function () {
-    this.render("project.help", {into: "application", outlet: "help"});
-    this.render("index.header", {outlet: "header" });
     this.render({outlet: "main"});
   },
 

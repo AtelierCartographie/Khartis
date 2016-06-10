@@ -3,11 +3,11 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   
   renderTemplate: function() {
-    this.render("index.sidebar", {outlet: "sidebar", controller: "project"});
-    this.render("project.step1.sidebar", {into: "index.sidebar", outlet: "sidebar"});
+    this.render({ outlet: "content" });
+    this.render("sidebar", {outlet: "sidebar", controller: "project"});
+    this.render("project.step1.sidebar", {into: "sidebar", outlet: "sidebar"});
     this.render("project.step1.help", {into: "project.step1.sidebar", outlet: "help"});
-    this.render("index.header", {into: "index.sidebar", outlet: "header" });
-    this.render({ outlet: "main" });
+    this.render("header", {into: "sidebar", outlet: "header" });
   },
   
   model() {

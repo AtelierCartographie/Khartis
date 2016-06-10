@@ -6,10 +6,8 @@ export default Ember.Route.extend({
   controllerName: "graph",
   
   renderTemplate: function() {
-    this.render("graph", { outlet: 'main' });
-    //this.render('graph.layer', {into: "graph", outlet: 'configuration-panel' });
-    this.render("index.sidebar-sub", {into: "graph", outlet: "sidebar-sub"});
-    this.render("graph.layer", {into: "index.sidebar-sub", outlet: "sidebar-sub-content"});
+    this.render("sidebar-sub", {into: "graph", outlet: "sidebar-sub"});
+    this.render("graph.layer", {into: "sidebar-sub", outlet: "sidebar-sub-content"});
   },
   
   model(params) {
