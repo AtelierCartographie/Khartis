@@ -90,8 +90,8 @@ let symbol = function(opts = {}) {
   proc.scale = function(v, w) {
     let conf = factory(name),
           max = Math.max.apply(this, conf.viewBox);
-    
-    return v / (w / max);
+   
+    return w >= 1 ? v / (w / max) : 0;
   };
   
   proc.url = function() {

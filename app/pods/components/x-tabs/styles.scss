@@ -16,7 +16,7 @@
       cursor: pointer;
       
       &.active {
-        border-bottom: 2px solid color(primary);
+        border-bottom: 3px solid color(primary);
         cursor: default;
       }
     }

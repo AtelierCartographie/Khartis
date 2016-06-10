@@ -8,7 +8,10 @@
         {{/facet.trigger}}
         {{#facet.list}}
           {{#each model.data.columns as |col|}}
-          <li {{action 'addLayer' col}}>{{col.header.value}} {{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</li>
+          <li {{action 'addLayer' col}} class="horizontal middle airy flow">
+            <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+            <div classs="fluid padded-h">{{col.header.value}}</div>
+          </li>
           {{/each}}
         {{/facet.list}}
       {{/x-dropdown-plus}}

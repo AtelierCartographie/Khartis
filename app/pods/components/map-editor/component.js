@@ -583,7 +583,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
           fill = converter(d.cell, "fill"),
           strokeColor = converter(d.cell, "strokeColor");
           
-      if (shape) {
+      if (shape && r > 0) {
         
         let symbol = SymbolMaker.symbol({name: shape});
       

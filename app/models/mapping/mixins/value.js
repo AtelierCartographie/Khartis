@@ -205,7 +205,7 @@ let SymbolMixin = Ember.Mixin.create({
   
   getScaleOf(type) {
     
-    let ext = d3.extent(this.get('values')),
+    let ext = d3.extent(this.get('absValues')),
         intervals = this.get('intervals'),
         contrastScale = this.get('scale.contrastScale'),
         visualization = this.get('visualization'),
@@ -218,12 +218,9 @@ let SymbolMixin = Ember.Mixin.create({
 
       if (this.get('scale.intervalType') === "linear") {
 
-        contrastScale.domain(ext)
-          .range([0, visualization.get('maxSize')]);
-
-        d3Scale = contrastScale;
-        range = contrastScale.range();
-        domain = contrastScale.domain();
+        d3Scale = contrastScale.clamp(true);
+        domain = ext;
+        range = [0, visualization.get('maxSize')];
         transform = _ => d3Scale(Math.abs(_));
 
       } else {
