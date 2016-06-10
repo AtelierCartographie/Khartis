@@ -37,13 +37,16 @@ export default Ember.Component.extend({
             }
             
             overed.each( (i, el) => {
+
               let shift = (y < $(el).position().top + $(el).outerHeight() / 2) ? 0 : 1,
                   marginTop = shift === 0 ? $(this).outerHeight() : 0,
                   marginBottom = shift === 1 ? $(this).outerHeight() : 0;
+
               $(el).css({
                "margin-top": marginTop,
                "margin-bottom": marginBottom
               });
+
               pos = {index: siblings.index(el)+shift};
             });
             
@@ -95,12 +98,12 @@ export default Ember.Component.extend({
         
         d3.select(this).classed("dragged", false);
         d3.select(this).classed("will-drag", false);
-        
-        $(this).siblings().css({
-          "margin-top": 0,
-          "margin-bottom": 0
-        });
-        
+
+          $(this).siblings().css({
+            "margin-top": "",
+            "margin-bottom": ""
+          });
+
       });
       
       this.d3l().selectAll("li")
