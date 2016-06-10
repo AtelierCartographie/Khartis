@@ -17,9 +17,7 @@ Router.map(function() {
     });
 
     this.route("graph", {path: "graph/:uuid"}, function() {
-        this.route("projection", function() {
-          this.route("edit");
-        });
+        this.route("projection");
         this.route("layer", {path: "layer/:layerId"}, function() {
           this.route("edit");
         });
