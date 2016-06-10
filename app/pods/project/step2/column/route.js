@@ -6,8 +6,8 @@ export default Ember.Route.extend({
   controllerName: "project/step2",
   
   renderTemplate: function() {
-    this.render("index.sidebar-sub", {into: "project", outlet: "sidebar-sub"});
-    this.render("project.step2.column", {into: "index.sidebar-sub", outlet: "sidebar-sub-content"});
+    this.render("sidebar-sub", {into: "project", outlet: "sidebar-sub"});
+    this.render("project.step2.column", {into: "sidebar-sub", outlet: "sidebar-sub-content"});
   },
   
   model(params) {
