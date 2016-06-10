@@ -85,7 +85,7 @@
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
           {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
 
-          <div class="title underlined">{{x-capitalize (t 'visualization.settings.categories')}}</div>
+          <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.settings.categories')}}</div>
 
             <ul class="collection categories-list">
                 {{#each editedLayer.mapping.rules as |rule|}}

@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  
+
   sidebarActiveTab: 'data',
-  sidebarTabVisualizationsDisabled: true,
-  sidebarTabExportDisabled: true,
+  sidebarTabVisualizationsDisabled: false,
+  sidebarTabExportDisabled: false,
 
   actions: {
 
@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
     },
 
     navigateToVisualizations() {
+      this.transitionToRoute('graph', { queryParams: { currentTab: 'visualisations' }})
     },
 
     navigateToExport() {
