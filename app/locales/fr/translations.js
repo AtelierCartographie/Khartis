@@ -141,6 +141,7 @@ export default {
       "diagram": "diagramme de fréquences",
       "title" : "Réglages",
       "categories" : "Catégories",
+      "symbols": "Symboles",
       "discretization": {
         "title": "discrétisation",
         "type": {

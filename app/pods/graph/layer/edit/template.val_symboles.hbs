@@ -21,7 +21,9 @@
       <div class="horizontal flow">
         {{distribution-bars mapping=editedLayer.mapping}}
       </div>
-      <div class="solid vertical flow">
+        <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
+
+        <div class="solid vertical flow">
         {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
         <ul class="tabs brewer-tabs">
           <li tab-id="linear-tab">uniques</li>
