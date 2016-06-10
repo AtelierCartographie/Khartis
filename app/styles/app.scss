@@ -66,40 +66,6 @@ footer {
   line-height: $footer-height;
 }
 
-//.menu-left {
-//  width: 5rem;
-//  transition: width 150ms ease-out;
-//
-//  .tool {
-//    @include flow(solid);
-//    height: 5rem;
-//    width: 100%;
-//    align-self: stretch;
-//    align-items: center;
-//    justify-content: center;
-//    position: relative;
-//    display: flex;
-//    cursor: pointer;
-//
-//    &:hover, &.selected {
-//      color: $color-primary;
-//    }
-//
-//    &:not(:last-child) {
-//      margin-bottom: 0.4em;
-//    }
-//
-//    &.selected {
-//      @extend .filled.default;
-//      @include shadow(2);
-//      //box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.24);
-//      z-index: 1;
-//    }
-//
-//  }
-//}
-
-
 .arrows-cursor {
   cursor: move;
 }
