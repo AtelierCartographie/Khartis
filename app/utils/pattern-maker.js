@@ -45,7 +45,6 @@ let _buildPatternFn = function(id, size, drawer) {
           y: -(4096/2),
           width: 4096,
           height: 4096
-          //transform: `scale(${scale})`
         })
         .attr("fill", `url(${window.location}#pattern-${maskId})`);
         
@@ -191,6 +190,7 @@ Composer.prototype.build = function({angle, stroke, type, size}) {
     angle: angle,
     stroke: stroke,
     key: `${angle}-${stroke}`,
+    type: type,
     fn: Pattern[type]({
       orientation: [ angle ],
       stroke: stroke,

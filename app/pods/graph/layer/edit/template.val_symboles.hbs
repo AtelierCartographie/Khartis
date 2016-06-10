@@ -89,7 +89,7 @@
                     totalClasses=editedLayer.mapping.scale.classes
                     possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
-                    {{x-slider class="fluid offset-slider" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
                 {{/unless}}
@@ -109,12 +109,14 @@
             {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.minSize max=24}}
             </div>
           </div>
+          {{#if (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
             <div class="horizontal half-airy solid flow w7">
               {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=0 max=4}}
             </div>
           </div>
+          {{/if}}
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=(x-ternary editedLayer.mapping.scale.diverging 2 1))}}</label>
             <div class="horizontal half-airy solid flow w7">
