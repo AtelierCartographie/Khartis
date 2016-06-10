@@ -147,27 +147,6 @@ let SurfaceMixin = Ember.Mixin.create({
     return this.get('colorSet')[this.get('visualization.reverse') ? this.get('colorSet').length - 1 : 0];
   }.property('colorSet.[]'),
 
-  usePattern: Ember.computed('visualization.pattern', {
-    get() {
-      return this.get('visualization.pattern') != null;
-    },
-    set(k, v) {
-      if (v && this.get('visualization.pattern') === null) {
-
-        let pattern = PatternMaker.Composer.build({
-          angle: 0,
-          stroke: 1,
-          type: "lines"
-        });
-        this.set('visualization.pattern', pattern);
-
-      } else if (!v && this.get('visualization.pattern') !== null) {
-        this.set('visualization.pattern', null);
-      }
-      return v;
-    }
-  }),
-  
   getScaleOf(type) {
     
     let ext = d3.extent(this.get('values')),
@@ -236,8 +215,6 @@ let SymbolMixin = Ember.Mixin.create({
         range;
         
     if (type === "size") {
-      
-      
 
       if (this.get('scale.intervalType') === "linear") {
 

@@ -28,7 +28,6 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   masks: function() {
-    console.log("masks");
     let r = [];
     if (this.get('mapping.scale.diverging')) {
       r.push(

@@ -94,6 +94,27 @@ let Mapping = Struct.extend({
   
   generateVisualization() {
   },
+
+  usePattern: Ember.computed('visualization.pattern', {
+    get() {
+      return this.get('visualization.pattern') != null;
+    },
+    set(k, v) {
+      if (v && this.get('visualization.pattern') === null) {
+
+        let pattern = PatternMaker.Composer.build({
+          angle: 0,
+          stroke: 1,
+          type: "lines"
+        });
+        this.set('visualization.pattern', pattern);
+
+      } else if (!v && this.get('visualization.pattern') !== null) {
+        this.set('visualization.pattern', null);
+      }
+      return v;
+    }
+  }),
   
   fn() {
     
@@ -115,6 +136,9 @@ let Mapping = Struct.extend({
           return rule.get('visible') ? rule.color : "none";
         } else if (mode === "texture" && rule.get('pattern')) {
           return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
+        } else if (mode === "texture" && !rule.get('pattern') && self.get('usePattern')) {
+          console.log(visualization.get('pattern'));
+          return rule.get('visible') ? PatternMaker.Composer.build(visualization.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "size") {
           return rule.get('size');
         } else if (mode === "shape") {
