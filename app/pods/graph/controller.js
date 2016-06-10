@@ -9,6 +9,9 @@ import topojson from 'npm:topojson';
 
 export default Ember.Controller.extend({
   
+  queryParams: ['currentTab'],
+  currentTab: null,
+
   states: [
     "visualizations",
     "export"
@@ -21,6 +24,12 @@ export default Ember.Controller.extend({
   
   editedLayer: null,
   editedColumn: null,
+
+  onCurrentTabChange: function() {
+    if (this.get('states').indexOf(this.get('currentTab')) !== -1) {
+      this.set('state', this.get('currentTab'));
+    }
+  }.observes('currentTab').on("init"),
   
   availableProjections: function() {
     return this.get('Dictionnary.data.projections')

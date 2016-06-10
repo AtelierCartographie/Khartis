@@ -2,6 +2,15 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  sidebarActiveTab: 'data',
+  sidebarTabVisualizationsDisabled: function() {
+    return this.get('hasErrors') || !this.get('model.project.geoDef');
+  }.property('hasErrors', 'model.project.geoDef'),
+
+  sidebarTabExportDisabled: function() {
+    return this.get('hasErrors') || !this.get('model.project.geoDef');
+  }.property('hasErrors', 'model.project.geoDef'),
+
   store: Ember.inject.service(),
 
   hasWarnings: function() {
@@ -54,6 +63,23 @@ export default Ember.Controller.extend({
     next(){
       this.get('store').merge(this.get('model.project'));
       this.transitionToRoute('graph', this.get('model.project._uuid'));
+    },
+
+    navigateToProject() {
+    },
+
+    navigateToVisualizations() {
+      if (!this.get('sidebarTabVisualizationsDisabled')) {
+        this.get('store').merge(this.get('model.project'));
+        this.transitionToRoute('graph', this.get('model.project._uuid'), { queryParams: { currentTab: 'visualizations' }});
+      }
+    },
+
+    navigateToExport() {
+      if (!this.get('sidebarTabExportDisabled')) {
+        this.get('store').merge(this.get('model.project'));
+        this.transitionToRoute('graph', this.get('model.project._uuid'), { queryParams: { currentTab: 'export' }});
+      }
     }
 
   }
