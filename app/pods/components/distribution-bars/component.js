@@ -81,6 +81,7 @@ export default Ember.Component.extend({
 			
 		let xAxis = d3.svg.axis()
       .scale(x)
+      .tickFormat(d3.format(".2s"))
       .orient("bottom");
 			
 		let yAxis = d3.svg.axis()

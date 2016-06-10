@@ -241,7 +241,7 @@ let SymbolMixin = Ember.Mixin.create({
         }
         
         contrastScale.domain(intervals).range(range);
-        d3Scale = d3.scale.linear();
+        d3Scale = d3.scale.linear().clamp(true);
         domain = [0, d3.max(range.map( v => Math.abs(v) ).slice(0, -1))];
         range = [0, visualization.get('maxSize')];
 

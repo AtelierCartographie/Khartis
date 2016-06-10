@@ -245,7 +245,7 @@ export default Ember.Mixin.create({
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
       
           if (!(r.x > 0 && r.y > 0)) return;
-          
+
           symbol.call(svg);
           
           let g = d3.select(this).append("g");
@@ -309,6 +309,8 @@ export default Ember.Mixin.create({
           let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
       
+          if (!(r.x > 0 && r.y > 0)) return;
+
           symbol.call(svg);
           
           let g = d3.select(this).append("g");
