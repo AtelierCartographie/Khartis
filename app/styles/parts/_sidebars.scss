@@ -26,12 +26,15 @@
 
 .sidebar-scroll-wrapper {
   overflow: auto;
-  padding: 0 $gutter;
-
-  &.padded {
-    padding: 4rem $gutter $gutter;  /* 4rem = Eyeballed alignment with sidebar content */
-  }
+  padding: 0 1rem;
+  flex: 1;
+  overflow-x: hidden;
 }
+
+.application-sidebar-sub .sidebar-scroll-wrapper {
+  padding-top: 1rem;
+}
+
 
 .sidebar-content{
   overflow: auto;
@@ -135,9 +138,11 @@
       }
   }
 
-  .collection > li.selected a {
+  .collection > li.selected,
+  .collection > li.selected a{
     color:color(text);
   }
+
 }
 
 

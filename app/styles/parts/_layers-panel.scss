@@ -1,7 +1,6 @@
 .layers, .edit-layer {
 
   .layer {
-
     border: none;
 
     .content {
@@ -13,8 +12,6 @@
         border-top: 1px solid color(primary);
       }
     }
-
-
 
     .caption {
       height: 5.4rem;
@@ -32,33 +29,39 @@
 
   }
 
-
 }
+
 
 .edit-layer .layer {
   background-color: color(variable);
 }
 
+
 // Controls adjustements
 
-.btn-switch-group .button:not(.selected){
+.btn-switch-group .button:not(.selected) {
   background-color: greys(30%);
 }
 
+
 // V center checkbox (must be on container)
 .offset-checkbox {
-  margin-top:2px;
+  margin-top: 2px;
 }
 
+
 // V center slider (must be on container)
-.offset-slider .slider.slider /* ! */{
+.offset-slider .slider.slider /* ! */
+{
   top: -5px;
 }
 
+
 // Fixed Height + padding bug on firefox
 input[type=text].padding-fix {
-  padding:.1rem 1rem;
+  padding: .1rem 1rem;
 }
+
 
 // Swatches dropdown
 .layer-color-selector {
@@ -76,15 +79,15 @@ input[type=text].padding-fix {
   }
 
   .swatch {
-    width:15px;
-    height:13px;
+    width: 15px;
+    height: 13px;
   }
 
 }
 
+
 // Patterns selector
 .layer-pattern-selector {
-
   display: flex;
   align-items: center;
 
@@ -97,11 +100,11 @@ input[type=text].padding-fix {
   }
 
   .layer-pattern-swatch li {
-    margin-right:0.5rem;
+    margin-right: 0.5rem;
   }
 
   .layer-pattern-swatch svg {
-    border:1px solid greys(30%);
+    border: 1px solid greys(30%);
 
     &.selected {
       border: 0.2rem solid #B29D8D;
@@ -110,6 +113,7 @@ input[type=text].padding-fix {
 
 }
 
+
 // Categories
 .categories-list {
 
@@ -117,7 +121,7 @@ input[type=text].padding-fix {
     //height: 35px;
     display: flex;
     align-items: stretch;
-    margin-bottom : 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .categories-controls {
@@ -128,7 +132,6 @@ input[type=text].padding-fix {
   .categories-control {
     flex: 1;
     background-color: #F5F5F5;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,16 +142,19 @@ input[type=text].padding-fix {
       background-color: transparent !important;
     }
 
-
     &.categories-shape-control {
       display: flex;
       align-items: center;
       width: 100%;
     }
 
+    .dropdown li {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
     // Dropdown
     .dropdown-trigger {
-
       display: flex;
       align-items: center;
       justify-content: center;
@@ -160,7 +166,7 @@ input[type=text].padding-fix {
     }
   }
 
-  .categories-control:not(:first-child){
+  .categories-control:not(:first-child) {
     margin-left: 0.3rem;
   }
 
@@ -174,7 +180,7 @@ input[type=text].padding-fix {
     color: #000;
 
     &.categories-surface {
-      flex:3;
+      flex: 3;
     }
   }
 
