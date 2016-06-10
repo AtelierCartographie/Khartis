@@ -144,7 +144,7 @@ var GraphLayout = Struct.extend({
   projection: null,
 
   showLegendChange: function() {
-    this.set('margin.b', this.get('showLegend') ? 200 : 30);
+    this.set('margin.b', this.get('showLegend') ? this.get('height') * 0.33 : 30);
   }.observes('showLegend').on("init"),
   
 	hOffset: function(screenWidth) {
