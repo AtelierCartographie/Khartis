@@ -1,0 +1,48 @@
+
+.application-sidebar,
+.application-sidebar-sub {
+  flex: 0 0 34rem !important;
+  &.empty {
+    flex: 0;
+  }
+}
+
+// Volet 1
+.application-sidebar {
+  background-color: color(volet1);
+  overflow: hidden;
+}
+
+// Volet 2
+.application-sidebar-sub {
+  background-color: color(volet2);
+  overflow: hidden;
+
+  .body {
+    margin-top: 1rem;
+  }
+}
+
+
+.sidebar-scroll-wrapper {
+  overflow: auto;
+  padding: 0 $gutter;
+
+  &.padded {
+    padding: 4rem $gutter $gutter;  /* 4rem = Eyeballed alignment with sidebar content */
+  }
+}
+
+.sidebar-content{
+  overflow: auto;
+}
+
+// Close btn
+.sidebar-sub-close {
+  padding: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
+  cursor:pointer;
+  z-index: 2;
+}

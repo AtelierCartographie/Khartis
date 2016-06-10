@@ -1,0 +1,10 @@
+.navheader {
+  @include flow(horizontal, solid, space-between);
+  padding: 0.5rem 1rem;
+}
+
+.btn-arrow {
+  line-height: 1;
+  font-size: 4.5rem;
+  color: color(titles);
+}

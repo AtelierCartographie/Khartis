@@ -14,3 +14,11 @@
 
 }
 
+/* Codemirror */
+.CodeMirror {
+  border: 1px solid #ddd;
+}
+
+.CodeMirror-placeholder.CodeMirror-placeholder {
+  color: greys(60%);
+}
