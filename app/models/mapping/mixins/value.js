@@ -247,19 +247,36 @@ let SymbolMixin = Ember.Mixin.create({
         d3Scale = contrastScale;
         range = contrastScale.range();
         domain = contrastScale.domain();
+        transform = _ => d3Scale(Math.abs(_));
 
       } else {
-        d3Scale = d3.scale.threshold();
-        range = Array.from({length: intervals.length},
-            (v, i) => Math.pow(Math.abs(i - (this.get('diverging') ? this.get('scale.classBeforeBreak') : 0)), 2)
+        contrastScale = d3.scale.threshold();
+        if (this.get('scale.diverging')) {
+          range = Array.from({length: this.get('scale.classesBeforeBreak')},
+            (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)
           );
-        range.push(Math.pow(intervals.length, 2));
-        console.log(range);
-        range.sort(d3.ascending);
-        domain = intervals.map( v => Math.abs(v) ).sort(d3.ascending);
+          range = range.concat(
+            Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak') + 1},
+              (v, i) => Math.pow(i+1, 2)
+            )
+          );
+        } else {
+          range = Array.from({length: intervals.length + 1},
+            (v, i) => Math.pow(i + 1, 2)
+          );
+        }
+        
+        contrastScale.domain(intervals).range(range);
+        d3Scale = d3.scale.linear();
+        domain = [0, d3.max(range.map( v => Math.abs(v) ).slice(0, -1))];
+        range = [0, visualization.get('maxSize')];
+
+        transform = _ => {
+          return d3Scale(contrastScale(Math.abs(_)));
+        };
+
       };
 
-      transform = _ => d3Scale(Math.abs(_));
       
     } else if (type === "color") {
       
@@ -276,6 +293,8 @@ let SymbolMixin = Ember.Mixin.create({
     }
     
     d3Scale.domain(domain).range(range);
+
+    
     
     return transform;
       

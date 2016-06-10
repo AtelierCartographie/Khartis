@@ -96,7 +96,8 @@ export default Ember.Controller.extend({
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
-    'graphLayout.showGrid', 'graphLayout.showLegend', 'graphLayout.showBorders'),
+    'graphLayout.showGrid', 'graphLayout.showLegend', 'graphLayout.showBorders',
+    'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment'),
   
   layersChange: function() {
     this.send('onAskVersioning', 'freeze');
@@ -297,7 +298,7 @@ export default Ember.Controller.extend({
     onIntervalTypeTabChange(id) {
       if (id === "linear-tab") {
         this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'linear');
-      } else {
+      } else if (this.get('editedLayer.mapping.scale.intervalType') === "linear") {
         this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'regular');
       }
     },
