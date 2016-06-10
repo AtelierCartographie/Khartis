@@ -14,6 +14,10 @@
 
 }
 
+.paste-csv-area:focus {
+  height: 200px;
+}
+
 /* Codemirror */
 .CodeMirror {
   border: 1px solid #ddd;

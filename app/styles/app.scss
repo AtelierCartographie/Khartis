@@ -57,10 +57,6 @@ body > .ember-view:not(.popable) {
   overflow-y: auto;
 }
 
-.paste-csv-area:focus {
-  height: 200px;
-}
-
 footer {
   flex-basis: $footer-height;
   line-height: $footer-height;
@@ -253,7 +249,6 @@ footer {
   }
 
 }
-
 
 .geo-ref-column, .layers-column {
 
