@@ -135,13 +135,14 @@ export default {
   
   "visualization": {
     "title": {
-      "choose": "choix d'une visualisation"
+      "choose": "choix d'une visualisation",
+      "categories": "catégories",
+      "nodata": "absence de données"
     },
     "settings": {
       "diagram": "diagramme de fréquences",
-      "title" : "Réglages",
-      "categories" : "Catégories",
-      "symbols": "Symboles",
+      "title" : "réglages",
+      "symbols": "symboles",
       "discretization": {
         "title": "discrétisation",
         "type": {

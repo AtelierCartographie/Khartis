@@ -140,28 +140,28 @@
           </div>
 
           {{#if editedLayer.mapping.rules.length}}
-          <div>
-              <label>Absence de données</label>
-              <ul class="collection">
-              {{#each editedLayer.mapping.rules as |rule|}}
-              <li>
-                <div class="horizontal space-between flow layer-header">
-                  <div class="horizontal airy flow">
-                    {{#if rule.emptyValue}}
-                      <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
-                    {{else}}
-                      <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
-                    {{/if}}
-                  </div>
-                  <div class="solid w4 text-right no-drag">
-                    <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                    {{color-picker value=rule.color}}
-                  </div>
+            <div class="title underlined" style="margin-top:20px;">
+              {{x-capitalize (t 'visualization.title.nodata')}}
+            </div>
+            <ul class="collection categories-list">
+            {{#each editedLayer.mapping.rules as |rule|}}
+            <li>
+              <div class="horizontal space-between flow layer-header">
+                <div class="horizontal airy flow">
+                  {{#if rule.emptyValue}}
+                    <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
+                  {{else}}
+                    <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
+                  {{/if}}
                 </div>
-              </li>
-              {{/each}}
-              </ul>
-          </div>
+                <div class="solid w4 text-right no-drag">
+                  <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                  {{color-picker value=rule.color}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+            </ul>
           {{/if}}
       </div>
     </div>
