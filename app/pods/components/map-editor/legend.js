@@ -67,7 +67,7 @@ export default Ember.Mixin.create({
           {w, h} = this.getSize();
       
       t.x = (w - bbox.width) / 2;
-      t.y = h - this.get('graphLayout').vOffset(h) - bbox.height - 16;
+      t.y = h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + 16;
       
     } else {
       

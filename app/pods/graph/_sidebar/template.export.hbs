@@ -10,12 +10,14 @@
 
     <div class="title underlined">{{x-capitalize (t 'export.title.legend')}}</div>
     <div class="settings vertical flow">
+      {{#if model.graphLayers.length}}
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'export.settings.showLegend')}} ?</label>
         <div class="horizontal solid half-airy flow w7">
           <a {{action 'toggleLegendVisibility'}}><i class="iconfont {{if model.graphLayout.showLegend 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
       </div>
+      {{/if}}
     </div>
     
     <!--<div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
