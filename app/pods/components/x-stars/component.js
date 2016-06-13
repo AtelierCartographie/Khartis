@@ -15,8 +15,9 @@ export default Ember.Component.extend({
   
   stars: function() {
     let arr = Em.A(),
-        max = this.get('max')+this.get('clampLeft') || this.get('value');
-    for (let i = this.get('clampLeft'); i < max; i++) {
+        max = (this.get('max')+this.get('clampLeft')) || this.get('value');
+    for (let i = this.get('clampLeft') + 1; i <= max; i++) {
+      console.log(i, this.get('value'));
       arr.push(i <= this.get('value'));
     }
     return arr;
