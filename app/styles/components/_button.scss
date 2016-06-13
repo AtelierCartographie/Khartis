@@ -62,7 +62,7 @@ a.button {
   right: 1rem;
 }
 
-.add-variable-button {
+.dropdown-trigger .add-variable-button {
   border-radius: 50%;
   background-color: color(variable);
   color: color(titles);
@@ -72,12 +72,14 @@ a.button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5rem;
+  &, .iconfont {
+    font-size: 3.5rem;
+  }
 
   i {
     margin-top: -5px;
     margin-left: 2px;
   }
-  // TODO: remove that
-  margin-bottom: 2rem;
+
+  margin-bottom: 0.5rem;
 }

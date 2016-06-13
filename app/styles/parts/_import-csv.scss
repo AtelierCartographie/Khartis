@@ -98,6 +98,10 @@
     position: relative;
   }
 
+  & thead tr {
+    background-color: greys(5%);
+  }
+
   & tr:nth-child(even){
     background-color: greys(5%);
   }
