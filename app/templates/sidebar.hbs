@@ -5,9 +5,15 @@
     <div class="sidebar-content  vertical flow">
 
         <ul class="application-nav text-center flow">
-            <li class="{{if (x-eq sidebarActiveTab 'data') 'active'}}" {{action 'navigateToProject'}}>1.{{t 'navigation.sidebar.data'}}</li>
-            <li class="{{if (x-eq sidebarActiveTab 'visualizations') 'active'}} {{if sidebarTabVisualizationsDisabled 'disabled'}}" {{action 'navigateToVisualizations'}}>2.{{t 'navigation.sidebar.visualisations'}}</li>
-            <li class="{{if (x-eq sidebarActiveTab 'export') 'active'}} {{if sidebarTabExportDisabled 'disabled'}}" {{action 'navigateToExport'}}>3.{{t 'navigation.sidebar.export'}}</li>
+            <li class="{{if (x-eq sidebarActiveTab 'data') 'active'}}" >
+              <span {{action 'navigateToProject'}}>1.{{t 'navigation.sidebar.data'}}</span>
+            </li>
+            <li class="{{if (x-eq sidebarActiveTab 'visualizations') 'active'}} {{if sidebarTabVisualizationsDisabled 'disabled'}}">
+              <span {{action 'navigateToVisualizations'}}>2.{{t 'navigation.sidebar.visualisations'}}</span>
+            </li>
+            <li class="{{if (x-eq sidebarActiveTab 'export') 'active'}} {{if sidebarTabExportDisabled 'disabled'}}">
+              <span {{action 'navigateToExport'}}>3.{{t 'navigation.sidebar.export'}}</span>
+            </li>
         </ul>
 
         <div class="flow vertical space-between">

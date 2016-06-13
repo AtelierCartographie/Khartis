@@ -14,6 +14,8 @@ import ZoomFeature from './zoom';
 
 let landSelSet = new Set();
 
+let shift = 0;
+
 export default Ember.Component.extend(ViewportFeature, LegendFeature,
   ZoomFeature, {
   
@@ -235,7 +237,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
           this.get('graphLayout.margin'),
           this.get('graphLayout.projection')
         );
-        
+   
     this.scaleProjection(projection);
     
     return projection; 
@@ -245,7 +247,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     'graphLayout.projection._defferedChangeIndicator'),
     
   scaleProjection: function(projection) {
-    
+
     projection
       .translate([
           projection.initialTranslate[0]*(this.get('graphLayout.zoom')+this.get('graphLayout.tx')),

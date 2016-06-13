@@ -25,16 +25,36 @@ export default Ember.Mixin.create({
     let updateTxTy = () => {
       let p = this.get('projection');
       zoom.translate([
-        p.initialTranslate[0]*this.get('graphLayout.tx'),
-        p.initialTranslate[1]*this.get('graphLayout.ty')
+        this.get('relTx'),
+        this.get('relTy')
       ]);
     }
-    this.addObserver('graphLayout.tx', 'graphLayout.ty', updateTxTy);
+    this.addObserver('relTx', 'relTy', updateTxTy);
     updateTxTy();
 
     d3g.call(zoom);
 
   },
+
+  relTx: Ember.computed('graphLayout.tx', {
+    get() {
+      return this.get('graphLayout.tx')*this.get('projection').initialTranslate[0];
+    },
+    set(k, v) {
+      this.set('graphLayout.tx', v/this.get('projection').initialTranslate[0]);
+      return v;
+    }
+  }),
+
+  relTy: Ember.computed('graphLayout.ty', {
+    get() {
+      return this.get('graphLayout.ty')*this.get('projection').initialTranslate[1];
+    },
+    set(k, v) {
+      this.set('graphLayout.ty', v/this.get('projection').initialTranslate[1]);
+      return v;
+    }
+  }),
 
   zoomAndDrag(scale, translate) {
     
@@ -64,10 +84,10 @@ export default Ember.Mixin.create({
         
         this.get('graphLayout').beginPropertyChanges();
         
-        this.get('graphLayout').setProperties({
-          zoom: parseFloat(mapG.attr("s")),
-          tx: parseFloat(mapG.attr("tx")) / t[0],
-          ty: parseFloat(mapG.attr("ty")) / t[1]
+        this.setProperties({
+          "graphLayout.zoom": parseFloat(mapG.attr("s")),
+          relTx: parseFloat(mapG.attr("tx")),
+          relTy: parseFloat(mapG.attr("ty"))
         });
         
         this.scaleProjection(projection);
@@ -100,8 +120,8 @@ export default Ember.Mixin.create({
         ds = projection.scale() / projection.resolution,
         tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
         ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
-        shiftX = tx - this.get('graphLayout.tx')*projection.initialTranslate[0],
-        shiftY = ty - this.get('graphLayout.ty')*projection.initialTranslate[1];
+        shiftX = tx - this.get('relTx'),
+        shiftY = ty - this.get('relTy');
    
     if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
         || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
@@ -120,8 +140,8 @@ export default Ember.Mixin.create({
       } else {
         zoom.toScaleAndTranslate(
           this.get('graphLayout.zoom'),
-          this.get('graphLayout.tx')*projection.initialTranslate[0],
-          this.get('graphLayout.ty')*projection.initialTranslate[1]
+          this.get('relTx'),
+          this.get('relTy')
         );
       }
       

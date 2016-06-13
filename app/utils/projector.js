@@ -22,7 +22,7 @@ export default {
     
     let projection = proj.fn()
       .center(center)
-      .clipExtent([[-fWidth, -fWidth], [2*fWidth, 2*fHeight]])
+      .clipExtent([[-width, -width], [2*width, 2*height]])
       .translate([
         (width + (margin.get('l') - margin.get('r'))) / 2,
         (height + (margin.get('t') - margin.get('b'))) / 2
