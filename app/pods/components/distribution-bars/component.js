@@ -44,13 +44,13 @@ export default Ember.Component.extend({
     stack.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate("+ (-margin.left/2) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-        .attr("class", "axis-label")
+        .attr("class", "axis-label y")
         .text(this.get('yLabel'));
 
     stack.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ ((width-margin.left)/2) +","+(height-(margin.bottom/2))+")")  // centre below axis
-        .attr("class", "axis-label")
+        .attr("transform", "translate("+ ((width-margin.left)/2) +","+(height-(margin.bottom/2) + 2)+")")  // centre below axis
+        .attr("class", "axis-label x")
         .text(this.get('xLabel'));
     
     this.drawDistribution();
@@ -194,6 +194,13 @@ export default Ember.Component.extend({
     
     sel.exit().remove();
     
-  }.observes('mapping._defferedChangeIndicator')
+  }.observes('mapping._defferedChangeIndicator'),
+
+  labelChange: function() {
+    this.d3l().select(".axis-label.x")
+      .text(this.get('xLabel'));
+    this.d3l().select(".axis-label.y")
+      .text(this.get('yLabel'));
+  }.observes("xLabel", "yLabel")
   
 });

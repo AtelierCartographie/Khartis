@@ -15,11 +15,14 @@
       </li>
     </ul>
   </div>
-  <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram')}}</div>
+  <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram.title')}}</div>
   <div class="body">
     <div class="settings vertical flow">
       <div class="horizontal flow">
-        {{distribution-bars mapping=editedLayer.mapping}}
+        {{distribution-bars mapping=editedLayer.mapping
+          xLabel=(t 'visualization.settings.diagram.values')
+          yLabel=(t 'visualization.settings.diagram.frequencies')
+        }}
       </div>
         <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
 

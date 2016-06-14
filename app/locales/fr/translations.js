@@ -140,7 +140,11 @@ export default {
       "nodata": "absence de données"
     },
     "settings": {
-      "diagram": "diagramme de fréquences",
+      "diagram": {
+        "title": "diagramme de fréquences",
+        "frequencies": "fréquences",
+        "values": "valeurs"
+      },
       "title" : "réglages",
       "symbols": "symboles",
       "discretization": {
