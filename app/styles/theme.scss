@@ -136,6 +136,10 @@ small {
 /* cursor */
 .clickable {
   cursor: pointer;
+  &.hover-effect:hover {
+    filter: brightness(0.85);
+    -webkit-filter: brightness(0.85);
+  }
 }
 
 @import "components/panel";

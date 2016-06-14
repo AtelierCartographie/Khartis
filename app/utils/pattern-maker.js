@@ -58,6 +58,10 @@ let _buildPatternFn = function(id, size, drawer) {
     }
     return `${window.location}#${maskId}`;
   };
+
+  fn.id = function() {
+    return id;
+  };
   
   return fn;
   
@@ -68,7 +72,7 @@ let Pattern = {};
 Pattern.lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
-      size = opts.size || 12,
+      size = opts.size || (2*opts.stroke+4),
       stroke = "#FFFFFF",
       strokeWidth = opts.stroke,
       path = function(orientation) {
@@ -95,7 +99,7 @@ Pattern.lines = function(opts = {}) {
             })(size);
         }
       };
-      
+  size = (orientation[0] % 90 === 0) ? size : size*Math.sqrt(2);
   return _buildPatternFn(
     `lines-${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "_")}`,
     size,
@@ -116,13 +120,13 @@ Pattern.lines = function(opts = {}) {
 
 Pattern.circles = function(opts = {}) {
   
-  let size = opts.size || 12,
-      color = "#FFFFFF",
+  let color = "#FFFFFF",
       strokeWidth = 1,
-      radius = opts.stroke;
-  
+      radius = opts.stroke,
+      size = opts.size || (2*radius+4)
+
   return _buildPatternFn(
-    `circles-${size}`,
+    `circles-${(""+radius).replace(".", "_")}`,
     size,
     function(g) {
       g.append("circle").attr({
@@ -141,61 +145,75 @@ Pattern.circles = function(opts = {}) {
 
 let Composer = function(){};
 
-Composer.prototype.compose = function(diverging, reverse, classes, before, angle, baseStroke) {
+Composer.prototype.compose = function(diverging, classes, before, angle, baseStroke, reverse) {
   
-  let res;
-  
+  let res,
+      strokeScale = d3.scale.linear().range([1, 8]),
+      maxSize = strokeScale.range()[1] + 4;
+
   if (diverging) {
     
     let left = Array.from({length: before}, (v, i) => {
+
+          strokeScale.domain([0, before]);
+          console.log(before - i, Math.abs(strokeScale(before - i)), [0, before-1]);
           return this.build({
               type: "circles",
-              angle: angle + 90,
-              stroke: baseStroke + Math.pow(before - i, 2),
-              size: 6*(before - i)
+              stroke: baseStroke + Math.abs(strokeScale(before - i))/2,
+              size: maxSize
             });
+
         }),
         right = Array.from({length: classes - before}, (v, i) => {
+
+          strokeScale.domain([0, classes - before - 1]);
           return this.build({
               type: "lines",
               angle: angle,
-              stroke: baseStroke + Math.pow(i, 2),
-              size: 6*i
+              stroke: baseStroke + strokeScale(i),
+              size: maxSize
             });
+
         });
     
-    reverse ? right.reverse() : left.reverse();
-    
+    reverse ? left.reverse() : void(0);
+    reverse ? right.reverse() : void(0);
     res = left.concat(right);
     
   } else {
     res = Array.from({length: classes}, (v, i) => {
+
+      strokeScale.domain([0, classes]);
       return this.build({
           type: "lines",
           angle: angle,
-          stroke: baseStroke + Math.pow(i, 2),
-          size: 6*i
+          stroke: baseStroke + strokeScale(i),
+          size: maxSize
         });
+
     });
     reverse ? res.reverse() : void(0);
   }
+
+  console.log(res);
   
   return res;
   
 };
   
 Composer.prototype.build = function({angle, stroke, type, size}) {
-  size = size || 12;
+  let fn = Pattern[type]({
+        orientation: [ angle ],
+        stroke: stroke,
+        size: size
+      });
+
   return {
     angle: angle,
     stroke: stroke,
-    key: `${angle}-${stroke}`,
+    key: fn.id(),
     type: type,
-    fn: Pattern[type]({
-      orientation: [ angle ],
-      stroke: stroke,
-      size: size
-    })
+    fn: fn
   };
 };
 

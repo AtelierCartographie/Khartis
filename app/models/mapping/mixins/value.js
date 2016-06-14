@@ -129,22 +129,26 @@ let SurfaceMixin = Ember.Mixin.create({
     
     return PatternMaker.Composer.compose(
       this.get('scale.diverging'),
-      this.get('visualization.reverse'),
       this.get('scale.classes'),
       this.get('scale.classesBeforeBreak'),
       this.get('visualization.pattern.angle'),
-      this.get('visualization.pattern.stroke')
+      this.get('visualization.pattern.stroke'),
+      this.get('visualization.reverse')
     );
     
   }.property('visualization.pattern', 'scale.classes',
-  'scale.classesBeforeBreak', 'scale.diverging'),
+  'scale.classesBeforeBreak', 'scale.diverging', 'visualization.reverse'),
 
   patternColor: function() {
-    return this.get('colorSet')[this.get('visualization.reverse') ? 0 : this.get('colorSet').length - 1];
+    let master = this.get('colorSet'),
+        startIndex = this.get('scale.diverging') ? this.get('scale.classesBeforeBreak') : 0;
+    return master[this.get('visualization.reverse') ? startIndex : master.length - 1];
   }.property('colorSet.[]'),
 
-  patternColorReverse: function() {
-    return this.get('colorSet')[this.get('visualization.reverse') ? this.get('colorSet').length - 1 : 0];
+  patternColorBeforeBreak: function() {
+    let master = this.get('colorSet'),
+        endIndex = this.get('scale.classesBeforeBreak') - 1;
+    return master[this.get('visualization.reverse') ? endIndex : 0];
   }.property('colorSet.[]'),
 
   getScaleOf(type) {
@@ -170,7 +174,7 @@ let SurfaceMixin = Ember.Mixin.create({
       } else if (type === "color") {
         if (this.get('scale.diverging')) {
           range = Array.from({length: rangeLength}, (v, i) => {
-            return (i < this.get('scale.classesBeforeBreak')) ? this.get('patternColorReverse') : this.get('patternColor');
+            return (i < this.get('scale.classesBeforeBreak')) ? this.get('patternColorBeforeBreak') : this.get('patternColor');
           });
         } else {
           range = Array.from({length: rangeLength}, () => this.get('patternColor'));
@@ -242,11 +246,6 @@ let SymbolMixin = Ember.Mixin.create({
 
         
         contrastScale.domain(intervals).range(range);
-        let _r = range.slice();
-        window.ts =  function() {
-          console.log(intervals, _r);
-          return contrastScale;
-        };
 
         d3Scale = d3.scale.linear().clamp(true);
         domain = [0, d3.max(range.map( v => Math.abs(v) ).slice(0, -1))];
@@ -274,8 +273,6 @@ let SymbolMixin = Ember.Mixin.create({
     }
     
     d3Scale.domain(domain).range(range);
-
-    
     
     return transform;
       

@@ -26,6 +26,9 @@
     .toggle-projection-button {
       font-size: 3rem;
       line-height: 1em;
+      @media screen and (max-width: 1260px) {
+        display: none;
+      }
     }
     
     .control-buttons {

@@ -4,10 +4,10 @@
       {{#each availableProjections as |proj|}}
         <li class="clickable" {{action 'selectProjection' proj}}>
           <div class="horizontal airy flow overflows">
-            <div class="vertical middle solid flow padded-h" style="width: 120px">
+            <div class="vertical middle solid flow padded-h projection-name">
               <b>{{t (concat "projection." proj.id ".name")}}</b>
             </div>
-            <div class="horizontal middle right solid flow" style="width: 200px">
+            <div class="horizontal middle right solid flow projection-stars">
               <div class="vertical solid flow w4">
                 {{x-stars value=proj.score_area iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
               </div>

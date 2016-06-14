@@ -19,3 +19,17 @@
   }
   
 }
+
+.projection-name {
+  width: 130px;
+  @media screen and (max-width: 1260px) {
+    width: 90px;
+  }
+}
+
+.projection-stars {
+  width: 200px;
+  @media screen and (max-width: 1260px) {
+    width: 183px;
+  }
+}

@@ -9,12 +9,12 @@
 
           <header class="filled volet2 horizontal solid flow graph-topbar">
 
-            <div class="horizontal bottom space-between solid airy flow">
+            <div class="projection horizontal bottom space-between solid airy flow filled volet2 clickable hover-effect" {{action 'toggleProjection'}} >
               {{#if model.graphLayout.projection}}
-                <div class="vertical bottom solid flow padded-h" style="width: 120px">
+                <div class="vertical bottom solid flow padded-h projection-name">
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
                 </div>
-                <div class="horizontal bottom solid flow" style="width: 200px">
+                <div class="horizontal bottom solid flow projection-stars">
                   <div class="vertical solid flow w4">
                     <label>surface</label>
                     {{x-stars value=model.graphLayout.projection.score_area iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
@@ -28,32 +28,32 @@
                     {{x-stars value=model.graphLayout.projection.score_angle iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                 </div>
-                <div {{action 'toggleProjection'}} class="solid button padded-r toggle-projection-button"> <i class="iconfont iconfont-angle-down"></i></div>
+                <div class="solid button padded-r toggle-projection-button"> <i class="iconfont iconfont-angle-down"></i></div>
               {{/if}}
             </div>
 
-            <div class="horizontal bottom space-between solid flow w6 padded-h">
+            <div class="horizontal bottom space-between flow padded-h">
                 {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
-                <div class="vertical flow">
+                <div class="vertical solid flow w4">
                   <label>Longitude</label>
                   {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.translation_y 1)}}
-                <div class="vertical flow">
+                <div class="vertical solid flow w4">
                   <label>Latitude</label>
                   {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" band=1 value=model.graphLayout.projection.rotateY min=-180 max=180}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.rotation_z 1)}}
-                <div class="vertical flow">
+                <div class="vertical solid flow w4">
                   <label>Rotation</label>
                   {{x-slider-editable class="proj-slider fluid" transform=invertSliderFn tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-180 max=180}}
                 </div>
                 {{/if}}
             </div>
 
-            <div class="horizontal bottom flow control-buttons">
+            <div class="horizontal bottom solid flow control-buttons">
               <div class="button control-button" {{action 'zoomMoins'}}><i class="iconfont iconfont-minus"></i></div>
               <div class="button control-button" {{action 'zoomPlus'}}><i class="iconfont iconfont-plus"></i></div>
               <div class="button control-button zoom" {{action 'resetTranslate'}}><i class="iconfont iconfont-move"></i></div>
