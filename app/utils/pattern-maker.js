@@ -148,29 +148,29 @@ let Composer = function(){};
 Composer.prototype.compose = function(diverging, classes, before, angle, baseStroke, reverse) {
   
   let res,
-      strokeScale = d3.scale.linear().range([1, 8]),
+      l,
+      strokeScale = d3.scale.pow().exponent(1).range([1, 8]),
       maxSize = strokeScale.range()[1] + 4;
 
   if (diverging) {
     
-    let left = Array.from({length: before}, (v, i) => {
+    let left = Array.from({length: l = before}, (v, i) => {
 
-          strokeScale.domain([0, before]);
-          console.log(before - i, Math.abs(strokeScale(before - i)), [0, before-1]);
+          strokeScale.domain([l > 1 ? 1 : 0, l]);
           return this.build({
               type: "circles",
-              stroke: baseStroke + Math.abs(strokeScale(before - i))/2,
+              stroke: (baseStroke + Math.abs(strokeScale(before - i)))/2,
               size: maxSize
             });
 
         }),
-        right = Array.from({length: classes - before}, (v, i) => {
+        right = Array.from({length: l = classes - before}, (v, i) => {
 
-          strokeScale.domain([0, classes - before - 1]);
+          strokeScale.domain([l > 1 ? 1 : 0, l]);
           return this.build({
               type: "lines",
               angle: angle,
-              stroke: baseStroke + strokeScale(i),
+              stroke: baseStroke + strokeScale(i+1),
               size: maxSize
             });
 
@@ -181,13 +181,13 @@ Composer.prototype.compose = function(diverging, classes, before, angle, baseStr
     res = left.concat(right);
     
   } else {
-    res = Array.from({length: classes}, (v, i) => {
+    res = Array.from({length: l = classes}, (v, i) => {
 
-      strokeScale.domain([0, classes]);
+      strokeScale.domain([1, l]);
       return this.build({
           type: "lines",
           angle: angle,
-          stroke: baseStroke + strokeScale(i),
+          stroke: baseStroke + strokeScale(i+1),
           size: maxSize
         });
 
