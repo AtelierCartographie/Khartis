@@ -443,7 +443,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
     d3l.select("#border-square-clip path")
       .datum(this.get('base').squares)
-      .attr("d", d => "M0,0H2000V2000H-2000z"+this.get('projectedPath')(d));
+      .attr("d", d => "M0,0H4000V4000H-4000z"+this.get('projectedPath')(d));
     
     d3l.select("g.borders path.borders")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
