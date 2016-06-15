@@ -55,11 +55,11 @@ var GraphLayout = Struct.extend({
 	
   basemap: "110m-world.json",
   
-	stroke: "#445aa9",
+	stroke: "#ffffff",
 	strokeWidth: 1,
 	
 	backgroundColor: "#F7F7F7",
-  backMapColor: "#ededed",
+  backMapColor: "#e0e1e1",
   
   showBorders: true,
 
@@ -170,6 +170,7 @@ var GraphLayout = Struct.extend({
       backgroundColor: this.get('backgroundColor'),
       backMapColor: this.get('backMapColor'),
       gridColor: this.get('gridColor'),
+      stroke: this.get('stroke'),
       tx: this.get('tx'),
       ty: this.get('ty'),
       width: this.get('width'),
@@ -200,6 +201,7 @@ GraphLayout.reopenClass({
         backgroundColor: json.backgroundColor,
         backMapColor: json.backMapColor,
         gridColor: json.gridColor,
+        stroke: json.stroke,
         projection: json.projection ? Projection.restore(json.projection) : null,
         margin: json.margin ? Margin.restore(json.margin) : null,
         width: json.width,

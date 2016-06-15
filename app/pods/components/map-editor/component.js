@@ -117,11 +117,12 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     backMap.append("path")
       .classed("land", true);
     	
-		mapG.append("g")
+		let layers = mapG.append("g")
 			.classed("layers", true);
     
-    let bordersMap = mapG.append("g")
-      .classed("borders", true);
+    let bordersMap = layers.append("g")
+      .classed("borders", true)
+      .datum({isBorderLayer: true});
       
     bordersMap.append("path")
       .classed("borders", true);
@@ -327,7 +328,32 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .classed("feature", true);
      
     sel.exit().remove();
+
     
+    
+  },
+
+  reorderLayers() {
+
+    let layers = this.get('graphLayers');
+
+    this.d3l().select(".layers")
+      .selectAll(".layer, g.borders")
+      .sort((a,b) => {
+          if (a.isBorderLayer && b.get('mapping.visualization.type') === "surface") {
+            return 1;
+          } else if (b.isBorderLayer && a.get('mapping.visualization.type') === "surface") {
+            return -1;
+          } else if (a.isBorderLayer && b.get('mapping.visualization.type') === "symbol") {
+            let idx = layers.indexOf(b);
+            return layers.some((v, i) => i < idx && v.get('mapping.visualization.type') === "surface") ? 1 : -1;
+          } else if (b.isBorderLayer && a.get('mapping.visualization.type') === "symbol") {
+            let idx = layers.indexOf(a);
+            return layers.some((v, i) => i < idx && v.get('mapping.visualization.type') === "surface") ? -1 : 1;
+          } else {
+            return layers.indexOf(a) < layers.indexOf(b) ? 1 : -1;
+          }
+      });
   },
   
   drawTitle: function() {
@@ -452,11 +478,11 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     sel.order().exit().remove();
     
     sel.each(function(d, index) {
-      d.index = index;
       self.mapData(d3.select(this), d);
     });
     
     this.drawLandSel();
+    this.reorderLayers();
     
   }.observes('graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
   
@@ -557,6 +583,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         });
       
     };
+
+    d3Layer.classed("surface", true);
       
     let sel = d3Layer.selectAll(".feature")
       .data(data)
