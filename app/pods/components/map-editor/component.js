@@ -75,6 +75,11 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     defs.append("clipPath")
       .attr("id", "clip")
       .append("use");
+
+    defs.append("clipPath")
+      .attr("id", "border-square-clip")
+      .append("path")
+      .attr("clip-rule", "evenodd")
     
 		// ---------
 		
@@ -116,7 +121,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       
     backMap.append("path")
       .classed("land", true);
-    	
+
 		let layers = mapG.append("g")
 			.classed("layers", true);
     
@@ -129,6 +134,9 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       
     bordersMap.append("path")
       .classed("borders-disputed", true);
+
+    bordersMap.append("path")
+      .classed("squares", true);
       
     this.viewportInit(defs, d3g);
     this.zoomInit(d3g);
@@ -432,10 +440,15 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .style({
         "fill": this.get('graphLayout.backMapColor')
       });
+
+    d3l.select("#border-square-clip path")
+      .datum(this.get('base').squares)
+      .attr("d", d => "M0,0H2000V2000H-2000z"+this.get('projectedPath')(d));
     
     d3l.select("g.borders path.borders")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
       .attr("d", this.get('projectedPath'))
+      .attr("clip-path", `url(${window.location}#border-square-clip)`)
       .style({
         "stroke-width": 1,
         "stroke": this.get("graphLayout.stroke"),
@@ -445,9 +458,19 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     d3l.select("g.borders path.borders-disputed")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').bordersDisputed : null)
       .attr("d", this.get('projectedPath'))
+      .attr("clip-path", `url(${window.location}#border-square-clip)`)
       .style({
         "stroke-width": 1,
         "stroke-dasharray": "5,5",
+        "stroke": this.get("graphLayout.stroke"),
+        "fill": "none"
+      });
+
+    d3l.select("g.borders path.squares")
+      .datum(this.get('graphLayout.showBorders') ? this.get('base').squares : null)
+      .attr("d", this.get('projectedPath'))
+      .style({
+        "stroke-width": 1,
         "stroke": this.get("graphLayout.stroke"),
         "fill": "none"
       });

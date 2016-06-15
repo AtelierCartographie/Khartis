@@ -63,9 +63,17 @@ export default Ember.Controller.extend({
   setup() {
     this.loadBasemap(this.get('model.graphLayout.basemap'))
       .then( (json) => {
-        let j = JSON.parse(json);
+        let j = JSON.parse(json),
+            partition = j.objects.land.geometries
+              .reduce( (part, g) => {
+                part[g.properties.square ? "left" : "right"].push(g);
+                return part;
+              }, {left: [], right: []});
+
+        console.log(j);
         this.set('basemapData', {
-          land: topojson.merge(j, j.objects.land.geometries),
+          land: topojson.merge(j, partition.right),
+          squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
               return a.properties.featurecla === "International"; 
