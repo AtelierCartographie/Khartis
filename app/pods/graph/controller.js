@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
-              return a.properties.featurecla === "International"; 
+              return a.properties.featurecla === "International";
             }),
           bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
               return a.properties.featurecla === "Disputed"; 
@@ -227,7 +227,12 @@ export default Ember.Controller.extend({
     },
     
     editLayer(layerIndex) {
-      this.transitionToRoute('graph.layer.edit', this.get('model.graphLayers').objectAt(layerIndex).get('_uuid'));
+      let layer = this.get('model.graphLayers').objectAt(layerIndex);
+      if (layer != this.get('editedLayer')) {
+        this.transitionToRoute('graph.layer.edit', layer.get('_uuid'));
+      } else {
+        this.transitionToRoute('graph');
+      }
     },
     
     removeLayer(layer) {
