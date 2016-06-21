@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'mapp',
     podModulePrefix: 'mapp/pods',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: /*process.env.EMBER_CLI_ELECTRON ? 'hash' : */'auto',
     EmberENV: {
       FEATURES: {

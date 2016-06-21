@@ -10,9 +10,10 @@ let Struct = Ember.Object.extend({
    },
    
    init() {
-      if (!this.get('_uuid')) {
-          this.set('_uuid', Struct._nextId.next().value);
-      }
+    this._super();
+    if (!this.get('_uuid')) {
+        this.set('_uuid', Struct._nextId.next().value);
+    }
    },
    export(opts) {
       return Object.assign({
