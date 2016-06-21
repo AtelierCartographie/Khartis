@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'mapp/config/environment';
 
 export default Ember.Component.extend({
   
@@ -9,9 +10,9 @@ export default Ember.Component.extend({
   
   src: function() {
     if (this.get('type')) {
-      return "assets/images/viz/small-"+this.get('type').replace(/\./, "-")+".jpg";
+      return config.rootURL+"assets/images/viz/small-"+this.get('type').replace(/\./, "-")+".jpg";
     } else {
-      return "assets/images/unknow.jpg";
+      return config.rootURL+"assets/images/unknow.jpg";
     } 
   }.property('type')
   
