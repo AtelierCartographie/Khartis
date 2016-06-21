@@ -12,6 +12,7 @@
             <div class="projection horizontal bottom space-between solid airy flow filled volet2 clickable hover-effect" {{action 'toggleProjection'}} >
               {{#if model.graphLayout.projection}}
                 <div class="vertical bottom solid flow padded-h projection-name">
+                  <label>projection</label>
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
                 </div>
                 <div class="horizontal bottom solid flow projection-stars">

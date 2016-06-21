@@ -24,17 +24,27 @@ export default Ember.Component.extend({
   valueChange: function() {
     this.set('inputValue', this.get('value'));
   }.observes('value').on("init"),
+
+  valueCommit(val) {
+
+    let newVal = val.replace(/[^\d\-\.]+/g, "");
+      
+    if (!isNaN(parseFloat(newVal))) {
+      this.set('value', newVal);
+    }
+
+  },
   
   actions: {
     
     inputFocusOut(val) {
-      
-      let newVal = val.replace(/[^\d\-\.]+/g, "");
-      
-      if (!isNaN(parseFloat(newVal))) {
-        this.set('value', newVal);
+      this.valueCommit(val);
+    },
+
+    inputKeyUp(val, e) {
+      if (e.keyCode == 13) {
+        this.valueCommit(val);
       }
-      
     }
     
   }
