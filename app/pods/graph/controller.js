@@ -70,13 +70,12 @@ export default Ember.Controller.extend({
                 return part;
               }, {left: [], right: []});
 
-        console.log(j);
         this.set('basemapData', {
           land: topojson.merge(j, partition.right),
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
-              return a.properties.featurecla === "International"; 
+              return a.properties.featurecla === "International";
             }),
           bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
               return a.properties.featurecla === "Disputed"; 
@@ -92,7 +91,7 @@ export default Ember.Controller.extend({
     return new Promise((res, rej) => {
       
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.baseURL}data/map/${basemap}`, true);
+      xhr.open('GET', `${config.rootURL}data/map/${basemap}`, true);
 
       xhr.onload = (e) => {
         
@@ -228,7 +227,12 @@ export default Ember.Controller.extend({
     },
     
     editLayer(layerIndex) {
-      this.transitionToRoute('graph.layer.edit', this.get('model.graphLayers').objectAt(layerIndex).get('_uuid'));
+      let layer = this.get('model.graphLayers').objectAt(layerIndex);
+      if (layer != this.get('editedLayer')) {
+        this.transitionToRoute('graph.layer.edit', layer.get('_uuid'));
+      } else {
+        this.transitionToRoute('graph');
+      }
     },
     
     removeLayer(layer) {

@@ -30,7 +30,7 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
     return new Promise( (res, rej) => {
       
       let xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.baseURL}data/Projection-list.csv`, true);
+      xhr.open('GET', `${config.rootURL}data/Projection-list.csv`, true);
       xhr.responseType = 'arraybuffer';
 
       xhr.onload = (e) => {
@@ -68,7 +68,7 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
     return new Promise( (res, rej) => {
       
       let xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.baseURL}data/world-dictionnary.json`, true);
+      xhr.open('GET', `${config.rootURL}data/world-dictionnary.json`, true);
 
       xhr.onload = (e) => {
         

@@ -5,9 +5,9 @@
     <div class="body">
         <ul class="collection">
             <li class="layer">
-                <div class="horizontal flow">
+                <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
                     <div class="caption">
-                        <img src="assets/images/viz/100x100px-QUALI-cat_surfaces.jpg">
+                        <img src="{{r-url 'assets/images/viz/100x100px-QUALI-cat_surfaces.jpg'}}">
                     </div>
                     <div class="vertical stretched middle flow padded-h content">
                         <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
@@ -83,7 +83,6 @@
 
                   {{#if editedLayer.mapping.usePattern}}
                       <ul class="layer-pattern-swatch">
-                          {{log editedLayer.mapping.visualization.pattern.key}}
                           {{#each brewer.availablePatterns as |pattern|}}
                               <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
                                   {{pattern-swatch pattern=pattern
