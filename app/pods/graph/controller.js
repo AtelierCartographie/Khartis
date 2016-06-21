@@ -227,7 +227,12 @@ export default Ember.Controller.extend({
     },
     
     editLayer(layerIndex) {
-      this.transitionToRoute('graph.layer.edit', this.get('model.graphLayers').objectAt(layerIndex).get('_uuid'));
+      let layer = this.get('model.graphLayers').objectAt(layerIndex);
+      if (layer != this.get('editedLayer')) {
+        this.transitionToRoute('graph.layer.edit', layer.get('_uuid'));
+      } else {
+        this.transitionToRoute('graph');
+      }
     },
     
     removeLayer(layer) {
