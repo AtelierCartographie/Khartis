@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
           lands: topojson.feature(j, j.objects.land),
           borders: topojson.mesh(j, j.objects.border, function(a, b) {
-              return a.properties.featurecla === "International"; 
+              return a.properties.featurecla === "International";
             }),
           bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
               return a.properties.featurecla === "Disputed"; 
