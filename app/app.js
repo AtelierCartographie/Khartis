@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Resolver from 'magic-resolver';
-import loadInitializers from 'ember/load-initializers';
+import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import d3 from 'd3';
 import {isEverGreen}from 'mapp/utils/browser-check'

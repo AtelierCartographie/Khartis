@@ -7,7 +7,7 @@ import ValueMixin from 'mapp/models/mapping/mixins/value';
 export default Ember.Mixin.create({
   
   legendInit() {
-    
+
     let legendG = this.d3l().append("g")
       .classed("legend", true);
     
@@ -47,6 +47,7 @@ export default Ember.Mixin.create({
       
     this.updateLegendPosition();
     this.updateLegendOpacity();
+    this.drawLegend();
     legendG.call(drag);
     
   },

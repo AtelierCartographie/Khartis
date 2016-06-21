@@ -70,7 +70,6 @@ export default Ember.Controller.extend({
                 return part;
               }, {left: [], right: []});
 
-        console.log(j);
         this.set('basemapData', {
           land: topojson.merge(j, partition.right),
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
