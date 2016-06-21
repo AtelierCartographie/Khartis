@@ -82,7 +82,7 @@
                     totalClasses=editedLayer.mapping.scale.classes
                     possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
-                    {{x-slider class="fluid offset-slider" displayTick="true" tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
                 {{/unless}}
