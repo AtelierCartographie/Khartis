@@ -91,7 +91,7 @@ export default Ember.Controller.extend({
     return new Promise((res, rej) => {
       
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.baseURL}data/map/${basemap}`, true);
+      xhr.open('GET', `${config.rootURL}data/map/${basemap}`, true);
 
       xhr.onload = (e) => {
         
