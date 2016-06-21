@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
   loadFile(source) {
     
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `${config.baseURL}data/${source}`, true);
+    xhr.open('GET', `${config.rootURL}data/${source}`, true);
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = (e) => {
