@@ -1,18 +1,21 @@
 <div class="importer">
 
-    <h1 class="title">{{x-capitalize (t 'project.step1.title.importCsv')}}</h1>
+    <h1 class="title">
+      {{#file-loader label="" class="import-link" onContentLoaded="loadCsv" tagName="a"}}
+      {{x-capitalize (t 'project.step1.title.import')}}
+      {{/file-loader}}&nbsp;{{t 'project.step1.title.fileCsv'}}
+      </h1>
 
     <div class="vertical airy flow">
       
       <div class="vertical airy flow">
         <div class="filled">
-        {{!#file-loader class="text-primary import-button" onContentLoaded="loadCsv"}}
+        
         {{ivy-codemirror
           value=model.csv
           valueUpdated=(action (mut model.csv))
           options=(hash placeholder=(x-capitalize (t "project.step1.pasteCsv")) lineNumbers=true)
         }}
-        {{!/file-loader}}
         </div>
       </div>
       

@@ -25,7 +25,8 @@ export default {
     
     "step1": {
       "title": {
-        "importCsv": "importer un fichier csv",
+        "import": "importer",
+        "fileCsv": "un fichier csv",
         "testData": "jeux de données de test"
       },
       "pasteCsv": "coller ici vos données ou glisser un fichier csv"

@@ -120,7 +120,6 @@
 
               {{#if editedLayer.mapping.usePattern}}
                 <ul class="layer-pattern-swatch">
-                  {{log editedLayer.mapping.visualization.pattern.key}}
                   {{#each brewer.availablePatterns as |pattern|}}
                     <li {{action 'bind' editedLayer.mapping.visualization 'pattern' pattern}}>
                       {{pattern-swatch pattern=pattern

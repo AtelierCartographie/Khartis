@@ -135,7 +135,6 @@ let Mapping = Struct.extend({
         } else if (mode === "texture" && rule.get('pattern')) {
           return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "texture" && !rule.get('pattern') && self.get('usePattern')) {
-          console.log(visualization.get('pattern'));
           return rule.get('visible') ? PatternMaker.Composer.build(visualization.get('pattern')) : {fn: PatternMaker.NONE};
         } else if (mode === "size") {
           return rule.get('size');
