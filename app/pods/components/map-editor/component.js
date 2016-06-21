@@ -294,16 +294,16 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     defs.select("#grid")
       .datum(d3.geo.graticule())
       .attr("d", path)
-      .attr("clip-path", `url(${window.location}#clip)`);
+      .attr("clip-path", `url(#clip)`);
 
     defs.select("#clip use")
-      .attr("xlink:href", `${window.location}#sphere`);
+      .attr("xlink:href", `#sphere`);
       
     defs.selectAll("path.feature")
       .attr("d", path);
       
     this.d3l().select("g.map")
-      .attr("clip-path", `url(${window.location}#clip)`);
+      .attr("clip-path", `url(#clip)`);
       
     this.drawGrid();
     this.drawBackmap();
@@ -314,7 +314,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   registerLandSel(id) {
     
     landSelSet.add(id);
-    return `${window.location}#f-path-${id}`;
+    return `#f-path-${id}`;
     
   },
   
@@ -413,7 +413,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       "stroke-width": 3
     })
     .attr({
-      "xlink:href": `${window.location}#sphere`,
+      "xlink:href": `#sphere`,
     })
     .classed("sphere", true);
   
@@ -422,7 +422,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       "stroke": this.get('graphLayout.gridColor')
     })
     .attr({
-      "xlink:href": `${window.location}#grid`,
+      "xlink:href": `#grid`,
     }).style({
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
     })
@@ -448,7 +448,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     d3l.select("g.borders path.borders")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
       .attr("d", this.get('projectedPath'))
-      .attr("clip-path", `url(${window.location}#border-square-clip)`)
+      .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
         "stroke": this.get("graphLayout.stroke"),
@@ -458,7 +458,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     d3l.select("g.borders path.borders-disputed")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').bordersDisputed : null)
       .attr("d", this.get('projectedPath'))
-      .attr("clip-path", `url(${window.location}#border-square-clip)`)
+      .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
         "stroke-dasharray": "5,5",

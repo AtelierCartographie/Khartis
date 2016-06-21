@@ -30,7 +30,7 @@ export default Ember.Mixin.create({
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("opacity", 0.8)
-      .attr("mask", `url(${window.location}#viewport-mask)`)
+      .attr("mask", `url(#viewport-mask)`)
       .attr("fill", this.get('graphLayout.backgroundColor'));
 
     let og = d3g.append("g")

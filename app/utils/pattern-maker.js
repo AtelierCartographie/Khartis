@@ -46,7 +46,7 @@ let _buildPatternFn = function(id, size, drawer) {
           width: 4096,
           height: 4096
         })
-        .attr("fill", `url(${window.location}#pattern-${maskId})`);
+        .attr("fill", `url(#pattern-${maskId})`);
         
     }
     
@@ -56,7 +56,7 @@ let _buildPatternFn = function(id, size, drawer) {
     if (!maskId) {
       throw new Error("Pattern not attached to svg element");
     }
-    return `${window.location}#${maskId}`;
+    return `#${maskId}`;
   };
 
   fn.id = function() {

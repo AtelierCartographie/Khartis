@@ -95,7 +95,7 @@ let symbol = function(opts = {}) {
   };
   
   proc.url = function() {
-   return `${window.location}#${id}`;
+   return `#${id}`;
   };
   
   return proc;
