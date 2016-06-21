@@ -1,0 +1,11 @@
+# place in [app]/public so it gets compiled into the dist folder
+Options FollowSymLinks
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase {{rootURL}}
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

@@ -2,16 +2,28 @@
 /* global require, module */
 var Funnel = require('broccoli-funnel');
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var env = require('./config/environment');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    babel: {
-      includePolyfill: true
-    },
-    fingerprint: {
-      exclude: ['assets/images/']
-    }
-  });
+  var conf = env(EmberApp.env()),
+      app = new EmberApp(defaults, {
+        babel: {
+          includePolyfill: true
+        },
+        fingerprint: {
+          exclude: ['assets/images/']
+        },
+        replace: {
+          files: [
+            '.htaccess'
+          ],
+          patterns: [{
+            match: /\{\{rootURL\}\}/g,
+            replacement: conf.rootURL
+          }],
+          enabled: true // can be set to false to disable 
+        }
+      });
 
   app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
   app.import("bower_components/spectrum/spectrum.js");
