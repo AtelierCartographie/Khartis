@@ -450,7 +450,7 @@ export default Ember.Mixin.create({
             if (d.get('mapping.scale.intervalType') === "linear") {
               fn = appendSymbolIntervalLinearLabel;
               if (d.get('mapping.values').length > 2) {
-                let steps = Math.min(d.get('mapping.values').length - 2, 3),
+                let steps = Math.min(d.get('mapping.values').length - 2, 5),
                     i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps,
                     nearest = Array.from({length: steps}, (v, idx) => d.get('mapping.extent')[0] + i*idx)
                       .reduce( (arr, v) => {
