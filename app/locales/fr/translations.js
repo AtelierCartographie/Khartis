@@ -101,11 +101,11 @@ export default {
       "description": "Ceci est une description"
     },
     "interrupted_goode_homolosine": {
-      "name": "Interrupted Goode Homolosine",
+      "name": "Goode H.",
       "description": "Ceci est une description"
     },
     "lambert_azimuthal_equal_area": {
-      "name": "Lambert Azimuthal Equal-Area",
+      "name": "LAEA",
       "description": "Ceci est une description"
     },
     "mollweide": {
@@ -125,7 +125,7 @@ export default {
       "description": "Ceci est une description"
     },
     "waterman_butterfly": {
-      "name": "Waterman butterfly",
+      "name": "Waterman b.",
       "description": "Ceci est une description"
     },
     "mercator": {
@@ -232,7 +232,7 @@ export default {
     "placeholder": {
       "mapTitle": "titre de la carte",
       "dataSource": "source des données",
-      "author": "auteur",
+      "author": "auteur / crédit",
       "comment": "commentaire"
     },
     "settings": {
