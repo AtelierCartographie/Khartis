@@ -56,7 +56,7 @@
                   <i class="iconfont iconfont-angle-down"></i>
                 {{/facet.trigger}}
                 {{#facet.list}}
-                  {{#each editedLayer.mapping.scale.possibleClasses as |count|}}
+                  {{#each editedLayer.mapping.possibleClasses as |count|}}
                     <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
                   {{/each}}
                 {{/facet.list}}
@@ -80,7 +80,7 @@
                   {{#o-wrap.classes-before-break
                     classes=editedLayer.mapping.scale.classesBeforeBreak
                     totalClasses=editedLayer.mapping.scale.classes
-                    possibilities=editedLayer.mapping.scale.possibleClassesBeforeBreak as |wrap|}}
+                    possibilities=editedLayer.mapping.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
                     {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}

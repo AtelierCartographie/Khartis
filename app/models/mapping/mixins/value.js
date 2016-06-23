@@ -73,6 +73,51 @@ let DataMixin = Ember.Mixin.create({
       return p;
     }, 0);
   }.property('values'),
+
+
+  valueBreakChange: function() {
+    
+    if (this.get('possibleClasses').indexOf(this.get('scale.classes')) === -1) {
+      this.set('scale.classes', 2);
+    }
+    
+    if (!this.get('scale.diverging')) {
+      this.set('scale.classesBeforeBreak', 1);
+    } else {
+      if (!this.get('scale.classesBeforeBreak')
+          || this.get('possibleClassesBeforeBreak').indexOf(this.get('scale.classesBeforeBreak')) === -1) {
+        this.set('scale.classesBeforeBreak', Math.floor(this.get('scale.classes') / 2));
+      }
+    }
+    
+  }.observes('scale.intervalType', 'scale.valueBreak', 'scale.diverging', 'scale.classes'),
+
+  possibleClasses: function() {
+
+    let hl = Math.floor(this.get('values').length/2),
+        max;
+    if (this.get('scale.intervalType') === "regular" || this.get('scale.intervalType') === "quantile") {
+      max = Math.max(1, hl - 2 + 1);
+      return Array.from({length: Math.min(7, max)}, (v, i) => (i+2));
+    } else if (this.get('scale.intervalType') === "mean") {
+      max = Math.max(1, Math.log(hl)/Math.log(2));
+      return Array.from({length: Math.min(3, max)}, (v, i) => Math.pow(2, (i+1)));
+    } else {
+      return []; //linear
+    }
+
+  }.property('scale.intervalType'),
+  
+  possibleClassesBeforeBreak: function() {
+    let lgt = this.get('possibleClasses').indexOf(this.get('scale.classes'));
+    if (this.get('scale.intervalType') === "regular" || this.get('scale.intervalType') === "quantile") {
+      return Array.from({length: lgt+1}, (v, i) => (i+1));
+    } else if (this.get('scale.intervalType') === "mean") {
+      return [1].concat(this.get('possibleClasses').slice(0, lgt));
+    } else {
+      return []; //linear
+    }
+  }.property('scale.classes', 'scale.intervalType'),
   
   generateRules() {
     
@@ -233,6 +278,7 @@ let SymbolMixin = Ember.Mixin.create({
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
             (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)
           );
+          console.log(range);
           range = range.concat(
             Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak') + 1},
               (v, i) => Math.pow(i+1, 2)
@@ -248,11 +294,11 @@ let SymbolMixin = Ember.Mixin.create({
         contrastScale.domain(intervals).range(range);
 
         d3Scale = d3.scale.linear().clamp(true);
-        domain = [0, d3.max(range.map( v => Math.abs(v) ).slice(0, -1))];
+        domain = [0, d3.max(range.slice(0, -1))];
         range = [0, visualization.get('maxSize')];
 
         transform = _ => {
-          return d3Scale(contrastScale(Math.abs(_)));
+          return d3Scale(contrastScale(_));
         };
 
       };

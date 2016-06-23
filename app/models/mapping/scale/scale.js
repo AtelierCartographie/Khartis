@@ -11,51 +11,13 @@ let CONTRASTS = {
 
 let Scale = Struct.extend({
   
-  classes: 8,
-  intervalType: "mean",
+  classes: 2,
+  intervalType: "linear",
   valueBreak: null,
   classesBeforeBreak: 1,
   contrast: 2,
   
   diverging: false,
-  
-  valueBreakChange: function() {
-    
-    if (this.get('possibleClasses').indexOf(this.get('classes')) === -1) {
-      this.set('classes', 2);
-    }
-    
-    if (!this.get('diverging')) {
-      this.set('classesBeforeBreak', 1);
-    } else {
-      if (!this.get('classesBeforeBreak')
-          || this.get('possibleClassesBeforeBreak').indexOf(this.get('classesBeforeBreak')) === -1) {
-        this.set('classesBeforeBreak', Math.floor(this.get('classes') / 2));
-      }
-    }
-    
-  }.observes('intervalType', 'valueBreak', 'diverging', 'classes', 'possibleClassesBeforeBreak'),
-  
-  possibleClasses: function() {
-    if (this.get('intervalType') === "regular" || this.get('intervalType') === "quantile") {
-      return Array.from({length: 7}, (v, i) => (i+2));
-    } else if (this.get('intervalType') === "mean") {
-      return Array.from({length: 3}, (v, i) => Math.pow(2, (i+1)));
-    } else {
-      return []; //linear
-    }
-  }.property('intervalType'),
-  
-  possibleClassesBeforeBreak: function() {
-    let lgt = this.get('possibleClasses').indexOf(this.get('classes'));
-    if (this.get('intervalType') === "regular" || this.get('intervalType') === "quantile") {
-      return Array.from({length: lgt+1}, (v, i) => (i+1));
-    } else if (this.get('intervalType') === "mean") {
-      return [1].concat(this.get('possibleClasses').slice(0, lgt));
-    } else {
-      return []; //linear
-    }
-  }.property('classes', 'intervalType'),
   
   contrastScale: function() {
     return d3.scale.pow().exponent(CONTRASTS[this.get('contrast')]);

@@ -1,7 +1,7 @@
-<div class="edit-layer">
+<div class="edit-layer vertical flow">
     <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
 
-    <div class="body">
+    <div class="body solid">
         <ul class="collection">
             <li class="layer">
                 <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
@@ -49,67 +49,49 @@
   <!--</div>-->
 
 
-  <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
-
-  <div class="body">
+  <div class="body vertical flow">
 
     <div class="settings vertical flow">
 
-      <div class="solid vertical flow">
+    {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
 
-      {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
+        <!--<div class="horizontal middle flow">-->
+            <!--<label class="solid w5">Taille des symboles</label>-->
+            <!--<div class="horizontal half-airy solid flow w7">-->
+                <!--{{!x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}-->
+            <!--</div>-->
+        <!--</div>-->
 
-          <!--<div class="horizontal middle flow">-->
-              <!--<label class="solid w5">Taille des symboles</label>-->
-              <!--<div class="horizontal half-airy solid flow w7">-->
-                  <!--{{!x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}-->
-              <!--</div>-->
-          <!--</div>-->
-
-          <div class="horizontal middle flow">
-              <label class="solid w5">Epaisseur du trait</label>
-              <div class="horizontal half-airy solid flow w7">
-                  {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
-              </div>
-          </div>
-
-          <div class="horizontal middle flow">
-              <label class="solid w5">Opacité</label>
-              <div class="horizontal half-airy solid flow w7">
-                  {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
-              </div>
-          </div>
-
-      <div>
+      <div class="vertical flow">
 
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
           {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
 
           <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
-            <ul class="collection categories-list">
+            <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
                 {{#each editedLayer.mapping.rules as |rule|}}
                     <li>
 
-                       <div class="categories-name">
+                      <div class="categories-name">
 
-                           {{#if rule.emptyValue}}
+                          {{#if rule.emptyValue}}
                                 <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
-                           {{else}}
+                          {{else}}
                                 <span class="varname">{{rule.label}}</span>
-                           {{/if}}
+                          {{/if}}
 
-                           <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                          <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
 
-                           <div class="flow">
+                          <div class="flow">
                                 {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
-                           </div>
+                          </div>
                         </div>
 
                         <div class="categories-controls">
 
                             <div class="categories-control categories-shape-control">
-                                {{shape-dropdown shapes=shapeSelection.availableShapes value=rule.shape  color=rule.color }}
+                                {{shape-dropdown shapes=shapeSelection.availableShapes value=rule.shape  color="#977864" }}
                             </div>
 
                             <div class="categories-control categories-fill-color-control">
@@ -117,7 +99,7 @@
                             </div>
 
                             <div class="categories-control categories-shape-size-control">
-                                {{x-slider class="fluid" band=0.5 value=rule.size min=4 max=24}}
+                                {{x-slider class="fluid" band=0.5 value=rule.size min=1 max=24}}
                             </div>
 
                         </div>
@@ -127,8 +109,28 @@
           {{/o-wrap.shape-selection}}
           {{/o-wrap.brewer}}
       </div>
-      {{/o-wrap.rules}}
+
+      <div class="vertical solid flow">
+
+        <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
+
+        <div class="horizontal middle flow">
+            <label class="solid w5">Epaisseur du trait</label>
+            <div class="horizontal half-airy solid flow w7">
+                {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
+            </div>
+        </div>
+
+        <div class="horizontal middle flow">
+            <label class="solid w5">Opacité</label>
+            <div class="horizontal half-airy solid flow w7">
+                {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
+            </div>
+        </div>
+
       </div>
+
+    {{/o-wrap.rules}}
     </div>
   </div>
 </div>

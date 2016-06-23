@@ -110,7 +110,7 @@ export default Ember.Mixin.create({
         layers = this.get('graphLayers'),
         width = layers.length * 120;
     
-    let legendG = this.d3l().selectAll("g.legend");
+    let legendG = this.d3l().selectAll("g.legend")
       
     let containerG = legendG.selectAll("g.legend-content"),
         bgG = legendG.selectAll("rect.legend-bg");

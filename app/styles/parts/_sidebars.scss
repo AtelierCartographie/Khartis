@@ -33,6 +33,7 @@
 
 .application-sidebar-sub .sidebar-scroll-wrapper {
   padding-top: 1rem;
+  display: flex;
 }
 
 
@@ -131,10 +132,6 @@
           display: inline-block;
           vertical-align: middle;
         }
-      }
-
-      &.selected .layer-visualization-icon {
-        display: none;
       }
   }
 
