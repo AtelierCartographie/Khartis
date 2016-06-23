@@ -27,7 +27,7 @@ export default {
       "title": {
         "import": "importer",
         "fileCsv": "un fichier csv",
-        "testData": "jeux de données de test"
+        "testData": "Essayer nos données test"
       },
       "pasteCsv": "coller ici vos données ou glisser un fichier csv"
     },
@@ -37,7 +37,7 @@ export default {
         "preview": "aperçu des données"
       },
       "import": {
-        "success": "importation réalisée avec succés",
+        "success": "importation réalisée avec succès",
         "fatal": "impossible de continuer, veuillez éditer votre csv",
         "warningsMessage": {
           "one": "anomalie non bloquante",
@@ -82,7 +82,7 @@ export default {
 
   "variable.meta": {
     "type": {
-      "text": "text",
+      "text": "texte",
       "numeric": "numérique",
       "geo": "code géographique",
       "lat": "latitude",
@@ -178,17 +178,17 @@ export default {
       "quanti": {
         "val_surfaces": {
           "name": "valeurs > surfaces",
-          "description": "l'ordre des nuances respecte celui des valeurs"
+          "description": "le dégradé de couleurs suit les valeurs"
         },
         "val_symboles": {
           "name": "valeurs > symboles",
-          "description": "taille de symboles proportionnelles aux valeurs"
+          "description": "les symboles sont proportionnels aux valeurs"
         }
       },
       "quali": {
         "cat_surfaces": {
           "name": "catégories > surfaces",
-          "description": "les figurés choisis différencient les valeurs"
+          "description": "les couleurs différencient les catégories"
         },
         "taille_valeur": {
           "name": "catégories sur surfaces 2",
@@ -196,7 +196,7 @@ export default {
         },
         "cat_symboles": {
           "name": "catégories > symboles",
-          "description": "les figurés choisis différencient les valeurs"
+          "description": "les symboles différencient les catégories"
         },
         "ordre_symboles": {
           "name": "catégories sur symboles 2",
@@ -225,7 +225,7 @@ export default {
     "title": {
       "legend": "légende",
       "labels": "étiquettes",
-      "styles": "habillage",
+      "styles": "habillage de la carte",
       "sizes": "dimensions",
       "export": "export"
     },

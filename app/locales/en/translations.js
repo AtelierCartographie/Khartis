@@ -1,99 +1,85 @@
 export default {
   
   "general": {
-    "welcomeTo": "Welcome to",
-    "onlineEditor": "online map editor",
-    "Next": "Next",
-    "Back": "Back",
-    "Submit": "Submit",
-    "Cancel": "Cancel",
-    "Import": "Importe",
-    "Continue": "Continue",
-    "Validate": "Validate",
+    "next": "next",
+    "back": "back",
+    "submit": "submit",
+    "cancel": "cancel",
+    "import": "import",
+    "continue": "continue",
+    "validate": "validate",
     "open": "Open",
     "close": "Close",
     "or": "or",
     "and": "and",
-    "gradientOf": "Gradient of",
-    "pageLayout": "Page layout",
-    "varMapping": "Variable mapping",
-    "addAVariable": "add a variable",
-    "contextualHelp": "Contextual help",
-    "chooseMap": "Choose a map",
-    "dataType": "data type",
-    "label": "label",
-    "none": "none",
-    "summary": "summary",
-    "mappingType": "mapping type",
-    "backMap": "Back map"
+    "download": "download",
+    "error": {
+     "one": "error",
+     "other": "errors" 
+    }
   },
-
+  
   "project": {
-
-    "resume": "reprendre le projet en cours",
-
+   
+    "resume": "resume last project",
+    
     "step1": {
       "title": {
-        "importCsv": "importer un fichier csv",
-        "testData": "jeux de données de test"
+        "import": "import",
+        "fileCsv": "a csv file",
+        "testData": "Try our sample datasets"
       },
-      "pasteCsv": "coller ici vos données ou glisser un fichier csv"
+      "pasteCsv": "past your data here or drop a csv file"
     },
-
+    
     "step2": {
       "title": {
-        "preview": "aperçu des données"
+        "preview": "data preview"
       },
       "import": {
-        "success": "importation réalisée avec succés",
-        "fatal": "impossible de continuer, veuillez éditer votre csv",
+        "success": "Import completed successfully",
+        "fatal": "impossible to continue, please edit your csv",
         "warningsMessage": {
-          "one": "anomalie non bloquante",
-          "other": "anomalies non bloquantes"
+          "one": "non-blocking anomaly",
+          "other": "non-blocking anomalies"
         },
         "warning": {
-          "trim": "certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
+          "trim": "some cells have unnecessary spaces at the beginning or end of a word. They were removed when importing"
         },
         "errorsMessage": {
-          "one": "anomalie bloquante",
-          "other": "anomalies bloquantes"
+          "one": "blocking anomaly",
+          "other": "blocking anomalies"
         },
         "error": {
-          "header.emptyCell": "l'entête semble incorrecte : certaines cellules sont vides.",
-          "oneColumn": "une seule colonne a été trouvée",
-          "colNumber": "csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
+          "header.emptyCell": "the header seems incorrect: some cells are empty.",
+          "oneColumn": "only one column was found",
+          "colNumber": "csv format error: all rows don't have the same number of columns."
         },
         "rowCount": {
-          "one": "ligne importée",
-          "other": "lignes importées"
+          "one": "row imported",
+          "other": "rows imported"
         },
         "colCount": {
-          "one": "colonnes importée",
-          "other": "colonnes importées"
+          "one": "column imported",
+          "other": "columns imported"
         }
       }
     }
-
-  },
-
-  "navigation": {
-    "openMap": "Open the map",
-    "chooseProjection": "Choose a projection",
-    "chooseVisualization": "Choose a visualization",
-    "editColumn": "Column Editing",
-
-    "sidebar": {
-      "data" : "Data",
-      "visualisations" : "Visualizations",
-      "variables": "variables",
-      "layout": "Layout",
-      "layers": "Layers",
-      "legend": "Legend",
-      "export": "Export"
-    }
-
+    
   },
   
+  "navigation": {
+
+    "editColumn": "Edit a column",
+
+    "sidebar": {
+      "data" : "data",
+      "visualisations" : "visualizations",
+      "export": "export"
+    }
+    
+  },
+
   "variable.meta": {
     "type": {
       "text": "text",
@@ -101,99 +87,331 @@ export default {
       "geo": "geographic code",
       "lat": "latitude",
       "lon": "longitude",
-      "auto": "auto"
+      "auto": "automatic"
+    }
+  },
+  
+  "projection": {
+    "atlantis": {
+      "name": "Atlantis",
+      "description": "Ceci est une description"
+    },
+    "briesemeister": {
+      "name": "Briesemeister",
+      "description": "Ceci est une description"
+    },
+    "interrupted_goode_homolosine": {
+      "name": "Goode H.",
+      "description": "Ceci est une description"
+    },
+    "lambert_azimuthal_equal_area": {
+      "name": "LAEA",
+      "description": "Ceci est une description"
+    },
+    "mollweide": {
+      "name": "Mollweide",
+      "description": "Ceci est une description"
+    },
+    "natural_earth": {
+      "name": "Natural Earth",
+      "description": "Ceci est une description"
+    },
+    "orthographic": {
+      "name": "Orthographic",
+      "description": "Ceci est une description"
+    },
+    "plate_carree": {
+      "name": "Plate carrée",
+      "description": "Ceci est une description"
+    },
+    "waterman_butterfly": {
+      "name": "Waterman b.",
+      "description": "Ceci est une description"
+    },
+    "mercator": {
+      "name": "Mercator",
+      "description": "Ceci est une description"
+    }
+  },
+  
+  "visualization": {
+    "title": {
+      "choose": "choose a visualization",
+      "categories": "categories",
+      "nodata": "missing data"
+    },
+    "settings": {
+      "diagram": {
+        "title": "frequency diagram",
+        "frequencies": "frequencies",
+        "values": "values"
+      },
+      "title" : "settings",
+      "symbols": "symbols",
+      "discretization": {
+        "title": "discretization",
+        "type": {
+          "regular": "regular intervals",
+          "mean": "nested means",
+          "quantile": "quantiles",
+          "linear": "none"
+        }
+      },
+      "classes": "classes",
+      "breakValue": "breaking value",
+      "shape": "shape",
+      "size": "size",
+      "contrast": "contrast",
+      "color": {
+        "one": "color",
+        "other": "colors"
+      },
+      "pattern": {
+        "one": "hatching",
+        "other": "hatching"
+      },
+      "reverse": "reverse",
+      "stroke": "stroke",
+      "opacity": "opacity"
+    },
+    "type": {
+      "quanti": {
+        "val_surfaces": {
+          "name": "values > areas",
+          "description": "color gradient follows the values"
+        },
+        "val_symboles": {
+          "name": "values > symbols",
+          "description": "symbols are proportionnal to the values"
+        }
+      },
+      "quali": {
+        "cat_surfaces": {
+          "name": "categories > areas",
+          "description": "various colors separate categories"
+        },
+        "taille_valeur": {
+          "name": "categories on areas 2",
+          "description": "l'ordre des symbols respecte celui des valeurs"
+        },
+        "cat_symboles": {
+          "name": "categories > symbols",
+          "description": "symbols separate categories"
+        },
+        "ordre_symboles": {
+          "name": "categories on symbols 2",
+          "description": "l'ordre des symbols respecte celui des valeurs"
+        }
+      }
+    },
+    "rule": {
+      "no_value": "(no value)"
+    },
+    "warning": {
+      "rule.count": {
+        "title": "non-blocking anomaly",
+        "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
+        "help": {
+          "_": "Veuillez vous assurer de visualiser :",
+          "1": "1 / du texte (données nominales)",
+          "2": "2 / des nombres (données ordinales)",
+          "3": "3 / moins de 12 catégories à la fois"
+        }
+      }
+    }
+  },
+
+  "export": {
+    "title": {
+      "legend": "legend",
+      "labels": "labels",
+      "styles": "map layout",
+      "sizes": "dimensions",
+      "export": "export"
+    },
+    "placeholder": {
+      "mapTitle": "map title",
+      "dataSource": "data source",
+      "author": "author / copyright",
+      "comment": "comment"
+    },
+    "settings": {
+      "showLegend": "show",
+      "width": "width",
+      "height": "height",
+      "borders": "borders",
+      "grid": "graticules",
+      "background": "basemap"
+    }
+  }
+  
+  
+    /*"gradientOf": "Dégradé de",
+    "pageLayout": "Mise en page",
+    "varMapping": "Couplage des variables",
+    "addAVariable": "ajouter une variable",
+    "contextualHelp": "Aide contextuelle",
+    "chooseMap": "Choisir une carte",
+    "dataType": "type de données",
+    "label": "libellé",
+    "none": "aucun",
+    "summary": "summary",
+    "mappingType": "type de couplage",
+    "backMap": "Fond de carte",
+    "mapTitle": "Titre de la carte"*/
+  
+ /* 
+  "navigation": {
+    "openMap": "Ourvir la carte",
+    "chooseProjection": "Choisir une projection",
+    "chooseVisualization": "Choix d'une visualisation",
+    "editColumn": "Edition d'une colonne",
+
+    "sidebar": {
+      "data" : "Données",
+      "visualisations" : "Visualisations",
+      "variables": "Variables",
+      "layout": "Mise en page",
+      "layers": "Calques",
+      "legend": "Légende",
+      "export": "Export"
+    }
+    
+  },
+  
+  "variable.meta": {
+    "type": {
+      "text": "text",
+      "numeric": "numérique",
+      "geo": "code géographique",
+      "lat": "latitude",
+      "lon": "longitude",
+      "auto": "automatique"
     }
   },
   
   "variable.mapping": {
     "type": {
-      "shape": "shape",
+      "shape": "forme",
       "surface": "surface",
       "text": "text"
     },
     "scaleOf": {
-      "size": "size",
-      "fill": "color"
+      "size": "taille",
+      "fill": "couleur"
     },
     "pattern": {
-      "solid": "solid",
-      "horizontal": "horizontal strip",
-      "vertical": "vertical strip",
-      "diagonal": "diagonal strip"
+      "solid": "plein",
+      "horizontal": "hachurage horizontal",
+      "vertical": "hachurage vertical",
+      "diagonal": "hachurage diagonal"
     },
     "shape": {
       "point": "point",
-      "rect": "rect",
+      "rect": "carré",
       "text": "text"
+    },
+    "interval": {
+      "type": {
+        "regular": "intervalles réguliers",
+        "mean": "moyennes emboitées",
+        "quantile": "quantiles",
+        "linear": "aucune"
+      }
+    },
+    "rule": {
+      "no_value": "(aucune valeur)"
+    },
+    "contrast": {
+      "sqrt": "racine carrée",
+      "cube_root": "racine cubique",
+      "identity": "linéaire",
+      "square": "carré"
     }
   },
   
-  "projection": {
-    "naturalEarth": {
-      "name": "Natural earth",
-      "description": "Natural earth's description"
+  "visualization": {
+    "quanti": {
+      "val_surfaces": {
+        "name": "valeurs sur surfaces",
+        "description": "L'ordre des nuances respecte celui des valeurs"
+      },
+      "val_symboles": {
+        "name": "valeurs sur symboles",
+        "description": "Taille de symboles proportionnelles aux valeurs"
+      }
     },
-    "orthographic": {
-      "name": "Orhtographic",
-      "description": ""
-    },
-    "mercator": {
-      "name": "Mercator",
-      "description": ""
+    "quali": {
+      "cat_surfaces": {
+        "name": "catégories sur surfaces 1",
+        "description": "Les figurés choisis différencient les valeurs"
+      },
+      "taille_valeur": {
+        "name": "catégories sur surfaces 2",
+        "description": "L'ordre des symbols respecte celui des valeurs"
+      },
+      "cat_symboles": {
+        "name": "catégories sur symboles 1",
+        "description": "Les figurés choisis différencient les valeurs"
+      },
+      "ordre_symboles": {
+        "name": "catégories sur symboles 2",
+        "description": "L'ordre des symbols respecte celui des valeurs"
+      }
     }
   },
   
   "graph": {
-    "displayedVars": "Displayed variables"
+    "displayedVars": "Variables représentées"
   },
   
   "success": {
-    "typeCoherency": "All cells are corectly formatted"
+    "typeCoherency": "Toutes les cellules sont correctement formatées"
   },
   
   "warning": {
-    "typeCoherency": "Some cells contains data that differs from the selected column type"
+    "typeCoherency": "Certaines cellules contiennent des données incompatibles avec le type de colonne sélectionné"
   },
   
   "error": {
-    "noGeoColumn": "You must specify at least one georeferenced column or lat / lon columns. Please qualify your data."
+    "noGeoColumn": "Aucune colonne géo-référencée ou lat / lon n'a été trouvée. Veuillez qualifier vos données"
   },
   
   "import": {
-    "preview": "Preview",
-    "report": "Import report",
-    "editor.paste.csv": "paste here the csv to import",
-    "editor.upload.file": "upload a file",
-    "editor.importTitle": "Import a csv file",
-    "testDataSetTitle" : "Test Dataset",
-    "startImport": "Start import",
-    "qualifyData": "Qualify data",
-    "success": "Import has been successfull. Data are ready to be processed.",
-    "fatal": "Import can be processed, please edit your csv",
+    "preview": "Aperçu",
+    "report": "Rapport d'importation",
+    "editor.paste.csv": "collez ici le csv à importer",
+    "editor.upload.file": "téléversez un fichier",
+    "editor.importTitle": "Importer un fichier csv",
+    "testDataSetTitle" : "Jeux de données test",
+    "startImport": "Lancer l'importation",
+    "qualifyData": "Qualifier les données",
+    "success": "Importation réalisée avec succés",
+    "fatal": "Impossible de continuer, veuillez éditer votre csv",
     "warningsMessage": {
-      "one": "non blocking warning",
-      "other": "non blocking warnings"
+      "one": "anomalie non bloquante",
+      "other": "anomalies non bloquantes"
     },
     "warning": {
-      "trim": "Some cells contained spaces which has been supressed by the process."
+      "trim": "Certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
     },
     "errorsMessage": {
-      "one": "blocking issue",
-      "other": "blocking issues"
+      "one": "anomalie bloquante",
+      "other": "anomalies bloquantes"
     },
     "error": {
-      "header.emptyCell": "Header is incorrect : come cells are empty.",
-      "oneColumn": "Only one column has been found",
-      "colNumber": "Csv format is incorrect. Some rows have different column count"
+      "header.emptyCell": "L'entête semble incorrecte : certaines cellules sont vides.",
+      "oneColumn": "Une seule colonne a été trouvée",
+      "colNumber": "Csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
     },
-    "rowCount": "lines imported",
-    "colCount": "columns imported"
+    "rowCount": "lignes importées",
+    "colCount": "colonnes importées"
     
   },
   "spreadsheet": {
-    "sidebar.title": "Data edition",
+    "sidebar.title": "Edition des données",
     "sidebar.p1": "Cette interface vous permet d'éditer les données qui serviront de base à votre création graphique."
-  }
+  }*/
   // "some.translation.key": "Text for some.translation.key",
   //
   // "a": {
