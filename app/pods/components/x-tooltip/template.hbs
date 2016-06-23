@@ -1,2 +1,2 @@
-<div class="tooltip popable {{positionClassName}}" id={{elementId}} >{{message}}</div>
+<div class="tooltip popable {{positionClassName}}" id={{elementId}} >{{message}}{{yield (hash html=(component 'x-tooltip.html-content' tagName=''))}}</div>
 {{yield}}

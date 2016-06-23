@@ -40,6 +40,8 @@ export default Ember.Component.extend({
   tagName: '',
   position: 'bottom',
   offset:5,
+
+  message: null,
   
   positionClassName: function() {
 

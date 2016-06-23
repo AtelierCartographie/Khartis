@@ -18,21 +18,26 @@
 
         {{#if (x-greater editedLayer.mapping.rules.length 8)}}
         <div class="report">
-            <div class="warning report-message">
-                <b class="text-warning">1</b>
-                {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
-            </div>
-            <div class="error-explenation">
-              <p>
-                {{x-capitalize (t "visualization.warning.rule.count.explenation")}}
-              </p>
-              <p>
-                {{x-capitalize (t "visualization.warning.rule.count.help._")}}<br/>
-                {{x-capitalize (t "visualization.warning.rule.count.help.1")}}<br/>
-                {{x-capitalize (t "visualization.warning.rule.count.help.2")}}<br/>
-                {{x-capitalize (t "visualization.warning.rule.count.help.3")}}
-              </p>
-            </div>
+            {{#x-tooltip position="bottom" as |tooltip|}}
+              {{#if tooltip.html}}
+                {{#tooltip.html}}
+                  <p>
+                    {{x-capitalize (t "visualization.warning.rule.count.explenation")}}
+                  </p>
+                  <p>
+                    {{x-capitalize (t "visualization.warning.rule.count.help._")}}<br/>
+                    {{x-capitalize (t "visualization.warning.rule.count.help.1")}}<br/>
+                    {{x-capitalize (t "visualization.warning.rule.count.help.2")}}<br/>
+                    {{x-capitalize (t "visualization.warning.rule.count.help.3")}}
+                  </p>
+                {{/tooltip.html}}
+              {{else}}
+                <div class="warning report-message">
+                    <b class="text-warning">1</b>
+                    {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
+                </div>
+              {{/if}}
+            {{/x-tooltip}}
             <div class="horizontal right flow">
               <a href="#" class="small button filled">En savoir plus</a>
             </div>
