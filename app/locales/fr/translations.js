@@ -117,7 +117,7 @@ export default {
       "description": "Ceci est une description"
     },
     "orthographic": {
-      "name": "Orthographic",
+      "name": "Orthographique",
       "description": "Ceci est une description"
     },
     "plate_carree": {
@@ -125,7 +125,7 @@ export default {
       "description": "Ceci est une description"
     },
     "waterman_butterfly": {
-      "name": "Waterman b.",
+      "name": "Waterman",
       "description": "Ceci est une description"
     },
     "mercator": {
