@@ -12,7 +12,7 @@ let CONTRASTS = {
 let Scale = Struct.extend({
   
   classes: 2,
-  intervalType: "linear",
+  intervalType: null,
   valueBreak: null,
   classesBeforeBreak: 1,
   contrast: 2,
