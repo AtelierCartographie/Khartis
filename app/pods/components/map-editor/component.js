@@ -336,8 +336,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .classed("feature", true);
      
     sel.exit().remove();
-
-    
     
   },
 
@@ -400,7 +398,9 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         "font-size": "0.8em"
       });
    
-  }.observes('title', 'dataSource', 'author', "$width", "$height"),
+  }.observes('title', 'dataSource', 'author', "$width", "$height",
+    "graphLayout.margin._defferedChangeIndicator",
+    "graphLayout.width", "graphLayout.height"),
    
   drawGrid: function() {
      

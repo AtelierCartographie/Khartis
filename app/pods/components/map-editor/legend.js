@@ -95,7 +95,8 @@ export default Ember.Mixin.create({
     }
     
   }.observes('$width', '$height',
-    'graphLayout.legendTx', 'graphLayout.legendTy'),
+    'graphLayout.legendTx', 'graphLayout.legendTy',
+    'graphLayout.width', 'graphLayout.height'),
   
   updateLegendOpacity: function() {
     
