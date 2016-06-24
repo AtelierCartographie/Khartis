@@ -26,10 +26,10 @@ export default {
       "height": function(val, bbox) { bbox.height =  cssPx(val) },
       "stretch": function(val) { return val; },
       "wrap": function(val) { return val; },
-      "margin-bottom": function(val, bbox) { /*bbox.height += cssPx(val);*/ },
-      "margin-top": function(val, bbox) { /*bbox.height += cssPx(val);*/ },
-      "margin-left": function(val, bbox) { /*bbox.width += cssPx(val);*/ },
-      "margin-right": function(val, bbox) { /*bbox.width += cssPx(val);*/ },
+      "margin-bottom": function(val, bbox) {  },
+      "margin-top": function(val, bbox) {  },
+      "margin-left": function(val, bbox) {  },
+      "margin-right": function(val, bbox) {  },
       "padding-bottom": function(val, bbox, padBox) { padBox.b = cssPx(val); },
       "padding-top": function(val, bbox, padBox) { padBox.t = cssPx(val); },
       "padding-left": function(val, bbox, padBox) { padBox.l = cssPx(val); },
@@ -38,7 +38,7 @@ export default {
       "min-height": function(val, bbox) { if (bbox.height < cssPx(val)) bbox.height = cssPx(val) }
     };
     
-    function cssPx(val) { return parseInt(val.replace("px", "")); }
+    function cssPx(val) { return parseFloat(val.replace("px", "")); }
     
     function parseCss(el) {
       
@@ -100,21 +100,20 @@ export default {
           childs = el.childNodes;
       
       //compute size of every solid children
-      let computedBBoxs = new Map(),
-          recomputableBBoxs = new Map();
+      let computedBBoxs = new Map();
       d3.selectAll(childs).each( function() {
         
         let css = parseCss(this);
         
         if (!css.hasProperty("layout", ["fluid"])) {
           let {bbox} = getDescriptor(this);
-          (css.hasProperty("layout", "fill") ? recomputableBBoxs : computedBBoxs).set(this, bbox);
+          computedBBoxs.set(this, bbox);
         }
         
       } );
       
       //compute size of every fluid children
-      let fluidCount = childs.length - [...computedBBoxs.values()].length - [...recomputableBBoxs.values()].length,
+      let fluidCount = childs.length - [...computedBBoxs.values()].length,
           remainingSpace = [...computedBBoxs.values()].reduce( (bbox, v) => {
             bbox[sizeAttr] -= v[sizeAttr]; 
             return bbox;
@@ -143,10 +142,8 @@ export default {
        if (computedBBoxs.has(this)) {
         
           let {bbox, padBox, css} = getDescriptor(this);
-          
-          let dCoord = bbox[coordAttr];
-          
-          if (elDesc.css.hasProperty('wrap', ["true", "1"]) &&  pos + bbox[sizeAttr] > elDesc.bbox[sizeAttr]) {
+
+          if (elDesc.css.hasProperty('wrap', ["true", "1"]) && pos + bbox[sizeAttr] > elDesc.bbox[sizeAttr]) {
             crossShift = crossMax;
             pos = 0;
             crossMax = 0;
@@ -183,6 +180,9 @@ export default {
             d3l.attr(crossSizeAttr, bbox[crossSizeAttr]);
           }
           
+          console.log(this, bbox);
+          pos += bbox[sizeAttr];
+          
           //apply margin after
           if (css.hasProperty('margin-bottom')) {
             if (coordAttr === "y") {
@@ -196,24 +196,10 @@ export default {
             }
           }
           
-          pos += (bbox[sizeAttr] + dCoord);
-          
        }
        
       } );
       
-      /*setTimeout(function() {
-        let postDisplayBBox = el.getBBox();
-        [...recomputableBBoxs.entries()].forEach( e => {
-          let {padBox} = getDescriptor(e[0]);
-          d3.select(e[0]).attr({
-            x: -padBox.l,
-            y: -padBox.t,
-            width: postDisplayBBox.width + padBox.l + padBox.r,
-            height: postDisplayBBox.height + padBox.t + padBox.b
-          });
-        });
-      }, 100);*/
       
     };
     

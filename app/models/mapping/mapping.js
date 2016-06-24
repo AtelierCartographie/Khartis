@@ -81,6 +81,7 @@ let Mapping = Struct.extend({
     }
     this.generateVisualization();
     this.generateRules();
+    this.configureScale();
   }.observes('type').on("init"),
   
   getScaleOf(type) {
@@ -91,6 +92,9 @@ let Mapping = Struct.extend({
   },
   
   generateVisualization() {
+  },
+
+  configureScale() {
   },
 
   usePattern: Ember.computed('visualization.pattern', {

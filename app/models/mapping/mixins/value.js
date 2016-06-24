@@ -170,6 +170,12 @@ let SurfaceMixin = Ember.Mixin.create({
     }
   },
 
+  configureScale() {
+    if (this.get('scale.intervalType') === null) {
+      this.set('scale.intervalType', "regular");
+    }
+  },
+
   patternModifiers: function() {
     
     return PatternMaker.Composer.compose(
@@ -249,6 +255,12 @@ let SymbolMixin = Ember.Mixin.create({
   generateVisualization() {
     if (!this.get('visualization')) {
       this.set('visualization', VisualizationFactory.createInstance("symbol"));
+    }
+  },
+
+  configureScale() {
+    if (this.get('scale.intervalType') === null) {
+      this.set('scale.intervalType', "linear");
     }
   },
   
