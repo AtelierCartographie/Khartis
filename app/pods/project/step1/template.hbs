@@ -44,7 +44,7 @@
         <h2 class="title">{{x-capitalize (t 'project.step1.title.testData')}}</h2>
         <ul>
             {{#each testDataSets as |set|}}
-                <li class="text-center" {{action 'selectDataSet' set}}>{{set.name}}</li>
+                <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
             {{/each}}
         </ul>
     </div>

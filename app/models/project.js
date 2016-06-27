@@ -16,7 +16,7 @@ let Project = Struct.extend({
     
     geoDef: null,
     
-    title: "Titre de la carte",
+    title: "",
     dataSource: null,
     author: null,
     comment: null,

@@ -180,7 +180,6 @@ export default {
             d3l.attr(crossSizeAttr, bbox[crossSizeAttr]);
           }
           
-          console.log(this, bbox);
           pos += bbox[sizeAttr];
           
           //apply margin after

@@ -46,19 +46,6 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  // Resources to be included in public folder
-  var dicts = new Funnel('ressources', {
-      srcDir: '/',
-      include: ['**/Projection-list.csv', '**/Dictionary-country-territory.json'],
-      destDir: '/data'
-   });
-
-   var maps = new Funnel('ressources/basemap', {
-      srcDir: '/',
-      include: ['**/*.json'],
-      destDir: '/data/map'
-   });
-
-  return app.toTree([maps, dicts]);
+  return app.toTree();
 
 };

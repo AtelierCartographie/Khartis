@@ -21,6 +21,17 @@ module.exports = function(environment) {
       default: "natural_earth"
     },
 
+    examples: [
+      {
+        id: "eco2",
+        source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
+      },
+      {
+        id: "surface_forets",
+        source: "02_WB_surfaces_forets_Km2_EN_milliers-virgule_decimal-point_ISO-Latin-1.txt"
+      }
+    ],
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
@@ -37,7 +48,7 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
+    ENV.rootURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter

@@ -243,6 +243,11 @@ export default {
       "grid": "graticules",
       "background": "fond de carte"
     }
+  },
+
+  "examples": {
+    "eco2": "Emissions CO2",
+    "surface_forets": "Surfaces de forêts"
   }
   
   

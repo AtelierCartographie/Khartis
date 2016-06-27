@@ -5,19 +5,6 @@ import {DataStruct} from 'mapp/models/data';
 import ab2string from 'mapp/utils/ab2string';
 import config from 'mapp/config/environment';
 
-const TEST_SETS = [
-  
-  {
-    name: "Emissions CO2",
-    source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
-  },
-  {
-    name: "Surfaces de forêts",
-    source: "02_WB_surfaces_forets_Km2_EN_milliers-virgule_decimal-point_ISO-Latin-1.txt"
-  }
-  
-];
-
 export default Ember.Controller.extend({
   
   store: Ember.inject.service(),
@@ -33,13 +20,13 @@ export default Ember.Controller.extend({
   }.property('model.csv'),
   
   testDataSets: function() {
-    return TEST_SETS;
+    return config.examples;
   }.property(),
   
   loadFile(source) {
     
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `${config.rootURL}data/${source}`, true);
+    xhr.open('GET', `${config.rootURL}data/examples/${source}`, true);
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = (e) => {

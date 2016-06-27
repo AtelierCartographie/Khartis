@@ -150,6 +150,8 @@ export default Ember.Mixin.create({
               d.get('mapping.visualization.maxSize') : 10),
             textOffset = xOrigin + 16,
             formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
+
+        console.log(`0.${d.get('mapping.maxValuePrecision')}f`);
         
         el.selectAll("*").remove();
           

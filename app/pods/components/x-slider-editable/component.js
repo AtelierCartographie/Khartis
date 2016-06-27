@@ -14,12 +14,18 @@ export default Ember.Component.extend({
   min:0,
   max:10,
   band: null,
+
+  inputPosition: "left",
   
   inputValue: null,
   
   tickAppend: null,
   
   transform: IDENTITY,
+
+  inputRightPositioned: function() {
+    return this.get('inputPosition') === "right";
+  }.property('position'),
   
   valueChange: function() {
     this.set('inputValue', this.get('value'));

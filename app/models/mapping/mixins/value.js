@@ -64,7 +64,10 @@ let DataMixin = Ember.Mixin.create({
   },
   
   maxValuePrecision: function() {
-    return this.get('values').reduce( (p, v) => {
+
+    let max = 5;
+
+    let pre = this.get('values').reduce( (p, v) => {
       if (isFinite(v)) {
         let e = 1;
         while (Math.round(v * e) / e !== v) e *= 10;
@@ -72,8 +75,33 @@ let DataMixin = Ember.Mixin.create({
       }
       return p;
     }, 0);
-  }.property('values'),
 
+    pre = Math.min(pre, 5);
+    
+    /*augmente la précision si elle ne permet pas
+     *de distinguer les intervalles 
+     */
+    let raisePrecision = function(v1, v2, pre) {
+      let rv1 = v1, rv2 = v2, p = pre;
+      while (rv1 !== rv2) {
+        rv1 = Math.floor(v1*Math.pow(10, pre))/Math.pow(10, pre);
+        rv2 = Math.floor(v2*Math.pow(10, pre))/Math.pow(10, pre);
+        p++;
+        if (p >= max) { //impossible à séparer
+          return pre;
+        }
+      }
+      return p;
+    };
+
+    pre = this.get('intervals').reduce( (p, v, i, arr) => {
+      return raisePrecision(i > 0 ? arr[i-1] : undefined, v, p);
+    }, pre);
+
+    console.log(pre);
+
+    return pre;
+  }.property('values', 'intervals'),
 
   valueBreakChange: function() {
     
@@ -290,7 +318,6 @@ let SymbolMixin = Ember.Mixin.create({
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
             (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)
           );
-          console.log(range);
           range = range.concat(
             Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak') + 1},
               (v, i) => Math.pow(i+1, 2)

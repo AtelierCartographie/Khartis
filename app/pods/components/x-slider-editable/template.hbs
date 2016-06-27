@@ -1,7 +1,15 @@
 <div class="horizontal middle flow">
-  {{x-slider class="fluid" transform=transform min=min value=value max=max band=band displayTick=false}}
-  <div class="horizontal solid flow">
+  {{#unless inputRightPositioned}}
+  <div class="horizontal solid flow input-left">
     {{input value=inputValue focus-out=(action 'inputFocusOut') key-up=(action 'inputKeyUp')}}
     <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
   </div>
+  {{/unless}}
+  {{x-slider class="fluid" transform=transform min=min value=value max=max band=band displayTick=false}}
+  {{#if inputRightPositioned}}
+  <div class="horizontal solid flow input-right">
+    {{input value=inputValue focus-out=(action 'inputFocusOut') key-up=(action 'inputKeyUp')}}
+    <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
+  </div>
+  {{/if}}
 </div>

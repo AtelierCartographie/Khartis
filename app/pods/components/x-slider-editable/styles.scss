@@ -6,7 +6,17 @@ input {
   text-align: right;
   font-size: 12px;
   padding-right: 1px;
+}
+
+.input-right input {
   margin-left: -$gutter / 2 ;
+}
+
+.input-left {
+  padding-left: 2px;
+  .unite {
+    padding-right: 1px;
+  }
 }
 
 .unite {
