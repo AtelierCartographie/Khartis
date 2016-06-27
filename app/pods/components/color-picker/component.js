@@ -1,3 +1,4 @@
+
 import Ember from 'ember';
 
 export default Ember.TextField.extend({
@@ -5,26 +6,29 @@ export default Ember.TextField.extend({
 	type: 'text',
   
   showInput: true,
+    
+  showAlpha: true,
   
   stroke: false,
   
   liveRendering: true,
   showPalette: true,
   palette: [
-        ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
-        ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
-        ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
-        ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
-        ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
-        ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
-        ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
-        ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
+        ["#f6e8c3","#e3c497","#cda16f","#b3824c","#97632e","#764815","#543005"],
+        ["#c7eae5","#9bcdc3","#72afa2","#4d9284","#2c7566","#0e584a","#003c30"],
+        ["#fddbc7","#f6b19c","#e68976","#d16155","#b43c3a","#921728","#67001f"],
+        ["#deebf7","#b3cae4","#8ba9cf","#6389b8","#3e6b9e","#1c4d82","#053061"],
+        ["#d9f0d3","#abd5aa","#7fb883","#589b61","#347e44","#12612c","#00441b"],
+        ["#e7d4e8","#ceaed3","#b387bd","#9864a5","#7c418b","#5f216d","#40004b"],
+        ["#f7f7f7","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#252525"],
+        ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2"]
     ],
   
 	didInsertElement: function() {
 		this.$().spectrum({
       showInput: this.get('showInput'),
-      preferredFormat: "hex",
+      showAlpha: this.get('showAlpha'),
+      preferredFormat: "rgb",
       palette: this.get('palette'),
       showPalette: this.get('showPalette'),
       replacerIcon: "<i class=\"iconfont iconfont-angle-down\"></i>",
@@ -33,7 +37,7 @@ export default Ember.TextField.extend({
       replacerClassName: this.get('stroke') ? 'of-stroke' : 'of-fill',
       move: (color) => {
         if (this.get('liveRendering')) {
-          this.set('value', color.toHexString());
+          this.set('value', color.toRgbString());
         }
       }
     });
@@ -44,4 +48,3 @@ export default Ember.TextField.extend({
   }.observes('value')
   
 });
-
