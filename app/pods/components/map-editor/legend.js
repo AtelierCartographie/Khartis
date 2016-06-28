@@ -171,20 +171,23 @@ export default Ember.Mixin.create({
           
           let r = {x: 24/2, y: 16/2};
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${2*r.y+1}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
+          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
               
           let g = d3.select(this).append("g")
             .attr("flow-css", `margin-right: -${r.x}px`);
           
-          /*g.append("rect")
+          //border
+          g.append("rect")
             .attr({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "width": 2*r.x,
               "height": 2*r.y,
-              "fill": "none",
-              "stroke": "#CCCCCC"
-            });*/
-          
+              y: 0,
+              "stroke-width": 1,
+              "stroke": "black",
+              fill: "none" 
+            });
+
           g.append("rect")
             .attr({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
@@ -209,32 +212,32 @@ export default Ember.Mixin.create({
             
           if (i === 0) {
             
-            g.append("line").attr({
+            /*g.append("line").attr({
               x1: -2*r.x,
               y1: 0,
               x2: 0,
               y2: 0,
               stroke: "black"
-            });
+            });*/
             
             g.append("text")
               .text( formatter(d.get('mapping.extent')[0]) )
               .attr({
                 x: textOffset - 12,
-                y:  -2,
+                y:  0,
                 dy: "0.3em",
                 "font-size": "0.75em"
               });
             
           }
           
-          g.append("line").attr({
+          /*g.append("line").attr({
               x1: -2*r.x,
               y1: 2*r.y,
               x2: 0,
               y2: 2*r.y,
               stroke: "black"
-            });
+            });*/
           
           g.append("text")
             .text( v => formatter(v) )

@@ -7,10 +7,12 @@ let SurfaceVisualization = Struct.extend({
   colors: "BuGn",
   stroke: 2,
   reverse: false,
+  patternColor: null,
+  patternColorBefore: null,
 
   deferredChange: Ember.debouncedObserver(
     'colors', 'stroke', 'pattern', 'patternColor',
-    'reverse',
+    'patternColorBefore', 'reverse',
     function() {
       this.notifyDefferedChange();
     },
@@ -22,7 +24,9 @@ let SurfaceVisualization = Struct.extend({
       pattern: this.get('pattern'),
       colors: this.get('colors'),
       stroke: this.get('stroke'),
-      reverse: this.get('reverse')
+      reverse: this.get('reverse'),
+      patternColor: this.get('patternColor'),
+      patternColorBefore: this.get('patternColorBefore')
     }, props));
   }
   
@@ -35,7 +39,9 @@ SurfaceVisualization.reopenClass({
       pattern: json.pattern,
       colors: json.colors,
       stroke: json.stroke,
-      reverse: json.reverse
+      reverse: json.reverse,
+      patternColor: json.patternColor,
+      patternColorBefore: json.patternColorBefore
     });
     return o;
   }

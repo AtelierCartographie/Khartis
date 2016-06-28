@@ -218,17 +218,37 @@ let SurfaceMixin = Ember.Mixin.create({
   }.property('visualization.pattern', 'scale.classes',
   'scale.classesBeforeBreak', 'scale.diverging', 'visualization.reverse'),
 
-  patternColor: function() {
-    let master = this.get('colorSet'),
-        startIndex = this.get('scale.diverging') ? this.get('scale.classesBeforeBreak') : 0;
-    return master[this.get('visualization.reverse') ? startIndex : master.length - 1];
-  }.property('colorSet.[]'),
+  patternColor: Ember.computed('colorSet.[]', {
 
-  patternColorBeforeBreak: function() {
-    let master = this.get('colorSet'),
-        endIndex = this.get('scale.classesBeforeBreak') - 1;
-    return master[this.get('visualization.reverse') ? endIndex : 0];
-  }.property('colorSet.[]'),
+    get() {
+      if (!this.get('visualization.patternColor')) {
+        let master = this.get('colorSet'),
+            startIndex = this.get('scale.diverging') ? this.get('scale.classesBeforeBreak') : 0;
+        return master[this.get('visualization.reverse') ? startIndex : master.length - 1];
+      }
+      return this.get('visualization.patternColor');
+    },
+    set(k, v) {
+      return this.set('visualization.patternColor', v);
+    }
+    
+  }),
+
+  patternColorBeforeBreak: Ember.computed('colorSet.[]', {
+
+    get() {
+      if (!this.get('visualization.patternColorBefore')) {
+      let master = this.get('colorSet'),
+            endIndex = this.get('scale.classesBeforeBreak') - 1;
+        return master[this.get('visualization.reverse') ? endIndex : 0];
+      }
+      return this.get('visualization.patternColorBefore');
+    },
+    set(k, v) {
+      return this.set('visualization.patternColorBefore', v);
+    }
+
+  }),
 
   getScaleOf(type) {
     
@@ -319,7 +339,7 @@ let SymbolMixin = Ember.Mixin.create({
             (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)
           );
           range = range.concat(
-            Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak') + 1},
+            Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak')},
               (v, i) => Math.pow(i+1, 2)
             )
           );
@@ -329,11 +349,10 @@ let SymbolMixin = Ember.Mixin.create({
           );
         }
 
-        
         contrastScale.domain(intervals).range(range);
 
         d3Scale = d3.scale.linear().clamp(true);
-        domain = [0, d3.max(range.slice(0, -1))];
+        domain = [0, d3.max(range)];
         range = [0, visualization.get('maxSize')];
 
         transform = _ => {
