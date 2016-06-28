@@ -151,13 +151,12 @@ export default Ember.Mixin.create({
             textOffset = xOrigin + 16,
             formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
 
-        console.log(`0.${d.get('mapping.maxValuePrecision')}f`);
-        
         el.selectAll("*").remove();
           
         let label = el.append("g")
           .attr("flow-css", "margin-bottom: 16")
           .append("text")
+          .attr("flow-css", "wrap-text: true; max-width: 250px")
           .classed("legend-title", true)
           .attr("transform", d3lper.translate({tx: -xOrigin/2}))
           .style({

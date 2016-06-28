@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   
   src: function() {
     if (this.get('type')) {
-      return config.rootURL+"assets/images/viz/small-"+this.get('type').replace(/\./, "-")+".jpg";
+      return config.rootURL+"assets/images/viz/small-"+this.get('type').replace(/\./, "-")+".svg";
     } else {
       return config.rootURL+"assets/images/unknow.jpg";
     } 

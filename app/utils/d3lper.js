@@ -1,4 +1,4 @@
-export default {
+let d3lper = {
 	
 	scale(val) {
 		return "scale("+val+")";
@@ -35,7 +35,10 @@ export default {
       "padding-left": function(val, bbox, padBox) { padBox.l = cssPx(val); },
       "padding-right": function(val, bbox, padBox) { padBox.r = cssPx(val); },
       "min-width": function(val, bbox) { if (bbox.width < cssPx(val)) bbox.width = cssPx(val) },
-      "min-height": function(val, bbox) { if (bbox.height < cssPx(val)) bbox.height = cssPx(val) }
+      "min-height": function(val, bbox) { if (bbox.height < cssPx(val)) bbox.height = cssPx(val) },
+      "max-width": function(val, bbox) { if (bbox.width > cssPx(val)) bbox.height = cssPx(val) },
+      "max-height": function(val, bbox) { if (bbox.height > cssPx(val)) bbox.height = cssPx(val) },
+      "wrap-text": function() {}
     };
     
     function cssPx(val) { return parseFloat(val.replace("px", "")); }
@@ -201,13 +204,19 @@ export default {
       
       
     };
+
+    let postProcessing = [];
     
     function traverse(el) {
       
       let css = parseCss(el);
           
       if (css.hasProperty("flow", ["horizontal", "vertical"])) {
-        distribute(el);
+        postProcessing.push(el);
+      }
+
+      if (css.hasProperty("wrap-text", ["1", "true"])) {
+        d3lper.wrapText(el, css.hasProperty("max-width") ? cssPx(css.get('max-width').val) : 200);
       }
       
       for (var i = 0; i < el.childNodes.length; i++) {
@@ -222,11 +231,13 @@ export default {
     if (_.node()) {
       traverse(_.node());
     }
+
+    postProcessing.forEach( el => distribute(el) );
     
   },
   
-  wrapText: function(text, width)  {
-    text.each(function() {
+  wrapText: function(el, width)  {
+    d3.select(el).each(function() {
       var text = d3.select(this),
           words = text.text().split(/\s+/).reverse(),
           word,
@@ -246,11 +257,14 @@ export default {
           line.pop();
           tspan.text(line.join(" "));
           line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
         }
       }
     });
   }
 	
 	
-}
+};
+
+
+export default d3lper;
