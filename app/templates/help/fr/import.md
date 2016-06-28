@@ -1,1 +1,1 @@
-Aide de l’étape ‘Import’. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+La collecte, la structuration et l'identification des données représentent des tâches préalables à toute réalisation de cartes. Un soin particulier doit y être accordé sous peine de devoir à nouveau y revenir pour continuer dans les étapes suivantes.
