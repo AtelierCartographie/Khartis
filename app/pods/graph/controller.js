@@ -352,7 +352,6 @@ export default Ember.Controller.extend({
     d3Node.selectAll("g.margin,g.offset").remove();
     d3Node.selectAll("rect.fg").remove();
 
-    console.log(x, y, w, h);
     d3Node.append("text")
       .text("Made from Khartis")
       .attr({

@@ -42,6 +42,8 @@ export default Ember.Component.extend({
   offset:5,
 
   message: null,
+
+  yieldMessage: false,
   
   positionClassName: function() {
 

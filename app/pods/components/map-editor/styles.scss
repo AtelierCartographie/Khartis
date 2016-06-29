@@ -5,6 +5,9 @@
   line.vertical-left,
   line.vertical-right {
     stroke-width: 0;
+    &.visible {
+      stroke-width: 1;
+    }
   }
 
   .fg {

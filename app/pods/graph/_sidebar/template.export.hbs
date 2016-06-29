@@ -56,13 +56,13 @@
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'export.settings.width')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{input value=model.graphLayout.width class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
+          {{input-numeric numericValue=model.graphLayout.width class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'export.settings.height')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{input value=model.graphLayout.height class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
+          {{input-numeric numericValue=model.graphLayout.height class="solid w4" focus-out=(action 'onAskVersioning' 'freeze')}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">

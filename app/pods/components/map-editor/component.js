@@ -45,7 +45,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   trueSize: false,
   
   resizeInterval: null,
-  
+
   windowLocation: function() {
     return window.location;
   }.property(),
@@ -247,7 +247,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
           this.get('graphLayout.margin'),
           this.get('graphLayout.projection')
         );
-   
+        
     this.scaleProjection(projection);
     
     return projection; 

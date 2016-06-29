@@ -18,7 +18,7 @@
 
         {{#if (x-greater editedLayer.mapping.rules.length 8)}}
         <div class="report">
-            {{#x-tooltip position="bottom" as |tooltip|}}
+            {{#x-tooltip position="bottom" yieldMessage=true as |tooltip|}}
               {{#if tooltip.html}}
                 {{#tooltip.html}}
                   <p>

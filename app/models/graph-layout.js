@@ -99,8 +99,6 @@ var GraphLayout = Struct.extend({
 			
 		} else {
 			
-			
-			
 			if (value != null && value.length > 0) {
 				this.setProperties({"_virginPatternColor": value, "virginPatternColorAuto": false});
 			} else {
@@ -152,7 +150,7 @@ var GraphLayout = Struct.extend({
 
   showLegendChange: function() {
     this.set('margin.b', this.get('showLegend') ? this.get('height') * 0.33 : 30);
-  }.observes('showLegend').on("init"),
+  }.observes('showLegend', 'height').on("init"),
   
 	hOffset: function(screenWidth) {
 		return (screenWidth - this.get('width')) / 2;

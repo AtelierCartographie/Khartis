@@ -1,31 +1,12 @@
-  let NAME_KEYS = ["iso_a2",
-                    "iso_a3",
-                    "name_EN",
-                    "name_short_EN",
-                    "name_sort_EN",
-                    "abbrev",
-                    "name_formal_EN",
-                    "name_ISO_EN",
-                    "name_ISO_FR",
-                    "name_WB",
-                    "name_UN_EN",
-                    "name_UN_FR",
-                    "name_UN_ES",
-                    "name_UN_RU",
-                    "name_UN_CN",
-                    "name_UN_AR"
-                   ];
-
 let _cache = new Map(),
     _find = function(str) {
       
       let strEq = (s1, s2) => {
-  
-        return s1 && s2 && s1.toLowerCase().trim() === s2.toLowerCase().trim();
-        
+        return s1 && s2 && (""+s1).toLowerCase().trim() === (""+s2).toLowerCase().trim();
       };
       
       let dic = geoMatch.dic,
+          keys = geoMatch.keyCodes,
           key = str,
           idx = _cache.get(key),
           o = idx >= 0 ? dic[idx] : undefined;
@@ -33,7 +14,7 @@ let _cache = new Map(),
       if (o === undefined) {
       
         for (let l = dic.length, i = 0; i < l; i++) {
-          if (NAME_KEYS.some( (k) => strEq(dic[i][k], str) )) {
+          if (keys.some( (k) => strEq(dic[i][k], str) )) {
             _cache.set(key, i);
             o = dic[i];
             break;
@@ -73,6 +54,22 @@ function geoMatch(code) {
   return false;
 }
 
+
+geoMatch._keys = undefined;
+
 geoMatch.dic = [];
 
-export {NAME_KEYS, geoMatch};
+Object.defineProperty(geoMatch, "keyCodes", {
+  get() {
+    if (!this._keys) {
+      this._keys = this.dic.reduce( 
+        (kSet, v) => {
+          Object.keys(v).forEach( k => kSet.add(k));
+          return kSet;
+        }, new Set());
+    }
+    return [...this._keys];
+  } 
+});
+
+export {geoMatch};

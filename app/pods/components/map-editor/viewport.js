@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
+  displayOffsets: false,
+
   viewportInit(defs, d3g) {
 
     let vm = defs.append("mask")
@@ -69,7 +71,7 @@ export default Ember.Mixin.create({
         outer = `M 0 0, ${w} 0, ${w} ${h}, 0 ${h} Z`,
         inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
                    ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
-        
+    
     this.d3l().select("defs #viewport-mask path")
       .attr("d", `${outer} ${inner}`);
 
@@ -79,6 +81,7 @@ export default Ember.Mixin.create({
     // ===========
 		
 		this.d3l().selectAll("g.offset line.horizontal-top")
+      .classed("visible", this.get('displayOffsets'))
 			.attr("x1", 0)
 			.attr("y1", vOf)
 			.attr("x2", w)
@@ -86,6 +89,7 @@ export default Ember.Mixin.create({
 		  .attr("stroke-width", "1");
     
 		this.d3l().selectAll("g.offset line.horizontal-bottom")
+      .classed("visible", this.get('displayOffsets'))
 			.attr("x1", 0)
 			.attr("y1", h - vOf)
 			.attr("x2", w)
@@ -93,6 +97,7 @@ export default Ember.Mixin.create({
 		  .attr("stroke-width", "1");
 			
 		this.d3l().selectAll("g.offset line.vertical-left")
+      .classed("visible", this.get('displayOffsets'))
 			.attr("x1", hOf)
 			.attr("y1", 0)
 			.attr("x2", hOf)
@@ -100,6 +105,7 @@ export default Ember.Mixin.create({
 		  .attr("stroke-width", "1");
       
 		this.d3l().selectAll("g.offset line.vertical-right")
+      .classed("visible", this.get('displayOffsets'))
 			.attr("x1", w - hOf)
 			.attr("y1", 0)
 			.attr("x2", w - hOf)
@@ -126,6 +132,6 @@ export default Ember.Mixin.create({
       });
       
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v'),
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets'),
 
 });
