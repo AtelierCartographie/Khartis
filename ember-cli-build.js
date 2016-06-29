@@ -32,6 +32,7 @@ module.exports = function(defaults) {
   app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
   app.import("vendor/codemirror-placeholder.js");
+  app.import("vendor/canvas-to-blob-polyfill.js");
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

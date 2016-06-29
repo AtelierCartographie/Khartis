@@ -116,7 +116,7 @@ export default Ember.Mixin.create({
     let containerG = legendG.selectAll("g.legend-content"),
         bgG = legendG.selectAll("rect.legend-bg");
     
-    if (!this.get('graphLayout.showLegend')) {
+    if (!this.get('graphLayout.showLegend') || !this.get('graphLayers').length) {
       containerG.remove();
       bgG.remove();
       return;
@@ -328,7 +328,7 @@ export default Ember.Mixin.create({
       
           if (!(r.x > 0 && r.y > 0)) return;
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${2*r.y - 2*dy}px; margin-bottom: 2px`);
+          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${Math.max(2*r.y - 2*dy, 10)}px; margin-bottom: 2px`);
           
           symbol.call(svg);
           

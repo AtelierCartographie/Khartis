@@ -128,9 +128,13 @@
 
       .layer-visualization-icon {
         display: block;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+        width: 5rem;
         img {
           display: inline-block;
           vertical-align: middle;
+          width: 100%;
         }
       }
   }

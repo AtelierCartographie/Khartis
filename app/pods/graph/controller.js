@@ -7,6 +7,76 @@ import Mapping from 'mapp/models/mapping/mapping';
 import Projection from 'mapp/models/projection';
 import topojson from 'npm:topojson';
 
+/*var CRC = function() {
+	
+	this.crc = 0xffffffff;	
+	
+};
+
+CRC.table = null;
+
+CRC.make_table = function() {
+	
+	var table = [];
+    for (var n = 0; n<256; n++) {
+    	var c = n;
+    	for (var k = 0; k<8; k++) {
+    		if (c & 1) {
+    			c = 0xedb88320 ^ (c >>> 1);
+    		}
+    		else {
+    			c = c >>> 1;
+    		}
+    	}
+    	table[n] = c;
+    }
+	
+    CRC.table = table;
+};
+
+CRC.prototype.update = function(array, index, len) {
+
+	if (CRC.table == null) {
+		CRC.make_table();
+	}
+	
+	var crc = this.crc;
+	var table = CRC.table;
+
+
+    while (len >= 8) {
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
+        len -= 8;
+    }
+    if (len) do {
+        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8);
+    } while (--len);
+	
+	this.crc = crc;
+	return crc;
+};*/
+
+let table = new Uint32Array(256),
+    crc;
+for (var i = 0, j; i < 256; i++) {
+  crc = i>>>0;
+  for (j = 0; j < 8; j++) crc = (crc & 1) ? 0xedb88320 ^ (crc >>> 1) : crc >>> 1;
+  table[i] = crc;
+}
+
+function calcCRC(buffer) {
+  var crc = (-1>>>0), len = buffer.length, i;
+  for (i = 0; i < len; i++) crc = (crc >>> 8) ^ table[(crc ^ buffer[i]) & 0xff];
+  return (crc ^ -1)>>>0;
+}
+
 export default Ember.Controller.extend({
   
   queryParams: ['currentTab'],
@@ -126,16 +196,133 @@ export default Ember.Controller.extend({
 
   exportPNG() {
 
-    let data = new FormData();
-    data.append("content", this.exportAsHTML());
+    let _this = this;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://slave.apyx.fr:9876/', true);
-    xhr.responseType="blob";
-    xhr.onload = function () {
-        saveAs(this.response, "export_mapp.png");
+    var svgString = this.exportAsHTML();
+
+    var fact = 4.16;
+    var canvas = document.getElementById("export-canvas");
+    canvas.width = this.get('model.graphLayout.width')*fact;
+    canvas.height = this.get('model.graphLayout.height')*fact;
+    var ctx = canvas.getContext("2d");
+    ctx.scale(fact, fact);
+    var DOMURL = self.URL || self.webkitURL || self;
+    var img = new Image();
+    var svg = new Blob([svgString], {type: "image/svg+xml"});
+    var url = DOMURL.createObjectURL(svg);
+    
+
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(function(blob) {
+
+          var arrayBuffer;
+          var fileReader = new FileReader();
+          fileReader.onload = function() {
+              arrayBuffer = this.result;
+              let dv = new DataView(arrayBuffer),
+                  firstIDATChunkPos = undefined,
+                  pos = 8;
+
+              /*dv.setUint32(16, _this.get('model.graphLayout.width'), false);
+              dv.setUint32(20, _this.get('model.graphLayout.height'), false);*/
+
+              let concatBuffers = function(buffer1, buffer2) {
+                var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+                tmp.set(new Uint8Array(buffer1), 0);
+                tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
+                return tmp.buffer;
+              };
+
+              function getUint32() {                 // and for Uint16 etc.
+                var data = dv.getUint32(pos, false); // use big-endian byte-order
+                pos += 4;
+                return data
+              }
+
+              // decode chunk name to string (from pngtoy)
+              function getFourCC() {
+                  var v = getUint32(),
+                      c = String.fromCharCode;
+                  return  c((v & 0xff000000)>>>24) + c((v & 0xff0000)>>>16) + 
+                          c((v & 0xff00)>>>8) + c((v & 0xff)>>>0)
+              }
+
+              function string2Uint32(s) {
+                  let arr = new Uint8Array(4);
+                  for (let i = 0; i < arr.length; i++) {
+                    arr[i] = s.charCodeAt(i);
+                  }
+                  let bin = (arr[0])<<24 | (arr[1])<<16 | (arr[2])<<8 | arr[3];
+                  
+                  let c = String.fromCharCode;
+                  console.log(
+                    c((bin & 0xff000000)>>>24) + c((bin & 0xff0000)>>>16) + 
+                    c((bin & 0xff00)>>>8) + c((bin & 0xff)>>>0)
+                  );
+
+                  return bin;
+              }
+
+              while (pos < dv.buffer.byteLength) {
+                let size = getUint32(),
+                    name = getFourCC(),
+                    crc;
+                if (name === "IHDR") {
+                  let crcBuffer = new Uint8Array(dv.buffer, pos-4, size+4);
+                  let width = getUint32();
+                  let height = getUint32();
+                  pos += size - 8;
+                  dv.setUint32(pos, calcCRC(crcBuffer));
+                } else if (name === "IDAT" && !firstIDATChunkPos) {
+                  firstIDATChunkPos = pos - 8;
+                  pos += size;
+                } else {
+                  pos += size;
+                }
+                crc = getUint32();
+              }
+
+              //append pHYs
+              let left = arrayBuffer.slice(0, firstIDATChunkPos),
+                  right = arrayBuffer.slice(firstIDATChunkPos),
+                  pHYs = new ArrayBuffer(4+4+4+4+1+4),
+                  dvPHYs = new DataView(pHYs);
+
+              dvPHYs.setUint32(0, 9, false);
+              dvPHYs.setUint32(4, string2Uint32("pHYs"), false);
+              dvPHYs.setUint32(8, Math.round(300/0.0254), false);
+              dvPHYs.setUint32(12, Math.round(300/0.0254), false);
+              dvPHYs.setUint8(16, 1, false);
+
+              let crcBuffer = new Uint8Array(dvPHYs.buffer, 4, pHYs.byteLength-4);
+              dvPHYs.setUint32(17, calcCRC(crcBuffer));
+
+              let pngBuffer = concatBuffers(concatBuffers(left, dvPHYs.buffer), right);
+
+              //check
+              dv = new DataView(pngBuffer);
+              pos = 8;
+              while (pos < dv.buffer.byteLength) {
+                let size = getUint32(),
+                    name = getFourCC(),
+                    crc;
+                  console.log(name, size);
+                  pos += size;
+                  crc = getUint32();
+              }
+            
+            saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_mapp.png");
+            DOMURL.revokeObjectURL(url);
+
+          };
+          fileReader.readAsArrayBuffer(blob);
+
+        }, "image/png", 1);
+
+        
     };
-    xhr.send(data);
+    img.src = url;
 
   },
 

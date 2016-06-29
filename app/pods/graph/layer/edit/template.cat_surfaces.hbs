@@ -7,7 +7,7 @@
             <li class="layer">
                 <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
                     <div class="caption">
-                        <img src="{{r-url 'assets/images/viz/100x100px-QUALI-cat_surfaces.svg'}}">
+                        <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
                     </div>
                     <div class="vertical stretched middle flow padded-h content">
                         <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
@@ -34,13 +34,20 @@
                 {{/tooltip.html}}
               {{else}}
                 <div class="warning report-message">
-                    <b class="text-warning">1</b>
-                    {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
+                    <div class="horizontal flow space-between">
+                      <div class="solid">
+                        <b class="text-warning">1</b>
+                        {{x-capitalize (t "visualization.warning.rule.count.title" count=1)}}
+                      </div>
+                      <div class="solid">
+                        <a href="#" class="small button">En savoir plus</a>
+                      </div>
+                    </div>
                 </div>
               {{/if}}
             {{/x-tooltip}}
             <div class="horizontal right flow">
-              <a href="#" class="small button filled">En savoir plus</a>
+              
             </div>
         </div>
         {{/if}}
