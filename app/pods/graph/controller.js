@@ -253,15 +253,7 @@ export default Ember.Controller.extend({
                   for (let i = 0; i < arr.length; i++) {
                     arr[i] = s.charCodeAt(i);
                   }
-                  let bin = (arr[0])<<24 | (arr[1])<<16 | (arr[2])<<8 | arr[3];
-                  
-                  let c = String.fromCharCode;
-                  console.log(
-                    c((bin & 0xff000000)>>>24) + c((bin & 0xff0000)>>>16) + 
-                    c((bin & 0xff00)>>>8) + c((bin & 0xff)>>>0)
-                  );
-
-                  return bin;
+                  return (arr[0])<<24 | (arr[1])<<16 | (arr[2])<<8 | arr[3];
               }
 
               while (pos < dv.buffer.byteLength) {
@@ -339,8 +331,8 @@ export default Ember.Controller.extend({
         
     let d3Node = d3.select(node);
     
-    let x = d3Node.selectAll("g.offset line.vertical-left").attr("x1"),
-        y = d3Node.selectAll("g.offset line.horizontal-top").attr("y1"),
+    let x = parseInt(d3Node.selectAll("g.offset line.vertical-left").attr("x1")),
+        y = parseInt(d3Node.selectAll("g.offset line.horizontal-top").attr("y1")),
         w = this.get('model.graphLayout.width'),
         h = this.get('model.graphLayout.height');
     
@@ -352,17 +344,18 @@ export default Ember.Controller.extend({
 
     d3Node.selectAll("g.margin,g.offset").remove();
     d3Node.selectAll("rect.fg").remove();
-    
-    /*d3Node.select("defs")
-      .append("clipPath")
-      .attr("id", "view-clip")
-      .append("rect")
+
+    console.log(x, y, w, h);
+    d3Node.append("text")
+      .text("Made from Khartis")
       .attr({
-        x: 0,
-        y: 0,
-        width: w,
-        height: h
-      });*/
+        "x": x+w,
+        "y": y+h,
+        "dy": "-0.81em",
+        "dx": "-0.81em",
+        "font-size": "0.8em",
+        "text-anchor": "end"
+      });
       
     d3Node.select(".outer-map")
       .attr("clip-path", "url(#viewport-clip)");
