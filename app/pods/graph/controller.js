@@ -182,13 +182,20 @@ export default Ember.Controller.extend({
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
-    'graphLayout.showGrid', 'graphLayout.showLegend', 'graphLayout.showBorders',
+    'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
     'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment'),
   
   layersChange: function() {
+
+    if (this.get('model.graphLayout.showLegend') === null && this.get('model.graphLayers').length) {
+      this.set('model.graphLayout.showLegend', true);
+    } else if (!this.get('model.graphLayers').length) {
+      this.set('model.graphLayout.showLegend', null);
+    }
     this.send('onAskVersioning', 'freeze');
+
   }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
-  
+
   exportSVG() {
     var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
     saveAs(blob, "export_mapp.svg");

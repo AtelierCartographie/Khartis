@@ -66,7 +66,7 @@ var GraphLayout = Struct.extend({
   showGrid: true,
   gridColor: "#e1e3ee",
   
-  showLegend: true,
+  showLegend: null,
 	
 	autoCenter: false,
 	

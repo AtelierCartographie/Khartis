@@ -20,9 +20,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   ZoomFeature, {
   
   tagName: "svg",
-  attributeBindings: ['width', 'xmlns', 'version'],
+  attributeBindings: ['width', 'height', 'xmlns', 'version'],
   classNames: ["map-editor"],
   width: "100%",
+  height: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
   version: '1.1',
   
