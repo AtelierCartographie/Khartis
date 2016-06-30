@@ -255,12 +255,21 @@ export default Ember.Controller.extend({
                           c((v & 0xff00)>>>8) + c((v & 0xff)>>>0)
               }
 
-              function string2Uint32(s) {
+              function str2Uint32(s) {
                   let arr = new Uint8Array(4);
                   for (let i = 0; i < arr.length; i++) {
                     arr[i] = s.charCodeAt(i);
                   }
                   return (arr[0])<<24 | (arr[1])<<16 | (arr[2])<<8 | arr[3];
+              }
+
+              function str2Uint8Arr(s) {
+                var buf = new ArrayBuffer(s.length);
+                var bufView = new Uint8Array(buf);
+                for (var i=0, sLen=s.length; i < sLen; i++) {
+                  bufView[i] = s.charCodeAt(i);
+                }
+                return bufView;
               }
 
               while (pos < dv.buffer.byteLength) {
@@ -282,22 +291,60 @@ export default Ember.Controller.extend({
                 crc = getUint32();
               }
 
-              //append pHYs
               let left = arrayBuffer.slice(0, firstIDATChunkPos),
                   right = arrayBuffer.slice(firstIDATChunkPos),
-                  pHYs = new ArrayBuffer(4+4+4+4+1+4),
+                  crcBuffer;
+
+              //append pHYs
+              let pHYs = new ArrayBuffer(4+4+4+4+1+4),
                   dvPHYs = new DataView(pHYs);
 
               dvPHYs.setUint32(0, 9, false);
-              dvPHYs.setUint32(4, string2Uint32("pHYs"), false);
+              dvPHYs.setUint32(4, str2Uint32("pHYs"), false);
               dvPHYs.setUint32(8, Math.round(300/0.0254), false);
               dvPHYs.setUint32(12, Math.round(300/0.0254), false);
               dvPHYs.setUint8(16, 1, false);
 
-              let crcBuffer = new Uint8Array(dvPHYs.buffer, 4, pHYs.byteLength-4);
+              crcBuffer = new Uint8Array(dvPHYs.buffer, 4, pHYs.byteLength-8);
               dvPHYs.setUint32(17, calcCRC(crcBuffer));
 
-              let pngBuffer = concatBuffers(concatBuffers(left, dvPHYs.buffer), right);
+              let meta = {
+                "Comment": "Made from Khartis",
+                "Author": "Arnaud PEZEL",
+                "Software": "Khartis"
+              };
+
+              let extraBuffer = dvPHYs.buffer;
+
+              for (let k in meta) {
+
+                //append tEXt
+                let keywordArr = str2Uint8Arr(k),
+                    textArr = str2Uint8Arr(meta[k]);
+                let tEXt = new ArrayBuffer(4+4+keywordArr.byteLength+1+textArr.byteLength+4),
+                    dvtEXt = new DataView(tEXt);
+
+                dvtEXt.setUint32(0, keywordArr.byteLength+1+textArr.byteLength, false);
+                dvtEXt.setUint32(4, str2Uint32("tEXt"), false);
+                pos = 8;
+                for (let i = 0; i < keywordArr.byteLength; i++) {
+                  dvtEXt.setUint8(pos, keywordArr[i]);
+                  pos++;
+                }
+                dvtEXt.setUint8(pos, 0);
+                pos++;
+                for (let i = 0; i < textArr.byteLength; i++) {
+                  dvtEXt.setUint8(pos, textArr[i]);
+                  pos++;
+                }
+                crcBuffer = new Uint8Array(dvtEXt.buffer, 4, tEXt.byteLength-8);
+                dvtEXt.setUint32(pos, calcCRC(crcBuffer));
+
+                extraBuffer = concatBuffers(dvtEXt.buffer, extraBuffer);
+
+              }
+
+              let pngBuffer = concatBuffers(concatBuffers(left, extraBuffer), right);
 
               //check
               dv = new DataView(pngBuffer);
