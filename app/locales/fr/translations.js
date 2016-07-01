@@ -92,6 +92,17 @@ export default {
   },
   
   "projection": {
+    "title": "projection",
+    "settings": {
+      "longitude": "longitude",
+      "latitude": "latitude",
+      "rotation": "rotation"
+    },
+    "rating": {
+      "surface": "surface",
+      "distance": "distance",
+      "angle": "angle"
+    },
     "atlantis": {
       "name": "Atlantis",
       "description": "Ceci est une description"

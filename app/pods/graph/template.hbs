@@ -12,20 +12,20 @@
             <div class="projection horizontal bottom space-between solid airy flow filled volet2 clickable hover-effect" {{action 'toggleProjection'}} >
               {{#if model.graphLayout.projection}}
                 <div class="vertical bottom solid flow padded-h projection-name">
-                  <label>projection</label>
+                  <label>{{t 'projection.title'}}</label>
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
                 </div>
                 <div class="horizontal bottom solid flow projection-stars">
                   <div class="vertical solid flow w4">
-                    <label>surface</label>
+                    <label>{{t 'projection.rating.surface'}}</label>
                     {{x-stars value=model.graphLayout.projection.score_area iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                   <div class="vertical solid flow w4">
-                    <label>distance</label>
+                    <label>{{t 'projection.rating.distance'}}</label>
                     {{x-stars value=model.graphLayout.projection.score_distance iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                   <div class="vertical solid flow w4">
-                    <label>angle</label>
+                    <label>{{t 'projection.rating.angle'}}</label>
                     {{x-stars value=model.graphLayout.projection.score_angle iconTrue="iconfont-circle" iconFalse="iconfont-circle-o" max=3 clampLeft=1 class="stars"}}
                   </div>
                 </div>
@@ -36,19 +36,19 @@
             <div class="horizontal bottom space-between flow padded-h">
                 {{#if (x-eq model.graphLayout.projection.translation_x 1)}}
                 <div class="vertical solid flow w4">
-                  <label>Longitude</label>
+                  <label>{{x-capitalize (t 'projection.settings.longitude')}}</label>
                   {{x-slider-editable class="proj-slider fluid" inputPosition="left" tickAppend="°" band=1 value=model.graphLayout.projection.rotateX min=-180 max=180}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.translation_y 1)}}
                 <div class="vertical solid flow w4">
-                  <label>Latitude</label>
+                  <label>{{x-capitalize (t 'projection.settings.latitude')}}</label>
                   {{x-slider-editable class="proj-slider fluid" inputPosition="left" tickAppend="°" band=1 value=model.graphLayout.projection.rotateY min=-90 max=90}}
                 </div>
                 {{/if}}
                 {{#if (x-eq model.graphLayout.projection.rotation_z 1)}}
                 <div class="vertical solid flow w4">
-                  <label>Rotation</label>
+                  <label>{{x-capitalize (t 'projection.settings.rotation')}}</label>
                   {{x-slider-editable class="proj-slider fluid" inputPosition="left" tickAppend="°" tickFormat=",.0f" band=1 value=model.graphLayout.projection.rotateZ min=-90 max=90}}
                 </div>
                 {{/if}}
