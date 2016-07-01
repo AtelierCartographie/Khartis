@@ -64,11 +64,16 @@ export default Ember.Mixin.create({
 		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
     
+    let vpBbox = this.d3l().node().getBoundingClientRect(),
+        ratio = Math.min(vpBbox.width/w, vpBbox.height/h),
+        mX = (vpBbox.width - w*ratio) / 2 / ratio, //marges de compensation du viewport / viewBox
+        mY = (vpBbox.height - h*ratio) / 2 / ratio;
+
     // fg mask
     let vOf = this.get('graphLayout').vOffset(h),
         hOf = this.get('graphLayout').hOffset(w),
         m = this.get('graphLayout.margin'),
-        outer = `M 0 0, ${w} 0, ${w} ${h}, 0 ${h} Z`,
+        outer = `M ${-mX} ${-mY}, ${w+2*mX} ${-mY}, ${w+2*mX} ${h+2*mY}, ${-mX} ${h+2*mY} Z`,
         inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
                    ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
     
@@ -77,6 +82,14 @@ export default Ember.Mixin.create({
 
     this.d3l().select("defs #viewport-clip path")
       .attr("d", `${inner}`);
+
+    this.d3l().selectAll("rect.fg, rect.bg")
+      .attr({
+        "x": -mX,
+        "y": -mY,
+        "width": w+2*mX,
+        "height": h+2*mY
+      })
     
     // ===========
 		

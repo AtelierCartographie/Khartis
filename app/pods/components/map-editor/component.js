@@ -102,8 +102,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
 		d3g.append("rect")
 			.classed("bg", true)
-      .attr("width", "100%")
-      .attr("height", "100%")
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
     let mapG = d3g.append("g")
