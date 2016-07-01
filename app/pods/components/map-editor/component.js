@@ -500,7 +500,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .call(bindAttr);
     
     sel.order().exit().remove();
-    
+
     sel.each(function(d, index) {
       self.mapData(d3.select(this), d);
     });
@@ -609,6 +609,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     };
 
     d3Layer.classed("surface", true);
+    d3Layer.selectAll("*:not(.surface)").remove();
       
     let sel = d3Layer.selectAll(".feature")
       .data(data)
@@ -617,9 +618,11 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     sel.enter()
       .append("use")
       .classed("feature", true)
+      .classed("surface", true)
       .call(bindAttr);
 
 		sel.exit().remove();
+
 			
 	},
   
@@ -696,6 +699,9 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       _.each(shapeFn);
       
     };
+
+    d3Layer.classed("surface", false);
+    d3Layer.selectAll("*:not(.symbol)").remove();
     
     let centroidSel = d3Layer
 			.selectAll("g.feature")
@@ -705,9 +711,11 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     centroidSel.enter()
       .append("g")
 			.classed("feature", true)
+			.classed("symbol", true)
       .call(bindAttr);
       
     centroidSel.order().exit().remove();
+
 
 	}
 	
