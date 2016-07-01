@@ -161,6 +161,10 @@ export default {
       "symbols": "symboles",
       "discretization": {
         "title": "discrétisation",
+        "method": {
+          "unique": "uniques",
+          "grouped": "regroupés en classes"
+        },
         "type": {
           "regular": "intervalles réguliers",
           "mean": "moyennes emboitées",

@@ -29,8 +29,8 @@
         <div class="solid vertical flow">
         {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
         <ul class="tabs brewer-tabs">
-          <li tab-id="linear-tab">uniques</li>
-          <li tab-id="classes-tab">regroupés en classes</li>
+          <li tab-id="linear-tab">{{t 'visualization.settings.discretization.method.unique'}}</li>
+          <li tab-id="classes-tab">{{t 'visualization.settings.discretization.method.grouped'}}</li>
         </ul>
         <div class="panes">
           <div id="classes-tab" class="tab-pane {{unless (x-eq editedLayer.mapping.scale.intervalType 'linear') 'active'}}">
