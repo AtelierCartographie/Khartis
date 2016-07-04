@@ -92,6 +92,17 @@ export default {
   },
   
   "projection": {
+    "title": "projection",
+    "settings": {
+      "longitude": "longitude",
+      "latitude": "latitude",
+      "rotation": "rotation"
+    },
+    "rating": {
+      "surface": "area",
+      "distance": "distance",
+      "angle": "angle"
+    },
     "atlantis": {
       "name": "Atlantis",
       "description": "Ceci est une description"
@@ -150,6 +161,10 @@ export default {
       "symbols": "symbols",
       "discretization": {
         "title": "discretization",
+        "method": {
+          "unique": "proportional",
+          "grouped": "grouped into classes"
+        },
         "type": {
           "regular": "regular intervals",
           "mean": "nested means",
