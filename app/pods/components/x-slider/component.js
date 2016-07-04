@@ -71,7 +71,6 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
   
   cleanup: function() {
-    console.log("cleanup");
     clearInterval(this.get('resizeInterval'));
   }.on("willDestroyElement"),
   

@@ -68,6 +68,10 @@
 
           <div class="title underlined">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
+          <div class="horizontal right solid flow padded-t">
+            <a class="solid button filled" {{action 'randomizeRules'}}><i class="iconfont iconfont-redo"></i></a>
+          </div>
+
           <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
 
               {{#each editedLayer.mapping.rules as |rule|}}

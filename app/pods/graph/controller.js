@@ -566,6 +566,10 @@ export default Ember.Controller.extend({
         this.get('editedLayer.mapping').clampValueBreak();
       }
     },
+
+    randomizeRules() {
+      this.get('editedLayer.mapping').generateRules(true);
+    },
     
     export(format) {
       if (format === "svg") {

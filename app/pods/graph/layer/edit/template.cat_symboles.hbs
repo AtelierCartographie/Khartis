@@ -45,9 +45,6 @@
                 </div>
               {{/if}}
             {{/x-tooltip}}
-            <div class="horizontal right flow">
-              <a href="#" class="small button filled">En savoir plus</a>
-            </div>
         </div>
         {{/if}}
     </div>
@@ -80,42 +77,46 @@
 
           <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
-            <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
-                {{#each editedLayer.mapping.rules as |rule|}}
-                    <li>
+          <div class="horizontal right solid flow padded-t">
+            <a class="solid button filled" {{action 'randomizeRules'}}><i class="iconfont iconfont-redo"></i></a>
+          </div>
 
-                      <div class="categories-name">
+          <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
+              {{#each editedLayer.mapping.rules as |rule|}}
+                  <li>
 
-                          {{#if rule.emptyValue}}
-                                <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
-                          {{else}}
-                                <span class="varname">{{rule.label}}</span>
-                          {{/if}}
+                    <div class="categories-name">
 
-                          <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+                        {{#if rule.emptyValue}}
+                              <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
+                        {{else}}
+                              <span class="varname">{{rule.label}}</span>
+                        {{/if}}
 
-                          <div class="flow">
-                                {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                        <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+
+                        <div class="flow">
+                              {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                        </div>
+                      </div>
+
+                      <div class="categories-controls">
+
+                          <div class="categories-control categories-shape-control">
+                              {{shape-dropdown shapes=editedLayer.mapping.visualization.availableShapes value=rule.shape  color="#977864" }}
                           </div>
-                        </div>
 
-                        <div class="categories-controls">
+                          <div class="categories-control categories-fill-color-control">
+                              {{color-picker value=rule.color}}
+                          </div>
 
-                            <div class="categories-control categories-shape-control">
-                                {{shape-dropdown shapes=editedLayer.mapping.visualization.availableShapes value=rule.shape  color="#977864" }}
-                            </div>
+                          <div class="categories-control categories-shape-size-control">
+                              {{x-slider class="fluid" band=0.5 value=rule.size min=1 max=24}}
+                          </div>
 
-                            <div class="categories-control categories-fill-color-control">
-                                {{color-picker value=rule.color}}
-                            </div>
-
-                            <div class="categories-control categories-shape-size-control">
-                                {{x-slider class="fluid" band=0.5 value=rule.size min=1 max=24}}
-                            </div>
-
-                        </div>
-                    </li>
-                {{/each}}
+                      </div>
+                  </li>
+              {{/each}}
           </ul>
           {{/o-wrap.brewer}}
       </div>

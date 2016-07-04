@@ -45,9 +45,9 @@ let DataMixin = Ember.Mixin.create({
 
 let SurfaceMixin = Ember.Mixin.create({
 
-  generateRules() {
+  generateRules(force) {
     
-    if (!this.get('rules')) {
+    if (force || !this.get('rules')) {
 
       let colors = shuffleArray(this.get('defaultColorScale').range().slice()),
           colorScale = (index) => {
@@ -84,9 +84,9 @@ let SurfaceMixin = Ember.Mixin.create({
 
 let SymbolMixin = Ember.Mixin.create({
 
-  generateRules() {
+  generateRules(force) {
     
-    if (!this.get('rules')) {
+    if (force || !this.get('rules')) {
       
       let colors = shuffleArray(this.get('defaultColorScale').range().slice()),
           shapes = shuffleArray(this.get('visualization.availableShapes').slice()),
