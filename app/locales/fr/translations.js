@@ -163,7 +163,7 @@ export default {
       "discretization": {
         "title": "discrétisation",
         "method": {
-          "unique": "uniques",
+          "unique": "proportionnels",
           "grouped": "regroupés en classes"
         },
         "type": {
