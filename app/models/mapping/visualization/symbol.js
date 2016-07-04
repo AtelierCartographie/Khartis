@@ -12,7 +12,7 @@ let SymbolVisualization = Struct.extend({
   maxSize: 10,
 
   absoluteMinSize: function() {
-    return config.symbolMaxMinSize;
+    return config.symbolMinMaxSize;
   }.property(),
 
   absoluteMaxSize: function() {
