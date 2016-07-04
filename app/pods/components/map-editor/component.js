@@ -683,14 +683,14 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
       _.attr("transform", d => { 
 
-        var transform = d3.geo.transform({
-            point:function(x,y){this.stream.point(x,y)}
-        });
-        //console.log(projection.stream(transform.stream()).point(d.point.geometry.coordinates[0], d.point.geometry.coordinates[1]));
+        let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        
         return d3lper.translate({
-        tx: projection(d.point.geometry.coordinates)[0],
-        ty: projection(d.point.geometry.coordinates)[1]
-      })});
+          tx: tx,
+          ty: ty
+        })
+        
+      });
       
       _.selectAll(".shape").remove();
       
@@ -703,7 +703,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
     let centroidSel = d3Layer
 			.selectAll("g.feature")
-      .data(sortedData)
+      .data(sortedData.filter( d => {
+        let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        return !isNaN(tx) && !isNaN(ty);
+      }))
       .call(bindAttr);
       
     centroidSel.enter()
