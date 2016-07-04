@@ -12,6 +12,7 @@ export default {
     "close": "Fermer",
     "or": "ou",
     "and": "et",
+    "none": "aucune",
     "download": "télécharger",
     "error": {
      "one": "erreur",

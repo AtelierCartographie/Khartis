@@ -26,10 +26,7 @@ let DataMixin = Ember.Mixin.create({
 
   initDivergence: function() {
     if (this.get('shouldDiverge') && !this.get('scale.diverging')) {
-      this.get('scale').setProperties({
-        diverging: true,
-        valueBreak: 0
-      });
+      this.set('scale.valueBreak', 0);
     }
   },
 
@@ -173,6 +170,14 @@ let DataMixin = Ember.Mixin.create({
   extent: function() {
     return d3.extent(this.get('values'));
   }.property('values.[]'),
+
+  extentMin: function() {
+    return this.get('extent')[0];
+  }.property('extent'),
+  
+  extentMax: function() {
+    return this.get('extent')[1];
+  }.property('extent'),
   
   distribution: function() {
       

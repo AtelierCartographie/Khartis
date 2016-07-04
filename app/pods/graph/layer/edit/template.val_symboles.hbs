@@ -79,15 +79,16 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
-              {{#unless editedLayer.mapping.shouldDiverge}}
-              <span class="offset-checkbox">{{input type="checkbox" checked=editedLayer.mapping.scale.diverging}}<div class="-h"></div></span>
-              {{/unless}}
+              {{input-numeric.one-way
+                readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
+                numericValue=editedLayer.mapping.scale.valueBreak
+                class="value-break-input solid w5 padding-fix"
+                nullable=true
+                min=editedLayer.mapping.extentMin
+                max=editedLayer.mapping.extentMax
+                update=(action 'updateValueBreak')
+                placeholder=(t 'general.none')}}
               {{#if editedLayer.mapping.scale.diverging}}
-                {{input-numeric
-                  readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
-                  numericValue=editedLayer.mapping.scale.valueBreak
-                  class="value-break-input solid w4 padding-fix"
-                  focus-out=(action 'onValueBreakFocusOut')}}
                 {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
                   {{#o-wrap.classes-before-break
                     classes=editedLayer.mapping.scale.classesBeforeBreak

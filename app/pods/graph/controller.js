@@ -557,8 +557,14 @@ export default Ember.Controller.extend({
       }
     },
 
-    onValueBreakFocusOut() {
-      this.get('editedLayer.mapping').clampValueBreak();
+    updateValueBreak(val) {
+      console.log("hello", val);
+      if (Ember.isEmpty(val)) {
+        this.set('editedLayer.mapping.scale.valueBreak', null);
+      } else {
+        this.set('editedLayer.mapping.scale.valueBreak', val);
+        this.get('editedLayer.mapping').clampValueBreak();
+      }
     },
     
     export(format) {

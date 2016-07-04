@@ -4,9 +4,11 @@ export default Ember.TextField.extend({
     
     isInteger: false,
 
-    min: Number.MIN_VALUE,
+    min: -Number.MAX_VALUE,
     max: Number.MAX_VALUE,
     numericValue: null,
+
+    nullable: false,
     
     sanitize: function() {
         
@@ -37,11 +39,15 @@ export default Ember.TextField.extend({
     },
 
     commitValue() {
-      if (this.get('value') < this.get('min')) {
-        this.set('value', `${this.get('min')}`);
-      }
-      if (this.get('value') > this.get('max')) {
-        this.set('value', `${this.get('max')}`);
+      if (this.get('nullable') && Ember.isEmpty(this.get('value'))) {
+        this.sendAction("update", null);
+      } else {
+        if (this.get('value') < this.get('min')) {
+          this.set('value', `${this.get('min')}`);
+        }
+        if (this.get('value') > this.get('max')) {
+          this.set('value', `${this.get('max')}`);
+        }
       }
       this.sendAction("update", this.get('value'));
     },

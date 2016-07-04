@@ -15,9 +15,11 @@ let Scale = Struct.extend({
   intervalType: null,
   valueBreak: null,
   classesBeforeBreak: 1,
-  contrast: 2,
+  contrast: 2,  
   
-  diverging: false,
+  diverging: function() {
+    return this.get('valueBreak') != null;
+  }.property('valueBreak'),
   
   contrastScale: function() {
     return d3.scale.pow().exponent(CONTRASTS[this.get('contrast')]);
@@ -106,8 +108,7 @@ let Scale = Struct.extend({
       intervalType: this.get('intervalType'),
       valueBreak: this.get('valueBreak'),
       classesBeforeBreak: this.get('classesBeforeBreak'),
-      contrast: this.get('contrast'),
-      diverging: this.get('diverging')
+      contrast: this.get('contrast')
     }, props));
   }
   
@@ -121,8 +122,7 @@ Scale.reopenClass({
       intervalType: json.intervalType,
       valueBreak: json.valueBreak,
       classesBeforeBreak: json.classesBeforeBreak,
-      contrast: json.contrast,
-      diverging: json.diverging
+      contrast: json.contrast
     });
     return o;
   }
