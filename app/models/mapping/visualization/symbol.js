@@ -10,6 +10,8 @@ let SymbolVisualization = Struct.extend({
   stroke: 2,
   minSize: 5,
   maxSize: 10,
+
+  availableShapes: ["circle", "rect", "line", "star", "times"],
   
   colorStops(diverging) {
     if (diverging) {

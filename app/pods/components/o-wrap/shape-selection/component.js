@@ -3,7 +3,7 @@ import WrapperAbstract from '../-abstract/component';
 
 export default WrapperAbstract.extend({
 
-  shapes: ["circle", "rect", "line", "bar", "star", "times"],
+  shapes: ["circle", "rect", "line", "star", "times"],
 
   availableShapes: function() {
     return this.get('shapes').map( s => s );

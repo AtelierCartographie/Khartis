@@ -3,33 +3,19 @@ import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'mapp/utils/pattern-maker';
 
+let shuffleArray = function(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+};
+
 let DataMixin = Ember.Mixin.create({
   
   defaultColorScale: d3.scale.category10(), 
-  
-  generateRules() {
-    
-    if (!this.get('rules')) {
-      
-      let scale = (index) => {
-        return index < this.get('defaultColorScale').range().length ? this.get('defaultColorScale')(index) : "#dddddd";
-      };
-      
-      let rules = [...this.get('distribution').values()]
-        .sort((a, b) => d3.descending(a.qty, b.qty))
-        .map( (dist, i) => Rule.create({
-          cells: dist.cells,
-          label: dist.val,
-          visible: true,
-          color: scale(i),
-          size: this.get('visualization.maxSize'),
-          shape: "circle"
-        }));
-       
-      this.set("rules", rules);
-    }
-    
-  },
   
   getScaleOf(type) {
     
@@ -58,6 +44,31 @@ let DataMixin = Ember.Mixin.create({
 });
 
 let SurfaceMixin = Ember.Mixin.create({
+
+  generateRules() {
+    
+    if (!this.get('rules')) {
+
+      let colors = shuffleArray(this.get('defaultColorScale').range().slice()),
+          colorScale = (index) => {
+            return index < colors.length ? colors[index] : "#dddddd";
+          };
+      
+      let rules = [...this.get('distribution').values()]
+        .sort((a, b) => d3.descending(a.qty, b.qty))
+        .map( (dist, i) => Rule.create({
+          cells: dist.cells,
+          label: dist.val,
+          visible: true,
+          color: colorScale(i),
+          size: null,
+          shape: null
+        }));
+       
+      this.set("rules", rules);
+    }
+    
+  },
   
   generateVisualization() {
     if (!this.get('visualization')) {
@@ -72,6 +83,35 @@ let SurfaceMixin = Ember.Mixin.create({
 });
 
 let SymbolMixin = Ember.Mixin.create({
+
+  generateRules() {
+    
+    if (!this.get('rules')) {
+      
+      let colors = shuffleArray(this.get('defaultColorScale').range().slice()),
+          shapes = shuffleArray(this.get('visualization.availableShapes').slice()),
+          colorScale = (index) => {
+            return index < colors.length ? colors[index] : "#dddddd";
+          },
+          shapeScale = (index) => {
+            return index < shapes.length ? shapes[index] : "circle";
+          };
+      
+      let rules = [...this.get('distribution').values()]
+        .sort((a, b) => d3.descending(a.qty, b.qty))
+        .map( (dist, i) => Rule.create({
+          cells: dist.cells,
+          label: dist.val,
+          visible: true,
+          color: colorScale(i),
+          size: this.get('visualization.maxSize'),
+          shape: shapeScale(i)
+        }));
+       
+      this.set("rules", rules);
+    }
+    
+  },
   
   generateVisualization() {
     if (!this.get('visualization')) {

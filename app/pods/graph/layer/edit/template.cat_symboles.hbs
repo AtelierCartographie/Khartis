@@ -77,7 +77,6 @@
       <div class="vertical flow">
 
           {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
-          {{#o-wrap.shape-selection obj=editedLayer.mapping as |shapeSelection|}}
 
           <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
@@ -103,7 +102,7 @@
                         <div class="categories-controls">
 
                             <div class="categories-control categories-shape-control">
-                                {{shape-dropdown shapes=shapeSelection.availableShapes value=rule.shape  color="#977864" }}
+                                {{shape-dropdown shapes=editedLayer.mapping.visualization.availableShapes value=rule.shape  color="#977864" }}
                             </div>
 
                             <div class="categories-control categories-fill-color-control">
@@ -118,7 +117,6 @@
                     </li>
                 {{/each}}
           </ul>
-          {{/o-wrap.shape-selection}}
           {{/o-wrap.brewer}}
       </div>
 
