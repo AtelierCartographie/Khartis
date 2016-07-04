@@ -1,4 +1,5 @@
 import Struct from 'mapp/models/struct';
+import config from 'mapp/config/environment';
 
 let SymbolVisualization = Struct.extend({
   
@@ -8,8 +9,15 @@ let SymbolVisualization = Struct.extend({
   shape: "circle",
   strokeColor: "#404040",
   stroke: 2,
-  minSize: 5,
   maxSize: 10,
+
+  absoluteMinSize: function() {
+    return config.symbolMaxMinSize;
+  }.property(),
+
+  absoluteMaxSize: function() {
+    return config.symbolMaxMaxSize;
+  }.property(),
 
   availableShapes: ["circle", "rect", "line", "star", "times"],
   
@@ -22,7 +30,7 @@ let SymbolVisualization = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak', 'minSize',
+    'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak',
     'maxSize', 'shape',
     function() {
       this.notifyDefferedChange();
@@ -36,7 +44,6 @@ let SymbolVisualization = Struct.extend({
       shape: this.get('shape'),
       strokeColor: this.get('strokeColor'),
       stroke: this.get('stroke'),
-      minSize: this.get('minSize'),
       maxSize: this.get('maxSize')
     }, props));
   }
@@ -51,7 +58,6 @@ SymbolVisualization.reopenClass({
       shape: json.shape,
       strokeColor: json.strokeColor,
       stroke: json.stroke,
-      minSize: json.minSize,
       maxSize: json.maxSize
     });
     return o;

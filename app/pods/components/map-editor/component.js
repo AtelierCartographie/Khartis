@@ -651,9 +651,9 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         if (shape === "bar") {
           
           el.attr({
-              "width": mapping.get('visualization.minSize'),
+              "width": mapping.get('visualization.maxSize'),
               "height": r*r,
-              "x": -mapping.get('visualization.minSize') / 2,
+              "x": -mapping.get('visualization.maxSize') / 2,
               "y": -r*r
             });
           

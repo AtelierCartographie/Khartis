@@ -49,27 +49,12 @@
         {{/if}}
     </div>
 
-  <!--<div class="titlebar">-->
-    <!--<div class="title">{{!#link-to 'graph.layer'}}{{!t "navigation.chooseVisualization"}}{{!/link-to}} <i class="iconfont iconfont-angle-right separator"></i>{{!x-capitalize (t (concat "visualization." editedLayer.mapping.type ".name"))}}</div>-->
-    <!--<div class="actions">-->
-      <!--{{!#link-to 'graph.layer'}}<div class="small button filled default" {{!action 'navigateTo' 'graph.layer'}}>Changer de visualisation</div>{{!/link-to}}-->
-      <!--{{!#link-to 'graph'}}<div class="small button filled default" {{!action 'navigateTo' 'graph'}}>Fermer</div>{{!/link-to}}-->
-    <!--</div>-->
-  <!--</div>-->
-
 
   <div class="body vertical flow">
 
     <div class="settings vertical flow">
 
     {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
-
-        <!--<div class="horizontal middle flow">-->
-            <!--<label class="solid w5">Taille des symboles</label>-->
-            <!--<div class="horizontal half-airy solid flow w7">-->
-                <!--{{!x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.minSize min=4 max=24}}-->
-            <!--</div>-->
-        <!--</div>-->
 
       <div class="vertical flow">
 
@@ -111,7 +96,7 @@
                           </div>
 
                           <div class="categories-control categories-shape-size-control">
-                              {{x-slider class="fluid" band=0.5 value=rule.size min=1 max=24}}
+                              {{x-slider class="fluid" band=0.5 value=rule.size min=1 max=editedLayer.mapping.visualization.absoluteMaxSize}}
                           </div>
 
                       </div>

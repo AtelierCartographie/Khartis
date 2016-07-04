@@ -7,62 +7,6 @@ import Mapping from 'mapp/models/mapping/mapping';
 import Projection from 'mapp/models/projection';
 import topojson from 'npm:topojson';
 
-/*var CRC = function() {
-	
-	this.crc = 0xffffffff;	
-	
-};
-
-CRC.table = null;
-
-CRC.make_table = function() {
-	
-	var table = [];
-    for (var n = 0; n<256; n++) {
-    	var c = n;
-    	for (var k = 0; k<8; k++) {
-    		if (c & 1) {
-    			c = 0xedb88320 ^ (c >>> 1);
-    		}
-    		else {
-    			c = c >>> 1;
-    		}
-    	}
-    	table[n] = c;
-    }
-	
-    CRC.table = table;
-};
-
-CRC.prototype.update = function(array, index, len) {
-
-	if (CRC.table == null) {
-		CRC.make_table();
-	}
-	
-	var crc = this.crc;
-	var table = CRC.table;
-
-
-    while (len >= 8) {
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8)
-        len -= 8;
-    }
-    if (len) do {
-        crc = table[(crc ^ array[index++]) & 0xff] ^ (crc >>> 8);
-    } while (--len);
-	
-	this.crc = crc;
-	return crc;
-};*/
-
 let table = new Uint32Array(256),
     crc;
 for (var i = 0, j; i < 256; i++) {

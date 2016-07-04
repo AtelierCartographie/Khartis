@@ -21,6 +21,9 @@ module.exports = function(environment) {
       default: "natural_earth"
     },
 
+    symbolMaxMinSize: 5,
+    symbolMaxMaxSize: 56,
+
     examples: [
       {
         id: "eco2",
