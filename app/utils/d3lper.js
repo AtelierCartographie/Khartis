@@ -16,14 +16,13 @@ let d3lper = {
 	  return (yiq >= 128) ? 'darken' : 'lighten';
 	},
   
-  
   flow(_) {
     
     const CSS = {
       "flow": function(val) { return val; },
       "layout": function(val) { return val; },
-      "width": function(val, bbox) { bbox.width =  cssPx(val) },
-      "height": function(val, bbox) { bbox.height =  cssPx(val) },
+      "width": function(val, bbox) { bbox.width =  cssPx(val); },
+      "height": function(val, bbox) { bbox.height =  cssPx(val); },
       "stretch": function(val) { return val; },
       "wrap": function(val) { return val; },
       "margin-bottom": function(val, bbox) {  },
