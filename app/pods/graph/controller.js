@@ -6,20 +6,7 @@ import GraphLayer from 'mapp/models/graph-layer';
 import Mapping from 'mapp/models/mapping/mapping';
 import Projection from 'mapp/models/projection';
 import topojson from 'npm:topojson';
-
-let table = new Uint32Array(256),
-    crc;
-for (var i = 0, j; i < 256; i++) {
-  crc = i>>>0;
-  for (j = 0; j < 8; j++) crc = (crc & 1) ? 0xedb88320 ^ (crc >>> 1) : crc >>> 1;
-  table[i] = crc;
-}
-
-function calcCRC(buffer) {
-  var crc = (-1>>>0), len = buffer.length, i;
-  for (i = 0; i < len; i++) crc = (crc >>> 8) ^ table[(crc ^ buffer[i]) & 0xff];
-  return (crc ^ -1)>>>0;
-}
+import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'mapp/utils/png-utils';
 
 export default Ember.Controller.extend({
   
@@ -170,138 +157,48 @@ export default Ember.Controller.extend({
           var arrayBuffer;
           var fileReader = new FileReader();
           fileReader.onload = function() {
+
               arrayBuffer = this.result;
               let dv = new DataView(arrayBuffer),
                   firstIDATChunkPos = undefined,
-                  pos = 8;
-
-              /*dv.setUint32(16, _this.get('model.graphLayout.width'), false);
-              dv.setUint32(20, _this.get('model.graphLayout.height'), false);*/
-
-              let concatBuffers = function(buffer1, buffer2) {
-                var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
-                tmp.set(new Uint8Array(buffer1), 0);
-                tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-                return tmp.buffer;
-              };
-
-              function getUint32() {                 // and for Uint16 etc.
-                var data = dv.getUint32(pos, false); // use big-endian byte-order
-                pos += 4;
-                return data
-              }
-
-              // decode chunk name to string (from pngtoy)
-              function getFourCC() {
-                  var v = getUint32(),
-                      c = String.fromCharCode;
-                  return  c((v & 0xff000000)>>>24) + c((v & 0xff0000)>>>16) + 
-                          c((v & 0xff00)>>>8) + c((v & 0xff)>>>0)
-              }
-
-              function str2Uint32(s) {
-                  let arr = new Uint8Array(4);
-                  for (let i = 0; i < arr.length; i++) {
-                    arr[i] = s.charCodeAt(i);
-                  }
-                  return (arr[0])<<24 | (arr[1])<<16 | (arr[2])<<8 | arr[3];
-              }
-
-              function str2Uint8Arr(s) {
-                var buf = new ArrayBuffer(s.length);
-                var bufView = new Uint8Array(buf);
-                for (var i=0, sLen=s.length; i < sLen; i++) {
-                  bufView[i] = s.charCodeAt(i);
-                }
-                return bufView;
-              }
-
+                  pos = 8,
+                  getUint32 = function() {
+                    var data = dv.getUint32(pos, false);
+                    pos += 4;
+                    return data;
+                  };
+              
+              //find first IDAT chunk
               while (pos < dv.buffer.byteLength) {
                 let size = getUint32(),
-                    name = getFourCC(),
-                    crc;
-                if (name === "IHDR") {
-                  let crcBuffer = new Uint8Array(dv.buffer, pos-4, size+4);
-                  let width = getUint32();
-                  let height = getUint32();
-                  pos += size - 8;
-                  dv.setUint32(pos, calcCRC(crcBuffer));
-                } else if (name === "IDAT" && !firstIDATChunkPos) {
+                    name = uint32ToStr(getUint32());
+                if (name === "IDAT" && !firstIDATChunkPos) {
                   firstIDATChunkPos = pos - 8;
-                  pos += size;
+                  break;
                 } else {
                   pos += size;
                 }
-                crc = getUint32();
+                getUint32(); //crc
               }
 
               let left = arrayBuffer.slice(0, firstIDATChunkPos),
-                  right = arrayBuffer.slice(firstIDATChunkPos),
-                  crcBuffer;
+                  right = arrayBuffer.slice(firstIDATChunkPos);
 
-              //append pHYs
-              let pHYs = new ArrayBuffer(4+4+4+4+1+4),
-                  dvPHYs = new DataView(pHYs);
-
-              dvPHYs.setUint32(0, 9, false);
-              dvPHYs.setUint32(4, str2Uint32("pHYs"), false);
-              dvPHYs.setUint32(8, Math.round(300/0.0254), false);
-              dvPHYs.setUint32(12, Math.round(300/0.0254), false);
-              dvPHYs.setUint8(16, 1, false);
-
-              crcBuffer = new Uint8Array(dvPHYs.buffer, 4, pHYs.byteLength-8);
-              dvPHYs.setUint32(17, calcCRC(crcBuffer));
+              let extraBuffer = build_pHYs(300);
 
               let meta = {
                 "Comment": "Made from Khartis",
-                "Author": "Arnaud PEZEL",
                 "Software": "Khartis"
               };
 
-              let extraBuffer = dvPHYs.buffer;
-
               for (let k in meta) {
-
-                //append tEXt
-                let keywordArr = str2Uint8Arr(k),
-                    textArr = str2Uint8Arr(meta[k]);
-                let tEXt = new ArrayBuffer(4+4+keywordArr.byteLength+1+textArr.byteLength+4),
-                    dvtEXt = new DataView(tEXt);
-
-                dvtEXt.setUint32(0, keywordArr.byteLength+1+textArr.byteLength, false);
-                dvtEXt.setUint32(4, str2Uint32("tEXt"), false);
-                pos = 8;
-                for (let i = 0; i < keywordArr.byteLength; i++) {
-                  dvtEXt.setUint8(pos, keywordArr[i]);
-                  pos++;
-                }
-                dvtEXt.setUint8(pos, 0);
-                pos++;
-                for (let i = 0; i < textArr.byteLength; i++) {
-                  dvtEXt.setUint8(pos, textArr[i]);
-                  pos++;
-                }
-                crcBuffer = new Uint8Array(dvtEXt.buffer, 4, tEXt.byteLength-8);
-                dvtEXt.setUint32(pos, calcCRC(crcBuffer));
-
-                extraBuffer = concatBuffers(dvtEXt.buffer, extraBuffer);
-
+                extraBuffer = concatBuffers(build_tEXt(k, meta[k]), extraBuffer);
               }
 
               let pngBuffer = concatBuffers(concatBuffers(left, extraBuffer), right);
 
-              //check
-              dv = new DataView(pngBuffer);
-              pos = 8;
-              while (pos < dv.buffer.byteLength) {
-                let size = getUint32(),
-                    name = getFourCC(),
-                    crc;
-                  console.log(name, size);
-                  pos += size;
-                  crc = getUint32();
-              }
-            
+              //tracePNGChunks(pngBuffer);
+
             saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_mapp.png");
             DOMURL.revokeObjectURL(url);
 
@@ -431,10 +328,6 @@ export default Ember.Controller.extend({
         varCol: this.get('editedLayer.mapping.varCol'),
         geoDef: this.get('editedLayer.mapping.geoDef')
       }));
-    },
-    
-    bindMappingScaleOf(layer, type) {
-      layer.set('mapping.scaleOf', type);
     },
     
     bindMappingPattern(layer, pattern) {
