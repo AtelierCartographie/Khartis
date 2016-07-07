@@ -25,7 +25,7 @@ export default Ember.TextField.extend({
     }.observes('value'),
 
     didReceiveAttrs() {
-      this.set('value', this.get('numericValue'));
+      this.set('value', this.get('numericValue') != null ? `${this.get('numericValue')}` : null);
     },
 
     keyUp(e) {

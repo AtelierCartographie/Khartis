@@ -180,6 +180,7 @@ export default Ember.Component.extend({
       
       if (this.get('_tmpValue') != tmpVal) {
         this.set('_tmpValue', tmpVal);
+        Ember.run.debounce(this, this.commitValue, 120);
       }
   },
   
@@ -250,10 +251,14 @@ export default Ember.Component.extend({
     }
     
   },
-  
-  tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
+
+  commitValue: function() {
     this.set('value', this.get('_tmpValue'));
-  }, 120),
+  },
+  
+  /*tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
+    this.set('value', this.get('_tmpValue'));
+  }, 120),*/
   
   valueChange: function() {
     

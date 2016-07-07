@@ -333,7 +333,7 @@ let SymbolMixin = Ember.Mixin.create({
       if (this.get('scale.intervalType') === "linear") {
 
         d3Scale = contrastScale.clamp(true);
-        domain = ext;
+        domain = [0, ext[1]];
         range = [0, visualization.get('maxSize')];
         transform = _ => d3Scale(Math.abs(_));
 
