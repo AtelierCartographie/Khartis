@@ -145,14 +145,20 @@ let DataMixin = Ember.Mixin.create({
   }.property('scale.classes', 'scale.intervalType'),
   
   generateRules() {
-    
     if (!this.get('rules')) {
       let ruleMap = this.get('varCol.body')
-        .filter( c => this.get('varCol.incorrectCells').indexOf(c) !== -1 )
+        .filter( c => Ember.isEmpty(c.get('value')) || this.get('varCol.incorrectCells').indexOf(c) !== -1 )
         .reduce( (m, c) => {
-          let val = !Ember.isEmpty(c.get('value')) ? c.get('value') : Rule.EMPTY_VALUE;
+          let val = !Ember.isEmpty(c.get('value')) ? c.get('value') : Rule.EMPTY_VALUE,
+              shape = !Ember.isEmpty(c.get('value')) ? "circle" : "line";
           if (!m.has(val)) {
-            m.set(val, Rule.create({cells: Em.A([c]), label: val, visible: true, color: "#dddddd"}));
+            m.set(val, Rule.create({
+              cells: Em.A([c]),
+              label: val,
+              visible: true,
+              color: "#dddddd",
+              shape: shape
+            }));
           } else {
             m.get(val).get('cells').addObject(c);
           }
