@@ -77,7 +77,7 @@
                 update=(action 'updateValueBreak')
                 placeholder=(t 'general.none')}}
               {{#if editedLayer.mapping.scale.diverging}}
-                {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
+                {{#if editedLayer.mapping.scale.usesInterval}}
                   {{#o-wrap.classes-before-break
                     classes=editedLayer.mapping.scale.classesBeforeBreak
                     totalClasses=editedLayer.mapping.scale.classes
@@ -86,7 +86,7 @@
                     {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
-                {{/unless}}
+                {{/if}}
               {{/if}}
             </div>
           </div>

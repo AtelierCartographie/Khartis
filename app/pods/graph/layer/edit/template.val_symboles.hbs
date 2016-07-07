@@ -33,7 +33,7 @@
           <li tab-id="classes-tab">{{t 'visualization.settings.discretization.method.grouped'}}</li>
         </ul>
         <div class="panes">
-          <div id="classes-tab" class="tab-pane {{unless (x-eq editedLayer.mapping.scale.intervalType 'linear') 'active'}}">
+          <div id="classes-tab" class="tab-pane {{if editedLayer.mapping.scale.usesInterval 'active'}}">
               <div class="horizontal middle flow">
                 <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
                 <div class="solid w7">
@@ -71,7 +71,7 @@
                 </div>
               </div>
             </div>
-            <div id="linear-tab" class="tab-pane {{if (x-eq editedLayer.mapping.scale.intervalType 'linear') 'active'}}"></div>
+            <div id="linear-tab" class="tab-pane {{unless editedLayer.mapping.scale.usesInterval 'active'}}"></div>
           </div>
           {{/x-tabs}}
           
@@ -89,7 +89,7 @@
                 update=(action 'updateValueBreak')
                 placeholder=(t 'general.none')}}
               {{#if editedLayer.mapping.scale.diverging}}
-                {{#unless (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
+                {{#if editedLayer.mapping.scale.usesInterval}}
                   {{#o-wrap.classes-before-break
                     classes=editedLayer.mapping.scale.classesBeforeBreak
                     totalClasses=editedLayer.mapping.scale.classes
@@ -98,7 +98,7 @@
                     {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
                   {{/o-wrap.classes-before-break}}
-                {{/unless}}
+                {{/if}}
               {{/if}}
             </div>
           </div>
@@ -147,7 +147,7 @@
           </div>
         </div>
       </div>
-      
+
       {{#if editedLayer.mapping.rules.length}}
         <div class="title underlined" style="margin-top:20px;">
           {{x-capitalize (t 'visualization.title.nodata')}}

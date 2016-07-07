@@ -387,15 +387,10 @@ export default Ember.Controller.extend({
     },
 
     onIntervalTypeTabChange(id) {
-      if (id === "linear-tab") {
-        this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'linear');
-      } else if (this.get('editedLayer.mapping.scale.intervalType') === "linear") {
-        this.send('bindScaleIntervalType', this.get('editedLayer.mapping.scale'), 'regular');
-      }
+      this.set('editedLayer.mapping.scale.usesInterval', !(id === "linear-tab"));
     },
 
     updateValueBreak(val) {
-      console.log("hello", val);
       if (Ember.isEmpty(val)) {
         this.set('editedLayer.mapping.scale.valueBreak', null);
       } else {

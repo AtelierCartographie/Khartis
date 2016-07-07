@@ -12,10 +12,11 @@ let CONTRASTS = {
 let Scale = Struct.extend({
   
   classes: 2,
-  intervalType: null,
+  intervalType: "regular",
   valueBreak: null,
   classesBeforeBreak: 1,
-  contrast: 2,  
+  contrast: 2,
+  usesInterval: null,
   
   diverging: function() {
     return this.get('valueBreak') != null;
@@ -26,8 +27,8 @@ let Scale = Struct.extend({
   }.property('contrast'),
   
   deferredChange: Ember.debouncedObserver(
-    'intervalType', 'classes', 'valueBreak',
-    'classesBeforeBreak', 'contrast',
+    'intervalType', 'usesInterval', 'classes',
+    'valueBreak', 'classesBeforeBreak', 'contrast',
     function() {
       this.notifyDefferedChange();
     },
@@ -40,36 +41,40 @@ let Scale = Struct.extend({
       let isInside = (ext, v) => v >= ext[0] && v <= ext[1],
           ext = d3.extent(values).map( (v,i) => bounds[i] !== undefined ? bounds[i] : v ),
           vals = values.filter( v => isInside(ext, v) );
-          
-      if (intervalType === "regular") {
-        let band = (ext[1] - ext[0])/classes;
-        return Array.from({length: classes-1}, (v,i) => (i+1)*band+ext[0] );
-      } else if (intervalType === "quantile") {
-        return d3.scale.quantile()
-          .domain(vals)
-          .range(Array.from({length: classes}, (v,i) => i))
-          .quantiles();
-      } else if (intervalType === "mean") {
+      
+      if (this.get('usesInterval')) {
 
-        let means = [],
-            mean = (ext) => {
-              return d3.mean(vals.filter( v => isInside(ext, v) ));
-            };
-        
-        for (;means.length+1 < classes;) {
-          let exts = means.reduce( (arr, m, i) => {
-            let e = arr[i];
-            arr[i] = [e[0], m];
-            arr.push([m, e[1]]);
-            return arr;
-          }, [d3.extent(vals)]);
+        if (intervalType === "regular") {
+          let band = (ext[1] - ext[0])/classes;
+          return Array.from({length: classes-1}, (v,i) => (i+1)*band+ext[0] );
+        } else if (intervalType === "quantile") {
+          return d3.scale.quantile()
+            .domain(vals)
+            .range(Array.from({length: classes}, (v,i) => i))
+            .quantiles();
+        } else if (intervalType === "mean") {
+
+          let means = [],
+              mean = (ext) => {
+                return d3.mean(vals.filter( v => isInside(ext, v) ));
+              };
           
-          means = exts.map( ext => mean(ext) );
+          for (;means.length+1 < classes;) {
+            let exts = means.reduce( (arr, m, i) => {
+              let e = arr[i];
+              arr[i] = [e[0], m];
+              arr.push([m, e[1]]);
+              return arr;
+            }, [d3.extent(vals)]);
+            
+            means = exts.map( ext => mean(ext) );
+          }
+          
+          return means;
+
         }
-        
-        return means;
-        
-      } else if (intervalType === "linear") {
+          
+      } else {
         return ext;
       }
       
@@ -108,7 +113,8 @@ let Scale = Struct.extend({
       intervalType: this.get('intervalType'),
       valueBreak: this.get('valueBreak'),
       classesBeforeBreak: this.get('classesBeforeBreak'),
-      contrast: this.get('contrast')
+      contrast: this.get('contrast'),
+      usesInterval: this.get('usesInterval')
     }, props));
   }
   
@@ -122,7 +128,8 @@ Scale.reopenClass({
       intervalType: json.intervalType,
       valueBreak: json.valueBreak,
       classesBeforeBreak: json.classesBeforeBreak,
-      contrast: json.contrast
+      contrast: json.contrast,
+      usesInterval: json.usesInterval
     });
     return o;
   }

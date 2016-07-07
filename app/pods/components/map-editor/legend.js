@@ -461,7 +461,14 @@ export default Ember.Mixin.create({
             intervals.push(d.get('mapping.extent')[1]); //push max
             intervals = compressIntervals(intervals);
           } else {
-            if (d.get('mapping.scale.intervalType') === "linear") {
+            if (d.get('mapping.scale.usesInterval')) {
+
+              fn = appendSymbolIntervalLabel;
+              intervals.push(d.get('mapping.extent')[1]); //push max
+              intervals = compressIntervals(intervals);
+              
+            } else {
+
               fn = appendSymbolIntervalLinearLabel;
               if (d.get('mapping.values').length > 2) {
                 let steps = Math.min(d.get('mapping.values').length - 2, 5),
@@ -478,10 +485,7 @@ export default Ember.Mixin.create({
                  Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
                  intervals = compressIntervals(intervals);
               }
-            } else {
-              fn = appendSymbolIntervalLabel;
-              intervals.push(d.get('mapping.extent')[1]); //push max
-              intervals = compressIntervals(intervals);
+              
             }
           }
           

@@ -213,6 +213,7 @@ let SurfaceMixin = Ember.Mixin.create({
     if (this.get('scale.intervalType') === null) {
       this.set('scale.intervalType', "regular");
     }
+    this.set('scale.usesInterval', true);
   },
 
   patternModifiers: function() {
@@ -269,12 +270,12 @@ let SurfaceMixin = Ember.Mixin.create({
         range,
         rangeLength;
         
-    if (this.get('scale.intervalType') === "linear") {
-      d3Scale = d3.scale.linear();
-      rangeLength = intervals.length; //2
-    } else {
+    if (this.get('scale.usesInterval')) {
       d3Scale = d3.scale.threshold();
       rangeLength = intervals.length + 1;
+    } else {
+      d3Scale = d3.scale.linear();
+      rangeLength = intervals.length; //2
     };
         
     if (this.get('visualization.pattern')) {
@@ -318,8 +319,8 @@ let SymbolMixin = Ember.Mixin.create({
   },
 
   configureScale() {
-    if (this.get('scale.intervalType') === null) {
-      this.set('scale.intervalType', "linear");
+    if (this.get('scale.usesInterval') === null) {
+      this.set('scale.usesInterval', false);
     }
   },
   
@@ -336,14 +337,8 @@ let SymbolMixin = Ember.Mixin.create({
         
     if (type === "size") {
 
-      if (this.get('scale.intervalType') === "linear") {
+      if (this.get('scale.usesInterval')) {
 
-        d3Scale = contrastScale.clamp(true);
-        domain = [0, ext[1]];
-        range = [0, visualization.get('maxSize')];
-        transform = _ => d3Scale(Math.abs(_));
-
-      } else {
         contrastScale = d3.scale.threshold();
         if (this.get('scale.diverging')) {
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
@@ -369,6 +364,13 @@ let SymbolMixin = Ember.Mixin.create({
         transform = _ => {
           return d3Scale(contrastScale(_));
         };
+
+      } else {
+
+        d3Scale = contrastScale.clamp(true);
+        domain = [0, ext[1]];
+        range = [0, visualization.get('maxSize')];
+        transform = _ => d3Scale(Math.abs(_));
 
       };
 
