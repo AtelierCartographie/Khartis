@@ -444,7 +444,7 @@ export default Ember.Mixin.create({
         //regroupe les intervales si l'écart est minime
         let compressIntervals = function(intervals) {
           return intervals.reduce( (arr, v) => {
-            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.000001) {
+            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.0000001) {
               arr.push(v);
             }
             return arr;
@@ -465,7 +465,6 @@ export default Ember.Mixin.create({
 
               fn = appendSymbolIntervalLabel;
               intervals.push(d.get('mapping.extent')[1]); //push max
-              intervals = compressIntervals(intervals);
               
             } else {
 
@@ -473,18 +472,24 @@ export default Ember.Mixin.create({
               if (d.get('mapping.values').length > 2) {
                 let steps = Math.min(d.get('mapping.values').length - 2, 5),
                     i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps,
-                    nearest = Array.from({length: steps}, (v, idx) => d.get('mapping.extent')[0] + i*idx)
+                    nearest = Array.from({length: steps-1}, (v, idx) => d.get('mapping.extent')[0] + i*(idx+1))
                       .reduce( (arr, v) => {
-                        let nVal = d.get('mapping').findNearestValue(v);
-                        if (arr.indexOf(nVal) === -1 && intervals.indexOf(nVal) === -1) {
+                        let nVal = Math.round(v);//d.get('mapping').findNearestValue(v);
+                        /*if (arr.indexOf(nVal) === -1 && intervals.indexOf(nVal) === -1) {
                           arr.push(nVal);
-                        }
+                        }*/
+                        arr.push(nVal);
                         return arr;
                       }, []);
-                      
-                 Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
-                 intervals = compressIntervals(intervals);
+                
+                 //Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
+                 intervals = [d.get('mapping.extent')[0]]
+                  .concat(nearest)
+                  .concat(d.get('mapping.extent')[1]);
+                 
               }
+              
+              intervals = compressIntervals(intervals);
               
             }
           }

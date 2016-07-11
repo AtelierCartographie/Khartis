@@ -113,7 +113,7 @@
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
             <div class="horizontal half-airy solid flow w7">
             {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
-            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}<small>px</small>
+            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
             </div>
           </div>
           {{#if (x-eq editedLayer.mapping.scale.intervalType 'linear')}}

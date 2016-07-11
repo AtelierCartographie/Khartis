@@ -157,7 +157,8 @@ let DataMixin = Ember.Mixin.create({
               label: val,
               visible: true,
               color: "#dddddd",
-              shape: shape
+              shape: shape,
+              size: 4
             }));
           } else {
             m.get(val).get('cells').addObject(c);
@@ -340,7 +341,10 @@ let SymbolMixin = Ember.Mixin.create({
       if (this.get('scale.usesInterval')) {
 
         contrastScale = d3.scale.threshold();
-        if (this.get('scale.diverging')) {
+
+        console.log(this.get('shouldDiverge'));
+
+        if (this.get('shouldDiverge')) {
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
             (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)
           );
@@ -374,7 +378,6 @@ let SymbolMixin = Ember.Mixin.create({
 
       };
 
-      
     } else if (type === "color") {
       
       d3Scale = d3.scale.threshold()

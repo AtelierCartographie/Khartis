@@ -668,6 +668,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             });
             
         }
+
+        if (shape === "line") {
+          strokeColor = fill;
+        }
         
         el.attr({
             "fill": fill,
