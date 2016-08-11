@@ -1,0 +1,102 @@
+[
+	{
+		"ID": "PT111",
+		"Name": "Alto Minho"
+	},
+	{
+		"ID": "PT112",
+		"Name": "Cávado"
+	},
+	{
+		"ID": "PT119",
+		"Name": "Ave"
+	},
+	{
+		"ID": "PT11A",
+		"Name": "Área Metropolitana do Porto"
+	},
+	{
+		"ID": "PT11B",
+		"Name": "Alto Tâmega"
+	},
+	{
+		"ID": "PT11C",
+		"Name": "Tâmega e Sousa"
+	},
+	{
+		"ID": "PT11D",
+		"Name": "Douro"
+	},
+	{
+		"ID": "PT11E",
+		"Name": "Terras de Trás-os-Montes"
+	},
+	{
+		"ID": "PT150",
+		"Name": "Algarve"
+	},
+	{
+		"ID": "PT16B",
+		"Name": "Oeste"
+	},
+	{
+		"ID": "PT16D",
+		"Name": "Região de Aveiro"
+	},
+	{
+		"ID": "PT16E",
+		"Name": "Região de Coimbra"
+	},
+	{
+		"ID": "PT16F",
+		"Name": "Região de Leiria"
+	},
+	{
+		"ID": "PT16G",
+		"Name": "Viseu Dão-Lafões"
+	},
+	{
+		"ID": "PT16H",
+		"Name": "Beira Baixa"
+	},
+	{
+		"ID": "PT16I",
+		"Name": "Médio Tejo"
+	},
+	{
+		"ID": "PT16J",
+		"Name": "Beiras e Serra da Estrela"
+	},
+	{
+		"ID": "PT170",
+		"Name": "Área Metropolitana de Lisboa"
+	},
+	{
+		"ID": "PT181",
+		"Name": "Alentejo Litoral"
+	},
+	{
+		"ID": "PT184",
+		"Name": "Baixo Alentejo"
+	},
+	{
+		"ID": "PT185",
+		"Name": "Lezíria do Tejo"
+	},
+	{
+		"ID": "PT186",
+		"Name": "Alto Alentejo"
+	},
+	{
+		"ID": "PT187",
+		"Name": "Alentejo Central"
+	},
+	{
+		"ID": "PT200",
+		"Name": "Região Autónoma dos Açores"
+	},
+	{
+		"ID": "PT300",
+		"Name": "Região Autónoma da Madeira"
+	}
+]

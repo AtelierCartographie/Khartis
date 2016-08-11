@@ -1,0 +1,164 @@
+[
+	{
+		"NUTS": "FR10",
+		"Insee": "11",
+		"ISO 3166-2": "FR-J",
+		"Name": "Île-de-France"
+	},
+	{
+		"NUTS": "FR21",
+		"Insee": "21",
+		"ISO 3166-2": "FR-G",
+		"Name": "Champagne-Ardenne"
+	},
+	{
+		"NUTS": "FR22",
+		"Insee": "22",
+		"ISO 3166-2": "FR-S",
+		"Name": "Picardie"
+	},
+	{
+		"NUTS": "FR23",
+		"Insee": "23",
+		"ISO 3166-2": "FR-Q",
+		"Name": "Haute-Normandie"
+	},
+	{
+		"NUTS": "FR24",
+		"Insee": "24",
+		"ISO 3166-2": "FR-F",
+		"Name": "Centre-Val de Loire"
+	},
+	{
+		"NUTS": "FR25",
+		"Insee": "25",
+		"ISO 3166-2": "FR-P",
+		"Name": "Basse-Normandie"
+	},
+	{
+		"NUTS": "FR26",
+		"Insee": "26",
+		"ISO 3166-2": "FR-D",
+		"Name": "Bourgogne"
+	},
+	{
+		"NUTS": "FR30",
+		"Insee": "31",
+		"ISO 3166-2": "FR-O",
+		"Name": "Nord-Pas-de-Calais"
+	},
+	{
+		"NUTS": "FR41",
+		"Insee": "41",
+		"ISO 3166-2": "FR-M",
+		"Name": "Lorraine"
+	},
+	{
+		"NUTS": "FR42",
+		"Insee": "42",
+		"ISO 3166-2": "FR-A",
+		"Name": "Alsace"
+	},
+	{
+		"NUTS": "FR43",
+		"Insee": "43",
+		"ISO 3166-2": "FR-I",
+		"Name": "Franche-Comté"
+	},
+	{
+		"NUTS": "FR51",
+		"Insee": "52",
+		"ISO 3166-2": "FR-R",
+		"Name": "Pays de la Loire"
+	},
+	{
+		"NUTS": "FR52",
+		"Insee": "53",
+		"ISO 3166-2": "FR-E",
+		"Name": "Bretagne"
+	},
+	{
+		"NUTS": "FR53",
+		"Insee": "54",
+		"ISO 3166-2": "FR-T",
+		"Name": "Poitou-Charentes"
+	},
+	{
+		"NUTS": "FR61",
+		"Insee": "72",
+		"ISO 3166-2": "FR-B",
+		"Name": "Aquitaine"
+	},
+	{
+		"NUTS": "FR62",
+		"Insee": "73",
+		"ISO 3166-2": "FR-N",
+		"Name": "Midi-Pyrénées"
+	},
+	{
+		"NUTS": "FR63",
+		"Insee": "74",
+		"ISO 3166-2": "FR-L",
+		"Name": "Limousin"
+	},
+	{
+		"NUTS": "FR71",
+		"Insee": "82",
+		"ISO 3166-2": "FR-V",
+		"Name": "Rhône-Alpes"
+	},
+	{
+		"NUTS": "FR72",
+		"Insee": "83",
+		"ISO 3166-2": "FR-C",
+		"Name": "Auvergne"
+	},
+	{
+		"NUTS": "FR81",
+		"Insee": "91",
+		"ISO 3166-2": "FR-K",
+		"Name": "Languedoc-Roussillon"
+	},
+	{
+		"NUTS": "FR82",
+		"Insee": "93",
+		"ISO 3166-2": "FR-U",
+		"Name": "Provence-Alpes-Côte d’Azur"
+	},
+	{
+		"NUTS": "FR83",
+		"Insee": "94",
+		"ISO 3166-2": "FR-H",
+		"Name": "Corse"
+	},
+	{
+		"NUTS": "FRA1",
+		"Insee": "01",
+		"ISO 3166-2": "—",
+		"Name": "Guadeloupe"
+	},
+	{
+		"NUTS": "FRA2",
+		"Insee": "02",
+		"ISO 3166-2": "—",
+		"Name": "Martinique"
+	},
+	{
+		"NUTS": "FRA3",
+		"Insee": "03",
+		"ISO 3166-2": "—",
+		"Name": "Guyane (française)"
+	},
+	{
+		"NUTS": "FRA4",
+		"Insee": "04",
+		"ISO 3166-2": "—",
+		"Name": "La Réunion"
+	},
+	{
+		"NUTS": "FRA5",
+		"Insee": "06",
+		"ISO 3166-2": "—",
+		"Name": "Mayotte"
+	}
+]
