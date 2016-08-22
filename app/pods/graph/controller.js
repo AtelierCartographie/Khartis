@@ -328,6 +328,9 @@ export default Ember.Controller.extend({
         varCol: this.get('editedLayer.mapping.varCol'),
         geoDef: this.get('editedLayer.mapping.geoDef')
       }));
+      if (type === "quali.cat_surfaces" || type === "quanti.val_surfaces") {
+        this.set('editedLayer.opacity', 1);
+      }
     },
     
     bindMappingPattern(layer, pattern) {

@@ -194,6 +194,7 @@ export default Ember.Mixin.create({
               "height": 2*r.y,
               y: 0,
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+              "opacity": d.get('opacity'),
               "mask": () => {
                 
                 let mask = d.get('mapping').getScaleOf("texture")(val - 0.000000001)
@@ -275,7 +276,8 @@ export default Ember.Mixin.create({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
               "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001)
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+              "opacity": d.get('opacity')
             });
             
           g = d3.select(this).append("g")
@@ -348,7 +350,8 @@ export default Ember.Mixin.create({
               "transform": d3lper.translate({tx: -r.x, ty: ty}),
               "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
               "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001)
+              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+              "opacity": d.get('opacity')
             });
             
           g = d3.select(this).append("g")
@@ -395,7 +398,8 @@ export default Ember.Mixin.create({
                 "transform": d3lper.translate({tx: -r.x, ty: 0}),
                 "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
                 "stroke": rule.get('strokeColor'),
-                "fill": rule.get('color')
+                "fill": rule.get('color'),
+                "opacity": d.get('opacity')
               });
               
           } else {
