@@ -342,8 +342,6 @@ let SymbolMixin = Ember.Mixin.create({
 
         contrastScale = d3.scale.threshold();
 
-        console.log(this.get('shouldDiverge'));
-
         if (this.get('shouldDiverge')) {
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
             (v, i) => Math.pow(this.get('scale.classesBeforeBreak') - i, 2)

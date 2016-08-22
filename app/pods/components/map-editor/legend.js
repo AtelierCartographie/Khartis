@@ -255,8 +255,10 @@ export default Ember.Mixin.create({
           let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
               dy = r.y*0.2, //compense la marge sur les symboles
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+
+          let symH = Math.max(2*r.y - 2*dy, 12);
       
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${Math.max(2*r.y - 2*dy, 10)}px; margin-bottom: 4px`);
+          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
 
           if (!(r.x > 0 && r.y > 0)) return;
 
@@ -328,7 +330,10 @@ export default Ember.Mixin.create({
       
           if (!(r.x > 0 && r.y > 0)) return;
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${Math.max(2*r.y - 2*dy, 10)}px; margin-bottom: 2px`);
+          let symH = Math.max(2*r.y - 2*dy, 12),
+              ty = symH > (2*r.y - 2*dy) ? (symH - (2*r.y - 2*dy)) / 2 : 0;
+
+          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 2px`);
           
           symbol.call(svg);
           
@@ -340,7 +345,7 @@ export default Ember.Mixin.create({
               "xlink:href": symbol.url(),
               "width": r.x*2,
               "height": r.y*2,
-              "transform": d3lper.translate({tx: -r.x, ty: 0}),
+              "transform": d3lper.translate({tx: -r.x, ty: ty}),
               "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001)
@@ -353,7 +358,7 @@ export default Ember.Mixin.create({
             .text( v => formatter(v) )
             .attr({
               x: textOffset,
-              y: r.y,
+              y: r.y + ty,
               dy: "0.3em",
               "font-size": "0.75em"
             })
