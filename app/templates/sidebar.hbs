@@ -2,7 +2,7 @@
 
     {{outlet 'header'}}
 
-    <div class="sidebar-content  vertical flow">
+    <div class="sidebar-content vertical flow">
 
         <ul class="application-nav text-center flow">
             <li class="{{if (x-eq sidebarActiveTab 'data') 'active'}}" >
@@ -18,6 +18,9 @@
 
         <div class="flow vertical space-between">
             {{outlet 'sidebar'}}
+        </div>
+
+        <div class="solid logo-atelier">
         </div>
 
     </div>

@@ -64,7 +64,8 @@ export default {
           "one": "colonnes importée",
           "other": "colonnes importées"
         }
-      }
+      },
+      "back": "importer de nouvelles données"
     }
     
   },

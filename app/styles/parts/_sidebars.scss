@@ -23,6 +23,15 @@
   }
 }
 
+.application-sidebar .sidebar-content .logo-atelier {
+  background-image: url(images/logo-Atelier-NB.svg);
+  background-repeat: no-repeat;
+  height: 70px;
+  background-position: center;
+  background-size: 33%;
+  border-top: 1px solid greys(30%);
+}
+
 
 .sidebar-scroll-wrapper {
   overflow: auto;
