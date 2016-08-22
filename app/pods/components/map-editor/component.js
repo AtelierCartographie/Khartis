@@ -543,7 +543,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       }
       
     } else if (geoDef.get('isLatLon')) {
-      
+
       data = varCol.get('body').map( (cell, index) => {
         
         let val = cell.get('postProcessedValue'),
@@ -558,6 +558,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             index: index,
             point: {
               geometry: {
+                type: "Point",
                 coordinates: [
                   lon,
                   lat
@@ -625,7 +626,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 	},
   
   mapSymbol: function(d3Layer, data, graphLayer) {
-		
+
     let projection = this.get('projection'),
         svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
@@ -639,7 +640,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
           r = converter(d.cell, "size"),
           fill = converter(d.cell, "fill"),
           strokeColor = converter(d.cell, "strokeColor");
-          
+      
       if (shape && r > 0) {
         
         let symbol = SymbolMaker.symbol({name: shape});
@@ -678,6 +679,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             "stroke": strokeColor
           })
           .classed("shape", true);
+
           
       }
       
