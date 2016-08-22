@@ -44,7 +44,8 @@ let SymbolVisualization = Struct.extend({
       shape: this.get('shape'),
       strokeColor: this.get('strokeColor'),
       stroke: this.get('stroke'),
-      maxSize: this.get('maxSize')
+      maxSize: this.get('maxSize'),
+      colorBeforeBreak: this.get('colorBeforeBreak')
     }, props));
   }
   
@@ -58,7 +59,8 @@ SymbolVisualization.reopenClass({
       shape: json.shape,
       strokeColor: json.strokeColor,
       stroke: json.stroke,
-      maxSize: json.maxSize
+      maxSize: json.maxSize,
+      colorBeforeBreak: json.colorBeforeBreak
     });
     return o;
   }
