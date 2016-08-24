@@ -73,7 +73,7 @@ let Scale = Struct.extend({
           return means;
 
         }
-          
+
       } else {
         return ext;
       }
@@ -102,7 +102,7 @@ let Scale = Struct.extend({
         [undefined, undefined]
       );
     }
-    
+
     return intervals;
     
   },
