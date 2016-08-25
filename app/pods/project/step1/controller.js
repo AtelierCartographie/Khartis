@@ -34,6 +34,7 @@ export default Ember.Controller.extend({
       if (e.target.status == 200) {
         
         let data = CSV.parse(ab2string(e.target.response));
+        
         data = data.map( r => {
           return r.map( c => c.trim() );
         });
@@ -63,8 +64,10 @@ export default Ember.Controller.extend({
 
     parseCsvContent() {
       
-      CSV.readAll(this.get('model.csv'), (data) => {
-        
+      let sep = CSV.detect(this.get('model.csv'));
+
+      CSV.readAll(this.get('model.csv'), sep, (data) => {
+        console.log(data);
         if (data.length === 0) {
           this.get('ModalManager')
             .show('error', "Impossible d'importer le CSV",
