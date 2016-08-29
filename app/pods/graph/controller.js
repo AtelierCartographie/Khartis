@@ -415,8 +415,7 @@ export default Ember.Controller.extend({
     },
     
     selectState(state) {
-      this.set('state', state);
-      this.transitionToRoute('graph');
+      this.transitionToRoute('graph', this.get('model._uuid'), { queryParams: { currentTab: state }});
     },
     
     next() {

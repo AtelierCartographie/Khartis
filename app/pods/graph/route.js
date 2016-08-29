@@ -14,7 +14,7 @@ export default Ember.Route.extend({
       this.render("graph.help", {into: "graph.sidebar", outlet: "help"});
 
     },
-    
+
     redirect(model) {
       this.transitionTo('graph');
     },
@@ -36,7 +36,7 @@ export default Ember.Route.extend({
       if (!model.get('graphLayout.projection')) {
         model.set('graphLayout.projection', this.get('Dictionnary.data.projections').find( p => p.id === config.projection.default ));
       }
-      console.log(!model.get('geoDef'), model.get('data.availableGeoDefs'));
+
       if (!model.get('geoDef') && model.get('data.availableGeoDefs').length > 0) {
         model.set('geoDef', model.get('data.availableGeoDefs').objectAt(0));
       }

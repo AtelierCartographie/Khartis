@@ -35,6 +35,35 @@ module.exports = function(environment) {
       }
     ],
 
+    //configure here analytics services. view ember-metrics for more info
+    metricsAdapters: [
+ /*     {
+        name: 'GoogleAnalytics',
+        environments: ['production'],
+        config: {
+          id: 'UA-XXXX-Y'
+        }
+      }, */
+ /*     {
+        name: 'Piwik',
+        environments: ['production'],
+        config: {
+          piwikUrl: 'http://piwik.my.com',
+          siteId: 42
+        }
+      } */
+    ],
+
+    metricsRouteLabels: {
+      "graph.index$visualizations": "Map editor - visualizations",
+      "graph.index$export": "Map editor - export",
+      "graph.projection": "Map editor - choose projection",
+      "graph.layer.edit": "Map editor - layer configuration",
+      "project.step1.index": "Step 1 - Data import",
+      "project.step2.index": "Step 2 - Data configuration",
+      "project.step2.column": "Step 2 - Column data edition"
+    },
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created

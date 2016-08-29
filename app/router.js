@@ -3,7 +3,35 @@ import config from './config/environment';
 
 const Router = Ember.Router.extend({
   location: config.locationType,
-  rootURL: config.rootURL
+  rootURL: config.rootURL,
+  metrics: Ember.inject.service(),
+
+  didTransition() {
+    this._super(...arguments);
+    this._trackPage();
+  },
+
+  _trackPage() {
+    Ember.run.scheduleOnce('afterRender', this, () => {
+
+      let page = this.get('currentPath').replace(/\./g, "/"),
+            routeName = this.get('currentRouteName');
+      
+      if (routeName === "graph.index") {
+        let state = this.get('router.state.queryParams.currentTab');
+        routeName = routeName + "$" + state;
+        page += "/" + state;
+      }
+
+      let title = config.metricsRouteLabels[routeName];
+
+      if (title) { //track only if a title has bean found
+        this.get('metrics').trackPage({ page, title });
+      }
+
+    });
+  }
+
 });
 
 Router.map(function() {
