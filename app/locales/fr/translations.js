@@ -262,6 +262,10 @@ export default {
     }
   },
 
+  "legend": {
+    "editTitleHere": "editez ici le titre de la légende"
+  },
+
   "examples": {
     "eco2": "Emissions CO2",
     "surface_forets": "Surfaces de forêts"

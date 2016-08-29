@@ -10,6 +10,12 @@ let GraphLayer = Struct.extend({
   mapping: null,
   visible: true,
   opacity: 1,
+
+  legendTitle: null,
+  
+  legendTitleComputed: function() {
+    return this.get('legendTitle') ? this.get('legendTitle') : this.get('mapping.varCol.header.value');
+  }.property('legendTitle', 'mapping.varCol.header.value'),
   
   displayable: function() {
     return this.get('visible') && this.get('mapping')
@@ -18,7 +24,7 @@ let GraphLayer = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'mapping', 'mapping._defferedChangeIndicator',
-    'visible', 'opacity',
+    'visible', 'opacity', 'legendTitle',
     function() {
       this.notifyDefferedChange();
     },
@@ -28,7 +34,8 @@ let GraphLayer = Struct.extend({
     return this._super({
         visible: this.get('visible'),
         mapping: this.get('mapping') != null ? this.get('mapping').export() : null,
-        opacity: this.get('opacity')
+        opacity: this.get('opacity'),
+        legendTitle: this.get('legendTitle')
     });
   }
 
@@ -40,7 +47,8 @@ GraphLayer.reopenClass({
       return this._super(json, refs, {
         visible: json.visible,
         mapping: Mapping.restore(json.mapping, refs),
-        opacity: json.opacity
+        opacity: json.opacity,
+        legendTitle: json.legendTitle
       });
   },
   

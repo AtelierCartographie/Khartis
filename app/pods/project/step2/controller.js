@@ -57,7 +57,7 @@ export default Ember.Controller.extend({
     },
 
     back() {
-      this.transitionToRoute('project.step1');
+      this.transitionToRoute('project.step1', 'new');
     },
 
     next(){

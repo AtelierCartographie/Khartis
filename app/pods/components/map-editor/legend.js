@@ -3,6 +3,7 @@ import d3lper from 'mapp/utils/d3lper';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
 import ValueMixin from 'mapp/models/mapping/mixins/value';
+import TextEditor from './text-editor/component';
 
 export default Ember.Mixin.create({
   
@@ -164,7 +165,14 @@ export default Ember.Mixin.create({
             "font-weight": "bold"
           });
         
-        label.text(d.get('mapping.varCol.header.value'));
+        label.text(d.get('legendTitleComputed'));
+
+        label.on("click", function() {
+          if (d3.event.defaultPrevented) return;
+          TextEditor.showAt("legend-title-editor", this, d.get('legendTitleComputed'), function(val) {
+            d.set('legendTitle', val);
+          });
+        });
           
         let appendSurfaceIntervalLabel = function(val, i) {
           
@@ -446,7 +454,7 @@ export default Ember.Mixin.create({
               y: r.y,
               dy: "0.3em",
               "font-size": "0.75em"
-            })
+            });
           
         };
 
