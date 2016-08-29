@@ -9,13 +9,16 @@
   flex: 0 0 2.8rem;
 
   li {
-    cursor: pointer;
     flex: 1;
     padding: 0.2rem 0;
   }
 
-  li:hover:not(.disabled) {
-    text-decoration: underline;
+  li:not(.disabled) {
+    cursor: pointer;
+  }
+
+  li.disabled {
+    cursor: not-allowed;
   }
 
   li:not(:last-child) {
