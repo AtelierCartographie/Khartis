@@ -20,7 +20,7 @@ const Router = Ember.Router.extend({
       if (routeName === "graph.index") {
         let state = this.get('router.state.queryParams.currentTab');
         routeName = routeName + "$" + state;
-        page += "/" + state;
+        page = page.replace(/\/index$/i, "/"+state);
       }
 
       let title = config.metricsRouteLabels[routeName];
