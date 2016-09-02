@@ -5,6 +5,7 @@ import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixins from './mixins/value';
 import CategoryMixins from './mixins/category';
+import LabellingMixins from './mixins/labelling';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
 import PatternMaker from 'mapp/utils/pattern-maker';
@@ -20,6 +21,8 @@ let Mapping = Struct.extend({
   geoDef: null,
   
   rules: null,
+
+  colorSet: null,
   
   canBeSurface: function() {
     return this.get('geoDef.isGeoRef');
@@ -28,23 +31,6 @@ let Mapping = Struct.extend({
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
   }.property('varCol._defferedChangeIndicator'),
-  
-  colorSet: function() {
-
-    let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
-    if (!master[this.get('visualization.colors')]) {
-      this.set('visualization.colors', Object.keys(master)[0]);
-    }
-
-    return Colorbrewer.Composer.compose(
-      this.get('visualization.colors'), 
-      this.get('scale.diverging'),
-      this.get('visualization.reverse'), 
-      this.get('scale.classes'),
-      this.get('scale.classesBeforeBreak')
-    );
-    
-  }.property('visualization.colors', 'visualization.reverse', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
   
   init() {
     this._super();
@@ -74,6 +60,9 @@ let Mapping = Struct.extend({
       case "quanti.val_symboles":
         this.reopen(ValueMixins.Data);
         this.reopen(ValueMixins.Symbol);
+        break;
+      case "labelling":
+        this.reopen(LabellingMixins.Visualization);
         break;
       default:
         this.set('visualization', null);

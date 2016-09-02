@@ -22,10 +22,22 @@
       {{/if}}
     </div>
     
-    <!--<div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
-    <div class="settings vertical flow">
-
-    </div>-->
+    <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
+    <div class="settings horizontal flow">
+      {{#x-dropdown-plus as |facet|}}
+        {{#facet.trigger}}
+            <div class="button"><i class="iconfont iconfont-plus-thin"></i></div>
+        {{/facet.trigger}}
+        {{#facet.list}}
+          {{#each model.data.columns as |col|}}
+          <li {{action 'addLabellingLayer' col}} class="horizontal middle airy flow">
+            <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+            <div classs="fluid padded-h">{{col.header.value}}</div>
+          </li>
+          {{/each}}
+        {{/facet.list}}
+      {{/x-dropdown-plus}}
+    </div>
     
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
     <div class="settings vertical flow">

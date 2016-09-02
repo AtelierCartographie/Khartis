@@ -13,7 +13,8 @@
     "d3": "~3.5.12",
     "d3-geo-projection": "~0.2.16",
     "spectrum": "https://github.com/AtelierCartographie/spectrum.git",
-    "bootstrap-sass": "bootstrap-sass-official#^3.3.6"
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
+    "d3-composite-projections": "^0.4.0"
   },
   "resolutions": {
     "ember": "2.2.0",

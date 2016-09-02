@@ -47,26 +47,29 @@ var Store = Ember.Service.extend({
       return this.get('projects');
     },
 
-    has(){
+    has() {
       return this.list().length > 0
     },
 
     select(uuid) {
-      let project = this.get('mounted')[uuid] ?
-        this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
-      if (project) {
-        this.startVersioning(project);
-        return this.get('mounted')[uuid] = project instanceof Project ? project : Project.restore(project);
-      } else {
-        return false;
-      }
+      return new Promise( (res, rej) => {
+        let project = this.get('mounted')[uuid] ?
+          this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
+        if (project) {
+          this.startVersioning(project);
+          this.get('mounted')[uuid] = project;
+          Project.restore(project).then( p => res(p) );
+        } else {
+          res(false);
+        }
+      });
     },
 
     persist(project) {
       if (!this.get('projects').some( p => p._uuid === project._uuid )) {
         this.get('projects').addObject( project.export() );
         this._save();
-        this.get('mounted')[project._uuid] = project;
+        this.get('mounted')[project._uuid] = project.export();
         return project;
       } else {
         throw new Error("Can't persist : a project with same UUID is already persisted");
@@ -79,10 +82,11 @@ var Store = Ember.Service.extend({
         .find( p => p._uuid === project._uuid );
 
       if (old) {
+        let json = project instanceof Project ? project.export() : project;
         this.get('projects').splice(this.get('projects').indexOf(old), 1,
-           project instanceof Project ? project.export() : project);
+           json);
         this.get('projects').enumerableContentDidChange();
-        this.get('mounted')[project._uuid] = project;
+        this.get('mounted')[project._uuid] = json;
         this._save();
         return project;
       } else {

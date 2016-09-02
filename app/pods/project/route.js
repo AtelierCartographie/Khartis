@@ -23,15 +23,17 @@ export default Ember.Route.extend({
         project: project
       });
     } else {
-      let p = this.get('store').select(params.uuid);
-      if (p) {
-        return Ember.Object.create({
-          csv: null,
-          project: p
+      return this.get('store').select(params.uuid)
+        .then( p => {
+          if (p) {
+            return Ember.Object.create({
+              csv: null,
+              project: p
+            });
+          } else {
+            this.transitionTo('/');
+          }
         });
-      } else {
-        this.transitionTo('/');
-      }
     }
 
   },
