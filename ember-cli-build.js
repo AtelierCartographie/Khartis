@@ -29,6 +29,14 @@ module.exports = function(defaults) {
   app.import("bower_components/spectrum/spectrum.js");
   app.import("bower_components/spectrum/spectrum.css");
   app.import("bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js");
+
+  app.import("bower_components/d3-composite-projections/composite-projections.min.js");
+  app.import("bower_components/d3-composite-projections/conicConformalEurope-proj.min.js");
+  app.import("bower_components/d3-composite-projections/conicConformalFrance-proj.min.js");
+  app.import("bower_components/d3-composite-projections/conicConformalPortugal-proj.min.js");
+  app.import("bower_components/d3-composite-projections/conicConformalSpain-proj.min.js");
+  app.import("bower_components/d3-composite-projections/conicEquidistantJapan.min.js");
+  
   app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
   app.import("vendor/codemirror-placeholder.js");

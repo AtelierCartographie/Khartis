@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import WrapperAbstract from '../-abstract/component';
-import {geoMatch} from 'mapp/utils/geo-match';
+import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
 /* global Em */
 
 export default WrapperAbstract.extend({
@@ -8,12 +8,12 @@ export default WrapperAbstract.extend({
   siblings: null,
 
   worldBank: function() {
-    return this.get('Dictionnary.data.worldBank');
+    return this.get('Dictionary.data.worldBank');
   }.property(),
   
   worldBankValue: Ember.computed('obj.correctedValue', {
     get() {
-      let match = geoMatch(this.get('obj.correctedValue'));
+      let match = geoMatcher.match(this.get('obj.correctedValue'));
       return match ? match.value : null;
     },
     set(k,v) {
@@ -29,7 +29,7 @@ export default WrapperAbstract.extend({
   worldBankNameKey: function() {
     let k = "name_ISO_"+this.get('i18n.locale').toUpperCase();
     
-    if (geoMatch.keyCodes.indexOf(k) === -1) {
+    if (geoMatcher.keyCodes.indexOf(k) === -1) {
       k = "name_ISO_EN";
     }
     

@@ -13,6 +13,8 @@ export default Ember.Controller.extend({
   queryParams: ['currentTab'],
   currentTab: null,
 
+  dictionary: Ember.inject.service(),
+
   states: [
     "visualizations",
     "export"
@@ -33,9 +35,9 @@ export default Ember.Controller.extend({
   }.observes('currentTab').on("init"),
   
   availableProjections: function() {
-    return this.get('Dictionnary.data.projections')
+    return this.get('Dictionary.data.projections')
       .filter( p => p.id !== "lambert_azimuthal_equal_area");
-  }.property('Dictionnary.data.projections'),
+  }.property('Dictionary.data.projections'),
   
   isInStateVisualization: function() {
     return this.get('state') === "visualizations";
@@ -62,7 +64,7 @@ export default Ember.Controller.extend({
   }.property('state'),
   
   setup() {
-    this.loadBasemap(this.get('model.graphLayout.basemap'))
+    this.get('model.graphLayout.basemap').loadMapData()
       .then( (json) => {
         let j = JSON.parse(json),
             partition = j.objects.land.geometries
@@ -84,28 +86,6 @@ export default Ember.Controller.extend({
           centroids: topojson.feature(j, j.objects.centroid)
         });
       });
-  },
-  
-  //TODO : basemap selection
-  loadBasemap(basemap) {
-    
-    return new Promise((res, rej) => {
-      
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.rootURL}data/map/${basemap}`, true);
-
-      xhr.onload = (e) => {
-        
-        if (e.target.status == 200) {
-          res(e.target.response);
-        }
-        
-      };
-
-      xhr.send();
-      
-    });
-    
   },
   
   layoutChange: function() {
@@ -148,7 +128,6 @@ export default Ember.Controller.extend({
     var img = new Image();
     var svg = new Blob([svgString], {type: "image/svg+xml"});
     var url = DOMURL.createObjectURL(svg);
-    
 
     img.onload = function() {
         ctx.drawImage(img, 0, 0);
@@ -331,6 +310,12 @@ export default Ember.Controller.extend({
       if (type === "quali.cat_surfaces" || type === "quanti.val_surfaces") {
         this.set('editedLayer.opacity', 1);
       }
+    },
+
+    addLabellingLayer(col) { //TODO : implement
+      let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
+      this.get('model.labellingLayers').unshiftObject(layer);
+      layer.set('mapping.type', "labelling");
     },
     
     bindMappingPattern(layer, pattern) {

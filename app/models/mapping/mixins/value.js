@@ -143,7 +143,7 @@ let DataMixin = Ember.Mixin.create({
       return []; //linear
     }
   }.property('scale.classes', 'scale.intervalType'),
-  
+
   generateRules() {
     if (!this.get('rules')) {
       let ruleMap = this.get('varCol.body')
@@ -216,6 +216,23 @@ let SurfaceMixin = Ember.Mixin.create({
     }
     this.set('scale.usesInterval', true);
   },
+
+  colorSet: function() {
+
+    let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
+    if (!master[this.get('visualization.colors')]) {
+      this.set('visualization.colors', Object.keys(master)[0]);
+    }
+
+    return Colorbrewer.Composer.compose(
+      this.get('visualization.colors'), 
+      this.get('scale.diverging'),
+      this.get('visualization.reverse'), 
+      this.get('scale.classes'),
+      this.get('scale.classesBeforeBreak')
+    );
+    
+  }.property('visualization.colors', 'visualization.reverse', 'scale.classes', 'scale.classesBeforeBreak', 'scale.diverging'),
 
   patternModifiers: function() {
     

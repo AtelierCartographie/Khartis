@@ -3,6 +3,7 @@ import d3 from 'd3';
 import d3lper from 'mapp/utils/d3lper';
 import Struct from './struct';
 import Projection from './projection';
+import Basemap from './basemap';
 
 var Margin = Struct.extend({
   
@@ -53,7 +54,7 @@ Margin.reopenClass({
 
 var GraphLayout = Struct.extend({
 	
-  basemap: "110m-world.json",
+  basemap: null,
   
 	stroke: "#ffffff",
 	strokeWidth: 1,
@@ -162,7 +163,7 @@ var GraphLayout = Struct.extend({
 	
   export() {
     return this._super({
-      basemap: this.get('basemap'),
+      basemap: this.get('basemap') ? this.get('basemap').export() : null,
       projection: this.get('projection') ? this.get('projection').export() : null,
       margin: this.get('margin') ? this.get('margin').export() : null,
       backgroundColor: this.get('backgroundColor'),
@@ -195,7 +196,7 @@ GraphLayout.reopenClass({
   
   restore(json, refs = {}) {
       let o = this._super(json, refs, {
-        basemap: json.basemap,
+        basemap: json.basemap ? Basemap.restore(json.basemap) : null,
         backgroundColor: json.backgroundColor,
         backMapColor: json.backMapColor,
         gridColor: json.gridColor,

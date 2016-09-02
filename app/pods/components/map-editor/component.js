@@ -3,12 +3,12 @@ import d3 from 'd3';
 import projector from 'mapp/utils/projector';
 import d3lper from 'mapp/utils/d3lper';
 import GraphLayout from 'mapp/models/graph-layout';
-import {geoMatch} from 'mapp/utils/geo-match';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
 import ViewportFeature from './viewport';
 import LegendFeature from './legend';
 import ZoomFeature from './zoom';
+import LabellingFeature from './labelling';
 
 /* global Em */
 
@@ -17,7 +17,7 @@ let landSelSet = new Set();
 let shift = 0;
 
 export default Ember.Component.extend(ViewportFeature, LegendFeature,
-  ZoomFeature, {
+  ZoomFeature, LabellingFeature, {
   
   tagName: "svg",
   attributeBindings: ['width', 'height', 'xmlns', 'version'],
@@ -37,6 +37,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 	graphLayout: null,
   
   graphLayers: [],
+  labellingLayers: [],
   
   title: null,
   dataSource: null,
@@ -136,7 +137,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
     bordersMap.append("path")
       .classed("squares", true);
-      
+    
+    this.labellingInit(mapG);
     this.viewportInit(defs, d3g);
     this.zoomInit(d3g);
     this.legendInit();
@@ -307,6 +309,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
+    this.drawLabelling();
 			
 	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed'),
   
@@ -512,8 +515,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
     let geoDef = graphLayer.get('mapping.geoDef'),
         varCol = graphLayer.get('mapping.varCol'),
+        geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         data = [];
     
+    geoDef.get('columns').forEach( c => console.log(c.get('meta.type')));
     if (geoDef.get('isGeoRef')) {
       
       data = varCol.get('body').map( (cell, index) => {
@@ -521,13 +526,14 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         let geoData = geoDef.get('geo').get('body').objectAt(index).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
         if (geoData) {
+          console.log();
           return {
-            id: geoData.value.iso_a2,
+            id: geoData.value[geoKey],
             value: val,
             cell: cell,
             index: index,
-            surface: this.get('base').lands.features.find( f => f.id === geoData.value.iso_a2),
-            point: this.get('base').centroids.features.find( f => f.id === geoData.value.iso_a2)
+            surface: this.get('base').lands.features.find( f => f.id === geoData.value[geoKey]),
+            point: this.get('base').centroids.features.find( f => f.id === geoData.value[geoKey])
           };
         }
         
@@ -535,11 +541,12 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         
       }).filter( d => d !== undefined );
       
-      
       if (graphLayer.get('mapping.visualization.type') === "surface") {
         this.mapSurface(d3Layer, data, graphLayer);
       } else if (graphLayer.get('mapping.visualization.type') === "symbol") {
         this.mapSymbol(d3Layer, data, graphLayer);
+      } else if (graphLayer.get('mapping.visualization.type') === "text") {
+        this.mapText(d3Layer, data, graphLayer);
       }
       
     } else if (geoDef.get('isLatLon')) {
@@ -574,6 +581,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       
       if (graphLayer.get('mapping.visualization.type') === "symbol") {
         this.mapSymbol(d3Layer, data, graphLayer);
+      } else if (graphLayer.get('mapping.visualization.type') === "text") {
+        this.mapText(d3Layer, data, graphLayer);
       }
       
     }
@@ -621,7 +630,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .call(bindAttr);
 
 		sel.exit().remove();
-
 			
 	},
   
@@ -679,7 +687,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             "stroke": strokeColor
           })
           .classed("shape", true);
-
           
       }
       
