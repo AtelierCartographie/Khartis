@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Struct from './struct';
 import GeoDef from './geo-def';
-import {geoMatch} from 'mapp/utils/geo-match';
+import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
 import deg2dec from 'mapp/utils/deg2dec';
 /* global d3 */
 
@@ -82,11 +82,13 @@ let ColumnStruct = Struct.extend({
     init() {
       this._super();
       this.set('cells', Ember.A());
-      this.set('meta', ColumnMeta.create({
-        type: "text",
-        inconsistency: 1,
-        manual: false
-      }));
+      if (!this.get('meta')) {
+        this.set('meta', ColumnMeta.create({
+          type: "text",
+          inconsistency: 1,
+          manual: false
+        }));
+      }
       this.set('layout', {
         sheet: {
           width: null
@@ -138,14 +140,14 @@ let ColumnStruct = Struct.extend({
             }
             return undefined;
           };
-          
+
           this.get('body')
             .filter( c => !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
               if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
-                  let match = geoMatch(c.get('value'));
+                  let match = geoMatcher.match(c.get('value'));
                   if (match) {
                     p.geo += 1/arr.length;
                   } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
@@ -182,6 +184,8 @@ let ColumnStruct = Struct.extend({
           });
           
         }
+
+        console.log(this.get('meta.type'));
         
     }, 50),
     
@@ -189,7 +193,7 @@ let ColumnStruct = Struct.extend({
       
       let p = 0,
           inconsistency = {
-            "geo": (v) => geoMatch(v),
+            "geo": (v) => geoMatcher.match(v),
             "text": (v) => true,
             "numeric": (v) => (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+)?)$/).test(v),
             "lat": (v) => (/^\-?[\d\s]+([\,\.]\d+)?$/).test(v) && Math.abs(parseFloat(v.replace(",", "."))) < 90,
@@ -243,6 +247,7 @@ ColumnStruct.reopenClass({
 });
 
 let CellStruct = Struct.extend({
+
     column: null,
     row: null,
     value: null,
@@ -274,7 +279,7 @@ let CellStruct = Struct.extend({
             return parseFloat(val.replace(/[\,\s]+/g, ""));
           }
         } else if (this.get('column.meta.type') === "geo") {
-          return geoMatch(val);
+          return geoMatcher.match(val);
         } else if (["lon_dms", "lat_dms"].indexOf(this.get('column.meta.type')) !== -1) {
           return deg2dec(val);
         }
@@ -288,10 +293,10 @@ let CellStruct = Struct.extend({
       this._super();
       this.set('state', {
           sheet: {
-                  edited: false,
-                  selected: false,
-                  resizing: false
-                  }
+            edited: false,
+            selected: false,
+            resizing: false
+          }
       });
     },
     
@@ -403,17 +408,6 @@ let DataStruct = Struct.extend({
         
     }.property('columns', 'columns.@each._defferedChangeIndicator'),
     
-    selectedCell() {
-      for (let row of this.get('rows')) {
-        for (let cell of row.get('cells')) {
-          if (cell.get('state.sheet.selected')) {
-              return cell;
-          }
-        }       
-      }
-      return null;
-    },
-    
     getCellAt(row, col) {
       return this.get('rows').objectAt(row).get('cells').objectAt(col);
     },
@@ -461,7 +455,7 @@ let DataStruct = Struct.extend({
     analyse() {
       let report = {
         errors: [],
-        warnings: [] 
+        warnings: []
       };
       this.analyseHeader(report);
       this.analyseColumnCount(report);

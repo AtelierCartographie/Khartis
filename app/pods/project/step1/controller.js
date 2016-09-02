@@ -2,13 +2,18 @@ import Ember from 'ember';
 import CSV from 'npm:csv-string';
 import Project from 'mapp/models/project';
 import {DataStruct} from 'mapp/models/data';
+import Basemap from 'mapp/models/basemap';
 import ab2string from 'mapp/utils/ab2string';
 import config from 'mapp/config/environment';
 
 export default Ember.Controller.extend({
   
   store: Ember.inject.service(),
-  
+
+  dictionary: Ember.inject.service(),
+
+  basemap: null,
+
   importReport: null,
   
   canResumeProject: function() {
@@ -39,9 +44,9 @@ export default Ember.Controller.extend({
           return r.map( c => c.trim() );
         });
         
-        let project = Project.create();
+        let project = this.get('model.project');
         project.importRawData(data);
-        this.set('model.project', project);
+        project.set('csv', null);
         this.transitionToRoute('project.step2', "new");
         
       }
@@ -54,6 +59,11 @@ export default Ember.Controller.extend({
   
   actions: {
     
+    selectBasemap(mapId) {
+      this.set('model.project.graphLayout.basemap', Basemap.create({id: mapId}))
+        .loadDictionaryData();
+    },
+
     resumeProject() {
       this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
     },

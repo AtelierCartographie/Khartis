@@ -10,7 +10,7 @@ let csvHeaderToJs = function(str) {
   return str.charAt(0).toLowerCase() + str.slice(1);
 }
 
-var Dictionnary = Ember.Service.extend(Ember.Evented, {
+var Dictionary = Ember.Service.extend(Ember.Evented, {
 	
   data: Em.Object.create(),
   
@@ -18,13 +18,13 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
     
     let promises = [
       this._loadProjections(),
-      this._loadWorldBank(),
+      this._loadMaps()
     ];
     
     return Promise.all(promises);
     
   },
-	
+
 	_loadProjections: function() {
 		
     return new Promise( (res, rej) => {
@@ -60,32 +60,21 @@ var Dictionnary = Ember.Service.extend(Ember.Evented, {
       xhr.send();
       
     });
-		
+		 
 	},
-  
-	_loadWorldBank: function() {
+
+  _loadMaps: function() {
 		
     return new Promise( (res, rej) => {
       
-      let xhr = new XMLHttpRequest();
-      xhr.open('GET', `${config.rootURL}data/world-dictionnary.json`, true);
+      this.set('data.maps', config.maps);
+      res(true);
 
-      xhr.onload = (e) => {
-        
-        if (e.target.status == 200) {
-          this.set('data.worldBank', JSON.parse(e.target.responseText).map( x => Ember.Object.create(x)));
-          res(true);
-          
-        }
-        
-      };
-
-      xhr.send();
-      
     });
 		
 	}
+  
 	
 });
 
-export default Dictionnary;
+export default Dictionary;

@@ -35,6 +35,11 @@ module.exports = function(environment) {
       }
     ],
 
+    maps: [
+
+
+    ],
+
     //configure here analytics services. view ember-metrics for more info
     metricsAdapters: [
  /*     {

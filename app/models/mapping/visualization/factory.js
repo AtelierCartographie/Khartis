@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Struct from 'mapp/models/struct';
 import SurfaceVisualization from './surface';
 import SymbolVisualization from './symbol';
+import TextVisualization from './text';
 
 let VisualizationFactory = Ember.Object.extend({});
 VisualizationFactory.reopenClass({
@@ -12,6 +13,8 @@ VisualizationFactory.reopenClass({
         return SurfaceVisualization;
       case "symbol":
         return SymbolVisualization;
+      case "text":
+        return TextVisualization;
     }
     throw new Error(`Unknow mapping type ${type}`);
   },

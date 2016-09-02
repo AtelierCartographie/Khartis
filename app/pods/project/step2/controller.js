@@ -62,6 +62,7 @@ export default Ember.Controller.extend({
 
     next(){
       this.get('store').merge(this.get('model.project'));
+      console.log("ok", this.get('model.project.graphLayout'));
       this.transitionToRoute('graph', this.get('model.project._uuid'));
     },
 

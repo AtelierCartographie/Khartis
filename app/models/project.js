@@ -13,6 +13,8 @@ let Project = Struct.extend({
     graphLayout: null,
     
     graphLayers: null,
+
+    labellingLayers: null,
     
     geoDef: null,
     
@@ -29,6 +31,7 @@ let Project = Struct.extend({
         this.set('graphLayout', GraphLayout.createDefault());
       }
       this.set('graphLayers', Em.A());
+      this.set('labellingLayers', Em.A());
     },
     
     importRawData(data) {
@@ -36,17 +39,12 @@ let Project = Struct.extend({
       this.set('report', this.get('data').analyse());
     },
     
-    removeLayerMappedToColumn(column) {
-      let layers = this.get('graphLayers')
-        .filter( gl => !(gl.get('geoDef.columns').indexOf(column) !== -1 || gl.get('varCol') == column) );
-      this.set('graphLayers', layers);
-    },
-    
     export() {
       return this._super({
         data: this.get('data') ? this.get('data').export() : null,
         graphLayout: this.get('graphLayout').export(),
         graphLayers: this.get('graphLayers').map( gl => gl.export() ),
+        labellingLayers: this.get('labellingLayers').map( gl => gl.export() ),
         geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
         title: this.get('title'),
         dataSource: this.get('dataSource'),
@@ -74,13 +72,25 @@ Project.reopenClass({
           comment: json.comment,
           graphLayout: GraphLayout.restore(json.graphLayout, refs)
         });
-        o.setProperties({
-          data: DataStruct.restore(json.data, refs),
-          graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) ),
-          geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
-          report: json.report
+        return new Promise( (res, rej) => {
+          if (o.get('graphLayout.basemap')) {
+            o.get('graphLayout.basemap').loadDictionaryData()
+              .then( () => {
+                res(o);
+              });
+          } else {
+            res(o);
+          }
+        }).then( (o) => {
+          o.setProperties({
+            data: DataStruct.restore(json.data, refs),
+            graphLayers: json.graphLayers.map( gl => GraphLayer.restore(gl, refs) ),
+            labellingLayers: json.labellingLayers.map( gl => GraphLayer.restore(gl, refs) ),
+            geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
+            report: json.report
+          });
+          return o;
         });
-        return o;
     }
     
 });

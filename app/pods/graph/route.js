@@ -20,21 +20,23 @@ export default Ember.Route.extend({
     },
     
     model(params) {
-      
-      let p = this.get('store').select(params.uuid);
-      
-      if (p) {
-        return p;
-      } else {
-        this.transitionTo('/');
-      }
+
+      return this.get('store').select(params.uuid)
+        .then( p => {
+          p.get('graphLayers').forEach( gl => console.log(gl.get('mapping')) );
+          if (p) {
+            return p;
+          } else {
+            this.transitionTo('/');
+          }
+        });
       
     },
     
     afterModel(model) {
       
       if (!model.get('graphLayout.projection')) {
-        model.set('graphLayout.projection', this.get('Dictionnary.data.projections').find( p => p.id === config.projection.default ));
+        model.set('graphLayout.projection', this.get('Dictionary.data.projections').find( p => p.id === config.projection.default ));
       }
 
       if (!model.get('geoDef') && model.get('data.availableGeoDefs').length > 0) {

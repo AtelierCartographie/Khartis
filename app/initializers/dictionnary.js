@@ -1,10 +1,10 @@
 export default {
-  name: 'Dictionnary',
+  name: 'Dictionary',
 
   initialize: function(app) {
-    app.inject('model', 'Dictionnary', 'service:dictionnary');
-    app.inject('controller', 'Dictionnary', 'service:dictionnary');
-    app.inject('component', 'Dictionnary', 'service:dictionnary');
-    app.inject('route', 'Dictionnary', 'service:dictionnary');
+    app.inject('model', 'Dictionary', 'service:dictionary');
+    app.inject('controller', 'Dictionary', 'service:dictionary');
+    app.inject('component', 'Dictionary', 'service:dictionary');
+    app.inject('route', 'Dictionary', 'service:dictionary');
   }
 };
