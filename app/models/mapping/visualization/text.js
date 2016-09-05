@@ -4,9 +4,10 @@ let TextVisualization = Struct.extend({
   
   type: "text",
   color: null,
+  anchor: "middle",
 
   deferredChange: Ember.debouncedObserver(
-    'color',
+    'color', 'anchor',
     function() {
       this.notifyDefferedChange();
     },
@@ -14,7 +15,9 @@ let TextVisualization = Struct.extend({
   
   export(props) {
     return this._super(Object.assign({
-      color: this.get('color')
+      type: this.get('type'),
+      color: this.get('color'),
+      anchor: this.get('anchor')
     }, props));
   }
   
@@ -23,7 +26,9 @@ let TextVisualization = Struct.extend({
 TextVisualization.reopenClass({
   restore(json, refs = {}) {
     let o = this._super(json, refs, {
-      color: json.color
+      type: json.type,
+      color: json.color,
+      anchor: json.anchor
     });
     return o;
   }

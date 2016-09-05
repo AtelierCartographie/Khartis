@@ -37,6 +37,9 @@
           {{/each}}
         {{/facet.list}}
       {{/x-dropdown-plus}}
+      <div><i class="iconfont iconfont-align-left" {{action 'alignLabels' 'left'}}/></div>
+      <div><i class="iconfont iconfont-align-center" {{action 'alignLabels' 'center'}}/></div>
+      <div><i class="iconfont iconfont-align-right" {{action 'alignLabels' 'right'}}/></div>
     </div>
     
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>

@@ -57,6 +57,11 @@ export default Ember.Mixin.create({
           })
           
         })
+        .attr("text-anchor", {
+            left: "start",
+            center: "middle",
+            right: "end"
+          }[graphLayer.get('mapping.visualization.anchor')])
         .text(d => d.value);
         
       };
