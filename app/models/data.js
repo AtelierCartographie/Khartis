@@ -184,8 +184,6 @@ let ColumnStruct = Struct.extend({
           });
           
         }
-
-        console.log(this.get('meta.type'));
         
     }, 50),
     

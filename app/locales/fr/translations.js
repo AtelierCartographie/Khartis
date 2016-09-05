@@ -14,6 +14,7 @@ export default {
     "and": "et",
     "none": "aucune",
     "download": "télécharger",
+    "loading": "chargement",
     "error": {
      "one": "erreur",
      "other": "erreurs" 

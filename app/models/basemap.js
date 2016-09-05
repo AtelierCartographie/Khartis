@@ -21,11 +21,10 @@ var Basemap = Struct.extend({
       dictionaryData: null
     });
 
-
+    console.log("idChenge");
     if (this.get('id') !== null) {
       this.set('mapConfig', config.maps.find( c => c.id === this.get('id') ));
     }
-    console.log("idChange", this.get('mapConfig'));
 
   }.observes('id').on("init"),
 
