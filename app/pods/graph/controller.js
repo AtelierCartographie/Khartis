@@ -105,7 +105,8 @@ export default Ember.Controller.extend({
     }
     this.send('onAskVersioning', 'freeze');
 
-  }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator'),
+  }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator',
+    'model.labellingLayers.[]', 'model.labellingLayers.@each._defferedChangeIndicator'),
 
   exportSVG() {
     var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
@@ -316,6 +317,10 @@ export default Ember.Controller.extend({
       let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
       this.get('model.labellingLayers').unshiftObject(layer);
       layer.set('mapping.type', "labelling");
+    },
+
+    alignLabels(to) {
+      this.get('model.labellingLayers')[0].set('mapping.visualization.anchor', to);
     },
     
     bindMappingPattern(layer, pattern) {

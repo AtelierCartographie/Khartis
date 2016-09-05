@@ -20,10 +20,10 @@ export default Ember.Route.extend({
     },
     
     model(params) {
-
+      
       return this.get('store').select(params.uuid)
         .then( p => {
-          p.get('graphLayers').forEach( gl => console.log(gl.get('mapping')) );
+          console.log(p);
           if (p) {
             return p;
           } else {
@@ -55,7 +55,7 @@ export default Ember.Route.extend({
     },
     
     actions: {
-      
+
       toggleProjection() {
         this.transitionTo('graph.projection');
       }
