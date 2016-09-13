@@ -62,8 +62,6 @@
           </header>
 
           <div class="fluid" style="position: relative;">
-            {{log basemapData}}
-            {{log model.graphLayout.projection}}
             {{#if (x-every basemapData model.graphLayout.projection)}}
 
               {{map-editor data=model.data
