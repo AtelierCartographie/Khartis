@@ -18,12 +18,16 @@
   <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram.title')}}</div>
   <div class="body">
     <div class="settings vertical flow">
+      {{#o-wrap.diagram as |wrap|}}
       <div class="horizontal flow">
-        {{distribution-bars mapping=editedLayer.mapping
+        {{distribution-graph mapping=editedLayer.mapping
+          displayColors=false
+          method=wrap.selectedDiagramMethod
           xLabel=(t 'visualization.settings.diagram.values')
           yLabel=(t 'visualization.settings.diagram.frequencies')
         }}
       </div>
+      {{/o-wrap.diagram}}
         <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
 
         <div class="solid vertical flow">
