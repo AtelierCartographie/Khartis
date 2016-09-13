@@ -1,5 +1,14 @@
 import Ember from 'ember';
 
+const DISPLAY_METHOD = {
+  CLASSES: "classes",
+  CUMULATIVE: "cumulative"
+};
+
+export {DISPLAY_METHOD};
+
+const MAX_CLASSES = 16;
+
 export default Ember.Component.extend({
   
   tagName: "svg",
@@ -14,6 +23,12 @@ export default Ember.Component.extend({
   
   xLabel: "valeurs",
   yLabel: "fréquences",
+
+  zoom: 1,
+
+  displayColors: true,
+
+  method: DISPLAY_METHOD.CLASSES,
   
   draw: function() {
     
@@ -36,6 +51,9 @@ export default Ember.Component.extend({
     
     stack.append("g")
       .classed("bars", true);
+
+    stack.append("g")
+      .classed("line-graph", true);
     
     stack.append("g")
       .classed("fillIntervals", true);
@@ -46,19 +64,29 @@ export default Ember.Component.extend({
     // now add titles to the axes
     stack.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (-margin.left/3*2) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .attr("transform", "translate("+ (-margin.left/3*2.5) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
         .attr("class", "axis-label y")
         .text(this.get('yLabel'));
 
     stack.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ ((width-margin.left)/2) +","+(height-(margin.bottom/2) + 2)+")")  // centre below axis
+        .attr("transform", "translate("+ ((width-margin.left)/2) +","+(height-(margin.bottom/2) + 6)+")")  // centre below axis
         .attr("class", "axis-label x")
         .text(this.get('xLabel'));
     
     this.drawDistribution();
+    this.enableZoom();
 			
   }.on("didInsertElement"),
+
+  enableZoom() {
+    let zoom = d3.behavior.zoom()
+      .scaleExtent([0.5, 1.5])
+      .on('zoom', () => {
+          this.set('zoom', d3.event.scale);
+      });
+      this.d3l().select("g.stack").call(zoom);
+  },
   
   drawDistribution: function() {
     
@@ -75,22 +103,26 @@ export default Ember.Component.extend({
 			.attr("transform", "translate("+margin.left+", "+margin.top+")");
 	
     let ext = d3.extent(values.map( v => v.val )),
-        maxClasses = Math.min(16, values.length),
+        maxClasses = Math.min(Math.floor(MAX_CLASSES*this.zoom), values.length),
         interval = (ext[1] - ext[0]) / maxClasses,
         bands = Array.from({length: maxClasses}, (v, i) => ext[0] + i*interval);
+          //.filter( b => Math.abs(b) >= Math.abs(interval) );
 
     let data = bands
       .map(function(b, i) {
       
-        return {
-          val: b,
-          qty: values.reduce( (s, c) => {
-            return c.val > b-interval && c.val <= b ? s+1 : s;
-          }, 0)
-        };
+          return {
+            val: b,
+            qty: values.reduce( (s, c) => {
+              return c.val > b-interval && c.val <= b ? s+1 : s;
+            }, 0)
+          };
         
-      });
+        });
 
+    data.reduce(function(cumul, d) {
+      return d.qtyC = (cumul += d.qty);
+    }, 0);
 
     let x = d3.scale.linear()
       .range([0, width])
@@ -98,15 +130,78 @@ export default Ember.Component.extend({
       .clamp(true);
 
     let bx = d3.scale.ordinal()
-      .rangeRoundBands([0, width])
-      .domain(data.map( c => c.val ));
-      
+      .rangePoints([0, width], 0)
+      .domain(data.map( c => c.val )); //=0 si < interval
+    
 		let y = d3.scale.linear()
-      .range([height, 0])
-      .domain([0, Math.floor(d3.max(data, (v) => v.qty ))+1]);
+      .range([height, 0]);
 			
-		let xAxis = d3.svg.axis()
-      .scale(bx)
+    if (this.get('method') === DISPLAY_METHOD.CLASSES) {
+      
+      y.domain([0, Math.floor(d3.max(data, (v) => v.qty ))+2]);
+
+      bindAttr = (_) => {
+          _.attr({
+            x: d => x(d.val),
+            y: d => y(d.qty),
+            width: x(interval),
+            height: d => height - y(d.qty)
+          })
+        };
+        
+      sel = stack.select("g.bars")
+        .selectAll("rect.bar")
+        .data(data)
+        .call(bindAttr);
+        
+      sel.enter()
+        .append("rect")
+        .call(bindAttr)
+        .classed("bar", true);
+      
+      sel.exit().remove();
+
+    } else {
+      stack.select("g.bars")
+        .selectAll("rect.bar")
+        .remove();
+    }
+
+    if (this.get('method') === DISPLAY_METHOD.CUMULATIVE) {
+
+      y.domain([0, Math.floor(d3.max(data, (v) => v.qtyC ))+2]);
+
+      let valueLine = d3.svg.line()
+        .x( d => bx(d.val) )
+        .y( d => y(d.qtyC) );
+
+      bindAttr = (_) => {
+          _.attr({
+            d: d => valueLine(d)
+          });
+        };
+        
+      sel = stack.select("g.line-graph")
+        .selectAll("path.line")
+        .data([data])
+        .call(bindAttr);
+        
+      sel.enter()
+        .append("path")
+        .call(bindAttr)
+        .classed("line", true);
+      
+      sel.exit().remove();
+
+    } else {
+      stack.select("g.line-graph")
+        .selectAll("path.line")
+        .remove();
+    }
+
+    let xAxis = d3.svg.axis()
+      .scale(x)
+      .tickValues(bands)
       .tickFormat(d3.format(".2s"))
       .orient("bottom");
 			
@@ -122,34 +217,11 @@ export default Ember.Component.extend({
 		stack.select("g.y.axis")
 		  .attr("transform", "translate(-3, 0)")
 		  .call(yAxis);
-      
-		bindAttr = (_) => {
-        _.attr({
-          x: d => bx(d.val),
-          y: d => y(d.qty),
-          width: bx.rangeBand(),
-          height: d => height - y(d.qty)
-        })
-      };
-      
-    sel = stack.select("g.bars")
-      .selectAll("rect.bar")
-      .data(data)
-      .call(bindAttr);
-      
-    sel.enter()
-      .append("rect")
-      .call(bindAttr)
-      .classed("bar", true);
-    
-    sel.exit().remove();
 		
     /* intervals */
 
     let intervalsData = this.get('mapping.intervals').map( v => ({val: v}) ),
-        fillIntervals = [{val: ext[0]}].concat(intervalsData);
-
-    console.log(intervalsData);
+        fillIntervals = this.displayColors ? [{val: ext[0]}].concat(intervalsData) : [];
 
     bindAttr = (_) => {
         _.attr({
@@ -200,7 +272,6 @@ export default Ember.Component.extend({
     /* ticks orientation */
     stack.selectAll(".x.axis text")
       .attr("transform", function(d) {
-          let dy = d3.select(this).attr("dy");
           return "rotate(-90)translate(-20," + (this.getBBox().height-4)*-1 + ")";
       });
     
@@ -229,7 +300,7 @@ export default Ember.Component.extend({
     
     sel.exit().remove();
     
-  }.observes('mapping._defferedChangeIndicator'),
+  }.observes('mapping._defferedChangeIndicator', 'displayColors', 'method', 'zoom'),
 
   labelChange: function() {
     this.d3l().select(".axis-label.x")
