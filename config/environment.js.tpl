@@ -94,12 +94,12 @@ module.exports = function(environment) {
     ],
 
     metricsRouteLabels: {
-      "graph.index$visualizations": "Map editor - visualizations",
-      "graph.index$export": "Map editor - export",
+      "graph$visualizations": "Map editor - visualizations",
+      "graph$export": "Map editor - export",
       "graph.projection": "Map editor - choose projection",
       "graph.layer.edit": "Map editor - layer configuration",
-      "project.step1.index": "Step 1 - Data import",
-      "project.step2.index": "Step 2 - Data configuration",
+      "project.step1": "Step 1 - Data import",
+      "project.step2": "Step 2 - Data configuration",
       "project.step2.column": "Step 2 - Column data edition"
     },
 
