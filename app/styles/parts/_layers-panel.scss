@@ -29,6 +29,16 @@
 
   }
 
+  .diagram {
+    margin-top: 0.5rem;
+  }
+
+  .diagram-buttons {
+    .button.active {
+      @extend .filled.primary;
+    }
+  }
+
 }
 
 

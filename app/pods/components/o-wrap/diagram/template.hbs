@@ -1,0 +1,5 @@
+<div class="horizontal half-airy flow diagram-buttons">
+  <a class="fluid filled default button small {{if (x-eq selectedDiagramMethod diagramMethods.CLASSES) 'active'}}" {{action (action (mut selectedDiagramMethod) diagramMethods.CLASSES)}}>classes</a>
+  <a class="fluid filled default button small {{if (x-eq selectedDiagramMethod diagramMethods.CUMULATIVE) 'active'}}" {{action (action (mut selectedDiagramMethod) diagramMethods.CUMULATIVE)}}>cumulées</a>
+</div>
+{{yield this}}

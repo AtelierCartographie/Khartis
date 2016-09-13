@@ -33,5 +33,11 @@
   .grid .grid-el line {
     stroke: white;
   }
+
+  .line-graph path.line {
+    fill: none;
+    stroke: color(primary);
+    stroke-width: 2px;
+  }
   
 }
