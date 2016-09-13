@@ -33,6 +33,10 @@ export default Ember.Controller.extend({
       this.set('state', this.get('currentTab'));
     }
   }.observes('currentTab').on("init"),
+
+  projectionConfigurable: function() {
+     return this.get('model.graphLayout.basemap.mapConfig.compositeProjection') == null; 
+  }.property('model.graphLayout.basemap.mapConfig.compositeProjection'),
   
   availableProjections: function() {
     return this.get('Dictionary.data.projections')
@@ -67,24 +71,24 @@ export default Ember.Controller.extend({
     this.get('model.graphLayout.basemap').loadMapData()
       .then( (json) => {
         let j = JSON.parse(json),
-            partition = j.objects.land.geometries
+            partition = j.objects.poly.geometries
               .reduce( (part, g) => {
                 part[g.properties.square ? "left" : "right"].push(g);
                 return part;
               }, {left: [], right: []});
-
-        this.set('basemapData', {
+        let bmd = {
           land: topojson.merge(j, partition.right),
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
-          lands: topojson.feature(j, j.objects.land),
-          borders: topojson.mesh(j, j.objects.border, function(a, b) {
-              return a.properties.featurecla === "International";
+          lands: topojson.feature(j, j.objects.poly),
+          borders: topojson.mesh(j, j.objects.line, function(a, b) {
+              return !a.properties || a.properties.featurecla === "International";
             }),
-          bordersDisputed: topojson.mesh(j, j.objects.border, function(a, b) { 
-              return a.properties.featurecla === "Disputed"; 
+          bordersDisputed: topojson.mesh(j, j.objects.line, function(a, b) { 
+              return a.properties && a.properties.featurecla === "Disputed"; 
             }),
           centroids: topojson.feature(j, j.objects.centroid)
-        });
+        };
+        this.set('basemapData', bmd);
       });
   },
   

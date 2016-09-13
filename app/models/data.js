@@ -144,13 +144,16 @@ let ColumnStruct = Struct.extend({
           this.get('body')
             .filter( c => !Ember.isEmpty(c.get('value')) )
             .forEach( (c, i, arr) => {
+
+              let match = geoMatcher.match(c.get('value'));
+              if (match) {
+                  p.geo += 2/arr.length; //twice the strength of other types
+              }
+              
               if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
                   p.numeric += 1/arr.length;
               } else {
-                  let match = geoMatcher.match(c.get('value'));
-                  if (match) {
-                    p.geo += 1/arr.length;
-                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
+                  if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
                     p.lat_dms += 1/arr.length;
                   } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)$/.test(c.get('value'))) {
                     p.lon_dms += 1/arr.length;
@@ -167,7 +170,7 @@ let ColumnStruct = Struct.extend({
                   }
               }
             });
-          
+
           let type = Object.keys(p).reduce( (r, key) => {
             return r == null || p[key] > p[r] ? key : r;
           }, null);

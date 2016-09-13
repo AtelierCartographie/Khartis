@@ -10,7 +10,7 @@
           <header class="filled volet2 horizontal solid flow graph-topbar">
 
             <div class="projection horizontal bottom space-between solid airy flow filled volet2 clickable hover-effect" {{action 'toggleProjection'}} >
-              {{#if model.graphLayout.projection}}
+              {{#if projectionConfigurable}}
                 <div class="vertical bottom solid flow padded-h projection-name">
                   <label>{{t 'projection.title'}}</label>
                   <b>{{t (concat "projection." model.graphLayout.projection.id ".name")}}</b>
@@ -62,6 +62,8 @@
           </header>
 
           <div class="fluid" style="position: relative;">
+            {{log basemapData}}
+            {{log model.graphLayout.projection}}
             {{#if (x-every basemapData model.graphLayout.projection)}}
 
               {{map-editor data=model.data
