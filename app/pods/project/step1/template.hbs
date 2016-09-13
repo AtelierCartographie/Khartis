@@ -16,13 +16,13 @@
       {{/x-dropdown-plus}}
     </div>
 
+    {{#if model.project.graphLayout.basemap}}
+
     <h1 class="title">
       {{#file-loader label="" class="import-link" onContentLoaded="loadCsv" tagName="a"}}
       {{x-capitalize (t 'project.step1.title.import')}}
       {{/file-loader}}&nbsp;{{t 'project.step1.title.fileCsv'}}
     </h1>
-
-    {{#if model.project.graphLayout.basemap}}
 
     <div class="vertical airy flow">
 
@@ -63,7 +63,7 @@
     <div class="import-samples">
         <h2 class="title">{{x-capitalize (t 'project.step1.title.testData')}}</h2>
         <ul>
-            {{#each testDataSets as |set|}}
+            {{#each examples as |set|}}
                 <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
             {{/each}}
         </ul>

@@ -68,6 +68,7 @@ GeoMatcher.prototype.isReady = function() {
 };
 
 GeoMatcher.prototype.match = function(code) {
+
   if (code && code.length > 0) {
     
     let str = _strNorm.$((""+code).toLowerCase().trim()),

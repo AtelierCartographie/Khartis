@@ -322,11 +322,12 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   
   drawLandSel() {
     
-    let features = this.get('base').lands.features.filter( 
-          f => landSelSet.has(f.id)
+    let geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
+        features = this.get('base').lands.features.filter( 
+          f => landSelSet.has(f.properties[geoKey])
         ),
         path = this.get('projectedPath');
-    
+
     let sel = this.d3l().select("defs").selectAll("path.feature")
       .data(features)
       .attr("d", path);
@@ -334,7 +335,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     sel.enter()
       .append("path")
       .attr("d", path)
-      .attr("id", (d) => `f-path-${d.id}`)
+      .attr("id", (d) => `f-path-${d.properties[geoKey]}`)
       .classed("feature", true);
      
     sel.exit().remove();
@@ -526,14 +527,13 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         let geoData = geoDef.get('geo').get('body').objectAt(index).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
         if (geoData) {
-          console.log();
           return {
             id: geoData.value[geoKey],
             value: val,
             cell: cell,
             index: index,
-            surface: this.get('base').lands.features.find( f => f.id === geoData.value[geoKey]),
-            point: this.get('base').centroids.features.find( f => f.id === geoData.value[geoKey])
+            surface: this.get('base').lands.features.find( f => f.properties[geoKey] === geoData.value[geoKey]),
+            point: this.get('base').centroids.features.find( f => f.properties[geoKey] === geoData.value[geoKey])
           };
         }
         
@@ -593,10 +593,11 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
     let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
-        converter = mapping.fn();
+        converter = mapping.fn(),
+        geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier');
 		
     let bindAttr = (_) => {
-      
+
       _.attr({
           "xlink:href": d => this.registerLandSel(d.id),
           "mask": d => {
@@ -695,7 +696,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
    let bindAttr = (_) => {
 
       _.attr("transform", d => { 
-
         let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
         
         return d3lper.translate({
@@ -718,6 +718,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
         let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        console.log(d.point.geometry, tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);

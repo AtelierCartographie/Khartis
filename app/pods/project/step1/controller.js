@@ -24,9 +24,9 @@ export default Ember.Controller.extend({
     return this.get('model.csv') && this.get('model.csv').length > 0;
   }.property('model.csv'),
   
-  testDataSets: function() {
-    return config.examples;
-  }.property(),
+  examples: function() {
+    return this.get('model.project.graphLayout.basemap.mapConfig.examples');
+  }.property('model.project.graphLayout.basemap.mapConfig.examples'),
   
   loadFile(source) {
     

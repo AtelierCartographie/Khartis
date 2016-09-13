@@ -7,7 +7,7 @@ const DISPLAY_METHOD = {
 
 export {DISPLAY_METHOD};
 
-const MAX_CLASSES = 16;
+const MAX_CLASSES = 15;
 
 export default Ember.Component.extend({
   
@@ -39,6 +39,16 @@ export default Ember.Component.extend({
     let stack = this.d3l()
 			.append("g")
       .classed("stack", true);
+
+    stack.append("rect")
+      .classed("scrollable-background", true)
+      .attr({
+        x: -this.get('margin.left'),
+        y: -this.get('margin.top'),
+        width: "100%",
+        height: "100%",
+        opacity: 0
+      });
       
     stack.append("g")
       .attr("class", "grid");
@@ -64,7 +74,7 @@ export default Ember.Component.extend({
     // now add titles to the axes
     stack.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (-margin.left/3*2.5) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .attr("transform", "translate("+ (-margin.left/3*2.4) +","+((height - margin.top - margin.bottom)/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
         .attr("class", "axis-label y")
         .text(this.get('yLabel'));
 
@@ -144,7 +154,7 @@ export default Ember.Component.extend({
           _.attr({
             x: d => x(d.val),
             y: d => y(d.qty),
-            width: x(interval),
+            width: d => x(d.val + interval) - x(d.val),
             height: d => height - y(d.qty)
           })
         };

@@ -94,11 +94,19 @@ let Projection = Struct.extend({
         d3Proj.clipAngle(this.compClipAngle());
       }
       
-      if (this.get('rotate')) {
+      if (this.get('rotate') && d3Proj.rotate) {
         d3Proj.rotate(this.compRotate());
       }
     }
-    
+
+    if (!d3Proj.center) {
+      d3Proj.center = x => d3Proj;
+    }
+
+    if (!d3Proj.clipExtent) {
+      d3Proj.clipExtent = x => d3Proj;
+    }
+
     return d3Proj;
   },
   
@@ -137,6 +145,16 @@ let Projection = Struct.extend({
 });
 
 Projection.reopenClass({
+
+  createComposite(d3_geo) {
+    return this.create({
+      d3_geo: `d3.geo.${d3_geo}()`,
+      rotate: "[0,0,0]",
+      translation_x: 0,
+      translation_y: 0,
+      rotation_z: 0
+    });
+  },
   
   restore(json, refs = {}) {
       return this._super(json, refs, {

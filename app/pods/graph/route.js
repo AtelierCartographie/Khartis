@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Project from 'mapp/models/project'; 
+import Projection from 'mapp/models/projection'; 
 import config from 'mapp/config/environment';
 
 export default Ember.Route.extend({
@@ -36,7 +37,11 @@ export default Ember.Route.extend({
     afterModel(model) {
       
       if (!model.get('graphLayout.projection')) {
-        model.set('graphLayout.projection', this.get('Dictionary.data.projections').find( p => p.id === config.projection.default ));
+        if (model.get('graphLayout.basemap.mapConfig.compositeProjection')) {
+          model.set('graphLayout.projection', Projection.createComposite(model.get('graphLayout.basemap.mapConfig.compositeProjection')));
+        } else {
+          model.set('graphLayout.projection', this.get('Dictionary.data.projections').find( p => p.id === config.projection.default ));
+        }
       }
 
       if (!model.get('geoDef') && model.get('data.availableGeoDefs').length > 0) {
