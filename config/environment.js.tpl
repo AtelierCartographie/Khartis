@@ -39,7 +39,7 @@ module.exports = function(environment) {
 
       {
         id: "world",
-        source: "W-110m-2015.json",
+        source: "W-110m-2015-modified.json",
         dictionary: {
           source: "Dictionary-country-territory.json",
           identifier: "iso_a2"

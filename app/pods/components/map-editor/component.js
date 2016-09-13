@@ -519,7 +519,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         data = [];
     
-    geoDef.get('columns').forEach( c => console.log(c.get('meta.type')));
     if (geoDef.get('isGeoRef')) {
       
       data = varCol.get('body').map( (cell, index) => {
@@ -718,7 +717,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
         let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
-        console.log(d.point.geometry, tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);
