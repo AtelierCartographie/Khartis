@@ -8,18 +8,18 @@ const Router = Ember.Router.extend({
 
   didTransition() {
     this._super(...arguments);
-    this._trackPage();
+    console.log("didTransition");
+    Ember.run.scheduleOnce('afterRender', this, this._trackPage);
   },
 
   _trackPage() {
-    Ember.run.scheduleOnce('afterRender', this, () => {
 
-      let page = this.get('currentPath').replace(/\./g, "/"),
-            routeName = this.get('currentRouteName');
+      let routeName = this.get('currentRouteName').replace(/\.index$/g, ""),
+          page = routeName.replace(/\./g, "/");
       
-      if (routeName === "graph.index") {
+      if (routeName === "graph") {
         let state = this.get('router.state.queryParams.currentTab');
-        routeName = routeName + "$" + state;
+        routeName = routeName + "$" + (state ? state : "visualizations");
         page = page.replace(/\/index$/i, "/"+state);
       }
 
@@ -29,7 +29,6 @@ const Router = Ember.Router.extend({
         this.get('metrics').trackPage({ page, title });
       }
 
-    });
   }
 
 });
