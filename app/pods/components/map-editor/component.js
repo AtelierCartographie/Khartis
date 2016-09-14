@@ -43,8 +43,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   dataSource: null,
   author: null,
   
-  trueSize: false,
-  
   resizeInterval: null,
 
   windowLocation: function() {
@@ -164,17 +162,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   }.on("willDestroyElement"),
   
   getSize() {
-    if (!this.get('trueSize')) {
-      return {
-        w: Math.max(this.get('$width'), this.get('graphLayout.width')),
-        h: Math.max(this.get('$height'), this.get('graphLayout.height'))
-      };
-    } else {
-      return {
-        w: this.get('$width'),
-        h: this.get('$height')
-      };
-    }
+    return {
+      w: Math.max(this.get('$width'), this.get('graphLayout.width')),
+      h: Math.max(this.get('$height'), this.get('graphLayout.height'))
+    };
   },
   
   getViewboxTransform() {
@@ -239,7 +230,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
     let {w, h} = this.getSize(),
         projection = projector.computeProjection(
-          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):null,
+          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get('base').lands,
           w,
           h,
           this.get('graphLayout.width'),
@@ -417,6 +408,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     })
     .attr({
       "xlink:href": `#sphere`,
+      "display": this.get('graphLayout.canDisplaySphere') ? null : "none"
     })
     .classed("sphere", true);
   
@@ -426,12 +418,14 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     })
     .attr({
       "xlink:href": `#grid`,
+      "display": this.get('graphLayout.canDisplayGrid') ? null : "none"
     }).style({
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
     })
     .classed("grid", true);
      
-   }.observes('graphLayout.gridColor', 'graphLayout.showGrid'),
+   }.observes('graphLayout.gridColor', 'graphLayout.showGrid',
+    'graphLayout.canDisplaySphere', 'graphLayout.canDisplayGrid'),
    
    drawBackmap: function() {
     
@@ -446,7 +440,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
     d3l.select("#border-square-clip path")
       .datum(this.get('base').squares)
-      .attr("d", d => "M0,0H4000V4000H-4000z"+this.get('projectedPath')(d));
+      .attr("d", d => {
+        let path = this.get('projectedPath')(d);
+        return "M0,0H4000V4000H-4000z"+(path ? path : "")
+      });
     
     d3l.select("g.borders path.borders")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)

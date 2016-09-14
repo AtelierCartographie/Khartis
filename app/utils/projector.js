@@ -32,7 +32,7 @@ export default {
     //store initial resolution and translate for future scale
     projection.resolution = r;
     projection.initialTranslate = projection.translate();
-    
+
     return projection;
     
   }

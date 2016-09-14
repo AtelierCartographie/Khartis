@@ -70,6 +70,14 @@ var GraphLayout = Struct.extend({
   showLegend: null,
 	
 	autoCenter: false,
+
+  canDisplayGrid: function() {
+    return !this.get('projection.isComposite');
+  }.property('projection.isComposite'),
+
+  canDisplaySphere: function() {
+    return !this.get('projection.isComposite');
+  }.property('projection.isComposite'),
 	
 	virginPatternColorAuto: true,
 	
@@ -139,7 +147,7 @@ var GraphLayout = Struct.extend({
   tx: 0,
   ty: 0,
 	width: 1024,
-	height: 700,
+	height: 1024,
 	margin: Margin.create(),
   zoom: 1,
   precision: 2.5,
