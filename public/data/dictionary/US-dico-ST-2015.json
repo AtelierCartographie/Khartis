@@ -1,363 +1,363 @@
 [
 	{
-		"GEOID": "01",
+		"ID": "01",
 		"GEOID2": "0400000US01",
 		"STUSPS": "AL",
 		"ISO 3166-2": "US-AL",
 		"Name": "Alabama"
 	},
 	{
-		"GEOID": "02",
+		"ID": "02",
 		"GEOID2": "0400000US02",
 		"STUSPS": "AK",
 		"ISO 3166-2": "US-AK",
 		"Name": "Alaska"
 	},
 	{
-		"GEOID": "04",
+		"ID": "04",
 		"GEOID2": "0400000US04",
 		"STUSPS": "AZ",
 		"ISO 3166-2": "US-AZ",
 		"Name": "Arizona"
 	},
 	{
-		"GEOID": "05",
+		"ID": "05",
 		"GEOID2": "0400000US05",
 		"STUSPS": "AR",
 		"ISO 3166-2": "US-AR",
 		"Name": "Arkansas"
 	},
 	{
-		"GEOID": "06",
+		"ID": "06",
 		"GEOID2": "0400000US06",
 		"STUSPS": "CA",
 		"ISO 3166-2": "US-CA",
 		"Name": "California"
 	},
 	{
-		"GEOID": "08",
+		"ID": "08",
 		"GEOID2": "0400000US08",
 		"STUSPS": "CO",
 		"ISO 3166-2": "US-CO",
 		"Name": "Colorado"
 	},
 	{
-		"GEOID": "09",
+		"ID": "09",
 		"GEOID2": "0400000US09",
 		"STUSPS": "CT",
 		"ISO 3166-2": "US-CT",
 		"Name": "Connecticut"
 	},
 	{
-		"GEOID": "10",
+		"ID": "10",
 		"GEOID2": "0400000US10",
 		"STUSPS": "DE",
 		"ISO 3166-2": "US-DE",
 		"Name": "Delaware"
 	},
 	{
-		"GEOID": "11",
+		"ID": "11",
 		"GEOID2": "0400000US11",
 		"STUSPS": "DC",
 		"ISO 3166-2": "US-DC",
 		"Name": "District of Columbia"
 	},
 	{
-		"GEOID": "12",
+		"ID": "12",
 		"GEOID2": "0400000US12",
 		"STUSPS": "FL",
 		"ISO 3166-2": "US-FL",
 		"Name": "Florida"
 	},
 	{
-		"GEOID": "13",
+		"ID": "13",
 		"GEOID2": "0400000US13",
 		"STUSPS": "GA",
 		"ISO 3166-2": "US-GA",
 		"Name": "Georgia"
 	},
 	{
-		"GEOID": "15",
+		"ID": "15",
 		"GEOID2": "0400000US15",
 		"STUSPS": "HI",
 		"ISO 3166-2": "US-HI",
 		"Name": "Hawaii"
 	},
 	{
-		"GEOID": "16",
+		"ID": "16",
 		"GEOID2": "0400000US16",
 		"STUSPS": "ID",
 		"ISO 3166-2": "US-ID",
 		"Name": "Idaho"
 	},
 	{
-		"GEOID": "17",
+		"ID": "17",
 		"GEOID2": "0400000US17",
 		"STUSPS": "IL",
 		"ISO 3166-2": "US-IL",
 		"Name": "Illinois"
 	},
 	{
-		"GEOID": "18",
+		"ID": "18",
 		"GEOID2": "0400000US18",
 		"STUSPS": "IN",
 		"ISO 3166-2": "US-IN",
 		"Name": "Indiana"
 	},
 	{
-		"GEOID": "19",
+		"ID": "19",
 		"GEOID2": "0400000US19",
 		"STUSPS": "IA",
 		"ISO 3166-2": "US-IA",
 		"Name": "Iowa"
 	},
 	{
-		"GEOID": "20",
+		"ID": "20",
 		"GEOID2": "0400000US20",
 		"STUSPS": "KS",
 		"ISO 3166-2": "US-KS",
 		"Name": "Kansas"
 	},
 	{
-		"GEOID": "21",
+		"ID": "21",
 		"GEOID2": "0400000US21",
 		"STUSPS": "KY",
 		"ISO 3166-2": "US-KY",
 		"Name": "Kentucky"
 	},
 	{
-		"GEOID": "22",
+		"ID": "22",
 		"GEOID2": "0400000US22",
 		"STUSPS": "LA",
 		"ISO 3166-2": "US-LA",
 		"Name": "Louisiana"
 	},
 	{
-		"GEOID": "23",
+		"ID": "23",
 		"GEOID2": "0400000US23",
 		"STUSPS": "ME",
 		"ISO 3166-2": "US-ME",
 		"Name": "Maine"
 	},
 	{
-		"GEOID": "24",
+		"ID": "24",
 		"GEOID2": "0400000US24",
 		"STUSPS": "MD",
 		"ISO 3166-2": "US-MD",
 		"Name": "Maryland"
 	},
 	{
-		"GEOID": "25",
+		"ID": "25",
 		"GEOID2": "0400000US25",
 		"STUSPS": "MA",
 		"ISO 3166-2": "US-MA",
 		"Name": "Massachusetts"
 	},
 	{
-		"GEOID": "26",
+		"ID": "26",
 		"GEOID2": "0400000US26",
 		"STUSPS": "MI",
 		"ISO 3166-2": "US-MI",
 		"Name": "Michigan"
 	},
 	{
-		"GEOID": "27",
+		"ID": "27",
 		"GEOID2": "0400000US27",
 		"STUSPS": "MN",
 		"ISO 3166-2": "US-MN",
 		"Name": "Minnesota"
 	},
 	{
-		"GEOID": "28",
+		"ID": "28",
 		"GEOID2": "0400000US28",
 		"STUSPS": "MS",
 		"ISO 3166-2": "US-MS",
 		"Name": "Mississippi"
 	},
 	{
-		"GEOID": "29",
+		"ID": "29",
 		"GEOID2": "0400000US29",
 		"STUSPS": "MO",
 		"ISO 3166-2": "US-MO",
 		"Name": "Missouri"
 	},
 	{
-		"GEOID": "30",
+		"ID": "30",
 		"GEOID2": "0400000US30",
 		"STUSPS": "MT",
 		"ISO 3166-2": "US-MT",
 		"Name": "Montana"
 	},
 	{
-		"GEOID": "31",
+		"ID": "31",
 		"GEOID2": "0400000US31",
 		"STUSPS": "NE",
 		"ISO 3166-2": "US-NE",
 		"Name": "Nebraska"
 	},
 	{
-		"GEOID": "32",
+		"ID": "32",
 		"GEOID2": "0400000US32",
 		"STUSPS": "NV",
 		"ISO 3166-2": "US-NV",
 		"Name": "Nevada"
 	},
 	{
-		"GEOID": "33",
+		"ID": "33",
 		"GEOID2": "0400000US33",
 		"STUSPS": "NH",
 		"ISO 3166-2": "US-NH",
 		"Name": "New Hampshire"
 	},
 	{
-		"GEOID": "34",
+		"ID": "34",
 		"GEOID2": "0400000US34",
 		"STUSPS": "NJ",
 		"ISO 3166-2": "US-NJ",
 		"Name": "New Jersey"
 	},
 	{
-		"GEOID": "35",
+		"ID": "35",
 		"GEOID2": "0400000US35",
 		"STUSPS": "NM",
 		"ISO 3166-2": "US-NM",
 		"Name": "New Mexico"
 	},
 	{
-		"GEOID": "36",
+		"ID": "36",
 		"GEOID2": "0400000US36",
 		"STUSPS": "NY",
 		"ISO 3166-2": "US-NY",
 		"Name": "New York"
 	},
 	{
-		"GEOID": "37",
+		"ID": "37",
 		"GEOID2": "0400000US37",
 		"STUSPS": "NC",
 		"ISO 3166-2": "US-NC",
 		"Name": "North Carolina"
 	},
 	{
-		"GEOID": "38",
+		"ID": "38",
 		"GEOID2": "0400000US38",
 		"STUSPS": "ND",
 		"ISO 3166-2": "US-ND",
 		"Name": "North Dakota"
 	},
 	{
-		"GEOID": "39",
+		"ID": "39",
 		"GEOID2": "0400000US39",
 		"STUSPS": "OH",
 		"ISO 3166-2": "US-OH",
 		"Name": "Ohio"
 	},
 	{
-		"GEOID": "40",
+		"ID": "40",
 		"GEOID2": "0400000US40",
 		"STUSPS": "OK",
 		"ISO 3166-2": "US-OK",
 		"Name": "Oklahoma"
 	},
 	{
-		"GEOID": "41",
+		"ID": "41",
 		"GEOID2": "0400000US41",
 		"STUSPS": "OR",
 		"ISO 3166-2": "US-OR",
 		"Name": "Oregon"
 	},
 	{
-		"GEOID": "42",
+		"ID": "42",
 		"GEOID2": "0400000US42",
 		"STUSPS": "PA",
 		"ISO 3166-2": "US-PA",
 		"Name": "Pennsylvania"
 	},
 	{
-		"GEOID": "72",
+		"ID": "72",
 		"GEOID2": "0400000US72",
 		"STUSPS": "PR",
 		"ISO 3166-2": "US-PR",
 		"Name": "Puerto Rico"
 	},
 	{
-		"GEOID": "44",
+		"ID": "44",
 		"GEOID2": "0400000US44",
 		"STUSPS": "RI",
 		"ISO 3166-2": "US-RI",
 		"Name": "Rhode Island"
 	},
 	{
-		"GEOID": "45",
+		"ID": "45",
 		"GEOID2": "0400000US45",
 		"STUSPS": "SC",
 		"ISO 3166-2": "US-SC",
 		"Name": "South Carolina"
 	},
 	{
-		"GEOID": "46",
+		"ID": "46",
 		"GEOID2": "0400000US46",
 		"STUSPS": "SD",
 		"ISO 3166-2": "US-SD",
 		"Name": "South Dakota"
 	},
 	{
-		"GEOID": "47",
+		"ID": "47",
 		"GEOID2": "0400000US47",
 		"STUSPS": "TN",
 		"ISO 3166-2": "US-TN",
 		"Name": "Tennessee"
 	},
 	{
-		"GEOID": "48",
+		"ID": "48",
 		"GEOID2": "0400000US48",
 		"STUSPS": "TX",
 		"ISO 3166-2": "US-TX",
 		"Name": "Texas"
 	},
 	{
-		"GEOID": "49",
+		"ID": "49",
 		"GEOID2": "0400000US49",
 		"STUSPS": "UT",
 		"ISO 3166-2": "US-UT",
 		"Name": "Utah"
 	},
 	{
-		"GEOID": "50",
+		"ID": "50",
 		"GEOID2": "0400000US50",
 		"STUSPS": "VT",
 		"ISO 3166-2": "US-VT",
 		"Name": "Vermont"
 	},
 	{
-		"GEOID": "51",
+		"ID": "51",
 		"GEOID2": "0400000US51",
 		"STUSPS": "VA",
 		"ISO 3166-2": "US-VA",
 		"Name": "Virginia"
 	},
 	{
-		"GEOID": "53",
+		"ID": "53",
 		"GEOID2": "0400000US53",
 		"STUSPS": "WA",
 		"ISO 3166-2": "US-WA",
 		"Name": "Washington"
 	},
 	{
-		"GEOID": "54",
+		"ID": "54",
 		"GEOID2": "0400000US54",
 		"STUSPS": "WV",
 		"ISO 3166-2": "US-WV",
 		"Name": "West Virginia"
 	},
 	{
-		"GEOID": "55",
+		"ID": "55",
 		"GEOID2": "0400000US55",
 		"STUSPS": "WI",
 		"ISO 3166-2": "US-WI",
 		"Name": "Wisconsin"
 	},
 	{
-		"GEOID": "56",
+		"ID": "56",
 		"GEOID2": "0400000US56",
 		"STUSPS": "WY",
 		"ISO 3166-2": "US-WY",

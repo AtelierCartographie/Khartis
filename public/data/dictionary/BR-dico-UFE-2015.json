@@ -1,0 +1,137 @@
+[
+ {
+   "ID": 11,
+   "ISO 3166-2": "BR-RO",
+   "Name": "RONDÔNIA"
+ },
+ {
+   "ID": 12,
+   "ISO 3166-2": "BR-AC",
+   "Name": "ACRE"
+ },
+ {
+   "ID": 13,
+   "ISO 3166-2": "BR-AM",
+   "Name": "AMAZONAS"
+ },
+ {
+   "ID": 14,
+   "ISO 3166-2": "BR-RR",
+   "Name": "RORAIMA"
+ },
+ {
+   "ID": 15,
+   "ISO 3166-2": "BR-PA",
+   "Name": "PARÁ"
+ },
+ {
+   "ID": 16,
+   "ISO 3166-2": "BR-AP",
+   "Name": "AMAPÁ"
+ },
+ {
+   "ID": 17,
+   "ISO 3166-2": "BR-TO",
+   "Name": "TOCANTINS"
+ },
+ {
+   "ID": 21,
+   "ISO 3166-2": "BR-MA",
+   "Name": "MARANHÃO"
+ },
+ {
+   "ID": 22,
+   "ISO 3166-2": "BR-PI",
+   "Name": "PIAUÍ"
+ },
+ {
+   "ID": 23,
+   "ISO 3166-2": "BR-CE",
+   "Name": "CEARÁ"
+ },
+ {
+   "ID": 24,
+   "ISO 3166-2": "BR-RN",
+   "Name": "RIO GRANDE DO NORTE"
+ },
+ {
+   "ID": 25,
+   "ISO 3166-2": "BR-PB",
+   "Name": "PARAÍBA"
+ },
+ {
+   "ID": 26,
+   "ISO 3166-2": "BR-PE",
+   "Name": "PERNAMBUCO"
+ },
+ {
+   "ID": 27,
+   "ISO 3166-2": "BR-AL",
+   "Name": "ALAGOAS"
+ },
+ {
+   "ID": 28,
+   "ISO 3166-2": "BR-SE",
+   "Name": "SERGIPE"
+ },
+ {
+   "ID": 29,
+   "ISO 3166-2": "BR-BA",
+   "Name": "BAHIA"
+ },
+ {
+   "ID": 31,
+   "ISO 3166-2": "BR-MG",
+   "Name": "MINAS GERAIS"
+ },
+ {
+   "ID": 32,
+   "ISO 3166-2": "BR-ES",
+   "Name": "ESPÍRITO SANTO"
+ },
+ {
+   "ID": 33,
+   "ISO 3166-2": "BR-RJ",
+   "Name": "RIO DE JANEIRO"
+ },
+ {
+   "ID": 35,
+   "ISO 3166-2": "BR-SP",
+   "Name": "SÃO PAULO"
+ },
+ {
+   "ID": 41,
+   "ISO 3166-2": "BR-PR",
+   "Name": "PARANÁ"
+ },
+ {
+   "ID": 42,
+   "ISO 3166-2": "BR-SC",
+   "Name": "SANTA CATARINA"
+ },
+ {
+   "ID": 43,
+   "ISO 3166-2": "BR-RS",
+   "Name": "RIO GRANDE DO SUL"
+ },
+ {
+   "ID": 50,
+   "ISO 3166-2": "BR-MS",
+   "Name": "MATO GROSSO DO SUL"
+ },
+ {
+   "ID": 51,
+   "ISO 3166-2": "BR-MT",
+   "Name": "MATO GROSSO"
+ },
+ {
+   "ID": 52,
+   "ISO 3166-2": "BR-GO",
+   "Name": "GOIÁS"
+ },
+ {
+   "ID": 53,
+   "ISO 3166-2": "BR-DF",
+   "Name": "DISTRITO FEDERAL"
+ }
+]

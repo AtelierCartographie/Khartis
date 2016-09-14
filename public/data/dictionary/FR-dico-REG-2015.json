@@ -1,162 +1,162 @@
 [
 	{
-		"NUTS": "FR10",
+		"ID": "FR10",
 		"Insee": "11",
 		"ISO 3166-2": "FR-J",
 		"Name": "Île-de-France"
 	},
 	{
-		"NUTS": "FR21",
+		"ID": "FR21",
 		"Insee": "21",
 		"ISO 3166-2": "FR-G",
 		"Name": "Champagne-Ardenne"
 	},
 	{
-		"NUTS": "FR22",
+		"ID": "FR22",
 		"Insee": "22",
 		"ISO 3166-2": "FR-S",
 		"Name": "Picardie"
 	},
 	{
-		"NUTS": "FR23",
+		"ID": "FR23",
 		"Insee": "23",
 		"ISO 3166-2": "FR-Q",
 		"Name": "Haute-Normandie"
 	},
 	{
-		"NUTS": "FR24",
+		"ID": "FR24",
 		"Insee": "24",
 		"ISO 3166-2": "FR-F",
 		"Name": "Centre-Val de Loire"
 	},
 	{
-		"NUTS": "FR25",
+		"ID": "FR25",
 		"Insee": "25",
 		"ISO 3166-2": "FR-P",
 		"Name": "Basse-Normandie"
 	},
 	{
-		"NUTS": "FR26",
+		"ID": "FR26",
 		"Insee": "26",
 		"ISO 3166-2": "FR-D",
 		"Name": "Bourgogne"
 	},
 	{
-		"NUTS": "FR30",
+		"ID": "FR30",
 		"Insee": "31",
 		"ISO 3166-2": "FR-O",
 		"Name": "Nord-Pas-de-Calais"
 	},
 	{
-		"NUTS": "FR41",
+		"ID": "FR41",
 		"Insee": "41",
 		"ISO 3166-2": "FR-M",
 		"Name": "Lorraine"
 	},
 	{
-		"NUTS": "FR42",
+		"ID": "FR42",
 		"Insee": "42",
 		"ISO 3166-2": "FR-A",
 		"Name": "Alsace"
 	},
 	{
-		"NUTS": "FR43",
+		"ID": "FR43",
 		"Insee": "43",
 		"ISO 3166-2": "FR-I",
 		"Name": "Franche-Comté"
 	},
 	{
-		"NUTS": "FR51",
+		"ID": "FR51",
 		"Insee": "52",
 		"ISO 3166-2": "FR-R",
 		"Name": "Pays de la Loire"
 	},
 	{
-		"NUTS": "FR52",
+		"ID": "FR52",
 		"Insee": "53",
 		"ISO 3166-2": "FR-E",
 		"Name": "Bretagne"
 	},
 	{
-		"NUTS": "FR53",
+		"ID": "FR53",
 		"Insee": "54",
 		"ISO 3166-2": "FR-T",
 		"Name": "Poitou-Charentes"
 	},
 	{
-		"NUTS": "FR61",
+		"ID": "FR61",
 		"Insee": "72",
 		"ISO 3166-2": "FR-B",
 		"Name": "Aquitaine"
 	},
 	{
-		"NUTS": "FR62",
+		"ID": "FR62",
 		"Insee": "73",
 		"ISO 3166-2": "FR-N",
 		"Name": "Midi-Pyrénées"
 	},
 	{
-		"NUTS": "FR63",
+		"ID": "FR63",
 		"Insee": "74",
 		"ISO 3166-2": "FR-L",
 		"Name": "Limousin"
 	},
 	{
-		"NUTS": "FR71",
+		"ID": "FR71",
 		"Insee": "82",
 		"ISO 3166-2": "FR-V",
 		"Name": "Rhône-Alpes"
 	},
 	{
-		"NUTS": "FR72",
+		"ID": "FR72",
 		"Insee": "83",
 		"ISO 3166-2": "FR-C",
 		"Name": "Auvergne"
 	},
 	{
-		"NUTS": "FR81",
+		"ID": "FR81",
 		"Insee": "91",
 		"ISO 3166-2": "FR-K",
 		"Name": "Languedoc-Roussillon"
 	},
 	{
-		"NUTS": "FR82",
+		"ID": "FR82",
 		"Insee": "93",
 		"ISO 3166-2": "FR-U",
 		"Name": "Provence-Alpes-Côte d’Azur"
 	},
 	{
-		"NUTS": "FR83",
+		"ID": "FR83",
 		"Insee": "94",
 		"ISO 3166-2": "FR-H",
 		"Name": "Corse"
 	},
 	{
-		"NUTS": "FRA1",
+		"ID": "FRA1",
 		"Insee": "01",
 		"ISO 3166-2": "—",
 		"Name": "Guadeloupe"
 	},
 	{
-		"NUTS": "FRA2",
+		"ID": "FRA2",
 		"Insee": "02",
 		"ISO 3166-2": "—",
 		"Name": "Martinique"
 	},
 	{
-		"NUTS": "FRA3",
+		"ID": "FRA3",
 		"Insee": "03",
 		"ISO 3166-2": "—",
 		"Name": "Guyane (française)"
 	},
 	{
-		"NUTS": "FRA4",
+		"ID": "FRA4",
 		"Insee": "04",
 		"ISO 3166-2": "—",
 		"Name": "La Réunion"
 	},
 	{
-		"NUTS": "FRA5",
+		"ID": "FRA5",
 		"Insee": "06",
 		"ISO 3166-2": "—",
 		"Name": "Mayotte"

@@ -1,363 +1,363 @@
 [
 	{
-		"ISO 3166-2": "ES-VI",
+		"ID": "ES-VI",
 		"CNIG": "01",
 		"NUTS": "ES211",
 		"Name": "Araba",
 		"Name local": "Álava"
 	},
 	{
-		"ISO 3166-2": "ES-AB",
+		"ID": "ES-AB",
 		"CNIG": "02",
 		"NUTS": "ES421",
 		"Name": "Albacete",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-A",
+		"ID": "ES-A",
 		"CNIG": "03",
 		"NUTS": "ES521",
 		"Name": "Alicante",
 		"Name local": "Alacant"
 	},
 	{
-		"ISO 3166-2": "ES-AL",
+		"ID": "ES-AL",
 		"CNIG": "04",
 		"NUTS": "ES611",
 		"Name": "Almería",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-AV",
+		"ID": "ES-AV",
 		"CNIG": "05",
 		"NUTS": "ES411",
 		"Name": "Ávila",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-BA",
+		"ID": "ES-BA",
 		"CNIG": "06",
 		"NUTS": "ES431",
 		"Name": "Badajoz",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-PM",
+		"ID": "ES-PM",
 		"CNIG": "07",
 		"NUTS": "-",
 		"Name": "Illes Balears",
 		"Name local": "Islas Baleares"
 	},
 	{
-		"ISO 3166-2": "ES-B",
+		"ID": "ES-B",
 		"CNIG": "08",
 		"NUTS": "ES511",
 		"Name": "Barcelona",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-BU",
+		"ID": "ES-BU",
 		"CNIG": "09",
 		"NUTS": "ES412",
 		"Name": "Burgos",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-CC",
+		"ID": "ES-CC",
 		"CNIG": "10",
 		"NUTS": "ES432",
 		"Name": "Cáceres",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-CA",
+		"ID": "ES-CA",
 		"CNIG": "11",
 		"NUTS": "ES612",
 		"Name": "Cádiz",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-CS",
+		"ID": "ES-CS",
 		"CNIG": "12",
 		"NUTS": "ES522",
 		"Name": "Castellón",
 		"Name local": "Castelló"
 	},
 	{
-		"ISO 3166-2": "ES-CR",
+		"ID": "ES-CR",
 		"CNIG": "13",
 		"NUTS": "ES422",
 		"Name": "Ciudad Real",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-CO",
+		"ID": "ES-CO",
 		"CNIG": "14",
 		"NUTS": "ES613",
 		"Name": "Córdoba",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-C",
+		"ID": "ES-C",
 		"CNIG": "15",
 		"NUTS": "ES111",
 		"Name": "A Coruña",
 		"Name local": "La Coruña"
 	},
 	{
-		"ISO 3166-2": "ES-CU",
+		"ID": "ES-CU",
 		"CNIG": "16",
 		"NUTS": "ES423",
 		"Name": "Cuenca",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-GI",
+		"ID": "ES-GI",
 		"CNIG": "17",
 		"NUTS": "ES512",
 		"Name": "Girona",
 		"Name local": "Gerona"
 	},
 	{
-		"ISO 3166-2": "ES-GR",
+		"ID": "ES-GR",
 		"CNIG": "18",
 		"NUTS": "ES614",
 		"Name": "Granada",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-GU",
+		"ID": "ES-GU",
 		"CNIG": "19",
 		"NUTS": "ES424",
 		"Name": "Guadalajara",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-SS",
+		"ID": "ES-SS",
 		"CNIG": "20",
 		"NUTS": "ES212",
 		"Name": "Gipuzkoa",
 		"Name local": "Guipúzcoa"
 	},
 	{
-		"ISO 3166-2": "ES-H",
+		"ID": "ES-H",
 		"CNIG": "21",
 		"NUTS": "ES615",
 		"Name": "Huelva",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-HU",
+		"ID": "ES-HU",
 		"CNIG": "22",
 		"NUTS": "ES241",
 		"Name": "Huesca",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-J",
+		"ID": "ES-J",
 		"CNIG": "23",
 		"NUTS": "ES616",
 		"Name": "Jaén",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-LE",
+		"ID": "ES-LE",
 		"CNIG": "24",
 		"NUTS": "ES413",
 		"Name": "León",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-L",
+		"ID": "ES-L",
 		"CNIG": "25",
 		"NUTS": "ES513",
 		"Name": "Lleida",
 		"Name local": "Lérida"
 	},
 	{
-		"ISO 3166-2": "ES-LO",
+		"ID": "ES-LO",
 		"CNIG": "26",
 		"NUTS": "ES230",
 		"Name": "La Rioja",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-LU",
+		"ID": "ES-LU",
 		"CNIG": "27",
 		"NUTS": "ES112",
 		"Name": "Lugo",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-M",
+		"ID": "ES-M",
 		"CNIG": "28",
 		"NUTS": "ES300",
 		"Name": "Madrid",
 		"Name local": "Comunidad de Madrid"
 	},
 	{
-		"ISO 3166-2": "ES-MA",
+		"ID": "ES-MA",
 		"CNIG": "29",
 		"NUTS": "ES617",
 		"Name": "Málaga",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-MU",
+		"ID": "ES-MU",
 		"CNIG": "30",
 		"NUTS": "ES620",
 		"Name": "Murcia",
 		"Name local": "Región de Murcia"
 	},
 	{
-		"ISO 3166-2": "ES-NA",
+		"ID": "ES-NA",
 		"CNIG": "31",
 		"NUTS": "ES220",
 		"Name": "Navarra",
 		"Name local": "Nafarroa"
 	},
 	{
-		"ISO 3166-2": "ES-OR",
+		"ID": "ES-OR",
 		"CNIG": "32",
 		"NUTS": "ES113",
 		"Name": "Ourense",
 		"Name local": "Orense"
 	},
 	{
-		"ISO 3166-2": "ES-O",
+		"ID": "ES-O",
 		"CNIG": "33",
 		"NUTS": "ES120",
 		"Name": "Asturias",
 		"Name local": "Principado de Asturias"
 	},
 	{
-		"ISO 3166-2": "ES-P",
+		"ID": "ES-P",
 		"CNIG": "34",
 		"NUTS": "ES414",
 		"Name": "Palencia",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-GC",
+		"ID": "ES-GC",
 		"CNIG": "35",
 		"NUTS": "ES701",
 		"Name": "Las Palmas",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-PO",
+		"ID": "ES-PO",
 		"CNIG": "36",
 		"NUTS": "ES114",
 		"Name": "Pontevedra",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-SA",
+		"ID": "ES-SA",
 		"CNIG": "37",
 		"NUTS": "ES415",
 		"Name": "Salamanca",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-TF",
+		"ID": "ES-TF",
 		"CNIG": "38",
 		"NUTS": "ES702",
 		"Name": "Santa Cruz de Tenerife",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-S",
+		"ID": "ES-S",
 		"CNIG": "39",
 		"NUTS": "ES130",
 		"Name": "Cantabria",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-SG",
+		"ID": "ES-SG",
 		"CNIG": "40",
 		"NUTS": "ES416",
 		"Name": "Segovia",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-SE",
+		"ID": "ES-SE",
 		"CNIG": "41",
 		"NUTS": "ES618",
 		"Name": "Sevilla",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-SO",
+		"ID": "ES-SO",
 		"CNIG": "42",
 		"NUTS": "ES417",
 		"Name": "Soria",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-T",
+		"ID": "ES-T",
 		"CNIG": "43",
 		"NUTS": "ES514",
 		"Name": "Tarragona",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-TE",
+		"ID": "ES-TE",
 		"CNIG": "44",
 		"NUTS": "ES242",
 		"Name": "Teruel",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-TO",
+		"ID": "ES-TO",
 		"CNIG": "45",
 		"NUTS": "ES425",
 		"Name": "Toledo",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-V",
+		"ID": "ES-V",
 		"CNIG": "46",
 		"NUTS": "ES523",
 		"Name": "Valencia",
 		"Name local": "València"
 	},
 	{
-		"ISO 3166-2": "ES-VA",
+		"ID": "ES-VA",
 		"CNIG": "47",
 		"NUTS": "ES418",
 		"Name": "Valladolid",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-BI",
+		"ID": "ES-BI",
 		"CNIG": "48",
 		"NUTS": "ES213",
 		"Name": "Bizkaia",
 		"Name local": "Vizcaya"
 	},
 	{
-		"ISO 3166-2": "ES-ZA",
+		"ID": "ES-ZA",
 		"CNIG": "49",
 		"NUTS": "ES419",
 		"Name": "Zamora",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-Z",
+		"ID": "ES-Z",
 		"CNIG": "50",
 		"NUTS": "ES243",
 		"Name": "Zaragoza",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-CE",
+		"ID": "ES-CE",
 		"CNIG": "51",
 		"NUTS": "ES630",
 		"Name": "Ceuta",
 		"Name local": ""
 	},
 	{
-		"ISO 3166-2": "ES-ML",
+		"ID": "ES-ML",
 		"CNIG": "52",
 		"NUTS": "ES640",
 		"Name": "Melilla",

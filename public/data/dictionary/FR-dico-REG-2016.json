@@ -1,108 +1,108 @@
 [
 	{
-		"NUTS": "FR10",
+		"ID": "FR10",
 		"Insee": "11",
 		"ISO 3166-2": "FR-J",
 		"Name": "Île-de-France"
 	},
 	{
-		"NUTS": "FR24",
+		"ID": "FR24",
 		"Insee": "24",
 		"ISO 3166-2": "FR-F",
 		"Name": "Centre-Val de Loire"
 	},
 	{
-		"NUTS": "FR26",
+		"ID": "FR26",
 		"Insee": "27",
 		"ISO 3166-2": "FR-D",
 		"Name": "Bourgogne-Franche-Comté"
 	},
 	{
-		"NUTS": "FR25",
+		"ID": "FR25",
 		"Insee": "28",
 		"ISO 3166-2": "FR-P",
 		"Name": "Normandie"
 	},
 	{
-		"NUTS": "FR22",
+		"ID": "FR22",
 		"Insee": "32",
 		"ISO 3166-2": "FR-S",
 		"Name": "Nord-Pas-de-Calais-Picardie"
 	},
 	{
-		"NUTS": "FR21",
+		"ID": "FR21",
 		"Insee": "44",
 		"ISO 3166-2": "FR-G",
 		"Name": "Alsace-Champagne-Ardenne-Lorraine"
 	},
 	{
-		"NUTS": "FR51",
+		"ID": "FR51",
 		"Insee": "52",
 		"ISO 3166-2": "FR-R",
 		"Name": "Pays de la Loire"
 	},
 	{
-		"NUTS": "FR52",
+		"ID": "FR52",
 		"Insee": "53",
 		"ISO 3166-2": "FR-E",
 		"Name": "Bretagne"
 	},
 	{
-		"NUTS": "FR61",
+		"ID": "FR61",
 		"Insee": "75",
 		"ISO 3166-2": "FR-B",
 		"Name": "Aquitaine-Limousin-Poitou-Charentes"
 	},
 	{
-		"NUTS": "FR62",
+		"ID": "FR62",
 		"Insee": "76",
 		"ISO 3166-2": "FR-N",
 		"Name": "Languedoc-Roussillon-Midi-Pyrénées"
 	},
 	{
-		"NUTS": "FR71",
+		"ID": "FR71",
 		"Insee": "84",
 		"ISO 3166-2": "FR-V",
 		"Name": "Auvergne-Rhône-Alpes"
 	},
 	{
-		"NUTS": "FR82",
+		"ID": "FR82",
 		"Insee": "93",
 		"ISO 3166-2": "FR-U",
 		"Name": "Provence-Alpes-Côte d’Azur"
 	},
 	{
-		"NUTS": "FR83",
+		"ID": "FR83",
 		"Insee": "94",
 		"ISO 3166-2": "FR-H",
 		"Name": "Corse"
 	},
 	{
-		"NUTS": "FRA1",
+		"ID": "FRA1",
 		"Insee": "01",
 		"ISO 3166-2": "—",
 		"Name": "Guadeloupe"
 	},
 	{
-		"NUTS": "FRA2",
+		"ID": "FRA2",
 		"Insee": "02",
 		"ISO 3166-2": "—",
 		"Name": "Martinique"
 	},
 	{
-		"NUTS": "FRA3",
+		"ID": "FRA3",
 		"Insee": "03",
 		"ISO 3166-2": "—",
 		"Name": "Guyane (française)"
 	},
 	{
-		"NUTS": "FRA4",
+		"ID": "FRA4",
 		"Insee": "04",
 		"ISO 3166-2": "—",
 		"Name": "La Réunion"
 	},
 	{
-		"NUTS": "FRA5",
+		"ID": "FRA5",
 		"Insee": "06",
 		"ISO 3166-2": "—",
 		"Name": "Mayotte"
