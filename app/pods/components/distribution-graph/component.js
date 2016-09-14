@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import PatternMaker from 'mapp/utils/pattern-maker';
 
 const DISPLAY_METHOD = {
   CLASSES: "classes",
@@ -238,7 +239,17 @@ export default Ember.Component.extend({
           x: d => x(d.val),
           y: -this.get('margin.top') + 2,
           height: this.get('margin.top') - 4,
-          width: (d, i) => (i < fillIntervals.length - 1 ? x(fillIntervals[i+1].val) : width) - x(d.val)
+          width: (d, i) => (i < fillIntervals.length - 1 ? x(fillIntervals[i+1].val) : width) - x(d.val),
+          mask: d => {
+            let mask = this.get('mapping').getScaleOf("texture")(d.val);
+            
+            if (mask && mask.fn != PatternMaker.NONE) {
+              this.d3l().call(mask.fn);
+              return `url(${mask.fn.url()})`;
+            } else {
+              return null;
+            }
+          }
         }).style({
           "fill": (d) => colorScale(d.val)
         })

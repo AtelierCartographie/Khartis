@@ -24,17 +24,6 @@ module.exports = function(environment) {
     symbolMinMaxSize: 5,
     symbolMaxMaxSize: 56,
 
-    examples: [
-      {
-        id: "eco2",
-        source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
-      },
-      {
-        id: "surface_forets",
-        source: "02_WB_surfaces_forets_Km2_EN_milliers-virgule_decimal-point_ISO-Latin-1.txt"
-      }
-    ],
-
     maps: [
 
       {
@@ -66,8 +55,8 @@ module.exports = function(environment) {
         compositeProjection: "conicConformalFrance",
         examples: [
           {
-            id: "eco2",
-            source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
+            id: "fr_dpt",
+            source: "fr-dpt-naissances.csv"
           }
         ]
       },

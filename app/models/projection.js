@@ -14,6 +14,7 @@ let Projection = Struct.extend({
   translation_x: 1,
   translation_y: 1,
   rotation_z: 1,
+  isComposite: false,
   
   rotateX: Ember.computed('rotate', {
     get() {
@@ -138,7 +139,8 @@ let Projection = Struct.extend({
       year: this.get('year'),
       translation_x: this.get('translation_x'),
       translation_y: this.get('translation_y'),
-      rotation_z: this.get('rotation_z')
+      rotation_z: this.get('rotation_z'),
+      isComposite: this.get('isComposite')
     });
   }
   
@@ -152,7 +154,8 @@ Projection.reopenClass({
       rotate: "[0,0,0]",
       translation_x: 0,
       translation_y: 0,
-      rotation_z: 0
+      rotation_z: 0,
+      isComposite: true
     });
   },
   
@@ -172,7 +175,8 @@ Projection.reopenClass({
         year: json.year,
         translation_x: json.translation_x,
         translation_y: json.translation_y,
-        rotation_z: json.rotation_z
+        rotation_z: json.rotation_z,
+        isComposite: json.isComposite
       });
   }
   
