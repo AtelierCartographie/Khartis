@@ -68,8 +68,10 @@ export default Ember.Controller.extend({
   }.property('state'),
   
   setup() {
+    
     this.get('model.graphLayout.basemap').loadMapData()
       .then( (json) => {
+
         let j = JSON.parse(json),
             partition = j.objects.poly.geometries
               .reduce( (part, g) => {
@@ -88,6 +90,7 @@ export default Ember.Controller.extend({
             }),
           centroids: topojson.feature(j, j.objects.centroid)
         };
+
         this.set('basemapData', bmd);
       });
   },

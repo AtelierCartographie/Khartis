@@ -8,7 +8,6 @@ const Router = Ember.Router.extend({
 
   didTransition() {
     this._super(...arguments);
-    console.log("didTransition");
     Ember.run.scheduleOnce('afterRender', this, this._trackPage);
   },
 
