@@ -10,6 +10,15 @@ export {DISPLAY_METHOD};
 
 const MAX_CLASSES = 15;
 
+const DISPLAY_METHOD = {
+  CLASSES: "classes",
+  CUMULATIVE: "cumulative"
+};
+
+export {DISPLAY_METHOD};
+
+const MAX_CLASSES = 15;
+
 export default Ember.Component.extend({
   
   tagName: "svg",
