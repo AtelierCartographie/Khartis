@@ -12,8 +12,7 @@ import LabellingFeature from './labelling';
 
 /* global Em */
 
-let landSelSet = new Set(),
-    projectionsMap = new Map();
+let landSelSet = new Set();
 
 let shift = 0;
 
@@ -252,8 +251,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     
     /*let proj = this.get('graphLayout.projection').fn();
     return proj;*/
-    this.projectionFor(0);
-    return this.get('graphLayout.projection').fn();
+    return this.projectionFor(1);
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
@@ -261,36 +259,20 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
   projectionFor(idx) {
 
-    if (projectionsMap.has(idx)) {
-      return projectionsMap.get(idx);
-    }
-
-    let zones = [
-      [[0, 0], [1, 0.8]],
-      [[0, 0.8], [0.25, 1]],
-      [[0.25, 0.8], [0.5, 1]],
-      [[0.5, 0.8], [0.75, 1]],
-      [[0.75, 0.8], [1, 1]],
-      [[0, 0.8], [0.333, 1]],
-    ];
-
     let {w, h} = this.getSize(),
         projection = projector.computeProjection(
-          this.get('base')[idx].land,
+          this.get('base').find( b => b.projection === idx ).land,
           w,
           h,
           this.get('graphLayout.width'),
           this.get('graphLayout.height'),
           this.get('graphLayout.margin'),
           this.get('graphLayout.projection'),
-          idx,
-          zones[idx]
+          idx
         );
- 
+    
     this.scaleProjection(projection);
 
-    projectionsMap.set(idx, projection);
-    
     return projection; 
     
   },
@@ -315,7 +297,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   getProjectedPath(idx) {
     
     let path = d3.geo.path(),
-        proj = this.projectionFor(idx || 0);
+        proj = this.projectionFor(idx || 1);
     
     path.projection(proj);
     
@@ -606,8 +588,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       data = varCol.get('body').map( (cell, index) => {
         
         let val = cell.get('postProcessedValue'),
-            lon = geoDef.get('lon').get('body').objectAt(index).get('postProcessedValue'),
-            lat = geoDef.get('lat').get('body').objectAt(index).get('postProcessedValue');
+            lon = geoDef.get('lon.body').objectAt(index).get('postProcessedValue'),
+            lat = geoDef.get('lat.body').objectAt(index).get('postProcessedValue');
         
         if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
           return {
@@ -688,8 +670,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   
   mapSymbol: function(d3Layer, data, graphLayer) {
 
-    let projection = this.get('projection'),
-        svg = this.d3l(),
+    let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
         converter = mapping.fn(),
         sortedData = data.sort((a, b) => d3.descending(converter(a.cell, "size"), converter(b.cell, "size")));

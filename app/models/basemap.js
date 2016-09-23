@@ -13,6 +13,18 @@ var Basemap = Struct.extend({
   dictionaryData: null,
   /* ---------- */
 
+  compositeProjection: function() {
+    return this.get('mapConfig.sources').length > 1;
+  }.property('mapConfig'),
+
+  projectionProvided: function() {
+    return this.get('mapConfig.sources').find( s => s.projection );
+  }.property('mapConfig'),
+
+  subProjections: function() {
+    return this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning}) );
+  }.property('mapConfig'),
+
   idChange: function() {
 
     this.setProperties({
@@ -79,7 +91,6 @@ var Basemap = Struct.extend({
         xhr.send();
       } else {
         res(geoMatcher.dic = this.get('dictionaryData'));
-        console.log(geoMatcher.dic);
       }
       
     });

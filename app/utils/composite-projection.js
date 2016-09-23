@@ -5,24 +5,37 @@ function inside(bbox, x, y) {
   && y <= bbox[0][1] && y >= bbox[1][1];
 }
 
-let projs = [
-  {fn: d3.geo.conicConformal(), scale: 1},
-  {fn: d3.geo.mercator(), scale: 0.3},
-  {fn: d3.geo.mercator(), scale: 1},
-  {fn: d3.geo.mercator(), scale: 1},
-  {fn: d3.geo.mercator(), scale: 0.5},
-  {fn: d3.geo.mercator(), scale: 1}
-];
-
-let proj = function(proxy) {
+let proj = function() {
   
-  proxy = proxy || projs[0].fn;
-
   let projection = {
+
+    set projections(projs) {
+      this.projs = projs.map( projConfig => ({idx: projConfig.idx, fn: eval(projConfig.projection), scale: projConfig.scale}) );
+    },
+
+    get ref() {
+      return this.projs[0].fn;
+    },
+
+    get resolution() {
+      return this.ref.resolution;
+    },
+
+    set resolution(v) {
+      this.ref.resolution = v;
+    },
+
+    get initialTranslate() {
+      return this.ref.initialTranslate;
+    },
+
+    set initialTranslate(v) {
+      this.ref.initialTranslate = v;
+    },
 
     stream(stream) {
       
-      let s = proxy.stream(stream);
+      let s = this.ref.stream(stream);
 
       return {
         point: function(x, y) {
@@ -48,68 +61,48 @@ let proj = function(proxy) {
     },
 
     scale(f) {
-      if (!arguments.length) return proxy.scale();
-      //let diff = this.resolution/f;
-      //projs.forEach( p => p.fn.scale(p.fn.resolution/diff) );
-      return (proxy.scale(f), this);
+      if (!arguments.length) return this.ref.scale();
+      return (this.ref.scale(f), this);
     },
 
     translate(xy) {
-      if (!arguments.length) return proxy.translate();
-      /*let diff = [proxy.translate()[0] - xy[0], proxy.translate()[1] - xy[1]];
-      projs.forEach( p => p.fn.translate([p.fn.translate()[0] - diff[0], p.fn.translate()[1] - diff[1]]) );*/
-      return (proxy.translate(xy), this);
+      if (!arguments.length) return this.ref.translate();
+      return (this.ref.translate(xy), this);
     },
 
     invert(coords) {
-      return proxy.invert(coords);
+      return this.ref.invert(coords);
     },
 
     precision(v) {
-      if (!arguments.length) return proxy.precision();
+      if (!arguments.length) return this.ref.precision();
       projs.forEach( p => p.fn.precision(v) );
-      return (proxy.precision(v), this);
+      return (this.ref.precision(v), this);
     },
 
     clipExtent(args) {
       projs.forEach( p => p.fn.clipExtent(args) );
-      return (proxy.clipExtent(args), this);
+      return (this.ref.clipExtent(args), this);
     },
 
     center(args) {
-      if (!arguments.length) return proxy.center();
-      return (proxy.center(args), this);
+      if (!arguments.length) return this.ref.center();
+      return (this.ref.center(args), this);
     },
 
-    proxying(idx) {
-      return projs[idx].fn.scale(1/projs[idx].scale);
-    },
-
-    get resolution() {
-      return proxy.resolution;
-    },
-
-    set resolution(v) {
-      proxy.resolution = v;
-    },
-
-    get initialTranslate() {
-      return proxy.initialTranslate;
-    },
-
-    set initialTranslate(v) {
-      proxy.initialTranslate = v;
+    getSubProjection(idx) {
+      let p = this.projs.find( p => p.idx === idx );
+      return p.fn.scale(1/p.scale);
     },
 
     all() {
-      return projs.map(p => p.fn);
+      return this.projs.map(p => p.fn);
     }
 
   };
-
 
   return projection;
 
 }
 
-d3.geo.arnaudTest = proj;
+d3.geo.compositeProjection = proj;

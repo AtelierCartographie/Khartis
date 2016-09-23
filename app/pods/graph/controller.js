@@ -35,8 +35,8 @@ export default Ember.Controller.extend({
   }.observes('currentTab').on("init"),
 
   projectionConfigurable: function() {
-     return this.get('model.graphLayout.basemap.mapConfig.compositeProjection') == null; 
-  }.property('model.graphLayout.basemap.mapConfig.compositeProjection'),
+     return !this.get('model.graphLayout.basemap.projectionProvided'); 
+  }.property('model.graphLayout.basemap.projectionProvided'),
   
   availableProjections: function() {
     return this.get('Dictionary.data.projections')
@@ -68,52 +68,37 @@ export default Ember.Controller.extend({
   }.property('state'),
   
   setup() {
-    let splits = ["FRA10","FRA20","FRA30","FRA40","FRA50"];
     this.get('model.graphLayout.basemap').loadMapData()
-      .then( (json) => {
-        let jsons = [];
-        //first, exclude
-        let j = JSON.parse(json);
-        j.objects.poly.geometries = j.objects.poly.geometries.filter( g => splits.indexOf(g.properties["NUTS"]) === -1 );
-        j.objects.centroid.geometries = j.objects.centroid.geometries.filter( g => splits.indexOf(g.properties["NUTS"]) === -1 );
-        j.projection = 0; //TODO
-        jsons.push(j);
-        return jsons.concat(splits.map( (split, idx) => {
-          j = JSON.parse(json);
-          j.objects.poly.geometries = j.objects.poly.geometries.filter( g => g.properties["NUTS"] === split );
-          j.objects.centroid.geometries = j.objects.centroid.geometries.filter( g => g.properties["NUTS"] === split );
-          j.objects.line.geometries = [];
-          j.projection = idx+1; //TODO: remplacer avec un définition de projection
+      .then( (sources) => {
+        return sources.map( (source, idx) => {
+          let j = JSON.parse(source.topojson);
+          j.projection = idx+1;
           return j;
-        }));
+        });
       })
       .then( (parts) => {
-
-        let buildBMD = function(j) {
+        return parts.map(function(j) {
           let partition = j.objects.poly.geometries
                 .reduce( (part, g) => {
                   part[g.properties.square ? "left" : "right"].push(g);
                   return part;
                 }, {left: [], right: []});
-          let bmd = {
+          return {
             projection: j.projection,
             land: topojson.merge(j, partition.right),
             squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
             lands: topojson.feature(j, j.objects.poly),
-            borders: topojson.mesh(j, j.objects.line, function(a, b) {
+            borders: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) {
                 return !a.properties || a.properties.featurecla === "International";
               }),
-            bordersDisputed: topojson.mesh(j, j.objects.line, function(a, b) { 
+            bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
                 return a.properties && a.properties.featurecla === "Disputed"; 
               }),
             centroids: topojson.feature(j, j.objects.centroid)
           };
-          return bmd;
-        };
-
-        this.set('basemapData', parts.map( part => buildBMD(part) ));
-
+        });
       })
+      .then( parts => this.set('basemapData', parts) )
       .catch( e => console.log(e) );
   },
   

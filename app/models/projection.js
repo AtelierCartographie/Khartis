@@ -15,6 +15,7 @@ let Projection = Struct.extend({
   translation_y: 1,
   rotation_z: 1,
   isComposite: false,
+  subProjections: [],
   
   rotateX: Ember.computed('rotate', {
     get() {
@@ -75,6 +76,14 @@ let Projection = Struct.extend({
       return value;
     }
   }),
+
+  d3Proj: function() {
+    let d3Proj = eval(this.get('d3_geo'));
+    if (this.get('isComposite')) {
+      d3Proj.projections = this.get('subProjections');
+    }
+    return d3Proj;
+  }.property('d3_geo'),
   
   deferredChange: Ember.debouncedObserver(
     'rotate', 'scale', 'clipAngle',
@@ -83,9 +92,12 @@ let Projection = Struct.extend({
     },
     10),
   
-  fn(transform = true) {
-    let d3Proj = eval(this.get('d3_geo'));
-    
+  fn(transform = true, idx) {
+
+    let d3Proj = this.get('d3Proj');
+
+    d3Proj = this.get('isComposite') && idx ? d3Proj.getSubProjection(idx) : d3Proj;
+
     if (this.get('lobes')) {
       d3Proj.lobes(this.compLobes());
     }
@@ -100,15 +112,8 @@ let Projection = Struct.extend({
       }
     }
 
-    if (!d3Proj.center) {
-      d3Proj.center = x => d3Proj;
-    }
-
-    if (!d3Proj.clipExtent) {
-      d3Proj.clipExtent = x => d3Proj;
-    }
-
     return d3Proj;
+
   },
   
   compClipAngle() {
@@ -121,6 +126,10 @@ let Projection = Struct.extend({
   
   compRotate() {
     return eval(this.get('rotate'));
+  },
+
+  getZoning(idx) {
+    return (this.get('isComposite') && this.get('subProjections').find( p => p.idx === idx ).zoning) || [[0, 0], [1, 1]];
   },
   
   export() {
@@ -140,7 +149,8 @@ let Projection = Struct.extend({
       translation_x: this.get('translation_x'),
       translation_y: this.get('translation_y'),
       rotation_z: this.get('rotation_z'),
-      isComposite: this.get('isComposite')
+      isComposite: this.get('isComposite'),
+      subProjections: this.get('subProjections')
     });
   }
   
@@ -148,14 +158,15 @@ let Projection = Struct.extend({
 
 Projection.reopenClass({
 
-  createComposite(d3_geo) {
+  createComposite(projections) {
     return this.create({
-      d3_geo: `d3.geo.${d3_geo}()`,
+      d3_geo: "d3.geo.compositeProjection()",
       rotate: "[0,0,0]",
       translation_x: 0,
       translation_y: 0,
       rotation_z: 0,
-      isComposite: true
+      isComposite: true,
+      subProjections: projections
     });
   },
   
@@ -176,7 +187,8 @@ Projection.reopenClass({
         translation_x: json.translation_x,
         translation_y: json.translation_y,
         rotation_z: json.rotation_z,
-        isComposite: json.isComposite
+        isComposite: json.isComposite,
+        subProjections: json.subProjections
       });
   }
   

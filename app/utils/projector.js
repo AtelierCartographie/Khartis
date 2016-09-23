@@ -2,13 +2,10 @@ import d3 from 'd3';
 
 export default {
   
-  computeProjection(features, width, height, fWidth, fHeight, margin, proj, idx, zone) {
+  computeProjection(features, width, height, fWidth, fHeight, margin, proj, idx) {
 
-    const fn = idx !== undefined ? proj.fn(false).proxying(idx) : proj.fn(false);
-
-    zone = zone || [[0, 0], [1, 1]];
-
-    let fProjection = fn.precision(0.1).translate([0, 0]),
+    let zone = proj.getZoning(idx),
+        fProjection = proj.fn(false, idx).precision(0.1).translate([0, 0]),
         d3Path = d3.geo.path().projection(fProjection),
 
         pixelBounds = d3Path.bounds(features ? features : {type: "Sphere"}),
@@ -24,7 +21,7 @@ export default {
 
         r = Math.min(widthResolution, heightResolution);
 
-    let projection = fn
+    let projection = proj.fn(true, idx)
       .center(center)
       .clipExtent([[-width, -width], [2*width, 2*height]])
       .translate([

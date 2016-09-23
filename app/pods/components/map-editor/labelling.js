@@ -40,8 +40,7 @@ export default Ember.Mixin.create({
 
   mapText: function(d3Layer, data, graphLayer) {
 
-    let projection = this.get('projection'),
-        svg = this.d3l(),
+    let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
         converter = mapping.fn();
 		

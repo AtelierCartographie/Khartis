@@ -37,8 +37,8 @@ export default Ember.Route.extend({
     afterModel(model) {
       
       if (!model.get('graphLayout.projection')) {
-        if (model.get('graphLayout.basemap.mapConfig.compositeProjection')) {
-          model.set('graphLayout.projection', Projection.createComposite(model.get('graphLayout.basemap.mapConfig.compositeProjection')));
+        if (model.get('graphLayout.basemap.compositeProjection')) {
+          model.set('graphLayout.projection', Projection.createComposite(model.get('graphLayout.basemap.subProjections')));
         } else {
           model.set('graphLayout.projection', this.get('Dictionary.data.projections').find( p => p.id === config.projection.default ));
         }
