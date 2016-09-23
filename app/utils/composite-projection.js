@@ -9,12 +9,35 @@ let proj = function() {
   
   let projection = {
 
+    transforms: {
+      scale: null,
+      translate: null,
+      invert: null,
+      precision: 0.1,
+      clipExtent: null,
+      center: null,
+      lobes: null,
+      clipAngle: null,
+      rotate: null
+    },
+
+    isValid: false,
+
     set projections(projs) {
-      this.projs = projs.map( projConfig => ({idx: projConfig.idx, fn: eval(projConfig.projection), scale: projConfig.scale}) );
+      this.projs = projs.map( projConfig => (
+        {
+          idx: projConfig.idx,
+          fn: projConfig.projection,
+          scale: projConfig.scale,
+          zoning: projConfig.zoning,
+          bounds: projConfig.bounds,
+          instance: null
+        }
+      ));
     },
 
     get ref() {
-      return this.projs[0].fn;
+      return this.projs[0].instance;
     },
 
     get resolution() {
@@ -34,8 +57,12 @@ let proj = function() {
     },
 
     stream(stream) {
-      
-      let s = this.ref.stream(stream);
+
+      if (!projection.isValid) {
+        throw new Error("Projector is invalid, use configure first");
+      }
+
+      let s = projection.ref.stream(stream);
 
       return {
         point: function(x, y) {
@@ -62,12 +89,12 @@ let proj = function() {
 
     scale(f) {
       if (!arguments.length) return this.ref.scale();
-      return (this.ref.scale(f), this);
+      return (this.transforms.scale = f, this.isValid = false, this);
     },
 
     translate(xy) {
       if (!arguments.length) return this.ref.translate();
-      return (this.ref.translate(xy), this);
+      return (this.transforms.translate = xy, this.isValid = false, this);
     },
 
     invert(coords) {
@@ -76,27 +103,103 @@ let proj = function() {
 
     precision(v) {
       if (!arguments.length) return this.ref.precision();
-      projs.forEach( p => p.fn.precision(v) );
-      return (this.ref.precision(v), this);
+      return (this.transforms.precision = v, this.isValid = false, this);
     },
 
     clipExtent(args) {
-      projs.forEach( p => p.fn.clipExtent(args) );
-      return (this.ref.clipExtent(args), this);
+      if (!arguments.length) return this.ref.clipExtent();
+      return (this.transforms.clipExtent = args, this.isValid = false, this);
     },
 
     center(args) {
       if (!arguments.length) return this.ref.center();
-      return (this.ref.center(args), this);
+      return (this.transforms.center = args, this.isValid = false, this);
     },
 
-    getSubProjection(idx) {
+    lobes(args) {
+      if (!arguments.length) return this.ref.lobes();
+      return (this.transforms.lobes = args, this.isValid = false, this);
+    },
+
+    clipAngle(args) {
+      if (!arguments.length) return this.ref.clipAngle();
+      return (this.transforms.clipAngle = args, this.isValid = false, this);
+    },
+
+    rotate(args) {
+      if (!arguments.length) return this.ref.rotate();
+      return (this.transforms.rotate = args, this.isValid = false, this);
+    },
+
+    configure(mapData, width, height, fWidth, fHeight, margin) {
+      this.projs.forEach( projConfig => {
+        this._configureProjection(
+          projConfig,
+          mapData.find( d => d.projection === projConfig.idx ).land,
+          width,
+          height,
+          fWidth,
+          fHeight,
+          margin
+        )
+      });
+      this.isValid = true;
+    },
+
+    projectionAt(idx) {
       let p = this.projs.find( p => p.idx === idx );
-      return p.fn.scale(1/p.scale);
+      if (!p.instance) {
+        throw new Error("Unconfigured projection instance, idx = "+idx);
+      }
+      return p.instance;
     },
 
-    all() {
-      return this.projs.map(p => p.fn);
+    forEachProjection(f) {
+      this.projs.forEach( p => f(p.instance) );
+    },
+
+    _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
+
+      let zone = projConfig.zoning || [[0, 0], [1, 1]],
+          instance = eval(projConfig.fn),
+          fProjection = instance.scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
+          d3Path = d3.geo.path().projection(fProjection),
+
+          pixelBounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features),
+          pixelBoundsWidth = pixelBounds[1][0] - pixelBounds[0][0],
+          pixelBoundsHeight = pixelBounds[1][1] - pixelBounds[0][1],
+      
+          centerX = pixelBounds[0][0] + pixelBoundsWidth / 2,
+          centerY = pixelBounds[0][1] + pixelBoundsHeight / 2,
+          center = fProjection.invert([centerX, centerY]),
+
+          widthResolution = ((fWidth - margin.get('h'))*(zone[1][0] - zone[0][0]) ) / pixelBoundsWidth,
+          heightResolution = ((fHeight - margin.get('v'))*(zone[1][1] - zone[0][1]) ) / pixelBoundsHeight,
+
+          r = Math.min(widthResolution, heightResolution);
+
+      let projection = instance
+        .center(center)
+        .clipExtent([[-width, -width], [2*width, 2*height]])
+        .translate([
+          (width*(zone[1][0] - zone[0][0]) + margin.get('l') - margin.get('r')) / 2 + zone[0][0]*(width - margin.get('h')/2),
+          (height*(zone[1][1] - zone[0][1]) + margin.get('t') - margin.get('b')) / 2 + zone[0][1]*(height - margin.get('v')/2)
+        ])
+        .translate([
+          (width + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(width - margin.get('h'))/2 + zone[0][0]*(width - margin.get('h')),
+          (height + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(height - margin.get('v'))/2 + zone[0][1]*(height - margin.get('v'))
+        ])
+        .precision(this.transforms.precision);
+
+      projection.lobes && this.transforms.lobes && projection.lobes(this.transforms.lobes);
+      projection.clipAngle && this.transforms.clipAngle && projection.clipAngle(this.transforms.clipAngle);
+      projection.rotate && this.transforms.rotate && projection.rotate(this.transforms.rotate);
+      
+      //store initial resolution and translate for future scale
+      projection.resolution = r;
+      projection.initialTranslate = projection.translate();
+
+      return projConfig.instance = projection;
     }
 
   };

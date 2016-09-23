@@ -15,7 +15,7 @@ let Projection = Struct.extend({
   translation_y: 1,
   rotation_z: 1,
   isComposite: false,
-  subProjections: [],
+  subProjections: null,
   
   rotateX: Ember.computed('rotate', {
     get() {
@@ -76,14 +76,6 @@ let Projection = Struct.extend({
       return value;
     }
   }),
-
-  d3Proj: function() {
-    let d3Proj = eval(this.get('d3_geo'));
-    if (this.get('isComposite')) {
-      d3Proj.projections = this.get('subProjections');
-    }
-    return d3Proj;
-  }.property('d3_geo'),
   
   deferredChange: Ember.debouncedObserver(
     'rotate', 'scale', 'clipAngle',
@@ -92,28 +84,29 @@ let Projection = Struct.extend({
     },
     10),
   
-  fn(transform = true, idx) {
+  projector() {
+    let projector = d3.geo.compositeProjection();
+    if (this.get('isComposite')) {
+      projector.projections = this.get('subProjections');
+    } else {
+      projector.projections = [{idx: 1, projection: this.get('d3_geo'), scale: 1, zoning: [[0,0], [1,1]], bounds: "Sphere"}];
+    }
 
-    let d3Proj = this.get('d3Proj');
-
-    d3Proj = this.get('isComposite') && idx ? d3Proj.getSubProjection(idx) : d3Proj;
+    console.log([{idx: 1, projection: this.get('d3_geo'), scale: 1, zoning: [[0,0], [1,1]]}]);
 
     if (this.get('lobes')) {
-      d3Proj.lobes(this.compLobes());
+      projector.lobes(this.compLobes());
+    }
+
+    if (this.get('clipAngle')) {
+      projector.clipAngle(this.compClipAngle());
     }
     
-    if (transform) {
-      if (this.get('clipAngle')) {
-        d3Proj.clipAngle(this.compClipAngle());
-      }
-      
-      if (this.get('rotate') && d3Proj.rotate) {
-        d3Proj.rotate(this.compRotate());
-      }
+    if (this.get('rotate')) {
+      projector.rotate(this.compRotate());
     }
 
-    return d3Proj;
-
+    return projector;
   },
   
   compClipAngle() {
@@ -126,10 +119,6 @@ let Projection = Struct.extend({
   
   compRotate() {
     return eval(this.get('rotate'));
-  },
-
-  getZoning(idx) {
-    return (this.get('isComposite') && this.get('subProjections').find( p => p.idx === idx ).zoning) || [[0, 0], [1, 1]];
   },
   
   export() {
@@ -160,7 +149,7 @@ Projection.reopenClass({
 
   createComposite(projections) {
     return this.create({
-      d3_geo: "d3.geo.compositeProjection()",
+      d3_geo: "",
       rotate: "[0,0,0]",
       translation_x: 0,
       translation_y: 0,

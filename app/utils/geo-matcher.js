@@ -44,6 +44,7 @@ function GeoMatcher() {
     },
     set(v) {
       this._dic = v;
+      this._keys = undefined;
       this._buildIndex();
     }
   });

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import d3 from 'd3';
-import projector from 'mapp/utils/projector';
 import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
 import Mapping from 'mapp/models/mapping/mapping';

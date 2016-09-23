@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import d3 from 'd3';
-import projector from 'mapp/utils/projector';
 import d3lper from 'mapp/utils/d3lper';
 import GraphLayout from 'mapp/models/graph-layout';
 import PatternMaker from 'mapp/utils/pattern-maker';
@@ -53,10 +52,10 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     this._super();
   },
 
-  getFeaturesFromBase(ns) {
+  getFeaturesFromBase(ns, ns2 = "features") {
     return this.get('base').reduce( (col, base) => {
       return col.concat(
-        base[ns].features.map(f => ({path: this.getProjectedPath(base.projection), feature: f}))
+        base[ns][ns2].map(f => ({path: this.getProjectedPath(base.projection), feature: f}))
       );
     }, []);
   },
@@ -85,9 +84,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .append("use");
 
     defs.append("clipPath")
-      .attr("id", "border-square-clip")
-      .append("path")
-      .attr("clip-rule", "evenodd")
+      .attr("id", "border-square-clip");
     
 		// ---------
 		
@@ -135,15 +132,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       .classed("borders", true)
       .datum({isBorderLayer: true});
       
-    bordersMap.append("path")
-      .classed("borders", true);
-      
-    bordersMap.append("path")
-      .classed("borders-disputed", true);
-
-    bordersMap.append("path")
-      .classed("squares", true);
-    
     this.labellingInit(mapG);
     this.viewportInit(defs, d3g);
     this.zoomInit(d3g);
@@ -234,70 +222,49 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 		
 	}.observes('graphLayout.strokeWidth'),
   
-  projection: function() {
+  projector: function() {
     
-    /*let {w, h} = this.getSize(),
-        projection = projector.computeProjection(
-          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get('base')[0].land,
-          w,
-          h,
-          this.get('graphLayout.width'),
-          this.get('graphLayout.height'),
-          this.get('graphLayout.margin'),
-          this.get('graphLayout.projection')
-        );
-        
-    this.scaleProjection(projection);*/
-    
-    /*let proj = this.get('graphLayout.projection').fn();
-    return proj;*/
-    return this.projectionFor(1);
+    let {w, h} = this.getSize(),
+        projector = this.get('graphLayout.projection').projector();
+
+    projector.configure(
+      this.get('base'),
+      w,
+      h,
+      this.get('graphLayout.width'),
+      this.get('graphLayout.height'),
+      this.get('graphLayout.margin')
+    );
+
+    this.scaleProjector(projector);
+
+    return projector;
     
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
-    'graphLayout.projection._defferedChangeIndicator'),
+    'graphLayout.projection', 'graphLayout.projection._defferedChangeIndicator'),
 
   projectionFor(idx) {
-
-    let {w, h} = this.getSize(),
-        projection = projector.computeProjection(
-          this.get('base').find( b => b.projection === idx ).land,
-          w,
-          h,
-          this.get('graphLayout.width'),
-          this.get('graphLayout.height'),
-          this.get('graphLayout.margin'),
-          this.get('graphLayout.projection'),
-          idx
-        );
-    
-    this.scaleProjection(projection);
-
-    return projection; 
-    
+    return this.get('projector').projectionAt(idx);
   },
-
-  projectionChange: function() {
-    projectionsMap = new Map();
-  }.observes('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
-    'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
-    'graphLayout.projection._defferedChangeIndicator'),
     
-  scaleProjection: function(projection) {
+  scaleProjector(projector) {
 
-    projection
+    projector.forEachProjection( projection => {
+      projection
       .translate([
           projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx')*this.getSize().w,
           projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')*this.getSize().h
         ])
       .scale(projection.resolution * this.get('graphLayout.zoom'));
+    });
       
   },
   
   getProjectedPath(idx) {
     
     let path = d3.geo.path(),
-        proj = this.projectionFor(idx || 1);
+        proj = idx ? this.projectionFor(idx) : this.get('projector');
     
     path.projection(proj);
     
@@ -336,7 +303,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     this.drawLayers();
     this.drawLabelling();
 			
-	}.observes('windowLocation', 'projection', 'graphLayout.virginDisplayed'),
+	}.observes('windowLocation', 'projector', 'graphLayout.virginDisplayed'),
   
   registerLandSel(id) {
     
@@ -476,26 +443,69 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         "fill": this.get('graphLayout.backMapColor')
       });
 
-    d3l.select("#border-square-clip path")
-      .datum(this.get('base').squares)
-      .attr("d", d => {
-        let path = this.getProjectedPath()(d);
+    sel.exit().remove();
+
+    /* squares */
+    sel = d3l.select("#border-square-clip")
+      .selectAll("path")
+      .data(this.get('base'));
+
+    sel.enter()
+      .append("path");
+
+    sel.attr("d", d => {
+        let path = this.getProjectedPath(d.projection)(d.squares);
         return "M0,0H4000V4000H-4000z"+(path ? path : "")
+      })
+      .attr("clip-rule", "evenodd");
+
+    sel.exit().remove();
+
+    sel = d3l.select("g.borders")
+      .selectAll("path.squares")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
+
+    sel.enter()
+      .append("path")
+      .classed("squares", true);
+
+    sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares))
+      .style({
+        "stroke-width": 1,
+        "stroke": this.get("graphLayout.stroke"),
+        "fill": "none"
       });
-    
-    d3l.select("g.borders path.borders")
-      .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
-      .attr("d", this.getProjectedPath())
+
+    sel.exit().remove();
+
+    /* borders */
+    sel = d3l.select("g.borders")
+      .selectAll("path.borders")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
+
+    sel.enter()
+      .append("path")
+      .classed("borders", true);
+
+    sel.attr("d", d => this.getProjectedPath(d.projection)(d.borders) )
       .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
         "stroke": this.get("graphLayout.stroke"),
         "fill": "none"
       });
-      
-    d3l.select("g.borders path.borders-disputed")
-      .datum(this.get('graphLayout.showBorders') ? this.get('base').bordersDisputed : null)
-      .attr("d", this.getProjectedPath())
+
+    sel.exit().remove();
+
+    sel = d3l.select("g.borders")
+      .selectAll("path.borders-disputed")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
+    
+    sel.enter()
+      .append("path")
+      .classed("borders", true);
+
+    sel.attr("d", d => this.getProjectedPath(d.projection)(d.bordersDisputed) )
       .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
@@ -504,15 +514,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         "fill": "none"
       });
 
-    d3l.select("g.borders path.squares")
-      .datum(this.get('graphLayout.showBorders') ? this.get('base').squares : null)
-      .attr("d", this.getProjectedPath())
-      .style({
-        "stroke-width": 1,
-        "stroke": this.get("graphLayout.stroke"),
-        "fill": "none"
-      });
-    
+    sel.exit().remove();
+
   }.observes('graphLayout.backMapColor', 'graphLayout.showBorders', 'graphLayout.stroke'),
   
   drawLayers: function() {
@@ -751,6 +754,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
         let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
+        console.log(tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);

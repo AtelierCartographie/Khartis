@@ -58,12 +58,12 @@ export default Ember.Mixin.create({
   zoomAndDrag(scale, translate) {
     
     let mapG = this.d3l().select("g.map"),
-        projection = this.get('projection'),
-        t = projection.initialTranslate,
-        ds = projection.scale() / projection.resolution,
+        projector = this.get('projector'),
+        t = projector.initialTranslate,
+        ds = projector.scale() / projector.resolution,
         rs = scale/ds,
-        tx = projection.translate()[0]*rs - t[0] * scale,
-        ty = projection.translate()[1]*rs - t[1] * scale;
+        tx = projector.translate()[0]*rs - t[0] * scale,
+        ty = projector.translate()[1]*rs - t[1] * scale;
 
     mapG
       .attr({
@@ -89,7 +89,7 @@ export default Ember.Mixin.create({
           relTy: parseFloat(mapG.attr("ty"))
         });
         
-        projection.all().forEach( p => this.scaleProjection(p) );
+        this.scaleProjector(projector);
         
         this.get('graphLayout').endPropertyChanges();
         
@@ -115,10 +115,10 @@ export default Ember.Mixin.create({
   
   zoomAndDragChange: function() {
     
-    let projection = this.get('projection'),
-        ds = projection.scale() / projection.resolution,
-        tx = projection.translate()[0] - projection.initialTranslate[0]*ds,
-        ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
+    let projector = this.get('projector'),
+        ds = projector.scale() / projector.resolution,
+        tx = projector.translate()[0] - projector.initialTranslate[0]*ds,
+        ty = projector.translate()[1] - projector.initialTranslate[1]*ds,
         shiftX = tx - this.get('relTx'),
         shiftY = ty - this.get('relTy');
 
