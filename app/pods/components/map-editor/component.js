@@ -12,7 +12,8 @@ import LabellingFeature from './labelling';
 
 /* global Em */
 
-let landSelSet = new Set();
+let landSelSet = new Set(),
+    projectionsMap = new Map();
 
 let shift = 0;
 
@@ -51,6 +52,14 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   
   init() {
     this._super();
+  },
+
+  getFeaturesFromBase(ns) {
+    return this.get('base').reduce( (col, base) => {
+      return col.concat(
+        base[ns].features.map(f => ({path: this.getProjectedPath(base.projection), feature: f}))
+      );
+    }, []);
   },
   
 	draw: function() {
@@ -117,8 +126,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     backMap.append("use")
       .classed("grid", true);
       
-    backMap.append("path")
-      .classed("land", true);
+    /*backMap.append("path")
+      .classed("land", true);*/
 
 		let layers = mapG.append("g")
 			.classed("layers", true);
@@ -228,9 +237,9 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   
   projection: function() {
     
-    let {w, h} = this.getSize(),
+    /*let {w, h} = this.getSize(),
         projection = projector.computeProjection(
-          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get('base').lands,
+          this.get("graphLayout.autoCenter") ? this.get("filteredBase"):this.get('base')[0].land,
           w,
           h,
           this.get('graphLayout.width'),
@@ -239,11 +248,56 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
           this.get('graphLayout.projection')
         );
         
+    this.scaleProjection(projection);*/
+    
+    /*let proj = this.get('graphLayout.projection').fn();
+    return proj;*/
+    this.projectionFor(0);
+    return this.get('graphLayout.projection').fn();
+    
+  }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
+    'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
+    'graphLayout.projection._defferedChangeIndicator'),
+
+  projectionFor(idx) {
+
+    if (projectionsMap.has(idx)) {
+      return projectionsMap.get(idx);
+    }
+
+    let zones = [
+      [[0, 0], [1, 0.8]],
+      [[0, 0.8], [0.25, 1]],
+      [[0.25, 0.8], [0.5, 1]],
+      [[0.5, 0.8], [0.75, 1]],
+      [[0.75, 0.8], [1, 1]],
+      [[0, 0.8], [0.333, 1]],
+    ];
+
+    let {w, h} = this.getSize(),
+        projection = projector.computeProjection(
+          this.get('base')[idx].land,
+          w,
+          h,
+          this.get('graphLayout.width'),
+          this.get('graphLayout.height'),
+          this.get('graphLayout.margin'),
+          this.get('graphLayout.projection'),
+          idx,
+          zones[idx]
+        );
+ 
     this.scaleProjection(projection);
+
+    projectionsMap.set(idx, projection);
     
     return projection; 
     
-  }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
+  },
+
+  projectionChange: function() {
+    projectionsMap = new Map();
+  }.observes('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
     'graphLayout.projection._defferedChangeIndicator'),
     
@@ -251,31 +305,29 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
     projection
       .translate([
-          projection.initialTranslate[0]*(this.get('graphLayout.zoom')+this.get('graphLayout.tx')),
-          projection.initialTranslate[1]*(this.get('graphLayout.zoom')+this.get('graphLayout.ty'))
+          projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx')*this.getSize().w,
+          projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')*this.getSize().h
         ])
       .scale(projection.resolution * this.get('graphLayout.zoom'));
       
   },
   
-  projectedPath: function() {
+  getProjectedPath(idx) {
     
     let path = d3.geo.path(),
-        proj = this.get('projection');
-        
+        proj = this.projectionFor(idx || 0);
+    
     path.projection(proj);
     
     return path;
      
-  }.property('projection'),
-  
+  },
 	
 	projectAndDraw: function() {
     
     let {w, h} = this.getSize();
     
-    let path = this.get('projectedPath'),
-        proj = this.get('projection'),
+    let path = this.getProjectedPath(),
         precision = this.get('graphLayout.precision'),
         defs = this.d3l().select("defs");
     
@@ -312,21 +364,19 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   },
   
   drawLandSel() {
-    
+
     let geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
-        features = this.get('base').lands.features.filter( 
-          f => landSelSet.has(f.properties[geoKey])
-        ),
-        path = this.get('projectedPath');
+        features = this.getFeaturesFromBase("lands")
+          .filter( f => landSelSet.has(f.feature.properties[geoKey]) );
 
     let sel = this.d3l().select("defs").selectAll("path.feature")
       .data(features)
-      .attr("d", path);
+      .attr("d", d => d.path(d.feature) );
       
     sel.enter()
       .append("path")
-      .attr("d", path)
-      .attr("id", (d) => `f-path-${d.properties[geoKey]}`)
+      .attr("d", d => d.path(d.feature))
+      .attr("id", d => `f-path-${d.feature.properties[geoKey]}`)
       .classed("feature", true);
      
     sel.exit().remove();
@@ -430,10 +480,16 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
    drawBackmap: function() {
     
     let d3l = this.d3l();
-    
-    d3l.select("g.backmap path.land")
-      .datum(this.get('base').land)
-      .attr("d", this.get('projectedPath'))
+
+    let sel = d3l.select("g.backmap")
+      .selectAll("path.land")
+      .data(this.get('base'));
+      
+    sel.enter()
+      .append("path")
+      .classed("land", true);
+
+    sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
       .style({
         "fill": this.get('graphLayout.backMapColor')
       });
@@ -441,13 +497,13 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     d3l.select("#border-square-clip path")
       .datum(this.get('base').squares)
       .attr("d", d => {
-        let path = this.get('projectedPath')(d);
+        let path = this.getProjectedPath()(d);
         return "M0,0H4000V4000H-4000z"+(path ? path : "")
       });
     
     d3l.select("g.borders path.borders")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').borders : null)
-      .attr("d", this.get('projectedPath'))
+      .attr("d", this.getProjectedPath())
       .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
@@ -457,7 +513,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       
     d3l.select("g.borders path.borders-disputed")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').bordersDisputed : null)
-      .attr("d", this.get('projectedPath'))
+      .attr("d", this.getProjectedPath())
       .attr("clip-path", `url(#border-square-clip)`)
       .style({
         "stroke-width": 1,
@@ -468,7 +524,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 
     d3l.select("g.borders path.squares")
       .datum(this.get('graphLayout.showBorders') ? this.get('base').squares : null)
-      .attr("d", this.get('projectedPath'))
+      .attr("d", this.getProjectedPath())
       .style({
         "stroke-width": 1,
         "stroke": this.get("graphLayout.stroke"),
@@ -528,8 +584,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             value: val,
             cell: cell,
             index: index,
-            surface: this.get('base').lands.features.find( f => f.properties[geoKey] === geoData.value[geoKey]),
-            point: this.get('base').centroids.features.find( f => f.properties[geoKey] === geoData.value[geoKey])
+            surface: this.getFeaturesFromBase("lands").find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
+            point: this.getFeaturesFromBase("centroids").find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
           };
         }
         
@@ -692,7 +748,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
    let bindAttr = (_) => {
 
       _.attr("transform", d => { 
-        let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
         
         return d3lper.translate({
           tx: tx,
@@ -713,7 +769,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     let centroidSel = d3Layer
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
-        let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);

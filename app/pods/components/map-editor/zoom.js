@@ -23,7 +23,6 @@ export default Ember.Mixin.create({
     this.addObserver('graphLayout.zoom', () => zoom.scale(this.get('graphLayout.zoom')) );
     
     let updateTxTy = () => {
-      let p = this.get('projection');
       zoom.translate([
         this.get('relTx'),
         this.get('relTy')
@@ -38,20 +37,20 @@ export default Ember.Mixin.create({
 
   relTx: Ember.computed('graphLayout.tx', {
     get() {
-      return this.get('graphLayout.tx')*this.get('projection').initialTranslate[0];
+      return this.get('graphLayout.tx')*this.getSize().w;
     },
     set(k, v) {
-      this.set('graphLayout.tx', v/this.get('projection').initialTranslate[0]);
+      this.set('graphLayout.tx', v/this.getSize().w);
       return v;
     }
   }),
 
   relTy: Ember.computed('graphLayout.ty', {
     get() {
-      return this.get('graphLayout.ty')*this.get('projection').initialTranslate[1];
+      return this.get('graphLayout.ty')*this.getSize().h;
     },
     set(k, v) {
-      this.set('graphLayout.ty', v/this.get('projection').initialTranslate[1]);
+      this.set('graphLayout.ty', v/this.getSize().h);
       return v;
     }
   }),
@@ -65,7 +64,7 @@ export default Ember.Mixin.create({
         rs = scale/ds,
         tx = projection.translate()[0]*rs - t[0] * scale,
         ty = projection.translate()[1]*rs - t[1] * scale;
-    
+
     mapG
       .attr({
         tx: translate[0],
@@ -90,7 +89,7 @@ export default Ember.Mixin.create({
           relTy: parseFloat(mapG.attr("ty"))
         });
         
-        this.scaleProjection(projection);
+        projection.all().forEach( p => this.scaleProjection(p) );
         
         this.get('graphLayout').endPropertyChanges();
         
@@ -122,7 +121,7 @@ export default Ember.Mixin.create({
         ty = projection.translate()[1] - projection.initialTranslate[1]*ds,
         shiftX = tx - this.get('relTx'),
         shiftY = ty - this.get('relTy');
-   
+
     if (Math.abs(ds - this.get('graphLayout.zoom')) > 0.1 
         || Math.abs(shiftX) > 0.1 || Math.abs(shiftY) > 0.1) {
       

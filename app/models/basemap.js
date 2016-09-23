@@ -29,26 +29,34 @@ var Basemap = Struct.extend({
 
   loadMapData() {
 
-    return new Promise((res, rej) => {
+    if (!this.get('mapData')) {
       
-      if (!this.get('mapData')) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', `${config.rootURL}data/map/${this.get('mapConfig.source')}`, true);
-
-        xhr.onload = (e) => {
+      let promises = this.get('mapConfig.sources').map( source => {
+        
+        return new Promise((res, rej) => {
           
-          if (e.target.status == 200) {
-            res(this.set('mapData', e.target.response));
-          }
-          
-        };
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', `${config.rootURL}data/map/${source.source}`, true);
 
-        xhr.send();
-      } else {
-        res(this.get('mapData'));
-      }
-      
-    });
+            xhr.onload = (e) => {
+              
+              if (e.target.status == 200) {
+                res({source: source, topojson: e.target.response});
+              }
+              
+            };
+
+            xhr.send();
+        
+        });
+
+      });
+
+      return Promise.all(promises).then( data => this.set('mapData', data) );
+
+    } else {
+      return new Promise((res, rej) => res(this.get('mapData')) );
+    }
     
   },
 
