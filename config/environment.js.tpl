@@ -28,12 +28,13 @@ module.exports = function(environment) {
 
       {
         id: "world",
-        source: "W-110m-2015-modified.json",
+        sources: [
+          {source: "W-110m-2015-modified.json"}
+        ],
         dictionary: {
           source: "Dictionary-country-territory.json",
           identifier: "iso_a2"
         },
-        compositeProjection: null,
         examples: [
           {
             id: "eco2",
@@ -47,12 +48,18 @@ module.exports = function(environment) {
       },
       {
         id: "france dept",
-        source: "FR-dpt-2016.json",
+        sources: [
+          {source: "FR-dpt-2016/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-dpt-2016/FRA10.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.25, 1]]},
+          {source: "FR-dpt-2016/FRA20.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.25, 0.85], [0.5, 1]]},
+          {source: "FR-dpt-2016/FRA30.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.85], [0.75, 1]]},
+          {source: "FR-dpt-2016/FRA40.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.85], [1, 1]]},
+          {source: "FR-dpt-2016/FRA50.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.333, 1]]}
+        ],
         dictionary: {
           source: "FR-dico-DPT-2016.json",
-          identifier: "NUTS"
+          identifier: "ID"
         },
-        compositeProjection: "conicConformalFrance",
         examples: [
           {
             id: "fr_dpt",
