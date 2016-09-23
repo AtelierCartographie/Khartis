@@ -158,11 +158,17 @@ let proj = function() {
       this.projs.forEach( p => f(p.instance) );
     },
 
+    _instantiate(projConfig) {
+      let d3Proj = eval(projConfig.fn);
+      d3Proj.lobes && this.transforms.lobes && d3Proj.lobes(this.transforms.lobes);
+      return d3Proj;
+    },
+
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
 
       let zone = projConfig.zoning || [[0, 0], [1, 1]],
-          instance = eval(projConfig.fn),
-          fProjection = instance.scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
+          d3Proj = this._instantiate(projConfig),
+          fProjection = d3Proj.scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geo.path().projection(fProjection),
 
           pixelBounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features),
@@ -178,7 +184,7 @@ let proj = function() {
 
           r = Math.min(widthResolution, heightResolution);
 
-      let projection = instance
+      let projection = d3Proj
         .center(center)
         .clipExtent([[-width, -width], [2*width, 2*height]])
         .translate([
@@ -191,10 +197,9 @@ let proj = function() {
         ])
         .precision(this.transforms.precision);
 
-      projection.lobes && this.transforms.lobes && projection.lobes(this.transforms.lobes);
       projection.clipAngle && this.transforms.clipAngle && projection.clipAngle(this.transforms.clipAngle);
       projection.rotate && this.transforms.rotate && projection.rotate(this.transforms.rotate);
-      
+
       //store initial resolution and translate for future scale
       projection.resolution = r;
       projection.initialTranslate = projection.translate();

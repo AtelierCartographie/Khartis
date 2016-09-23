@@ -754,7 +754,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
         let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
-        console.log(tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);
