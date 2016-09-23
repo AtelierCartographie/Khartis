@@ -24,6 +24,7 @@ module.exports = function(environment) {
     symbolMinMaxSize: 5,
     symbolMaxMaxSize: 56,
 
+<<<<<<< HEAD
     maps: [
 
       {
@@ -70,6 +71,8 @@ module.exports = function(environment) {
       
     ],
 
+=======
+>>>>>>> 8c3719873baeea3bd445fc7d50d223c3bd4ef2cd
     maps: [
 
       {
@@ -101,8 +104,8 @@ module.exports = function(environment) {
         compositeProjection: "conicConformalFrance",
         examples: [
           {
-            id: "eco2",
-            source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
+            id: "fr_dpt",
+            source: "fr-dpt-naissances.csv"
           }
         ]
       },
