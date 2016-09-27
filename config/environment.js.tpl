@@ -51,11 +51,11 @@ module.exports = function(environment) {
         id: "france dept",
         sources: [
           {source: "FR-dpt-2016/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
-          {source: "FR-dpt-2016/FRA10.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.25, 1]]},
-          {source: "FR-dpt-2016/FRA20.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.25, 0.85], [0.5, 1]]},
-          {source: "FR-dpt-2016/FRA30.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.85], [0.75, 1]]},
-          {source: "FR-dpt-2016/FRA40.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.85], [1, 1]]},
-          {source: "FR-dpt-2016/FRA50.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.333, 1]]}
+          {source: "FR-dpt-2016/FRA10.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
+          {source: "FR-dpt-2016/FRA20.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
+          {source: "FR-dpt-2016/FRA30.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
+          {source: "FR-dpt-2016/FRA40.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.6, 0.85], [0.8, 1]], borders: ["l", "t"]},
+          {source: "FR-dpt-2016/FRA50.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.8, 0.85], [1, 1]], borders: ["l", "r", "t"]}
         ],
         dictionary: {
           source: "FR-dico-DPT-2016.json",
