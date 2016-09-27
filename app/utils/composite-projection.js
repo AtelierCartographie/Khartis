@@ -24,6 +24,7 @@ let proj = function() {
     isValid: false,
 
     set projections(projs) {
+      console.log(projs);
       this.projs = projs.map( projConfig => (
         {
           idx: projConfig.idx,
@@ -31,9 +32,14 @@ let proj = function() {
           scale: projConfig.scale,
           zoning: projConfig.zoning,
           bounds: projConfig.bounds,
+          borders: projConfig.borders || [],
           instance: null
         }
       ));
+    },
+
+    get projections() {
+      return this.projs;
     },
 
     get ref() {
@@ -154,8 +160,22 @@ let proj = function() {
       return p.instance;
     },
 
+    projectionForCoords(coords) {
+      this.projs.filter( p => {
+        let bbox = [
+          p.instance.invert(p.instance.bboxPx[0]),
+          p.instance.invert(p.instance.bboxPx[1])
+        ];
+        return inside(bbox, coords[0], coords[1]);
+      } );
+    },
+
     forEachProjection(f) {
       this.projs.forEach( p => f(p.instance) );
+    },
+
+    instances() {
+      return this.projs.map( p => p.instance );
     },
 
     _instantiate(projConfig) {
@@ -182,18 +202,16 @@ let proj = function() {
           widthResolution = ((fWidth - margin.get('h'))*(zone[1][0] - zone[0][0]) ) / pixelBoundsWidth,
           heightResolution = ((fHeight - margin.get('v'))*(zone[1][1] - zone[0][1]) ) / pixelBoundsHeight,
 
-          r = Math.min(widthResolution, heightResolution);
+          r = Math.min(widthResolution, heightResolution),
+          hOffset = (width - fWidth) /2, 
+          vOffset = (height - fHeight) /2; 
 
       let projection = d3Proj
         .center(center)
         .clipExtent([[-width, -width], [2*width, 2*height]])
         .translate([
-          (width*(zone[1][0] - zone[0][0]) + margin.get('l') - margin.get('r')) / 2 + zone[0][0]*(width - margin.get('h')/2),
-          (height*(zone[1][1] - zone[0][1]) + margin.get('t') - margin.get('b')) / 2 + zone[0][1]*(height - margin.get('v')/2)
-        ])
-        .translate([
-          (width + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(width - margin.get('h'))/2 + zone[0][0]*(width - margin.get('h')),
-          (height + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(height - margin.get('v'))/2 + zone[0][1]*(height - margin.get('v'))
+          (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
+          (fHeight + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(fHeight - margin.get('v'))/2 + zone[0][1]*(fHeight - margin.get('v')) + vOffset
         ])
         .precision(this.transforms.precision);
 
@@ -203,8 +221,19 @@ let proj = function() {
       //store initial resolution and translate for future scale
       projection.resolution = r;
       projection.initialTranslate = projection.translate();
+      projection.bboxPx = [
+        [
+          margin.get('l') + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
+          margin.get('t') + zone[0][1]*(fHeight - margin.get('v')) + vOffset
+        ],
+        [
+          margin.get('l') + zone[0][0]*(fWidth - margin.get('h')) + (zone[1][0] - zone[0][0])*(fWidth - margin.get('h')) + hOffset,
+          margin.get('t') + zone[0][1]*(fHeight - margin.get('v')) + (zone[1][1] - zone[0][1])*(fHeight - margin.get('v')) + vOffset
+        ]
+      ];
 
       return projConfig.instance = projection;
+
     }
 
   };

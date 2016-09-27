@@ -22,7 +22,7 @@ var Basemap = Struct.extend({
   }.property('mapConfig'),
 
   subProjections: function() {
-    return this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning}) );
+    return this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning, borders: s.borders}) );
   }.property('mapConfig'),
 
   idChange: function() {

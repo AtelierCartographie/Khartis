@@ -49,6 +49,10 @@ export default Ember.Mixin.create({
 		mg.append("rect")
 			.attr("fill", "none");
 
+    d3g.select("g.map")
+      .append("g")
+      .classed("composition-borders", true);
+
     this.updateViewport();
 
   },
@@ -59,12 +63,13 @@ export default Ember.Mixin.create({
 		// = VIEWBOX =
 		// ===========
 		
-		let {w, h} = this.getSize();
+		let {w, h} = this.getSize(),
+        d3l = this.d3l();
 		
-		this.d3l().attr("viewBox", "0 0 "+w+" "+h);
+		d3l.attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
     
-    let vpBbox = this.d3l().node().getBoundingClientRect(),
+    let vpBbox = d3l.node().getBoundingClientRect(),
         ratio = Math.min(vpBbox.width/w, vpBbox.height/h),
         mX = (vpBbox.width - w*ratio) / 2 / ratio, //marges de compensation du viewport / viewBox
         mY = (vpBbox.height - h*ratio) / 2 / ratio;
@@ -77,13 +82,13 @@ export default Ember.Mixin.create({
         inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
                    ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
     
-    this.d3l().select("defs #viewport-mask path")
+    d3l.select("defs #viewport-mask path")
       .attr("d", `${outer} ${inner}`);
 
-    this.d3l().select("defs #viewport-clip path")
+    d3l.select("defs #viewport-clip path")
       .attr("d", `${inner}`);
 
-    this.d3l().selectAll("rect.fg, rect.bg")
+    d3l.selectAll("rect.fg, rect.bg")
       .attr({
         "x": -mX,
         "y": -mY,
@@ -93,7 +98,7 @@ export default Ember.Mixin.create({
     
     // ===========
 		
-		this.d3l().selectAll("g.offset line.horizontal-top")
+		d3l.selectAll("g.offset line.horizontal-top")
       .classed("visible", this.get('displayOffsets'))
 			.attr("x1", 0)
 			.attr("y1", vOf)
@@ -101,7 +106,7 @@ export default Ember.Mixin.create({
 			.attr("y2", vOf)
 		  .attr("stroke-width", "1");
     
-		this.d3l().selectAll("g.offset line.horizontal-bottom")
+		d3l.selectAll("g.offset line.horizontal-bottom")
       .classed("visible", this.get('displayOffsets'))
 			.attr("x1", 0)
 			.attr("y1", h - vOf)
@@ -109,7 +114,7 @@ export default Ember.Mixin.create({
 			.attr("y2", h - vOf)
 		  .attr("stroke-width", "1");
 			
-		this.d3l().selectAll("g.offset line.vertical-left")
+		d3l.selectAll("g.offset line.vertical-left")
       .classed("visible", this.get('displayOffsets'))
 			.attr("x1", hOf)
 			.attr("y1", 0)
@@ -117,7 +122,7 @@ export default Ember.Mixin.create({
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
       
-		this.d3l().selectAll("g.offset line.vertical-right")
+		d3l.selectAll("g.offset line.vertical-right")
       .classed("visible", this.get('displayOffsets'))
 			.attr("x1", w - hOf)
 			.attr("y1", 0)
@@ -125,7 +130,7 @@ export default Ember.Mixin.create({
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
 		
-		this.d3l().select("g.margin")
+		d3l.select("g.margin")
 			.attr("transform", `translate(${hOf}, ${vOf})`)
 			.selectAll("rect")
 			.attr("x", this.get('graphLayout.margin.l'))
@@ -136,15 +141,80 @@ export default Ember.Mixin.create({
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", "1, 3");
       
-    this.d3l().select("rect.bg")
+    d3l.select("rect.bg")
       .attr({
         x: 0,
         y: 0,
         width: w,
         height: h
       });
+
+    this.drawCompositionBorders();
       
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets'),
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector', 'graphLayout.tx'),
+
+  drawCompositionBorders() {
+
+    let zoom = this.get('graphLayout.zoom'),
+        affineT = d3.geo.transform({
+          point: function(x, y) { this.stream.point(x*zoom, y*zoom); },
+        }),
+        path = d3.geo.path().projection(affineT);
+
+    let sel = this.d3l().select("g.composition-borders")
+      .attr("transform", `translate(${this.get('graphLayout.tx')*this.getSize().w}, ${this.get('graphLayout.ty')*this.getSize().h})`)
+      .selectAll("g")
+      .data(this.get('projector').projections);
+
+    sel.selectAll("path")
+      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) );
+
+    sel.enter()
+      .append("g")
+      .append("path")
+      .attr("d", d => (console.log(d.borders), path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders))) )
+      .style("stroke", this.get('graphLayout.gridColor'));
+
+    sel.exit().remove();
+
+  },
+
+  bboxToMultiLineString(bbox, borders) {
+
+    let coordinates = [];
+
+    console.log(bbox);
+
+    if (borders.indexOf("l") !== -1) {
+      coordinates.push(
+        [bbox[0], [bbox[0][0], bbox[1][1]]]
+      );
+    }
+
+    if (borders.indexOf("r") !== -1) {
+      coordinates.push(
+        [bbox[1], [bbox[1][0], bbox[0][1]]]
+      );
+    }
+
+    if (borders.indexOf("t") !== -1) {
+      coordinates.push(
+        [bbox[0], [bbox[1][0], bbox[0][1]]]
+      );
+    }
+
+    if (borders.indexOf("b") !== -1) {
+      coordinates.push(
+        [bbox[1], [bbox[0][0], bbox[1][1]]]
+      );
+    }
+
+    return {
+      "type": "MultiLineString",
+      "coordinates": coordinates
+    };
+
+  }
 
 });
