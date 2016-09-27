@@ -152,10 +152,11 @@ export default Ember.Mixin.create({
     this.drawCompositionBorders();
       
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector', 'graphLayout.tx'),
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector',
+    'graphLayout.tx', 'graphLayout.tx'),
 
   drawCompositionBorders() {
-
+    
     let zoom = this.get('graphLayout.zoom'),
         affineT = d3.geo.transform({
           point: function(x, y) { this.stream.point(x*zoom, y*zoom); },
@@ -167,13 +168,13 @@ export default Ember.Mixin.create({
       .selectAll("g")
       .data(this.get('projector').projections);
 
-    sel.selectAll("path")
+    sel.select("path")
       .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) );
 
     sel.enter()
       .append("g")
       .append("path")
-      .attr("d", d => (console.log(d.borders), path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders))) )
+      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) )
       .style("stroke", this.get('graphLayout.gridColor'));
 
     sel.exit().remove();
@@ -183,8 +184,6 @@ export default Ember.Mixin.create({
   bboxToMultiLineString(bbox, borders) {
 
     let coordinates = [];
-
-    console.log(bbox);
 
     if (borders.indexOf("l") !== -1) {
       coordinates.push(

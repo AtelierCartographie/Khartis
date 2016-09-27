@@ -160,8 +160,8 @@ let proj = function() {
       return p.instance;
     },
 
-    projectionForCoords(coords) {
-      this.projs.filter( p => {
+    projectionsForCoords(coords) {
+      return this.projs.filter( p => {
         let bbox = [
           p.instance.invert(p.instance.bboxPx[0]),
           p.instance.invert(p.instance.bboxPx[1])
