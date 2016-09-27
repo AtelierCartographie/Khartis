@@ -160,14 +160,14 @@ let proj = function() {
       return p.instance;
     },
 
-    projectionsForCoords(coords) {
+    projectionsForLatLon(latLon) {
       return this.projs.filter( p => {
         let bbox = [
           p.instance.invert(p.instance.bboxPx[0]),
           p.instance.invert(p.instance.bboxPx[1])
         ];
-        return inside(bbox, coords[0], coords[1]);
-      } );
+        return inside(bbox, latLon[1], latLon[0]);
+      } ).map(p => p.instance);
     },
 
     forEachProjection(f) {

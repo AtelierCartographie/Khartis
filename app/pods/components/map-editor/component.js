@@ -271,6 +271,19 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     return path;
      
   },
+
+  assumePathForLatLon(latLon) {
+    
+    let path = d3.geo.path(),
+       projs = this.get('projector').projectionsForLatLon(latLon);
+    if (projs.length) {
+      path.projection(projs[0]);
+    } else {
+      path.projection(this.get('projector'));
+    }
+    
+    return path;
+  },
 	
 	projectAndDraw: function() {
     
@@ -593,7 +606,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         let val = cell.get('postProcessedValue'),
             lon = geoDef.get('lon.body').objectAt(index).get('postProcessedValue'),
             lat = geoDef.get('lat.body').objectAt(index).get('postProcessedValue');
-        
+
         if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
           return {
             id: `coord-${index}`,
@@ -601,12 +614,15 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
             cell: cell,
             index: index,
             point: {
-              geometry: {
-                type: "Point",
-                coordinates: [
-                  lon,
-                  lat
-                ]
+              path: this.assumePathForLatLon([lat, lon]),
+              feature: {
+                geometry: {
+                  type: "Point",
+                  coordinates: [
+                    lon,
+                    lat
+                  ]
+                }
               }
             }
           };
@@ -732,7 +748,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
    let bindAttr = (_) => {
 
       _.attr("transform", d => { 
-        let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
+        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
         
         return d3lper.translate({
           tx: tx,
@@ -753,7 +769,8 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     let centroidSel = d3Layer
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
-        let [tx, ty] = this.getProjectedPath().centroid(d.point.geometry);
+        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
+        console.log(d, tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);
