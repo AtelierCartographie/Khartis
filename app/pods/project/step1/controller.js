@@ -27,6 +27,17 @@ export default Ember.Controller.extend({
   examples: function() {
     return this.get('model.project.graphLayout.basemap.mapConfig.examples');
   }.property('model.project.graphLayout.basemap.mapConfig.examples'),
+
+  dictionaryDataHeaders: function() {
+    return Array.from(
+      this.get('model.project.graphLayout.basemap.dictionaryData')
+        .reduce( (headers, row) => (Object.keys(row).forEach( k => headers.add(k) ), headers), new Set() )
+    );
+  }.property('model.project.graphLayout.basemap.dictionaryData'),
+
+  truncatedDictionaryData: function() {
+    return this.get('model.project.graphLayout.basemap.dictionaryData').slice(0, 8);
+  }.property('model.project.graphLayout.basemap.dictionaryData'),
   
   loadFile(source) {
     
@@ -60,8 +71,7 @@ export default Ember.Controller.extend({
   actions: {
     
     selectBasemap(mapId) {
-      this.set('model.project.graphLayout.basemap', Basemap.create({id: mapId}))
-        .loadDictionaryData();
+      this.get('model.project.graphLayout').setBasemap(Basemap.create({id: mapId}));
     },
 
     resumeProject() {

@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import Struct from './struct';
+import Projection from './projection';
 import config from 'mapp/config/environment';
 import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
+import ab2string from 'mapp/utils/ab2string';
+import CSV from 'npm:csv-string';
+import {csvHeaderToJs} from 'mapp/utils/csv-helpers';
+import topojson from 'npm:topojson';
 
 var Basemap = Struct.extend({
   
@@ -11,6 +16,7 @@ var Basemap = Struct.extend({
   mapConfig: null,
   mapData: null,
   dictionaryData: null,
+  availableProjections: null,
   /* ---------- */
 
   compositeProjection: function() {
@@ -21,9 +27,15 @@ var Basemap = Struct.extend({
     return this.get('mapConfig.sources').find( s => s.projection );
   }.property('mapConfig'),
 
-  subProjections: function() {
-    return this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning, borders: s.borders}) );
-  }.property('mapConfig'),
+  assumeProjection() {
+    if (this.get('compositeProjection')) {
+      return Projection.createComposite(
+        this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning, borders: s.borders}) )
+      );
+    } else {
+      return this.get('availableProjections').find( p => p.id === (this.get('mapConfig.sources')[0].projection || config.projection.default) );
+    }
+  },
 
   idChange: function() {
 
@@ -39,6 +51,14 @@ var Basemap = Struct.extend({
 
   }.observes('id').on("init"),
 
+  setup() {
+    return Promise.all([
+      this.loadMapData(),
+      this.loadDictionaryData(),
+      this.loadProjections()
+    ]);
+  },
+
   loadMapData() {
 
     if (!this.get('mapData')) {
@@ -47,29 +67,57 @@ var Basemap = Struct.extend({
         
         return new Promise((res, rej) => {
           
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', `${config.rootURL}data/map/${source.source}`, true);
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', `${config.rootURL}data/map/${source.source}`, true);
 
-            xhr.onload = (e) => {
-              
-              if (e.target.status == 200) {
-                res({source: source, topojson: e.target.response});
-              }
-              
-            };
+          xhr.onload = (e) => {
+            
+            if (e.target.status == 200) {
+              res({source: source, topojson: e.target.response});
+            }
+            
+          };
 
-            xhr.send();
+          xhr.send();
         
         });
 
       });
 
-      return Promise.all(promises).then( data => this.set('mapData', data) );
+      return Promise.all(promises).then( sources => this.set('mapData', this.computeMapSources(sources) ));
 
     } else {
       return new Promise((res, rej) => res(this.get('mapData')) );
     }
     
+  },
+
+  computeMapSources(sources) {
+    let parts = sources.map( (source, idx) => {
+          let j = JSON.parse(source.topojson);
+          j.projection = idx+1;
+          return j;
+        });
+      return parts.map(function(j) {
+        let partition = j.objects.poly.geometries
+              .reduce( (part, g) => {
+                part[g.properties.square ? "left" : "right"].push(g);
+                return part;
+              }, {left: [], right: []});
+        return {
+          projection: j.projection,
+          land: topojson.merge(j, partition.right),
+          squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
+          lands: topojson.feature(j, j.objects.poly),
+          borders: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) {
+              return !a.properties || a.properties.featurecla === "International";
+            }),
+          bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
+              return a.properties && a.properties.featurecla === "Disputed"; 
+            }),
+          centroids: topojson.feature(j, j.objects.centroid)
+        };
+    });
   },
 
   loadDictionaryData() {
@@ -95,6 +143,49 @@ var Basemap = Struct.extend({
       
     });
 		
+	},
+
+  loadProjections: function() {
+		
+    return new Promise( (res, rej) => {
+      
+      if (!this.get('availableProjections')) {
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', `${config.rootURL}data/Projection-list.csv`, true);
+        xhr.responseType = 'arraybuffer';
+
+        xhr.onload = (e) => {
+          
+        if (e.target.status == 200) {
+          
+          let data = CSV.parse(ab2string(e.target.response));
+          data = data.map( r => {
+            return r.map( c => c.trim() );
+          });
+          
+          let headers = data[0],
+              body = data.slice(1),
+              projs = body.map( r => {
+                let o = {};
+                headers.forEach( (h,i) => o[csvHeaderToJs(h)] = r[i] );
+                return Projection.create(o);
+              });
+          
+          res(this.set('availableProjections', projs));
+          
+        }
+        
+      };
+
+      xhr.send();
+
+      } else {
+        res(this.get('availableProjections'));
+      }
+      
+    });
+		 
 	},
   
   deferredChange: Ember.debouncedObserver(

@@ -49,26 +49,17 @@ export default Ember.Mixin.create({
 		mg.append("rect")
 			.attr("fill", "none");
 
-    d3g.select("g.map")
-      .append("g")
-      .classed("composition-borders", true);
-
     this.updateViewport();
 
   },
 
   updateViewport: function() {
     
-    // ===========
-		// = VIEWBOX =
-		// ===========
+    this._super();
 		
 		let {w, h} = this.getSize(),
         d3l = this.d3l();
 		
-		d3l.attr("viewBox", "0 0 "+w+" "+h);
-		// ===========
-    
     let vpBbox = d3l.node().getBoundingClientRect(),
         ratio = Math.min(vpBbox.width/w, vpBbox.height/h),
         mX = (vpBbox.width - w*ratio) / 2 / ratio, //marges de compensation du viewport / viewBox
@@ -149,71 +140,8 @@ export default Ember.Mixin.create({
         height: h
       });
 
-    this.drawCompositionBorders();
-      
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector',
-    'graphLayout.tx', 'graphLayout.tx'),
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector'),
 
-  drawCompositionBorders() {
-    
-    let zoom = this.get('graphLayout.zoom'),
-        affineT = d3.geo.transform({
-          point: function(x, y) { this.stream.point(x*zoom, y*zoom); },
-        }),
-        path = d3.geo.path().projection(affineT);
-
-    let sel = this.d3l().select("g.composition-borders")
-      .attr("transform", `translate(${this.get('graphLayout.tx')*this.getSize().w}, ${this.get('graphLayout.ty')*this.getSize().h})`)
-      .selectAll("g")
-      .data(this.get('projector').projections);
-
-    sel.select("path")
-      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) );
-
-    sel.enter()
-      .append("g")
-      .append("path")
-      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) )
-      .style("stroke", this.get('graphLayout.gridColor'));
-
-    sel.exit().remove();
-
-  },
-
-  bboxToMultiLineString(bbox, borders) {
-
-    let coordinates = [];
-
-    if (borders.indexOf("l") !== -1) {
-      coordinates.push(
-        [bbox[0], [bbox[0][0], bbox[1][1]]]
-      );
-    }
-
-    if (borders.indexOf("r") !== -1) {
-      coordinates.push(
-        [bbox[1], [bbox[1][0], bbox[0][1]]]
-      );
-    }
-
-    if (borders.indexOf("t") !== -1) {
-      coordinates.push(
-        [bbox[0], [bbox[1][0], bbox[0][1]]]
-      );
-    }
-
-    if (borders.indexOf("b") !== -1) {
-      coordinates.push(
-        [bbox[1], [bbox[0][0], bbox[1][1]]]
-      );
-    }
-
-    return {
-      "type": "MultiLineString",
-      "coordinates": coordinates
-    };
-
-  }
 
 });

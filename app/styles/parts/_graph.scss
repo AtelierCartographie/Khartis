@@ -48,8 +48,31 @@
         }
       }
     }
+  }
+
+  svg.map-editor {
+    display:block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .map {
+      cursor: -webkit-grab;
+      cursor: grab;
+      &.dragging {
+        cursor: -webkit-grabbing;
+        cursor: grabbing;
+      }
+    }
     
-    
+    .legend {
+      cursor: move;
+      &.dragging {
+        cursor: grab;
+      }
+    }
   }
   
 }
@@ -92,34 +115,9 @@
     }
     
   }
-  
+
 }
 
-svg {
-  
-  .map {
-    cursor: -webkit-grab;
-    cursor: grab;
-    &.dragging {
-      cursor: -webkit-grabbing;
-      cursor: grabbing;
-    }
-  }
-  
-  .legend {
-    cursor: move;
-    &.dragging {
-      cursor: grab;
-    }
-  }
-  
-}
 
-.map-editor {
-  display:block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
+
+

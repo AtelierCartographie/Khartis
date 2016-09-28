@@ -79,71 +79,6 @@ var GraphLayout = Struct.extend({
     return !this.get('projection.isComposite');
   }.property('projection.isComposite'),
 	
-	virginPatternColorAuto: true,
-	
-	_virginPatternColor: null,
-	virginPatternColor: function(key, value) {
-		
-		var self = this;
-		
-		var colorAuto = function() {
-			
-			var bgColor = d3.rgb(self.get("backgroundColor"));
-			
-			return (d3lper.yiqColor(bgColor) === "lighten" ? bgColor.brighter(3):bgColor.darker(3)).toString();
-			
-		};
-		
-		if (arguments.length === 1) { //get
-			
-			if (this.get('virginPatternColorAuto')) {
-				
-				return colorAuto();
-				
-			} else {
-				
-				return this.get("_virginPatternColor");
-				
-			}
-			
-		} else {
-			
-			if (value != null && value.length > 0) {
-				this.setProperties({"_virginPatternColor": value, "virginPatternColorAuto": false});
-			} else {
-				this.set("virginPatternColorAuto", true);
-			}
-			
-			return value;
-			
-		}
-		
-	}.property('_virginPatternColor', 'backgroundColor'),
-	
-	virginPattern: "diagonalGrid",
-	
-	_virginDisplayed: true,
-	
-	virginDisplayed: function(key, value) {
-		
-		if (arguments.length === 1) {
-			
-			return this.get("_virginDisplayed");
-			
-		} else {
-
-			if (value === false) {
-				this.set("autoCenter", true);
-      }
-			
-			this.set("_virginDisplayed", value);
-			
-			return value;
-		
-		}
-		
-	}.property("_virginDisplayed"),
-	
   tx: 0,
   ty: 0,
 	width: 1024,
@@ -168,6 +103,14 @@ var GraphLayout = Struct.extend({
 	vOffset: function(screenHeight) {
 		return (screenHeight - this.get('height')) / 2;
 	},
+
+  setBasemap(basemap) {
+    this.set('basemap', basemap)
+      .setup()
+      .then( res => {
+        this.set('projection', basemap.assumeProjection());
+      });
+  },
 	
   export() {
     return this._super({

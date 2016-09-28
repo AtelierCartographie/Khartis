@@ -15,6 +15,7 @@ export default {
     "none": "none",
     "download": "download",
     "loading": "chargement",
+    "search": "rechercher",
     "error": {
      "one": "error",
      "other": "errors" 
@@ -29,9 +30,11 @@ export default {
       "title": {
         "import": "import",
         "fileCsv": "a csv file",
-        "testData": "Try our sample datasets"
+        "testData": "Try our sample datasets",
+        "selectAMap": "Select a map"
       },
-      "pasteCsv": "past your data here or drop a csv file"
+      "pasteCsv": "past your data here or drop a csv file",
+      "downloadCsvModel": "download model (.csv)"
     },
     
     "step2": {

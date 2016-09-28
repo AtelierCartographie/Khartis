@@ -1,28 +1,80 @@
 <div class="importer">
 
-    <div class="vertical airy flow">
-      {{#x-dropdown-plus as |dropdown|}}
+    <h2 class="title">
+      {{x-capitalize (t 'project.step1.title.selectAMap')}}
+    </h2>
+
+    <div class="vertical airy flow select-a-map">
+      {{#x-dropdown-plus stretch=true as |dropdown|}}
         {{#dropdown.trigger}}
-          Choisir une carte
+          {{#if model.project.graphLayout.basemap}}
+          {{x-capitalize (t (concat 'basemap.' model.project.graphLayout.basemap.mapConfig.id))}}
+          {{else}}
+          {{x-capitalize (t 'general.search')}}
+          {{/if}}
           <i class="iconfont iconfont-angle-down"></i>
         {{/dropdown.trigger}}
         {{#dropdown.list}}
           {{#each dictionary.data.maps as |map|}}
             <li {{action 'selectBasemap' map.id}}>
-              {{map.id}}
+              {{x-capitalize (t (concat 'basemap.' map.id))}}
             </li>
           {{/each}}
         {{/dropdown.list}}
       {{/x-dropdown-plus}}
     </div>
 
-    {{#if model.project.graphLayout.basemap}}
+  {{#if model.project.graphLayout.basemap}}
+    <div class="vertical flow">
+      <div class="horizontal airy flow">
+        <div class="map-preview solid">
+        {{#if model.project.graphLayout.projection}}
+          {{map-editor
+            graphLayout=model.project.graphLayout
+            displayOffsets=false
+            hasViewportFeature=false
+            hasLegendFeature=false
+            hasZoomFeature=false
+            hasLabellingFeature=false
+            hasCreditsFeature=false
+          }}
+        {{/if}}
+        </div>
+        <div class="map-dictionary-preview">
+        {{#if model.project.graphLayout.basemap.dictionaryData}}
+          <table>
+            <thead>
+              <tr>
+                {{#each dictionaryDataHeaders as |header|}}
+                    <th nowrap>{{header}}</th>
+                {{/each}}
+              </tr>
+            </thead>
+            <tbody>
+              {{#each truncatedDictionaryData as |row|}}
+                <tr>
+                  {{#each dictionaryDataHeaders as |header|}}
+                    <td nowrap>{{get row header}}</td>
+                  {{/each}}
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+        </div>
+      </div>
+      <div class="horizontal right flow">
+        {{#x-button class="solid filled primary"}}
+          {{x-capitalize (t 'project.step1.downloadCsvModel')}}
+        {{/x-button}}
+      </div>
+    </div>
 
-    <h1 class="title">
+    <h2 class="title">
       {{#file-loader label="" class="import-link" onContentLoaded="loadCsv" tagName="a"}}
       {{x-capitalize (t 'project.step1.title.import')}}
       {{/file-loader}}&nbsp;{{t 'project.step1.title.fileCsv'}}
-    </h1>
+    </h2>
 
     <div class="vertical airy flow">
 

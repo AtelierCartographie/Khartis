@@ -4,7 +4,6 @@ import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
 import Mapping from 'mapp/models/mapping/mapping';
 import Projection from 'mapp/models/projection';
-import topojson from 'npm:topojson';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'mapp/utils/png-utils';
 
 export default Ember.Controller.extend({
@@ -20,8 +19,6 @@ export default Ember.Controller.extend({
   ],
   state: "visualizations",
   
-  basemapData: null,
-
   sidebarSubExpanded: false,
   
   editedLayer: null,
@@ -38,9 +35,9 @@ export default Ember.Controller.extend({
   }.property('model.graphLayout.basemap.projectionProvided'),
   
   availableProjections: function() {
-    return this.get('Dictionary.data.projections')
+    return this.get('model.graphLayout.basemap.availableProjections')
       .filter( p => p.id !== "lambert_azimuthal_equal_area");
-  }.property('Dictionary.data.projections'),
+  }.property('model.graphLayout.availableProjections'),
   
   isInStateVisualization: function() {
     return this.get('state') === "visualizations";
@@ -65,41 +62,6 @@ export default Ember.Controller.extend({
   helpTemplate: function() {
     return `help/{locale}/graph/${this.get('state')}`;
   }.property('state'),
-  
-  setup() {
-    this.get('model.graphLayout.basemap').loadMapData()
-      .then( (sources) => {
-        return sources.map( (source, idx) => {
-          let j = JSON.parse(source.topojson);
-          j.projection = idx+1;
-          return j;
-        });
-      })
-      .then( (parts) => {
-        return parts.map(function(j) {
-          let partition = j.objects.poly.geometries
-                .reduce( (part, g) => {
-                  part[g.properties.square ? "left" : "right"].push(g);
-                  return part;
-                }, {left: [], right: []});
-          return {
-            projection: j.projection,
-            land: topojson.merge(j, partition.right),
-            squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
-            lands: topojson.feature(j, j.objects.poly),
-            borders: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) {
-                return !a.properties || a.properties.featurecla === "International";
-              }),
-            bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
-                return a.properties && a.properties.featurecla === "Disputed"; 
-              }),
-            centroids: topojson.feature(j, j.objects.centroid)
-          };
-        });
-      })
-      .then( parts => this.set('basemapData', parts) )
-      .catch( e => console.log(e) );
-  },
   
   layoutChange: function() {
     this.send('onAskVersioning', 'freeze');

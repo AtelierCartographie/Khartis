@@ -8,6 +8,40 @@
   position: relative;
   width: 100%;
 
+  .select-a-map {
+    .dropdown-trigger {
+      @include flow(horizontal, space-between);
+      background-color: color(default);
+    }
+  }
+
+  .map-preview {
+    height: 200px;
+    width: 200px;
+  }
+
+  .map-dictionary-preview {
+    overflow-x: scroll;
+    font-size: 0.9em;
+    &, table {
+      width: 100%;
+    }
+    th, td {
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+    }
+    & thead tr {
+      background-color: greys(5%);
+    }
+    & tr:nth-child(even){
+      background-color: greys(5%);
+    }
+  }
+
+  .CodeMirror {
+    height: 200px;
+  }
+
   .importer,
   .report {
     flex: 1;
@@ -20,10 +54,6 @@
 
   .importer .label {
     font-size: 1.1em;
-  }
-
-  h1 {
-    margin-bottom: 1.5rem;
   }
 
   h2 {

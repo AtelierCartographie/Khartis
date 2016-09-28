@@ -78,6 +78,10 @@ export default Ember.Component.extend({
       .to(this.get('triggerEl')[0],  this.get('triggerPivot'))
 
     this.set('snapped', snapped);
+
+    if (this.get('dropdown.stretch')) {
+      this.get('targetEl').width(this.get('triggerEl').width());
+    }
     
   },
 

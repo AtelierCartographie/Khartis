@@ -62,10 +62,9 @@
           </header>
 
           <div class="fluid" style="position: relative;">
-            {{#if (x-every basemapData model.graphLayout.projection)}}
+            {{#if model.graphLayout.projection}}
 
-              {{map-editor data=model.data
-                base=basemapData
+              {{map-editor
                 graphLayout=model.graphLayout
                 graphLayers=model.graphLayers
                 labellingLayers=model.labellingLayers

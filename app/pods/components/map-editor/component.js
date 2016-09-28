@@ -8,15 +8,12 @@ import ViewportFeature from './viewport';
 import LegendFeature from './legend';
 import ZoomFeature from './zoom';
 import LabellingFeature from './labelling';
+import CompositionBordersFeature from './composition-borders';
+import CreditsFeature from './credits';
 
 /* global Em */
 
-let landSelSet = new Set();
-
-let shift = 0;
-
-export default Ember.Component.extend(ViewportFeature, LegendFeature,
-  ZoomFeature, LabellingFeature, {
+export default Ember.Component.extend({
   
   tagName: "svg",
   attributeBindings: ['width', 'height', 'xmlns', 'version'],
@@ -29,20 +26,29 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   $width: null,
   $height: null,
 	
-	base: null,
-	
-	data: null,
-	
 	graphLayout: null,
-  
-  graphLayers: [],
-  labellingLayers: [],
+	base: function() {
+    return this.get('graphLayout.basemap.mapData');
+  }.property('graphLayout.basemap.mapData'),
   
   title: null,
   dataSource: null,
   author: null,
+
+  labellingLayers: [],
+  graphLayers: [],
   
-  resizeInterval: null,
+  _resizeInterval: null,
+  _landSelSet: null,
+
+  /* traits */
+  hasViewportFeature: true,
+  hasLegendFeature: true,
+  hasZoomFeature: true,
+  hasLabellingFeature: true,
+  hasCompositionBordersFeature: true,
+  hasCreditsFeature: true,
+  /* ---- */
 
   windowLocation: function() {
     return window.location;
@@ -50,6 +56,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
   
   init() {
     this._super();
+    this.set('_landSelSet', new Set());
   },
 
   getFeaturesFromBase(ns, ns2 = "features") {
@@ -100,7 +107,7 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
         });
       }
     };
-    this.set('resizeInterval', setInterval($size, 500));
+    this.set('_resizeInterval', setInterval($size, 500));
     $size();
     // ---------
     
@@ -122,39 +129,45 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     backMap.append("use")
       .classed("grid", true);
       
-    /*backMap.append("path")
-      .classed("land", true);*/
-
 		let layers = mapG.append("g")
 			.classed("layers", true);
     
     let bordersMap = layers.append("g")
       .classed("borders", true)
       .datum({isBorderLayer: true});
-      
-    this.labellingInit(mapG);
-    this.viewportInit(defs, d3g);
-    this.zoomInit(d3g);
-    this.legendInit();
     
-    d3g.append("text")
-      .classed("map-title", true);
-
-    d3g.append("text")
-      .classed("map-dataSource", true);
-
-    d3g.append("g")
-      .classed("map-author", true)
-      .append("text");
-      
-    this.drawTitle();
+    if (this.get('hasViewportFeature')) {
+      this.reopen(ViewportFeature);
+      this.viewportInit(defs, d3g);
+    }
+    if (this.get('hasLegendFeature')) {
+      this.reopen(LegendFeature);
+      this.legendInit();
+    }
+    if (this.get('hasZoomFeature')) {
+      this.reopen(ZoomFeature);
+      this.zoomInit(d3g);
+    }
+    if (this.get('hasLabellingFeature')) {
+      this.reopen(LabellingFeature);
+      this.labellingInit(mapG);
+    }
+    if (this.get('hasCompositionBordersFeature')) {
+      this.reopen(CompositionBordersFeature);
+      this.compositionBordersInit(mapG);
+    }
+    if (this.get('hasCreditsFeature')) {
+      this.reopen(CreditsFeature);
+      this.creditsInit(d3g);
+    }
+    
 		this.projectAndDraw();
 		this.updateColors();
           
 	}.on("didInsertElement"),
   
   cleanup: function() {
-    clearInterval(this.get('resizeInterval'));
+    clearInterval(this.get('_resizeInterval'));
   }.on("willDestroyElement"),
   
   getSize() {
@@ -191,6 +204,21 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     return transform;
     
   },
+
+  /* may be overrided by viewport feature */
+  updateViewport: function() {
+    
+    // ===========
+		// = VIEWBOX =
+		// ===========
+		let {w, h} = this.getSize(),
+        d3l = this.d3l();
+		
+		d3l.attr("viewBox", "0 0 "+w+" "+h);
+		// ===========
+
+  }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector'),
 	
 	updateColors: function() {
 		
@@ -314,22 +342,19 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
     this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
-    this.drawLabelling();
 			
 	}.observes('windowLocation', 'projector', 'graphLayout.virginDisplayed'),
   
   registerLandSel(id) {
-    
-    landSelSet.add(id);
+    this.get('_landSelSet').add(id);
     return `#f-path-${id}`;
-    
   },
   
   drawLandSel() {
 
     let geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         features = this.getFeaturesFromBase("lands")
-          .filter( f => landSelSet.has(f.feature.properties[geoKey]) );
+          .filter( f => this.get('_landSelSet').has(f.feature.properties[geoKey]) );
 
     let sel = this.d3l().select("defs").selectAll("path.feature")
       .data(features)
@@ -368,46 +393,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
       });
   },
   
-  drawTitle: function() {
-    
-    let {w, h} = this.getSize();
-    
-    this.d3l().select("text.map-title")
-      .text(this.get('title'))
-      .attr({
-        "font-size": "2em",
-        x: this.get('graphLayout').hOffset(w) + this.get('graphLayout.margin.l'),
-        y: this.get('graphLayout').vOffset(h) + this.get('graphLayout.margin.t') - 5
-      });
-      
-   this.d3l().attr("title", this.get('title'));
-
-   this.d3l().select("text.map-dataSource")
-      .text(this.get('dataSource'))
-      .attr({
-        "font-size": "0.8em",
-        "text-anchor": "end",
-        x: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') - 1,
-        y: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + 11
-      });
-
-
-    this.d3l().select("g.map-author")
-      .attr("transform", d3lper.translate({
-        tx: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') + 11,
-        ty: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') - 1
-      }))
-      .select("text")
-      .text(this.get('author'))
-      .attr("transform", "rotate(-90)")
-      .attr({
-        "font-size": "0.8em"
-      });
-   
-  }.observes('title', 'dataSource', 'author', "$width", "$height",
-    "graphLayout.margin._defferedChangeIndicator",
-    "graphLayout.width", "graphLayout.height"),
-   
   drawGrid: function() {
      
     let sphere = this.d3l().select("g.backmap").selectAll("use.sphere"),
@@ -770,7 +755,6 @@ export default Ember.Component.extend(ViewportFeature, LegendFeature,
 			.selectAll("g.feature")
       .data(sortedData.filter( d => {
         let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-        console.log(d, tx, ty);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);

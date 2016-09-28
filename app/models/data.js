@@ -235,93 +235,93 @@ let ColumnStruct = Struct.extend({
 });
 
 ColumnStruct.reopenClass({
-    restore(json, refs) {
-        return this._super(json, refs, {
-          layout: {
-              sheet: {
-                width: json.layout.sheet.width
-              }
-            },
-            meta: ColumnMeta.restore(json.meta, refs)
-        });
-    }
+  restore(json, refs) {
+    return this._super(json, refs, {
+      layout: {
+          sheet: {
+            width: json.layout.sheet.width
+          }
+        },
+        meta: ColumnMeta.restore(json.meta, refs)
+    });
+  }
 });
 
 let CellStruct = Struct.extend({
 
-    column: null,
-    row: null,
-    value: null,
-    correctedValue: null,
-    
-    corrected: function() {
-      return !Ember.isEmpty(this.get('correctedValue'));
-    }.property('correctedValue'),
-    
-    index() {
-      return this.get('row.cells').indexOf(this);
-    },
-    
-    isFirstOfRow() {
-      return this.index() === 0;
-    },
-    
-    isLastOfRow() {
-      return this.index() === this.get('row.cells').length - 1;
-    },
-    
-    postProcessedValue: function() {
-      let val = this.get('corrected') ? this.get('correctedValue') : this.get('value');
-      if (!Ember.isEmpty(val)) {
-        if (["numeric", "lon", "lat"].indexOf(this.get('column.meta.type')) !== -1) {
-          if (val.indexOf(".") === -1) {
-            return parseFloat(val.replace(/[\,\s]+/g, "."));
-          } else {
-            return parseFloat(val.replace(/[\,\s]+/g, ""));
-          }
-        } else if (this.get('column.meta.type') === "geo") {
-          return geoMatcher.match(val);
-        } else if (["lon_dms", "lat_dms"].indexOf(this.get('column.meta.type')) !== -1) {
-          return deg2dec(val);
+  column: null,
+  row: null,
+  value: null,
+  correctedValue: null,
+  
+  corrected: function() {
+    return !Ember.isEmpty(this.get('correctedValue'));
+  }.property('correctedValue'),
+  
+  index() {
+    return this.get('row.cells').indexOf(this);
+  },
+  
+  isFirstOfRow() {
+    return this.index() === 0;
+  },
+  
+  isLastOfRow() {
+    return this.index() === this.get('row.cells').length - 1;
+  },
+  
+  postProcessedValue: function() {
+    let val = this.get('corrected') ? this.get('correctedValue') : this.get('value');
+    if (!Ember.isEmpty(val)) {
+      if (["numeric", "lon", "lat"].indexOf(this.get('column.meta.type')) !== -1) {
+        if (val.indexOf(".") === -1) {
+          return parseFloat(val.replace(/[\,\s]+/g, "."));
+        } else {
+          return parseFloat(val.replace(/[\,\s]+/g, ""));
         }
-        return val;
-      } else {
-        return null;
+      } else if (this.get('column.meta.type') === "geo") {
+        return geoMatcher.match(val);
+      } else if (["lon_dms", "lat_dms"].indexOf(this.get('column.meta.type')) !== -1) {
+        return deg2dec(val);
       }
-    }.property('value', 'column.meta.type', 'corrected', 'correctedValue'),
-    
-    init() {
-      this._super();
-      this.set('state', {
-          sheet: {
-            edited: false,
-            selected: false,
-            resizing: false
-          }
-      });
-    },
-    
-    deferredChange: Ember.debouncedObserver(
-      'value', 'correctedValue',
-      function() {
-        this.notifyDefferedChange();
-      },
-      50),
-    
-    onColumnChange: function() {
-      if (this.get('column')) {
-          this.get('column').visit(this);
-      }
-    }.observes('column').on("init"),
-    
-    export() {
-      return this._super({
-          col: this.get('column._uuid'),
-          row: this.get('row._uuid'),
-          val: this.get('value'),
-          cval: this.get('correctedValue')
-      });
+      return val;
+    } else {
+      return null;
     }
+  }.property('value', 'column.meta.type', 'corrected', 'correctedValue'),
+  
+  init() {
+    this._super();
+    this.set('state', {
+        sheet: {
+          edited: false,
+          selected: false,
+          resizing: false
+        }
+    });
+  },
+  
+  deferredChange: Ember.debouncedObserver(
+    'value', 'correctedValue',
+    function() {
+      this.notifyDefferedChange();
+    },
+    50),
+  
+  onColumnChange: function() {
+    if (this.get('column')) {
+        this.get('column').visit(this);
+    }
+  }.observes('column').on("init"),
+  
+  export() {
+    return this._super({
+        col: this.get('column._uuid'),
+        row: this.get('row._uuid'),
+        val: this.get('value'),
+        cval: this.get('correctedValue')
+    });
+  }
 });
 
 CellStruct.reopenClass({

@@ -4,11 +4,18 @@ import d3lper from 'mapp/utils/d3lper';
 export default Ember.Mixin.create({
 
   labellingInit(d3g) {
-    
+
     d3g.append("g")
       .classed("labelling", "true");
 
   },
+
+  projectAndDraw: function() {
+    
+    this._super();
+    this.drawLabelling();
+			
+	}.observes('windowLocation', 'projector', 'graphLayout.virginDisplayed'),
 
   drawLabelling: function() {
 
@@ -48,7 +55,7 @@ export default Ember.Mixin.create({
 
         _.attr("transform", d => { 
 
-          let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+          let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
           
           return d3lper.translate({
             tx: tx,
@@ -68,7 +75,7 @@ export default Ember.Mixin.create({
     let centroidSel = d3Layer
 			.selectAll("text.label")
       .data(data.filter( d => {
-        let [tx, ty] = this.get('projectedPath').centroid(d.point.geometry);
+        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
         return !isNaN(tx) && !isNaN(ty);
       }))
       .call(bindAttr);

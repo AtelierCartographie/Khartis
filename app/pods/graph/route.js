@@ -24,7 +24,6 @@ export default Ember.Route.extend({
       
       return this.get('store').select(params.uuid)
         .then( p => {
-          console.log(p);
           if (p) {
             return p;
           } else {
@@ -35,14 +34,6 @@ export default Ember.Route.extend({
     },
     
     afterModel(model) {
-      
-      if (!model.get('graphLayout.projection')) {
-        if (model.get('graphLayout.basemap.compositeProjection')) {
-          model.set('graphLayout.projection', Projection.createComposite(model.get('graphLayout.basemap.subProjections')));
-        } else {
-          model.set('graphLayout.projection', this.get('Dictionary.data.projections').find( p => p.id === config.projection.default ));
-        }
-      }
 
       if (!model.get('geoDef') && model.get('data.availableGeoDefs').length > 0) {
         model.set('geoDef', model.get('data.availableGeoDefs').objectAt(0));
@@ -51,12 +42,13 @@ export default Ember.Route.extend({
       this.get('store').versions()
         .on("undo", () => this.refresh())
         .on("redo", () => this.refresh());
-        
+
+      return model.get('graphLayout.basemap').setup();
+
     },
     
     setupController(controller, model) {
       this._super(controller, model);
-      controller.setup();
     },
     
     actions: {

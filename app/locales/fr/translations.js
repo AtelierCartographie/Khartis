@@ -15,6 +15,7 @@ export default {
     "none": "aucune",
     "download": "télécharger",
     "loading": "chargement",
+    "search": "rechercher",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
@@ -29,9 +30,11 @@ export default {
       "title": {
         "import": "importer",
         "fileCsv": "un fichier csv",
-        "testData": "Essayer nos données test"
+        "testData": "Essayer nos données test",
+        "selectAMap": "Sélectionner un fond de carte"
       },
-      "pasteCsv": "coller ici vos données ou glisser un fichier csv"
+      "pasteCsv": "coller ici vos données ou glisser un fichier csv",
+      "downloadCsvModel": "télécharger le modèle (.csv)"
     },
     
     "step2": {
@@ -267,6 +270,11 @@ export default {
 
   "legend": {
     "editTitleHere": "editez ici le titre de la légende"
+  },
+
+  "basemap": {
+    "world": "carte du monde",
+    "fr_dpt": "France > départements (2016)"
   },
 
   "examples": {
