@@ -114,8 +114,12 @@ export default function() {
 
   function scaleTo(s) {
     absScale = Math.max(scaleExtent[0], Math.min(scaleExtent[1], s));
-    scale = stepScaleValue(absScale);
-    zoom.scale(scale);
+    let stepped = stepScaleValue(absScale);
+    if (scale != stepped) {
+      zoom.scale(scale = stepped);
+      return true;
+    }
+    return false;
   }
 
   function translateTo(p, l) {
@@ -125,7 +129,7 @@ export default function() {
   }
   
   function stepScaleValue(val) {
-    
+
     if (band > 0) {
 
       if (val === scaleExtent[0] || val === scaleExtent[1]) {
@@ -164,6 +168,12 @@ export default function() {
     dispatcher.zoom.apply(this, [scale, translate]);
   }
 
+  function prevent() {
+    if (d3.event) {
+      d3.event.preventDefault();
+    }
+  }
+
   function mousedown() {
     var target = this,
         eventTarget = d3.event.target,
@@ -200,9 +210,13 @@ export default function() {
 
   function mousewheel() {
     if (!translate0) translate0 = location(d3.mouse(this));
-    scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .002) * absScale);
+    let commited = scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .002) * absScale);
     translateTo(d3.mouse(this), translate0);
-    dispatch();
+    if (commited) {
+      dispatch();
+    } else {
+      prevent();
+    }
   }
 
   function mousemove() {
