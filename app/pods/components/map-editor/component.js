@@ -60,9 +60,11 @@ export default Ember.Component.extend({
   },
 
   getFeaturesFromBase(ns, ns2 = "features") {
+    
     return this.get('base').reduce( (col, base) => {
+      let path = this.getProjectedPath(base.projection);
       return col.concat(
-        base[ns][ns2].map(f => ({path: this.getProjectedPath(base.projection), feature: f}))
+        base[ns][ns2].map(f => ({path: path, feature: f}))
       );
     }, []);
   },
@@ -118,7 +120,8 @@ export default Ember.Component.extend({
     let mapG = d3g.append("g")
       .classed("outer-map", true)
       .append("g")
-      .classed("map", true);
+      .classed("map", true)
+      .attr("clip-path", `url(#clip)`);
     
     let backMap = mapG.append("g")
 			.classed("backmap", true);
@@ -286,7 +289,7 @@ export default Ember.Component.extend({
         ])
       .scale(projection.resolution * this.get('graphLayout.zoom'));
     });
-      
+    
   },
   
   getProjectedPath(idx) {
@@ -312,8 +315,12 @@ export default Ember.Component.extend({
     
     return path;
   },
+
+  redraw: function() {
+    this.projectAndDraw();
+  }.observes('windowLocation', 'projector'),
 	
-	projectAndDraw: function() {
+	projectAndDraw() {
     
     let {w, h} = this.getSize();
     
@@ -333,17 +340,11 @@ export default Ember.Component.extend({
     defs.select("#clip use")
       .attr("xlink:href", `#sphere`);
       
-    defs.selectAll("path.feature")
-      .attr("d", path);
-      
-    this.d3l().select("g.map")
-      .attr("clip-path", `url(#clip)`);
-      
     this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
 			
-	}.observes('windowLocation', 'projector', 'graphLayout.virginDisplayed'),
+	},
   
   registerLandSel(id) {
     this.get('_landSelSet').add(id);
@@ -356,7 +357,8 @@ export default Ember.Component.extend({
         features = this.getFeaturesFromBase("lands")
           .filter( f => this.get('_landSelSet').has(f.feature.properties[geoKey]) );
 
-    let sel = this.d3l().select("defs").selectAll("path.feature")
+    let sel = this.d3l().select("defs")
+      .selectAll("path.feature")
       .data(features)
       .attr("d", d => d.path(d.feature) );
       
@@ -425,6 +427,8 @@ export default Ember.Component.extend({
     'graphLayout.canDisplaySphere', 'graphLayout.canDisplayGrid'),
    
    drawBackmap: function() {
+
+    console.log("drawBackmap");
     
     let d3l = this.d3l();
 
@@ -548,14 +552,17 @@ export default Ember.Component.extend({
     
   }.observes('graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
   
-	mapData: function(d3Layer, graphLayer) {
+	mapData(d3Layer, graphLayer) {
     
     let geoDef = graphLayer.get('mapping.geoDef'),
         varCol = graphLayer.get('mapping.varCol'),
         geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         data = [];
-    
+
     if (geoDef.get('isGeoRef')) {
+
+      let lands = this.getFeaturesFromBase("lands"),
+          centroids = this.getFeaturesFromBase("centroids");
       
       data = varCol.get('body').map( (cell, index) => {
         
@@ -567,8 +574,8 @@ export default Ember.Component.extend({
             value: val,
             cell: cell,
             index: index,
-            surface: this.getFeaturesFromBase("lands").find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
-            point: this.getFeaturesFromBase("centroids").find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
+            surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
+            point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
           };
         }
         

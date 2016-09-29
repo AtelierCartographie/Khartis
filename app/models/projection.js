@@ -92,8 +92,6 @@ let Projection = Struct.extend({
       projector.projections = [{idx: 1, projection: this.get('d3_geo'), scale: 1, zoning: [[0,0], [1,1]], bounds: "Sphere"}];
     }
 
-    console.log([{idx: 1, projection: this.get('d3_geo'), scale: 1, zoning: [[0,0], [1,1]]}]);
-
     if (this.get('lobes')) {
       projector.lobes(this.compLobes());
     }

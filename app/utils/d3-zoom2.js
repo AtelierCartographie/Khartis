@@ -115,6 +115,7 @@ export default function() {
   function scaleTo(s) {
     absScale = Math.max(scaleExtent[0], Math.min(scaleExtent[1], s));
     scale = stepScaleValue(absScale);
+    zoom.scale(scale);
   }
 
   function translateTo(p, l) {

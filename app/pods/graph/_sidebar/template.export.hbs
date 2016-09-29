@@ -23,7 +23,23 @@
     </div>
     
     <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
-    <div class="settings horizontal flow">
+    <div class="settings vertical flow">
+      {{#each model.labellingLayers as |layer|}}
+      <div class="horizontal space-between flow layer-header">
+        <div class="horizontal airy baseline flow">
+          {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
+          <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
+        </div>
+        <div class="solid horizontal baseline half-airy right flow w4">
+          <span class="no-drag no-drag-click">
+            {{#x-button tagName="a" action=(action 'removeLabellingLayer' layer) disabled=(x-eq layer editedLayer)}}
+              <i class="iconfont iconfont-trash"></i>
+            {{/x-button}}
+          </span>
+        </div>
+      </div>
+      {{/each}}
+      {{#unless model.labellingLayers.length}}
       {{#x-dropdown-plus as |facet|}}
         {{#facet.trigger}}
             <div class="button"><i class="iconfont iconfont-plus-thin"></i></div>
@@ -37,9 +53,7 @@
           {{/each}}
         {{/facet.list}}
       {{/x-dropdown-plus}}
-      <div><i class="iconfont iconfont-align-left" {{action 'alignLabels' 'left'}}/></div>
-      <div><i class="iconfont iconfont-align-center" {{action 'alignLabels' 'center'}}/></div>
-      <div><i class="iconfont iconfont-align-right" {{action 'alignLabels' 'right'}}/></div>
+      {{/unless}}
     </div>
     
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>

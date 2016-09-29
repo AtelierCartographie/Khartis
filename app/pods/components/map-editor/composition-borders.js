@@ -11,6 +11,11 @@ export default Ember.Mixin.create({
 
   },
 
+  projectAndDraw() {
+    this._super();
+    this.drawCompositionBorders();
+  },
+
   drawCompositionBorders: function() {
     
     let zoom = this.get('graphLayout.zoom'),
@@ -35,9 +40,7 @@ export default Ember.Mixin.create({
 
     sel.exit().remove();
 
-  }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'projector',
-    'graphLayout.tx', 'graphLayout.tx'),
+  },
 
   bboxToMultiLineString(bbox, borders) {
 

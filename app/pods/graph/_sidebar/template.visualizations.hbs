@@ -26,7 +26,7 @@
       {{#drag-sort-collection provider=model.graphLayers onClick=(action 'editLayer') as |layer self|}}
       
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
-            <div class="horizontal space-between flow layer-header">
+            <div class="horizontal space-between flow">
               <div class="horizontal airy baseline flow">
                 {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
                 <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>

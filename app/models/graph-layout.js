@@ -59,7 +59,7 @@ var GraphLayout = Struct.extend({
 	stroke: "#ffffff",
 	strokeWidth: 1,
 	
-	backgroundColor: "#F7F7F7",
+	backgroundColor: "#f8f8f8",
   backMapColor: "#e0e1e1",
   
   showBorders: true,

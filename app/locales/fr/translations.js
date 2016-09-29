@@ -247,7 +247,7 @@ export default {
   "export": {
     "title": {
       "legend": "légende",
-      "labels": "étiquettes",
+      "labels": "etiquettes",
       "styles": "habillage de la carte",
       "sizes": "dimensions",
       "export": "export"
