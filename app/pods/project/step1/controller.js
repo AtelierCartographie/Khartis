@@ -38,6 +38,21 @@ export default Ember.Controller.extend({
   truncatedDictionaryData: function() {
     return this.get('model.project.graphLayout.basemap.dictionaryData').slice(0, 8);
   }.property('model.project.graphLayout.basemap.dictionaryData'),
+
+  downloadTemplate() {
+
+    let csvData = "ID;NAME\n",
+        mapKey = this.get('model.project.graphLayout.basemap.mapConfig.dictionary.identifier');
+        
+    this.get('model.project.graphLayout.basemap.dictionaryData').forEach( row => {
+      csvData += row[mapKey] + ";";
+      csvData += (row["Name"] || row["name_"+this.get('i18n.locale').toUpperCase()] || row["name_EN"]) + "\n";
+    });
+
+    let blob = new Blob([csvData], {type: "text/csv"});
+    saveAs(blob, "template.csv");
+
+  },
   
   loadFile(source) {
     
@@ -101,6 +116,10 @@ export default Ember.Controller.extend({
     
     selectDataSet(set) {
       this.loadFile(set.source);
+    },
+
+    downloadTemplate() {
+      this.downloadTemplate();
     }
     
   }
