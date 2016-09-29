@@ -14,7 +14,7 @@ export default Ember.Mixin.create({
       .scaleExtent([1, 12])
       .band(0.5)
       .on("zoom", (scale, translate) => {
-        console.log("zoom");
+        
         this.zoomAndDrag(scale, translate);
 
       })
@@ -62,7 +62,7 @@ export default Ember.Mixin.create({
         rs = scale/ds,
         tx = projector.translate()[0]*rs - t[0] * scale,
         ty = projector.translate()[1]*rs - t[1] * scale;
-        console.log(scale);
+
     mapG
       .attr({
         tx: translate[0],

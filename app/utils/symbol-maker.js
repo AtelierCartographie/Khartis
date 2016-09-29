@@ -1,7 +1,10 @@
+import {isFirefox} from 'mapp/utils/browser-check';
+
 let symbol = function(opts = {}) {
   let name = opts.name,
       scale = opts.scale || 1,
       id = `symbol-${name}`,
+      baseUrl = isFirefox() ? window.location : "",
       factory = function() {
         switch (name) {
           case "rect":
@@ -95,7 +98,7 @@ let symbol = function(opts = {}) {
   };
   
   proc.url = function() {
-   return `#${id}`;
+   return `${baseUrl}#${id}`;
   };
   
   return proc;

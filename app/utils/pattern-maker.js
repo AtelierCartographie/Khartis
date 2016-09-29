@@ -1,10 +1,14 @@
+import {isFirefox} from 'mapp/utils/browser-check';
+
 let _buildPatternFn = function(id, size, drawer) {
   
-  let maskId;
+  let maskId,
+      baseUrl;
   
   let fn = function() {
     
     maskId = `mask-${this.attr('id')}-${id}`;
+    baseUrl = isFirefox() ? window.location : "";
     
     let defs = this.selectAll("defs");
   
@@ -56,7 +60,7 @@ let _buildPatternFn = function(id, size, drawer) {
     if (!maskId) {
       throw new Error("Pattern not attached to svg element");
     }
-    return `#${maskId}`;
+    return `${baseUrl}#${maskId}`;
   };
 
   fn.id = function() {
