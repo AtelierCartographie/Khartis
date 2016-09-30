@@ -24,7 +24,6 @@ module.exports = function(environment) {
     symbolMinMaxSize: 5,
     symbolMaxMaxSize: 56,
 
-<<<<<<< HEAD
     maps: [
 
       {
@@ -61,47 +60,6 @@ module.exports = function(environment) {
           source: "FR-dico-DPT-2016.json",
           identifier: "ID"
         },
-        examples: [
-          {
-            id: "fr_dpt",
-            source: "fr-dpt-naissances.csv"
-          }
-        ]
-      },
-      
-    ],
-
-=======
->>>>>>> 8c3719873baeea3bd445fc7d50d223c3bd4ef2cd
-    maps: [
-
-      {
-        id: "world",
-        source: "W-110m-2015-modified.json",
-        dictionary: {
-          source: "Dictionary-country-territory.json",
-          identifier: "iso_a2"
-        },
-        compositeProjection: null,
-        examples: [
-          {
-            id: "eco2",
-            source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
-          },
-          {
-            id: "surface_forets",
-            source: "02_WB_surfaces_forets_Km2_EN_milliers-virgule_decimal-point_ISO-Latin-1.txt"
-          }
-        ]
-      },
-      {
-        id: "france dept",
-        source: "FR-dpt-2016.json",
-        dictionary: {
-          source: "FR-dico-DPT-2016.json",
-          identifier: "NUTS"
-        },
-        compositeProjection: "conicConformalFrance",
         examples: [
           {
             id: "fr_dpt",
