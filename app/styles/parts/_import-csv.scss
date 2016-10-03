@@ -18,10 +18,11 @@
   .map-preview {
     height: 200px;
     width: 200px;
+    margin: auto;
   }
 
   .map-dictionary-preview {
-    overflow-x: scroll;
+    overflow-x: auto;
     font-size: 0.9em;
     &, table {
       width: 100%;
@@ -36,6 +37,7 @@
     & tr:nth-child(even){
       background-color: greys(5%);
     }
+    margin-bottom: 10px;
   }
 
   .CodeMirror {
