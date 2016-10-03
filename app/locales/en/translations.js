@@ -274,12 +274,16 @@ export default {
 
   "basemap": {
     "world": "World countries",
-    "france dept": "France > departments (2016)"
+    "france dept": "France > departments (2016)",
+    "france reg 2015": "France > regions (2015)",
+    "france reg 2016": "France > regions (2016)"
   },
 
   "examples": {
-    "eco2": "CO2 emissions",
-    "surface_forets": "Forests surfaces",
+    "pop": "Population of States (2010-2015)",
+    "idh": "Evolution of HDI (1990-2014)",
+    "alim": "Undernourishment (2014-2016)",
+    "unesco": "Unesco sites (2015)",
     "fr_dpt": "France departments test"
   }
   

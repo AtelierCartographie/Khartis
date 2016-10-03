@@ -37,12 +37,20 @@ module.exports = function(environment) {
         },
         examples: [
           {
-            id: "eco2",
-            source: "01_WB_emissions_CO2_structureOK_ISO-Latin-1.txt"
+            id: "pop",
+            source: "01-population-etats.csv"
           },
           {
-            id: "surface_forets",
-            source: "02_WB_surfaces_forets_Km2_EN_milliers-virgule_decimal-point_ISO-Latin-1.txt"
+            id: "idh",
+            source: "02-evolution-idh-1990-2014.csv"
+          },
+          {
+            id: "alim",
+            source: "03-sous-alimentation-2014-2016.csv"
+          },
+          {
+            id: "unesco",
+            source: "05-sites-unesco-2015.csv"
           }
         ]
       },
@@ -67,6 +75,48 @@ module.exports = function(environment) {
           }
         ]
       },
+      {
+        id: "france reg 2015",
+        sources: [
+          {source: "FR-reg-2015/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2015/FRA1.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2015/FRA2.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2015/FRA3.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2015/FRA4.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.6, 0.85], [0.8, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2015/FRA5.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.8, 0.85], [1, 1]], borders: ["l", "r", "t"]}
+        ],
+        dictionary: {
+          source: "FR-dico-REG-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "fr_dpt",
+            source: "fr-dpt-naissances.csv"
+          }
+        ]
+      },
+      {
+        id: "france reg 2016",
+        sources: [
+          {source: "FR-reg-2016/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2016/FRA1.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2016/FRA2.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2016/FRA3.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2016/FRA4.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.6, 0.85], [0.8, 1]], borders: ["l", "t"]},
+          {source: "FR-reg-2016/FRA5.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.8, 0.85], [1, 1]], borders: ["l", "r", "t"]}
+        ],
+        dictionary: {
+          source: "FR-dico-REG-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "fr_dpt",
+            source: "fr-dpt-naissances.csv"
+          }
+        ]
+      }
       
     ],
 
