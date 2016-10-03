@@ -273,8 +273,8 @@ export default {
   },
 
   "basemap": {
-    "world": "carte du monde",
-    "fr_dpt": "France > départements (2016)"
+    "world": "Monde > pays",
+    "france dept": "France > départements (2016)"
   },
 
   "examples": {

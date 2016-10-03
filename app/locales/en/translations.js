@@ -68,7 +68,8 @@ export default {
           "one": "column imported",
           "other": "columns imported"
         }
-      }
+      },
+      "back": "start over by importing new data"
     }
     
   },
@@ -160,7 +161,9 @@ export default {
       "diagram": {
         "title": "frequency diagram",
         "frequencies": "frequencies",
-        "values": "values"
+        "values": "values",
+        "cumulatives": "aggregated",
+        "classes": "classed"
       },
       "title" : "settings",
       "symbols": "symbols",
@@ -269,10 +272,15 @@ export default {
     "editTitleHere": "edit legend's title"
   },
 
+  "basemap": {
+    "world": "World countries",
+    "france dept": "France > departments (2016)"
+  },
+
   "examples": {
-    "eco2": "Emissions CO2",
-    "surface_forets": "Surfaces de forêts",
-    "fr_dpt": "France département test"
+    "eco2": "CO2 emissions",
+    "surface_forets": "Forests surfaces",
+    "fr_dpt": "France departments test"
   }
   
 };
