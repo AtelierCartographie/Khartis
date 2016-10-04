@@ -284,7 +284,9 @@ export default {
     "idh": "Évolution de l'IDH (1990-2014)",
     "alim": "Sous-alimentation (2014-2016)",
     "unesco": "Sites de l'Unesco (2015)",
-    "fr_dpt": "France département test"
+    "fr_dpt-pop": "Population (2013)",
+    "fr_reg2015-pop": "Population (2013)",
+    "fr_reg2016-pop": "Population (2013)"
   }
   
 };

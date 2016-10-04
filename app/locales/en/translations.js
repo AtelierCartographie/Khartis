@@ -284,7 +284,9 @@ export default {
     "idh": "Evolution of HDI (1990-2014)",
     "alim": "Undernourishment (2014-2016)",
     "unesco": "Unesco sites (2015)",
-    "fr_dpt": "France departments test"
+    "fr_dpt-pop": "Population (2013)",
+    "fr_reg2015-pop": "Population (2013)",
+    "fr_reg2016-pop": "Population (2013)"
   }
   
 };

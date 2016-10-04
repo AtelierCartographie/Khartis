@@ -70,8 +70,8 @@ module.exports = function(environment) {
         },
         examples: [
           {
-            id: "fr_dpt",
-            source: "fr-dpt-naissances.csv"
+            id: "fr_dpt-pop",
+            source: "fr-dpt-pop-2013.csv"
           }
         ]
       },
@@ -91,8 +91,8 @@ module.exports = function(environment) {
         },
         examples: [
           {
-            id: "fr_dpt",
-            source: "fr-dpt-naissances.csv"
+            id: "fr_reg2015-pop",
+            source: "fr-reg2015-pop-2013.csv"
           }
         ]
       },
@@ -112,8 +112,8 @@ module.exports = function(environment) {
         },
         examples: [
           {
-            id: "fr_dpt",
-            source: "fr-dpt-naissances.csv"
+            id: "fr_reg2016-pop",
+            source: "fr-reg2016-pop-2013.csv"
           }
         ]
       }
