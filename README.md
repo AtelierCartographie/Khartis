@@ -1,8 +1,6 @@
 # Khartis
 
-<a href="http://www.sciencespo.fr/cartographie/khartis/"><img src="http://www.sciencespo.fr/cartographie/khartis/assets/img/Khartis-logo-N.svg" align="left" hspace="10" vspace="6" width="150"></a>   
-   
-   
+<a href="http://www.sciencespo.fr/cartographie/khartis/"><img src="http://www.sciencespo.fr/cartographie/khartis/assets/img/Khartis-logo-noir.svg" align="left" hspace="10" vspace="6" width="150"></a>   
 
 **Khartis** est un outil simple de créations de cartes thématiques.   
 Un projet open source de [Sciences Po - Atelier de cartographie](http://www.sciencespo.fr/cartographie/)   
