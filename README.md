@@ -1,7 +1,15 @@
-# Mapp
+# Khartis
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+<a href="http://www.sciencespo.fr/cartographie/khartis/"><img src="http://www.sciencespo.fr/cartographie/khartis/assets/img/Khartis-logo-N.svg" align="left" hspace="10" vspace="6" width="150"></a>   
+   
+   
+
+**Khartis** est un outil simple de créations de cartes thématiques.   
+Un projet open source de [Sciences Po - Atelier de cartographie](http://www.sciencespo.fr/cartographie/)   
+
+## Ressources
+* [wiki](https://github.com/AtelierCartographie/Khartis/wiki)
+* [FAQ](https://github.com/AtelierCartographie/Khartis/wiki/FAQ)
 
 ## Prerequisites
 
