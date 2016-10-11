@@ -21,6 +21,7 @@ export default Ember.Route.extend({
   
   setupController(controller, model) {
     controller.set('editedColumn', model);
+    controller.set('model', this.modelFor('project.step2'));
     this.set('controller.displayProjection', false);
   },
   

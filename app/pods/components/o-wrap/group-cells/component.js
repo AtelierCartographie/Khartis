@@ -2,7 +2,6 @@ import WrapperAbstract from '../-abstract/component';
 /* global Em */
 
 export default WrapperAbstract.extend({
-
   groupedIncorrectCells: function() {
     return this.get('obj.incorrectCells').reduce( (arr, cell) => {
       let row = arr.find( x => x.get('cell.value') === cell.get('value'));
@@ -17,5 +16,4 @@ export default WrapperAbstract.extend({
       return arr;
     }, Em.A());
   }.property('obj.incorrectCells.[]')
-  
 });

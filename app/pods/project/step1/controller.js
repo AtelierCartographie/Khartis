@@ -46,7 +46,10 @@ export default Ember.Controller.extend({
         
     this.get('model.project.graphLayout.basemap.dictionaryData').forEach( row => {
       csvData += row[mapKey] + ";";
-      csvData += (row["Name"] || row["name_"+this.get('i18n.locale').toUpperCase()] || row["name_EN"]) + "\n";
+      csvData += (row["name_"+this.get('i18n.locale').toUpperCase()]
+        || row["name_ISO_"+this.get('i18n.locale').toUpperCase()]
+        || row["Name"]
+        || row["name_EN"]) + "\n";
     });
 
     let blob = new Blob([csvData], {type: "text/csv"});

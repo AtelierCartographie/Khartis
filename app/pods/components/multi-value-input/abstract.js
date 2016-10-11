@@ -179,16 +179,18 @@ export default Ember.Component.extend({
       
       Ember.run.later(this, () => {
         
-        let top = this.$().offset().top + this.$().height() + 1;
-        
-        if (top + this.$('.suggestions').height() > $(window).height()) {
-          top = this.$().offset().top - this.$('.suggestions').height() - 1;
+        if (this.$()) {
+          let top = this.$().offset().top + this.$().height() + 1;
+          
+          if (top + this.$('.suggestions').height() > $(window).height()) {
+            top = this.$().offset().top - this.$('.suggestions').height() - 1;
+          }
+          
+          this.$('.suggestions-wrapper').css({
+            top: top,
+            visibility: "visible"
+          });
         }
-        
-        this.$('.suggestions-wrapper').css({
-          top: top,
-          visibility: "visible"
-        });
         
       });
         

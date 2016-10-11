@@ -6,19 +6,20 @@ import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
 export default WrapperAbstract.extend({
 
   siblings: null,
+  basemap: null,
 
-  worldBank: function() {
-    return this.get('Dictionary.data.worldBank');
-  }.property(),
-  
-  worldBankValue: Ember.computed('obj.correctedValue', {
+  dictionary: function() {
+    return this.get('basemap.dictionaryData');
+  }.property('basemap'),
+
+  dictionaryValue: Ember.computed('obj.correctedValue', {
     get() {
       let match = geoMatcher.match(this.get('obj.correctedValue'));
       return match ? match.value : null;
     },
     set(k,v) {
       if (v !== null) {
-        this.set('obj.correctedValue', v.get('iso_a2'));
+        this.set('obj.correctedValue', v.get(this.get('basemap.mapConfig.dictionary.identifier')));
       } else {
         this.set('obj.correctedValue', null);
       }
@@ -26,19 +27,29 @@ export default WrapperAbstract.extend({
     }
   }),
   
-  worldBankNameKey: function() {
-    let k = "name_ISO_"+this.get('i18n.locale').toUpperCase();
+  nameKey: function() {
+
+    let ks = [
+      "name_"+this.get('i18n.locale').toUpperCase(),
+      "name_ISO_"+this.get('i18n.locale').toUpperCase(),
+      "Name",
+      "name",
+      "name_EN"
+    ];
     
-    if (geoMatcher.keyCodes.indexOf(k) === -1) {
-      k = "name_ISO_EN";
+    for (let k of ks) {
+      if (geoMatcher.keyCodes.indexOf(k) !== -1) {
+        return k;
+      }
     }
-    
-    return k;
-  }.property('i18n.locale'),
+
+    return geoMatcher.keyCodes[0];
+
+  }.property('basemap', 'i18n.locale'),
   
-  worldBankFilterFields: function() {
-    return Em.A('iso_a3', this.get('worldBankNameKey'));
-  }.property('worldBankNameKey'),
+  filterFields: function() {
+    return Em.A(basemap.get('mapConfig.dictionary.identifier'), this.get('nameKey'));
+  }.property('nameKey'),
   
   correctedValueChange: function() {
     this.get('siblings').forEach( cell => cell.set('correctedValue', this.get('obj.correctedValue')));

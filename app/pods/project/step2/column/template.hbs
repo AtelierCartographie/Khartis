@@ -9,10 +9,10 @@
           <div class="settings horizontal center flow">
 
             <div class="solid vertical airy flow w12">
-                {{#o-wrap.column obj=editedColumn as |oCol|}}
+                {{#o-wrap.group-cells obj=editedColumn as |oCol|}}
 
                     {{#each oCol.groupedIncorrectCells as |group|}}
-                        {{#o-wrap.cell-correction obj=group.cell siblings=group.siblings as |oCell|}}
+                        {{#o-wrap.cell-correction obj=group.cell basemap=model.project.graphLayout.basemap siblings=group.siblings as |oCell|}}
 
                             <div class="horizontal airy solid flow column-editor-row">
 
@@ -24,20 +24,13 @@
 
                                 <div class="solid w5 cell-new-value">
                                     {{#if (x-eq editedColumn.meta.type 'geo')}}
-
-                                      {{#multi-value-input  uniqueSelection=oCell.worldBankValue selectionMaxLength=1 suggestionProvider=oCell.worldBank filterField=oCell.worldBankNameKey queryMinLength=0 as |facet o this|}}
+                                      {{#multi-value-input uniqueSelection=oCell.dictionaryValue selectionMaxLength=1 
+                                        suggestionProvider=oCell.dictionary filterField=oCell.nameKey
+                                        queryMinLength=0 as |facet o this|}}
                                           {{#if facet.isSuggestionRow}}
-                                              {{#unless (is-empty (get o oCell.worldBankNameKey))}}
-                                              {{get o oCell.worldBankNameKey}}
-                                              {{else}}
-                                              {{get o 'name_ISO_EN'}}
-                                              {{/unless}}
+                                            {{get o oCell.nameKey}}
                                           {{else if facet.isSelectedValue}}
-                                              {{#unless (is-empty (get o oCell.worldBankNameKey))}}
-                                              {{get o oCell.worldBankNameKey}}
-                                              {{else}}
-                                              {{get o 'name_ISO_EN'}}
-                                              {{/unless}}
+                                            {{get o oCell.nameKey}}
                                           {{/if}}
                                       {{/multi-value-input}}
 
@@ -51,7 +44,7 @@
                         {{/o-wrap.cell-correction}}
                     {{/each}}
 
-                {{/o-wrap.column}}
+                {{/o-wrap.group-cells}}
             </div>
           </div>
 
