@@ -428,8 +428,6 @@ export default Ember.Component.extend({
    
    drawBackmap: function() {
 
-    console.log("drawBackmap");
-    
     let d3l = this.d3l();
 
     let sel = d3l.select("g.backmap")
