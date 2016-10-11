@@ -111,14 +111,14 @@
         <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
 
         <div class="horizontal middle flow">
-            <label class="solid w5">Epaisseur du trait</label>
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.strokeSize')}}</label>
             <div class="horizontal half-airy solid flow w7">
                 {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
             </div>
         </div>
 
         <div class="horizontal middle flow">
-            <label class="solid w5">Opacité</label>
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
             <div class="horizontal half-airy solid flow w7">
                 {{x-slider class="fluid" band=0.1 value=editedLayer.opacity min=0 max=1}}
             </div>

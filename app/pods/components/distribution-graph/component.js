@@ -233,7 +233,7 @@ export default Ember.Component.extend({
 
     let intervalsData = this.get('mapping.intervals').map( v => ({val: v}) ),
         fillIntervals = this.displayColors ? [{val: ext[0]}].concat(intervalsData) : [];
-
+        
     bindAttr = (_) => {
         _.attr({
           x: d => x(d.val),

@@ -266,8 +266,10 @@ export default Ember.Controller.extend({
     
     removeLayer(layer) {
       this.get('ModalManager')
-        .show('confirm', "Êtes vous sur de vouloir supprimer ce calque ?",
-          "Confirmation de suppression", 'Oui', 'Annuler')
+        .show('confirm', Ember.String.capitalize(this.get('i18n').t('visualization.alert.remove.content').string),
+          Ember.String.capitalize(this.get('i18n').t('visualization.alert.remove.title').string),
+          Ember.String.capitalize(this.get('i18n').t('general.yes').string),
+          Ember.String.capitalize(this.get('i18n').t('general.cancel').string))
         .then(() => {
           this.get('model.graphLayers').removeObject(layer);
         });
@@ -275,8 +277,10 @@ export default Ember.Controller.extend({
 
     removeLabellingLayer(layer) {
       this.get('ModalManager')
-        .show('confirm', "Êtes vous sur de vouloir supprimer ce calque ?",
-          "Confirmation de suppression", 'Oui', 'Annuler')
+         .show('confirm', Ember.String.capitalize(this.get('i18n').t('visualization.alert.remove.content').string),
+          Ember.String.capitalize(this.get('i18n').t('visualization.alert.remove.title').string),
+          Ember.String.capitalize(this.get('i18n').t('general.yes').string),
+          Ember.String.capitalize(this.get('i18n').t('general.cancel').string))
         .then(() => {
           this.get('model.labellingLayers').removeObject(layer);
         });

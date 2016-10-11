@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Struct from 'mapp/models/struct';
 
-let CONTRASTS = {
+const CONTRASTS = {
   0: 1/4,
   1: 1/3,
   2: 0.5,
@@ -11,8 +11,8 @@ let CONTRASTS = {
 
 let Scale = Struct.extend({
   
-  classes: 2,
-  intervalType: "regular",
+  classes: null,
+  intervalType: null,
   valueBreak: null,
   classesBeforeBreak: 1,
   contrast: 2,
@@ -45,6 +45,7 @@ let Scale = Struct.extend({
       if (this.get('usesInterval')) {
 
         if (intervalType === "regular") {
+          console.log(classes);
           let band = (ext[1] - ext[0])/classes;
           return Array.from({length: classes-1}, (v,i) => (i+1)*band+ext[0] );
         } else if (intervalType === "quantile") {

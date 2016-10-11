@@ -107,10 +107,10 @@
             </div>
           </div>
           <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape')}}</label>
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
             <div class="horizontal half-airy solid flow w7 btn-switch-group">
-              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>cercle</div>
-              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>carré</div>
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
             </div>
           </div>
           <div class="horizontal middle flow">

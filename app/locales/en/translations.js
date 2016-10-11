@@ -16,6 +16,8 @@ export default {
     "download": "download",
     "loading": "chargement",
     "search": "rechercher",
+    "yes": "yes",
+    "no": "no",
     "error": {
      "one": "error",
      "other": "errors" 
@@ -67,7 +69,11 @@ export default {
         "colCount": {
           "one": "column imported",
           "other": "columns imported"
-        }
+        },
+        "geoRefColumn": "Geographic column"
+      },
+      "editColumn": {
+        "unrecognizedColumns": "Some cells have not been recognized"
       },
       "back": "start over by importing new data"
     }
@@ -182,7 +188,11 @@ export default {
       },
       "classes": "classes",
       "breakValue": "breaking value",
-      "shape": "shape",
+      "shape": {
+        "title": "shape",
+        "rect": "rect",
+        "circle": "circle"
+      },
       "size": "size",
       "contrast": "contrast",
       "color": {
@@ -195,6 +205,7 @@ export default {
       },
       "reverse": "reverse",
       "stroke": "stroke",
+      "strokeSize": "stroke size",
       "opacity": "opacity"
     },
     "type": {
@@ -240,6 +251,16 @@ export default {
           "2": "2 / des nombres (données ordinales)",
           "3": "3 / moins de 12 catégories à la fois"
         }
+      }
+    },
+    "alert": {
+      "remove": {
+        "title": "Confirm delete",
+        "content": "Are you sure you want to delete this layer ?"
+      },
+      "bigDataSet": {
+        "title": "Warning",
+        "content": "This layer contains a large data set. This could result in performance issues. Do you want to continue ?"
       }
     }
   },

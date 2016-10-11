@@ -21,6 +21,17 @@ module.exports = function(environment) {
       default: "natural_earth"
     },
 
+    visualization: {
+      values: {
+        surface: {
+          default: {
+            intervalType: "mean", //mean, regular, quantile
+            classes: 4
+          }
+        }
+      }
+    },
+
     symbolMinMaxSize: 5,
     symbolMaxMaxSize: 56,
 

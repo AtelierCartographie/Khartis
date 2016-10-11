@@ -3,6 +3,7 @@ import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'mapp/utils/pattern-maker';
 import Colorbrewer from 'mapp/utils/colorbrewer';
+import config from 'mapp/config/environment';
 /* global d3 */
 
 let DataMixin = Ember.Mixin.create({
@@ -94,8 +95,6 @@ let DataMixin = Ember.Mixin.create({
     pre = this.get('intervals').reduce( (p, v, i, arr) => {
       return raisePrecision(i > 0 ? arr[i-1] : undefined, v, p);
     }, pre);
-
-    console.log(pre);
 
     return pre;
   }.property('values', 'intervals'),
@@ -211,10 +210,11 @@ let SurfaceMixin = Ember.Mixin.create({
   },
 
   configureScale() {
-    if (this.get('scale.intervalType') === null) {
-      this.set('scale.intervalType', "regular");
-    }
-    this.set('scale.usesInterval', true);
+    this.get('scale').setProperties({
+      classes: this.get('scale.classes') != null ? this.get('scale.classes') : config.visualization.values.surface.default.classes,
+      intervalType: this.get('scale.intervalType') || config.visualization.values.surface.default.intervalType,
+      usesInterval: true
+    });
   },
 
   colorSet: function() {
@@ -337,9 +337,11 @@ let SymbolMixin = Ember.Mixin.create({
   },
 
   configureScale() {
-    if (this.get('scale.usesInterval') === null) {
-      this.set('scale.usesInterval', false);
-    }
+    this.get('scale').setProperties({
+      classes: this.get('scale.classes') != null ? this.get('scale.classes') : 2,
+      intervalType: this.get('scale.intervalType') || "regular",
+      usesInterval: this.get('scale.usesInterval') || false
+    });
   },
   
   getScaleOf(type) {

@@ -17,8 +17,10 @@ export default Ember.Route.extend({
       
       if (layer.get('mapping.rules').length > 30) {
         return this.get('ModalManager')
-          .show('confirm', "Ce calque contient beaucoup de valeurs et cela pourra nuire aux performances de l'application. Voulez-vous continuer ?",
-            "Attention", 'Oui', 'Annuler')
+          .show('confirm', Ember.String.capitalize(this.get('i18n').t('visualization.alert.bigDataSet.content').string),
+            Ember.String.capitalize(this.get('i18n').t('visualization.alert.bigDataSet.title').string),
+            Ember.String.capitalize(this.get('i18n').t('general.yes').string),
+            Ember.String.capitalize(this.get('i18n').t('general.cancel').string))
           .then(() => {
             return layer;
           }).catch( () => {

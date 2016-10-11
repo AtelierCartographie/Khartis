@@ -16,6 +16,8 @@ export default {
     "download": "télécharger",
     "loading": "chargement",
     "search": "rechercher",
+    "yes": "oui",
+    "no": "non",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
@@ -67,7 +69,11 @@ export default {
         "colCount": {
           "one": "colonnes importée",
           "other": "colonnes importées"
-        }
+        },
+        "geoRefColumn": "Colonne de référence géographique"
+      },
+      "editColumn": {
+        "unrecognizedColumns": "Certaines cellules n'ont pas été reconnues"
       },
       "back": "importer de nouvelles données"
     }
@@ -182,7 +188,11 @@ export default {
       },
       "classes": "classes",
       "breakValue": "valeur de rupture",
-      "shape": "forme",
+      "shape": {
+        "title": "forme",
+        "rect": "carré",
+        "circle": "cercle"
+      },
       "size": "taille",
       "contrast": "contraste",
       "color": {
@@ -195,6 +205,7 @@ export default {
       },
       "reverse": "inverser",
       "stroke": "contour",
+      "strokeSize": "épaisseur du trait",
       "opacity": "opacité"
     },
     "type": {
@@ -240,6 +251,16 @@ export default {
           "2": "2 / des nombres (données ordinales)",
           "3": "3 / moins de 12 catégories à la fois"
         }
+      }
+    },
+    "alert": {
+      "remove": {
+        "title": "Confirmation de suprression",
+        "content": "Êtes vous sur de vouloir supprimer ce calque ?"
+      },
+      "bigDataSet": {
+        "title": "Attention",
+        "content": "Ce calque contient beaucoup de valeurs et cela pourra nuire aux performances de l'application. Voulez-vous continuer ?"
       }
     }
   },
