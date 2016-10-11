@@ -42,10 +42,10 @@ let Scale = Struct.extend({
           ext = d3.extent(values).map( (v,i) => bounds[i] !== undefined ? bounds[i] : v ),
           vals = values.filter( v => isInside(ext, v) );
       
+          console.log(classes);
       if (this.get('usesInterval')) {
 
         if (intervalType === "regular") {
-          console.log(classes);
           let band = (ext[1] - ext[0])/classes;
           return Array.from({length: classes-1}, (v,i) => (i+1)*band+ext[0] );
         } else if (intervalType === "quantile") {

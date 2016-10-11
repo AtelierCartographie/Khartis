@@ -81,6 +81,28 @@
           
           
           <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
+            <div class="horizontal half-airy solid flow w7 btn-switch-group">
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
+            </div>
+          </div>
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+            {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
+            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
+            </div>
+          </div>
+          {{#unless editedLayer.mapping.scale.usesInterval}}
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+              {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=0 max=4}}
+            </div>
+          </div>
+          {{/unless}}
+          <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
               {{input-numeric.one-way
@@ -106,28 +128,6 @@
               {{/if}}
             </div>
           </div>
-          <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
-            <div class="horizontal half-airy solid flow w7 btn-switch-group">
-              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
-              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
-            </div>
-          </div>
-          <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
-            <div class="horizontal half-airy solid flow w7">
-            {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
-            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
-            </div>
-          </div>
-          {{#if (x-eq editedLayer.mapping.scale.intervalType 'linear')}}
-          <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
-            <div class="horizontal half-airy solid flow w7">
-              {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=0 max=4}}
-            </div>
-          </div>
-          {{/if}}
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=(x-ternary editedLayer.mapping.scale.diverging 2 1))}}</label>
             <div class="horizontal half-airy solid flow w7">
