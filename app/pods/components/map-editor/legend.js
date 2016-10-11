@@ -84,13 +84,16 @@ export default Ember.Mixin.create({
       });
       
     if (!legendContentG.empty()) {
-      
-      let bbox = legendContentG.node().getBBox();
+
+      let padding = 7,
+          contentBox = legendContentG.node().getBBox();
       
       legendG.select("rect.legend-bg")
         .attr({
-          width: bbox.width + 18,
-          height: bbox.height + 20
+          x: contentBox.x - padding,
+          y: contentBox.y - padding,
+          width: contentBox.width + 2*padding,
+          height: contentBox.height + 2*padding,
         });
         
     }
