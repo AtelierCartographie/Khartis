@@ -561,11 +561,12 @@ export default Ember.Component.extend({
 
       let lands = this.getFeaturesFromBase("lands"),
           centroids = this.getFeaturesFromBase("centroids");
-
+          
       data = varCol.get('body').map( (cell, index) => {
         
-        let geoData = geoDef.get('geo').get('body').objectAt(index).get('postProcessedValue'),
+        let geoData = geoDef.get('geo.body').objectAt(index).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
+
         if (geoData) {
           return {
             id: geoData.value[geoKey],

@@ -55,7 +55,7 @@ function GeoMatcher() {
       if (!this._keys) {
         this._keys = this.dic.reduce( 
           (kSet, v) => {
-            Object.keys(v).forEach( k => kSet.add(k));
+            Object.keys(v).forEach( k => k !== "sov_a3" && k !== "sovereignt" && kSet.add(k) );
             return kSet;
           }, new Set());
       }
@@ -115,12 +115,8 @@ GeoMatcher.prototype._buildIndex = function() {
   this._dic.forEach( (r, idx) => {
     this.keyCodes.forEach( k => {
       let l = (""+r[k]).length;
-      if (!this._lIndex.has(l)) {
-        this._lIndex.set(l, new Map());
-      }
-      if (!this._lIndex.get(l).has(idx)) {
-        this._lIndex.get(l).set(idx, []);
-      }
+      !this._lIndex.has(l) && this._lIndex.set(l, new Map());
+      !this._lIndex.get(l).has(idx) && this._lIndex.get(l).set(idx, []);
       this._lIndex.get(l).get(idx).push(k);
     });
   });
