@@ -175,6 +175,8 @@ export default function() {
   }
 
   function mousedown() {
+    console.log(d3.event.defaultPrevented);
+    if (d3.event.defaultPrevented) return;
     var target = this,
         eventTarget = d3.event.target,
         moved = 0,

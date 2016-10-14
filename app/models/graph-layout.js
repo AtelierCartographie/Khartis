@@ -5,19 +5,31 @@ import Struct from './struct';
 import Projection from './projection';
 import Basemap from './basemap';
 
+const MARGIN_DEFAULTS = {t: 30, b: 30, l: 16, r: 16};
+
 var Margin = Struct.extend({
   
-  l: 16,
-  r: 16,
-  t: 30,
-  b: 200,
+  manual: false,
+  l: MARGIN_DEFAULTS.l,
+  r: MARGIN_DEFAULTS.r,
+  t: MARGIN_DEFAULTS.t,
+  b: MARGIN_DEFAULTS.b,
   
   h: function() {
     return this.get('l') + this.get('r');
   }.property('l', 'r'),
+  
   v: function() {
     return this.get('t') + this.get('b');
   }.property('t', 'b'),
+
+  getInitialValue(k) {
+    return MARGIN_DEFAULTS[k];
+  },
+
+  resetValue(k) {
+    this.set(k, MARGIN_DEFAULTS[k]);
+  },
 
   deferredChange: Ember.debouncedObserver(
     'l', 'r', 't', 'b', 'h', 'v',
@@ -28,6 +40,7 @@ var Margin = Struct.extend({
   
   export() {
     return this._super({
+      manual: this.get('manual'),
       l: this.get('l'),
       r: this.get('r'),
       t: this.get('t'),
@@ -42,6 +55,7 @@ Margin.reopenClass({
   restore(json, refs = {}) {
       let o = this._super(json, refs);
       o.setProperties({
+          manual: json.manual,
           l: json.l,
           r: json.r,
           t: json.t,
@@ -83,7 +97,7 @@ var GraphLayout = Struct.extend({
   ty: 0,
 	width: 1024,
 	height: 1024,
-	margin: Margin.create(),
+	margin: null,
   zoom: 1,
   precision: 2.5,
   legendTx: null,
@@ -93,7 +107,7 @@ var GraphLayout = Struct.extend({
   projection: null,
 
   showLegendChange: function() {
-    this.set('margin.b', this.get('showLegend') ? this.get('height') * 0.33 : 30);
+    //this.set('margin.b', this.get('showLegend') ? this.get('height') * 0.33 : 30);
   }.observes('showLegend', 'height').on("init"),
   
 	hOffset: function(screenWidth) {
@@ -141,7 +155,7 @@ var GraphLayout = Struct.extend({
 GraphLayout.reopenClass({
   
   createDefault() {
-    let o = GraphLayout.create({});
+    let o = GraphLayout.create({margin: Margin.create()});
     return o;
   },
   

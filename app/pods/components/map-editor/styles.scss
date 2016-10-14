@@ -10,6 +10,12 @@
     }
   }
 
+  .margin-resizer rect {
+    opacity: 0;
+    &.t, &.b { cursor: ns-resize; }
+    &.l, &.r { cursor: ew-resize; }
+  }
+
   .fg {
     pointer-events: none;
   }
@@ -17,6 +23,5 @@
   .legend-title {
     cursor: pointer;
   }
-
 
 }

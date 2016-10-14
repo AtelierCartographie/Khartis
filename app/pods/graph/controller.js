@@ -69,7 +69,8 @@ export default Ember.Controller.extend({
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
-    'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment'),
+    'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment',
+    'model.graphLayout.margin._defferedChangeIndicator'),
   
   layersChange: function() {
 
@@ -192,7 +193,7 @@ export default Ember.Controller.extend({
       viewBox: `${x} ${y} ${w} ${h}`
     });
 
-    d3Node.selectAll("g.margin,g.offset").remove();
+    d3Node.selectAll("g.margin,g.offset,g.margin-resizer").remove();
     d3Node.selectAll("rect.fg").remove();
 
     d3Node.append("text")

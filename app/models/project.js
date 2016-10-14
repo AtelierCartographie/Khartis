@@ -35,6 +35,9 @@ let Project = Struct.extend({
     },
     
     importRawData(data) {
+      this.set('graphLayers', Em.A());
+      this.set('labellingLayers', Em.A());
+      this.set('geoDef', null);
       this.set('data', DataStruct.createFromRawData(data));
       this.set('report', this.get('data').analyse());
     },

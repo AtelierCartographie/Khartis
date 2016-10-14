@@ -45,11 +45,10 @@ export default Ember.Mixin.create({
         });
         this.sendAction('onAskVersioning', "freeze");
       });
-      
-    this.updateLegendPosition();
-    this.updateLegendOpacity();
+    
     this.drawLegend();
     legendG.call(drag);
+    this.updateLegendOpacity();
     
   },
   
@@ -63,27 +62,43 @@ export default Ember.Mixin.create({
       return;
     }
     
-    if (t.x === null || t.y === null) {
-      
-      let bbox = legendG.node().getBBox(),
-          {w, h} = this.getSize();
-      
-      t.x = (w - bbox.width) / 2;
-      t.y = h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + 16;
-      
-    } else {
-      
-      t = this.getViewboxTransform().invert(t);
-      
-    }
-    
-    legendG.attr({
+    let autoMargin = !this.get('graphLayout.margin.manual'),
+        bbox = legendG.node().getBBox(),
+        {w, h} = this.getSize();
+
+    if (!legendContentG.empty()) {
+
+      if (t.x === null || t.y === null) {
+        
+        let vPadding = 16;
+        t.x = (w - bbox.width) / 2;
+
+        if (autoMargin) {
+          this.set('graphLayout.margin.b', 
+            Math.min(
+              this.get('graphLayout.height')*0.33,
+              bbox.height+2*vPadding+this.get('graphLayout.margin').getInitialValue('b')
+              )
+            );
+          t.y = h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + vPadding;
+        } else {
+          //fix tx, ty
+          t.y = h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + vPadding;
+          this.get('graphLayout').setProperties({
+              legendTx: t.x,
+              legendTy: t.y
+            });
+        }
+        
+      } else {
+        t = this.getViewboxTransform().invert(t);
+      }
+
+      legendG.attr({
         "tx": t.x,
         "ty": t.y,
         "transform": d3lper.translate({tx: t.x, ty: t.y})
       });
-      
-    if (!legendContentG.empty()) {
 
       let padding = 7,
           contentBox = legendContentG.node().getBBox();
@@ -96,11 +111,15 @@ export default Ember.Mixin.create({
           height: contentBox.height + 2*padding,
         });
         
+    } else {
+      if (autoMargin) {
+        this.get('graphLayout.margin').resetValue('b');
+      }
     }
     
   }.observes('$width', '$height',
     'graphLayout.legendTx', 'graphLayout.legendTy',
-    'graphLayout.width', 'graphLayout.height'),
+    'graphLayout.width', 'graphLayout.height', 'graphLayout.margin.manual'),
   
   updateLegendOpacity: function() {
     
@@ -123,6 +142,7 @@ export default Ember.Mixin.create({
     if (!this.get('graphLayout.showLegend') || !this.get('graphLayers').length) {
       containerG.remove();
       bgG.remove();
+      this.updateLegendPosition();
       return;
     }
     

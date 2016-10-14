@@ -221,7 +221,7 @@ export default Ember.Component.extend({
 		// ===========
 
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'projector'),
+    'displayOffsets', 'projector'),
 	
 	updateColors: function() {
 		
@@ -561,7 +561,7 @@ export default Ember.Component.extend({
 
       let lands = this.getFeaturesFromBase("lands"),
           centroids = this.getFeaturesFromBase("centroids");
-      
+
       data = varCol.get('body').map( (cell, index) => {
         
         let geoData = geoDef.get('geo').get('body').objectAt(index).get('postProcessedValue'),
@@ -662,7 +662,6 @@ export default Ember.Component.extend({
 
     d3Layer.classed("surface", true);
     d3Layer.selectAll("*:not(.surface)").remove();
-      
     let sel = d3Layer.selectAll(".feature")
       .data(data)
       .call(bindAttr);

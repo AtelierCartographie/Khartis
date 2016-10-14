@@ -43,6 +43,7 @@ function GeoMatcher() {
       return this._dic;
     },
     set(v) {
+      _cache = new Map();
       this._dic = v;
       this._keys = undefined;
       this._buildIndex();
