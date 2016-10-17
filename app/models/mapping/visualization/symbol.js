@@ -8,7 +8,7 @@ let SymbolVisualization = Struct.extend({
   colorBeforeBreak: "blue",
   shape: "circle",
   strokeColor: "#404040",
-  stroke: 2,
+  stroke: 1,
   maxSize: 10,
 
   absoluteMinSize: function() {

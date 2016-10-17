@@ -74,6 +74,8 @@ export default Ember.Component.extend({
 		var d3g = this.d3l();
     
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    d3.ns.prefix.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
+    d3g.attr("xmlns:ai", d3.ns.prefix.illustrator);
     d3g.style("font-family", "verdana");
 		
 		// ========
@@ -698,7 +700,7 @@ export default Ember.Component.extend({
       
         symbol.call(svg);
       
-        let el = _.append("use").attr("xlink:href", symbol.url());
+        let el = symbol.insert(_, r*2);//_.append("use").attr("xlink:href", symbol.url());
         
         if (shape === "bar") {
           
@@ -710,14 +712,17 @@ export default Ember.Component.extend({
             });
           
         } else {
-          
-            el.attr({
+/*            el.attr({
               "width": r*2,
               "height": r*2,
               "x": d => -r,
               "y": d => -r,
               "stroke-width": symbol.scale(mapping.get('visualization.stroke'), r*2)
-            });
+            });*/
+            _.select("*").attr({
+              "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
+            })
+            .attr("ai:ai:stroke-width", mapping.get('visualization.stroke'));
             
         }
 

@@ -15,7 +15,9 @@
       </li>
     </ul>
   </div>
+  {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
   <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram.title')}}</div>
+  {{/x-tooltip}}
   <div class="body">
     <div class="settings vertical flow">
       {{#o-wrap.diagram as |wrap|}}
@@ -31,7 +33,9 @@
       <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
       <div class="solid vertical flow">
         <div class="horizontal middle flow">
+            {{#x-tooltip message=(t 'visualization.settings.discretization.tooltip.title')}}
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
+            {{/x-tooltip}}
             <div class="solid w7">
               {{#x-dropdown-plus as |facet|}}
                 {{#facet.trigger class="filled padded-h w8"}}

@@ -11,7 +11,7 @@ let symbol = function(opts = {}) {
             return {
               tag: "path",
               attrs: {
-                d: "M0,0 100,0 100,100 0,100 0,0"
+                d: "M0,0 100,0 100,100 0,100 0,0Z"
               },
               viewBox: [0, 0, 100, 100]
             };
@@ -78,19 +78,43 @@ let symbol = function(opts = {}) {
           max = Math.max.apply(this, conf.viewBox),
           shift = 0.2*max;
       
-      symbol = defs.append("symbol")
+      /*symbol = defs.append("symbol")
         .attr({
           id: id,
           viewBox: Array.from([-shift, -shift, 2*shift, 2*shift], (v, i) => v + conf.viewBox[i]).join(' ')
-        });
+        });*/
       
       symbol.append(conf.tag).attr(conf.attrs);
       
     }
     
   };
+
+  proc.insert = function(root, size) {
+
+    let conf = factory(name),
+          max = Math.max.apply(this, conf.viewBox),
+          s = proc.scale(size);
+
+    Object.assign(conf.attrs, {
+      transform: `translate(${-conf.viewBox[2]/2}, ${-conf.viewBox[3]/2})`
+    });
+
+    return root
+      .append("g")
+      .attr("transform", `scale(${s})`)
+      .append(conf.tag).attr(conf.attrs);
+
+  };
+
+  proc.scale = function(v) {
+    let conf = factory(name),
+          max = Math.max.apply(this, conf.viewBox);
+   
+    return v / max;
+  };
   
-  proc.scale = function(v, w) {
+  proc.unscale = function(v, w) {
     let conf = factory(name),
           max = Math.max.apply(this, conf.viewBox);
    

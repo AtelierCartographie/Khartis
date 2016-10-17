@@ -7,6 +7,8 @@ import TextEditor from './text-editor/component';
 
 export default Ember.Mixin.create({
   
+  resizingMargin: false,
+
   legendInit() {
 
     let legendG = this.d3l().append("g")
@@ -20,6 +22,7 @@ export default Ember.Mixin.create({
       .on("dragstart", () => {
         d3.event.sourceEvent.stopPropagation();
         legendG.classed("dragging", true);
+        this.set('resizingMargin', true);
       })
       .on("drag", () => {
         let bbox = this.d3l().select(".bg").node().getBBox(),
@@ -35,6 +38,7 @@ export default Ember.Mixin.create({
       })
       .on("dragend", () => {
         legendG.classed("dragging", false);
+        this.set('resizingMargin', false);
         let t = this.getViewboxTransform()({
           x: legendG.attr('tx'),
           y: legendG.attr('ty')
@@ -100,7 +104,7 @@ export default Ember.Mixin.create({
         "transform": d3lper.translate({tx: t.x, ty: t.y})
       });
 
-      let padding = 7,
+      let padding = 12,
           contentBox = legendContentG.node().getBBox();
       
       legendG.select("rect.legend-bg")
@@ -153,6 +157,7 @@ export default Ember.Mixin.create({
           "x": -18,
           "y": -5
         })
+        .attr("stroke", "#F0F0F0")
         .attr("fill", "white");
     }
     
@@ -285,10 +290,10 @@ export default Ember.Mixin.create({
 
           
           let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
-              dy = r.y*0.2, //compense la marge sur les symboles
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
 
-          let symH = Math.max(2*r.y - 2*dy, 12);
+          let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
+              dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
       
           d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
 
@@ -297,30 +302,29 @@ export default Ember.Mixin.create({
           symbol.call(svg);
           
           let g = d3.select(this).append("g")
-            .attr("flow-css", `margin-right: ${-r.x}px; margin-top: ${-dy}; width: ${r.x}px`);
+            .attr("flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
           
-          g.append("use")
+          let symG = g.append("g")
+            .attr("transform", d3lper.translate({ty: r.y+d.get('mapping.visualization.stroke')/2 - dy/2}));
+
+          symbol.insert(symG, r.x*2)
             .attr({
-              "xlink:href": symbol.url(),
-              "width": r.x*2,
-              "height": r.y*2,
-              "transform": d3lper.translate({tx: -r.x, ty: 0}),
-              "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
+              "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+              "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "opacity": d.get('opacity')
             });
             
-          g = d3.select(this).append("g")
-            .attr("flow-css", `margin-top: ${-dy};`);
+          g = d3.select(this).append("g");
             
           if (i === 0) {
             
             g.append("line").attr({
               x1: 0,
-              y1: -2 + dy,
+              y1: -2,
               x2: textOffset - 6,
-              y2: -2 + dy,
+              y2: -2,
               stroke: "black"
             });
             
@@ -328,7 +332,7 @@ export default Ember.Mixin.create({
               .text( formatter(d.get('mapping.extent')[0]) )
               .attr({
                 x: textOffset,
-                y: -2 + dy,
+                y: -2,
                 dy: "0.3em",
                 "font-size": "0.75em"
               });
@@ -337,9 +341,9 @@ export default Ember.Mixin.create({
           
           g.append("line").attr({
               x1: 0,
-              y1: Math.max(2*r.y - dy + 2, 10),
+              y1: Math.max(symH+2, 10),
               x2: textOffset - 6,
-              y2: Math.max(2*r.y - dy + 2, 10),
+              y2: Math.max(symH+2, 10),
               stroke: "black"
             });
           
@@ -347,7 +351,7 @@ export default Ember.Mixin.create({
             .text( v => formatter(v) )
             .attr({
               x: textOffset,
-              y: Math.max(2*r.y - dy + 2, 10),
+              y: Math.max(symH+2, 10),
               dy: "0.3em",
               "font-size": "0.75em"
             });
@@ -358,76 +362,74 @@ export default Ember.Mixin.create({
         let appendSymbolIntervalLinearLabel = function(val, i) {
           
           let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
-              dy = r.y*0.2, //compense la marge sur les symboles
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
       
           if (!(r.x > 0 && r.y > 0)) return;
 
-          let symH = Math.max(2*r.y - 2*dy, 12),
-              ty = symH > (2*r.y - 2*dy) ? (symH - (2*r.y - 2*dy)) / 2 : 0;
+          let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
+              dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 2px`);
+          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
           
           symbol.call(svg);
           
           let g = d3.select(this).append("g")
-           .attr("flow-css", `margin-right: ${-r.x}; margin-top: ${-dy}; width: ${r.x}px`);
-          
-          g.append("use")
+           .attr("flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+
+          let symG = g.append("g")
+            .attr("transform", d3lper.translate({ty: r.y - dy/2}));
+
+          symbol.insert(symG, r.x*2)
             .attr({
-              "xlink:href": symbol.url(),
-              "width": r.x*2,
-              "height": r.y*2,
-              "transform": d3lper.translate({tx: -r.x, ty: ty}),
-              "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
+              "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+              "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "opacity": d.get('opacity')
             });
             
-          g = d3.select(this).append("g")
-            .attr("flow-css", `margin-top: ${-dy};`);
-          
-          g.append("text")
+          d3.select(this).append("g")
+            .append("text")
             .text( v => formatter(v) )
             .attr({
               x: textOffset,
-              y: r.y + ty,
+              y: r.y - dy/2,
               dy: "0.3em",
               "font-size": "0.75em"
-            })
+            });
           
         };
         
         let appendRuleLabel = function(rule, i) {
 
-          let r,
-              dy = 0; //compense la marge sur les symboles
+          let r;
 
           if (d.get('mapping.visualization.type') === "symbol") {
 
-            let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape');
+            let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
+                symH = 2*rule.get('size') + d.get('mapping.visualization.stroke');
             
-            r = {x: rule.get('size'), y: rule.get('size')};
-            dy = r.y*0.2;
+            r = {
+              x: rule.get('size'),
+              y: rule.get('size')
+            };
             
-            //height trouvée empiriquement car la bbox ne fait pas la bonne taille avec les symbols
-            d3.select(this).attr("flow-css", `flow: horizontal; height: ${2*r.y - 2*dy}px; stretch: true; margin-bottom: 4px`);
+            d3.select(this).attr("flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
 
             let symbol = SymbolMaker.symbol({name: shape});
       
             symbol.call(svg);
             
             let g = d3.select(this).append("g")
-              .attr("flow-css", `margin-right: ${-r.x}px; margin-top: ${-dy}px; width: ${r.x}px`);
+              .attr("flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+            
+            let symG = g.append("g")
+              .attr("transform", d3lper.translate({ty: r.y}));
 
-            g.append("use")
+            symbol.insert(symG, r.x*2)
               .attr({
-                "xlink:href": symbol.url(),
-                "width": r.x*2,
-                "height": r.y*2,
-                "transform": d3lper.translate({tx: -r.x, ty: 0}),
-                "stroke-width": symbol.scale(d.get('mapping.visualization.stroke'), r.x*2),
+                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+                "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": rule.get('strokeColor'),
                 "fill": rule.get('color'),
                 "opacity": d.get('opacity')
@@ -467,10 +469,8 @@ export default Ember.Mixin.create({
             
           }
           
-          let g = d3.select(this).append("g")
-            .attr("flow-css", `margin-top: ${-dy}`);
-          
-          g.append("text")
+          d3.select(this).append("g")
+            .append("text")
             .text( rule.get('label') )
             .attr({
               x: textOffset,
@@ -480,6 +480,12 @@ export default Ember.Mixin.create({
             });
           
         };
+
+        //re-calcul de l'offset du texte si il y a des rules symboles
+        if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.type') === "symbol") {
+          xOrigin = Math.max.apply(null, [xOrigin].concat(d.get('mapping.rules').map( r => r.get('size') )));
+          textOffset = xOrigin + 16;
+        }
 
         //regroupe les intervales si l'écart est minime
         let compressIntervals = function(intervals) {
@@ -563,7 +569,7 @@ export default Ember.Mixin.create({
         }
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
-          
+
           let sel = el.selectAll("g.rule")
             .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10))
             .each(appendRuleLabel);

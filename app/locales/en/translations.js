@@ -35,6 +35,10 @@ export default {
         "testData": "Try our sample datasets",
         "selectAMap": "Select a map"
       },
+      "tooltip": {
+        "csv": "Comma separated values files that ends with .csv",
+        "resumeProject": "Will resume the last project edited on this computer "
+      },
       "pasteCsv": "past your data here or drop a csv file",
       "downloadCsvModel": "download model (.csv)"
     },
@@ -70,7 +74,11 @@ export default {
           "one": "column imported",
           "other": "columns imported"
         },
-        "geoRefColumn": "Geographic column"
+        "geoRefColumn": "Geographic column",
+        "geoRefColumnNotFound": "No geographic column has been found",
+        "tooltip": {
+          "geoRefColumn": "The column from your imported data that maps to a geographic zone"
+        }
       },
       "editColumn": {
         "unrecognizedColumns": "Some cells have not been recognized"
@@ -169,15 +177,24 @@ export default {
         "frequencies": "frequencies",
         "values": "values",
         "cumulatives": "aggregated",
-        "classes": "classed"
+        "classes": "classed",
+        "tooltip": {
+          "title": "Histogram that represents the distribution of the data"
+        }
       },
       "title" : "settings",
       "symbols": "symbols",
       "discretization": {
         "title": "discretization",
+        "tooltip": {
+          "title": "Discretization concerns the process of transferring continuous functions, models, and equations into discrete counterparts"
+        },
         "method": {
           "unique": "proportional",
-          "grouped": "grouped into classes"
+          "grouped": "grouped into classes",
+          "tooltip": {
+            "grouped": "Values are grouped into classes"
+          }
         },
         "type": {
           "regular": "regular intervals",

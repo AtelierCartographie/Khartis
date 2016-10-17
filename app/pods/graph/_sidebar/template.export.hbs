@@ -96,9 +96,14 @@
       </div>
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'general.download')}}</label>
-        <div class="horizontal solid half-airy flow w7">
-          {{x-button class="small filled primary" action=(action 'export' 'svg') label="SVG"}}
-          {{x-button class="small filled primary" action=(action 'export' 'png') label="PNG"}}
+        <div class="vertical half-airy solid flow w7">
+          <div class="horizontal flow half-airy">
+            {{x-button class="small filled primary" action=(action 'export' 'svg') label="SVG"}}
+            {{x-button class="small filled primary" action=(action 'export' 'png') label="PNG"}}
+          </div>
+          <div class="solid flow">
+            {{x-button class="small filled primary" action=(action 'export' 'svg' 'illustrator') label="SVG (optimisé illustrator)"}}
+          </div>
         </div>
       </div>
     </div>

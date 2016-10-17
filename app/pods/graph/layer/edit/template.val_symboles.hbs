@@ -15,7 +15,9 @@
       </li>
     </ul>
   </div>
+  {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
   <div class="title underlined">{{x-capitalize (t 'visualization.settings.diagram.title')}}</div>
+  {{/x-tooltip}}
   <div class="body">
     <div class="settings vertical flow">
       {{#o-wrap.diagram as |wrap|}}
@@ -34,12 +36,18 @@
         {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
         <ul class="tabs brewer-tabs">
           <li tab-id="linear-tab">{{t 'visualization.settings.discretization.method.unique'}}</li>
-          <li tab-id="classes-tab">{{t 'visualization.settings.discretization.method.grouped'}}</li>
+          <li tab-id="classes-tab">
+            {{#x-tooltip message=(t 'visualization.settings.discretization.method.tooltip.grouped')}}
+            <span>{{t 'visualization.settings.discretization.method.grouped'}}</span>
+            {{/x-tooltip}}
+          </li>
         </ul>
         <div class="panes">
           <div id="classes-tab" class="tab-pane {{if editedLayer.mapping.scale.usesInterval 'active'}}">
               <div class="horizontal middle flow">
+                {{#x-tooltip message=(t 'visualization.settings.discretization.tooltip.title')}}
                 <label class="solid w5">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
+                {{/x-tooltip}}
                 <div class="solid w7">
                   {{#x-dropdown-plus as |facet|}}
                     {{#facet.trigger class="filled padded-h w8"}}

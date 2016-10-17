@@ -84,8 +84,9 @@ export default Ember.Controller.extend({
   }.observes('model.graphLayers.[]', 'model.graphLayers.@each._defferedChangeIndicator',
     'model.labellingLayers.[]', 'model.labellingLayers.@each._defferedChangeIndicator'),
 
-  exportSVG() {
-    var blob = new Blob([this.exportAsHTML()], {type: "image/svg+xml"});
+  exportSVG(targetIllustrator) {
+    let compatibility = targetIllustrator ? {illustrator: true} : undefined,
+        blob = new Blob([this.exportAsHTML(compatibility)], {type: "image/svg+xml"});
     saveAs(blob, "export_mapp.svg");
   },
 
@@ -169,7 +170,7 @@ export default Ember.Controller.extend({
 
   },
 
-  exportAsHTML() {
+  exportAsHTML(compatibility = {}) {
     
     try {
         var isFileSaverSupported = !!new Blob();
@@ -209,6 +210,29 @@ export default Ember.Controller.extend({
       
     d3Node.select(".outer-map")
       .attr("clip-path", "url(#viewport-clip)");
+
+    if (compatibility.illustrator) {
+      ["stroke-width"].forEach(attr => {
+        d3Node.selectAll(`[ai\\:${attr}]`)[0]
+          .forEach( (node) => {
+            (node = d3.select(node))
+              .attr({
+                [attr]: node.attr(`ai:ai:${attr}`),
+                [`ai:ai:${attr}`]: null
+              });
+              
+          });
+      });
+    }
+
+    //suppression des instructions flow
+    d3Node.selectAll(`[flow-css]`)[0]
+      .forEach( (node) => {
+        (node = d3.select(node))
+          .attr({
+            "flow-css": null
+          });
+      });
               
     let html = d3Node.node()
       .outerHTML
@@ -385,9 +409,9 @@ export default Ember.Controller.extend({
       this.get('editedLayer.mapping').generateRules(true);
     },
     
-    export(format) {
+    export(format, target = undefined) {
       if (format === "svg") {
-        this.exportSVG();
+        this.exportSVG(target === "illustrator");
       } else {
         this.exportPNG();
       }

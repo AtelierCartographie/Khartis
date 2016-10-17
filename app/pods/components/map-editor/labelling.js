@@ -64,9 +64,9 @@ export default Ember.Mixin.create({
           
         })
         .attr("text-anchor", {
-            left: "start",
-            center: "middle",
-            right: "end"
+            start: "start",
+            middle: "middle",
+            end: "end"
           }[graphLayer.get('mapping.visualization.anchor')])
         .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'));
         

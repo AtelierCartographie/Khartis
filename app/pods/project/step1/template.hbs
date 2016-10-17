@@ -70,11 +70,16 @@
         {{/x-button}}
       </div>
     </div>
-
+    
     <h2 class="title">
       {{#file-loader label="" class="import-link" onContentLoaded="loadCsv" tagName="a"}}
       {{x-capitalize (t 'project.step1.title.import')}}
-      {{/file-loader}}&nbsp;{{t 'project.step1.title.fileCsv'}}
+      {{/file-loader}}&nbsp;
+      {{#x-tooltip message=(t 'project.step1.tooltip.csv')}}
+      <span>
+      {{t 'project.step1.title.fileCsv'}}
+      </span>
+      {{/x-tooltip}}
     </h2>
 
     <div class="vertical airy flow">
@@ -96,9 +101,11 @@
             {{x-capitalize (t "general.next")}}
         {{/x-button}}
         {{#if canResumeProject}}
+        {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject')}}
         {{#x-button class="solid filled default" action=(action 'resumeProject')}}
             {{x-capitalize (t "project.resume")}}
         {{/x-button}}
+        {{/x-tooltip}}
         {{/if}}
       </div>
 

@@ -35,6 +35,10 @@ export default {
         "testData": "Essayer nos données test",
         "selectAMap": "Sélectionner un fond de carte"
       },
+      "tooltip": {
+        "csv": "Fichers de type « comma separated value » finissant par .csv",
+        "resumeProject": "Le dernier projet édité sur ce poste sera restauré"
+      },
       "pasteCsv": "coller ici vos données ou glisser un fichier csv",
       "downloadCsvModel": "télécharger le modèle (.csv)"
     },
@@ -70,7 +74,11 @@ export default {
           "one": "colonnes importée",
           "other": "colonnes importées"
         },
-        "geoRefColumn": "Colonne de référence géographique"
+        "geoRefColumn": "Colonne de référence géographique",
+        "geoRefColumnNotFound": "Aucune colonne géoréférençable n'a été trouvée",
+        "tooltip": {
+          "geoRefColumn": "La colonne de votre import identifiant la zone géographique à représenter"
+        }
       },
       "editColumn": {
         "unrecognizedColumns": "Certaines cellules n'ont pas été reconnues"
@@ -169,15 +177,24 @@ export default {
         "frequencies": "fréquences",
         "values": "valeurs",
         "cumulatives": "cumulées",
-        "classes": "classes"
+        "classes": "classes",
+        "tooltip": {
+          "title": "Histogramme permettant de représenter la répartition des données"
+        }
       },
       "title" : "réglages",
       "symbols": "symboles",
       "discretization": {
         "title": "discrétisation",
+        "tooltip": {
+          "title": "La discrétisation consiste au découpage de données en classes homogènes"
+        },
         "method": {
           "unique": "proportionnels",
-          "grouped": "regroupés en classes"
+          "grouped": "regroupés en classes",
+          "tooltip": {
+            "grouped": "Les valeurs sont regroupées en classes"
+          }
         },
         "type": {
           "regular": "intervalles réguliers",
