@@ -63,6 +63,7 @@ export default Ember.Mixin.create({
           })
           
         })
+        .attr("dy", "0.3em")
         .attr("text-anchor", {
             start: "start",
             middle: "middle",
