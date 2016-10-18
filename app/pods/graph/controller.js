@@ -233,6 +233,22 @@ export default Ember.Controller.extend({
       d3Node.select(".legend").attr("i:i:layer", "yes").attr("id", "legend");
       d3Node.select(".outer-map").attr("i:i:layer", "yes").attr("id", "outerMap");
 
+      //wrap nodes
+      let wrapper = d3Node.append("g")
+            .attr({
+              "id": "view-box",
+              "transform": `translate(${-x}, ${-y})`
+            });
+
+      [].slice.call(d3Node.node().children).forEach( node => {
+        if (node != wrapper.node() && ['g', 'text', 'rect'].indexOf(node.tagName)+1) {
+          wrapper.append(() => d3.select(node).remove().node());
+        }
+      });
+
+      //rewrite viewport because illustrator doesn't read x y
+      d3Node.attr("viewBox", `0 0 ${w} ${h}`);
+
     }
 
     khartisAttrs.forEach(kAttr => {
