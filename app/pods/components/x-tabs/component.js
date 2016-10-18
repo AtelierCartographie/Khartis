@@ -21,9 +21,8 @@ export default Ember.Component.extend({
     this.set('activeItem', $activeItems.get(0));
     
     this.$().on('click', '.tabs li', (e) => {
-
       let prevActiveItem = this.get('activeItem'),
-          newActiveItem = $("#" + $(e.target).attr('tab-id'));
+          newActiveItem = $("#" + ($(e.target).attr('tab-id') || $(e.target).parent('[tab-id]').attr('tab-id')));
 
       this.set('activeItem', newActiveItem.get(0));
       

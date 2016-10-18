@@ -75,7 +75,9 @@ export default Ember.Component.extend({
     
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
     d3.ns.prefix.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
-    d3g.attr("xmlns:ai", d3.ns.prefix.illustrator);
+    d3g.attr("xmlns:i", d3.ns.prefix.illustrator);
+    d3.ns.prefix.khartis = 'http://www.sciencespo.fr/cartographie/khartis/';
+    d3g.attr("xmlns:kis", d3.ns.prefix.khartis);
     d3g.style("font-family", "verdana");
 		
 		// ========
@@ -722,7 +724,7 @@ export default Ember.Component.extend({
             _.select("*").attr({
               "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
             })
-            .attr("ai:ai:stroke-width", mapping.get('visualization.stroke'));
+            .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
             
         }
 

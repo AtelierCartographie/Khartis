@@ -191,7 +191,8 @@ export default Ember.Controller.extend({
     d3Node.attr({
       width: this.get('model.graphLayout.width'),
       height: this.get('model.graphLayout.height'),
-      viewBox: `${x} ${y} ${w} ${h}`
+      viewBox: `${x} ${y} ${w} ${h}`,
+      title: d3Node.attr('title') || "Khartis project"
     });
 
     d3Node.selectAll("g.margin,g.offset,g.margin-resizer").remove();
@@ -211,28 +212,36 @@ export default Ember.Controller.extend({
     d3Node.select(".outer-map")
       .attr("clip-path", "url(#viewport-clip)");
 
+    //netooyage des attributs internes
+    let khartisAttrs = [
+      {ns: "kis", attr: "flow-css", fn: null},
+      {ns: "kis", attr: "tx", fn: null},
+      {ns: "kis", attr: "ty", fn: null},
+      {ns: "kis", attr: "height", fn: null},
+      {ns: "kis", attr: "width", fn: null}
+    ];
     if (compatibility.illustrator) {
-      ["stroke-width"].forEach(attr => {
-        d3Node.selectAll(`[ai\\:${attr}]`)[0]
-          .forEach( (node) => {
-            (node = d3.select(node))
-              .attr({
-                [attr]: node.attr(`ai:ai:${attr}`),
-                [`ai:ai:${attr}`]: null
-              });
-              
-          });
+      khartisAttrs.push({
+        ns: "i",
+        attr: "stroke-width",
+        fn: (node) => node.attr({
+              "stroke-width": node.attr(`i:i:stroke-width`),
+              "i:i:stroke-width": null
+            })
       });
+
+      d3Node.select(".legend").attr("i:i:layer", "yes").attr("id", "legend");
+      d3Node.select(".outer-map").attr("i:i:layer", "yes").attr("id", "outerMap");
+
     }
 
-    //suppression des instructions flow
-    d3Node.selectAll(`[flow-css]`)[0]
-      .forEach( (node) => {
-        (node = d3.select(node))
-          .attr({
-            "flow-css": null
-          });
-      });
+    khartisAttrs.forEach(kAttr => {
+      d3Node.selectAll(`[${kAttr.ns}\\:${kAttr.attr}]`)[0]
+        .forEach( (node) => {
+          kAttr.fn || (kAttr.fn = (node) => node.attr(`${kAttr.ns}:${kAttr.ns}:${kAttr.attr}`, null));
+          kAttr.fn(node = d3.select(node));
+        });
+    });
               
     let html = d3Node.node()
       .outerHTML

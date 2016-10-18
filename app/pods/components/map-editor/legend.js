@@ -17,7 +17,7 @@ export default Ember.Mixin.create({
     //LEGEND DRAG
     let drag = d3.behavior.drag()
       .origin(() => {
-        return {x: legendG.attr('tx'), y: legendG.attr('ty')};
+        return {x: legendG.attr('kis:kis:tx'), y: legendG.attr('kis:kis:ty')};
       })
       .on("dragstart", () => {
         d3.event.sourceEvent.stopPropagation();
@@ -32,16 +32,16 @@ export default Ember.Mixin.create({
             };
         legendG.attr({
          'transform': d3lper.translate(pos), 
-          tx: pos.tx,
-          ty: pos.ty
+          "kis:kis:tx": pos.tx,
+          "kis:kis:ty": pos.ty
         });
       })
       .on("dragend", () => {
         legendG.classed("dragging", false);
         this.set('resizingMargin', false);
         let t = this.getViewboxTransform()({
-          x: legendG.attr('tx'),
-          y: legendG.attr('ty')
+          x: legendG.attr('kis:kis:tx'),
+          y: legendG.attr('kis:kis:ty')
         });
         this.get('graphLayout').setProperties({
           legendTx: t.x,
@@ -99,8 +99,8 @@ export default Ember.Mixin.create({
       }
 
       legendG.attr({
-        "tx": t.x,
-        "ty": t.y,
+        "kis:kis:tx": t.x,
+        "kis:kis:ty": t.y,
         "transform": d3lper.translate({tx: t.x, ty: t.y})
       });
 
@@ -166,11 +166,11 @@ export default Ember.Mixin.create({
         .classed("legend-content", true);
     }
     
-    containerG.attr("flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);  
+    containerG.attr("kis:kis:flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);  
     
     let bindLayer = (_) => {
       
-      _.attr("flow-css", "flow: vertical; stretch: true; margin-right: 34; margin-top: 16");
+      _.attr("kis:kis:flow-css", "flow: vertical; stretch: true; margin-right: 34; margin-top: 16");
       
       _.each( function(d, i) {
         
@@ -183,9 +183,9 @@ export default Ember.Mixin.create({
         el.selectAll("*").remove();
           
         let label = el.append("g")
-          .attr("flow-css", "margin-bottom: 16")
+          .attr("kis:kis:flow-css", "margin-bottom: 16")
           .append("text")
-          .attr("flow-css", "wrap-text: true; max-width: 250px")
+          .attr("kis:kis:flow-css", "wrap-text: true; max-width: 250px")
           .classed("legend-title", true)
           .attr("transform", d3lper.translate({tx: -xOrigin/2}))
           .style({
@@ -206,10 +206,10 @@ export default Ember.Mixin.create({
           
           let r = {x: 24/2, y: 16/2};
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
+          d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
               
           let g = d3.select(this).append("g")
-            .attr("flow-css", `margin-right: -${r.x}px`);
+            .attr("kis:kis:flow-css", `margin-right: -${r.x}px`);
           
           //border
           g.append("rect")
@@ -295,14 +295,14 @@ export default Ember.Mixin.create({
           let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
               dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
       
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+          d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
 
           if (!(r.x > 0 && r.y > 0)) return;
 
           symbol.call(svg);
           
           let g = d3.select(this).append("g")
-            .attr("flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+            .attr("kis:kis:flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
           
           let symG = g.append("g")
             .attr("transform", d3lper.translate({ty: r.y+d.get('mapping.visualization.stroke')/2 - dy/2}));
@@ -310,7 +310,7 @@ export default Ember.Mixin.create({
           symbol.insert(symG, r.x*2)
             .attr({
               "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
-              "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
+              "i:i:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "opacity": d.get('opacity')
@@ -369,12 +369,12 @@ export default Ember.Mixin.create({
           let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
               dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
 
-          d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+          d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
           
           symbol.call(svg);
           
           let g = d3.select(this).append("g")
-           .attr("flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+           .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
 
           let symG = g.append("g")
             .attr("transform", d3lper.translate({ty: r.y - dy/2}));
@@ -382,7 +382,7 @@ export default Ember.Mixin.create({
           symbol.insert(symG, r.x*2)
             .attr({
               "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
-              "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
+              "i:i:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "opacity": d.get('opacity')
@@ -414,14 +414,14 @@ export default Ember.Mixin.create({
               y: rule.get('size')
             };
             
-            d3.select(this).attr("flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
+            d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
 
             let symbol = SymbolMaker.symbol({name: shape});
       
             symbol.call(svg);
             
             let g = d3.select(this).append("g")
-              .attr("flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+              .attr("kis:kis:flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
             
             let symG = g.append("g")
               .attr("transform", d3lper.translate({ty: r.y}));
@@ -429,7 +429,7 @@ export default Ember.Mixin.create({
             symbol.insert(symG, r.x*2)
               .attr({
                 "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
-                "ai:ai:stroke-width": d.get('mapping.visualization.stroke'),
+                "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": rule.get('strokeColor'),
                 "fill": rule.get('color'),
                 "opacity": d.get('opacity')
@@ -439,7 +439,7 @@ export default Ember.Mixin.create({
             
             r = {x: 24/2, y: 16/2};
             
-            d3.select(this).attr("flow-css", `flow: horizontal; stretch: true; height: ${r.y*2}px; margin-bottom: 4px`);
+            d3.select(this).attr("kis:kisflow-css", `flow: horizontal; stretch: true; height: ${r.y*2}px; margin-bottom: 4px`);
 
             let mask = rule.get('pattern') ? PatternMaker.Composer.build(rule.get('pattern')) : null;
             if (mask && mask.fn != PatternMaker.NONE) {
@@ -447,7 +447,7 @@ export default Ember.Mixin.create({
             }
             
             let g = d3.select(this).append("g")
-              .attr("flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+              .attr("kis:kisflow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
             
             g.append("rect")
               .attr({
@@ -516,17 +516,20 @@ export default Ember.Mixin.create({
 
               fn = appendSymbolIntervalLinearLabel;
               if (d.get('mapping.values').length > 2) {
-                let steps = Math.min(d.get('mapping.values').length - 2, 5),
-                    i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps,
-                    nearest = Array.from({length: steps-1}, (v, idx) => d.get('mapping.extent')[0] + i*(idx+1))
-                      .reduce( (arr, v) => {
-                        let nVal = Math.round(v);//d.get('mapping').findNearestValue(v);
-                        /*if (arr.indexOf(nVal) === -1 && intervals.indexOf(nVal) === -1) {
-                          arr.push(nVal);
-                        }*/
-                        arr.push(nVal);
-                        return arr;
-                      }, []);
+                let steps, nearest;
+                if (d.get('mapping.scale.diverging')) {
+                  steps = Math.min(d.get('mapping.values').filter(v => v < d.get('mapping.scale.valueBreak')).length - 1, 3);
+                  let i = (d.get('mapping.scale.valueBreak') - d.get('mapping.extent')[0]) / steps;
+                  nearest = Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.extent')[0] + i*(idx+1)));
+                  //after value break
+                  steps = Math.min(d.get('mapping.values').filter(v => v >= d.get('mapping.scale.valueBreak')).length - 1, 3);
+                  i = (d.get('mapping.extent')[1] - d.get('mapping.scale.valueBreak')) / steps,
+                  nearest = nearest.concat(Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.scale.valueBreak') + i*(idx+1))));
+                } else {
+                  steps = Math.min(d.get('mapping.values').length - 2, 5);
+                  let i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps;
+                  nearest = Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.extent')[0] + i*(idx+1)));
+                }
                 
                  //Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
                  intervals = [d.get('mapping.extent')[0]]
@@ -554,7 +557,7 @@ export default Ember.Mixin.create({
           if (d.get('mapping.rules').length) {
             
             el.append("g")
-              .attr("flow-css", "margin-top: 10; margin-bottom: 10")
+              .attr("kis:kis:flow-css", "margin-top: 10; margin-bottom: 10")
               .append("line")
                 .attr({
                   x1: 0,

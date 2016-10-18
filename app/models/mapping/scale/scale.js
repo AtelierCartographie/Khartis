@@ -42,7 +42,6 @@ let Scale = Struct.extend({
           ext = d3.extent(values).map( (v,i) => bounds[i] !== undefined ? bounds[i] : v ),
           vals = values.filter( v => isInside(ext, v) );
       
-          console.log(classes);
       if (this.get('usesInterval')) {
 
         if (intervalType === "regular") {

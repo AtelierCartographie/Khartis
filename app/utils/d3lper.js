@@ -44,7 +44,7 @@ let d3lper = {
     
     function parseCss(el) {
       
-      let css = el.getAttribute('flow-css') ? el.getAttribute('flow-css').split(";") : [];
+      let css = el.getAttribute('kis:flow-css') ? el.getAttribute('kis:flow-css').split(";") : [];
       let instructions = css.filter(s => s.length).reduce( (instructions, s) => {
         let couple = s.trim().split(":");
         if (couple.length === 2) {
@@ -130,7 +130,7 @@ let d3lper = {
           let {bbox} = getDescriptor(this);
           bbox[sizeAttr] = remainingSpace[sizeAttr] / fluidCount;
           computedBBoxs.set(this, bbox);
-          d3.select(this).attr(sizeAttr, bbox[sizeAttr]);
+          d3.select(this).attr("kis:kis:"+sizeAttr, bbox[sizeAttr]);
         }
         
       } );
@@ -179,7 +179,7 @@ let d3lper = {
           
           if (css.hasProperty('stretch', ["1", "true"])) {
             bbox[crossSizeAttr] =  elDesc.bbox[crossSizeAttr] - (elDesc.padBox[crossPadBefore] + elDesc.padBox[crossPadAfter]);
-            d3l.attr(crossSizeAttr, bbox[crossSizeAttr]);
+            d3l.attr("kis:kis:"+crossSizeAttr, bbox[crossSizeAttr]);
           }
           
           pos += bbox[sizeAttr];
