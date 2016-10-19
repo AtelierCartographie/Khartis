@@ -237,6 +237,7 @@ export default Ember.Controller.extend({
       let wrapper = d3Node.append("g")
             .attr({
               "id": "view-box",
+              "i:i:extraneous": "self",
               "transform": `translate(${-x}, ${-y})`
             });
 

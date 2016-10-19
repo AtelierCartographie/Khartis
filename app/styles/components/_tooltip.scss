@@ -2,6 +2,23 @@ $tooltip-arrow-height: 10px;
 $tooltip-arrow-width: 7px;
 $tooltip-background: greys(80%);
 
+.tooltip-trigger {
+  border-bottom: 1px dotted #aaa;
+  cursor: help;
+}
+
+.tooltip-trigger-special {
+  position: relative;
+  &:after {
+    border-bottom: 1px dotted #aaa;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+  }
+  cursor: help;
+}
+
+
 // Tooltip content
 .tooltip {
 

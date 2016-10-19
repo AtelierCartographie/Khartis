@@ -76,7 +76,7 @@
       {{x-capitalize (t 'project.step1.title.import')}}
       {{/file-loader}}&nbsp;
       {{#x-tooltip message=(t 'project.step1.tooltip.csv')}}
-      <span>
+      <span class="tooltip-trigger-special">
       {{t 'project.step1.title.fileCsv'}}
       </span>
       {{/x-tooltip}}
@@ -103,7 +103,7 @@
         {{#if canResumeProject}}
         {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject')}}
         {{#x-button class="solid filled default" action=(action 'resumeProject')}}
-            {{x-capitalize (t "project.resume")}}
+            <span class="tooltip-trigger">{{x-capitalize (t "project.resume")}}</span>
         {{/x-button}}
         {{/x-tooltip}}
         {{/if}}
