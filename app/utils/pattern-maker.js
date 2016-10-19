@@ -2,72 +2,83 @@ import {isFirefox} from 'mapp/utils/browser-check';
 
 let _buildPatternFn = function(id, size, drawer) {
   
-  let maskId,
-      baseUrl;
-  
-  let fn = function() {
+  let Fn = function(useMask = true, fill) {
+
+    this.baseUrl = isFirefox() ? window.location : "";
+    this.useMask = useMask;
+    this.fill = d3.rgb(fill).toString();
+
+  };
+
+  Fn.prototype.init = function(sel) {
     
-    maskId = `mask-${this.attr('id')}-${id}`;
-    baseUrl = isFirefox() ? window.location : "";
+    console.log(sel);
     
-    let defs = this.selectAll("defs");
+    this.patternId = `pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill.replace("#", "")}` : ""}`;
+
+    let defs = sel.selectAll("defs");
   
     if (defs.empty()) {
-      defs = this.append("defs");
+      defs = sel.append("defs");
     }
-      
-    let pattern = defs.selectAll(`#pattern-${maskId}`),
-        mask = defs.selectAll(`#${maskId}`);
+    
+    console.log(this.patternId);
+    let pattern = defs.selectAll(`#${this.patternId}`);
     
     if (pattern.empty()) {
       
       pattern = defs.append("pattern")
         .attr({
-          id: `pattern-${maskId}`,
+          id: `${this.patternId}`,
           patternUnits: "userSpaceOnUse",
           width: size,
           height: size
         });
       
-      drawer(pattern);
+      drawer(pattern, this.fill);
       
-    }
-    
-    if (mask.empty()) {
+    };
+
+    if (this.useMask) {
+
+      this.maskId = `${this.patternId}-mask`;
+
+      let mask = defs.selectAll(`#${this.maskId}`);
+
+      if (mask.empty() && useMask) {
       
-      let size = 4096;
-      
-      mask = defs.append("mask")
-        .attr({
-          id: maskId,
-          width: 4096,
-          height: 4096
-        });
-      
-      mask.append("rect").attr({
-          x: -(4096/2),
-          y: -(4096/2),
-          width: 4096,
-          height: 4096
-        })
-        .attr("fill", `url(#pattern-${maskId})`);
+        let size = 4096;
         
+        mask = defs.append("mask")
+          .attr({
+            id: this.maskId,
+            width: 4096,
+            height: 4096
+          });
+        
+        mask.append("rect").attr({
+            x: -(4096/2),
+            y: -(4096/2),
+            width: 4096,
+            height: 4096
+          })
+          .attr("fill", `url(#${this.patternId})`);
+          
+      }
+
     }
     
   }
   
-  fn.url = function() {
-    if (!maskId) {
-      throw new Error("Pattern not attached to svg element");
-    }
-    return `${baseUrl}#${maskId}`;
+  Fn.prototype.url = function() {
+    return `${this.baseUrl}#${this.maskId ? this.maskId : this.patternId}`;
   };
 
-  fn.id = function() {
+  Fn.id = function() {
     return id;
   };
   
-  return fn;
+  return Fn;
   
 };
 
@@ -77,7 +88,6 @@ Pattern.lines = function(opts = {}) {
   let orientation = opts.orientation || ["diagonal"],
       shapeRendering = "auto",
       size = opts.size || (2*opts.stroke+4),
-      stroke = "#FFFFFF",
       strokeWidth = opts.stroke,
       path = function(orientation) {
         switch (orientation % 180) {
@@ -107,13 +117,13 @@ Pattern.lines = function(opts = {}) {
   return _buildPatternFn(
     `lines-${orientation.join('-').replace('/', '')}-${(strokeWidth+"").replace(".", "_")}`,
     size,
-    function(g) {
+    function(g, stroke = "#FFFFFF") {
       for (let i = 0; i < orientation.length; i++) {
         g.append("path").attr({
           d: path(orientation[i]),
           "stroke-width": strokeWidth,
-          "shape-rendering": shapeRendering,
           "stroke": stroke,
+          "shape-rendering": shapeRendering,
           "stroke-linecap": "square"
         });
       }
@@ -124,15 +134,14 @@ Pattern.lines = function(opts = {}) {
 
 Pattern.circles = function(opts = {}) {
   
-  let color = "#FFFFFF",
-      strokeWidth = 1,
+  let strokeWidth = 1,
       radius = opts.stroke,
       size = opts.size || (2*radius+4)
 
   return _buildPatternFn(
     `circles-${(""+radius).replace(".", "_")}`,
     size,
-    function(g) {
+    function(g, color = "#FFFFFF") {
       g.append("circle").attr({
         cx: size / 2,
         cy: size / 2,
@@ -199,8 +208,6 @@ Composer.prototype.compose = function(diverging, classes, before, angle, baseStr
     reverse ? res.reverse() : void(0);
   }
 
-  console.log(res);
-  
   return res;
   
 };

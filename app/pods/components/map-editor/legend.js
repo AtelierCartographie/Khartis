@@ -229,16 +229,18 @@ export default Ember.Mixin.create({
               "width": 2*r.x,
               "height": 2*r.y,
               y: 0,
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
               "opacity": d.get('opacity'),
-              "mask": () => {
+              "fill": () => {
                 
-                let mask = d.get('mapping').getScaleOf("texture")(val - 0.000000001)
-                if (mask && mask.fn != PatternMaker.NONE) {
-                  svg.call(mask.fn);
-                  return `url(${mask.fn.url()})`;
+                let pattern = d.get('mapping').getScaleOf("texture")(val - 0.000000001),
+                    color = d.get('mapping').getScaleOf("color")(val - 0.000000001);
+
+                if (pattern && pattern.fn != PatternMaker.NONE) {
+                  let fn = new pattern.fn(false, color);
+                  fn.init(svg);
+                  return `url(${fn.url()})`;
                 } else {
-                  return null;
+                  return color;
                 }
               },
               "stroke-width": 0

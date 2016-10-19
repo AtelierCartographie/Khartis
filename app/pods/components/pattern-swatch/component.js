@@ -58,16 +58,16 @@ export default Ember.Component.extend({
         width: (100/this.get('masks').length)+"%",
         height: "100%"
       }).style({
-        mask: (d) => {
-          svg.call(d.fn);
-          return `url(${d.fn.url()})`
-        },
         fill: (d, i) => {
+          let fill;
           if (this.get('mapping.scale.diverging')) {
-            return this.get(i === 0 ? 'mapping.patternColorReverse' : 'mapping.patternColor');
+            fill = this.get(i === 0 ? 'mapping.patternColorReverse' : 'mapping.patternColor');
           } else {
-            return this.get('mapping.patternColor');
-          } 
+            fill = this.get('mapping.patternColor');
+          }
+          let fn = new d.fn(false, fill);
+          fn.init(svg);
+          return `url(${fn.url()})`
         }
       })
     };

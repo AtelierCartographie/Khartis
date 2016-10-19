@@ -648,19 +648,17 @@ export default Ember.Component.extend({
 
       _.attr({
           "xlink:href": d => this.registerLandSel(d.id),
-          "mask": d => {
-            let mask = converter(d.cell, "texture");
+          "fill": d => {
+            let pattern = converter(d.cell, "texture");
           
-            if (mask && mask.fn != PatternMaker.NONE) {
-              svg.call(mask.fn);
-              return `url(${mask.fn.url()})`;
+            if (pattern && pattern.fn != PatternMaker.NONE) {
+              let fn = new pattern.fn(false, converter(d.cell, "fill"));
+              fn.init(svg);
+              return `url(${fn.url()})`;
             } else {
-              return null;
+              return converter(d.cell, "fill");
             }
           }
-        })
-        .style({
-          "fill": d => converter(d.cell, "fill")
         });
       
     };

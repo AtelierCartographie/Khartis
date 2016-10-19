@@ -240,19 +240,19 @@ export default Ember.Component.extend({
           y: -this.get('margin.top') + 2,
           height: this.get('margin.top') - 4,
           width: (d, i) => (i < fillIntervals.length - 1 ? x(fillIntervals[i+1].val) : width) - x(d.val),
-          mask: d => {
-            let mask = this.get('mapping').getScaleOf("texture")(d.val);
+          fill: d => {
+            let pattern = this.get('mapping').getScaleOf("texture")(d.val),
+                fill = colorScale(d.val);
             
-            if (mask && mask.fn != PatternMaker.NONE) {
-              this.d3l().call(mask.fn);
-              return `url(${mask.fn.url()})`;
+            if (pattern && pattern.fn != PatternMaker.NONE) {
+              let fn = new pattern.fn(false, fill);
+              fn.init(this.d3l());
+              return `url(${fn.url()})`;
             } else {
-              return null;
+              return fill;
             }
           }
-        }).style({
-          "fill": (d) => colorScale(d.val)
-        })
+        });
       };
 
     sel = stack.select("g.fillIntervals")
