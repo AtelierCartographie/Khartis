@@ -12,8 +12,6 @@ let _buildPatternFn = function(id, size, drawer) {
 
   Fn.prototype.init = function(sel) {
     
-    console.log(sel);
-    
     this.patternId = `pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill.replace("#", "")}` : ""}`;
 
     let defs = sel.selectAll("defs");
@@ -22,7 +20,6 @@ let _buildPatternFn = function(id, size, drawer) {
       defs = sel.append("defs");
     }
     
-    console.log(this.patternId);
     let pattern = defs.selectAll(`#${this.patternId}`);
     
     if (pattern.empty()) {
