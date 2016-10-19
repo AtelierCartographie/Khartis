@@ -30,8 +30,8 @@ export default WrapperAbstract.extend({
   nameKey: function() {
 
     let ks = [
-      "name_"+this.get('i18n.locale').toUpperCase(),
       "name_ISO_"+this.get('i18n.locale').toUpperCase(),
+      "name_"+this.get('i18n.locale').toUpperCase(),
       "Name",
       "name",
       "name_EN"
