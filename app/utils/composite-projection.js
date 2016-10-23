@@ -24,10 +24,11 @@ let proj = function() {
     isValid: false,
 
     set projections(projs) {
-      this.projs = projs.map( projConfig => (
+      this.projs = projs.map( projConfig => (console.log(projConfig), 
         {
           idx: projConfig.idx,
           fn: projConfig.projection,
+          transforms: projConfig.transforms || {},
           scale: projConfig.scale,
           zoning: projConfig.zoning,
           bounds: projConfig.bounds,
@@ -179,7 +180,8 @@ let proj = function() {
 
     _instantiate(projConfig) {
       let d3Proj = eval(projConfig.fn);
-      d3Proj.lobes && this.transforms.lobes && d3Proj.lobes(this.transforms.lobes);
+      let transforms = Object.assign({}, this.transforms, projConfig.transforms);
+      d3Proj.lobes && transforms.lobes && d3Proj.lobes(transforms.lobes);
       return d3Proj;
     },
 
@@ -214,8 +216,10 @@ let proj = function() {
         ])
         .precision(this.transforms.precision);
 
-      projection.clipAngle && this.transforms.clipAngle && projection.clipAngle(this.transforms.clipAngle);
-      projection.rotate && this.transforms.rotate && projection.rotate(this.transforms.rotate);
+      let transforms = Object.assign({}, this.transforms, projConfig.transforms);
+      projection.parallels && transforms.parallels && projection.parallels(transforms.parallels);
+      projection.clipAngle && transforms.clipAngle && projection.clipAngle(transforms.clipAngle);
+      projection.rotate && transforms.rotate && projection.rotate(transforms.rotate);
 
       //store initial resolution and translate for future scale
       projection.resolution = r;

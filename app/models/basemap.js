@@ -30,7 +30,7 @@ var Basemap = Struct.extend({
   assumeProjection() {
     if (this.get('compositeProjection')) {
       return Projection.createComposite(
-        this.get('mapConfig.sources').map( (s, idx) => ({idx: idx+1, projection: s.projection, scale: s.scale, zoning: s.zoning, borders: s.borders}) )
+        this.get('mapConfig.sources').map( (s, idx) => Object.assign({}, s, {idx: idx+1}) )
       );
     } else {
       return this.get('availableProjections').find( p => p.id === (this.get('mapConfig.sources')[0].projection || config.projection.default) );
