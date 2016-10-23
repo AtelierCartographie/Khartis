@@ -21,7 +21,6 @@ var XModal = Ember.Component.extend({
   large: false,
 
   didInsertElement: function () {
-    console.log('connection')
     this.get('ModalManager').connect(this);
 
     this.$().on('hidden.bs.modal', e => {

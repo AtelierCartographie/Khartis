@@ -37,7 +37,6 @@ export default WrapperAbstract.extend({
     },
     set(k, v) {
       let idx = this.get('possibilities').length - (this.get('centerIndex') + v);
-      console.log(v, idx, this.get('possibilities')[idx]);
       this.set('classes', this.get('possibilities')[idx]);
       return v;
     }

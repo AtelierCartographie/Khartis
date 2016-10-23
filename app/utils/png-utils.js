@@ -102,7 +102,6 @@ function tracePNGChunks(buffer) {
         crc;
       pos += size;
       crc = getUint32();
-      console.log(name, size, crc);
   }
 }
 

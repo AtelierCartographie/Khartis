@@ -20,7 +20,7 @@ var Basemap = Struct.extend({
   /* ---------- */
 
   compositeProjection: function() {
-    return this.get('mapConfig.sources').length > 1;
+    return this.get('mapConfig.sources').length > 1 || this.get('projectionProvided');
   }.property('mapConfig'),
 
   projectionProvided: function() {

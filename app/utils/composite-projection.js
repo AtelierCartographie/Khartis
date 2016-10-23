@@ -24,7 +24,7 @@ let proj = function() {
     isValid: false,
 
     set projections(projs) {
-      this.projs = projs.map( projConfig => (console.log(projConfig), 
+      this.projs = projs.map( projConfig => ( 
         {
           idx: projConfig.idx,
           fn: projConfig.projection,
