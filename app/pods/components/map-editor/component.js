@@ -562,8 +562,8 @@ export default Ember.Component.extend({
   
 	mapData(d3Layer, graphLayer) {
     
-    let geoDef = graphLayer.get('mapping.geoDef'),
-        varCol = graphLayer.get('mapping.varCol'),
+    let mapping = graphLayer.get('mapping'),
+        geoDef = mapping.get('geoDef'),
         geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         data = [];
 
@@ -572,7 +572,7 @@ export default Ember.Component.extend({
       let lands = this.getFeaturesFromBase("lands"),
           centroids = this.getFeaturesFromBase("centroids");
           
-      data = varCol.get('body').map( (cell, index) => {
+      data = mapping.get('filteredBody').map( (cell, index) => {
         
         let geoData = geoDef.get('geo.body').objectAt(index).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
@@ -602,7 +602,7 @@ export default Ember.Component.extend({
       
     } else if (geoDef.get('isLatLon')) {
 
-      data = varCol.get('body').map( (cell, index) => {
+      data = mapping.get('filteredBody').map( (cell, index) => {
         
         let val = cell.get('postProcessedValue'),
             lon = geoDef.get('lon.body').objectAt(index).get('postProcessedValue'),

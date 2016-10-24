@@ -8,6 +8,7 @@ import CategoryMixins from './mixins/category';
 import LabellingMixins from './mixins/labelling';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
+import Filter from './filter/filter';
 import PatternMaker from 'mapp/utils/pattern-maker';
 
 let Mapping = Struct.extend({
@@ -19,6 +20,7 @@ let Mapping = Struct.extend({
   
   varCol: null,
   geoDef: null,
+  filter: null,
   
   rules: null,
 
@@ -38,6 +40,14 @@ let Mapping = Struct.extend({
       this.set('scale', Scale.create());
     }
   },
+
+  filteredBody: function() {
+    if (this.get('filter')) {
+      return this.get('varCol.body').filter( cell => this.get('filter').run(cell) );
+    } else {
+      return this.get('varCol.body');
+    }
+  }.property('filter._defferedChangeIndicator', 'varCol.body'),
   
   configure: function() {
     switch (this.get('type')) {
@@ -172,6 +182,7 @@ let Mapping = Struct.extend({
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
+      filter: this.get('filter') ? this.get('filter').export() : null,
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
   }
@@ -187,6 +198,7 @@ Mapping.reopenClass({
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
+      filter: json.filter ? Filter.restore(json.filter, refs) : null,
       rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
     });
   }

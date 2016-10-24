@@ -64,6 +64,7 @@ export default Ember.Mixin.create({
           
         })
         .attr("dy", "0.3em")
+        .attr("font-size", graphLayer.get('size'))
         .attr("text-anchor", {
             start: "start",
             middle: "middle",
