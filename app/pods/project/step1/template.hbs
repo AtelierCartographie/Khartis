@@ -76,7 +76,7 @@
       {{x-capitalize (t 'project.step1.title.import')}}
       {{/file-loader}}&nbsp;
       {{#x-tooltip message=(t 'project.step1.tooltip.csv')}}
-      <span class="tooltip-trigger-special">
+      <span class="tooltip-trigger">
       {{t 'project.step1.title.fileCsv'}}
       </span>
       {{/x-tooltip}}
@@ -100,13 +100,6 @@
         {{#x-button class="solid filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
             {{x-capitalize (t "general.next")}}
         {{/x-button}}
-        {{#if canResumeProject}}
-        {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject')}}
-        {{#x-button class="solid filled default" action=(action 'resumeProject')}}
-            <span class="tooltip-trigger">{{x-capitalize (t "project.resume")}}</span>
-        {{/x-button}}
-        {{/x-tooltip}}
-        {{/if}}
       </div>
 
     

@@ -1,5 +1,12 @@
 <div class="sidebar-scroll-wrapper">
     <div class="help">{{outlet 'help'}}</div>
+    {{#if canResumeProject}}
+      {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject') position="right"}}
+      {{#x-button class="solid filled primary" action=(action 'resumeProject')}}
+          <span class="tooltip-trigger">{{x-capitalize (t "project.resume")}}</span>
+      {{/x-button}}
+      {{/x-tooltip}}
+    {{/if}}
 </div>
 
 <div class="arrows-navigation right">

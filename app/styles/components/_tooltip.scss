@@ -7,6 +7,11 @@ $tooltip-background: greys(80%);
   cursor: help;
 }
 
+.filled.primary > .tooltip-trigger {
+  border-bottom: 1px dotted #fff;
+  cursor: help;
+}
+
 .tooltip-trigger-special {
   position: relative;
   &:after {
