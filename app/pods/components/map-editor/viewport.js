@@ -30,6 +30,7 @@ export default Ember.Mixin.create({
 
     d3g.append("rect")
 			.classed("fg", true)
+			.classed("viewport", true)
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("opacity", 0.8)
@@ -84,7 +85,7 @@ export default Ember.Mixin.create({
     d3l.select("defs #viewport-clip path")
       .attr("d", `${inner}`);
 
-    d3l.selectAll("rect.fg, rect.bg")
+    d3l.selectAll("rect.fg.viewport, rect.bg")
       .attr({
         "x": -mX,
         "y": -mY,

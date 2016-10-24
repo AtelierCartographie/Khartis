@@ -10,6 +10,7 @@ import ZoomFeature from './zoom';
 import LabellingFeature from './labelling';
 import CompositionBordersFeature from './composition-borders';
 import CreditsFeature from './credits';
+import DocumentMaskFeature from './document-mask';
 
 /* global Em */
 
@@ -48,6 +49,7 @@ export default Ember.Component.extend({
   hasLabellingFeature: true,
   hasCompositionBordersFeature: true,
   hasCreditsFeature: true,
+  hasDocumentMaskFeature: true,
   /* ---- */
 
   windowLocation: function() {
@@ -144,7 +146,7 @@ export default Ember.Component.extend({
       .datum({isBorderLayer: true});
     
     if (this.get('hasViewportFeature')) {
-      this.reopen(ViewportFeature);
+      this.reopen(ViewportFeature, {displayOffsets: this.get('displayDocumentMask')});
       this.viewportInit(defs, d3g);
     }
     if (this.get('hasLegendFeature')) {
@@ -166,6 +168,10 @@ export default Ember.Component.extend({
     if (this.get('hasCreditsFeature')) {
       this.reopen(CreditsFeature);
       this.creditsInit(d3g);
+    }
+    if (this.get('hasDocumentMaskFeature')) {
+      this.reopen(DocumentMaskFeature, {displayDocumentMask: this.get('displayDocumentMask')});
+      this.documentMaskInit(defs, d3g);
     }
     
 		this.projectAndDraw();

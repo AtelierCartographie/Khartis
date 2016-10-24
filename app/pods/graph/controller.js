@@ -9,7 +9,7 @@ import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChu
 export default Ember.Controller.extend({
   
   queryParams: ['currentTab'],
-  currentTab: null,
+  currentTab: "visualizations",
 
   dictionary: Ember.inject.service(),
 

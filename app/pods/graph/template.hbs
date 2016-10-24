@@ -63,7 +63,7 @@
 
           <div class="fluid" style="position: relative;">
             {{#if model.graphLayout.projection}}
-
+              {{log isInStateExport}}
               {{map-editor
                 graphLayout=model.graphLayout
                 graphLayers=model.graphLayers
@@ -72,6 +72,7 @@
                 dataSource=model.dataSource
                 author=model.author
                 displayOffsets=isInStateExport
+                displayDocumentMask=isInStateExport
                 hasCompositionBordersFeature=model.graphLayout.projection.isComposite
                 onAskVersioning="onAskVersioning"
               }}
