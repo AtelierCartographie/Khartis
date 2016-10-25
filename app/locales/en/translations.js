@@ -314,7 +314,9 @@ export default {
     "world": "World countries",
     "france dept": "France > departments (2016)",
     "france reg 2015": "France > regions (2015)",
-    "france reg 2016": "France > regions (2016)"
+    "france reg 2016": "France > regions (2016)",
+    "spain prov 2015": "Spain > provinces (2015)",
+    "spain auto 2015": "Spain > communities (2015)"
   },
 
   "examples": {
@@ -324,7 +326,9 @@ export default {
     "unesco": "Unesco sites (2015)",
     "fr_dpt-pop": "Population (2013)",
     "fr_reg2015-pop": "Population (2013)",
-    "fr_reg2016-pop": "Population (2013)"
+    "fr_reg2016-pop": "Population (2013)",
+    "es_prov-pop": "Population (2000-2015)",
+    "es_auto-pop": "Population (2000-2015)"
   }
   
 };

@@ -127,6 +127,40 @@ module.exports = function(environment) {
             source: "fr-reg2016-pop-2013.csv"
           }
         ]
+      },
+      {
+        id: "spain prov 2015",
+        sources: [
+          {source: "ES-prov-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-prov-2015/spain-islands.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+        ],
+        dictionary: {
+          source: "ES-dico-PROV-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "es_prov-pop",
+            source: "es-prov-pop-2015.csv"
+          }
+        ]
+      },
+      {
+        id: "spain auto 2015",
+        sources: [
+          {source: "ES-auto-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-auto-2015/spain-islands.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+        ],
+        dictionary: {
+          source: "ES-dico-AUTO-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "es_auto-pop",
+            source: "es-auto-pop-2015.csv"
+          }
+        ]
       }
       
     ],
