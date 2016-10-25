@@ -11,7 +11,7 @@
     </div>
     
     <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
-    <div class="settings vertical flow">
+    <div class="settings vertical flow labelling">
       {{#if model.hasLabelling}}
       {{#each model.labellingLayers as |layer|}}
         <div class="horizontal middle flow">
@@ -38,7 +38,7 @@
         <div class="horizontal middle flow">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.size')}}</label>
           <div class="horizontal solid flow w5">
-            {{x-slider class="fluid offset-slider" band=0.1 value=layer.mapping.visualization.size min=0.7 max=3.5}}
+            {{x-slider class="fluid offset-slider" band=0.1 value=layer.mapping.visualization.size min=0.6 max=3.2}}
           </div>
         </div>
         <div class="horizontal middle flow">
@@ -56,13 +56,13 @@
                   <div class="solid">{{data-type-icon meta=layer.mapping.filter.varCol.meta inconsistency=layer.mapping.filter.varCol.inconsistency}}</div>
                   <div classs="fluid padded-h">{{layer.mapping.filter.varCol.header.value}}</div>
                 {{else}}
-                  <span>-</span>
+                  <div class="solid padded-l">-</div>
                 {{/if}}
                 <i class="iconfont iconfont-angle-down"></i>
               {{/facet.trigger}}
               {{#facet.list}}
                 <li {{action 'setLabellingFilterCol' layer null}} class="horizontal middle airy flow">
-                  -
+                  <div class="solid padded-l">-</div>
                 </li>
                 {{#each model.data.columns as |col|}}
                 <li {{action 'setLabellingFilterCol' layer col}} class="horizontal middle airy flow">
@@ -74,16 +74,23 @@
             {{/x-dropdown-plus}}
           </div>
         </div>
+
         {{#if (x-eq layer.mapping.filter.type 'category')}}
+
         <div class="horizontal middle flow">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.categories')}}</label>
           <div class="horizontal solid flow w5">
             {{#x-dropdown-plus as |facet|}}
-              {{#facet.trigger class="horizontal space-between flow filled"}}
+              {{#facet.trigger class="horizontal space-between flow filled padded-l"}}
                 {{x-capitalize (t 'export.settings.labelling.chooseCategories')}}
                 <i class="iconfont iconfont-angle-down"></i>
               {{/facet.trigger}}
               {{#facet.list}}
+                <li class="horizontal middle center airy flow no-close padded-h">
+                  <a class="solid button" {{action 'selectAllLabellingFilterCategory' layer.mapping.filter true}}>{{x-capitalize (t 'export.settings.labelling.selectAll')}}</a>
+                  &nbsp;/&nbsp;
+                  <a class="solid button" {{action 'selectAllLabellingFilterCategory' layer.mapping.filter false}}>{{x-capitalize (t 'export.settings.labelling.unselectAll')}}</a>
+                </li>
                 {{#each layer.mapping.filter.domain as |cat|}}
                 <li {{action 'toggleLabellingFilterCategory' layer.mapping.filter cat}} class="horizontal middle airy flow no-close">
                   <span class="solid">{{input type="checkbox" class="no-close clickable" checked=cat.included}}<div class="-h"></div></span>
@@ -94,22 +101,28 @@
             {{/x-dropdown-plus}}
           </div>
         </div>
+
         {{else if (x-eq layer.mapping.filter.type 'range')}}
-        <div class="horizontal middle flow">
-          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.categories')}}</label>
-          <div class="horizontal solid flow w5">
-            {{x-slider-range class="fluid offset-slider" value=layer.mapping.filter.range min=layer.mapping.filter.min max=layer.mapping.filter.max}}
+
+        <div class="horizontal flow padded-t">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.threshold')}}</label>
+          <div class="horizontal solid flow w8">
+            {{x-slider-range-editable bandAuto=true class="fluid offset-slider" value=layer.mapping.filter.range min=layer.mapping.filter.min max=layer.mapping.filter.max}}
           </div>
         </div>
+
         {{/if}}
       {{/each}}
+
       {{else}}
+
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.show')}}</label>
         <div class="horizontal solid half-airy flow w8">
           <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
       </div>
+
       {{/if}}
     </div>
     

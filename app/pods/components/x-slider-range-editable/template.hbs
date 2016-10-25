@@ -1,0 +1,28 @@
+{{#if (x-eq inputPosition 'middle')}}
+<div class="horizontal middle flow">
+  <div class="horizontal solid flow input-left">
+    {{input class="no-fill" value=inputValueL focus-out=(action 'inputFocusOut' 'L') key-up=(action 'inputKeyUp' 'L')}}
+    <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
+  </div>
+  {{x-slider-range class="fluid" bandAuto=bandAuto transform=transform min=min value=value max=max band=band displayTick=false}}
+  <div class="horizontal solid flow input-right">
+    {{input class="no-fill" value=inputValueR focus-out=(action 'inputFocusOut' 'R') key-up=(action 'inputKeyUp' 'R')}}
+    <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
+  </div>
+</div>
+{{else if (x-eq inputPosition 'bottom')}}
+<div class="vertical half-airy flow">
+  {{x-slider-range class="fluid" bandAuto=bandAuto transform=transform min=min value=value max=max band=band displayTick=false}}
+  <div class="horizontal airy middle flow">
+    <div class="horizontal fluid flow input-left">
+      {{input value=inputValueL focus-out=(action 'inputFocusOut' 'L') key-up=(action 'inputKeyUp' 'L')}}
+      <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
+    </div>
+    <div class="horizontal fluid flow input-right">
+      {{input value=inputValueR focus-out=(action 'inputFocusOut' 'R') key-up=(action 'inputKeyUp' 'R')}}
+      <span class="unite">{{#if tickAppend}}{{tickAppend}}{{/if}}</span>
+    </div>
+  </div>
+</div>
+
+{{/if}}

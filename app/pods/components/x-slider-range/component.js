@@ -32,6 +32,7 @@ export default Ember.Component.extend({
   _tmpValue: null,
   
   band: null,
+  bandAuto: false,
   
   transform: IDENTITY,
   
@@ -103,18 +104,25 @@ export default Ember.Component.extend({
       .tickSize(0)
       .ticks(0);
     
-    sliderG.append("g")
+    let axisG = sliderG.append("g")
       .classed("axis", true)
       .attr("transform", `translate(${DRAGGER_SIZE/2},0)`)
       .call(axis);
+
+    axisG.append("line")
+      .classed("range-line", true)
+      .attr({
+        x2: width - DRAGGER_SIZE,
+        y1: 0,
+        y2: 0
+      });
       
     if (this.get('band') != null) {
       
       let bandPx = scale(this.get('min')+this.get('band')) - scale(this.get('min'));
       
       if (bandPx > 5) {
-        sliderG.select(".axis")
-          .append("line")
+        axisG.append("line")
           .classed("ticks", true)
           .attr({
             x1: bandPx,
@@ -203,7 +211,12 @@ export default Ember.Component.extend({
         band = this.get('band');
 
     val = Math.min(this.get('max'), Math.max(this.get('min'), val));
-        
+    
+    if (this.get('bandAuto')) {
+      let diff = Math.abs(this.get('max') - this.get('min'));
+      band = Math.pow(10, Math.floor(Math.log10(diff/100))-1);
+    }
+
     if (band) {
 
       if (val === scale.domain()[0] || val === scale.domain()[1]) {
@@ -231,7 +244,7 @@ export default Ember.Component.extend({
   
   translate(val, ori) {
 
-    let translate = this.get('scale')(this.get('transform').invert(val)) + DRAGGER_SIZE / 2;
+    let translate = this.get('scale')(this.get('transform').invert(val));
     
     this.displayValue();
     
@@ -239,7 +252,12 @@ export default Ember.Component.extend({
       .transition()
       .ease("cubic-out")
       .duration(100)
-      .attr("transform", `translate(${translate}, 0)`);
+      .attr("transform", `translate(${translate + DRAGGER_SIZE / 2}, 0)`);
+
+    this.d3l().selectAll(`.slider .range-line`)
+      .attr({
+        [ori === "L" ? "x1" : "x2"]: translate 
+      });
     
   },
   

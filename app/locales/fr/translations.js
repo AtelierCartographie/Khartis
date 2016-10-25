@@ -300,7 +300,12 @@ export default {
         "show": "afficher",
         "size": "taille",
         "color": "couleur",
-        "filter": "filtrer selon"
+        "filter": "filtrer selon",
+        "categories": "catégories",
+        "chooseCategories": "choisir",
+        "threshold": "seuil",
+        "selectAll": "tout cocher",
+        "unselectAll": "tout décocher"
       },
       "legend": "légende",
       "width": "largeur",

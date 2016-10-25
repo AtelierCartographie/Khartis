@@ -35,6 +35,14 @@ let CategoryFilter = Filter.extend({
     this.notifyPropertyChange('excluded');
   },
 
+  selectAllCategory(mod) {
+    if (mod) {
+      this.set('excluded', []);
+    } else {
+      this.set('excluded', this.get('domain').map( d => d.value ) );
+    }
+  },
+
   filteredRows: function() {
     if (this.get('excluded') && this.get('varCol')) {
       return this.get('varCol.body')

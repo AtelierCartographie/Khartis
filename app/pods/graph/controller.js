@@ -422,6 +422,10 @@ export default Ember.Controller.extend({
     toggleLabellingFilterCategory(filter, cat) {
       filter.toggleCategory(cat);
     },
+
+    selectAllLabellingFilterCategory(filter, mod) {
+      filter.selectAllCategory(mod);
+    },
     
     resetTranslate() {
       this.get('model.graphLayout').setProperties({

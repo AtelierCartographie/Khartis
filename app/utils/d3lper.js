@@ -7,7 +7,7 @@ let d3lper = {
 	translate({tx = 0, ty = 0}) {
 		return "translate("+tx+", "+ty+")";
 	},
-
+  
   polyPoints(arr) {
     return arr.map(function(d) {
         return d.join(",");

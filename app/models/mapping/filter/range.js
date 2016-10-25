@@ -37,19 +37,23 @@ let RangeFilter = Filter.extend({
     if (this.get('range') && this.get('varCol')) {
       let [min, max] = this.get('range');
       return this.get('varCol.body')
-        .filter( cell => cell.get('postProcessedValue') >= min && cell.get('postProcessedValue') <= max)
+        .filter( 
+          cell => cell.get('postProcessedValue') != null 
+            && cell.get('postProcessedValue') >= min
+            && cell.get('postProcessedValue') <= max
+        )
         .map( cell => cell.get('row') );
     }
     return this.get('varCol.body').map( cell => cell.get('row') );
   }.property('range', 'range.[]', 'varCol'),
 
   run(cell) {
-    console.log("run");
     return this.get('filteredRows').indexOf(cell.get('row')) !== -1;
   },
 
   export(props) {
     return this._super(Object.assign({
+      range: this.get('range')
     }, props))
   }
   
@@ -59,6 +63,7 @@ RangeFilter.reopenClass({
   
   restore(json, refs = {}) {
     return this._super(json, refs, {
+      range: json.range.slice()
     });
   }
 });

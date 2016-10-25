@@ -300,7 +300,12 @@ export default {
         "show": "show",
         "size": "size",
         "color": "color",
-        "filter": "filter by"
+        "filter": "filter by",
+        "categories": "categories",
+        "chooseCategories": "choose",
+        "threshold": "threshold",
+        "selectAll": "select all",
+        "unselectAll": "unselect all"
       },
       "legend": "legend",
       "width": "width",

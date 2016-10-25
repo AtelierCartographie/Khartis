@@ -39,6 +39,11 @@
         stroke-width: $axis-height;
         pointer-events: none;
       }
+
+      line.range-line {
+        stroke: color(primary);
+        stroke-width: $axis-height / 2;
+      }
       
     }
     
