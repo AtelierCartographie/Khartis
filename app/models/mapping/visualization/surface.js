@@ -34,7 +34,7 @@ let SurfaceVisualization = Struct.extend({
 
 SurfaceVisualization.reopenClass({
   restore(json, refs = {}) {
-    let o = this._super(json, refs, {
+    return this._super(json, refs, {
       type: json.type,
       pattern: json.pattern,
       colors: json.colors,
@@ -43,7 +43,6 @@ SurfaceVisualization.reopenClass({
       patternColor: json.patternColor,
       patternColorBefore: json.patternColorBefore
     });
-    return o;
   }
 });
 

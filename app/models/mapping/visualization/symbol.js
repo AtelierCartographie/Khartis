@@ -53,7 +53,7 @@ let SymbolVisualization = Struct.extend({
 
 SymbolVisualization.reopenClass({
   restore(json, refs = {}) {
-    let o = this._super(json, refs, {
+    return this._super(json, refs, {
       type: json.type,
       color: json.color,
       shape: json.shape,
@@ -62,7 +62,6 @@ SymbolVisualization.reopenClass({
       maxSize: json.maxSize,
       colorBeforeBreak: json.colorBeforeBreak
     });
-    return o;
   }
 });
 

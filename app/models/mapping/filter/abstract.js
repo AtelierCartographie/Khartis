@@ -1,14 +1,21 @@
 import Ember from 'ember';
 import Struct from '../../struct';
-import RangeFilter from './filter';
 
 let Filter = Struct.extend({
 
+  type: null,
   varCol: null,
 
   run(cell) {
     throw new Error(`Filter run method not implemented`);
   },
+
+  deferredChange: Ember.debouncedObserver(
+    'varCol',
+    function() {
+      this.notifyDefferedChange();
+    },
+    1),
 
   export(props) {
     return this._super(Object.assign({
@@ -21,11 +28,11 @@ let Filter = Struct.extend({
 
 Filter.reopenClass({
   
-  restore(json, refs = {}) {
-    if (json.type === "range") {
-      return RangeFilter.restore(json, refs);
-    }
-    throw new Error(`Unable to restore filter with type ${json.type}`);
+  restore(json, refs = {}, opts = {}) {
+    return this._super(json, refs, Object.assign({
+      type: json.type,
+      varCol: json.varCol ? refs[json.varCol] : null
+    }, opts));
   }
 });
 

@@ -3,12 +3,12 @@ import Struct from 'mapp/models/struct';
 let TextVisualization = Struct.extend({
   
   type: "text",
-  color: null,
-  size: 12,
+  color: "#404040",
+  size: 1,
   anchor: "middle",
 
   deferredChange: Ember.debouncedObserver(
-    'color', 'anchor',
+    'color', 'anchor', 'size',
     function() {
       this.notifyDefferedChange();
     },

@@ -3,6 +3,7 @@ import d3 from 'd3';
 import config from 'mapp/config/environment';
 import GraphLayer from 'mapp/models/graph-layer';
 import Mapping from 'mapp/models/mapping/mapping';
+import FilterFactory from 'mapp/models/mapping/filter/factory';
 import Projection from 'mapp/models/projection';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'mapp/utils/png-utils';
 
@@ -352,12 +353,6 @@ export default Ember.Controller.extend({
       }
     },
 
-    addLabellingLayer(col) { //TODO : implement
-      let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
-      this.get('model.labellingLayers').unshiftObject(layer);
-      layer.set('mapping.type', "labelling");
-    },
-
     alignLabels(to) {
       this.get('model.labellingLayers')[0].set('mapping.visualization.anchor', to);
     },
@@ -396,6 +391,36 @@ export default Ember.Controller.extend({
 
     toggleLegendVisibility() {
       this.toggleProperty('model.graphLayout.showLegend');
+    },
+
+    toggleLabellingVisibility() {
+      if (this.get('model.labellingLayers') && this.get('model.labellingLayers').length) {
+        this.set('model.labellingLayers', []);
+      } else {
+        let col = this.get('model.data.columns')[0],
+            layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
+        this.get('model.labellingLayers').unshiftObject(layer);
+        layer.set('mapping.type', "labelling");
+      }
+    },
+
+    setLabellingCol(layer, col) {
+      layer.set('mapping.varCol', col);
+    },
+
+    setLabellingFilterCol(layer, col) {
+      if (col) {
+        layer.set('mapping.filter', FilterFactory.createInstance(
+          col.get('meta.type') === "numeric" ? "range" : "category",
+          {varCol: col}
+        ));
+      } else {
+        layer.set('mapping.filter', null);
+      }
+    },
+
+    toggleLabellingFilterCategory(filter, cat) {
+      filter.toggleCategory(cat);
     },
     
     resetTranslate() {

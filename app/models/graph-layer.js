@@ -28,7 +28,7 @@ let GraphLayer = Struct.extend({
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    25),
   
   export() {
     return this._super({

@@ -284,7 +284,6 @@ export default {
 
   "export": {
     "title": {
-      "legend": "legend",
       "labels": "labels",
       "styles": "map layout",
       "sizes": "dimensions",
@@ -297,7 +296,13 @@ export default {
       "comment": "comment"
     },
     "settings": {
-      "showLegend": "show",
+      "labelling": {
+        "show": "show",
+        "size": "size",
+        "color": "color",
+        "filter": "filter by"
+      },
+      "legend": "legend",
       "width": "width",
       "height": "height",
       "borders": "borders",

@@ -40,13 +40,13 @@ export default Ember.Component.extend({
       var target = e.target
 
       do {
-        if($(target).is(trigger)) {
+        if($(target).is(trigger) || $(target).hasClass("no-close")) {
           break
         }
       } while(target = target.parentNode)
 
       // Target IS the dropdown or the trigger
-      if(target){
+      if (target) {
         return
       }
 

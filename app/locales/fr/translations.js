@@ -284,7 +284,6 @@ export default {
 
   "export": {
     "title": {
-      "legend": "légende",
       "labels": "etiquettes",
       "styles": "habillage de la carte",
       "sizes": "dimensions",
@@ -297,7 +296,13 @@ export default {
       "comment": "commentaire"
     },
     "settings": {
-      "showLegend": "afficher",
+      "labelling": {
+        "show": "afficher",
+        "size": "taille",
+        "color": "couleur",
+        "filter": "filtrer selon"
+      },
+      "legend": "légende",
       "width": "largeur",
       "height": "hauteur",
       "borders": "frontières",

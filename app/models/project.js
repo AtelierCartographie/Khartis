@@ -24,6 +24,10 @@ let Project = Struct.extend({
     comment: null,
 
     report: null,
+
+    hasLabelling: function() {
+      return this.get('labellingLayers') && this.get('labellingLayers').length > 0;
+    }.property('labellingLayers.[]'),
     
     init() {
       this._super();

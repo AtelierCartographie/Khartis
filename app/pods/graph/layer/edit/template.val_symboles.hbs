@@ -46,7 +46,7 @@
           <div id="classes-tab" class="tab-pane {{if editedLayer.mapping.scale.usesInterval 'active'}}">
               <div class="horizontal middle flow">
                 {{#x-tooltip message=(t 'visualization.settings.discretization.tooltip.title')}}
-                <label class="solid w5 tooltip-trigger">{{x-capitalize (t 'visualization.settings.discretization.title')}}</label>
+                <label class="solid w5"><span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.discretization.title')}}</span></label>
                 {{/x-tooltip}}
                 <div class="solid w7">
                   {{#x-dropdown-plus as |facet|}}

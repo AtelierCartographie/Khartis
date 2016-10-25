@@ -572,9 +572,9 @@ export default Ember.Component.extend({
       let lands = this.getFeaturesFromBase("lands"),
           centroids = this.getFeaturesFromBase("centroids");
           
-      data = mapping.get('filteredBody').map( (cell, index) => {
+      data = mapping.get('filteredBody').map( (cell) => {
         
-        let geoData = geoDef.get('geo.body').objectAt(index).get('postProcessedValue'),
+        let geoData = cell.get('row.cells').find( c => c.get('column') == geoDef.get('geo') ).get('postProcessedValue'),
             val = cell.get('postProcessedValue');
 
         if (geoData) {
@@ -582,7 +582,6 @@ export default Ember.Component.extend({
             id: geoData.value[geoKey],
             value: val,
             cell: cell,
-            index: index,
             surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
             point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
           };
@@ -605,15 +604,14 @@ export default Ember.Component.extend({
       data = mapping.get('filteredBody').map( (cell, index) => {
         
         let val = cell.get('postProcessedValue'),
-            lon = geoDef.get('lon.body').objectAt(index).get('postProcessedValue'),
-            lat = geoDef.get('lat.body').objectAt(index).get('postProcessedValue');
+            lon = cell.get('row.cells').find( c => c.get('column') == geoDef.get('lon') ).get('postProcessedValue'),
+            lat = cell.get('row.cells').find( c => c.get('column') == geoDef.get('lat') ).get('postProcessedValue');
 
         if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
           return {
             id: `coord-${index}`,
             value: val,
             cell: cell,
-            index: index,
             point: {
               path: this.assumePathForLatLon([lat, lon]),
               feature: {
@@ -718,18 +716,10 @@ export default Ember.Component.extend({
             });
           
         } else {
-/*            el.attr({
-              "width": r*2,
-              "height": r*2,
-              "x": d => -r,
-              "y": d => -r,
-              "stroke-width": symbol.scale(mapping.get('visualization.stroke'), r*2)
-            });*/
-            _.select("*").attr({
-              "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
-            })
-            .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
-            
+          _.select("*").attr({
+            "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
+          })
+          .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
         }
 
         if (shape === "line") {

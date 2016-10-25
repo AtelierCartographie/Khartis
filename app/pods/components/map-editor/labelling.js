@@ -50,7 +50,7 @@ export default Ember.Mixin.create({
     let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
         converter = mapping.fn();
-		
+
     let bindAttr = (_) => {
 
         _.attr("transform", d => { 
@@ -64,18 +64,22 @@ export default Ember.Mixin.create({
           
         })
         .attr("dy", "0.3em")
-        .attr("font-size", graphLayer.get('size'))
         .attr("text-anchor", {
             start: "start",
             middle: "middle",
             end: "end"
           }[graphLayer.get('mapping.visualization.anchor')])
+        .style({
+          "font-size": `${mapping.get('visualization.size')}em`,
+          "fill": mapping.get('visualization.color'),
+          "stroke": mapping.get('visualization.color')
+        })
         .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'));
         
       };
 
     let centroidSel = d3Layer
-			.selectAll("text.label")
+			.selectAll("text.labelling")
       .data(data.filter( d => {
         let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
         return !isNaN(tx) && !isNaN(ty);
@@ -84,7 +88,7 @@ export default Ember.Mixin.create({
       
     centroidSel.enter()
       .append("text")
-			.classed("label", true)
+			.classed("labelling", true)
       .call(bindAttr);
       
     centroidSel.order().exit().remove();

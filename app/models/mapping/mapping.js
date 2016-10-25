@@ -8,7 +8,7 @@ import CategoryMixins from './mixins/category';
 import LabellingMixins from './mixins/labelling';
 import Colorbrewer from 'mapp/utils/colorbrewer';
 import Rule from './rule';
-import Filter from './filter/filter';
+import FilterFactory from './filter/factory';
 import PatternMaker from 'mapp/utils/pattern-maker';
 
 let Mapping = Struct.extend({
@@ -170,10 +170,11 @@ let Mapping = Struct.extend({
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet',
+    'filter._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();
     },
-    50),
+    25),
   
   export(props) {
     return this._super(Object.assign({
@@ -198,7 +199,7 @@ Mapping.reopenClass({
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
-      filter: json.filter ? Filter.restore(json.filter, refs) : null,
+      filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
       rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
     });
   }

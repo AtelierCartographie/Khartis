@@ -9,72 +9,142 @@
       {{textarea class="auto-expand" value=model.comment placeholder=(t 'export.placeholder.comment')}}
       {{/if}}
     </div>
-
-    <div class="title underlined">{{x-capitalize (t 'export.title.legend')}}</div>
+    
+    <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
     <div class="settings vertical flow">
-      {{#if model.graphLayers.length}}
+      {{#if model.hasLabelling}}
+      {{#each model.labellingLayers as |layer|}}
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.show')}}</label>
+          <div class="horizontal solid half-airy flow w8">
+            <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+              {{#x-dropdown-plus as |facet|}}
+                {{#facet.trigger class="horizontal space-between flow filled"}}
+                    <div class="solid">{{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</div>
+                    <div classs="fluid padded-h">{{layer.mapping.varCol.header.value}}</div>
+                    <i class="iconfont iconfont-angle-down"></i>
+                {{/facet.trigger}}
+                {{#facet.list}}
+                  {{#each model.data.columns as |col|}}
+                  <li {{action 'setLabellingCol' layer col}} class="horizontal middle airy flow">
+                    <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+                    <div classs="fluid padded-h">{{col.header.value}}</div>
+                  </li>
+                  {{/each}}
+                {{/facet.list}}
+              {{/x-dropdown-plus}}
+          </div>
+        </div>
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.size')}}</label>
+          <div class="horizontal solid flow w5">
+            {{x-slider class="fluid offset-slider" band=0.1 value=layer.mapping.visualization.size min=0.7 max=3.5}}
+          </div>
+        </div>
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.color')}}</label>
+          <div class="horizontal solid flow w5">
+            {{color-picker value=layer.mapping.visualization.color}}
+          </div>
+        </div>
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.filter')}}</label>
+          <div class="horizontal solid flow w5">
+            {{#x-dropdown-plus as |facet|}}
+              {{#facet.trigger class="horizontal space-between flow filled"}}
+                {{#if layer.mapping.filter}}
+                  <div class="solid">{{data-type-icon meta=layer.mapping.filter.varCol.meta inconsistency=layer.mapping.filter.varCol.inconsistency}}</div>
+                  <div classs="fluid padded-h">{{layer.mapping.filter.varCol.header.value}}</div>
+                {{else}}
+                  <span>-</span>
+                {{/if}}
+                <i class="iconfont iconfont-angle-down"></i>
+              {{/facet.trigger}}
+              {{#facet.list}}
+                <li {{action 'setLabellingFilterCol' layer null}} class="horizontal middle airy flow">
+                  -
+                </li>
+                {{#each model.data.columns as |col|}}
+                <li {{action 'setLabellingFilterCol' layer col}} class="horizontal middle airy flow">
+                  <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+                  <div classs="fluid padded-h">{{col.header.value}}</div>
+                </li>
+                {{/each}}
+              {{/facet.list}}
+            {{/x-dropdown-plus}}
+          </div>
+        </div>
+        {{#if (x-eq layer.mapping.filter.type 'category')}}
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.categories')}}</label>
+          <div class="horizontal solid flow w5">
+            {{#x-dropdown-plus as |facet|}}
+              {{#facet.trigger class="horizontal space-between flow filled"}}
+                {{x-capitalize (t 'export.settings.labelling.chooseCategories')}}
+                <i class="iconfont iconfont-angle-down"></i>
+              {{/facet.trigger}}
+              {{#facet.list}}
+                {{#each layer.mapping.filter.domain as |cat|}}
+                <li {{action 'toggleLabellingFilterCategory' layer.mapping.filter cat}} class="horizontal middle airy flow no-close">
+                  <span class="solid">{{input type="checkbox" class="no-close clickable" checked=cat.included}}<div class="-h"></div></span>
+                  <div classs="fluid padded-h">{{cat.value}}</div>
+                </li>
+                {{/each}}
+              {{/facet.list}}
+            {{/x-dropdown-plus}}
+          </div>
+        </div>
+        {{else if (x-eq layer.mapping.filter.type 'range')}}
+        <div class="horizontal middle flow">
+          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.categories')}}</label>
+          <div class="horizontal solid flow w5">
+            {{x-slider-range class="fluid offset-slider" value=layer.mapping.filter.range min=layer.mapping.filter.min max=layer.mapping.filter.max}}
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+      {{else}}
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.showLegend')}} ?</label>
-        <div class="horizontal solid half-airy flow w7">
-          <a {{action 'toggleLegendVisibility'}}><i class="iconfont {{if model.graphLayout.showLegend 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.show')}}</label>
+        <div class="horizontal solid half-airy flow w8">
+          <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
       </div>
       {{/if}}
     </div>
     
-    <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
-    <div class="settings vertical flow">
-      {{#each model.labellingLayers as |layer|}}
-      <div class="horizontal space-between flow layer-header">
-        <div class="horizontal airy baseline flow">
-          {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
-          <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
-        </div>
-        <div class="solid horizontal baseline half-airy right flow w4">
-          <span class="no-drag no-drag-click">
-            {{#x-button tagName="a" action=(action 'removeLabellingLayer' layer) disabled=(x-eq layer editedLayer)}}
-              <i class="iconfont iconfont-trash"></i>
-            {{/x-button}}
-          </span>
-        </div>
-      </div>
-      {{/each}}
-      {{#unless model.labellingLayers.length}}
-      {{#x-dropdown-plus as |facet|}}
-        {{#facet.trigger}}
-            <div class="button"><i class="iconfont iconfont-plus-thin"></i></div>
-        {{/facet.trigger}}
-        {{#facet.list}}
-          {{#each model.data.columns as |col|}}
-          <li {{action 'addLabellingLayer' col}} class="horizontal middle airy flow">
-            <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
-            <div classs="fluid padded-h">{{col.header.value}}</div>
-          </li>
-          {{/each}}
-        {{/facet.list}}
-      {{/x-dropdown-plus}}
-      {{/unless}}
-    </div>
-    
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
     <div class="settings vertical flow">
+      {{#if model.graphLayers.length}}
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.borders')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.legend')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{color-picker value=model.graphLayout.stroke}}
+          <a {{action 'toggleLegendVisibility'}}><i class="iconfont {{if model.graphLayout.showLegend 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.borders')}}</label>
+        <div class="horizontal solid half-airy flow w7">
           <a {{action 'toggleBordersVisibility'}}><i class="iconfont {{if model.graphLayout.showBorders 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+          {{#if model.graphLayout.showBorders}}
+          {{color-picker value=model.graphLayout.stroke}}
+          {{/if}}
         </div>
       </div>
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.grid')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.grid')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{color-picker value=model.graphLayout.gridColor}}
           <a {{action 'toggleGridVisibility' layer}}><i class="iconfont {{if model.graphLayout.showGrid 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+          {{#if model.graphLayout.showGrid}}
+          {{color-picker value=model.graphLayout.gridColor}}
+          {{/if}}
         </div>
       </div>
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.background')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.background')}}</label>
         <div class="horizontal solid half-airy flow w7">
+          <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
           {{color-picker value=model.graphLayout.backMapColor}}
         </div>
       </div>
@@ -83,19 +153,19 @@
     <div class="title underlined">{{x-capitalize (t 'export.title.sizes')}} {{t 'general.and'}} {{t 'export.title.export'}}</div>
     <div class="settings vertical flow">
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.width')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.width')}}</label>
         <div class="horizontal solid half-airy flow w7">
           {{input-numeric.one-way numericValue=model.graphLayout.width class="solid w4" min=640 update=(action (mut model.graphLayout.width))}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'export.settings.height')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.height')}}</label>
         <div class="horizontal solid half-airy flow w7">
           {{input-numeric.one-way numericValue=model.graphLayout.height class="solid w4" min=480 update=(action (mut model.graphLayout.height))}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'general.download')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'general.download')}}</label>
         <div class="vertical half-airy solid flow w7">
           <div class="horizontal flow half-airy">
             {{x-button class="small filled primary" action=(action 'export' 'svg') label="SVG"}}

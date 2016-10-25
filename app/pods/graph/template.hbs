@@ -63,7 +63,6 @@
 
           <div class="fluid" style="position: relative;">
             {{#if model.graphLayout.projection}}
-              {{log isInStateExport}}
               {{map-editor
                 graphLayout=model.graphLayout
                 graphLayers=model.graphLayers
@@ -76,7 +75,6 @@
                 hasCompositionBordersFeature=model.graphLayout.projection.isComposite
                 onAskVersioning="onAskVersioning"
               }}
-
             {{/if}}
 
             {{outlet "configuration-panel"}}
