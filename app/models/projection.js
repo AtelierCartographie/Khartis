@@ -8,6 +8,7 @@ let Projection = Struct.extend({
   name: null,
   d3_geo: null,
   rotate: null,
+  parallels: [0, 0],
   scale: null,
   clipAngle: null,
   lobes: null,

@@ -1,4 +1,5 @@
 import d3 from 'd3';
+import d3lper from 'mapp/utils/d3lper';
 
 function inside(bbox, x, y) {
   return x >= bbox[0][0] && x <= bbox[1][0]
@@ -180,16 +181,18 @@ let proj = function() {
 
     _instantiate(projConfig) {
       let d3Proj = eval(projConfig.fn);
+
+      //apply transforms
       let transforms = Object.assign({}, this.transforms, projConfig.transforms);
       d3Proj.lobes && transforms.lobes && d3Proj.lobes(transforms.lobes);
+      
       return d3Proj;
     },
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
 
       let zone = projConfig.zoning || [[0, 0], [1, 1]],
-          d3Proj = this._instantiate(projConfig),
-          fProjection = d3Proj.scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
+          fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geo.path().projection(fProjection),
 
           pixelBounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features),
@@ -207,8 +210,8 @@ let proj = function() {
           hOffset = (width - fWidth) /2, 
           vOffset = (height - fHeight) /2; 
 
-      let projection = d3Proj
-        .center(center)
+      let projection = fProjection
+        .center(projConfig.transforms.rotate ? d3lper.sum(center, projConfig.transforms.rotate) : center)
         .clipExtent([[-width, -width], [2*width, 2*height]])
         .translate([
           (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
