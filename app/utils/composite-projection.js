@@ -182,6 +182,10 @@ let proj = function() {
     _instantiate(projConfig) {
       let d3Proj = eval(projConfig.fn);
 
+      //apply projConfig initial transforms
+      d3Proj.parallels && projConfig.transforms.parallels && d3Proj.parallels(projConfig.transforms.parallels);
+      d3Proj.rotate && projConfig.transforms.rotate && d3Proj.rotate(projConfig.transforms.rotate);
+
       //apply transforms
       let transforms = Object.assign({}, this.transforms, projConfig.transforms);
       d3Proj.lobes && transforms.lobes && d3Proj.lobes(transforms.lobes);
@@ -211,7 +215,7 @@ let proj = function() {
           vOffset = (height - fHeight) /2; 
 
       let projection = fProjection
-        .center(projConfig.transforms.rotate ? d3lper.sum(center, projConfig.transforms.rotate) : center)
+        .center(d3lper.sumCoords(center, projConfig.transforms.rotate))
         .clipExtent([[-width, -width], [2*width, 2*height]])
         .translate([
           (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,

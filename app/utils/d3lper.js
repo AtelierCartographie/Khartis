@@ -8,7 +8,9 @@ let d3lper = {
 		return "translate("+tx+", "+ty+")";
 	},
 
-  sum(coord1, coord2) {
+  sumCoords(coord1, coord2) {
+    !coord1 && (coord1 = [0,0]);
+    !coord2 && (coord2 = [0,0]);
     return [coord1[0] + coord2[0], coord1[1] + coord2[1]];
   },
 
