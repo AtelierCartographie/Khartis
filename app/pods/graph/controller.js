@@ -395,7 +395,7 @@ export default Ember.Controller.extend({
 
     toggleLabellingVisibility() {
       if (this.get('model.labellingLayers') && this.get('model.labellingLayers').length) {
-        this.set('model.labellingLayers', []);
+        this.get('model.labellingLayers').forEach( ll => ll.toggleProperty('visible') );
       } else {
         let col = this.get('model.data.columns')[0],
             layer = GraphLayer.createDefault(col, this.get('model.geoDef'));

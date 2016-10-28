@@ -75,7 +75,6 @@ export default Ember.Mixin.create({
       })
       .each("end", () => {
         
-        console.log("end");
         mapG.attr("transform", null)
           .selectAll("g.layers .shape")
           .attr("transform", null);
