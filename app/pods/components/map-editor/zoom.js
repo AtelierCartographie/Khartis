@@ -69,12 +69,13 @@ export default Ember.Mixin.create({
         "kis:kis:ty": translate[1],
         s: scale
       })
-      .transition().duration(400).ease("cubic-out")
+      .interrupt().transition().duration(400).ease("cubic-out")
       .attr({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })
       .each("end", () => {
         
+        console.log("end");
         mapG.attr("transform", null)
           .selectAll("g.layers .shape")
           .attr("transform", null);
