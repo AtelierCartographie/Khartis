@@ -67,7 +67,7 @@ export default Ember.Mixin.create({
       .attr({
         "kis:kis:tx": translate[0],
         "kis:kis:ty": translate[1],
-        s: scale
+        "kis:kis:s": scale
       })
       .interrupt().transition().duration(400).ease("cubic-out")
       .attr({
@@ -82,7 +82,7 @@ export default Ember.Mixin.create({
         this.get('graphLayout').beginPropertyChanges();
         
         this.setProperties({
-          "graphLayout.zoom": parseFloat(mapG.attr("s")),
+          "graphLayout.zoom": parseFloat(mapG.attr("kis:kis:s")),
           relTx: parseFloat(mapG.attr("kis:kis:tx")),
           relTy: parseFloat(mapG.attr("kis:kis:ty"))
         });
