@@ -68,7 +68,7 @@ module.exports = function(environment) {
       {
         id: "france dept",
         sources: [
-          {source: "FR-dpt-2016/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-dpt-2016/france.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-dpt-2016/FRA10.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-dpt-2016/FRA20.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-dpt-2016/FRA30.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -89,7 +89,7 @@ module.exports = function(environment) {
       {
         id: "france reg 2015",
         sources: [
-          {source: "FR-reg-2015/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2015/france.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-reg-2015/FRA1.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2015/FRA2.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2015/FRA3.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -110,7 +110,7 @@ module.exports = function(environment) {
       {
         id: "france reg 2016",
         sources: [
-          {source: "FR-reg-2016/france.json", projection: "d3.geo.conicConformal()", scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2016/france.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-reg-2016/FRA1.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2016/FRA2.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2016/FRA3.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -131,8 +131,8 @@ module.exports = function(environment) {
       {
         id: "spain prov 2015",
         sources: [
-          {source: "ES-prov-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
-          {source: "ES-prov-2015/spain-islands.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+          {source: "ES-prov-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-prov-2015/spain-islands.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
         ],
         dictionary: {
           source: "ES-dico-PROV-2015.json",
@@ -148,8 +148,8 @@ module.exports = function(environment) {
       {
         id: "spain auto 2015",
         sources: [
-          {source: "ES-auto-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
-          {source: "ES-auto-2015/spain-islands.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+          {source: "ES-auto-2015/spain.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-auto-2015/spain-islands.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
         ],
         dictionary: {
           source: "ES-dico-AUTO-2015.json",
@@ -159,6 +159,25 @@ module.exports = function(environment) {
           {
             id: "es_auto-pop",
             source: "es-auto-pop-2015.csv"
+          }
+        ]
+      },
+      {
+        id: "us state 2015",
+        sources: [
+          {source: "US-state-2015/usa.json", projection: "d3.geo.albers()", transforms:{rotate: [96, 0], parallels: [29.5, 45.5]}, scale: 1, zoning: [[0, 0], [1, 0.9]]},
+          {source: "US-state-2015/alaska.json", projection: "d3.geo.conicEqualArea()", transforms:{rotate: [154, 0], parallels: [55, 65]}, scale: 1, zoning: [[0, 0.8], [0.33, 1]], borders: ["r", "t"]},
+          {source: "US-state-2015/hawai.json", projection: "d3.geo.conicEqualArea()", transforms:{rotate: [157, 0], parallels: [8, 18]}, scale: 0.7, zoning: [[0.33, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "US-state-2015/porto-rico.json", projection: "d3.geo.conicEqualArea()", transforms:{rotate: [67, 0], parallels: [18, 18]}, scale: 0.45, zoning: [[0.5, 0.95], [0.65, 1]], borders: ["r", "t"]}
+        ],
+        dictionary: {
+          source: "US-dico-ST-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "us_state-pop",
+            source: "us-state-pop-2015.csv"
           }
         ]
       }

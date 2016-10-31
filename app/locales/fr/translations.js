@@ -326,7 +326,8 @@ export default {
     "france reg 2015": "France > régions (2015)",
     "france reg 2016": "France > régions (2016)",
     "spain prov 2015": "Espagne > provinces (2015)",
-    "spain auto 2015": "Espagne > communautés (2015)"
+    "spain auto 2015": "Espagne > communautés (2015)",
+    "us state 2015": "États-Unis > États (2015)"
   },
 
   "examples": {
@@ -338,7 +339,8 @@ export default {
     "fr_reg2015-pop": "Population (2013)",
     "fr_reg2016-pop": "Population (2013)",
     "es_prov-pop": "Population (2000-2015)",
-    "es_auto-pop": "Population (2000-2015)"
+    "es_auto-pop": "Population (2000-2015)",
+    "us_state-pop": "Population (2010-2015)"
   }
   
 };
