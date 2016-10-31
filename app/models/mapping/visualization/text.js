@@ -6,9 +6,19 @@ let TextVisualization = Struct.extend({
   color: "#404040",
   size: 1,
   anchor: "middle",
+  overwrites: {},
+
+  getGeometry(id, geom) {
+    return this.get('overwrites')[id] || geom;
+  },
+
+  setGeometry(id, geom) {
+    this.get('overwrites')[id] = geom;
+    this.notifyPropertyChange('overwrites');
+  },
 
   deferredChange: Ember.debouncedObserver(
-    'color', 'anchor', 'size',
+    'color', 'anchor', 'size', 'overwrites',
     function() {
       this.notifyDefferedChange();
     },
@@ -19,7 +29,8 @@ let TextVisualization = Struct.extend({
       type: this.get('type'),
       color: this.get('color'),
       anchor: this.get('anchor'),
-      size: this.get('size')
+      size: this.get('size'),
+      overwrites: this.get('overwrites')
     }, props));
   }
   
@@ -31,7 +42,8 @@ TextVisualization.reopenClass({
       type: json.type,
       color: json.color,
       anchor: json.anchor,
-      size: json.size
+      size: json.size,
+      overwrites: Object.assign({}, json.overwrites)
     });
     return o;
   }

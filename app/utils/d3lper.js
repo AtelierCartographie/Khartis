@@ -8,10 +8,11 @@ let d3lper = {
 		return "translate("+tx+", "+ty+")";
 	},
 
-  sumCoords(coord1, coord2) {
-    !coord1 && (coord1 = [0,0]);
-    !coord2 && (coord2 = [0,0]);
-    return [coord1[0] + coord2[0], coord1[1] + coord2[1]];
+  sumCoords(...args) {
+    return args.reduce( (out, coords) => {
+      !coords && (coords = [0,0]);
+      return [out[0] + coords[0], out[1] + coords[1]];
+    }, [0, 0]);
   },
 
   polyPoints(arr) {

@@ -20,6 +20,10 @@
     pointer-events: none;
   }
 
+  .labelling line.radius, .labelling line.end {
+    stroke: #404040;
+  }
+
   .legend-title {
     cursor: pointer;
   }

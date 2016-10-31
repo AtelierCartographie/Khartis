@@ -645,8 +645,7 @@ export default Ember.Component.extend({
     
     let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
-        converter = mapping.fn(),
-        geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier');
+        converter = mapping.fn();
 		
     let bindAttr = (_) => {
 
