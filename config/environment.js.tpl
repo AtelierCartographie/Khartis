@@ -66,6 +66,54 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "brazil ufe 2015",
+        sources: [
+          {source: "BR-ufe-2015.json", projection: "d3.geo.polyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-UFE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "br_ufe-pop",
+            source: "br-ufe-pop-2010.csv"
+          },
+        ]
+      },
+      {
+        id: "brazil mie 2015",
+        sources: [
+          {source: "BR-mie-2015.json", projection: "d3.geo.polyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-MIE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "",
+            source: ""
+          },
+        ]
+      },
+      {
+        id: "brazil mee 2015",
+        sources: [
+          {source: "BR-mee-2015.json", projection: "d3.geo.polyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-MEE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "",
+            source: ""
+          },
+        ]
+      },
+      {
         id: "france dept",
         sources: [
           {source: "FR-dpt-2016/france.json", projection: "d3.geo.conicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},

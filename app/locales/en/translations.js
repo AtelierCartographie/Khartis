@@ -321,7 +321,10 @@ export default {
   },
 
   "basemap": {
-    "world": "World countries",
+    "world": "World > countries (2016)",
+    "brazil ufe 2015": "Brésil > States (2015)",
+    "brazil mee 2015": "Brésil > mesoregions (2015)",
+    "brazil mie 2015": "Brésil > microregions (2015)",
     "france dept": "France > departments (2016)",
     "france reg 2015": "France > regions (2015)",
     "france reg 2016": "France > regions (2016)",
@@ -335,6 +338,7 @@ export default {
     "idh": "Evolution of HDI (1990-2014)",
     "alim": "Undernourishment (2014-2016)",
     "unesco": "Unesco sites (2015)",
+    "br_ufe-pop": "Population (2015)",
     "fr_dpt-pop": "Population (2013)",
     "fr_reg2015-pop": "Population (2013)",
     "fr_reg2016-pop": "Population (2013)",
