@@ -1,0 +1,19 @@
+ID,Insee,ISO 3166-2,Name
+FR10,11,FR-J,Île-de-France
+FR24,24,FR-F,Centre-Val de Loire
+FR26,27,FR-D,Bourgogne-Franche-Comté
+FR25,28,FR-P,Normandie
+FR22,32,FR-S,Hauts-de-France
+FR21,44,FR-G,Grand Est
+FR51,52,FR-R,Pays de la Loire
+FR52,53,FR-E,Bretagne
+FR61,75,FR-B,Nouvelle-Aquitaine
+FR62,76,FR-N,Occitanie
+FR71,84,FR-V,Auvergne-Rhône-Alpes
+FR82,93,FR-U,Provence-Alpes-Côte d’Azur
+FR83,94,FR-H,Corse
+FRA1,01,—,Guadeloupe
+FRA2,02,—,Martinique
+FRA3,03,—,Guyane (française)
+FRA4,04,—,La Réunion
+FRA5,06,—,Mayotte

@@ -1,0 +1,53 @@
+ID,CNIG,NUTS,Name,Name local
+ES-VI,01,ES211,Araba,Álava
+ES-AB,02,ES421,Albacete,
+ES-A,03,ES521,Alicante,Alacant
+ES-AL,04,ES611,Almería,
+ES-AV,05,ES411,Ávila,
+ES-BA,06,ES431,Badajoz,
+ES-PM,07,-,Illes Balears,Islas Baleares
+ES-B,08,ES511,Barcelona,
+ES-BU,09,ES412,Burgos,
+ES-CC,10,ES432,Cáceres,
+ES-CA,11,ES612,Cádiz,
+ES-CS,12,ES522,Castellón,Castelló
+ES-CR,13,ES422,Ciudad Real,
+ES-CO,14,ES613,Córdoba,
+ES-C,15,ES111,A Coruña,La Coruña
+ES-CU,16,ES423,Cuenca,
+ES-GI,17,ES512,Girona,Gerona
+ES-GR,18,ES614,Granada,
+ES-GU,19,ES424,Guadalajara,
+ES-SS,20,ES212,Gipuzkoa,Guipúzcoa
+ES-H,21,ES615,Huelva,
+ES-HU,22,ES241,Huesca,
+ES-J,23,ES616,Jaén,
+ES-LE,24,ES413,León,
+ES-L,25,ES513,Lleida,Lérida
+ES-LO,26,ES230,La Rioja,
+ES-LU,27,ES112,Lugo,
+ES-M,28,ES300,Madrid,Comunidad de Madrid
+ES-MA,29,ES617,Málaga,
+ES-MU,30,ES620,Murcia,Región de Murcia
+ES-NA,31,ES220,Navarra,Nafarroa
+ES-OR,32,ES113,Ourense,Orense
+ES-O,33,ES120,Asturias,Principado de Asturias
+ES-P,34,ES414,Palencia,
+ES-GC,35,ES701,Las Palmas,
+ES-PO,36,ES114,Pontevedra,
+ES-SA,37,ES415,Salamanca,
+ES-TF,38,ES702,Santa Cruz de Tenerife,
+ES-S,39,ES130,Cantabria,
+ES-SG,40,ES416,Segovia,
+ES-SE,41,ES618,Sevilla,
+ES-SO,42,ES417,Soria,
+ES-T,43,ES514,Tarragona,
+ES-TE,44,ES242,Teruel,
+ES-TO,45,ES425,Toledo,
+ES-V,46,ES523,Valencia,València
+ES-VA,47,ES418,Valladolid,
+ES-BI,48,ES213,Bizkaia,Vizcaya
+ES-ZA,49,ES419,Zamora,
+ES-Z,50,ES243,Zaragoza,
+ES-CE,51,ES630,Ceuta,
+ES-ML,52,ES640,Melilla,
