@@ -131,6 +131,10 @@ module.exports = function(environment) {
           {
             id: "fr_dpt-pop",
             source: "fr-dpt-pop-2013.csv"
+          },
+          {
+            id: "fr_dpt-poverty",
+            source: "fr-dpt-pauvrete-2013.csv"
           }
         ]
       },
@@ -152,6 +156,10 @@ module.exports = function(environment) {
           {
             id: "fr_reg2015-pop",
             source: "fr-reg2015-pop-2013.csv"
+          },
+          {
+            id: "fr_reg2015-poverty",
+            source: "fr-reg2015-pauvrete-2013.csv"
           }
         ]
       },
@@ -173,6 +181,10 @@ module.exports = function(environment) {
           {
             id: "fr_reg2016-pop",
             source: "fr-reg2016-pop-2013.csv"
+          },
+          {
+            id: "fr_reg2016-poverty",
+            source: "fr-reg2016-pauvrete-2013.csv"
           }
         ]
       },

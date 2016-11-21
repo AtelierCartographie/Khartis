@@ -145,7 +145,7 @@ export default Ember.Controller.extend({
               let extraBuffer = build_pHYs(300);
 
               let meta = {
-                "Comment": "Made from Khartis",
+                "Comment": "Made with Khartis",
                 "Software": "Khartis"
               };
 
@@ -200,7 +200,7 @@ export default Ember.Controller.extend({
     d3Node.selectAll("rect.fg").remove();
 
     d3Node.append("text")
-      .text("Made from Khartis")
+      .text("Made with Khartis")
       .attr({
         "x": x+w,
         "y": y+h,

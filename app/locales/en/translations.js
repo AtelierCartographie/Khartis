@@ -340,8 +340,11 @@ export default {
     "unesco": "Unesco sites (2015)",
     "br_ufe-pop": "Population (2015)",
     "fr_dpt-pop": "Population (2013)",
+    "fr_dpt-poverty": "Poverty (2013)",
     "fr_reg2015-pop": "Population (2013)",
+    "fr_reg2015-poverty": "Poverty (2013)",
     "fr_reg2016-pop": "Population (2013)",
+    "fr_reg2016-poverty": "Poverty (2013)",
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)"
