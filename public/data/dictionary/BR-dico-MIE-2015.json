@@ -1,2238 +1,2238 @@
 [
  {
-   "ID": 11001,
+   "ID": "11001",
    "Name": "PORTO VELHO"
  },
  {
-   "ID": 11002,
+   "ID": "11002",
    "Name": "GUAJARÁ-MIRIM"
  },
  {
-   "ID": 11003,
+   "ID": "11003",
    "Name": "ARIQUEMES"
  },
  {
-   "ID": 11004,
+   "ID": "11004",
    "Name": "JI-PARANÁ"
  },
  {
-   "ID": 11005,
+   "ID": "11005",
    "Name": "ALVORADA D'OESTE"
  },
  {
-   "ID": 11006,
+   "ID": "11006",
    "Name": "CACOAL"
  },
  {
-   "ID": 11007,
+   "ID": "11007",
    "Name": "VILHENA"
  },
  {
-   "ID": 11008,
+   "ID": "11008",
    "Name": "COLORADO DO OESTE"
  },
  {
-   "ID": 12001,
+   "ID": "12001",
    "Name": "CRUZEIRO DO SUL"
  },
  {
-   "ID": 12002,
+   "ID": "12002",
    "Name": "TARAUACÁ"
  },
  {
-   "ID": 12003,
+   "ID": "12003",
    "Name": "SENA MADUREIRA"
  },
  {
-   "ID": 12004,
+   "ID": "12004",
    "Name": "RIO BRANCO"
  },
  {
-   "ID": 12005,
+   "ID": "12005",
    "Name": "BRASILÉIA"
  },
  {
-   "ID": 13001,
+   "ID": "13001",
    "Name": "RIO NEGRO"
  },
  {
-   "ID": 13002,
+   "ID": "13002",
    "Name": "JAPURÁ"
  },
  {
-   "ID": 13003,
+   "ID": "13003",
    "Name": "ALTO SOLIMÕES"
  },
  {
-   "ID": 13004,
+   "ID": "13004",
    "Name": "JURUÁ"
  },
  {
-   "ID": 13005,
+   "ID": "13005",
    "Name": "TEFÉ"
  },
  {
-   "ID": 13006,
+   "ID": "13006",
    "Name": "COARI"
  },
  {
-   "ID": 13007,
+   "ID": "13007",
    "Name": "MANAUS"
  },
  {
-   "ID": 13008,
+   "ID": "13008",
    "Name": "RIO PRETO DA EVA"
  },
  {
-   "ID": 13009,
+   "ID": "13009",
    "Name": "ITACOATIARA"
  },
  {
-   "ID": 13010,
+   "ID": "13010",
    "Name": "PARINTINS"
  },
  {
-   "ID": 13011,
+   "ID": "13011",
    "Name": "BOCA DO ACRE"
  },
  {
-   "ID": 13012,
+   "ID": "13012",
    "Name": "PURUS"
  },
  {
-   "ID": 13012,
+   "ID": "13012",
    "Name": "PURUS"
  },
  {
-   "ID": 13013,
+   "ID": "13013",
    "Name": "MADEIRA"
  },
  {
-   "ID": 14001,
+   "ID": "14001",
    "Name": "BOA VISTA"
  },
  {
-   "ID": 14002,
+   "ID": "14002",
    "Name": "NORDESTE DE RORAIMA"
  },
  {
-   "ID": 14003,
+   "ID": "14003",
    "Name": "CARACARAÍ"
  },
  {
-   "ID": 14004,
+   "ID": "14004",
    "Name": "SUDESTE DE RORAIMA"
  },
  {
-   "ID": 15001,
+   "ID": "15001",
    "Name": "ÓBIDOS"
  },
  {
-   "ID": 15002,
+   "ID": "15002",
    "Name": "SANTARÉM"
  },
  {
-   "ID": 15003,
+   "ID": "15003",
    "Name": "ALMEIRIM"
  },
  {
-   "ID": 15004,
+   "ID": "15004",
    "Name": "PORTEL"
  },
  {
-   "ID": 15005,
+   "ID": "15005",
    "Name": "FUROS DE BREVES"
  },
  {
-   "ID": 15006,
+   "ID": "15006",
    "Name": "ARARI"
  },
  {
-   "ID": 15007,
+   "ID": "15007",
    "Name": "BELÉM"
  },
  {
-   "ID": 15008,
+   "ID": "15008",
    "Name": "CASTANHAL"
  },
  {
-   "ID": 15009,
+   "ID": "15009",
    "Name": "SALGADO"
  },
  {
-   "ID": 15010,
+   "ID": "15010",
    "Name": "BRAGANTINA"
  },
  {
-   "ID": 15011,
+   "ID": "15011",
    "Name": "CAMETÁ"
  },
  {
-   "ID": 15012,
+   "ID": "15012",
    "Name": "TOMÉ-AÇU"
  },
  {
-   "ID": 15013,
+   "ID": "15013",
    "Name": "GUAMÁ"
  },
  {
-   "ID": 15014,
+   "ID": "15014",
    "Name": "ITAITUBA"
  },
  {
-   "ID": 15015,
+   "ID": "15015",
    "Name": "ALTAMIRA"
  },
  {
-   "ID": 15016,
+   "ID": "15016",
    "Name": "TUCURUÍ"
  },
  {
-   "ID": 15017,
+   "ID": "15017",
    "Name": "PARAGOMINAS"
  },
  {
-   "ID": 15018,
+   "ID": "15018",
    "Name": "SÃO FÉLIX DO XINGU"
  },
  {
-   "ID": 15019,
+   "ID": "15019",
    "Name": "PARAUAPEBAS"
  },
  {
-   "ID": 15020,
+   "ID": "15020",
    "Name": "MARABÁ"
  },
  {
-   "ID": 15021,
+   "ID": "15021",
    "Name": "REDENÇÃO"
  },
  {
-   "ID": 15022,
+   "ID": "15022",
    "Name": "CONCEIÇÃO DO ARAGUAIA"
  },
  {
-   "ID": 16001,
+   "ID": "16001",
    "Name": "OIAPOQUE"
  },
  {
-   "ID": 16002,
+   "ID": "16002",
    "Name": "AMAPÁ"
  },
  {
-   "ID": 16003,
+   "ID": "16003",
    "Name": "MACAPÁ"
  },
  {
-   "ID": 16004,
+   "ID": "16004",
    "Name": "MAZAGÃO"
  },
  {
-   "ID": 17001,
+   "ID": "17001",
    "Name": "BICO DO PAPAGAIO"
  },
  {
-   "ID": 17002,
+   "ID": "17002",
    "Name": "ARAGUAÍNA"
  },
  {
-   "ID": 17003,
+   "ID": "17003",
    "Name": "MIRACEMA DO TOCANTINS"
  },
  {
-   "ID": 17004,
+   "ID": "17004",
    "Name": "RIO FORMOSO"
  },
  {
-   "ID": 17005,
+   "ID": "17005",
    "Name": "GURUPI"
  },
  {
-   "ID": 17006,
+   "ID": "17006",
    "Name": "PORTO NACIONAL"
  },
  {
-   "ID": 17007,
+   "ID": "17007",
    "Name": "JALAPÃO"
  },
  {
-   "ID": 17008,
+   "ID": "17008",
    "Name": "DIANÓPOLIS"
  },
  {
-   "ID": 21001,
+   "ID": "21001",
    "Name": "LITORAL OCIDENTAL MARANHENSE"
  },
  {
-   "ID": 21002,
+   "ID": "21002",
    "Name": "AGLOMERAÇÃO URBANA DE SÃO LUÍS"
  },
  {
-   "ID": 21003,
+   "ID": "21003",
    "Name": "ROSÁRIO"
  },
  {
-   "ID": 21004,
+   "ID": "21004",
    "Name": "LENÇÓIS MARANHENSES"
  },
  {
-   "ID": 21005,
+   "ID": "21005",
    "Name": "BAIXADA MARANHENSE"
  },
  {
-   "ID": 21006,
+   "ID": "21006",
    "Name": "ITAPECURU MIRIM"
  },
  {
-   "ID": 21007,
+   "ID": "21007",
    "Name": "GURUPI"
  },
  {
-   "ID": 21008,
+   "ID": "21008",
    "Name": "PINDARÉ"
  },
  {
-   "ID": 21009,
+   "ID": "21009",
    "Name": "IMPERATRIZ"
  },
  {
-   "ID": 21010,
+   "ID": "21010",
    "Name": "MÉDIO MEARIM"
  },
  {
-   "ID": 21011,
+   "ID": "21011",
    "Name": "ALTO MEARIM E GRAJAÚ"
  },
  {
-   "ID": 21012,
+   "ID": "21012",
    "Name": "PRESIDENTE DUTRA"
  },
  {
-   "ID": 21013,
+   "ID": "21013",
    "Name": "BAIXO PARNAÍBA MARANHENSE"
  },
  {
-   "ID": 21014,
+   "ID": "21014",
    "Name": "CHAPADINHA"
  },
  {
-   "ID": 21015,
+   "ID": "21015",
    "Name": "CODÓ"
  },
  {
-   "ID": 21016,
+   "ID": "21016",
    "Name": "COELHO NETO"
  },
  {
-   "ID": 21017,
+   "ID": "21017",
    "Name": "CAXIAS"
  },
  {
-   "ID": 21018,
+   "ID": "21018",
    "Name": "CHAPADAS DO ALTO ITAPECURU"
  },
  {
-   "ID": 21019,
+   "ID": "21019",
    "Name": "PORTO FRANCO"
  },
  {
-   "ID": 21020,
+   "ID": "21020",
    "Name": "GERAIS DE BALSAS"
  },
  {
-   "ID": 21021,
+   "ID": "21021",
    "Name": "CHAPADAS DAS MANGABEIRAS"
  },
  {
-   "ID": 22001,
+   "ID": "22001",
    "Name": "BAIXO PARNAÍBA PIAUIENSE"
  },
  {
-   "ID": 22002,
+   "ID": "22002",
    "Name": "LITORAL PIAUIENSE"
  },
  {
-   "ID": 22003,
+   "ID": "22003",
    "Name": "TERESINA"
  },
  {
-   "ID": 22004,
+   "ID": "22004",
    "Name": "CAMPO MAIOR"
  },
  {
-   "ID": 22005,
+   "ID": "22005",
    "Name": "MÉDIO PARNAÍBA PIAUIENSE"
  },
  {
-   "ID": 22006,
+   "ID": "22006",
    "Name": "VALENÇA DO PIAUÍ"
  },
  {
-   "ID": 22007,
+   "ID": "22007",
    "Name": "ALTO PARNAÍBA PIAUIENSE"
  },
  {
-   "ID": 22008,
+   "ID": "22008",
    "Name": "BERTOLÍNIA"
  },
  {
-   "ID": 22009,
+   "ID": "22009",
    "Name": "FLORIANO"
  },
  {
-   "ID": 22010,
+   "ID": "22010",
    "Name": "ALTO MÉDIO GURGUÉIA"
  },
  {
-   "ID": 22011,
+   "ID": "22011",
    "Name": "SÃO RAIMUNDO NONATO"
  },
  {
-   "ID": 22012,
+   "ID": "22012",
    "Name": "CHAPADAS DO EXTREMO SUL PIAUIENSE"
  },
  {
-   "ID": 22013,
+   "ID": "22013",
    "Name": "PICOS"
  },
  {
-   "ID": 22014,
+   "ID": "22014",
    "Name": "PIO IX"
  },
  {
-   "ID": 22015,
+   "ID": "22015",
    "Name": "ALTO MÉDIO CANINDÉ"
  },
  {
-   "ID": 23001,
+   "ID": "23001",
    "Name": "LITORAL DE CAMOCIM E ACARAÚ"
  },
  {
-   "ID": 23002,
+   "ID": "23002",
    "Name": "IBIAPABA"
  },
  {
-   "ID": 23003,
+   "ID": "23003",
    "Name": "COREAÚ"
  },
  {
-   "ID": 23004,
+   "ID": "23004",
    "Name": "MERUOCA"
  },
  {
-   "ID": 23005,
+   "ID": "23005",
    "Name": "SOBRAL"
  },
  {
-   "ID": 23006,
+   "ID": "23006",
    "Name": "IPU"
  },
  {
-   "ID": 23007,
+   "ID": "23007",
    "Name": "SANTA QUITÉRIA"
  },
  {
-   "ID": 23008,
+   "ID": "23008",
    "Name": "ITAPIPOCA"
  },
  {
-   "ID": 23009,
+   "ID": "23009",
    "Name": "BAIXO CURU"
  },
  {
-   "ID": 23010,
+   "ID": "23010",
    "Name": "URUBURETAMA"
  },
  {
-   "ID": 23011,
+   "ID": "23011",
    "Name": "MÉDIO CURU"
  },
  {
-   "ID": 23012,
+   "ID": "23012",
    "Name": "CANINDÉ"
  },
  {
-   "ID": 23013,
+   "ID": "23013",
    "Name": "BATURITÉ"
  },
  {
-   "ID": 23014,
+   "ID": "23014",
    "Name": "CHOROZINHO"
  },
  {
-   "ID": 23015,
+   "ID": "23015",
    "Name": "CASCAVEL"
  },
  {
-   "ID": 23016,
+   "ID": "23016",
    "Name": "FORTALEZA"
  },
  {
-   "ID": 23017,
+   "ID": "23017",
    "Name": "PACAJUS"
  },
  {
-   "ID": 23018,
+   "ID": "23018",
    "Name": "SERTÃO DE CRATÉUS"
  },
  {
-   "ID": 23019,
+   "ID": "23019",
    "Name": "SERTÃO DE QUIXERAMOBIM"
  },
  {
-   "ID": 23020,
+   "ID": "23020",
    "Name": "SERTÃO DE INHAMUNS"
  },
  {
-   "ID": 23021,
+   "ID": "23021",
    "Name": "SERTÃO DE SENADOR POMPEU"
  },
  {
-   "ID": 23022,
+   "ID": "23022",
    "Name": "LITORAL DE ARACATI"
  },
  {
-   "ID": 23023,
+   "ID": "23023",
    "Name": "BAIXO JAGUARIBE"
  },
  {
-   "ID": 23024,
+   "ID": "23024",
    "Name": "MÉDIO JAGUARIBE"
  },
  {
-   "ID": 23025,
+   "ID": "23025",
    "Name": "SERRA DO PEREIRO"
  },
  {
-   "ID": 23026,
+   "ID": "23026",
    "Name": "IGUATU"
  },
  {
-   "ID": 23027,
+   "ID": "23027",
    "Name": "VÁRZEA ALEGRE"
  },
  {
-   "ID": 23028,
+   "ID": "23028",
    "Name": "LAVRAS DA MANGABEIRA"
  },
  {
-   "ID": 23029,
+   "ID": "23029",
    "Name": "CHAPADA DO ARARIPE"
  },
  {
-   "ID": 23030,
+   "ID": "23030",
    "Name": "CARIRIAÇU"
  },
  {
-   "ID": 23031,
+   "ID": "23031",
    "Name": "BARRO"
  },
  {
-   "ID": 23032,
+   "ID": "23032",
    "Name": "CARIRI"
  },
  {
-   "ID": 23033,
+   "ID": "23033",
    "Name": "BREJO SANTO"
  },
  {
-   "ID": 24001,
+   "ID": "24001",
    "Name": "MOSSORÓ"
  },
  {
-   "ID": 24002,
+   "ID": "24002",
    "Name": "CHAPADA DO APODI"
  },
  {
-   "ID": 24003,
+   "ID": "24003",
    "Name": "MÉDIO OESTE"
  },
  {
-   "ID": 24004,
+   "ID": "24004",
    "Name": "VALE DO AÇU"
  },
  {
-   "ID": 24005,
+   "ID": "24005",
    "Name": "SERRA DE SÃO MIGUEL"
  },
  {
-   "ID": 24006,
+   "ID": "24006",
    "Name": "PAU DOS FERROS"
  },
  {
-   "ID": 24007,
+   "ID": "24007",
    "Name": "UMARIZAL"
  },
  {
-   "ID": 24008,
+   "ID": "24008",
    "Name": "MACAU"
  },
  {
-   "ID": 24009,
+   "ID": "24009",
    "Name": "ANGICOS"
  },
  {
-   "ID": 24010,
+   "ID": "24010",
    "Name": "SERRA DE SANTANA"
  },
  {
-   "ID": 24011,
+   "ID": "24011",
    "Name": "SERIDÓ OCIDENTAL"
  },
  {
-   "ID": 24012,
+   "ID": "24012",
    "Name": "SERIDÓ ORIENTAL"
  },
  {
-   "ID": 24013,
+   "ID": "24013",
    "Name": "BAIXA VERDE"
  },
  {
-   "ID": 24014,
+   "ID": "24014",
    "Name": "BORBOREMA POTIGUAR"
  },
  {
-   "ID": 24015,
+   "ID": "24015",
    "Name": "AGRESTE POTIGUAR"
  },
  {
-   "ID": 24016,
+   "ID": "24016",
    "Name": "LITORAL NORDESTE"
  },
  {
-   "ID": 24017,
+   "ID": "24017",
    "Name": "MACAÍBA"
  },
  {
-   "ID": 24018,
+   "ID": "24018",
    "Name": "NATAL"
  },
  {
-   "ID": 24019,
+   "ID": "24019",
    "Name": "LITORAL SUL"
  },
  {
-   "ID": 25001,
+   "ID": "25001",
    "Name": "CATOLÉ DO ROCHA"
  },
  {
-   "ID": 25002,
+   "ID": "25002",
    "Name": "CAJAZEIRAS"
  },
  {
-   "ID": 25003,
+   "ID": "25003",
    "Name": "SOUSA"
  },
  {
-   "ID": 25004,
+   "ID": "25004",
    "Name": "PATOS"
  },
  {
-   "ID": 25005,
+   "ID": "25005",
    "Name": "PIANCÓ"
  },
  {
-   "ID": 25006,
+   "ID": "25006",
    "Name": "ITAPORANGA"
  },
  {
-   "ID": 25007,
+   "ID": "25007",
    "Name": "SERRA DO TEIXEIRA"
  },
  {
-   "ID": 25008,
+   "ID": "25008",
    "Name": "SERIDÓ OCIDENTAL PARAIBANO"
  },
  {
-   "ID": 25009,
+   "ID": "25009",
    "Name": "SERIDÓ ORIENTAL PARAIBANO"
  },
  {
-   "ID": 25010,
+   "ID": "25010",
    "Name": "CARIRI OCIDENTAL"
  },
  {
-   "ID": 25011,
+   "ID": "25011",
    "Name": "CARIRI ORIENTAL"
  },
  {
-   "ID": 25012,
+   "ID": "25012",
    "Name": "CURIMATAÚ OCIDENTAL"
  },
  {
-   "ID": 25013,
+   "ID": "25013",
    "Name": "CURIMATAÚ ORIENTAL"
  },
  {
-   "ID": 25014,
+   "ID": "25014",
    "Name": "ESPERANÇA"
  },
  {
-   "ID": 25015,
+   "ID": "25015",
    "Name": "BREJO PARAIBANO"
  },
  {
-   "ID": 25016,
+   "ID": "25016",
    "Name": "GUARABIRA"
  },
  {
-   "ID": 25017,
+   "ID": "25017",
    "Name": "CAMPINA GRANDE"
  },
  {
-   "ID": 25018,
+   "ID": "25018",
    "Name": "ITABAIANA"
  },
  {
-   "ID": 25019,
+   "ID": "25019",
    "Name": "UMBUZEIRO"
  },
  {
-   "ID": 25020,
+   "ID": "25020",
    "Name": "LITORAL NORTE"
  },
  {
-   "ID": 25021,
+   "ID": "25021",
    "Name": "SAPÉ"
  },
  {
-   "ID": 25022,
+   "ID": "25022",
    "Name": "JOÃO PESSOA"
  },
  {
-   "ID": 25023,
+   "ID": "25023",
    "Name": "LITORAL SUL"
  },
  {
-   "ID": 26001,
+   "ID": "26001",
    "Name": "ARARIPINA"
  },
  {
-   "ID": 26002,
+   "ID": "26002",
    "Name": "SALGUEIRO"
  },
  {
-   "ID": 26003,
+   "ID": "26003",
    "Name": "PAJEÚ"
  },
  {
-   "ID": 26004,
+   "ID": "26004",
    "Name": "SERTÃO DO MOXOTÓ"
  },
  {
-   "ID": 26005,
+   "ID": "26005",
    "Name": "PETROLINA"
  },
  {
-   "ID": 26006,
+   "ID": "26006",
    "Name": "ITAPARICA"
  },
  {
-   "ID": 26007,
+   "ID": "26007",
    "Name": "VALE DO IPANEMA"
  },
  {
-   "ID": 26008,
+   "ID": "26008",
    "Name": "VALE DO IPOJUCA"
  },
  {
-   "ID": 26009,
+   "ID": "26009",
    "Name": "ALTO CAPIBARIBE"
  },
  {
-   "ID": 26010,
+   "ID": "26010",
    "Name": "MÉDIO CAPIBARIBE"
  },
  {
-   "ID": 26011,
+   "ID": "26011",
    "Name": "GARANHUNS"
  },
  {
-   "ID": 26012,
+   "ID": "26012",
    "Name": "BREJO PERNAMBUCANO"
  },
  {
-   "ID": 26013,
+   "ID": "26013",
    "Name": "MATA SETENTRIONAL PERNAMBUCANA"
  },
  {
-   "ID": 26014,
+   "ID": "26014",
    "Name": "VITÓRIA DE SANTO ANTÃO"
  },
  {
-   "ID": 26015,
+   "ID": "26015",
    "Name": "MATA MERIDIONAL PERNAMBUCANA"
  },
  {
-   "ID": 26016,
+   "ID": "26016",
    "Name": "ITAMARACÁ"
  },
  {
-   "ID": 26017,
+   "ID": "26017",
    "Name": "RECIFE"
  },
  {
-   "ID": 26018,
+   "ID": "26018",
    "Name": "SUAPE"
  },
  {
-   "ID": 26019,
+   "ID": "26019",
    "Name": "FERNANDO DE NORONHA"
  },
  {
-   "ID": 27001,
+   "ID": "27001",
    "Name": "SERRANA DO SERTÃO ALAGOANO"
  },
  {
-   "ID": 27002,
+   "ID": "27002",
    "Name": "ALAGOANA DO SERTÃO DO SÃO FRANCISCO"
  },
  {
-   "ID": 27003,
+   "ID": "27003",
    "Name": "SANTANA DO IPANEMA"
  },
  {
-   "ID": 27004,
+   "ID": "27004",
    "Name": "BATALHA"
  },
  {
-   "ID": 27005,
+   "ID": "27005",
    "Name": "PALMEIRA DOS ÍNDIOS"
  },
  {
-   "ID": 27006,
+   "ID": "27006",
    "Name": "ARAPIRACA"
  },
  {
-   "ID": 27007,
+   "ID": "27007",
    "Name": "TRAIPU"
  },
  {
-   "ID": 27008,
+   "ID": "27008",
    "Name": "SERRANA DOS QUILOMBOS"
  },
  {
-   "ID": 27009,
+   "ID": "27009",
    "Name": "MATA ALAGOANA"
  },
  {
-   "ID": 27010,
+   "ID": "27010",
    "Name": "LITORAL NORTE ALAGOANO"
  },
  {
-   "ID": 27011,
+   "ID": "27011",
    "Name": "MACEIÓ"
  },
  {
-   "ID": 27012,
+   "ID": "27012",
    "Name": "SÃO MIGUEL DOS CAMPOS"
  },
  {
-   "ID": 27013,
+   "ID": "27013",
    "Name": "PENEDO"
  },
  {
-   "ID": 28001,
+   "ID": "28001",
    "Name": "SERGIPANA DO SERTÃO DO SÃO FRANCISCO"
  },
  {
-   "ID": 28002,
+   "ID": "28002",
    "Name": "CARIRA"
  },
  {
-   "ID": 28003,
+   "ID": "28003",
    "Name": "NOSSA SENHORA DAS DORES"
  },
  {
-   "ID": 28004,
+   "ID": "28004",
    "Name": "AGRESTE DE ITABAIANA"
  },
  {
-   "ID": 28005,
+   "ID": "28005",
    "Name": "TOBIAS BARRETO"
  },
  {
-   "ID": 28006,
+   "ID": "28006",
    "Name": "AGRESTE DE LAGARTO"
  },
  {
-   "ID": 28007,
+   "ID": "28007",
    "Name": "PROPRIÁ"
  },
  {
-   "ID": 28008,
+   "ID": "28008",
    "Name": "COTINGUIBA"
  },
  {
-   "ID": 28009,
+   "ID": "28009",
    "Name": "JAPARATUBA"
  },
  {
-   "ID": 28010,
+   "ID": "28010",
    "Name": "BAIXO COTINGUIBA"
  },
  {
-   "ID": 28011,
+   "ID": "28011",
    "Name": "ARACAJU"
  },
  {
-   "ID": 28012,
+   "ID": "28012",
    "Name": "BOQUIM"
  },
  {
-   "ID": 28013,
+   "ID": "28013",
    "Name": "ESTÂNCIA"
  },
  {
-   "ID": 29001,
+   "ID": "29001",
    "Name": "BARREIRAS"
  },
  {
-   "ID": 29002,
+   "ID": "29002",
    "Name": "COTEGIPE"
  },
  {
-   "ID": 29003,
+   "ID": "29003",
    "Name": "SANTA MARIA DA VITÓRIA"
  },
  {
-   "ID": 29004,
+   "ID": "29004",
    "Name": "JUAZEIRO"
  },
  {
-   "ID": 29005,
+   "ID": "29005",
    "Name": "PAULO AFONSO"
  },
  {
-   "ID": 29006,
+   "ID": "29006",
    "Name": "BARRA"
  },
  {
-   "ID": 29007,
+   "ID": "29007",
    "Name": "BOM JESUS DA LAPA"
  },
  {
-   "ID": 29008,
+   "ID": "29008",
    "Name": "SENHOR DO BONFIM"
  },
  {
-   "ID": 29009,
+   "ID": "29009",
    "Name": "IRECÊ"
  },
  {
-   "ID": 29010,
+   "ID": "29010",
    "Name": "JACOBINA"
  },
  {
-   "ID": 29011,
+   "ID": "29011",
    "Name": "ITABERABA"
  },
  {
-   "ID": 29012,
+   "ID": "29012",
    "Name": "FEIRA DE SANTANA"
  },
  {
-   "ID": 29013,
+   "ID": "29013",
    "Name": "JEREMOABO"
  },
  {
-   "ID": 29014,
+   "ID": "29014",
    "Name": "EUCLIDES DA CUNHA"
  },
  {
-   "ID": 29015,
+   "ID": "29015",
    "Name": "RIBEIRA DO POMBAL"
  },
  {
-   "ID": 29016,
+   "ID": "29016",
    "Name": "SERRINHA"
  },
  {
-   "ID": 29017,
+   "ID": "29017",
    "Name": "ALAGOINHAS"
  },
  {
-   "ID": 29018,
+   "ID": "29018",
    "Name": "ENTRE RIOS"
  },
  {
-   "ID": 29019,
+   "ID": "29019",
    "Name": "CATU"
  },
  {
-   "ID": 29020,
+   "ID": "29020",
    "Name": "SANTO ANTÔNIO DE JESUS"
  },
  {
-   "ID": 29021,
+   "ID": "29021",
    "Name": "SALVADOR"
  },
  {
-   "ID": 29022,
+   "ID": "29022",
    "Name": "BOQUIRA"
  },
  {
-   "ID": 29023,
+   "ID": "29023",
    "Name": "SEABRA"
  },
  {
-   "ID": 29024,
+   "ID": "29024",
    "Name": "JEQUIÉ"
  },
  {
-   "ID": 29025,
+   "ID": "29025",
    "Name": "LIVRAMENTO DO BRUMADO"
  },
  {
-   "ID": 29026,
+   "ID": "29026",
    "Name": "GUANAMBI"
  },
  {
-   "ID": 29027,
+   "ID": "29027",
    "Name": "BRUMADO"
  },
  {
-   "ID": 29028,
+   "ID": "29028",
    "Name": "VITÓRIA DA CONQUISTA"
  },
  {
-   "ID": 29029,
+   "ID": "29029",
    "Name": "ITAPETINGA"
  },
  {
-   "ID": 29030,
+   "ID": "29030",
    "Name": "VALENÇA"
  },
  {
-   "ID": 29031,
+   "ID": "29031",
    "Name": "ILHÉUS-ITABUNA"
  },
  {
-   "ID": 29032,
+   "ID": "29032",
    "Name": "PORTO SEGURO"
  },
  {
-   "ID": 31001,
+   "ID": "31001",
    "Name": "UNAÍ"
  },
  {
-   "ID": 31002,
+   "ID": "31002",
    "Name": "PARACATU"
  },
  {
-   "ID": 31003,
+   "ID": "31003",
    "Name": "JANUÁRIA"
  },
  {
-   "ID": 31004,
+   "ID": "31004",
    "Name": "JANAÚBA"
  },
  {
-   "ID": 31005,
+   "ID": "31005",
    "Name": "SALINAS"
  },
  {
-   "ID": 31006,
+   "ID": "31006",
    "Name": "PIRAPORA"
  },
  {
-   "ID": 31007,
+   "ID": "31007",
    "Name": "MONTES CLAROS"
  },
  {
-   "ID": 31008,
+   "ID": "31008",
    "Name": "GRÃO MOGOL"
  },
  {
-   "ID": 31009,
+   "ID": "31009",
    "Name": "BOCAIÚVA"
  },
  {
-   "ID": 31010,
+   "ID": "31010",
    "Name": "DIAMANTINA"
  },
  {
-   "ID": 31011,
+   "ID": "31011",
    "Name": "CAPELINHA"
  },
  {
-   "ID": 31012,
+   "ID": "31012",
    "Name": "ARAÇUAÍ"
  },
  {
-   "ID": 31013,
+   "ID": "31013",
    "Name": "PEDRA AZUL"
  },
  {
-   "ID": 31014,
+   "ID": "31014",
    "Name": "ALMENARA"
  },
  {
-   "ID": 31015,
+   "ID": "31015",
    "Name": "TEÓFILO OTONI"
  },
  {
-   "ID": 31016,
+   "ID": "31016",
    "Name": "NANUQUE"
  },
  {
-   "ID": 31017,
+   "ID": "31017",
    "Name": "ITUIUTABA"
  },
  {
-   "ID": 31018,
+   "ID": "31018",
    "Name": "UBERLÂNDIA"
  },
  {
-   "ID": 31019,
+   "ID": "31019",
    "Name": "PATROCÍNIO"
  },
  {
-   "ID": 31020,
+   "ID": "31020",
    "Name": "PATOS DE MINAS"
  },
  {
-   "ID": 31021,
+   "ID": "31021",
    "Name": "FRUTAL"
  },
  {
-   "ID": 31022,
+   "ID": "31022",
    "Name": "UBERABA"
  },
  {
-   "ID": 31023,
+   "ID": "31023",
    "Name": "ARAXÁ"
  },
  {
-   "ID": 31024,
+   "ID": "31024",
    "Name": "TRÊS MARIAS"
  },
  {
-   "ID": 31025,
+   "ID": "31025",
    "Name": "CURVELO"
  },
  {
-   "ID": 31026,
+   "ID": "31026",
    "Name": "BOM DESPACHO"
  },
  {
-   "ID": 31027,
+   "ID": "31027",
    "Name": "SETE LAGOAS"
  },
  {
-   "ID": 31028,
+   "ID": "31028",
    "Name": "CONCEIÇÃO DO MATO DENTRO"
  },
  {
-   "ID": 31029,
+   "ID": "31029",
    "Name": "PARÁ DE MINAS"
  },
  {
-   "ID": 31030,
+   "ID": "31030",
    "Name": "BELO HORIZONTE"
  },
  {
-   "ID": 31031,
+   "ID": "31031",
    "Name": "ITABIRA"
  },
  {
-   "ID": 31032,
+   "ID": "31032",
    "Name": "ITAGUARA"
  },
  {
-   "ID": 31033,
+   "ID": "31033",
    "Name": "OURO PRETO"
  },
  {
-   "ID": 31034,
+   "ID": "31034",
    "Name": "CONSELHEIRO LAFAIETE"
  },
  {
-   "ID": 31035,
+   "ID": "31035",
    "Name": "GUANHÃES"
  },
  {
-   "ID": 31036,
+   "ID": "31036",
    "Name": "PEÇANHA"
  },
  {
-   "ID": 31037,
+   "ID": "31037",
    "Name": "GOVERNADOR VALADARES"
  },
  {
-   "ID": 31038,
+   "ID": "31038",
    "Name": "MANTENA"
  },
  {
-   "ID": 31039,
+   "ID": "31039",
    "Name": "IPATINGA"
  },
  {
-   "ID": 31040,
+   "ID": "31040",
    "Name": "CARATINGA"
  },
  {
-   "ID": 31041,
+   "ID": "31041",
    "Name": "AIMORÉS"
  },
  {
-   "ID": 31042,
+   "ID": "31042",
    "Name": "PIUÍ"
  },
  {
-   "ID": 31043,
+   "ID": "31043",
    "Name": "DIVINÓPOLIS"
  },
  {
-   "ID": 31044,
+   "ID": "31044",
    "Name": "FORMIGA"
  },
  {
-   "ID": 31045,
+   "ID": "31045",
    "Name": "CAMPO BELO"
  },
  {
-   "ID": 31046,
+   "ID": "31046",
    "Name": "OLIVEIRA"
  },
  {
-   "ID": 31047,
+   "ID": "31047",
    "Name": "PASSOS"
  },
  {
-   "ID": 31048,
+   "ID": "31048",
    "Name": "SÃO SEBASTIÃO DO PARAÍSO"
  },
  {
-   "ID": 31049,
+   "ID": "31049",
    "Name": "ALFENAS"
  },
  {
-   "ID": 31050,
+   "ID": "31050",
    "Name": "VARGINHA"
  },
  {
-   "ID": 31051,
+   "ID": "31051",
    "Name": "POÇOS DE CALDAS"
  },
  {
-   "ID": 31052,
+   "ID": "31052",
    "Name": "POUSO ALEGRE"
  },
  {
-   "ID": 31053,
+   "ID": "31053",
    "Name": "SANTA RITA DO SAPUCAÍ"
  },
  {
-   "ID": 31054,
+   "ID": "31054",
    "Name": "SÃO LOURENÇO"
  },
  {
-   "ID": 31055,
+   "ID": "31055",
    "Name": "ANDRELÂNDIA"
  },
  {
-   "ID": 31056,
+   "ID": "31056",
    "Name": "ITAJUBÁ"
  },
  {
-   "ID": 31057,
+   "ID": "31057",
    "Name": "LAVRAS"
  },
  {
-   "ID": 31058,
+   "ID": "31058",
    "Name": "SÃO JOÃO DEL REI"
  },
  {
-   "ID": 31059,
+   "ID": "31059",
    "Name": "BARBACENA"
  },
  {
-   "ID": 31060,
+   "ID": "31060",
    "Name": "PONTE NOVA"
  },
  {
-   "ID": 31061,
+   "ID": "31061",
    "Name": "MANHUAÇU"
  },
  {
-   "ID": 31062,
+   "ID": "31062",
    "Name": "VIÇOSA"
  },
  {
-   "ID": 31063,
+   "ID": "31063",
    "Name": "MURIAÉ"
  },
  {
-   "ID": 31064,
+   "ID": "31064",
    "Name": "UBÁ"
  },
  {
-   "ID": 31065,
+   "ID": "31065",
    "Name": "JUIZ DE FORA"
  },
  {
-   "ID": 31066,
+   "ID": "31066",
    "Name": "CATAGUASES"
  },
  {
-   "ID": 32001,
+   "ID": "32001",
    "Name": "BARRA DE SÃO FRANCISCO"
  },
  {
-   "ID": 32002,
+   "ID": "32002",
    "Name": "NOVA VENÉCIA"
  },
  {
-   "ID": 32003,
+   "ID": "32003",
    "Name": "COLATINA"
  },
  {
-   "ID": 32004,
+   "ID": "32004",
    "Name": "MONTANHA"
  },
  {
-   "ID": 32005,
+   "ID": "32005",
    "Name": "SÃO MATEUS"
  },
  {
-   "ID": 32006,
+   "ID": "32006",
    "Name": "LINHARES"
  },
  {
-   "ID": 32007,
+   "ID": "32007",
    "Name": "AFONSO CLÁUDIO"
  },
  {
-   "ID": 32008,
+   "ID": "32008",
    "Name": "SANTA TERESA"
  },
  {
-   "ID": 32009,
+   "ID": "32009",
    "Name": "VITÓRIA"
  },
  {
-   "ID": 32010,
+   "ID": "32010",
    "Name": "GUARAPARI"
  },
  {
-   "ID": 32011,
+   "ID": "32011",
    "Name": "ALEGRE"
  },
  {
-   "ID": 32012,
+   "ID": "32012",
    "Name": "CACHOEIRO DE ITAPEMIRIM"
  },
  {
-   "ID": 32013,
+   "ID": "32013",
    "Name": "ITAPEMIRIM"
  },
  {
-   "ID": 33001,
+   "ID": "33001",
    "Name": "ITAPERUNA"
  },
  {
-   "ID": 33002,
+   "ID": "33002",
    "Name": "SANTO ANTÔNIO DE PÁDUA"
  },
  {
-   "ID": 33003,
+   "ID": "33003",
    "Name": "CAMPOS DOS GOYTACAZES"
  },
  {
-   "ID": 33004,
+   "ID": "33004",
    "Name": "MACAÉ"
  },
  {
-   "ID": 33005,
+   "ID": "33005",
    "Name": "TRÊS RIOS"
  },
  {
-   "ID": 33006,
+   "ID": "33006",
    "Name": "CANTAGALO-CORDEIRO"
  },
  {
-   "ID": 33007,
+   "ID": "33007",
    "Name": "NOVA FRIBURGO"
  },
  {
-   "ID": 33008,
+   "ID": "33008",
    "Name": "SANTA MARIA MADALENA"
  },
  {
-   "ID": 33009,
+   "ID": "33009",
    "Name": "BACIA DE SÃO JOÃO"
  },
  {
-   "ID": 33010,
+   "ID": "33010",
    "Name": "LAGOS"
  },
  {
-   "ID": 33011,
+   "ID": "33011",
    "Name": "VALE DO PARAÍBA FLUMINENSE"
  },
  {
-   "ID": 33012,
+   "ID": "33012",
    "Name": "BARRA DO PIRAÍ"
  },
  {
-   "ID": 33013,
+   "ID": "33013",
    "Name": "BAÍA DA ILHA GRANDE"
  },
  {
-   "ID": 33014,
+   "ID": "33014",
    "Name": "VASSOURAS"
  },
  {
-   "ID": 33015,
+   "ID": "33015",
    "Name": "SERRANA"
  },
  {
-   "ID": 33016,
+   "ID": "33016",
    "Name": "MACACU-CACERIBU"
  },
  {
-   "ID": 33017,
+   "ID": "33017",
    "Name": "ITAGUAÍ"
  },
  {
-   "ID": 33018,
+   "ID": "33018",
    "Name": "RIO DE JANEIRO"
  },
  {
-   "ID": 35001,
+   "ID": "35001",
    "Name": "JALES"
  },
  {
-   "ID": 35002,
+   "ID": "35002",
    "Name": "FERNANDÓPOLIS"
  },
  {
-   "ID": 35003,
+   "ID": "35003",
    "Name": "VOTUPORANGA"
  },
  {
-   "ID": 35004,
+   "ID": "35004",
    "Name": "SÃO JOSÉ DO RIO PRETO"
  },
  {
-   "ID": 35005,
+   "ID": "35005",
    "Name": "CATANDUVA"
  },
  {
-   "ID": 35006,
+   "ID": "35006",
    "Name": "AURIFLAMA"
  },
  {
-   "ID": 35007,
+   "ID": "35007",
    "Name": "NHANDEARA"
  },
  {
-   "ID": 35008,
+   "ID": "35008",
    "Name": "NOVO HORIZONTE"
  },
  {
-   "ID": 35009,
+   "ID": "35009",
    "Name": "BARRETOS"
  },
  {
-   "ID": 35010,
+   "ID": "35010",
    "Name": "SÃO JOAQUIM DA BARRA"
  },
  {
-   "ID": 35011,
+   "ID": "35011",
    "Name": "ITUVERAVA"
  },
  {
-   "ID": 35012,
+   "ID": "35012",
    "Name": "FRANCA"
  },
  {
-   "ID": 35013,
+   "ID": "35013",
    "Name": "JABOTICABAL"
  },
  {
-   "ID": 35014,
+   "ID": "35014",
    "Name": "RIBEIRÃO PRETO"
  },
  {
-   "ID": 35015,
+   "ID": "35015",
    "Name": "BATATAIS"
  },
  {
-   "ID": 35016,
+   "ID": "35016",
    "Name": "ANDRADINA"
  },
  {
-   "ID": 35017,
+   "ID": "35017",
    "Name": "ARAÇATUBA"
  },
  {
-   "ID": 35018,
+   "ID": "35018",
    "Name": "BIRIGUI"
  },
  {
-   "ID": 35019,
+   "ID": "35019",
    "Name": "LINS"
  },
  {
-   "ID": 35020,
+   "ID": "35020",
    "Name": "BAURU"
  },
  {
-   "ID": 35021,
+   "ID": "35021",
    "Name": "JAÚ"
  },
  {
-   "ID": 35022,
+   "ID": "35022",
    "Name": "AVARÉ"
  },
  {
-   "ID": 35023,
+   "ID": "35023",
    "Name": "BOTUCATU"
  },
  {
-   "ID": 35024,
+   "ID": "35024",
    "Name": "ARARAQUARA"
  },
  {
-   "ID": 35025,
+   "ID": "35025",
    "Name": "SÃO CARLOS"
  },
  {
-   "ID": 35026,
+   "ID": "35026",
    "Name": "RIO CLARO"
  },
  {
-   "ID": 35027,
+   "ID": "35027",
    "Name": "LIMEIRA"
  },
  {
-   "ID": 35028,
+   "ID": "35028",
    "Name": "PIRACICABA"
  },
  {
-   "ID": 35029,
+   "ID": "35029",
    "Name": "PIRASSUNUNGA"
  },
  {
-   "ID": 35030,
+   "ID": "35030",
    "Name": "SÃO JOÃO DA BOA VISTA"
  },
  {
-   "ID": 35031,
+   "ID": "35031",
    "Name": "MOJI MIRIM"
  },
  {
-   "ID": 35032,
+   "ID": "35032",
    "Name": "CAMPINAS"
  },
  {
-   "ID": 35033,
+   "ID": "35033",
    "Name": "AMPARO"
  },
  {
-   "ID": 35034,
+   "ID": "35034",
    "Name": "DRACENA"
  },
  {
-   "ID": 35035,
+   "ID": "35035",
    "Name": "ADAMANTINA"
  },
  {
-   "ID": 35036,
+   "ID": "35036",
    "Name": "PRESIDENTE PRUDENTE"
  },
  {
-   "ID": 35037,
+   "ID": "35037",
    "Name": "TUPÃ"
  },
  {
-   "ID": 35038,
+   "ID": "35038",
    "Name": "MARÍLIA"
  },
  {
-   "ID": 35039,
+   "ID": "35039",
    "Name": "ASSIS"
  },
  {
-   "ID": 35040,
+   "ID": "35040",
    "Name": "OURINHOS"
  },
  {
-   "ID": 35041,
+   "ID": "35041",
    "Name": "ITAPEVA"
  },
  {
-   "ID": 35042,
+   "ID": "35042",
    "Name": "ITAPETININGA"
  },
  {
-   "ID": 35043,
+   "ID": "35043",
    "Name": "TATUÍ"
  },
  {
-   "ID": 35044,
+   "ID": "35044",
    "Name": "CAPÃO BONITO"
  },
  {
-   "ID": 35045,
+   "ID": "35045",
    "Name": "PIEDADE"
  },
  {
-   "ID": 35046,
+   "ID": "35046",
    "Name": "SOROCABA"
  },
  {
-   "ID": 35047,
+   "ID": "35047",
    "Name": "JUNDIAÍ"
  },
  {
-   "ID": 35048,
+   "ID": "35048",
    "Name": "BRAGANÇA PAULISTA"
  },
  {
-   "ID": 35049,
+   "ID": "35049",
    "Name": "CAMPOS DO JORDÃO"
  },
  {
-   "ID": 35050,
+   "ID": "35050",
    "Name": "SÃO JOSÉ DOS CAMPOS"
  },
  {
-   "ID": 35051,
+   "ID": "35051",
    "Name": "GUARATINGUETÁ"
  },
  {
-   "ID": 35052,
+   "ID": "35052",
    "Name": "BANANAL"
  },
  {
-   "ID": 35053,
+   "ID": "35053",
    "Name": "PARAIBUNA/PARAITINGA"
  },
  {
-   "ID": 35054,
+   "ID": "35054",
    "Name": "CARAGUATATUBA"
  },
  {
-   "ID": 35055,
+   "ID": "35055",
    "Name": "REGISTRO"
  },
  {
-   "ID": 35056,
+   "ID": "35056",
    "Name": "ITANHAÉM"
  },
  {
-   "ID": 35057,
+   "ID": "35057",
    "Name": "OSASCO"
  },
  {
-   "ID": 35058,
+   "ID": "35058",
    "Name": "FRANCO DA ROCHA"
  },
  {
-   "ID": 35059,
+   "ID": "35059",
    "Name": "GUARULHOS"
  },
  {
-   "ID": 35060,
+   "ID": "35060",
    "Name": "ITAPECERICA DA SERRA"
  },
  {
-   "ID": 35061,
+   "ID": "35061",
    "Name": "SÃO PAULO"
  },
  {
-   "ID": 35062,
+   "ID": "35062",
    "Name": "MOGI DAS CRUZES"
  },
  {
-   "ID": 35063,
+   "ID": "35063",
    "Name": "SANTOS"
  },
  {
-   "ID": 41001,
+   "ID": "41001",
    "Name": "PARANAVAÍ"
  },
  {
-   "ID": 41002,
+   "ID": "41002",
    "Name": "UMUARAMA"
  },
  {
-   "ID": 41003,
+   "ID": "41003",
    "Name": "CIANORTE"
  },
  {
-   "ID": 41004,
+   "ID": "41004",
    "Name": "GOIOERÊ"
  },
  {
-   "ID": 41005,
+   "ID": "41005",
    "Name": "CAMPO MOURÃO"
  },
  {
-   "ID": 41006,
+   "ID": "41006",
    "Name": "ASTORGA"
  },
  {
-   "ID": 41007,
+   "ID": "41007",
    "Name": "PORECATU"
  },
  {
-   "ID": 41008,
+   "ID": "41008",
    "Name": "FLORAÍ"
  },
  {
-   "ID": 41009,
+   "ID": "41009",
    "Name": "MARINGÁ"
  },
  {
-   "ID": 41010,
+   "ID": "41010",
    "Name": "APUCARANA"
  },
  {
-   "ID": 41011,
+   "ID": "41011",
    "Name": "LONDRINA"
  },
  {
-   "ID": 41012,
+   "ID": "41012",
    "Name": "FAXINAL"
  },
  {
-   "ID": 41013,
+   "ID": "41013",
    "Name": "IVAIPORÃ"
  },
  {
-   "ID": 41014,
+   "ID": "41014",
    "Name": "ASSAÍ"
  },
  {
-   "ID": 41015,
+   "ID": "41015",
    "Name": "CORNÉLIO PROCÓPIO"
  },
  {
-   "ID": 41016,
+   "ID": "41016",
    "Name": "JACAREZINHO"
  },
  {
-   "ID": 41017,
+   "ID": "41017",
    "Name": "IBAITI"
  },
  {
-   "ID": 41018,
+   "ID": "41018",
    "Name": "WENCESLAU BRAZ"
  },
  {
-   "ID": 41019,
+   "ID": "41019",
    "Name": "TELÊMACO BORBA"
  },
  {
-   "ID": 41020,
+   "ID": "41020",
    "Name": "JAGUARIAÍVA"
  },
  {
-   "ID": 41021,
+   "ID": "41021",
    "Name": "PONTA GROSSA"
  },
  {
-   "ID": 41022,
+   "ID": "41022",
    "Name": "TOLEDO"
  },
  {
-   "ID": 41023,
+   "ID": "41023",
    "Name": "CASCAVEL"
  },
  {
-   "ID": 41024,
+   "ID": "41024",
    "Name": "FOZ DO IGUAÇU"
  },
  {
-   "ID": 41025,
+   "ID": "41025",
    "Name": "CAPANEMA"
  },
  {
-   "ID": 41026,
+   "ID": "41026",
    "Name": "FRANCISCO BELTRÃO"
  },
  {
-   "ID": 41027,
+   "ID": "41027",
    "Name": "PATO BRANCO"
  },
  {
-   "ID": 41028,
+   "ID": "41028",
    "Name": "PITANGA"
  },
  {
-   "ID": 41029,
+   "ID": "41029",
    "Name": "GUARAPUAVA"
  },
  {
-   "ID": 41030,
+   "ID": "41030",
    "Name": "PALMAS"
  },
  {
-   "ID": 41031,
+   "ID": "41031",
    "Name": "PRUDENTÓPOLIS"
  },
  {
-   "ID": 41032,
+   "ID": "41032",
    "Name": "IRATI"
  },
  {
-   "ID": 41033,
+   "ID": "41033",
    "Name": "UNIÃO DA VITÓRIA"
  },
  {
-   "ID": 41034,
+   "ID": "41034",
    "Name": "SÃO MATEUS DO SUL"
  },
  {
-   "ID": 41035,
+   "ID": "41035",
    "Name": "CERRO AZUL"
  },
  {
-   "ID": 41036,
+   "ID": "41036",
    "Name": "LAPA"
  },
  {
-   "ID": 41037,
+   "ID": "41037",
    "Name": "CURITIBA"
  },
  {
-   "ID": 41038,
+   "ID": "41038",
    "Name": "PARANAGUÁ"
  },
  {
-   "ID": 41039,
+   "ID": "41039",
    "Name": "RIO NEGRO"
  },
  {
-   "ID": 42001,
+   "ID": "42001",
    "Name": "SÃO MIGUEL DO OESTE"
  },
  {
-   "ID": 42002,
+   "ID": "42002",
    "Name": "CHAPECÓ"
  },
  {
-   "ID": 42003,
+   "ID": "42003",
    "Name": "XANXERÊ"
  },
  {
-   "ID": 42004,
+   "ID": "42004",
    "Name": "JOAÇABA"
  },
  {
-   "ID": 42005,
+   "ID": "42005",
    "Name": "CONCÓRDIA"
  },
  {
-   "ID": 42006,
+   "ID": "42006",
    "Name": "CANOINHAS"
  },
  {
-   "ID": 42007,
+   "ID": "42007",
    "Name": "SÃO BENTO DO SUL"
  },
  {
-   "ID": 42008,
+   "ID": "42008",
    "Name": "JOINVILLE"
  },
  {
-   "ID": 42009,
+   "ID": "42009",
    "Name": "CURITIBANOS"
  },
  {
-   "ID": 42010,
+   "ID": "42010",
    "Name": "CAMPOS DE LAGES"
  },
  {
-   "ID": 42011,
+   "ID": "42011",
    "Name": "RIO DO SUL"
  },
  {
-   "ID": 42012,
+   "ID": "42012",
    "Name": "BLUMENAU"
  },
  {
-   "ID": 42013,
+   "ID": "42013",
    "Name": "ITAJAÍ"
  },
  {
-   "ID": 42014,
+   "ID": "42014",
    "Name": "ITUPORANGA"
  },
  {
-   "ID": 42015,
+   "ID": "42015",
    "Name": "TIJUCAS"
  },
  {
-   "ID": 42016,
+   "ID": "42016",
    "Name": "FLORIANÓPOLIS"
  },
  {
-   "ID": 42017,
+   "ID": "42017",
    "Name": "TABULEIRO"
  },
  {
-   "ID": 42018,
+   "ID": "42018",
    "Name": "TUBARÃO"
  },
  {
-   "ID": 42019,
+   "ID": "42019",
    "Name": "CRICIÚMA"
  },
  {
-   "ID": 42020,
+   "ID": "42020",
    "Name": "ARARANGUÁ"
  },
  {
-   "ID": 43001,
+   "ID": "43001",
    "Name": "SANTA ROSA"
  },
  {
-   "ID": 43002,
+   "ID": "43002",
    "Name": "TRÊS PASSOS"
  },
  {
-   "ID": 43003,
+   "ID": "43003",
    "Name": "FREDERICO WESTPHALEN"
  },
  {
-   "ID": 43004,
+   "ID": "43004",
    "Name": "ERECHIM"
  },
  {
-   "ID": 43005,
+   "ID": "43005",
    "Name": "SANANDUVA"
  },
  {
-   "ID": 43006,
+   "ID": "43006",
    "Name": "CERRO LARGO"
  },
  {
-   "ID": 43007,
+   "ID": "43007",
    "Name": "SANTO ÂNGELO"
  },
  {
-   "ID": 43008,
+   "ID": "43008",
    "Name": "IJUÍ"
  },
  {
-   "ID": 43009,
+   "ID": "43009",
    "Name": "CARAZINHO"
  },
  {
-   "ID": 43010,
+   "ID": "43010",
    "Name": "PASSO FUNDO"
  },
  {
-   "ID": 43011,
+   "ID": "43011",
    "Name": "CRUZ ALTA"
  },
  {
-   "ID": 43012,
+   "ID": "43012",
    "Name": "NÃO-ME-TOQUE"
  },
  {
-   "ID": 43013,
+   "ID": "43013",
    "Name": "SOLEDADE"
  },
  {
-   "ID": 43014,
+   "ID": "43014",
    "Name": "GUAPORÉ"
  },
  {
-   "ID": 43015,
+   "ID": "43015",
    "Name": "VACARIA"
  },
  {
-   "ID": 43016,
+   "ID": "43016",
    "Name": "CAXIAS DO SUL"
  },
  {
-   "ID": 43017,
+   "ID": "43017",
    "Name": "SANTIAGO"
  },
  {
-   "ID": 43018,
+   "ID": "43018",
    "Name": "SANTA MARIA"
  },
  {
-   "ID": 43019,
+   "ID": "43019",
    "Name": "RESTINGA SECA"
  },
  {
-   "ID": 43020,
+   "ID": "43020",
    "Name": "SANTA CRUZ DO SUL"
  },
  {
-   "ID": 43021,
+   "ID": "43021",
    "Name": "LAJEADO-ESTRELA"
  },
  {
-   "ID": 43022,
+   "ID": "43022",
    "Name": "CACHOEIRA DO SUL"
  },
  {
-   "ID": 43023,
+   "ID": "43023",
    "Name": "MONTENEGRO"
  },
  {
-   "ID": 43024,
+   "ID": "43024",
    "Name": "GRAMADO-CANELA"
  },
  {
-   "ID": 43025,
+   "ID": "43025",
    "Name": "SÃO JERÔNIMO"
  },
  {
-   "ID": 43026,
+   "ID": "43026",
    "Name": "PORTO ALEGRE"
  },
  {
-   "ID": 43027,
+   "ID": "43027",
    "Name": "OSÓRIO"
  },
  {
-   "ID": 43028,
+   "ID": "43028",
    "Name": "CAMAQUÃ"
  },
  {
-   "ID": 43029,
+   "ID": "43029",
    "Name": "CAMPANHA OCIDENTAL"
  },
  {
-   "ID": 43030,
+   "ID": "43030",
    "Name": "CAMPANHA CENTRAL"
  },
  {
-   "ID": 43031,
+   "ID": "43031",
    "Name": "CAMPANHA MERIDIONAL"
  },
  {
-   "ID": 43032,
+   "ID": "43032",
    "Name": "SERRAS DE SUDESTE"
  },
  {
-   "ID": 43033,
+   "ID": "43033",
    "Name": "PELOTAS"
  },
  {
-   "ID": 43034,
+   "ID": "43034",
    "Name": "JAGUARÃO"
  },
  {
-   "ID": 43035,
+   "ID": "43035",
    "Name": "LITORAL LAGUNAR"
  },
  {
-   "ID": 50001,
+   "ID": "50001",
    "Name": "BAIXO PANTANAL"
  },
  {
-   "ID": 50002,
+   "ID": "50002",
    "Name": "AQUIDAUANA"
  },
  {
-   "ID": 50003,
+   "ID": "50003",
    "Name": "ALTO TAQUARI"
  },
  {
-   "ID": 50004,
+   "ID": "50004",
    "Name": "CAMPO GRANDE"
  },
  {
-   "ID": 50005,
+   "ID": "50005",
    "Name": "CASSILÂNDIA"
  },
  {
-   "ID": 50006,
+   "ID": "50006",
    "Name": "PARANAÍBA"
  },
  {
-   "ID": 50007,
+   "ID": "50007",
    "Name": "TRÊS LAGOAS"
  },
  {
-   "ID": 50008,
+   "ID": "50008",
    "Name": "NOVA ANDRADINA"
  },
  {
-   "ID": 50009,
+   "ID": "50009",
    "Name": "BODOQUENA"
  },
  {
-   "ID": 50010,
+   "ID": "50010",
    "Name": "DOURADOS"
  },
  {
-   "ID": 50011,
+   "ID": "50011",
    "Name": "IGUATEMI"
  },
  {
-   "ID": 51001,
+   "ID": "51001",
    "Name": "ARIPUANÃ"
  },
  {
-   "ID": 51002,
+   "ID": "51002",
    "Name": "ALTA FLORESTA"
  },
  {
-   "ID": 51003,
+   "ID": "51003",
    "Name": "COLÍDER"
  },
  {
-   "ID": 51004,
+   "ID": "51004",
    "Name": "PARECIS"
  },
  {
-   "ID": 51005,
+   "ID": "51005",
    "Name": "ARINOS"
  },
  {
-   "ID": 51006,
+   "ID": "51006",
    "Name": "ALTO TELES PIRES"
  },
  {
-   "ID": 51007,
+   "ID": "51007",
    "Name": "SINOP"
  },
  {
-   "ID": 51008,
+   "ID": "51008",
    "Name": "PARANATINGA"
  },
  {
-   "ID": 51009,
+   "ID": "51009",
    "Name": "NORTE ARAGUAIA"
  },
  {
-   "ID": 51010,
+   "ID": "51010",
    "Name": "CANARANA"
  },
  {
-   "ID": 51011,
+   "ID": "51011",
    "Name": "MÉDIO ARAGUAIA"
  },
  {
-   "ID": 51012,
+   "ID": "51012",
    "Name": "ALTO GUAPORÉ"
  },
  {
-   "ID": 51013,
+   "ID": "51013",
    "Name": "TANGARÁ DA SERRA"
  },
  {
-   "ID": 51014,
+   "ID": "51014",
    "Name": "JAURU"
  },
  {
-   "ID": 51015,
+   "ID": "51015",
    "Name": "ALTO PARAGUAI"
  },
  {
-   "ID": 51016,
+   "ID": "51016",
    "Name": "ROSÁRIO OESTE"
  },
  {
-   "ID": 51017,
+   "ID": "51017",
    "Name": "CUIABÁ"
  },
  {
-   "ID": 51018,
+   "ID": "51018",
    "Name": "ALTO PANTANAL"
  },
  {
-   "ID": 51019,
+   "ID": "51019",
    "Name": "PRIMAVERA DO LESTE"
  },
  {
-   "ID": 51020,
+   "ID": "51020",
    "Name": "TESOURO"
  },
  {
-   "ID": 51021,
+   "ID": "51021",
    "Name": "RONDONÓPOLIS"
  },
  {
-   "ID": 51022,
+   "ID": "51022",
    "Name": "ALTO ARAGUAIA"
  },
  {
-   "ID": 52001,
+   "ID": "52001",
    "Name": "SÃO MIGUEL DO ARAGUAIA"
  },
  {
-   "ID": 52002,
+   "ID": "52002",
    "Name": "RIO VERMELHO"
  },
  {
-   "ID": 52003,
+   "ID": "52003",
    "Name": "ARAGARÇAS"
  },
  {
-   "ID": 52004,
+   "ID": "52004",
    "Name": "PORANGATU"
  },
  {
-   "ID": 52005,
+   "ID": "52005",
    "Name": "CHAPADA DOS VEADEIROS"
  },
  {
-   "ID": 52006,
+   "ID": "52006",
    "Name": "CERES"
  },
  {
-   "ID": 52007,
+   "ID": "52007",
    "Name": "ANÁPOLIS"
  },
  {
-   "ID": 52008,
+   "ID": "52008",
    "Name": "IPORÁ"
  },
  {
-   "ID": 52009,
+   "ID": "52009",
    "Name": "ANICUNS"
  },
  {
-   "ID": 52010,
+   "ID": "52010",
    "Name": "GOIÂNIA"
  },
  {
-   "ID": 52011,
+   "ID": "52011",
    "Name": "VÃO DO PARANÃ"
  },
  {
-   "ID": 52012,
+   "ID": "52012",
    "Name": "ENTORNO DE BRASÍLIA"
  },
  {
-   "ID": 52013,
+   "ID": "52013",
    "Name": "SUDOESTE DE GOIÁS"
  },
  {
-   "ID": 52014,
+   "ID": "52014",
    "Name": "VALE DO RIO DOS BOIS"
  },
  {
-   "ID": 52015,
+   "ID": "52015",
    "Name": "MEIA PONTE"
  },
  {
-   "ID": 52016,
+   "ID": "52016",
    "Name": "PIRES DO RIO"
  },
  {
-   "ID": 52017,
+   "ID": "52017",
    "Name": "CATALÃO"
  },
  {
-   "ID": 52018,
+   "ID": "52018",
    "Name": "QUIRINÓPOLIS"
  },
  {
-   "ID": 53001,
+   "ID": "53001",
    "Name": "BRASÍLIA"
  }
 ]

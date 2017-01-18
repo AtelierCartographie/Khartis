@@ -41,19 +41,30 @@ export default Ember.Controller.extend({
 
   downloadTemplate() {
 
-    let csvData = "ID;NAME\n",
-        mapKey = this.get('model.project.graphLayout.basemap.mapConfig.dictionary.identifier');
-        
+    let modelKeys = Object.keys(this.get('model.project.graphLayout.basemap.dictionaryData')[0]),
+        modelName = this.get('model.project.graphLayout.basemap.id').replace(/\s/g, '-'),
+        idField = this.get('model.project.graphLayout.basemap.mapConfig.dictionary.identifier'),
+        extraFields = [],
+        csvData, rowData;
+    modelKeys.forEach(field => {
+      if (field !== idField && !/^name/i.test(field)) {
+        extraFields.push(field);
+      }
+    });
+    
+    csvData = "ID,NAME" + (extraFields.length ? "," + extraFields.join(",") : "") + "\n";
     this.get('model.project.graphLayout.basemap.dictionaryData').forEach( row => {
-      csvData += row[mapKey] + ";";
-      csvData += (row["name_"+this.get('i18n.locale').toUpperCase()]
-        || row["name_ISO_"+this.get('i18n.locale').toUpperCase()]
-        || row["Name"]
-        || row["name_EN"]) + "\n";
+      rowData = [row[idField]];
+      rowData.push(row["name_"+this.get('i18n.locale').toUpperCase()] ||
+        row["name_ISO_"+this.get('i18n.locale').toUpperCase()] ||
+        row["Name"] ||
+        row["name_EN"]);
+      extraFields.forEach(field => { rowData.push(row[field]) });
+      csvData += '"' + rowData.map(val => (val+"").replace(/"/g, '""')).join('","') + '"\n';
     });
 
     let blob = new Blob([csvData], {type: "text/csv"});
-    saveAs(blob, "template.csv");
+    saveAs(blob, "Khartis_template_"+modelName+".csv");
 
   },
   

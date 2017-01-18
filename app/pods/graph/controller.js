@@ -88,7 +88,7 @@ export default Ember.Controller.extend({
   exportSVG(targetIllustrator) {
     let compatibility = targetIllustrator ? {illustrator: true} : undefined,
         blob = new Blob([this.exportAsHTML(compatibility)], {type: "image/svg+xml"});
-    saveAs(blob, "export_mapp.svg");
+    saveAs(blob, "export_khartis.svg");
   },
 
   exportPNG() {
@@ -145,7 +145,7 @@ export default Ember.Controller.extend({
               let extraBuffer = build_pHYs(300);
 
               let meta = {
-                "Comment": "Made from Khartis",
+                "Comment": "Made with Khartis",
                 "Software": "Khartis"
               };
 
@@ -157,7 +157,7 @@ export default Ember.Controller.extend({
 
               //tracePNGChunks(pngBuffer);
 
-            saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_mapp.png");
+            saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_khartis.png");
             DOMURL.revokeObjectURL(url);
 
           };
@@ -200,7 +200,7 @@ export default Ember.Controller.extend({
     d3Node.selectAll("rect.fg").remove();
 
     d3Node.append("text")
-      .text("Made from Khartis")
+      .text("Made with Khartis")
       .attr({
         "x": x+w,
         "y": y+h,

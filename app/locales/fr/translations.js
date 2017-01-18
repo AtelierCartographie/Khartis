@@ -321,12 +321,16 @@ export default {
   },
 
   "basemap": {
-    "world": "Monde > pays",
+    "world": "Monde > pays (2016)",
+    "brazil ufe 2015": "Brésil > États (2015)",
+    "brazil mee 2015": "Brésil > mésorégions (2015)",
+    "brazil mie 2015": "Brésil > microrégions (2015)",
     "france dept": "France > départements (2016)",
     "france reg 2015": "France > régions (2015)",
     "france reg 2016": "France > régions (2016)",
     "spain prov 2015": "Espagne > provinces (2015)",
-    "spain auto 2015": "Espagne > communautés (2015)"
+    "spain auto 2015": "Espagne > communautés (2015)",
+    "us state 2015": "États-Unis > États (2015)"
   },
 
   "examples": {
@@ -334,11 +338,16 @@ export default {
     "idh": "Évolution de l'IDH (1990-2014)",
     "alim": "Sous-alimentation (2014-2016)",
     "unesco": "Sites de l'Unesco (2015)",
+    "br_ufe-pop": "Population (2015)",
     "fr_dpt-pop": "Population (2013)",
+    "fr_dpt-poverty": "Pauvreté (2013)",
     "fr_reg2015-pop": "Population (2013)",
+    "fr_reg2015-poverty": "Pauvreté (2013)",
     "fr_reg2016-pop": "Population (2013)",
+    "fr_reg2016-poverty": "Pauvreté (2013)",
     "es_prov-pop": "Population (2000-2015)",
-    "es_auto-pop": "Population (2000-2015)"
+    "es_auto-pop": "Population (2000-2015)",
+    "us_state-pop": "Population (2010-2015)"
   }
   
 };

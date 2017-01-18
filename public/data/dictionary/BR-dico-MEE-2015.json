@@ -1,550 +1,550 @@
 [
  {
-   "ID": 1101,
+   "ID": "1101",
    "Name": "MADEIRA-GUAPORÉ"
  },
  {
-   "ID": 1102,
+   "ID": "1102",
    "Name": "LESTE RONDONIENSE"
  },
  {
-   "ID": 1201,
+   "ID": "1201",
    "Name": "VALE DO JURUÁ"
  },
  {
-   "ID": 1202,
+   "ID": "1202",
    "Name": "VALE DO ACRE"
  },
  {
-   "ID": 1301,
+   "ID": "1301",
    "Name": "NORTE AMAZONENSE"
  },
  {
-   "ID": 1302,
+   "ID": "1302",
    "Name": "SUDOESTE AMAZONENSE"
  },
  {
-   "ID": 1303,
+   "ID": "1303",
    "Name": "CENTRO AMAZONENSE"
  },
  {
-   "ID": 1304,
+   "ID": "1304",
    "Name": "SUL AMAZONENSE"
  },
  {
-   "ID": 1401,
+   "ID": "1401",
    "Name": "NORTE DE RORAIMA"
  },
  {
-   "ID": 1402,
+   "ID": "1402",
    "Name": "SUL DE RORAIMA"
  },
  {
-   "ID": 1501,
+   "ID": "1501",
    "Name": "BAIXO AMAZONAS"
  },
  {
-   "ID": 1502,
+   "ID": "1502",
    "Name": "MARAJÓ"
  },
  {
-   "ID": 1503,
+   "ID": "1503",
    "Name": "METROPOLITANA DE BELÉM"
  },
  {
-   "ID": 1504,
+   "ID": "1504",
    "Name": "NORDESTE PARAENSE"
  },
  {
-   "ID": 1505,
+   "ID": "1505",
    "Name": "SUDOESTE PARAENSE"
  },
  {
-   "ID": 1506,
+   "ID": "1506",
    "Name": "SUDESTE PARAENSE"
  },
  {
-   "ID": 1601,
+   "ID": "1601",
    "Name": "NORTE DO AMAPÁ"
  },
  {
-   "ID": 1602,
+   "ID": "1602",
    "Name": "SUL DO AMAPÁ"
  },
  {
-   "ID": 1701,
+   "ID": "1701",
    "Name": "OCIDENTAL DO TOCANTINS"
  },
  {
-   "ID": 1702,
+   "ID": "1702",
    "Name": "ORIENTAL DO TOCANTINS"
  },
  {
-   "ID": 2101,
+   "ID": "2101",
    "Name": "NORTE MARANHENSE"
  },
  {
-   "ID": 2102,
+   "ID": "2102",
    "Name": "OESTE MARANHENSE"
  },
  {
-   "ID": 2103,
+   "ID": "2103",
    "Name": "CENTRO MARANHENSE"
  },
  {
-   "ID": 2104,
+   "ID": "2104",
    "Name": "LESTE MARANHENSE"
  },
  {
-   "ID": 2105,
+   "ID": "2105",
    "Name": "SUL MARANHENSE"
  },
  {
-   "ID": 2201,
+   "ID": "2201",
    "Name": "NORTE PIAUIENSE"
  },
  {
-   "ID": 2202,
+   "ID": "2202",
    "Name": "CENTRO-NORTE PIAUIENSE"
  },
  {
-   "ID": 2203,
+   "ID": "2203",
    "Name": "SUDOESTE PIAUIENSE"
  },
  {
-   "ID": 2204,
+   "ID": "2204",
    "Name": "SUDESTE PIAUIENSE"
  },
  {
-   "ID": 2301,
+   "ID": "2301",
    "Name": "NOROESTE CEARENSE"
  },
  {
-   "ID": 2302,
+   "ID": "2302",
    "Name": "NORTE CEARENSE"
  },
  {
-   "ID": 2303,
+   "ID": "2303",
    "Name": "METROPOLITANA DE FORTALEZA"
  },
  {
-   "ID": 2304,
+   "ID": "2304",
    "Name": "SERTÕES CEARENSES"
  },
  {
-   "ID": 2305,
+   "ID": "2305",
    "Name": "JAGUARIBE"
  },
  {
-   "ID": 2306,
+   "ID": "2306",
    "Name": "CENTRO-SUL CEARENSE"
  },
  {
-   "ID": 2307,
+   "ID": "2307",
    "Name": "SUL CEARENSE"
  },
  {
-   "ID": 2401,
+   "ID": "2401",
    "Name": "OESTE POTIGUAR"
  },
  {
-   "ID": 2402,
+   "ID": "2402",
    "Name": "CENTRAL POTIGUAR"
  },
  {
-   "ID": 2403,
+   "ID": "2403",
    "Name": "AGRESTE POTIGUAR"
  },
  {
-   "ID": 2404,
+   "ID": "2404",
    "Name": "LESTE POTIGUAR"
  },
  {
-   "ID": 2501,
+   "ID": "2501",
    "Name": "SERTÃO PARAIBANO"
  },
  {
-   "ID": 2502,
+   "ID": "2502",
    "Name": "BORBOREMA"
  },
  {
-   "ID": 2503,
+   "ID": "2503",
    "Name": "AGRESTE PARAIBANO"
  },
  {
-   "ID": 2504,
+   "ID": "2504",
    "Name": "MATA PARAIBANA"
  },
  {
-   "ID": 2601,
+   "ID": "2601",
    "Name": "SERTÃO PERNAMBUCANO"
  },
  {
-   "ID": 2602,
+   "ID": "2602",
    "Name": "SÃO FRANCISCO PERNAMBUCANO"
  },
  {
-   "ID": 2603,
+   "ID": "2603",
    "Name": "AGRESTE PERNAMBUCANO"
  },
  {
-   "ID": 2604,
+   "ID": "2604",
    "Name": "MATA PERNAMBUCANA"
  },
  {
-   "ID": 2605,
+   "ID": "2605",
    "Name": "METROPOLITANA DE RECIFE"
  },
  {
-   "ID": 2701,
+   "ID": "2701",
    "Name": "SERTÃO ALAGOANO"
  },
  {
-   "ID": 2702,
+   "ID": "2702",
    "Name": "AGRESTE ALAGOANO"
  },
  {
-   "ID": 2703,
+   "ID": "2703",
    "Name": "LESTE ALAGOANO"
  },
  {
-   "ID": 2801,
+   "ID": "2801",
    "Name": "SERTÃO SERGIPANO"
  },
  {
-   "ID": 2802,
+   "ID": "2802",
    "Name": "AGRESTE SERGIPANO"
  },
  {
-   "ID": 2803,
+   "ID": "2803",
    "Name": "LESTE SERGIPANO"
  },
  {
-   "ID": 2901,
+   "ID": "2901",
    "Name": "EXTREMO OESTE BAIANO"
  },
  {
-   "ID": 2902,
+   "ID": "2902",
    "Name": "VALE SÃO-FRANCISCANO DA BAHIA"
  },
  {
-   "ID": 2903,
+   "ID": "2903",
    "Name": "CENTRO NORTE BAIANO"
  },
  {
-   "ID": 2904,
+   "ID": "2904",
    "Name": "NORDESTE BAIANO"
  },
  {
-   "ID": 2905,
+   "ID": "2905",
    "Name": "METROPOLITANA DE SALVADOR"
  },
  {
-   "ID": 2906,
+   "ID": "2906",
    "Name": "CENTRO SUL BAIANO"
  },
  {
-   "ID": 2907,
+   "ID": "2907",
    "Name": "SUL BAIANO"
  },
  {
-   "ID": 3101,
+   "ID": "3101",
    "Name": "NOROESTE DE MINAS"
  },
  {
-   "ID": 3102,
+   "ID": "3102",
    "Name": "NORTE DE MINAS"
  },
  {
-   "ID": 3103,
+   "ID": "3103",
    "Name": "JEQUITINHONHA"
  },
  {
-   "ID": 3104,
+   "ID": "3104",
    "Name": "VALE DO MUCURI"
  },
  {
-   "ID": 3105,
+   "ID": "3105",
    "Name": "TRIÂNGULO MINEIRO/ALTO PARANAÍBA"
  },
  {
-   "ID": 3106,
+   "ID": "3106",
    "Name": "CENTRAL MINEIRA"
  },
  {
-   "ID": 3107,
+   "ID": "3107",
    "Name": "METROPOLITANA DE BELO HORIZONTE"
  },
  {
-   "ID": 3108,
+   "ID": "3108",
    "Name": "VALE DO RIO DOCE"
  },
  {
-   "ID": 3109,
+   "ID": "3109",
    "Name": "OESTE DE MINAS"
  },
  {
-   "ID": 3110,
+   "ID": "3110",
    "Name": "SUL/SUDOESTE DE MINAS"
  },
  {
-   "ID": 3111,
+   "ID": "3111",
    "Name": "CAMPO DAS VERTENTES"
  },
  {
-   "ID": 3112,
+   "ID": "3112",
    "Name": "ZONA DA MATA"
  },
  {
-   "ID": 3201,
+   "ID": "3201",
    "Name": "NOROESTE ESPÍRITO-SANTENSE"
  },
  {
-   "ID": 3202,
+   "ID": "3202",
    "Name": "LITORAL NORTE ESPÍRITO-SANTENSE"
  },
  {
-   "ID": 3203,
+   "ID": "3203",
    "Name": "CENTRAL ESPÍRITO-SANTENSE"
  },
  {
-   "ID": 3204,
+   "ID": "3204",
    "Name": "SUL ESPÍRITO-SANTENSE"
  },
  {
-   "ID": 3301,
+   "ID": "3301",
    "Name": "NOROESTE FLUMINENSE"
  },
  {
-   "ID": 3302,
+   "ID": "3302",
    "Name": "NORTE FLUMINENSE"
  },
  {
-   "ID": 3303,
+   "ID": "3303",
    "Name": "CENTRO FLUMINENSE"
  },
  {
-   "ID": 3304,
+   "ID": "3304",
    "Name": "BAIXADAS"
  },
  {
-   "ID": 3305,
+   "ID": "3305",
    "Name": "SUL FLUMINENSE"
  },
  {
-   "ID": 3306,
+   "ID": "3306",
    "Name": "METROPOLITANA DO RIO DE JANEIRO"
  },
  {
-   "ID": 3501,
+   "ID": "3501",
    "Name": "SÃO JOSÉ DO RIO PRETO"
  },
  {
-   "ID": 3502,
+   "ID": "3502",
    "Name": "RIBEIRÃO PRETO"
  },
  {
-   "ID": 3503,
+   "ID": "3503",
    "Name": "ARAÇATUBA"
  },
  {
-   "ID": 3504,
+   "ID": "3504",
    "Name": "BAURU"
  },
  {
-   "ID": 3505,
+   "ID": "3505",
    "Name": "ARARAQUARA"
  },
  {
-   "ID": 3506,
+   "ID": "3506",
    "Name": "PIRACICABA"
  },
  {
-   "ID": 3507,
+   "ID": "3507",
    "Name": "CAMPINAS"
  },
  {
-   "ID": 3508,
+   "ID": "3508",
    "Name": "PRESIDENTE PRUDENTE"
  },
  {
-   "ID": 3509,
+   "ID": "3509",
    "Name": "MARÍLIA"
  },
  {
-   "ID": 3510,
+   "ID": "3510",
    "Name": "ASSIS"
  },
  {
-   "ID": 3511,
+   "ID": "3511",
    "Name": "ITAPETININGA"
  },
  {
-   "ID": 3512,
+   "ID": "3512",
    "Name": "MACRO METROPOLITANA PAULISTA"
  },
  {
-   "ID": 3513,
+   "ID": "3513",
    "Name": "VALE DO PARAÍBA PAULISTA"
  },
  {
-   "ID": 3514,
+   "ID": "3514",
    "Name": "LITORAL SUL PAULISTA"
  },
  {
-   "ID": 3515,
+   "ID": "3515",
    "Name": "METROPOLITANA DE SÃO PAULO"
  },
  {
-   "ID": 4101,
+   "ID": "4101",
    "Name": "NOROESTE PARANAENSE"
  },
  {
-   "ID": 4102,
+   "ID": "4102",
    "Name": "CENTRO OCIDENTAL PARANAENSE"
  },
  {
-   "ID": 4103,
+   "ID": "4103",
    "Name": "NORTE CENTRAL PARANAENSE"
  },
  {
-   "ID": 4104,
+   "ID": "4104",
    "Name": "NORTE PIONEIRO PARANAENSE"
  },
  {
-   "ID": 4105,
+   "ID": "4105",
    "Name": "CENTRO ORIENTAL PARANAENSE"
  },
  {
-   "ID": 4106,
+   "ID": "4106",
    "Name": "OESTE PARANAENSE"
  },
  {
-   "ID": 4107,
+   "ID": "4107",
    "Name": "SUDOESTE PARANAENSE"
  },
  {
-   "ID": 4108,
+   "ID": "4108",
    "Name": "CENTRO-SUL PARANAENSE"
  },
  {
-   "ID": 4109,
+   "ID": "4109",
    "Name": "SUDESTE PARANAENSE"
  },
  {
-   "ID": 4110,
+   "ID": "4110",
    "Name": "METROPOLITANA DE CURITIBA"
  },
  {
-   "ID": 4201,
+   "ID": "4201",
    "Name": "OESTE CATARINENSE"
  },
  {
-   "ID": 4202,
+   "ID": "4202",
    "Name": "NORTE CATARINENSE"
  },
  {
-   "ID": 4203,
+   "ID": "4203",
    "Name": "SERRANA"
  },
  {
-   "ID": 4204,
+   "ID": "4204",
    "Name": "VALE DO ITAJAÍ"
  },
  {
-   "ID": 4205,
+   "ID": "4205",
    "Name": "GRANDE FLORIANÓPOLIS"
  },
  {
-   "ID": 4206,
+   "ID": "4206",
    "Name": "SUL CATARINENSE"
  },
  {
-   "ID": 4301,
+   "ID": "4301",
    "Name": "NOROESTE RIO-GRANDENSE"
  },
  {
-   "ID": 4302,
+   "ID": "4302",
    "Name": "NORDESTE RIO-GRANDENSE"
  },
  {
-   "ID": 4303,
+   "ID": "4303",
    "Name": "CENTRO OCIDENTAL RIO-GRANDENSE"
  },
  {
-   "ID": 4304,
+   "ID": "4304",
    "Name": "CENTRO ORIENTAL RIO-GRANDENSE"
  },
  {
-   "ID": 4305,
+   "ID": "4305",
    "Name": "METROPOLITANA DE PORTO ALEGRE"
  },
  {
-   "ID": 4306,
+   "ID": "4306",
    "Name": "SUDOESTE RIO-GRANDENSE"
  },
  {
-   "ID": 4307,
+   "ID": "4307",
    "Name": "SUDESTE RIO-GRANDENSE"
  },
  {
-   "ID": 5001,
+   "ID": "5001",
    "Name": "PANTANAIS SUL MATO-GROSSENSE"
  },
  {
-   "ID": 5002,
+   "ID": "5002",
    "Name": "CENTRO NORTE DE MATO GROSSO DO SUL"
  },
  {
-   "ID": 5003,
+   "ID": "5003",
    "Name": "LESTE DE MATO GROSSO DO SUL"
  },
  {
-   "ID": 5004,
+   "ID": "5004",
    "Name": "SUDOESTE DE MATO GROSSO DO SUL"
  },
  {
-   "ID": 5101,
+   "ID": "5101",
    "Name": "NORTE MATO-GROSSENSE"
  },
  {
-   "ID": 5102,
+   "ID": "5102",
    "Name": "NORDESTE MATO-GROSSENSE"
  },
  {
-   "ID": 5103,
+   "ID": "5103",
    "Name": "SUDOESTE MATO-GROSSENSE"
  },
  {
-   "ID": 5104,
+   "ID": "5104",
    "Name": "CENTRO-SUL MATO-GROSSENSE"
  },
  {
-   "ID": 5105,
+   "ID": "5105",
    "Name": "SUDESTE MATO-GROSSENSE"
  },
  {
-   "ID": 5201,
+   "ID": "5201",
    "Name": "NOROESTE GOIANO"
  },
  {
-   "ID": 5202,
+   "ID": "5202",
    "Name": "NORTE GOIANO"
  },
  {
-   "ID": 5203,
+   "ID": "5203",
    "Name": "CENTRO GOIANO"
  },
  {
-   "ID": 5204,
+   "ID": "5204",
    "Name": "LESTE GOIANO"
  },
  {
-   "ID": 5205,
+   "ID": "5205",
    "Name": "SUL GOIANO"
  },
  {
-   "ID": 5301,
+   "ID": "5301",
    "Name": "DISTRITO FEDERAL"
  }
 ]

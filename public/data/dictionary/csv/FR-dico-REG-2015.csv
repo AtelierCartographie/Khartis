@@ -1,0 +1,28 @@
+ID,Insee,ISO 3166-2,Name
+FR10,11,FR-J,Île-de-France
+FR21,21,FR-G,Champagne-Ardenne
+FR22,22,FR-S,Picardie
+FR23,23,FR-Q,Haute-Normandie
+FR24,24,FR-F,Centre-Val de Loire
+FR25,25,FR-P,Basse-Normandie
+FR26,26,FR-D,Bourgogne
+FR30,31,FR-O,Nord-Pas-de-Calais
+FR41,41,FR-M,Lorraine
+FR42,42,FR-A,Alsace
+FR43,43,FR-I,Franche-Comté
+FR51,52,FR-R,Pays de la Loire
+FR52,53,FR-E,Bretagne
+FR53,54,FR-T,Poitou-Charentes
+FR61,72,FR-B,Aquitaine
+FR62,73,FR-N,Midi-Pyrénées
+FR63,74,FR-L,Limousin
+FR71,82,FR-V,Rhône-Alpes
+FR72,83,FR-C,Auvergne
+FR81,91,FR-K,Languedoc-Roussillon
+FR82,93,FR-U,Provence-Alpes-Côte d’Azur
+FR83,94,FR-H,Corse
+FRA1,01,—,Guadeloupe
+FRA2,02,—,Martinique
+FRA3,03,—,Guyane (française)
+FRA4,04,—,La Réunion
+FRA5,06,—,Mayotte
