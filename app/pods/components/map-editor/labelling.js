@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import d3lper from 'mapp/utils/d3lper';
 
+const ENABLE_DRAG_FEATURE = false; //TODO : finish
+
 const π = Math.PI,
       angle = function(o, p) {
         let hyp = Math.sqrt(Math.pow(p[0] - o[0], 2) + Math.pow(p[1] - o[1], 2)),
@@ -73,7 +75,8 @@ export default Ember.Mixin.create({
           .style({
             "font-size": `${visualization.get('size')}em`,
             "fill": visualization.get('color'),
-            "stroke": visualization.get('color')
+            "stroke": "none",
+            "stroke-width": 0
           })
           .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'))
           .each( function(d) {
@@ -100,8 +103,11 @@ export default Ember.Mixin.create({
       .append("g")
       .classed("labelling", true);
 
-    gSel.append("text")
-      .call(this.newDragFeature(visualization));
+    let textSel = gSel.append("text");
+    
+    if (ENABLE_DRAG_FEATURE) {
+        textSel.call(this.newDragFeature(visualization));
+    }
 
     gSel.append("line").classed("radius", true);
     gSel.append("line").classed("end", true);
