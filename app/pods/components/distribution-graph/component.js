@@ -125,12 +125,12 @@ export default Ember.Component.extend({
           return {
             val: b,
             qty: values.reduce( (s, c) => {
-              return c.val > b-interval && c.val <= b ? s+1 : s;
+              return c.val >= b && c.val < b+interval+0.00000001 ? s+1 : s;
             }, 0)
           };
         
         });
-
+    
     data.reduce(function(cumul, d) {
       return d.qtyC = (cumul += d.qty);
     }, 0);
