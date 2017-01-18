@@ -1,5 +1,20 @@
+.header-icons {
+  @include flow(solid, right);
+  .icon {
+    @include flow(solid, middle);
+    padding: 0 2rem 0 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover,
+    &.active {
+      background-color: white;
+      color: hsl(0, 0%, 40%);
+      background-color: greys(5%);
+    }
+  }
+}
 
-// TODO: lang-switcher
 .lang-switcher {
 
 

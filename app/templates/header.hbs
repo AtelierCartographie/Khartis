@@ -2,17 +2,24 @@
 
     <span class="brand" >{{#link-to 'index'}}<img src="{{r-url 'assets/images/khartis-logo.svg'}}"/>{{/link-to}}</span>
 
-    <div class="lang-switcher">
+    <div class="header-icons">
+      <div class="lang-switcher">
 
-      {{#x-dropdown-plus dropdownPivot='top right' triggerPivot='bottom right' as |facet|}}
-        {{#facet.trigger}}
-        <span class="lang-switcher-item">{{i18n.locale}}</span>
-        {{/facet.trigger}}
-        {{#facet.list}}
-          <li {{action 'setLocale' 'fr'}}>fr</li>
-          <li {{action 'setLocale' 'en'}}>en</li>
-        {{/facet.list}}
-      {{/x-dropdown-plus}}
+        {{#x-dropdown-plus dropdownPivot='top right' triggerPivot='bottom right' as |facet|}}
+          {{#facet.trigger}}
+          <span class="lang-switcher-item">{{i18n.locale}}</span>
+          {{/facet.trigger}}
+          {{#facet.list}}
+            <li {{action 'setLocale' 'fr'}}>fr</li>
+            <li {{action 'setLocale' 'en'}}>en</li>
+          {{/facet.list}}
+        {{/x-dropdown-plus}}
+      </div>
 
+      <a href="https://github.com/AtelierCartographie/Khartis/wiki" target="_blank"
+        title="Aide - Wiki Khartis"
+        class="clickable icon help-wiki">
+        ?
+      </a>
     </div>
 </header>
