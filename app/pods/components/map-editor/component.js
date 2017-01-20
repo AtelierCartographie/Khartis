@@ -472,20 +472,6 @@ export default Ember.Component.extend({
         }
       });
 
-    /*sel = d3l
-      .selectAll("g.backmap path.squares-land")
-      .data(this.get('base'));
-
-    sel.append("path")
-      .classed("squares-land", true)
-      .attr("d", d => (console.log(2, d), this.getProjectedPath(d.projection)(d.squares)))
-      .style({
-        "stroke": "none",
-        "fill": this.get('graphLayout.backmapColor')
-      });
-
-    sel.exit().remove();*/
-
     /* squares clip */
     d3l.select("#border-square-clip")
       .selectAll("path")
@@ -736,7 +722,7 @@ export default Ember.Component.extend({
       
         symbol.call(svg);
       
-        let el = symbol.insert(_, r*2);//_.append("use").attr("xlink:href", symbol.url());
+        let el = symbol.insert(_, r*2);
         
         if (shape === "bar") {
           

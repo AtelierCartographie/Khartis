@@ -1,5 +1,8 @@
 import Ember from 'ember';
 import SymbolMaker from 'mapp/utils/symbol-maker';
+import d3lper from 'mapp/utils/d3lper';
+
+const MARGIN = 4;
 
 export default Ember.Component.extend({
   
@@ -16,7 +19,6 @@ export default Ember.Component.extend({
   
   draw: function() {
     
-    this.d3l().append("defs");
     this.d3l().append("g")
       .classed("swatchs", true);
       
@@ -27,32 +29,32 @@ export default Ember.Component.extend({
   drawSymbol: function() {
     
     let svg = this.d3l(),
+        w = this.$().width(),
+        h = this.$().height(),
+        r = Math.min(w/2, h/2),
         symbol = SymbolMaker.symbol({name: this.get('shape')});
-          
-    symbol.call(svg);
     
-    let bindAttr = (_) => {
-      _.attr({
-        "xlink:xlink:href": symbol.url(),
-        x: 0,
-        width: "100%",
-        height: "100%"
-      }).style({
-        fill: this.get('color')
-      });
-    };
-    
-    let sel = this.d3l().select("g.swatchs")
-      .selectAll("use.swatch")
+    this.d3l().select("g.swatchs")
+      .selectAll("g.swatch")
+      .remove();
+      
+    this.d3l().select("g.swatchs")
+      .selectAll("g.swatch")
       .data([this.get('shape')])
-      .call(bindAttr);
-      
-    sel.enter()
-      .append("use")
-      .classed("swatch", true)
-      .call(bindAttr);
-      
-    sel.exit().remove();
+      .enterUpdate({
+        enter: function(sel) {
+          let g = sel.append("g").classed("swatch", true);
+          symbol.insert(g, 2*(r-MARGIN));
+          return g;
+        },
+        update: (sel) => {
+          return sel.attr({
+            transform: d3lper.translate({tx: w/2, ty: h/2})
+          }).style({
+            fill: this.get('color')
+          });
+        }
+      });
     
   }.observes('shape', 'color')
   
