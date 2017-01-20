@@ -5,6 +5,7 @@ import config from './config/environment';
 import d3 from 'd3';
 import {isEverGreen} from 'mapp/utils/browser-check'
 import './utils/composite-projection';
+import './utils/d3proto';
 /* global Em */
 
 let App;

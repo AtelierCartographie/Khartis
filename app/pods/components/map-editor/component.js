@@ -438,95 +438,128 @@ export default Ember.Component.extend({
    
    drawBackmap: function() {
 
-    let d3l = this.d3l();
+    let d3l = this.d3l(),
+        backmap = d3l.select("g.backmap");
 
-    let sel = d3l.select("g.backmap")
+    backmap
       .selectAll("path.land")
-      .data(this.get('base'));
-      
-    sel.enter()
-      .append("path")
-      .classed("land", true);
-
-    sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
-      .style({
-        "fill": this.get('graphLayout.backMapColor')
+      .data(this.get('base'))
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("land", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => (console.log(1, d), this.getProjectedPath(d.projection)(d.land) ))
+            .style({
+              "fill": this.get('graphLayout.backmapColor')
+            });
+        }
       });
 
-    sel.exit().remove();
+    backmap
+      .selectAll("path.land-squares")
+      .data(this.get('base'))
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("land-squares", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => (console.log(2, d), this.getProjectedPath(d.projection)(d.squares)))
+            .style({
+              "stroke": "none",
+              "fill": this.get('graphLayout.backmapColor')
+            });
+        }
+      });
 
-    /* squares */
-    sel = d3l.select("#border-square-clip")
+    /*sel = d3l
+      .selectAll("g.backmap path.squares-land")
+      .data(this.get('base'));
+
+    sel.append("path")
+      .classed("squares-land", true)
+      .attr("d", d => (console.log(2, d), this.getProjectedPath(d.projection)(d.squares)))
+      .style({
+        "stroke": "none",
+        "fill": this.get('graphLayout.backmapColor')
+      });
+
+    sel.exit().remove();*/
+
+    /* squares clip */
+    d3l.select("#border-square-clip")
       .selectAll("path")
-      .data(this.get('base'));
-
-    sel.enter()
-      .append("path");
-
-    sel.attr("d", d => {
-        let path = this.getProjectedPath(d.projection)(d.squares);
-        return "M0,0H4000V4000H-4000z"+(path ? path : "")
-      })
-      .attr("clip-rule", "evenodd");
-
-    sel.exit().remove();
-
-    sel = d3l.select("g.borders")
-      .selectAll("path.squares")
-      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
-
-    sel.enter()
-      .append("path")
-      .classed("squares", true);
-
-    sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares))
-      .style({
-        "stroke-width": 1,
-        "stroke": this.get("graphLayout.stroke"),
-        "fill": "none"
+      .data(this.get('base'))
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path");
+        },
+        update: (sel) => {
+          return sel.attr("d", d => {
+              let path = this.getProjectedPath(d.projection)(d.squares);
+              return "M0,0H4000V4000H-4000z"+(path ? path : "")
+            })
+            .attr("clip-rule", "evenodd");
+        }
       });
 
-    sel.exit().remove();
+    /*squares borders*/
+    d3l.select("g.borders")
+      .selectAll("path.squares")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("squares", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares))
+            .style({
+              "stroke-width": 1,
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
+      });
 
     /* borders */
-    sel = d3l.select("g.borders")
+    d3l.select("g.borders")
       .selectAll("path.borders")
-      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
-
-    sel.enter()
-      .append("path")
-      .classed("borders", true);
-
-    sel.attr("d", d => this.getProjectedPath(d.projection)(d.borders) )
-      .attr("clip-path", `url(#border-square-clip)`)
-      .style({
-        "stroke-width": 1,
-        "stroke": this.get("graphLayout.stroke"),
-        "fill": "none"
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("borders", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.borders) )
+            .attr("clip-path", `url(#border-square-clip)`)
+            .style({
+              "stroke-width": 1,
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
       });
 
-    sel.exit().remove();
-
-    sel = d3l.select("g.borders")
+    d3l.select("g.borders")
       .selectAll("path.borders-disputed")
-      .data(this.get('graphLayout.showBorders') ? this.get('base') : []);
-    
-    sel.enter()
-      .append("path")
-      .classed("borders", true);
-
-    sel.attr("d", d => this.getProjectedPath(d.projection)(d.bordersDisputed) )
-      .attr("clip-path", `url(#border-square-clip)`)
-      .style({
-        "stroke-width": 1,
-        "stroke-dasharray": "5,5",
-        "stroke": this.get("graphLayout.stroke"),
-        "fill": "none"
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("borders", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.bordersDisputed) )
+            .attr("clip-path", `url(#border-square-clip)`)
+            .style({
+              "stroke-width": 1,
+              "stroke-dasharray": "5,5",
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
       });
 
-    sel.exit().remove();
-
-  }.observes('graphLayout.backMapColor', 'graphLayout.showBorders', 'graphLayout.stroke'),
+  }.observes('graphLayout.backmapColor', 'graphLayout.showBorders', 'graphLayout.stroke'),
   
   drawLayers: function() {
     

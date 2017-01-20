@@ -9,14 +9,11 @@ export default Ember.Mixin.create({
 
   zoomInit(d3g) {
 
-    // DRAG & ZOOM
     zoom = zoom2()
       .scaleExtent([1, 12])
       .band(0.5)
       .on("zoom", (scale, translate) => {
-        
         this.zoomAndDrag(scale, translate);
-
       })
       .scale(this.get('graphLayout.zoom'));
     
@@ -69,7 +66,7 @@ export default Ember.Mixin.create({
         "kis:kis:ty": translate[1],
         "kis:kis:s": scale
       })
-      .interrupt().transition().duration(400).ease("cubic-out")
+      .interrupt().transition().duration(350).ease("cubic-out")
       .attr({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })

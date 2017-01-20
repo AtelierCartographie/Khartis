@@ -74,7 +74,7 @@ var GraphLayout = Struct.extend({
 	strokeWidth: 1,
 	
 	backgroundColor: "#f8f8f8",
-  backMapColor: "#e0e1e1",
+  backmapColor: "#e0e1e1",
   
   showBorders: true,
 
@@ -128,7 +128,7 @@ var GraphLayout = Struct.extend({
       projection: this.get('projection') ? this.get('projection').export() : null,
       margin: this.get('margin') ? this.get('margin').export() : null,
       backgroundColor: this.get('backgroundColor'),
-      backMapColor: this.get('backMapColor'),
+      backmapColor: this.get('backmapColor'),
       gridColor: this.get('gridColor'),
       stroke: this.get('stroke'),
       tx: this.get('tx'),
@@ -159,7 +159,7 @@ GraphLayout.reopenClass({
       let o = this._super(json, refs, {
         basemap: json.basemap ? Basemap.restore(json.basemap) : null,
         backgroundColor: json.backgroundColor,
-        backMapColor: json.backMapColor,
+        backmapColor: json.backmapColor,
         gridColor: json.gridColor,
         stroke: json.stroke,
         projection: json.projection ? Projection.restore(json.projection) : null,

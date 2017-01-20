@@ -68,7 +68,7 @@ export default Ember.Controller.extend({
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
     'model.graphLayout.tx', 'model.graphLayout.ty',
-    'model.graphLayout.backgroundColor', 'model.graphLayout.backMapColor',
+    'model.graphLayout.backgroundColor', 'model.graphLayout.backmapColor',
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
     'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment',
     'model.graphLayout.margin._defferedChangeIndicator'),
@@ -109,61 +109,61 @@ export default Ember.Controller.extend({
     var url = DOMURL.createObjectURL(svg);
 
     img.onload = function() {
-        ctx.drawImage(img, 0, 0);
-        canvas.toBlob(function(blob) {
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob(function(blob) {
 
-          var arrayBuffer;
-          var fileReader = new FileReader();
-          fileReader.onload = function() {
+        var arrayBuffer;
+        var fileReader = new FileReader();
+        fileReader.onload = function() {
 
-              arrayBuffer = this.result;
-              let dv = new DataView(arrayBuffer),
-                  firstIDATChunkPos = undefined,
-                  pos = 8,
-                  getUint32 = function() {
-                    var data = dv.getUint32(pos, false);
-                    pos += 4;
-                    return data;
-                  };
-              
-              //find first IDAT chunk
-              while (pos < dv.buffer.byteLength) {
-                let size = getUint32(),
-                    name = uint32ToStr(getUint32());
-                if (name === "IDAT" && !firstIDATChunkPos) {
-                  firstIDATChunkPos = pos - 8;
-                  break;
-                } else {
-                  pos += size;
-                }
-                getUint32(); //crc
+            arrayBuffer = this.result;
+            let dv = new DataView(arrayBuffer),
+                firstIDATChunkPos = undefined,
+                pos = 8,
+                getUint32 = function() {
+                  var data = dv.getUint32(pos, false);
+                  pos += 4;
+                  return data;
+                };
+            
+            //find first IDAT chunk
+            while (pos < dv.buffer.byteLength) {
+              let size = getUint32(),
+                  name = uint32ToStr(getUint32());
+              if (name === "IDAT" && !firstIDATChunkPos) {
+                firstIDATChunkPos = pos - 8;
+                break;
+              } else {
+                pos += size;
               }
+              getUint32(); //crc
+            }
 
-              let left = arrayBuffer.slice(0, firstIDATChunkPos),
-                  right = arrayBuffer.slice(firstIDATChunkPos);
+            let left = arrayBuffer.slice(0, firstIDATChunkPos),
+                right = arrayBuffer.slice(firstIDATChunkPos);
 
-              let extraBuffer = build_pHYs(300);
+            let extraBuffer = build_pHYs(300);
 
-              let meta = {
-                "Comment": "Made with Khartis",
-                "Software": "Khartis"
-              };
+            let meta = {
+              "Comment": "Made with Khartis",
+              "Software": "Khartis"
+            };
 
-              for (let k in meta) {
-                extraBuffer = concatBuffers(build_tEXt(k, meta[k]), extraBuffer);
-              }
+            for (let k in meta) {
+              extraBuffer = concatBuffers(build_tEXt(k, meta[k]), extraBuffer);
+            }
 
-              let pngBuffer = concatBuffers(concatBuffers(left, extraBuffer), right);
+            let pngBuffer = concatBuffers(concatBuffers(left, extraBuffer), right);
 
-              //tracePNGChunks(pngBuffer);
+            //tracePNGChunks(pngBuffer);
 
-            saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_khartis.png");
-            DOMURL.revokeObjectURL(url);
+          saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_khartis.png");
+          DOMURL.revokeObjectURL(url);
 
-          };
-          fileReader.readAsArrayBuffer(blob);
+        };
+        fileReader.readAsArrayBuffer(blob);
 
-        }, "image/png", 1);
+      }, "image/png", 1);
 
         
     };
