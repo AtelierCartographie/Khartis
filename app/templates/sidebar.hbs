@@ -16,7 +16,7 @@
             </li>
         </ul>
 
-        <div class="flow vertical space-between">
+        <div class="flow vertical space-between" style="min-height: 0"> <!-- min-height 0 required for firefox -->
             {{outlet 'sidebar'}}
         </div>
 
