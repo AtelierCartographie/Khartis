@@ -66,11 +66,13 @@ export default Ember.Mixin.create({
         "kis:kis:ty": translate[1],
         "kis:kis:s": scale
       })
-      .interrupt().transition().duration(350).ease("cubic-out")
+      .transition().duration(250).ease("linear")
       .attr({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })
       .each("end", () => {
+
+        if (mapG[0][0].__transition__.count > 1) return;
         
         mapG.attr("transform", null)
           .selectAll("g.layers .shape")
@@ -92,7 +94,7 @@ export default Ember.Mixin.create({
         
       });
     
-    if (isChrome()) {
+    /*if (isChrome()) { //désactivé car marche mal
       mapG.selectAll("g.layers .shape").each(function() {
         
         let el = d3.select(this),
@@ -103,7 +105,7 @@ export default Ember.Mixin.create({
         el.attr("transform", `${d3lper.translate({tx: -cx*(1/rs-1), ty: -cy*(1/rs-1)})} scale(${1/rs})`);
         
       });
-    }
+    }*/
     
     
   },

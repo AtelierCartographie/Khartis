@@ -1,8 +1,9 @@
 /* jshint undef: false */
 
-var BrowserWindow = require('browser-window');
-var app = require('app');
-var mainWindow = null;
+const BrowserWindow = require('electron').BrowserWindow;
+const app = require('electron').app;
+
+let mainWindow = null;
 
 app.on('window-all-closed', function onWindowAllClosed() {
     if (process.platform !== 'darwin') {
@@ -13,15 +14,16 @@ app.on('window-all-closed', function onWindowAllClosed() {
 app.on('ready', function onReady() {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        backgroundThrottling: false
     });
 
     delete mainWindow.module;
 
     if (process.env.EMBER_ENV === 'test') {
-        mainWindow.loadUrl('file://' + __dirname + '/index.html');
+        mainWindow.loadURL('file://' + __dirname + '/index.html');
     } else {
-        mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
+        mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
     }
 
     mainWindow.on('closed', function onClosed() {
