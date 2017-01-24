@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Struct from 'mapp/models/struct';
+import {insideInterval, nestedMeans} from 'mapp/utils/math';
 
 const CONTRASTS = {
   0: 1/4,
@@ -38,9 +39,8 @@ let Scale = Struct.extend({
     
     let calc = (intervalType, classes, bounds) => {
       
-      let isInside = (ext, v) => v >= ext[0] && v <= ext[1],
-          ext = d3.extent(values).map( (v,i) => bounds[i] !== undefined ? bounds[i] : v ),
-          vals = values.filter( v => isInside(ext, v) );
+      let ext = d3.extent(values).map( (v,i) => bounds[i] !== undefined ? bounds[i] : v ),
+          vals = values.filter( v => insideInterval(ext, v) );
       
       if (this.get('usesInterval')) {
 
@@ -53,25 +53,7 @@ let Scale = Struct.extend({
             .range(Array.from({length: classes}, (v,i) => i))
             .quantiles();
         } else if (intervalType === "mean") {
-
-          let means = [],
-              mean = (ext) => {
-                return d3.mean(vals.filter( v => isInside(ext, v) ));
-              };
-          
-          for (;means.length+1 < classes;) {
-            let exts = means.reduce( (arr, m, i) => {
-              let e = arr[i];
-              arr[i] = [e[0], m];
-              arr.push([m, e[1]]);
-              return arr;
-            }, [d3.extent(vals)]);
-            
-            means = exts.map( ext => mean(ext) );
-          }
-          
-          return means;
-
+          return nestedMeans(vals, classes);
         }
 
       } else {

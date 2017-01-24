@@ -4,6 +4,7 @@ import PatternMaker from 'mapp/utils/pattern-maker';
 import SymbolMaker from 'mapp/utils/symbol-maker';
 import ValueMixin from 'mapp/models/mapping/mixins/value';
 import TextEditor from './text-editor/component';
+import {compressIntervals} from 'mapp/utils/math';
 
 export default Ember.Mixin.create({
   
@@ -363,32 +364,54 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLinearLabel = function(val, i) {
           
-          let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
-              symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+          let r, dy;
+
+          if (val !== d.get('mapping.scale.valueBreak')) {
+
+            let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+
+            r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)};
       
-          if (!(r.x > 0 && r.y > 0)) return;
+            if (!(r.x > 0 && r.y > 0)) return;
 
-          let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
-              dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
+            let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12);
+              
+            dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
 
-          d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+            d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+
+            symbol.call(svg);
           
-          symbol.call(svg);
-          
-          let g = d3.select(this).append("g")
-           .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+            let g = d3.select(this).append("g")
+            .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
 
-          let symG = g.append("g")
-            .attr("transform", d3lper.translate({ty: r.y - dy/2}));
+            let symG = g.append("g")
+              .attr("transform", d3lper.translate({ty: r.y - dy/2}));
 
-          symbol.insert(symG, r.x*2)
-            .attr({
-              "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
-              "i:i:stroke-width": d.get('mapping.visualization.stroke'),
-              "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
-              "opacity": d.get('opacity')
-            });
+            symbol.insert(symG, r.x*2)
+              .attr({
+                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+                "i:i:stroke-width": d.get('mapping.visualization.stroke'),
+                "stroke": d.get('mapping.visualization.strokeColor'),
+                "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+                "opacity": d.get('opacity')
+              });
+          } else {
+            r = {x: 20, y: 12};
+            dy = 0;
+            d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; margin-bottom: 4px`);
+            let g = d3.select(this).append("g")
+              .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+
+            g.append("line")
+              .attr({
+                x1: 0,
+                y1: r.y - dy/2,
+                x2: r.x,
+                y2: r.y - dy/2,
+                stroke: "#BBBBBB"
+              });
+          }
             
           d3.select(this).append("g")
             .append("text")
@@ -489,16 +512,6 @@ export default Ember.Mixin.create({
           textOffset = xOrigin + 16;
         }
 
-        //regroupe les intervales si l'écart est minime
-        let compressIntervals = function(intervals) {
-          return intervals.reduce( (arr, v) => {
-            if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.0000001) {
-              arr.push(v);
-            }
-            return arr;
-          }, []);
-        };
-        
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           
           let intervals = d.get('mapping.intervals').slice(),
@@ -510,38 +523,11 @@ export default Ember.Mixin.create({
             intervals = compressIntervals(intervals);
           } else {
             if (d.get('mapping.scale.usesInterval')) {
-
               fn = appendSymbolIntervalLabel;
               intervals.push(d.get('mapping.extent')[1]); //push max
-              
             } else {
-
+              intervals = d.get('mapping').getLegendIntervals();
               fn = appendSymbolIntervalLinearLabel;
-              if (d.get('mapping.values').length > 2) {
-                let steps, nearest;
-                if (d.get('mapping.scale.diverging')) {
-                  steps = Math.min(d.get('mapping.values').filter(v => v < d.get('mapping.scale.valueBreak')).length - 1, 3);
-                  let i = (d.get('mapping.scale.valueBreak') - d.get('mapping.extent')[0]) / steps;
-                  nearest = Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.extent')[0] + i*(idx+1)));
-                  //after value break
-                  steps = Math.min(d.get('mapping.values').filter(v => v >= d.get('mapping.scale.valueBreak')).length - 1, 3);
-                  i = (d.get('mapping.extent')[1] - d.get('mapping.scale.valueBreak')) / steps,
-                  nearest = nearest.concat(Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.scale.valueBreak') + i*(idx+1))));
-                } else {
-                  steps = Math.min(d.get('mapping.values').length - 2, 5);
-                  let i = (d.get('mapping.extent')[1] - d.get('mapping.extent')[0]) / steps;
-                  nearest = Array.from({length: steps-1}, (v, idx) => Math.round(d.get('mapping.extent')[0] + i*(idx+1)));
-                }
-                
-                 //Array.prototype.splice.apply(intervals, [intervals.length - 1, 0].concat(nearest));
-                 intervals = [d.get('mapping.extent')[0]]
-                  .concat(nearest)
-                  .concat(d.get('mapping.extent')[1]);
-                 
-              }
-              
-              intervals = compressIntervals(intervals);
-              
             }
           }
           

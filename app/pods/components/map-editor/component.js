@@ -449,7 +449,7 @@ export default Ember.Component.extend({
           return sel.append("path").classed("land", true);
         },
         update: (sel) => {
-          return sel.attr("d", d => (console.log(1, d), this.getProjectedPath(d.projection)(d.land) ))
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
             .style({
               "fill": this.get('graphLayout.backmapColor')
             });
@@ -464,7 +464,7 @@ export default Ember.Component.extend({
           return sel.append("path").classed("land-squares", true);
         },
         update: (sel) => {
-          return sel.attr("d", d => (console.log(2, d), this.getProjectedPath(d.projection)(d.squares)))
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares) )
             .style({
               "stroke": "none",
               "fill": this.get('graphLayout.backmapColor')

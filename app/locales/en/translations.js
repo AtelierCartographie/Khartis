@@ -23,6 +23,8 @@ export default {
      "other": "errors" 
     }
   },
+
+  "help.wiki": "Help - Wiki Khartis",
   
   "project": {
    

@@ -73,7 +73,7 @@ export default Ember.Mixin.create({
       .each("end", () => {
 
         if (mapG[0][0].__transition__.count > 1) return;
-        
+
         mapG.attr("transform", null)
           .selectAll("g.layers .shape")
           .attr("transform", null);

@@ -25,6 +25,11 @@ let DataMixin = Ember.Mixin.create({
     return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
   }.property('values'),
 
+  allNegative: function() {
+    console.log(this.get('values'), this.get('values').every( v => v <= 0 ));
+    return this.get('values').every( v => v <= 0 );
+  }.property('values'),
+
   initDivergence: function() {
     if (this.get('shouldDiverge') && !this.get('scale.diverging')) {
       this.set('scale.valueBreak', 0);
