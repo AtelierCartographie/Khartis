@@ -179,7 +179,7 @@ export default Ember.Mixin.create({
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
               d.get('mapping.visualization.maxSize') : 10),
             textOffset = xOrigin + 16,
-            formatter = d3.format(`0.${d.get('mapping.maxValuePrecision')}f`);
+            formatter = d3.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
         el.selectAll("*").remove();
           
@@ -332,7 +332,7 @@ export default Ember.Mixin.create({
             });
             
             g.append("text")
-              .text( formatter(d.get('mapping.extent')[0]) )
+              .text( formatter(d.get('mapping.extent')[d.get('mapping.allNegative') ? 1:0]) )
               .attr({
                 x: textOffset,
                 y: -2,
@@ -524,11 +524,10 @@ export default Ember.Mixin.create({
           } else {
             if (d.get('mapping.scale.usesInterval')) {
               fn = appendSymbolIntervalLabel;
-              intervals.push(d.get('mapping.extent')[1]); //push max
             } else {
-              intervals = d.get('mapping').getLegendIntervals();
               fn = appendSymbolIntervalLinearLabel;
             }
+            intervals = d.get('mapping').getLegendIntervals();
           }
           
           let sel = el.selectAll("g.interval")

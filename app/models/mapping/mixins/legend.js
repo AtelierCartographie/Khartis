@@ -17,9 +17,15 @@ let LegendMixin = Ember.Mixin.create({
       } else {
 
         if (this.get('scale.usesInterval')) {
-          intervals.push(this.get('extent')[1]); //push max
+          intervals = compressIntervals(intervals);
+          if (this.get('allNegative')) {
+            intervals = intervals.sort(d3.descending);
+            intervals.push(this.get('extent')[0]); //push min
+          } else {
+            intervals = intervals.sort(d3.ascending);
+            intervals.push(this.get('extent')[1]); //push max
+          }
         } else {
-
           if (this.get('values').length > 2) {
             if (this.get('shouldDiverge')) {
               intervals = this.symbolLinearDiverging();
