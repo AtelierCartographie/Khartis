@@ -11,7 +11,7 @@
     "build": "ember build",
     "start": "ember server",
     "test": "ember test",
-    "electron": "ember electron:package && cd electron-builds/ && rm -f Khartis*.zip && ls | grep \"mapp-.*\\(darwin\\|linux\\|win32\\)\" | while read d; do zip -r Khartis-$d.zip $d; done"
+    "electron": "rm -rf electron-builds && ember electron:package && cd electron-builds/ && ls | grep \"mapp-.*\\(darwin\\|linux\\|win32\\)\" | while read d; do zip -r Khartis-$d.zip $d; done"
   },
   "repository": "",
   "engines": {
