@@ -22,7 +22,7 @@ let TextEditor = Ember.Component.extend({
 
   hide() {
     $(document).off(`click.${EV_NS}`);
-    this.$().css({display: "none"});
+    this.$(".popup-text-editor").css({display: "none"});
   },
 
   showAt(el, text, cb) {
@@ -34,7 +34,7 @@ let TextEditor = Ember.Component.extend({
       _cb: cb
     });
 
-    this.$().css({display: "block"});
+    this.$(".popup-text-editor").css({display: "block"});
     this.move(el);
 
     Ember.run.later(this, () => {
@@ -84,7 +84,7 @@ let TextEditor = Ember.Component.extend({
   },
 
   handleOuterClick(e) {
-    if (!($(e.target).is(this.$()) || $.contains(this.$()[0], e.target))) {
+    if (!($(e.target).is(this.$(".popup-text-editor")) || $.contains(this.$()[0], e.target))) {
       this.hide();
     }
   },
