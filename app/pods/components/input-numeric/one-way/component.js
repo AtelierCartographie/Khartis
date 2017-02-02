@@ -48,8 +48,8 @@ export default Ember.TextField.extend({
         if (this.get('value') > this.get('max')) {
           this.set('value', `${this.get('max')}`);
         }
+        this.sendAction("update", parseFloat(this.get('value')));
       }
-      this.sendAction("update", parseFloat(this.get('value')));
     },
     
     dotDisallowed: function() {

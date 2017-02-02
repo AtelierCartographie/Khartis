@@ -20,7 +20,8 @@ let Scale = Struct.extend({
   usesInterval: null,
   
   diverging: function() {
-    return this.get('valueBreak') != null;
+    console.log(this.get('valueBreak'));
+    return this.get('valueBreak') != null && !isNaN(this.get('valueBreak'));
   }.property('valueBreak'),
   
   contrastScale: function() {
