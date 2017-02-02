@@ -142,7 +142,8 @@ let DataMixin = Ember.Mixin.create({
     if (this.get('scale.intervalType') === "regular" || this.get('scale.intervalType') === "quantile") {
       return Array.from({length: lgt+1}, (v, i) => (i+1));
     } else if (this.get('scale.intervalType') === "mean") {
-      return [1].concat(this.get('possibleClasses').slice(0, lgt));
+      //return Array.from({length: Math.floor(this.get('scale.classes') / 2) - 1}, (v, i) =>  2 * (i + 1)); désactivé pour le moment
+      return [this.get('scale.classes') / 2];
     } else {
       return []; //linear
     }
@@ -322,9 +323,8 @@ let SurfaceMixin = Ember.Mixin.create({
       } else if (type === "color") {
         range = this.get('colorSet');
       }
-      
     }
-    
+
     return d3Scale
       .domain(intervals)
       .range(range);
@@ -357,7 +357,7 @@ let SymbolMixin = Ember.Mixin.create({
         visualization = this.get('visualization'),
         d3Scale,
         domain,
-        transform = _ => d3Scale(_),
+        transform = _ => d3Scale(_*(1+Math.sign(_)*Number.EPSILON)),
         range;
         
     if (type === "size") {
@@ -372,13 +372,19 @@ let SymbolMixin = Ember.Mixin.create({
           );
           range = range.concat(
             Array.from({length: this.get('scale.classes') - this.get('scale.classesBeforeBreak')},
-              (v, i) => Math.pow(i+1, 2)
+              (v, i) => Math.pow(i + 1, 2)
             )
           );
         } else {
-          range = Array.from({length: intervals.length + 1},
-            (v, i) => Math.pow(i + 1, 2)
-          );
+          if (this.get('allNegative')) {
+            range = Array.from({length: intervals.length + 1},
+              (v, i) => Math.pow(intervals.length + 1 - i, 2)
+            );
+          } else {
+            range = Array.from({length: intervals.length + 1},
+              (v, i) => Math.pow(i + 1, 2)
+            );
+          }
         }
 
         contrastScale.domain(intervals).range(range);
@@ -388,7 +394,7 @@ let SymbolMixin = Ember.Mixin.create({
         range = [0, visualization.get('maxSize')];
 
         transform = _ => {
-          return d3Scale(contrastScale(_));
+          return d3Scale(contrastScale(_*(1+Math.sign(_)*Number.EPSILON)));
         };
 
       } else {
@@ -403,7 +409,7 @@ let SymbolMixin = Ember.Mixin.create({
     } else if (type === "color") {
       
       d3Scale = d3.scale.threshold()
-      
+
       if (this.get('scale.diverging')) {
         range = this.get('visualization').colorStops(this.get('scale.diverging'));
         domain = [this.get('scale.valueBreak')];

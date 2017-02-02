@@ -290,9 +290,8 @@ export default Ember.Mixin.create({
         };
         
         let appendSymbolIntervalLabel = function(val, i) {
-
           
-          let r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)},
+          let r = {x: d.get('mapping').getScaleOf('size')(val), y: d.get('mapping').getScaleOf('size')(val)},
               symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
 
           let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
@@ -315,7 +314,7 @@ export default Ember.Mixin.create({
               "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
               "i:i:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
-              "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+              "fill": d.get('mapping').getScaleOf('color')(val),
               "opacity": d.get('opacity')
             });
             
@@ -332,7 +331,7 @@ export default Ember.Mixin.create({
             });
             
             g.append("text")
-              .text( formatter(d.get('mapping.extent')[d.get('mapping.allNegative') ? 1:0]) )
+              .text( formatter(d.get('mapping.extent')[1]) )
               .attr({
                 x: textOffset,
                 y: -2,
@@ -370,7 +369,7 @@ export default Ember.Mixin.create({
 
             let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
 
-            r = {x: d.get('mapping').getScaleOf('size')(val - 0.000000001), y: d.get('mapping').getScaleOf('size')(val - 0.000000001)};
+            r = {x: d.get('mapping').getScaleOf('size')(val), y: d.get('mapping').getScaleOf('size')(val)};
       
             if (!(r.x > 0 && r.y > 0)) return;
 
@@ -393,7 +392,7 @@ export default Ember.Mixin.create({
                 "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
                 "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": d.get('mapping.visualization.strokeColor'),
-                "fill": d.get('mapping').getScaleOf('color')(val - 0.000000001),
+                "fill": d.get('mapping').getScaleOf('color')(val),
                 "opacity": d.get('opacity')
               });
           } else {

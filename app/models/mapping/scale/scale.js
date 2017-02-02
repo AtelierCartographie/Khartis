@@ -63,7 +63,6 @@ let Scale = Struct.extend({
     };
     
     let intervals;
-    
     if (this.get('diverging')) {
       let vb = parseFloat(this.get('valueBreak'));
       vb = isNaN(vb) ? 0 : vb;

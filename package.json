@@ -64,6 +64,7 @@
     "text-encoding": "^0.5.2"
   },
   "dependencies": {
+    "@types/ember": "^2.7.36",
     "ember-load-initializers": "^0.5.1",
     "topojson": "^1.6.24"
   },
