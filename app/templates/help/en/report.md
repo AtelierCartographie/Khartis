@@ -1,1 +1,0 @@
-Have you think about the column that will identify geographical objects?

@@ -1,8 +1,0 @@
-<div class="tooltip popable {{positionClassName}}" id={{elementId}} >
-  {{#unless yieldMessage}}
-    {{message}}
-  {{else}}
-    {{yield (hash html=(component 'x-tooltip.html-content' tagName=''))}}
-  {{/unless}}
-</div>
-{{yield}}

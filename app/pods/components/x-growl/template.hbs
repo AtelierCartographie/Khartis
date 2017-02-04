@@ -1,7 +1,0 @@
-<div class="growl-stack">
-{{#each messages as | o |}}
-
-    {{x-growl.message message=o.message level=o.level lifeTime=lifeTime dismiss=(action 'removeMessage' o)}}
-
-{{/each}}
-</div>

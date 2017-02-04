@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="160px"
+	 height="160px" viewBox="0 0 160 160" enable-background="new 0 0 160 160" xml:space="preserve">
+<pattern  x="-340.5" y="377.5" width="28.666" height="21.992" patternUnits="userSpaceOnUse" id="Nouvelle_nuance_de_motif_3" viewBox="0 -21.992 28.666 21.992" overflow="visible">
+	<g>
+		<polygon fill="none" points="0,0 28.666,0 28.666,-21.992 0,-21.992 		"/>
+		<polygon fill="#E2DAD4" points="28.666,0 0,0 0,-21.992 28.666,-21.992 		"/>
+		<polygon fill="#977864" points="28.666,-16.143 0,-16.143 0,-21.992 28.666,-21.992 		"/>
+	</g>
+</pattern>
+<g id="Calque_1">
+	<g>
+		<defs>
+			<circle id="SVGID_1_" cx="80.599" cy="79.599" r="76.099"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  overflow="visible"/>
+		</clipPath>
+		<polygon clip-path="url(#SVGID_2_)" fill="#C2B2A4" points="75.233,88.585 90.596,84.953 96.452,83.874 126.968,68.535 
+			135.374,54.185 104.86,18.884 120.032,-12.618 120.155,-43.406 -26.828,-43.406 -26.828,110.144 48.438,75.815 		"/>
+		<polygon clip-path="url(#SVGID_2_)" fill="#AE9887" points="104.86,18.884 135.374,54.185 152.099,46.148 196.505,46.18 
+			196.505,-43.406 120.155,-43.406 120.032,-12.618 		"/>
+		<polygon clip-path="url(#SVGID_2_)" fill="#E2DAD4" points="196.505,46.18 152.099,46.148 135.374,54.185 126.968,68.535 
+			96.452,83.874 96.563,98.365 80.158,104.593 62.838,134.011 86.047,181.262 196.505,181.262 		"/>
+		<polygon clip-path="url(#SVGID_2_)" fill="#977864" points="80.158,104.593 96.563,98.365 96.452,83.874 90.596,84.953 
+			75.233,88.585 48.438,75.815 -26.828,110.144 -26.828,181.262 86.047,181.262 62.838,134.011 		"/>
+		<pattern  id="SVGID_3_" xlink:href="#Nouvelle_nuance_de_motif_3" patternTransform="matrix(0.3 0 0 0.3 -5204.2998 -6107.1084)">
+		</pattern>
+		<polygon clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="url(#SVGID_3_)" points="73.49,108.475 
+			81.02,103.823 83.77,101.93 101.949,95.912 110.969,98.269 112.867,124.36 131.369,130.833 141.833,134.5 85.079,182.698 
+			16.5,136.5 67.93,124.158 		"/>
+		<g clip-path="url(#SVGID_2_)">
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="62.215" cy="35.196" r="39.069"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="84.556" cy="59.106" r="20.203"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="116.309" cy="35.72" r="10.467"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="119.393" cy="59.749" r="5.355"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="103.542" cy="101.948" r="12.901"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="114.744" cy="95.555" r="6.811"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="91.386" cy="95.004" r="5.599"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="76.767" cy="103.095" r="5.112"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="139.081" cy="101.461" r="14.118"/>
+			<circle fill="#977864" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" cx="58.267" cy="92.744" r="3.721"/>
+		</g>
+	</g>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#B29D8C" stroke-width="3" stroke-miterlimit="10" d="
+		M43.359,111.367l-10.594,10.588 M32.765,111.367l10.594,10.588"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#B29D8C" stroke-width="3" stroke-miterlimit="10" d="
+		M59.722,104.275l-10.594,10.59 M49.128,104.275l10.594,10.59"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#B29D8C" stroke-width="3" stroke-miterlimit="10" d="
+		M45.495,96.768l-10.594,10.59 M34.901,96.768l10.594,10.59"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#B29D8C" stroke-width="3" stroke-miterlimit="10" d="
+		M26.349,91.475l-10.594,10.588 M15.755,91.475l10.594,10.588"/>
+</g>
+<g id="pictos">
+</g>
+</svg>

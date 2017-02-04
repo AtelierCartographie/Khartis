@@ -1,1 +1,0 @@
-La collecte, la structuration et l'identification des données représentent des tâches préalables à toute réalisation de cartes. Un soin particulier doit y être accordé sous peine de devoir à nouveau y revenir pour continuer dans les étapes suivantes.

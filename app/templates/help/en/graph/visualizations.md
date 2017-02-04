@@ -1,2 +1,0 @@
-Turning data into shapes is a key step. But depending on data, some visualizations are more appropriate than others. In order to avoid unreadable or misinterpreted maps, you have to make a good choice.   
-Have you got an idea of the "nature" of your data?
