@@ -15,13 +15,14 @@ Khartis<br><em>How to simply create thematic maps in three steps ?
   </small>
 </p>
 ===
-<img alt="Sciences Po médialab" src="./assets/SciencesPO_MEDIALAB.png" style="margin: 0;">
+[<img alt="Sciences Po médialab" src="./assets/SciencesPO_MEDIALAB.png" style="margin: 0;">](http://medialab.sciences-po.fr)
+* A social sciences research lab
 * Designing digital research methods
 * Developing Free and Open Source software
-* In social sciences and humanities
+  [github.com/medialab](http://github.com/medialab)
 
 ===
-<img alt="Sciences Po, Atelier de cartographie" src="./assets/logo_carto.png" style="margin: 0;">
+[<img alt="Sciences Po, Atelier de cartographie" src="./assets/logo_carto.png" style="margin: 0;">](http://www.sciencespo.fr/cartographie/)
 * cartography
 * graphic semiology
 * information visualisation
@@ -30,24 +31,26 @@ Khartis<br><em>How to simply create thematic maps in three steps ?
 ![Atelier de cartographie's team](./assets/atelier_carto_team.png)
 
 === 
-
-![World Carbon Dioxyde emission in 2013](./assets/emissions-CO2-2013-CCBYNDNC4.0.jpg)
-
-===
-
-A grant to design a pedagocial mapping tool. 
-
-![logo USPC](./assets/logo_uspc.jpg)
+Thematic maps
+![World Carbon Dioxyde emission in 2013](./assets/emissions-CO2-2013-CCBYNDNC4.0.jpg) 
 
 ===
 
-## A tri-partite collaboration
+[![logo USPC](./assets/logo_uspc.jpg)<!-- .element: style="width:25%; "-->](http://www.sorbonne-paris-cite.fr/)
+
+The story starts with a grant from USPC  
+won to design a **pedagogical mapping tool**. 
+
+
+===
+
+## A tripartite collaboration
 
 - teaching cartographers
 - digital methods specialists and FOOS agilists
-- [apyx.net](http://www.apyx.fr/): cartography web application developer
-<center>![logo apyx](./assets/logo-apyx.png)</center>
-
+- cartography web application developer:  
+  [Arnaud Pezel](https://github.com/apezel) from [![logo apyx](./assets/logo-apyx.png)<!-- .elements: style="height:50px; margin:0; margin-bottom:-13px"-->](http://www.apyx.fr/)
+  
 ===
 
 ## easily
@@ -64,7 +67,7 @@ Which map projection?
 
 ===
 
-## which conveys a message
+## to convey a message
 <center>choose and tune visual forms</center>
 
 ===
@@ -119,6 +122,14 @@ and load it into [Khartis](http://www.sciencespo.fr/cartographie/khartis/app/)
 </center>
 
 ===
+
+### multiple geospatial areas
+
+<center>
+![préfectures populations France](./assets/pref_khartis.svg)<!-- .element: style="width:90%; "--> 
+</center>
+
+===
 ## under the hood
 
 - full web client application
@@ -134,7 +145,7 @@ fork me on [github.com/AtelierCartographie/Khartis](https://github.com/AtelierCa
 ### your data stays on your computer
 
 ===
-
-## issue 2: multiple discontinued pojection
+<!-- .slide: data-background-image="./assets/khartis.png"-->
+<center>[http://www.sciencespo.fr/cartographie/khartis](http://www.sciencespo.fr/cartographie/khartis)</center>  <!-- .element: style="background:white;margin-top:60%;"-->
 
 
