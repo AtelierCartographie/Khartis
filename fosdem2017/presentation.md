@@ -7,6 +7,9 @@ Khartis<br><em>How to simply create thematic maps in three steps ?
   Sciences Po médialab, Paris, France
 </p>
 
+
+
+[http://ateliercartographie.github.io/Khartis/fosdem2017/](http://ateliercartographie.github.io/Khartis/fosdem2017/)
 <p align="center">
  <small>
   <em>FOSDEM 2017</em><br>
