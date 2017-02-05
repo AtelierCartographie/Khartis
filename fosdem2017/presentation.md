@@ -34,7 +34,7 @@ Khartis<br><em>How to simply create thematic maps in three steps ?
 ![Atelier de cartographie's team](./assets/atelier_carto_team.png)
 
 === 
-Thematic maps
+[Thematic maps available on their cartothèque](http://cartotheque.sciences-po.fr/)
 ![World Carbon Dioxyde emission in 2013](./assets/emissions-CO2-2013-CCBYNDNC4.0.jpg) 
 
 ===
@@ -115,15 +115,21 @@ geographical names alignment
 - tune the legend
 - download SVG or PNG
 
+===
+
+<center>
+  ![World Carbon Dioxyde emission in 2013](./assets/emissions-CO2-2013-CCBYNDNC4.0.jpg)  
+</center>
 
 ===
 ### Live mapping !
 Let's use the [dataset from Andres, Broniak and Marlan](./assets/co2_nation.1751_2013.csv)  
 and load it into [Khartis](http://www.sciencespo.fr/cartographie/khartis/app/)
-<center>
-  ![World Carbon Dioxyde emission in 2013](./assets/emissions-CO2-2013-CCBYNDNC4.0.jpg)<!-- .element: style="width:60%; "-->  
-</center>
 
+===
+<center>
+![World 2013 CO2 emissions](./assets/emissions-CO2-2013-CCBYNDNC4.0.svg)
+</center>
 ===
 
 ### multiple geospatial areas
@@ -138,7 +144,6 @@ and load it into [Khartis](http://www.sciencespo.fr/cartographie/khartis/app/)
 - full web client application
 - ember.js
 - d3.js
-- an electron version for offline use
 
 fork me on [github.com/AtelierCartographie/Khartis](https://github.com/AtelierCartographie/Khartis)
 
@@ -146,6 +151,7 @@ fork me on [github.com/AtelierCartographie/Khartis](https://github.com/AtelierCa
 
 <center>![picto viz icon](./assets/safe.svg)</center>
 ### your data stays on your computer
+an electron version for offline use
 
 ===
 <!-- .slide: data-background-image="./assets/khartis.png"-->
