@@ -24,6 +24,11 @@ export default {
     }
   },
 
+  "d3.format": {
+    "decimal": ",",
+    "thousands": " "
+  },
+
   "help.wiki": "Aide - Wiki Khartis",
   
   "project": {

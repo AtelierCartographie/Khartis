@@ -134,9 +134,10 @@ export default Ember.Mixin.create({
   }.observes('graphLayout.legendOpacity'),
   
   drawLegend: function() {
-    
+
     let svg = this.d3l(),
         layers = this.get('graphLayers'),
+        d3Locale = d3lper.getLocale(this.get('i18n')),
         width = layers.length * 120;
     
     let legendG = this.d3l().selectAll("g.legend")
@@ -179,7 +180,7 @@ export default Ember.Mixin.create({
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
               d.get('mapping.visualization.maxSize') : 10),
             textOffset = xOrigin + 16,
-            formatter = d3.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
+            formatter = d3Locale.numberFormat(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
         el.selectAll("*").remove();
           
@@ -594,7 +595,7 @@ export default Ember.Mixin.create({
       this.updateLegendOpacity();
     });
     
-  }.observes('graphLayout.showLegend', 'graphLayers.[]',
+  }.observes('i18n.locale', 'graphLayout.showLegend', 'graphLayers.[]',
     'graphLayers.@each._defferedChangeIndicator')
   
   

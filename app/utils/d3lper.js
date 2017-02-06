@@ -28,6 +28,28 @@ let d3lper = {
 	      yiq = (r * 299 + g * 587 + b * 114) / 1000;
 	  return (yiq >= 128) ? 'darken' : 'lighten';
 	},
+
+  getLocale(i18n) {
+    const en_US = {
+      "decimal": ".",
+      "thousands": ",",
+      "grouping": [3],
+      "currency": ["$", ""],
+      "dateTime": "%a %b %e %X %Y",
+      "date": "%m/%d/%Y",
+      "time": "%H:%M:%S",
+      "periods": ["AM", "PM"],
+      "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "shortDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    };
+    const locale = Object.assign(en_US, {
+      "decimal": i18n.t('d3.format.decimal'),
+      "thousands": i18n.t('d3.format.thousands')
+    });
+    return d3.locale(locale);
+  },
   
   flow(_) {
     

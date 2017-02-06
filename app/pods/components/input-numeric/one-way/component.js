@@ -42,10 +42,11 @@ export default Ember.TextField.extend({
       if (this.get('nullable') && Ember.isEmpty(this.get('value'))) {
         this.sendAction("update", null);
       } else {
-        if (this.get('value') < this.get('min')) {
+        let val = parseFloat(this.get('value'));
+        if (val < this.get('min')) {
           this.set('value', `${this.get('min')}`);
         }
-        if (this.get('value') > this.get('max')) {
+        if (val > this.get('max')) {
           this.set('value', `${this.get('max')}`);
         }
         this.sendAction("update", parseFloat(this.get('value')));
