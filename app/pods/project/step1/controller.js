@@ -106,6 +106,21 @@ export default Ember.Controller.extend({
     resumeProject() {
       this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
     },
+
+    loadExternalProject(data) {
+      this.get('store').loadFromFile(data)
+        .then( res => {
+          this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
+        })
+        .catch( res => {
+          this.get('ModalManager')
+            .show('confirm', Ember.String.capitalize(this.get('i18n').t('project.step1.importPoject.loadError').string),
+              Ember.String.capitalize(this.get('i18n').t('general.error', {count: 1}).string),
+              null,
+              Ember.String.capitalize(this.get('i18n').t('general.cancel').string));
+        })
+        .catch(console.log)
+    },
     
     loadCsv(text) {
       this.set('model.csv', text);

@@ -38,6 +38,35 @@ var Store = Ember.Service.extend({
       }
     },
 
+    saveAsFile() {
+      let project = Object.assign({}, this.get('projects')[0]);
+      project._uuid = Project._nextId.next().value;
+      
+      let json = JSON.stringify(project),
+          blob = new Blob([LZString.compressToBase64(json)], {type: "application/octet-stream"});
+
+      saveAs(blob, "Projet-Khartis.lzs");
+    },
+
+    loadFromFile(data) {
+      return new Promise( (res, rej) => {
+        let json = LZString.decompressFromBase64(data),
+          parsedData; 
+        try {
+          if (json) {
+            parsedData = JSON.parse(json);
+            this.set('projects', Em.A([parsedData]));
+            this.set('mounted', {});
+            res(parsedData._uuid);
+          } else {
+            throw new Error("Unable to decompress file");
+          }
+        } catch(e) {
+          rej(false);
+        }
+      });
+    },
+
     clear() {
       this.get('projects').clear();
       this.save();
@@ -56,6 +85,7 @@ var Store = Ember.Service.extend({
         let project = this.get('mounted')[uuid] ?
           this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
         if (project) {
+          console.log(project);
           this.startVersioning(project);
           this.get('mounted')[uuid] = project;
           Project.restore(project).then( p => res(p) );

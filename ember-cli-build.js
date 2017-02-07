@@ -34,6 +34,7 @@ module.exports = function(defaults) {
   app.import("vendor/FileSaver.js");
   app.import("vendor/codemirror-placeholder.js");
   app.import("vendor/canvas-to-blob-polyfill.js");
+  app.import("vendor/lz-string.js");
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

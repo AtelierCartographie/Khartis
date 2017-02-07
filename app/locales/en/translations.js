@@ -16,6 +16,7 @@ export default {
     "download": "download",
     "loading": "chargement",
     "search": "rechercher",
+    "save": "save",
     "yes": "yes",
     "no": "no",
     "error": {
@@ -44,10 +45,15 @@ export default {
       },
       "tooltip": {
         "csv": "Comma separated values files that ends with .csv",
-        "resumeProject": "Will resume the last project edited on this computer "
+        "resumeProject": "Will resume the last project edited on this computer ",
+        "importProject": "Import a saved project"
       },
       "pasteCsv": "past your data here or drop a csv file",
-      "downloadCsvModel": "download model (.csv)"
+      "downloadCsvModel": "download model (.csv)",
+      "importPoject": {
+        "title": "Import Khartis project",
+        "loadError": "Unable to load selected file"
+      }
     },
     
     "step2": {

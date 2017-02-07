@@ -21,5 +21,12 @@
         class="clickable icon help-wiki">
         ?
       </a>
+
+      {{#if (x-some (x-eq sidebarActiveTab 'visualizations') (x-eq sidebarActiveTab 'export'))}}
+      <a class="clickable icon iconfont iconfont-save" {{action 'exportProject'}}
+        title="{{t 'general.save'}}">
+      </a>
+      {{/if}}
+
     </div>
 </header>

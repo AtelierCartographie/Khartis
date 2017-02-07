@@ -516,6 +516,10 @@ export default Ember.Controller.extend({
           Ember.run.debounce(this, this.freeze, 1000);
           break;
       }
+    },
+
+    exportProject() {
+      this.get('store').saveAsFile();
     }
     
   }

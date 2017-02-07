@@ -1,5 +1,6 @@
 <div class="sidebar-scroll-wrapper">
     <div class="help">{{outlet 'help'}}</div>
+    <div class="vertical airy flow">
     {{#if canResumeProject}}
       {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject') position="right"}}
       {{#x-button class="solid filled primary" action=(action 'resumeProject')}}
@@ -7,6 +8,12 @@
       {{/x-button}}
       {{/x-tooltip}}
     {{/if}}
+    {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
+    {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
+      <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
+    {{/file-loader}}
+    {{/x-tooltip}}
+    </div>
 </div>
 
 <div class="arrows-navigation right">
