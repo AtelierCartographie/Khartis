@@ -132,22 +132,9 @@ let Mapping = Struct.extend(LegendMixin, {
       }
       
       let rule = ruleForCell.get(cell);
+
       if (rule) {
-        
-        if (mode === "fill") {
-          return rule.get('visible') ? rule.color : "none";
-        } else if (mode === "texture" && rule.get('pattern')) {
-          return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
-        } else if (mode === "texture" && !rule.get('pattern') && self.get('usePattern')) {
-          return rule.get('visible') ? PatternMaker.Composer.build(visualization.get('pattern')) : {fn: PatternMaker.NONE};
-        } else if (mode === "size") {
-          return rule.get('size');
-        } else if (mode === "shape") {
-          return rule.get('visible') ? (rule.get('shape') ? rule.get('shape') : visualization.get('shape') ) : null;
-        } else if (mode === "strokeColor") {
-          return rule.get('visible') ? rule.get('strokeColor') : null;
-        }
-        
+        return self.ruleFn(rule, mode);
       } else {
         switch (mode) {
           case "texture":
@@ -163,6 +150,24 @@ let Mapping = Struct.extend(LegendMixin, {
         }
       }
       
+    }
+  },
+
+  ruleFn(rule, mode) {
+    let visualization = this.get('visualization');
+
+    if (mode === "fill") {
+      return rule.get('visible') ? rule.color : "none";
+    } else if (mode === "texture" && rule.get('pattern')) {
+      return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
+    } else if (mode === "texture" && !rule.get('pattern') && this.get('usePattern')) {
+      return rule.get('visible') ? PatternMaker.Composer.build(visualization.get('pattern')) : {fn: PatternMaker.NONE};
+    } else if (mode === "size") {
+      return rule.get('size');
+    } else if (mode === "shape") {
+      return rule.get('visible') ? (rule.get('shape') ? rule.get('shape') : visualization.get('shape') ) : null;
+    } else if (mode === "strokeColor") {
+      return rule.get('visible') ? rule.get('strokeColor') : null;
     }
   },
   

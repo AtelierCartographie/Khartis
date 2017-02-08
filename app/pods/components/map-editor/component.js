@@ -672,7 +672,6 @@ export default Ember.Component.extend({
           "xlink:href": d => this.registerLandSel(d.id),
           "fill": d => {
             let pattern = converter(d.cell, "texture");
-          
             if (pattern && pattern.fn != PatternMaker.NONE) {
               let fn = new pattern.fn(false, converter(d.cell, "fill"));
               fn.init(svg);

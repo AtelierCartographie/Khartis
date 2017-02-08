@@ -56,7 +56,7 @@ app.on('ready', function onReady() {
           },
           {
             label: 'Quit',
-            accelerator: 'Command+Q',
+            accelerator: 'CommandOrControl+Q',
             click: function() { app.quit(); }
           }
         ]
@@ -69,12 +69,12 @@ app.on('ready', function onReady() {
             click: () => {
               mainWindow.webContents.send('exportProject');
             },
-            accelerator: 'Command+S',
+            accelerator: 'CommandOrControl+S',
             enabled: false
           },
           {
             label: 'Open',
-            accelerator: 'Command+O',
+            accelerator: 'CommandOrControl+O',
             click: () => {
               dialog.showOpenDialog(mainWindow, {
                 properties: ['openFile']

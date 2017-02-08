@@ -427,7 +427,8 @@ export default Ember.Mixin.create({
         
         let appendRuleLabel = function(rule, i) {
 
-          let r;
+          let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
+              r;
 
           if (d.get('mapping.visualization.type') === "symbol") {
 
@@ -465,11 +466,8 @@ export default Ember.Mixin.create({
             r = {x: 24/2, y: 16/2};
             
             d3.select(this).attr("kis:kisflow-css", `flow: horizontal; stretch: true; height: ${r.y*2}px; margin-bottom: 4px`);
-
-            let mask = rule.get('pattern') ? PatternMaker.Composer.build(rule.get('pattern')) : null;
-            if (mask && mask.fn != PatternMaker.NONE) {
-              svg.call(mask.fn);
-            }
+            
+            let pattern = converter(rule, "texture");
             
             let g = d3.select(this).append("g")
               .attr("kis:kisflow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
@@ -488,8 +486,18 @@ export default Ember.Mixin.create({
                 "width": 2*r.x,
                 "height": 2*r.y,
                 "transform": d3lper.translate({tx: -r.x, ty: 0}),
-                "fill": rule.get('color'),
-                "mask": mask ? `url(${mask.fn.url()})` : null
+                "fill": () => {
+                
+                  let color = rule.get('color');
+                  if (pattern && pattern.fn != PatternMaker.NONE) {
+                    let fn = new pattern.fn(false, color);
+                    fn.init(svg);
+                    return `url(${fn.url()})`;
+                  } else {
+                    return color;
+                  }
+
+                }
               });
             
           }
