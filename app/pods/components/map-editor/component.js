@@ -127,7 +127,7 @@ export default Ember.Component.extend({
       .classed("outer-map", true)
       .append("g")
       .classed("map", true)
-      .attr("clip-path", `url(#clip)`);
+      //.attr("clip-path", `url(#clip)`);
     
     let backMap = mapG.append("g")
       .attr("id", "backmap");
@@ -338,17 +338,17 @@ export default Ember.Component.extend({
         precision = this.get('graphLayout.precision'),
         defs = this.d3l().select("defs");
     
-    defs.select("#sphere")
+    /*defs.select("#sphere")
       .datum({type: "Sphere"})
-      .attr("d", path);
+      .attr("d", path);*/
     
-    defs.select("#grid")
+    /*defs.select("#grid")
       .datum(d3.geo.graticule())
       .attr("d", path)
-      .attr("clip-path", `url(#clip)`);
+      .attr("clip-path", `url(#clip)`);*/
 
-    defs.select("#clip use")
-      .attr("xlink:href", `#sphere`);
+    /*defs.select("#clip use")
+      .attr("xlink:href", `#sphere`);*/
       
     this.drawGrid();
     this.drawBackmap();
@@ -442,6 +442,21 @@ export default Ember.Component.extend({
         backmap = d3l.select("#backmap");
 
     backmap
+      .selectAll("path.backland")
+      .data(this.get('base'))
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("backland", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.backLands) )
+            .style({
+              "fill": this.get('graphLayout.backmapColor')
+            });
+        }
+      });
+
+    backmap
       .selectAll("path.land")
       .data(this.get('base'))
       .enterUpdate({
@@ -509,6 +524,24 @@ export default Ember.Component.extend({
 
     /* borders */
     d3l.select("g.borders")
+      .selectAll("path.linesUp")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("linesUp", true);
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
+            .attr("clip-path", `url(#border-square-clip)`)
+            .style({
+              "stroke-width": 1,
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
+      });
+
+    d3l.select("g.borders")
       .selectAll("path.borders")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -544,6 +577,8 @@ export default Ember.Component.extend({
             });
         }
       });
+
+    
 
   }.observes('graphLayout.backmapColor', 'graphLayout.showBorders', 'graphLayout.stroke'),
   

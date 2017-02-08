@@ -109,12 +109,14 @@ var Basemap = Struct.extend({
           land: topojson.merge(j, partition.right),
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
           lands: topojson.feature(j, j.objects.poly),
+          backLands: j.objects['poly-down'] && topojson.feature(j, j.objects['poly-down']),
           borders: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) {
               return !a.properties || a.properties.featurecla === "International";
             }),
           bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
               return a.properties && a.properties.featurecla === "Disputed"; 
             }),
+          linesUp: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up']),
           centroids: topojson.feature(j, j.objects.centroid)
         };
     });

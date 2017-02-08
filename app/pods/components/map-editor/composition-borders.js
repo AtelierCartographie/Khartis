@@ -27,22 +27,25 @@ export default Ember.Mixin.create({
     let sel = this.d3l().select("g.composition-borders")
       .attr("transform", `translate(${this.get('graphLayout.tx')*this.getSize().w}, ${this.get('graphLayout.ty')*this.getSize().h})`)
       .selectAll("g")
-      .data(this.get('projector').projections);
+      .data(this.get('projector').projections)
+      .enterUpdate({
+        enter: (sel) => {
+          let g = sel.append("g");
 
-    sel.select("path")
-      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) );
+          g.append("path")
+            .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) )
+            .style("stroke", this.get('graphLayout.gridColor'))
+            .style("fill", "white");
 
-    sel.enter()
-      .append("g")
-      .append("path")
-      .attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) )
-      .style("stroke", this.get('graphLayout.gridColor'));
-
-    sel.exit().remove();
-
+          return g;
+        },
+        update: (sel) => {
+          return sel.select("path").attr("d", d => path(this.bboxToMultiLineString(d.instance.bboxPx, d.borders)) );
+        }
+      });
   },
 
-  bboxToMultiLineString(bbox, borders) {
+  bboxToMultiLineString(bbox, borders, type="MultiLineString") {
 
     let coordinates = [];
 
