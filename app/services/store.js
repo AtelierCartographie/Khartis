@@ -44,7 +44,7 @@ var Store = Ember.Service.extend({
       let json = JSON.stringify(project),
           blob = new Blob([LZString.compressToBase64(json)], {type: "application/octet-stream"});
 
-      saveAs(blob, "Projet-Khartis.lzs");
+      saveAs(blob, "Projet-Khartis.kh");
     },
 
     loadFromFile(data) {

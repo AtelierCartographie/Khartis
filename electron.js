@@ -69,10 +69,12 @@ app.on('ready', function onReady() {
             click: () => {
               mainWindow.webContents.send('exportProject');
             },
+            accelerator: 'Command+S',
             enabled: false
           },
           {
             label: 'Open',
+            accelerator: 'Command+O',
             click: () => {
               dialog.showOpenDialog(mainWindow, {
                 properties: ['openFile']

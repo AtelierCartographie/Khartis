@@ -91,7 +91,7 @@
     "extend-info": null,
     "extra-resource": null,
     "helper-bundle-id": null,
-    "icon": null,
+    "icon": "public/assets/icons/khartis",
     "ignore": null,
     "out": null,
     "osx-sign": {
