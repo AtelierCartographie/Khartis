@@ -2,8 +2,8 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'mapp',
-    podModulePrefix: 'mapp/pods',
+    modulePrefix: 'khartis',
+    podModulePrefix: 'khartis/pods',
     environment: environment,
     rootURL: process.env.EMBER_CLI_ELECTRON ? '' : '/',
     locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',

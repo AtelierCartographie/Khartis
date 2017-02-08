@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import d3lper from 'mapp/utils/d3lper';
-import PatternMaker from 'mapp/utils/pattern-maker';
-import SymbolMaker from 'mapp/utils/symbol-maker';
-import ValueMixin from 'mapp/models/mapping/mixins/value';
+import d3lper from 'khartis/utils/d3lper';
+import PatternMaker from 'khartis/utils/pattern-maker';
+import SymbolMaker from 'khartis/utils/symbol-maker';
+import ValueMixin from 'khartis/models/mapping/mixins/value';
 import TextEditor from './text-editor/component';
-import {compressIntervals} from 'mapp/utils/math';
+import {compressIntervals} from 'khartis/utils/math';
 
 export default Ember.Mixin.create({
   

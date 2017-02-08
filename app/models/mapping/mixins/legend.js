@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import {insideInterval, nestedMeans} from 'mapp/utils/math';
+import {insideInterval, nestedMeans} from 'khartis/utils/math';
 import ValueMixins from './value';
-import {compressIntervals} from 'mapp/utils/math';
+import {compressIntervals} from 'khartis/utils/math';
 
 let LegendMixin = Ember.Mixin.create({
 

@@ -1,6 +1,6 @@
 import WrapperAbstract from '../-abstract/component';
-import Colorbrewer from 'mapp/utils/colorbrewer';
-import PatternMaker from 'mapp/utils/pattern-maker';
+import Colorbrewer from 'khartis/utils/colorbrewer';
+import PatternMaker from 'khartis/utils/pattern-maker';
 /* global Em */
 
 export default WrapperAbstract.extend({

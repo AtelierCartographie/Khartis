@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Struct from 'mapp/models/struct';
+import Struct from 'khartis/models/struct';
 import SurfaceVisualization from './surface';
 import SymbolVisualization from './symbol';
 import TextVisualization from './text';

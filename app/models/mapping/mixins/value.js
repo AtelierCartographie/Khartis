@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
-import PatternMaker from 'mapp/utils/pattern-maker';
-import Colorbrewer from 'mapp/utils/colorbrewer';
-import config from 'mapp/config/environment';
+import PatternMaker from 'khartis/utils/pattern-maker';
+import Colorbrewer from 'khartis/utils/colorbrewer';
+import config from 'khartis/config/environment';
 /* global d3 */
 
 let DataMixin = Ember.Mixin.create({

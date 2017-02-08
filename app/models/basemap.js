@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import Struct from './struct';
 import Projection from './projection';
-import config from 'mapp/config/environment';
-import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
-import ab2string from 'mapp/utils/ab2string';
+import config from 'khartis/config/environment';
+import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
+import ab2string from 'khartis/utils/ab2string';
 import CSV from 'npm:csv-string';
-import {csvHeaderToJs} from 'mapp/utils/csv-helpers';
+import {csvHeaderToJs} from 'khartis/utils/csv-helpers';
 import topojson from 'npm:topojson';
 
 var Basemap = Struct.extend({

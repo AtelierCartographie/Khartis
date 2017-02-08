@@ -1,7 +1,7 @@
 {
-  "name": "mapp",
+  "name": "khartis",
   "version": "0.0.0",
-  "description": "Small description for mapp goes here",
+  "description": "Small description for khartis goes here",
   "private": true,
   "directories": {
     "doc": "doc",

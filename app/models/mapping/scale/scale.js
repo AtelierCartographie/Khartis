@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import Struct from 'mapp/models/struct';
-import {insideInterval, nestedMeans} from 'mapp/utils/math';
+import Struct from 'khartis/models/struct';
+import {insideInterval, nestedMeans} from 'khartis/utils/math';
 
 const CONTRASTS = {
   0: 1/4,

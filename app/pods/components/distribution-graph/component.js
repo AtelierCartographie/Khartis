@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import PatternMaker from 'mapp/utils/pattern-maker';
+import PatternMaker from 'khartis/utils/pattern-maker';
 
 const DISPLAY_METHOD = {
   CLASSES: "classes",

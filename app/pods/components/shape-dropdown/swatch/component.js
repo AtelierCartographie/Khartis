@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import SymbolMaker from 'mapp/utils/symbol-maker';
-import d3lper from 'mapp/utils/d3lper';
+import SymbolMaker from 'khartis/utils/symbol-maker';
+import d3lper from 'khartis/utils/d3lper';
 
 const MARGIN = 4;
 

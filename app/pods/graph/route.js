@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import Project from 'mapp/models/project'; 
-import Projection from 'mapp/models/projection'; 
-import config from 'mapp/config/environment';
+import Project from 'khartis/models/project'; 
+import Projection from 'khartis/models/projection'; 
+import config from 'khartis/config/environment';
 
 export default Ember.Route.extend({
     
@@ -49,6 +49,20 @@ export default Ember.Route.extend({
     
     setupController(controller, model) {
       this._super(controller, model);
+    },
+
+    activate() {
+      if (window.process) {
+        const {ipcRenderer} = require('electron');
+        ipcRenderer.send("enter-graph-route");
+      }
+    },
+
+    deactivate() {
+      if (window.process) {
+        const {ipcRenderer} = require('electron');
+        ipcRenderer.send("exit-graph-route");
+      }
     },
     
     actions: {

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3lper from  'mapp/utils/d3lper';
+import d3lper from  'khartis/utils/d3lper';
 import d3 from 'd3';
 
 const DRAGGER_SIZE = 14;

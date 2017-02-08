@@ -1,5 +1,5 @@
 import d3 from 'd3';
-import d3lper from 'mapp/utils/d3lper';
+import d3lper from 'khartis/utils/d3lper';
 
 function inside(bbox, x, y) {
   return x >= bbox[0][0] && x <= bbox[1][0]

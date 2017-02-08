@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ab2string from 'mapp/utils/ab2string';
+import ab2string from 'khartis/utils/ab2string';
 /* global $ */
 
 export default Ember.Component.extend({

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import XModal from 'mapp/pods/components/x-modal/component';
+import XModal from 'khartis/pods/components/x-modal/component';
 
 var ConfirmDialog = XModal.extend({
 

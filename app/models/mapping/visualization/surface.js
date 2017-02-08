@@ -1,4 +1,4 @@
-import Struct from 'mapp/models/struct';
+import Struct from 'khartis/models/struct';
 
 let SurfaceVisualization = Struct.extend({
   

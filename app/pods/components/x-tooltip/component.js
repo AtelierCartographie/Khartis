@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import snap from 'mapp/utils/snap';
+import snap from 'khartis/utils/snap';
 /* global $ */
 
 var positionsMap = {

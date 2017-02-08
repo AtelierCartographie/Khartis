@@ -1,4 +1,4 @@
-import {isFirefox} from 'mapp/utils/browser-check';
+import {isFirefox} from 'khartis/utils/browser-check';
 
 let _buildPatternFn = function(id, size, drawer) {
   

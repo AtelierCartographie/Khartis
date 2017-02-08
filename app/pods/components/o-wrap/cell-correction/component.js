@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import WrapperAbstract from '../-abstract/component';
-import {matcher as geoMatcher} from 'mapp/utils/geo-matcher';
+import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
 /* global Em */
 
 export default WrapperAbstract.extend({

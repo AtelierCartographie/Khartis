@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Project from 'mapp/models/project'; 
+import Project from 'khartis/models/project'; 
 
 export default Ember.Route.extend({
   

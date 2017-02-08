@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import Project from 'mapp/models/project';
-import {DataStruct} from 'mapp/models/data';
+import Project from 'khartis/models/project';
+import {DataStruct} from 'khartis/models/data';
 
 export default Ember.Route.extend({
 

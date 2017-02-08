@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import Project from 'mapp/models/project';
+import Project from 'khartis/models/project';
 /* global Em */
 
-const NS = "mapp-project",
+const NS = "khartis-project",
       SIZE = 1,
       MAX = 30,
       FREEZE_EVT = "freeze",
@@ -40,7 +40,6 @@ var Store = Ember.Service.extend({
 
     saveAsFile() {
       let project = Object.assign({}, this.get('projects')[0]);
-      project._uuid = Project._nextId.next().value;
       
       let json = JSON.stringify(project),
           blob = new Blob([LZString.compressToBase64(json)], {type: "application/octet-stream"});
@@ -55,6 +54,7 @@ var Store = Ember.Service.extend({
         try {
           if (json) {
             parsedData = JSON.parse(json);
+            parsedData._uuid = Project._nextId.next().value;
             this.set('projects', Em.A([parsedData]));
             this.set('mounted', {});
             res(parsedData._uuid);

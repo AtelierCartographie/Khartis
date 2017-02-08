@@ -3,7 +3,7 @@
 // TODO: DropDown Ember position param
 
 import Ember from 'ember';
-import snap, {forceUpdate} from 'mapp/utils/snap';
+import snap, {forceUpdate} from 'khartis/utils/snap';
 
 
 export default Ember.Component.extend({

@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import d3lper from 'mapp/utils/d3lper';
-import {isChrome} from 'mapp/utils/browser-check';
-import zoom2 from 'mapp/utils/d3-zoom2';
+import d3lper from 'khartis/utils/d3lper';
+import {isChrome} from 'khartis/utils/browser-check';
+import zoom2 from 'khartis/utils/d3-zoom2';
 
 let zoom;
 

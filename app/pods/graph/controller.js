@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import d3 from 'd3';
-import config from 'mapp/config/environment';
-import GraphLayer from 'mapp/models/graph-layer';
-import Mapping from 'mapp/models/mapping/mapping';
-import FilterFactory from 'mapp/models/mapping/filter/factory';
-import Projection from 'mapp/models/projection';
-import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'mapp/utils/png-utils';
+import config from 'khartis/config/environment';
+import GraphLayer from 'khartis/models/graph-layer';
+import Mapping from 'khartis/models/mapping/mapping';
+import FilterFactory from 'khartis/models/mapping/filter/factory';
+import Projection from 'khartis/models/projection';
+import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
 
 export default Ember.Controller.extend({
   
@@ -516,10 +516,6 @@ export default Ember.Controller.extend({
           Ember.run.debounce(this, this.freeze, 1000);
           break;
       }
-    },
-
-    exportProject() {
-      this.get('store').saveAsFile();
     }
     
   }

@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import CSV from 'npm:csv-string';
-import Project from 'mapp/models/project';
-import {DataStruct} from 'mapp/models/data';
-import Basemap from 'mapp/models/basemap';
-import ab2string from 'mapp/utils/ab2string';
-import config from 'mapp/config/environment';
+import Project from 'khartis/models/project';
+import {DataStruct} from 'khartis/models/data';
+import Basemap from 'khartis/models/basemap';
+import ab2string from 'khartis/utils/ab2string';
+import config from 'khartis/config/environment';
 
 export default Ember.Controller.extend({
   
@@ -107,21 +107,6 @@ export default Ember.Controller.extend({
       this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
     },
 
-    loadExternalProject(data) {
-      this.get('store').loadFromFile(data)
-        .then( res => {
-          this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
-        })
-        .catch( res => {
-          this.get('ModalManager')
-            .show('confirm', Ember.String.capitalize(this.get('i18n').t('project.step1.importPoject.loadError').string),
-              Ember.String.capitalize(this.get('i18n').t('general.error', {count: 1}).string),
-              null,
-              Ember.String.capitalize(this.get('i18n').t('general.cancel').string));
-        })
-        .catch(console.log)
-    },
-    
     loadCsv(text) {
       this.set('model.csv', text);
     },

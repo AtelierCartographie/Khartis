@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
-import PatternMaker from 'mapp/utils/pattern-maker';
+import PatternMaker from 'khartis/utils/pattern-maker';
 
 let shuffleArray = function(array) {
   for (var i = array.length - 1; i > 0; i--) {

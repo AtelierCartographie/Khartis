@@ -7,10 +7,10 @@ import ValueMixins from './mixins/value';
 import CategoryMixins from './mixins/category';
 import LabellingMixins from './mixins/labelling';
 import LegendMixin from './mixins/legend';
-import Colorbrewer from 'mapp/utils/colorbrewer';
+import Colorbrewer from 'khartis/utils/colorbrewer';
 import Rule from './rule';
 import FilterFactory from './filter/factory';
-import PatternMaker from 'mapp/utils/pattern-maker';
+import PatternMaker from 'khartis/utils/pattern-maker';
 
 let Mapping = Struct.extend(LegendMixin, {
   

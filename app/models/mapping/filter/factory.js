@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Struct from 'mapp/models/struct';
+import Struct from 'khartis/models/struct';
 import RangeFilter from './range';
 import CategoryFilter from './category';
 

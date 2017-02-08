@@ -2,11 +2,16 @@
 'use strict';
 
 const electron             = require('electron');
+const {dialog}             = require('electron');
+const {ipcMain}             = require('electron');
 const path                 = require('path');
 const app                  = electron.app;
 const BrowserWindow        = electron.BrowserWindow;
 const dirname              = __dirname || path.resolve(path.dirname());
 const emberAppLocation     = `file://${dirname}/dist/index.html`;
+const Menu                 = electron.Menu;
+const shell                = electron.shell;
+const fs                   = require("fs");
 
 let mainWindow = null;
 
@@ -31,6 +36,66 @@ app.on('ready', function onReady() {
         width: 1360,
         height: 768,
         'min-width': 1024
+    });
+
+    const menuTemplate = [
+      {
+        label: 'Khartis',
+        submenu: [
+          {
+            label: 'About ...',
+            click: () => {
+              shell.openExternal("http://www.sciencespo.fr/cartographie/khartis/");
+            }
+          },
+          {
+            label: 'Wiki',
+            click: () => {
+              shell.openExternal("https://github.com/AtelierCartographie/Khartis/wiki");
+            }
+          },
+          {
+            label: 'Quit',
+            accelerator: 'Command+Q',
+            click: function() { app.quit(); }
+          }
+        ]
+      },
+      {
+        label: 'File',
+        submenu: [
+          {
+            label: 'Save',
+            click: () => {
+              mainWindow.webContents.send('exportProject');
+            },
+            enabled: false
+          },
+          {
+            label: 'Open',
+            click: () => {
+              dialog.showOpenDialog(mainWindow, {
+                properties: ['openFile']
+              }, function(files) {
+                fs.readFile(files[0], 'utf-8', function (err, data) {
+                  mainWindow.webContents.send('importProject', data);
+                });
+              });
+            }
+          }
+        ]
+      }
+    ];
+
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
+
+    ipcMain.on("enter-graph-route", function() {
+      menu.items[1].submenu.items[0].enabled = true;
+    });
+
+    ipcMain.on("exit-graph-route", function() {
+      menu.items[1].submenu.items[0].enabled = false;
     });
 
     delete mainWindow.module;

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3lper from 'mapp/utils/d3lper';
+import d3lper from 'khartis/utils/d3lper';
 
 export default Ember.Mixin.create({
 

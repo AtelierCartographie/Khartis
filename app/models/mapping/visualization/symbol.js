@@ -1,5 +1,5 @@
-import Struct from 'mapp/models/struct';
-import config from 'mapp/config/environment';
+import Struct from 'khartis/models/struct';
+import config from 'khartis/config/environment';
 
 let SymbolVisualization = Struct.extend({
   
