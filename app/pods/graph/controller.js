@@ -221,6 +221,7 @@ export default Ember.Controller.extend({
       {ns: "kis", attr: "height", fn: null},
       {ns: "kis", attr: "width", fn: null}
     ];
+
     if (compatibility.illustrator) {
       khartisAttrs.push({
         ns: "i",
@@ -233,6 +234,7 @@ export default Ember.Controller.extend({
 
       d3Node.select(".legend").attr("i:i:layer", "yes").attr("id", "legend");
       d3Node.select(".outer-map").attr("i:i:layer", "yes").attr("id", "outerMap");
+      d3Node.selectAll("*[display='none']").remove();
 
       //wrap nodes
       let wrapper = d3Node.append("g")

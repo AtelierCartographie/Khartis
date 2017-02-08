@@ -130,7 +130,7 @@ export default Ember.Component.extend({
       .attr("clip-path", `url(#clip)`);
     
     let backMap = mapG.append("g")
-			.classed("backmap", true);
+      .attr("id", "backmap");
       
     backMap.append("use")
       .classed("sphere", true);
@@ -139,7 +139,7 @@ export default Ember.Component.extend({
       .classed("grid", true);
       
 		let layers = mapG.append("g")
-			.classed("layers", true);
+      .attr("id", "layers");
     
     let bordersMap = layers.append("g")
       .classed("borders", true)
@@ -386,7 +386,7 @@ export default Ember.Component.extend({
 
     let layers = this.get('graphLayers');
 
-    this.d3l().select(".layers")
+    this.d3l().select("#layers")
       .selectAll(".layer, g.borders")
       .sort((a,b) => {
           if (a.isBorderLayer && b.get('mapping.visualization.type') === "surface") {
@@ -407,8 +407,8 @@ export default Ember.Component.extend({
   
   drawGrid: function() {
      
-    let sphere = this.d3l().select("g.backmap").selectAll("use.sphere"),
-        grid = this.d3l().select("g.backmap").selectAll("use.grid");
+    let sphere = this.d3l().select("#backmap").selectAll("use.sphere"),
+        grid = this.d3l().select("#backmap").selectAll("use.grid");
 
     sphere.style({
       "fill": "none",
@@ -439,7 +439,7 @@ export default Ember.Component.extend({
    drawBackmap: function() {
 
     let d3l = this.d3l(),
-        backmap = d3l.select("g.backmap");
+        backmap = d3l.select("#backmap");
 
     backmap
       .selectAll("path.land")
@@ -559,7 +559,7 @@ export default Ember.Component.extend({
        .style("opacity", d => d.get('opacity'));
     };
     
-    let sel = this.d3l().select("g.layers")
+    let sel = this.d3l().select("#layers")
       .selectAll("g.layer")
       .data(data, d => d._uuid)
       .call(bindAttr);
