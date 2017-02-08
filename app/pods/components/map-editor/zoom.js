@@ -66,7 +66,7 @@ export default Ember.Mixin.create({
         "kis:kis:ty": translate[1],
         "kis:kis:s": scale
       })
-      .transition().duration(250).ease("linear")
+      .transition().duration(240).ease("linear")
       .attr({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       })
@@ -75,7 +75,7 @@ export default Ember.Mixin.create({
         if (mapG[0][0].__transition__.count > 1) return;
 
         mapG.attr("transform", null)
-          .selectAll("g.layers .shape")
+          .selectAll("#layers .shape")
           .attr("transform", null);
         
         this.get('graphLayout').beginPropertyChanges();
@@ -95,7 +95,7 @@ export default Ember.Mixin.create({
       });
     
     /*if (isChrome()) { //désactivé car marche mal
-      mapG.selectAll("g.layers .shape").each(function() {
+      mapG.selectAll("#layers .shape").each(function() {
         
         let el = d3.select(this),
           elBox = el.node().getBBox(),
