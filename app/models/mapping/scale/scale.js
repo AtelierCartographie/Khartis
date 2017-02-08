@@ -20,7 +20,6 @@ let Scale = Struct.extend({
   usesInterval: null,
   
   diverging: function() {
-    console.log(this.get('valueBreak'));
     return this.get('valueBreak') != null && !isNaN(this.get('valueBreak'));
   }.property('valueBreak'),
   

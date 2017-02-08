@@ -85,7 +85,6 @@ var Store = Ember.Service.extend({
         let project = this.get('mounted')[uuid] ?
           this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
         if (project) {
-          console.log(project);
           this.startVersioning(project);
           this.get('mounted')[uuid] = project;
           Project.restore(project).then( p => res(p) );

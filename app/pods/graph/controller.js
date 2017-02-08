@@ -6,6 +6,7 @@ import Mapping from 'khartis/models/mapping/mapping';
 import FilterFactory from 'khartis/models/mapping/filter/factory';
 import Projection from 'khartis/models/projection';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
+import {isSafari} from 'khartis/utils/browser-check';
 
 export default Ember.Controller.extend({
   
@@ -87,7 +88,7 @@ export default Ember.Controller.extend({
 
   exportSVG(targetIllustrator) {
     let compatibility = targetIllustrator ? {illustrator: true} : undefined,
-        blob = new Blob([this.exportAsHTML(compatibility)], {type: "image/svg+xml"});
+        blob = new Blob([this.exportAsHTML(compatibility)], {type: isSafari() ? "application/octet-stream" : "image/svg+xml"});
     saveAs(blob, "export_khartis.svg");
   },
 
@@ -157,7 +158,7 @@ export default Ember.Controller.extend({
 
             //tracePNGChunks(pngBuffer);
 
-          saveAs(new Blob([pngBuffer], {type: "image/png"}), "export_khartis.png");
+          saveAs(new Blob([pngBuffer], {type: isSafari() ? "application/octet-stream" :  "image/png"}), "export_khartis.png");
           DOMURL.revokeObjectURL(url);
 
         };
