@@ -307,6 +307,29 @@ export default Ember.Component.extend({
     let path = d3.geo.path(),
         proj = idx ? this.projectionFor(idx) : this.get('projector');
     
+    /*if (proj.bboxPx) {
+      let bbox = d3lper.scaleCoords(this.get('graphLayout.zoom'), proj.bboxPx[0], proj.bboxPx[1]),
+          tx = this.get('graphLayout.tx')*this.getSize().w,
+          ty = this.get('graphLayout.ty')*this.getSize().h;
+      bbox = [
+        d3lper.sumCoords([tx, ty], bbox[0]),
+        d3lper.sumCoords([tx, ty], bbox[1])
+      ];
+
+      let clip = d3.geo.clipExtent(bbox);
+      let affineT = d3.geo.transform({
+          point: function(x, y) { console.log(x, y); return this.stream.point(x, y); },
+        })
+      var proj_then_clip = {
+        stream: function(s) {
+          return proj.stream(clip.stream(affineT.stream(s))); 
+        }
+      };
+      path.projection(proj_then_clip);
+    }
+    else {
+      path.projection(proj);
+    }*/
     path.projection(proj);
     
     return path;
@@ -338,19 +361,24 @@ export default Ember.Component.extend({
         precision = this.get('graphLayout.precision'),
         defs = this.d3l().select("defs");
     
-    /*defs.select("#sphere")
-      .datum({type: "Sphere"})
-      .attr("d", path);*/
-    
-    /*defs.select("#grid")
-      .datum(d3.geo.graticule())
-      .attr("d", path)
-      .attr("clip-path", `url(#clip)`);*/
+    if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
 
-    /*defs.select("#clip use")
-      .attr("xlink:href", `#sphere`);*/
+      defs.select("#sphere")
+        .datum({type: "Sphere"})
+        .attr("d", path);
+    
+      defs.select("#grid")
+        .datum(d3.geo.graticule())
+        .attr("d", path)
+        .attr("clip-path", `url(#clip)`);
+
+      defs.select("#clip use")
+        .attr("xlink:href", `#sphere`);
+    
+      this.drawGrid();
+
+    }
       
-    this.drawGrid();
     this.drawBackmap();
     this.drawLayers();
 			
@@ -446,7 +474,9 @@ export default Ember.Component.extend({
       .data(this.get('base'))
       .enterUpdate({
         enter: function(sel) {
-          return sel.append("path").classed("backland", true);
+          return sel.append("path").classed("backland", true)
+            .attr("id","backland")
+            .attr("mask", d => `url(#composition-mask-${d.projection})`);
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.backLands) )
@@ -461,7 +491,8 @@ export default Ember.Component.extend({
       .data(this.get('base'))
       .enterUpdate({
         enter: function(sel) {
-          return sel.append("path").classed("land", true);
+          return sel.append("path").classed("land", true)
+            .attr("id","land");
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
@@ -528,11 +559,12 @@ export default Ember.Component.extend({
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
         enter: function(sel) {
-          return sel.append("path").classed("linesUp", true);
+          return sel.append("path").classed("linesUp", true)
+            //.attr("clip-path", d => `url(#composition-clip-${d.projection})`);
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
-            .attr("clip-path", `url(#border-square-clip)`)
+            //.attr("clip-path", `url(#border-square-clip)`)
             .style({
               "stroke-width": 1,
               "stroke": this.get("graphLayout.stroke"),

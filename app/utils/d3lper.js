@@ -15,6 +15,17 @@ let d3lper = {
     }, [0, 0]);
   },
 
+  subtractCoords(...args) {
+    return args.reverse().reduce( (out, coords) => {
+      !coords && (coords = [0,0]);
+      return [coords[0] - out[0], coords[1] - out[1]];
+    }, [0, 0]);
+  },
+
+  scaleCoords(scale, ...args) {
+    return args.map( (coords) => [coords[0]*scale, coords[1]*scale] );
+  },
+
   polyPoints(arr) {
     return arr.map(function(d) {
         return d.join(",");

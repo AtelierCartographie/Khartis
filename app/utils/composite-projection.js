@@ -216,7 +216,7 @@ let proj = function() {
 
       let projection = fProjection
         .center(d3lper.sumCoords(center, projConfig.transforms.rotate))
-        .clipExtent([[-width, -width], [2*width, 2*height]])
+        .clipExtent([[-width, -height], [2*width, 2*height]])
         .translate([
           (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
           (fHeight + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(fHeight - margin.get('v'))/2 + zone[0][1]*(fHeight - margin.get('v')) + vOffset
