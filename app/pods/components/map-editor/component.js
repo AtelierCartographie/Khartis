@@ -127,7 +127,7 @@ export default Ember.Component.extend({
       .classed("outer-map", true)
       .append("g")
       .classed("map", true)
-      //.attr("clip-path", `url(#clip)`);
+      .attr("id", "map");
     
     let backMap = mapG.append("g")
       .attr("id", "backmap");
@@ -375,6 +375,8 @@ export default Ember.Component.extend({
       defs.select("#clip use")
         .attr("xlink:href", `#sphere`);
     
+      this.d3l().select("#map").attr("clip-path", `url(#clip)`);
+
       this.drawGrid();
 
     }
