@@ -343,7 +343,8 @@ export default {
     "france reg 2016": "France > régions (2016)",
     "spain prov 2015": "Espagne > provinces (2015)",
     "spain auto 2015": "Espagne > communautés (2015)",
-    "us state 2015": "États-Unis > États (2015)"
+    "us state 2015": "États-Unis > États (2015)",
+    "eu nuts-2 2013": "Europe 2013"
   },
 
   "examples": {

@@ -66,6 +66,24 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "eu nuts-2 2013",
+        sources: [
+          {source: "EU-nuts-2/EU.json", projection: "d3.geo.azimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 0.8]]},
+          {source: "EU-nuts-2/acores.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.8], [0.25, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/canarias.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0.25, 0.8], [0.5, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/guadeloupe.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.25, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/guyane.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.9], [0.75, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/madeira.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.9], [0.25, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/martinique.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.8], [0.75, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-2/mayotte.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.9], [1, 1]], borders: ["t"]},
+          {source: "EU-nuts-2/reunion.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.8], [1, 0.9]], borders: ["t"]}
+        ],
+        dictionary: {
+          source: "EU-dico-NUTS-2-2013.json",
+          identifier: "ID"
+        }
+      },
+      {
         id: "brazil ufe 2015",
         sources: [
           {source: "BR-ufe-2015.json", projection: "d3.geo.polyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
