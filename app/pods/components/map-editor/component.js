@@ -379,6 +379,8 @@ export default Ember.Component.extend({
 
       this.drawGrid();
 
+    } else {
+      this.d3l().select("#map").attr("clip-path", null);
     }
       
     this.drawBackmap();
