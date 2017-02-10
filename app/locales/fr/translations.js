@@ -213,6 +213,7 @@ export default {
           "regular": "intervalles réguliers",
           "mean": "moyennes emboitées",
           "quantile": "quantiles",
+          "standardDeviation": "standard",
           "linear": "aucune"
         }
       },

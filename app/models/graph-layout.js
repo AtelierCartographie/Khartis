@@ -74,7 +74,11 @@ var GraphLayout = Struct.extend({
 	strokeWidth: 1,
 	
 	backgroundColor: "#f8f8f8",
-  backmapColor: "#e0e1e1",
+  backmapColor: "#cfd1d1",
+
+  backlandsColor: function() {
+    return d3.rgb(this.get('backmapColor')).brighter(0.222);
+  }.property('backmapColor'),
   
   showBorders: true,
 

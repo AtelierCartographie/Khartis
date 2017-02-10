@@ -23,6 +23,30 @@ export function nestedMeans(values, classes) {
 
 };
 
+export function standardDeviation(values, classes) {
+  let ext = d3.extent(values),
+      mean = d3.mean(values),
+      theta = d3.deviation(values),
+      even = classes % 2 === 0,
+      lgt = classes-1,
+      intervals = [];
+  if (even) {
+    intervals = Array.from({length: lgt}, (x, i) => {
+      x = mean - theta*(i-(Math.floor(lgt/2)));
+      x = Math.min(Math.max(ext[0], x), ext[1]);
+      return x;
+    });
+  } else {
+    intervals = Array.from({length: lgt}, (x, i) => {
+      x = mean - theta*(i-(Math.floor(lgt/2))) - theta/2;
+      x = Math.min(Math.max(ext[0], x), ext[1]);
+      return x;
+    });
+  }
+  console.log(mean, theta, classes, even, intervals);
+  return intervals.sort(d3.ascending);
+};
+
 export function compressIntervals(intervals) {
   return intervals.reduce( (arr, v) => {
     if (!arr.length || Math.abs(arr[arr.length-1] - v) > 0.0000001) {
