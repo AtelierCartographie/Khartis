@@ -43,7 +43,6 @@ export function standardDeviation(values, classes) {
       return x;
     });
   }
-  console.log(mean, theta, classes, even, intervals);
   return intervals.sort(d3.ascending);
 };
 
