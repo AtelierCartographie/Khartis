@@ -48,7 +48,7 @@ export default {
         "resumeProject": "Das letzte Projekt wiederherstellen",
         "importProject": "Importieren Sie ein Khartis Projekt"
       },
-      "pasteCsv": "Daten aus der Zwischenablage einfügen oder mittels 'Drag & Drop' eine CSV-Datei einspielen",
+      "pasteCsv": "Daten aus der Zwischenablage einfügen oder einfach per 'Drag & Drop' eine CSV-Datei einspielen.",
       "downloadCsvModel": "Download des Modells (.csv)",
       "importPoject": {
         "title": "Khartis Projekt importieren",
@@ -64,15 +64,15 @@ export default {
         "success": "Importvorgang erfolgreich",
         "fatal": "Bearbeiten Sie bitte Ihre CSV-Datei und versuchen Sie es dann noch einmal.",
         "warningsMessage": {
-          "one": "non-blocking anomaly",
-          "other": "non-blocking anomalies"
+          "one": "Vernachlässigbarer Fehler",
+          "other": "Vernachlässigbare Fehler"
         },
         "warning": {
           "trim": "Wir haben einige Zellen Ihrer CSV-Datei um unnötige Leerzeichen (am Anfang oder Ende eines Wertes) bereinigt."
         },
         "errorsMessage": {
-          "one": "blocking anomaly",
-          "other": "blocking anomalies"
+          "one": "Es ist ein Fehler aufgetreten",
+          "other": "Es sind mehrere Fehler aufgetreten"
         },
         "error": {
           "header.emptyCell": "Die Kopfzeile scheint Fehler zu enthalten: Einige Zellen sind Leer.",
@@ -138,43 +138,43 @@ export default {
     },
     "atlantis": {
       "name": "Atlantis",
-      "description": "Ceci est une description"
+      "description": "(Transverse Mollweide) Pseudozylindrisch, Flächentreu, John Bartholomew (1948) (Quelle: csiss.org, Public Domain, Paul B. Andersson)"
     },
     "briesemeister": {
       "name": "Briesemeister",
-      "description": "Ceci est une description"
+      "description": "Schiefachsige und neu skalierte Version der Hammer Projektion, William A. Briesemeister (1953) (Quelle: kartenprojektionen.de, CC-BY-SA-4.0)"
     },
     "interrupted_goode_homolosine": {
       "name": "Goode H.",
-      "description": "Ceci est une description"
+      "description": "Pseudozylindrisch, Flächentreu. Diese Methode der Kartenprojektion wurde in den 1920er Jahren von John Paul Goode entwickelt. (Quelle: Deutsche Wikipedia, 2017, CC-BY-SA)"
     },
     "lambert_azimuthal_equal_area": {
       "name": "LAEA",
-      "description": "Ceci est une description"
+      "description": "Lambertsche Azimutalprojektion. Die Kartenabbildung ist weder längen- noch winkeltreu. Das Kartenzentrum wird verzerrungsfrei dargestellt, jedoch nimmt die Verzerrung zum Rand hin so stark zu, dass diese Bereiche sehr unanschaulich werden. Deshalb wird meist nur maximal eine Halbkugeloberfläche mit dieser Abbildung wiedergegeben. (Quelle: Deutsche Wikipedia, 2017)"
     },
     "mollweide": {
       "name": "Mollweide",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     },
     "natural_earth": {
       "name": "Natural Earth",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     },
     "orthographic": {
       "name": "Orthographic",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     },
     "plate_carree": {
       "name": "Plate carrée",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     },
     "waterman_butterfly": {
       "name": "Waterman",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     },
     "mercator": {
       "name": "Mercator",
-      "description": "Ceci est une description"
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     }
   },
   
@@ -200,7 +200,7 @@ export default {
       "discretization": {
         "title": "Diskretisierung",
         "tooltip": {
-          "title": "Als Diskretisierung (engl. discretization) bezeichnet man die Gewinnung einer diskreten Teilmenge aus einer kontinuierlichen Daten- oder Informationsmenge. Diskretisierung ist ein zentrales Konzept in der numerischen Mathematik und in der Kartografie, wo damit die Zerlegung räumlicher Kontinua wie Oberflächen etc. in kleine Abschnitte bzw. einzelne Punkte bezeichnet wird. (Deutsche Wikipedia, 2017)"
+          "title": "Als Diskretisierung bezeichnet man die Gewinnung einer diskreten Teilmenge aus einer kontinuierlichen Daten- oder Informationsmenge. Diskretisierung ist ein zentrales Konzept in der numerischen Mathematik und in der Kartografie, wo damit die Zerlegung räumlicher Kontinua wie Oberflächen etc. in kleine Abschnitte bzw. einzelne Punkte bezeichnet wird. (Deutsche Wikipedia, 2017)"
         },
         "method": {
           "unique": "Proportional",
@@ -244,29 +244,29 @@ export default {
       "quanti": {
         "val_surfaces": {
           "name": "Wert > Fläche",
-          "description": "color gradient follows the values"
+          "description": "Farbverlauf entlang der Werte"
         },
         "val_symboles": {
           "name": "Wert > Symbol",
-          "description": "symbols are proportionnal to the values"
+          "description": "Symbolgröße proportional zum Wert"
         }
       },
       "quali": {
         "cat_surfaces": {
           "name": "Kategorie > Fläche",
-          "description": "various colors separate categories"
+          "description": "Farbe je Kategorie"
         },
         "taille_valeur": {
           "name": "Kategorie auf 2 Flächen",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "Die Reihenfolge der Farben entspricht denen der Werte"
         },
         "cat_symboles": {
           "name": "Kategorie > Symbol",
-          "description": "symbols separate categories"
+          "description": "Symbol je Kategorie"
         },
         "ordre_symboles": {
           "name": "Kategorie auf 2 Symbole",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "Die Reihenfolge der Symbole entspricht denen der Werte"
         }
       }
     },
@@ -275,13 +275,13 @@ export default {
     },
     "warning": {
       "rule.count": {
-        "title": "non-blocking anomaly",
-        "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
+        "title": "Vernachlässigbarer Fehler",
+        "explenation": "Achtung: Es gibt jetzt mehr als 8 Ebenen. Derart viele Ebenen einzusetzen kann die Klarheit bzw. Lesbarkeit der Karte beeinträchtigen.",
         "help": {
-          "_": "Veuillez vous assurer de visualiser :",
-          "1": "1 / du texte (données nominales)",
-          "2": "2 / des nombres (données ordinales)",
-          "3": "3 / moins de 12 catégories à la fois"
+          "_": "Bitte achten Sie auf:",
+          "1": "1 / den Text (Nominal)",
+          "2": "2 / die Zahlen (Ordinal)",
+          "3": "3 / bis zu insgesamt max. 12 Kategorien"
         }
       }
     },
