@@ -214,6 +214,7 @@ export default {
           "mean": "moyennes emboitées",
           "quantile": "quantiles",
           "standardDeviation": "standardisation",
+          "jenks": "jenks",
           "linear": "aucune"
         }
       },

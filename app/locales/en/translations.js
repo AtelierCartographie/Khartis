@@ -214,6 +214,7 @@ export default {
           "mean": "nested means",
           "quantile": "quantiles",
           "standardDeviation": "standard deviation",
+          "jenks": "jenks",
           "linear": "none"
         }
       },

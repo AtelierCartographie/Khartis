@@ -126,7 +126,7 @@ let DataMixin = Ember.Mixin.create({
     let hl = Math.floor(this.get('values').length/2),
         max;
     if (this.get('scale.intervalType') === "regular" || this.get('scale.intervalType') === "quantile"
-      || this.get('scale.intervalType') === "standardDeviation") {
+      || this.get('scale.intervalType') === "standardDeviation" || this.get('scale.intervalType') === "jenks") {
       max = Math.max(1, hl - 2 + 1);
       return Array.from({length: Math.min(7, max)}, (v, i) => (i+2));
     } else if (this.get('scale.intervalType') === "mean") {
@@ -141,7 +141,7 @@ let DataMixin = Ember.Mixin.create({
   possibleClassesBeforeBreak: function() {
     let lgt = this.get('possibleClasses').indexOf(this.get('scale.classes'));
     if (this.get('scale.intervalType') === "regular" || this.get('scale.intervalType') === "quantile"
-      || this.get('scale.intervalType') === "standardDeviation") {
+      || this.get('scale.intervalType') === "standardDeviation" || this.get('scale.intervalType') === "jenks") {
       return Array.from({length: lgt+1}, (v, i) => (i+1));
     } else if (this.get('scale.intervalType') === "mean") {
       //return Array.from({length: Math.floor(this.get('scale.classes') / 2) - 1}, (v, i) =>  2 * (i + 1)); désactivé pour le moment

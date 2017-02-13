@@ -4,7 +4,7 @@ import PatternMaker from 'khartis/utils/pattern-maker';
 import SymbolMaker from 'khartis/utils/symbol-maker';
 import ValueMixin from 'khartis/models/mapping/mixins/value';
 import TextEditor from './text-editor/component';
-import {compressIntervals} from 'khartis/utils/math';
+import {compressIntervals} from 'khartis/utils/stats';
 
 export default Ember.Mixin.create({
   

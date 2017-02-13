@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Struct from 'khartis/models/struct';
-import {insideInterval, nestedMeans, standardDeviation} from 'khartis/utils/math';
+import {insideInterval, nestedMeans, standardDeviation, jenks} from 'khartis/utils/stats';
 
 const CONTRASTS = {
   0: 1/4,
@@ -56,6 +56,8 @@ let Scale = Struct.extend({
           return nestedMeans(vals, classes);
         } else if (intervalType === "standardDeviation") {
           return standardDeviation(vals, classes);
+        } else if (intervalType === "jenks") {
+          return jenks(vals, classes);
         }
 
       } else {
