@@ -1,0 +1,1 @@
+Haben Sie bereits darüber nachgedacht in welcher Spalte ihrer Tabelle sich der geographische Bezug findet?
