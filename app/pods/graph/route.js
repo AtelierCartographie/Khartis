@@ -12,6 +12,7 @@ export default Ember.Route.extend({
       this.render("sidebar", {into: "graph", outlet: "sidebar", controller: "graph"});
       this.render("header", {into: "sidebar", outlet: "header" });
       this.render("graph.sidebar", {into: "sidebar", outlet: "sidebar"});
+      this.render("graph.sidebar-bottom", {into: "sidebar", outlet: "sidebar-bottom"});
       this.render("graph.help", {into: "graph.sidebar", outlet: "help"});
 
     },
