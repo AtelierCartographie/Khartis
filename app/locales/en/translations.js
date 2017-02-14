@@ -48,7 +48,7 @@ export default {
         "resumeProject": "Will resume the last project edited on this computer ",
         "importProject": "Import a saved project"
       },
-      "pasteCsv": "past your data here or drop a csv file",
+      "pasteCsv": "paste your data here or drop a csv file",
       "downloadCsvModel": "download model (.csv)",
       "importPoject": {
         "title": "Import Khartis project",
