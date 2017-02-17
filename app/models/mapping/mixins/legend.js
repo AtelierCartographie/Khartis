@@ -17,8 +17,8 @@ let LegendMixin = Ember.Mixin.create({
       } else {
 
         if (this.get('scale.usesInterval')) {
+          intervals = compressIntervals(intervals, this.get('extent'));
           intervals.push(this.get('extent')[0]); //push min
-          intervals = compressIntervals(intervals);
           intervals = intervals.sort(d3.descending);
         } else {
           if (this.get('values').length > 2) {
@@ -37,6 +37,7 @@ let LegendMixin = Ember.Mixin.create({
         }
       }
     }
+    console.log(intervals);
     return intervals;
   },
 
