@@ -345,6 +345,8 @@ export default {
     "france reg 2016": "Frankreich > Regionen (2016)",
     "spain prov 2015": "Spanien > Provinzen (2015)",
     "spain auto 2015": "Spanien > Gemeinden (2015)",
+    "german states 2016": "Deutschland > Länder (2016)",
+    "german districts 2016": "Deutschland > Landkreise (2016)",
     "us state 2015": "USA > Staaten (2015)",
     "eu nuts-2 2013": "Europa (2013)"
   },

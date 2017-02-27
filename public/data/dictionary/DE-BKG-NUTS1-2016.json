@@ -1,0 +1,98 @@
+[
+ {
+   "ADE": "2",
+   "RS": "01",
+   "RS_0": "010000000000",
+   "Name_DE": "Schleswig-Holstein"
+ },
+ {
+   "ADE": "2",
+   "RS": "02",
+   "RS_0": "020000000000",
+   "Name_DE": "Hamburg"
+ },
+ {
+   "ADE": "2",
+   "RS": "03",
+   "RS_0": "030000000000",
+   "Name_DE": "Niedersachsen"
+ },
+ {
+   "ADE": "2",
+   "RS": "04",
+   "RS_0": "040000000000",
+   "Name_DE": "Bremen"
+ },
+ {
+   "ADE": "2",
+   "RS": "05",
+   "RS_0": "050000000000",
+   "Name_DE": "Nordrhein-Westfalen"
+ },
+ {
+   "ADE": "2",
+   "RS": "06",
+   "RS_0": "060000000000",
+   "Name_DE": "Hessen"
+ },
+ {
+   "ADE": "2",
+   "RS": "07",
+   "RS_0": "070000000000",
+   "Name_DE": "Rheinland-Pfalz"
+ },
+ {
+   "ADE": "2",
+   "RS": "08",
+   "RS_0": "080000000000",
+   "Name_DE": "Baden-Württemberg"
+ },
+ {
+   "ADE": "2",
+   "RS": "09",
+   "RS_0": "090000000000",
+   "Name_DE": "Bayern"
+ },
+ {
+   "ADE": "2",
+   "RS": "10",
+   "RS_0": "100000000000",
+   "Name_DE": "Saarland"
+ },
+ {
+   "ADE": "2",
+   "RS": "11",
+   "RS_0": "110000000000",
+   "Name_DE": "Berlin"
+ },
+ {
+   "ADE": "2",
+   "RS": "12",
+   "RS_0": "120000000000",
+   "Name_DE": "Brandenburg"
+ },
+ {
+   "ADE": "2",
+   "RS": "13",
+   "RS_0": "130000000000",
+   "Name_DE": "Mecklenburg"
+ },
+ {
+   "ADE": "2",
+   "RS": "14",
+   "RS_0": "140000000000",
+   "Name_DE": "Sachsen"
+ },
+ {
+   "ADE": "2",
+   "RS": "15",
+   "RS_0": "150000000000",
+   "Name_DE": "Sachsen-Anhalt"
+ },
+ {
+   "ADE": "2",
+   "RS": "16",
+   "RS_0": "160000000000",
+   "Name_DE": "Thüringen"
+ }
+]

@@ -1,0 +1,23 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "02", "RS_0": "020000000000", "GEN": "Hamburg" }, "geometry": { "type": "Point", "coordinates": [ 10.011145909929327, 53.547270655855996 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "03", "RS_0": "030000000000", "GEN": "Niedersachsen" }, "geometry": { "type": "Point", "coordinates": [ 9.168132950962447, 52.765689003007317 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "04", "RS_0": "040000000000", "GEN": "Bremen" }, "geometry": { "type": "Point", "coordinates": [ 8.742528469270679, 53.197441986673098 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "05", "RS_0": "050000000000", "GEN": "Nordrhein-Westfalen" }, "geometry": { "type": "Point", "coordinates": [ 7.553404658395331, 51.477876508918762 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "06", "RS_0": "060000000000", "GEN": "Hessen" }, "geometry": { "type": "Point", "coordinates": [ 9.026413135989152, 50.599414900923563 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "07", "RS_0": "070000000000", "GEN": "Rheinland-Pfalz" }, "geometry": { "type": "Point", "coordinates": [ 7.452094070399101, 49.911304605804396 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "08", "RS_0": "080000000000", "GEN": "Baden-Württemberg" }, "geometry": { "type": "Point", "coordinates": [ 9.042513474324178, 48.540226584383468 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "09", "RS_0": "090000000000", "GEN": "Bayern" }, "geometry": { "type": "Point", "coordinates": [ 11.428296210308138, 48.938639655895699 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "10", "RS_0": "100000000000", "GEN": "Saarland" }, "geometry": { "type": "Point", "coordinates": [ 6.951801732390164, 49.384246024684579 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "11", "RS_0": "110000000000", "GEN": "Berlin" }, "geometry": { "type": "Point", "coordinates": [ 13.402193043356938, 52.501391558975776 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "12", "RS_0": "120000000000", "GEN": "Brandenburg" }, "geometry": { "type": "Point", "coordinates": [ 13.403759390524632, 52.468924413577788 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "13", "RS_0": "130000000000", "GEN": "Mecklenburg-Vorpommern" }, "geometry": { "type": "Point", "coordinates": [ 12.532047814778721, 53.75420049486732 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "14", "RS_0": "140000000000", "GEN": "Sachsen" }, "geometry": { "type": "Point", "coordinates": [ 13.345605204430401, 51.052809633625962 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "15", "RS_0": "150000000000", "GEN": "Sachsen-Anhalt" }, "geometry": { "type": "Point", "coordinates": [ 11.702485627224549, 52.00920497790424 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "16", "RS_0": "160000000000", "GEN": "Thüringen" }, "geometry": { "type": "Point", "coordinates": [ 11.029113985324704, 50.903518172893975 ] } },
+{ "type": "Feature", "properties": { "ADE": 2, "RS": "01", "RS_0": "010000000000", "GEN": "Schleswig-Holstein" }, "geometry": { "type": "Point", "coordinates": [ 9.816357802502544, 54.18335992423723 ] } }
+]
+}
