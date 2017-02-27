@@ -94,11 +94,11 @@ var GraphLayout = Struct.extend({
 
   canDisplayGrid: function() {
     return !this.get('projection.isComposite');
-  }.property('projection.isComposite'),
+  }.property('projection', 'projection.isComposite'),
 
   canDisplaySphere: function() {
     return !this.get('projection.isComposite');
-  }.property('projection.isComposite'),
+  }.property('projection', 'projection.isComposite'),
 	
   tx: 0,
   ty: 0,

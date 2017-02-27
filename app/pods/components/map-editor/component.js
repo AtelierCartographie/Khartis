@@ -347,7 +347,7 @@ export default Ember.Component.extend({
         defs = this.d3l().select("defs");
     
     if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
-
+      
       defs.select("#sphere")
         .datum({type: "Sphere"})
         .attr("d", path);
