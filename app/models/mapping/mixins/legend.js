@@ -37,7 +37,6 @@ let LegendMixin = Ember.Mixin.create({
         }
       }
     }
-    console.log(intervals);
     return intervals;
   },
 

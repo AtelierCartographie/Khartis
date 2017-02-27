@@ -741,6 +741,7 @@ export default Ember.Component.extend({
     };
 
     d3Layer.classed("surface", true);
+    d3Layer.classed("symbol", false);
     d3Layer.selectAll("*:not(.surface)").remove();
     let sel = d3Layer.selectAll(".feature")
       .data(data)
@@ -828,6 +829,7 @@ export default Ember.Component.extend({
     };
 
     d3Layer.classed("surface", false);
+    d3Layer.classed("symbol", true);
     d3Layer.selectAll("*:not(.symbol)").remove();
     
     let centroidSel = d3Layer
