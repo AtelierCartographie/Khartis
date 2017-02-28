@@ -81,7 +81,41 @@ module.exports = function(environment) {
         dictionary: {
           source: "EU-dico-NUTS-2-2013.json",
           identifier: "ID"
-        }
+        },
+        examples: [
+          {
+            id: "eu_nuts2-travail",
+            source: "eu-nuts2-travail.csv"
+          },
+          {
+            id: "eu_nuts2-agriculture",
+            source: "eu-nuts2-agriculture.csv"
+          },
+        ]
+      },
+      {
+        id: "eu nuts-3 2013",
+        sources: [
+          {source: "EU-nuts-3/EU.json", projection: "d3.geo.azimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 0.8]]},
+          {source: "EU-nuts-3/acores.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0, 0.8], [0.25, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/canarias.json", projection: "d3.geo.mercator()", scale: 0.8, zoning: [[0.25, 0.8], [0.5, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/guadeloupe.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.25, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/guyane.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.9], [0.75, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/madeira.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0, 0.9], [0.25, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/martinique.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.5, 0.8], [0.75, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts-3/mayotte.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.9], [1, 1]], borders: ["t"]},
+          {source: "EU-nuts-3/reunion.json", projection: "d3.geo.mercator()", scale: 0.6, zoning: [[0.75, 0.8], [1, 0.9]], borders: ["t"]}
+        ],
+        dictionary: {
+          source: "EU-dico-NUTS-3-2013.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "eu_nuts3-pop",
+            source: "eu-nuts3-pop.csv"
+          },
+        ]
       },
       {
         id: "brazil ufe 2015",

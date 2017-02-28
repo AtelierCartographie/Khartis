@@ -363,7 +363,8 @@ export default {
     "spain prov 2015": "Spain > provinces (2015)",
     "spain auto 2015": "Spain > communities (2015)",
     "us state 2015": "United States > States (2015)",
-    "eu nuts-2 2013": "Europe 2013"
+    "eu nuts-2 2013": "Europe > nuts 2 (2013)",
+    "eu nuts-3 2013": "Europe > nuts 3 (2013)"
   },
 
   "examples": {
@@ -380,7 +381,10 @@ export default {
     "fr_reg2016-poverty": "Poverty (2013)",
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
-    "us_state-pop": "Population (2010-2015)"
+    "us_state-pop": "Population (2010-2015)",
+    "eu_nuts2-travail": "Average hours worked per week (2015)",
+    "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
+    "eu_nuts3-pop": "Population density (2015)"
   }
   
 };
