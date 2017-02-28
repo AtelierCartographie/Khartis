@@ -79,6 +79,8 @@ export default {
           "oneColumn": "une seule colonne a été trouvée",
           "colNumber": "csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
         },
+        "noError": "aucune erreur détectée",
+        "correct": "corriger",
         "rowCount": {
           "one": "ligne importée",
           "other": "lignes importées"
@@ -276,6 +278,7 @@ export default {
     "warning": {
       "rule.count": {
         "title": "anomalie non bloquante",
+        "about": "en savoir plus",
         "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
         "help": {
           "_": "Veuillez vous assurer de visualiser :",

@@ -96,7 +96,7 @@
 
                     <li class="{{if (x-eq editedColumn col) 'selected'}} {{if col.incorrectCells.length 'clickable'}}" {{action 'editColumn' col}}>
 
-                        {{#x-tooltip message=(if col.inconsistency 'Corriger' 'Aucune erreur détectée') position="right"}}
+                        {{#x-tooltip message=(if col.inconsistency (x-capitalize (t 'project.step2.import.correct')) (x-capitalize (t 'project.step2.import.noError'))) position="right"}}
 
                             <div class="horizontal space-between middle flow">
 
