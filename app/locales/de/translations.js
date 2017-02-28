@@ -79,6 +79,8 @@ export default {
           "oneColumn": "Wir konnten nur eine Spalte identifizieren",
           "colNumber": "CSV-Formatierunsfehler: Zeilen haben eine unterschiedliche Anzahl an Spalten."
         },
+        "noError": "OK",
+        "correct": "Korrektur benötigt",
         "rowCount": {
           "one": "Zeile importiert",
           "other": "Zeilen importiert"
@@ -276,6 +278,7 @@ export default {
     "warning": {
       "rule.count": {
         "title": "Vernachlässigbarer Fehler",
+        "about": "Details",
         "explenation": "Achtung: Es gibt jetzt mehr als 8 Ebenen. Derart viele Ebenen einzusetzen kann die Klarheit bzw. Lesbarkeit der Karte beeinträchtigen.",
         "help": {
           "_": "Bitte achten Sie auf:",
