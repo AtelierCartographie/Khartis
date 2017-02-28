@@ -486,6 +486,10 @@ export default Ember.Controller.extend({
     selectState(state) {
       this.transitionToRoute('graph', this.get('model._uuid'), { queryParams: { currentTab: state }});
     },
+
+    setBlindnessMode(mode) {
+      this.set('model.blindnessMode', mode);
+    },
     
     next() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);

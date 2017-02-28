@@ -25,6 +25,8 @@ let Project = Struct.extend({
 
     report: null,
 
+    blindnessMode: null,
+
     hasLabelling: function() {
       return this.get('labellingLayers') && this.get('labellingLayers').length > 0
        && this.get('labellingLayers').some( ll => ll.get('displayable') );
@@ -58,6 +60,7 @@ let Project = Struct.extend({
         dataSource: this.get('dataSource'),
         author: this.get('author'),
         comment: this.get('comment'),
+        blindnessMode: this.get('blindnessMode'),
         report: this.get('report')
       });
     }
@@ -78,6 +81,7 @@ Project.reopenClass({
           dataSource: json.dataSource,
           author: json.author,
           comment: json.comment,
+          blindnessMode: json.blindnessMode,
           graphLayout: GraphLayout.restore(json.graphLayout, refs)
         });
         return new Promise( (res, rej) => {

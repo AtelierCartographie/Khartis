@@ -32,7 +32,19 @@
       text-decoration: none;
     }
 
-    &:hover {
+    &:not(.title):hover {
+      background-color: darken(greys(white), 5%);
+    }
+
+    &.title {
+      font-size: 0.9em;
+      justify-content: center;
+      padding: 0.2rem 1.2rem 0.2rem 0.5rem;
+      background-color: color(primary);
+      color: white;
+    }
+
+    &.selected {
       background-color: darken(greys(white), 5%);
     }
 

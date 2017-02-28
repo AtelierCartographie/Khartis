@@ -335,6 +335,20 @@ export default {
     "editTitleHere": "editez ici le titre de la légende"
   },
 
+  "blindness": {
+    "menu.title": "Simulation de daltonisme",
+    "type": {
+      "protanopia": "protanopie (rouge-vert)",
+      "protanomaly": "protanomalie (rouge-vert)",
+      "deuteranopia": "deutéranopie (rouge-vert)",
+      "deuteranomaly": "deutéranomalie (rouge-vert)",
+      "tritanopia": "tritanopie (bleu-jaune)",
+      "tritanomaly": "tritanomalie (bleu-jaune)",
+      "achromatopsia": "achromatopsie",
+      "achromatomaly": "achromatomalie"
+    }
+  },
+
   "basemap": {
     "world": "Monde > pays (2016)",
     "brazil ufe 2015": "Brésil > États (2015)",

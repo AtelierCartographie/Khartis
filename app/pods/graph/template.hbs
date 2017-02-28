@@ -54,16 +54,13 @@
                 {{/if}}
             </div>
 
-            <div class="horizontal bottom solid flow control-buttons">
-              <div class="button control-button" {{action 'zoomMoins'}}><i class="iconfont iconfont-minus"></i></div>
-              <div class="button control-button" {{action 'zoomPlus'}}><i class="iconfont iconfont-plus"></i></div>
-              <div class="button control-button zoom" {{action 'resetTranslate'}}><i class="iconfont iconfont-move"></i></div>
-            </div>
+            
           </header>
 
           <div class="fluid" style="position: relative;">
             {{#if model.graphLayout.projection}}
               {{map-editor
+                class=model.blindnessMode
                 graphLayout=model.graphLayout
                 graphLayers=model.graphLayers
                 labellingLayers=model.labellingLayers
@@ -78,6 +75,30 @@
             {{/if}}
 
             {{outlet "configuration-panel"}}
+
+            <div class="vertical half-airy solid flow control-buttons">
+              <div class="bordered button control-button zoom" {{action 'resetTranslate'}}><i class="iconfont iconfont-move"></i></div>
+              <div class="bordered button control-button zoom-plus" {{action 'zoomPlus'}}><i class="iconfont iconfont-plus"></i></div>
+              <div class="bordered button control-button zoom-minus" {{action 'zoomMoins'}}><i class="iconfont iconfont-minus"></i></div>
+              <div class="separator"></div>
+              {{#x-dropdown-plus as |facet|}}
+                {{#facet.trigger class=(concat "bordered button control-button " (if model.blindnessMode 'selected')) triggerPivot="top left" dropdownPivot="top right"}}
+                  <i class="iconfont iconfont-blindness"></i>
+                {{/facet.trigger}}
+                {{#facet.list}}
+                  <li class="title">{{x-capitalize (t 'blindness.menu.title')}}</li>
+                  <li {{action 'setBlindnessMode' null}}>{{x-capitalize (t 'general.none')}}</li>
+                  <li {{action 'setBlindnessMode' 'protanopia'}} class="{{if (x-eq model.blindnessMode 'protanopia') 'selected'}}">{{x-capitalize (t 'blindness.type.protanopia')}}</li>
+                  <li {{action 'setBlindnessMode' 'protanomaly'}} class="{{if (x-eq model.blindnessMode 'protanomaly') 'selected'}}">{{x-capitalize (t 'blindness.type.protanomaly')}}</li>
+                  <li {{action 'setBlindnessMode' 'deuteranopia'}} class="{{if (x-eq model.blindnessMode 'deuteranopia') 'selected'}}">{{x-capitalize (t 'blindness.type.deuteranopia')}}</li>
+                  <li {{action 'setBlindnessMode' 'deuteranomaly'}} class="{{if (x-eq model.blindnessMode 'deuteranomaly') 'selected'}}">{{x-capitalize (t 'blindness.type.deuteranomaly')}}</li>
+                  <li {{action 'setBlindnessMode' 'tritanopia'}} class="{{if (x-eq model.blindnessMode 'tritanopia') 'selected'}}">{{x-capitalize (t 'blindness.type.tritanopia')}}</li>
+                  <li {{action 'setBlindnessMode' 'tritanomaly'}} class="{{if (x-eq model.blindnessMode 'tritanomaly') 'selected'}}">{{x-capitalize (t 'blindness.type.tritanomaly')}}</li>
+                  <li {{action 'setBlindnessMode' 'achromatopsia'}} class="{{if (x-eq model.blindnessMode 'achromatopsia') 'selected'}}">{{x-capitalize (t 'blindness.type.achromatopsia')}}</li>
+                  <li {{action 'setBlindnessMode' 'achromatomaly'}} class="{{if (x-eq model.blindnessMode 'achromatomaly') 'selected'}}">{{x-capitalize (t 'blindness.type.achromatomaly')}}</li>
+                {{/facet.list}}
+              {{/x-dropdown-plus}}
+            </div>
 
           </div>
         </div>
