@@ -1,6 +1,11 @@
 .arrows-navigation {
-  @include flow(horizontal, solid, middle, space-between);
+  @include flow(horizontal, solid, space-between);
   padding: 0.5rem 1rem;
+  margin-bottom: 0.2rem;
+  &.left, &.right {
+    width: 4.5rem;
+    margin-bottom: 0;
+  }
 }
 
 .btn-arrow {

@@ -7,12 +7,3 @@
     </div>
 
 </div><!-- End scrollbar-wrapper -->
-
-<div class="arrows-navigation">
-    {{#x-button class="default btn-prev btn-arrow" action=(action 'back')}}
-        <i class="iconfont iconfont-angle-left"></i> {{!t "general.back"}}
-    {{/x-button}}
-    {{#x-button class="primary btn-next btn-arrow" invisible=(x-not hasNextState) action=(action 'next')}}
-        {{!t "navigation.openMap"}} <i class="iconfont iconfont-angle-right"></i>
-    {{/x-button}}
-</div>

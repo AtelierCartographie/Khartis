@@ -527,8 +527,8 @@ export default Ember.Mixin.create({
           
           if (ValueMixin.Surface.detect(d.get('mapping'))) {
             fn = appendSurfaceIntervalLabel;
+            intervals = compressIntervals(intervals, d.get('mapping.extent'));
             intervals.push(d.get('mapping.extent')[1]); //push max
-            intervals = compressIntervals(intervals);
           } else {
             if (d.get('mapping.scale.usesInterval')) {
               fn = appendSymbolIntervalLabel;

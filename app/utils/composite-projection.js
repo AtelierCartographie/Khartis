@@ -202,7 +202,7 @@ let proj = function() {
           pixelBounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features),
           pixelBoundsWidth = pixelBounds[1][0] - pixelBounds[0][0],
           pixelBoundsHeight = pixelBounds[1][1] - pixelBounds[0][1],
-      
+          
           centerX = pixelBounds[0][0] + pixelBoundsWidth / 2,
           centerY = pixelBounds[0][1] + pixelBoundsHeight / 2,
           center = fProjection.invert([centerX, centerY]),
@@ -211,18 +211,18 @@ let proj = function() {
           heightResolution = ((fHeight - margin.get('v'))*(zone[1][1] - zone[0][1]) ) / pixelBoundsHeight,
 
           r = Math.min(widthResolution, heightResolution),
-          hOffset = (width - fWidth) /2, 
-          vOffset = (height - fHeight) /2; 
-
+          hOffset = (width - fWidth) /2,
+          vOffset = (height - fHeight) /2;
+          
       let projection = fProjection
-        .center(d3lper.sumCoords(center, projConfig.transforms.rotate))
+        .center(d3.geo.rotation(fProjection.rotate())(center))
         .clipExtent([[-width, -height], [2*width, 2*height]])
         .translate([
           (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
           (fHeight + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(fHeight - margin.get('v'))/2 + zone[0][1]*(fHeight - margin.get('v')) + vOffset
         ])
         .precision(this.transforms.precision);
-
+      
       let transforms = Object.assign({}, this.transforms, projConfig.transforms);
       projection.parallels && transforms.parallels && projection.parallels(transforms.parallels);
       projection.clipAngle && transforms.clipAngle && projection.clipAngle(transforms.clipAngle);

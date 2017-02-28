@@ -73,15 +73,17 @@ export default Ember.Component.extend({
     if(this.get('snapped')){
       this.get('snapped').dispose()
     }
+    
+    Ember.run.later(() => {
+      var snapped = snap(this.get('targetEl')[0], this.get('dropdownPivot'))
+        .to(this.get('triggerEl')[0],  this.get('triggerPivot'))
 
-    var snapped = snap(this.get('targetEl')[0], this.get('dropdownPivot'))
-      .to(this.get('triggerEl')[0],  this.get('triggerPivot'))
+      this.set('snapped', snapped);
 
-    this.set('snapped', snapped);
-
-    if (this.get('dropdown.stretch')) {
-      this.get('targetEl').width(this.get('triggerEl').width());
-    }
+      if (this.get('dropdown.stretch')) {
+        this.get('targetEl').width(this.get('triggerEl').width());
+      }
+    });
     
   },
 

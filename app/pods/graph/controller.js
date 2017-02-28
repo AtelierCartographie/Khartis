@@ -237,6 +237,14 @@ export default Ember.Controller.extend({
       d3Node.select(".outer-map").attr("i:i:layer", "yes").attr("id", "outerMap");
       d3Node.selectAll("*[display='none']").remove();
 
+      d3Node.selectAll("g.layer.surface").each( function(d, i) {
+        d3.select(this).attr("id", `viz-surface${i > 0 ? '-'+i: ''}`);
+      });
+
+      d3Node.selectAll("g.layer.symbol").each( function(d, i) {
+        d3.select(this).attr("id", `viz-symbol${i > 0 ? '-'+i: ''}`);
+      });
+
       //wrap nodes
       let wrapper = d3Node.append("g")
             .attr({
@@ -477,6 +485,10 @@ export default Ember.Controller.extend({
     
     selectState(state) {
       this.transitionToRoute('graph', this.get('model._uuid'), { queryParams: { currentTab: state }});
+    },
+
+    setBlindnessMode(mode) {
+      this.set('model.blindnessMode', mode);
     },
     
     next() {

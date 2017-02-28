@@ -335,6 +335,20 @@ export default {
     "editTitleHere": "edit legend's title"
   },
 
+  "blindness": {
+    "menu.title": "Color blindness simulation",
+    "type": {
+      "protanopia": "protanopia (red-green)",
+      "protanomaly": "protanomaly (red-green)",
+      "deuteranopia": "deuteranopia (red-green)",
+      "deuteranomaly": "deuteranomaly (red-green)",
+      "tritanopia": "tritanopia (blue-yellow)",
+      "tritanomaly": "tritanomaly (blue-yellow)",
+      "achromatopsia": "achromatopsia",
+      "achromatomaly": "achromatomaly"
+    }
+  },
+
   "basemap": {
     "world": "World > countries (2016)",
     "brazil ufe 2015": "Brésil > States (2015)",
