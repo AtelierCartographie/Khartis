@@ -124,7 +124,7 @@ export default Ember.Component.extend({
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
     let mapG = d3g.append("g")
-      .classed("outer-map", true)
+      .attr("id", "outerMap", true)
       .append("g")
       .classed("map", true)
       .attr("id", "map");
@@ -142,7 +142,7 @@ export default Ember.Component.extend({
       .attr("id", "layers");
     
     let bordersMap = layers.append("g")
-      .classed("borders", true)
+      .attr("id", "borders")
       .datum({isBorderLayer: true});
     
     if (this.get('hasViewportFeature')) {
@@ -347,7 +347,7 @@ export default Ember.Component.extend({
         defs = this.d3l().select("defs");
     
     if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
-      
+
       defs.select("#sphere")
         .datum({type: "Sphere"})
         .attr("d", path);
@@ -404,7 +404,7 @@ export default Ember.Component.extend({
     let layers = this.get('graphLayers');
 
     this.d3l().select("#layers")
-      .selectAll(".layer, g.borders")
+      .selectAll(".layer, #borders")
       .sort((a,b) => {
           if (a.isBorderLayer && b.get('mapping.visualization.type') === "surface") {
             return 1;
@@ -525,7 +525,7 @@ export default Ember.Component.extend({
       });
 
     /*squares borders*/
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.squares")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -543,7 +543,7 @@ export default Ember.Component.extend({
       });
 
     /* borders */
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.linesUp")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -562,7 +562,7 @@ export default Ember.Component.extend({
         }
       });
 
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.borders")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -580,7 +580,7 @@ export default Ember.Component.extend({
         }
       });
 
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.borders-disputed")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
