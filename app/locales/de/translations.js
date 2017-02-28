@@ -3,7 +3,7 @@ export default {
   "general": {
     "next": "Weiter",
     "back": "Zurück",
-    "submit": "submit",
+    "submit": "Absenden",
     "cancel": "Abbrechen",
     "import": "Import",
     "continue": "OK",
@@ -30,7 +30,7 @@ export default {
     "thousands": ","
   },
 
-  "help.wiki": "Hilfe - Wiki Khartis",
+  "help.wiki": "Hilfe - Wiki Khartis (Aktuell nur in Französisch)",
   
   "project": {
    
@@ -190,7 +190,7 @@ export default {
         "frequencies": "Häufigkeit",
         "values": "Werte",
         "cumulatives": "Kumulativ",
-        "classes": "klassifiziert",
+        "classes": "Klassifiziert",
         "tooltip": {
           "title": "Histogram zur Verteilung der Werte"
         }
@@ -204,7 +204,7 @@ export default {
         },
         "method": {
           "unique": "Proportional",
-          "grouped": "Wertes in Klassen",
+          "grouped": "Werte in Klassen",
           "tooltip": {
             "grouped": "Werte werden in Klassen gruppiert"
           }
