@@ -365,6 +365,7 @@ export default {
     "fr_reg2016-poverty": "Armutsstatistik (2013)",
     "es_prov-pop": "Bevölkerungstatistik (2000-2015)",
     "es_auto-pop": "Bevölkerungstatistik (2000-2015)",
+    "de_district_inhabitants": "Einwohnerzahlen (2016)",
     "us_state-pop": "Bevölkerungstatistik (2010-2015)"
   }
   

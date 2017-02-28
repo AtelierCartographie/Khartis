@@ -378,6 +378,7 @@ export default {
     "fr_reg2016-pop": "Population (2013)",
     "fr_reg2016-poverty": "Pauvreté (2013)",
     "es_prov-pop": "Population (2000-2015)",
+    "de_district_inhabitants": "Population (2016)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)"
   }
