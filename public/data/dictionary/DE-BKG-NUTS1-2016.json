@@ -1,114 +1,97 @@
-[
- {
-   "ADE": "2",
-   "RS": "01",
-   "RS_0": "010000000000",
-   "NUTS_1": "DEF",
-   "Name_DE": "Schleswig-Holstein"
- },
- {
-   "ADE": "2",
-   "RS": "02",
-   "RS_0": "020000000000",
-   "NUTS_1": "DE6",
-   "Name_DE": "Hamburg"
- },
- {
-   "ADE": "2",
-   "RS": "03",
-   "RS_0": "030000000000",
-   "NUTS_1": "DE9",
-   "Name_DE": "Niedersachsen"
- },
- {
-   "ADE": "2",
-   "RS": "04",
-   "RS_0": "040000000000",
-   "NUTS_1": "DE5",
-   "Name_DE": "Bremen"
- },
- {
-   "ADE": "2",
-   "RS": "05",
-   "RS_0": "050000000000",
-   "NUTS_1": "DEA",
-   "Name_DE": "Nordrhein-Westfalen"
- },
- {
-   "ADE": "2",
-   "RS": "06",
-   "RS_0": "060000000000",
-   "NUTS_1": "DE7",
-   "Name_DE": "Hessen"
- },
- {
-   "ADE": "2",
-   "RS": "07",
-   "RS_0": "070000000000",
-   "NUTS_1": "DEB",
-   "Name_DE": "Rheinland-Pfalz"
- },
- {
-   "ADE": "2",
-   "RS": "08",
-   "RS_0": "080000000000",
-   "NUTS_1": "DE1",
-   "Name_DE": "Baden-Württemberg"
- },
- {
-   "ADE": "2",
-   "RS": "09",
-   "RS_0": "090000000000",
-   "NUTS_1": "DE2",
-   "Name_DE": "Bayern"
- },
- {
-   "ADE": "2",
-   "RS": "10",
-   "RS_0": "100000000000",
-   "NUTS_1": "DEC",
-   "Name_DE": "Saarland"
- },
- {
-   "ADE": "2",
-   "RS": "11",
-   "RS_0": "110000000000",
-   "NUTS_1": "DE3",
-   "Name_DE": "Berlin"
- },
- {
-   "ADE": "2",
-   "RS": "12",
-   "RS_0": "120000000000",
-   "NUTS_1": "DE4",
-   "Name_DE": "Brandenburg"
- },
- {
-   "ADE": "2",
-   "RS": "13",
-   "RS_0": "130000000000",
-   "NUTS_1": "DE8",
-   "Name_DE": "Mecklenburg"
- },
- {
-   "ADE": "2",
-   "RS": "14",
-   "RS_0": "140000000000",
-   "NUTS_1": "DED",
-   "Name_DE": "Sachsen"
- },
- {
-   "ADE": "2",
-   "RS": "15",
-   "RS_0": "150000000000",
-   "NUTS_1": "DEE",
-   "Name_DE": "Sachsen-Anhalt"
- },
- {
-   "ADE": "2",
-   "RS": "16",
-   "RS_0": "160000000000",
-   "NUTS_1": "DEG",
-   "Name_DE": "Thüringen"
- }
+  {
+    "RS": "1",
+    "RS_0": "10000000000",
+    "NUTS_1": "DEF",
+    "NAME": "Schleswig-Holstein"
+  },
+  {
+    "RS": "2",
+    "RS_0": "20000000000",
+    "NUTS_1": "DE6",
+    "NAME": "Hamburg"
+  },
+  {
+    "RS": "3",
+    "RS_0": "30000000000",
+    "NUTS_1": "DE9",
+    "NAME": "Niedersachsen"
+  },
+  {
+    "RS": "4",
+    "RS_0": "40000000000",
+    "NUTS_1": "DE5",
+    "NAME": "Bremen"
+  },
+  {
+    "RS": "5",
+    "RS_0": "50000000000",
+    "NUTS_1": "DEA",
+    "NAME": "Nordrhein-Westfalen"
+  },
+  {
+    "RS": "6",
+    "RS_0": "60000000000",
+    "NUTS_1": "DE7",
+    "NAME": "Hessen"
+  },
+  {
+    "RS": "7",
+    "RS_0": "70000000000",
+    "NUTS_1": "DEB",
+    "NAME": "Rheinland-Pfalz"
+  },
+  {
+    "RS": "8",
+    "RS_0": "80000000000",
+    "NUTS_1": "DE1",
+    "NAME": "Baden-Württemberg"
+  },
+  {
+    "RS": "9",
+    "RS_0": "90000000000",
+    "NUTS_1": "DE2",
+    "NAME": "Bayern"
+  },
+  {
+    "RS": "10",
+    "RS_0": "100000000000",
+    "NUTS_1": "DEC",
+    "NAME": "Saarland"
+  },
+  {
+    "RS": "11",
+    "RS_0": "110000000000",
+    "NUTS_1": "DE3",
+    "NAME": "Berlin"
+  },
+  {
+    "RS": "12",
+    "RS_0": "120000000000",
+    "NUTS_1": "DE4",
+    "NAME": "Brandenburg"
+  },
+  {
+    "RS": "13",
+    "RS_0": "130000000000",
+    "NUTS_1": "DE8",
+    "NAME": "Mecklenburg-Vorpommern"
+  },
+  {
+    "RS": "14",
+    "RS_0": "140000000000",
+    "NUTS_1": "DED",
+    "NAME": "Sachsen"
+  },
+  {
+    "RS": "15",
+    "RS_0": "150000000000",
+    "NUTS_1": "DEE",
+    "NAME": "Sachsen-Anhalt"
+  },
+  {
+    "RS": "16",
+    "RS_0": "160000000000",
+    "NUTS_1": "DEG",
+    "NAME": "Thüringen"
+  }
 ]
