@@ -124,7 +124,7 @@ export default Ember.Component.extend({
       .attr("fill", this.get("graphLayout.backgroundColor"));
 		
     let mapG = d3g.append("g")
-      .classed("outer-map", true)
+      .attr("id", "outerMap", true)
       .append("g")
       .classed("map", true)
       .attr("id", "map");
@@ -142,7 +142,7 @@ export default Ember.Component.extend({
       .attr("id", "layers");
     
     let bordersMap = layers.append("g")
-      .classed("borders", true)
+      .attr("id", "borders")
       .datum({isBorderLayer: true});
     
     if (this.get('hasViewportFeature')) {
@@ -292,12 +292,20 @@ export default Ember.Component.extend({
   scaleProjector(projector) {
 
     projector.forEachProjection( projection => {
+      let bbox = d3lper.scaleCoords(this.get('graphLayout.zoom'), projection.bboxPx[0], projection.bboxPx[1]),
+          tx = this.get('graphLayout.tx')*this.getSize().w,
+          ty = this.get('graphLayout.ty')*this.getSize().h;
+      bbox = [
+        d3lper.sumCoords([tx, ty], bbox[0]),
+        d3lper.sumCoords([tx, ty], bbox[1])
+      ];
       projection
       .translate([
           projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx')*this.getSize().w,
           projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')*this.getSize().h
         ])
-      .scale(projection.resolution * this.get('graphLayout.zoom'));
+      .scale(projection.resolution * this.get('graphLayout.zoom'))
+      .clipExtent(bbox);
     });
     
   },
@@ -307,29 +315,6 @@ export default Ember.Component.extend({
     let path = d3.geo.path(),
         proj = idx ? this.projectionFor(idx) : this.get('projector');
     
-    /*if (proj.bboxPx) {
-      let bbox = d3lper.scaleCoords(this.get('graphLayout.zoom'), proj.bboxPx[0], proj.bboxPx[1]),
-          tx = this.get('graphLayout.tx')*this.getSize().w,
-          ty = this.get('graphLayout.ty')*this.getSize().h;
-      bbox = [
-        d3lper.sumCoords([tx, ty], bbox[0]),
-        d3lper.sumCoords([tx, ty], bbox[1])
-      ];
-
-      let clip = d3.geo.clipExtent(bbox);
-      let affineT = d3.geo.transform({
-          point: function(x, y) { console.log(x, y); return this.stream.point(x, y); },
-        })
-      var proj_then_clip = {
-        stream: function(s) {
-          return proj.stream(clip.stream(affineT.stream(s))); 
-        }
-      };
-      path.projection(proj_then_clip);
-    }
-    else {
-      path.projection(proj);
-    }*/
     path.projection(proj);
     
     return path;
@@ -419,7 +404,7 @@ export default Ember.Component.extend({
     let layers = this.get('graphLayers');
 
     this.d3l().select("#layers")
-      .selectAll(".layer, g.borders")
+      .selectAll(".layer, #borders")
       .sort((a,b) => {
           if (a.isBorderLayer && b.get('mapping.visualization.type') === "surface") {
             return 1;
@@ -480,12 +465,12 @@ export default Ember.Component.extend({
         enter: function(sel) {
           return sel.append("path").classed("backland", true)
             .attr("id","backland")
-            .attr("mask", d => `url(#composition-mask-${d.projection})`);
+            //.attr("mask", d => `url(#composition-mask-${d.projection})`);
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.backLands) )
             .style({
-              "fill": this.get('graphLayout.backmapColor')
+              "fill": this.get('graphLayout.backlandsColor')
             });
         }
       });
@@ -540,7 +525,7 @@ export default Ember.Component.extend({
       });
 
     /*squares borders*/
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.squares")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -558,26 +543,26 @@ export default Ember.Component.extend({
       });
 
     /* borders */
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.linesUp")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
         enter: function(sel) {
           return sel.append("path").classed("linesUp", true)
-            //.attr("clip-path", d => `url(#composition-clip-${d.projection})`);
+            //.attr("clip-path", d => `url(#composition-clip-${d.projection})`); //TODO remove
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
             //.attr("clip-path", `url(#border-square-clip)`)
             .style({
-              "stroke-width": 1,
+              "stroke-width": this.get('graphLayout.strokeWidth')+1,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
         }
       });
 
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.borders")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -595,7 +580,7 @@ export default Ember.Component.extend({
         }
       });
 
-    d3l.select("g.borders")
+    d3l.select("#borders")
       .selectAll("path.borders-disputed")
       .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
       .enterUpdate({
@@ -756,6 +741,7 @@ export default Ember.Component.extend({
     };
 
     d3Layer.classed("surface", true);
+    d3Layer.classed("symbol", false);
     d3Layer.selectAll("*:not(.surface)").remove();
     let sel = d3Layer.selectAll(".feature")
       .data(data)
@@ -843,6 +829,7 @@ export default Ember.Component.extend({
     };
 
     d3Layer.classed("surface", false);
+    d3Layer.classed("symbol", true);
     d3Layer.selectAll("*:not(.symbol)").remove();
     
     let centroidSel = d3Layer

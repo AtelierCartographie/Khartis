@@ -1,0 +1,13 @@
+<div class="arrows-navigation left">
+  {{#if model.csv}}
+    {{#x-button class="default btn-prev btn-arrow" action=(action 'back')}}
+        <i class="iconfont iconfont-angle-left"></i>
+    {{/x-button}}
+  {{/if}}
+</div>
+<a href="http://www.sciencespo.fr/cartographie/" class="fluid logo-atelier clickable"></a>
+<div class="arrows-navigation right">
+  {{#x-button class="primary btn-next btn-arrow" disabled=(x-not model.project.geoDef) invisible=hasErrors action=(action 'next')}}
+      <i class="iconfont iconfont-angle-right"></i>
+  {{/x-button}}
+</div>

@@ -96,7 +96,7 @@
 
                     <li class="{{if (x-eq editedColumn col) 'selected'}} {{if col.incorrectCells.length 'clickable'}}" {{action 'editColumn' col}}>
 
-                        {{#x-tooltip message=(if col.inconsistency 'Corriger' 'Aucune erreur détectée') position="right"}}
+                        {{#x-tooltip message=(if col.inconsistency (x-capitalize (t 'project.step2.import.correct')) (x-capitalize (t 'project.step2.import.noError'))) position="right"}}
 
                             <div class="horizontal space-between middle flow">
 
@@ -141,17 +141,10 @@
 
 </div><!-- End scrollbar-wrapper -->
 
+{{#unless model.csv}}
 <div class="arrows-navigation">
-  {{#if model.csv}}
-    {{#x-button class="default btn-prev btn-arrow" action=(action 'back')}}
-        <i class="iconfont iconfont-angle-left"></i>
-    {{/x-button}}
-  {{else}}
-    {{#x-button class="solid import-new-data" action=(action 'back')}}
-        {{x-capitalize (t "project.step2.back")}}
-    {{/x-button}}
-  {{/if}}
-  {{#x-button class="primary btn-next btn-arrow" disabled=(x-not model.project.geoDef) invisible=hasErrors action=(action 'next')}}
-      <i class="iconfont iconfont-angle-right"></i>
+  {{#x-button class="solid import-new-data" action=(action 'back')}}
+      {{x-capitalize (t "project.step2.back")}}
   {{/x-button}}
 </div>
+{{/unless}}

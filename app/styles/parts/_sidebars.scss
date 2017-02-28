@@ -23,16 +23,6 @@
   }
 }
 
-.application-sidebar .sidebar-content .logo-atelier {
-  background-image: url(images/logo-Atelier-NB.svg);
-  background-repeat: no-repeat;
-  height: 70px;
-  background-position: center;
-  background-size: 33%;
-  border-top: 1px solid greys(30%);
-}
-
-
 .sidebar-scroll-wrapper {
   overflow: auto;
   padding: 0 1rem;
@@ -49,7 +39,8 @@
 
 
 .sidebar-content{
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 // Close btn
@@ -60,6 +51,18 @@
   right: 0.5rem;
   cursor:pointer;
   z-index: 2;
+}
+
+.sidebar-bottom {
+  height: 70px;
+  border-top: 1px solid greys(30%);
+  & .logo-atelier {
+    background-image: url(images/logo-Atelier-NB.svg);
+    background-repeat: no-repeat;
+    height: 70px;
+    background-position: center;
+    background-size: 40%;
+  }
 }
 
 .geo-ref-column, .layers-column {

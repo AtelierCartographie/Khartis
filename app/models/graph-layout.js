@@ -77,7 +77,10 @@ var GraphLayout = Struct.extend({
   backmapColor: "#cfd1d1",
 
   backlandsColor: function() {
-    return d3.rgb(this.get('backmapColor')).brighter(0.222);
+    /*let color = d3.rgb(this.get('backmapColor')),
+        contrast = d3lper.yiqColor(color);
+    return contrast === "lighten" ? color.brighter(0.222) : color.darker(0.222);*/
+    return "#e0e1e1";
   }.property('backmapColor'),
   
   showBorders: true,
@@ -91,11 +94,11 @@ var GraphLayout = Struct.extend({
 
   canDisplayGrid: function() {
     return !this.get('projection.isComposite');
-  }.property('projection.isComposite'),
+  }.property('projection', 'projection.isComposite'),
 
   canDisplaySphere: function() {
     return !this.get('projection.isComposite');
-  }.property('projection.isComposite'),
+  }.property('projection', 'projection.isComposite'),
 	
   tx: 0,
   ty: 0,

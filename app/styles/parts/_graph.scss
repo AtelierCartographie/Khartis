@@ -30,23 +30,42 @@
         display: none;
       }
     }
-    
-    .control-buttons {
-      @extend %padded-h;
-      padding-bottom: $gutter / 4;
-      .control-button {
-        border: 1px solid #000;
-        border-radius: 0;
-        line-height: 1em;
-        font-size: 1.8rem;
-        width: 2.6rem;
-        height: 2.6rem;
-        padding: 0.2rem 0.2rem;
-        margin-right: 0.2rem;
-        &.zoom {
-          margin-left: $gutter / 2;
-        }
+  }
+
+  .control-buttons {
+    $size: 2.6rem;;
+    position: absolute;
+    right: $gutter;
+    top: $gutter;
+    width: $size;
+    .control-button {
+      border: 1px solid #000;
+      border-radius: 0;
+      line-height: 1em;
+      font-size: 1.9rem;
+      width: $size;
+      height: $size;
+      padding: 0.21rem 0.21rem;
+      margin-right: 0.2rem;
+      &.zoom-plus {
+        margin-bottom: 0px;
       }
+      &.zoom-minus {
+        margin-top: -1px;
+      }
+      &:hover {
+        background-color: greys(5%);
+      }
+      &.selected {
+        background-color: black;
+        color: white;
+      }
+    }
+    .separator {
+      height: 1px;
+      width: $size/2;
+      margin-left: $size/4;
+      border-top: 1px solid greys(20%);
     }
   }
 
