@@ -33,6 +33,14 @@ I added two types of data both geometries representing administrative regions (i
 
 (A) is the level of 16 federal states ("Länder"), (B) is the more detailed level of departments ("Kreise").
 
+(A) was easily assembled manully through combining various sources (some of the following and Wikipeida).
+
+The dictionary (B) however is much more detailed and based on the following sources: [Eurostat NUTS 2013, Metadata Download, RAMON](http://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_CLS_DLD&StrNom=NUTS_2013L&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC#), via [NUTS on destatis.de](https://www.destatis.de/Europa/DE/MethodenMetadaten/Klassifikationen/UebersichtKlassifikationen_NUTS.html), [Gemeindeverzeichnis on destatis.de](https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html) and [ZENSUS 2011 on destatis.de](https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Administrativ/Aktuell/04Kreise.html)
+
+A special map of PLZ could be integrated after integrating the PLZ values from [Eurostat NUTS-3 <-> PLZ DE](http://ec.europa.eu/eurostat/tercet/flatfiles.do).
+
+Another list of NUTS codes to german region names is contained in this [PDF document](http://www.esf.de/portal/SharedDocs/PDFs/DE/Sonstiges/nuts-klassifikation.pdf?__blob=publicationFile&v=4) published by the ESF.
+
 #### (A) Ländergrenzen ("bkg-vg2500-lan-utm32s-1e4.json") Geometrie (States in Germany)
 
 `properties: {"ADE":2,"RS":"03","RS_0":"030000000000","GEN":"Niedersachsen"}`
