@@ -30,7 +30,7 @@ export default {
     "thousands": ","
   },
 
-  "help.wiki": "Hilfe - Wiki Khartis (Aktuell nur in Französisch)",
+  "help.wiki": "Hilfe - Khartis Wiki (Französisch)",
   
   "project": {
    
@@ -197,7 +197,7 @@ export default {
           "title": "Histogram zur Verteilung der Werte"
         }
       },
-      "title" : "Einstellungen",
+      "title" : "Darstellungsoptionen",
       "symbols": "Symbole",
       "discretization": {
         "title": "Diskretisierung",
@@ -309,8 +309,8 @@ export default {
     },
     "placeholder": {
       "mapTitle": "Kartentitel",
-      "dataSource": "Datenquelle",
-      "author": "Autor*in",
+      "dataSource": "Lizenzhinweise",
+      "author": "Autor/innen",
       "comment": "Kommentar"
     },
     "settings": {
