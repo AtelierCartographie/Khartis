@@ -363,6 +363,7 @@ export default {
     "spain prov 2015": "Spain > provinces (2015)",
     "spain auto 2015": "Spain > communities (2015)",
     "us state 2015": "United States > States (2015)",
+    "eu country 2013": "Europe > States (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
     "eu nuts-3 2013": "Europe > nuts 3 (2013)"
   },
@@ -382,6 +383,8 @@ export default {
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)",
+    "eu_country-energie": "Share of renewable energy in gross final energy consumption (2005-2014)",
+    "eu_country-ecommerce": "Internet purchases by individuals in the 12 months (2004-2016)",
     "eu_nuts2-travail": "Average hours worked per week (2015)",
     "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
     "eu_nuts3-pop": "Population density (2015)"

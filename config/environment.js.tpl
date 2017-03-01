@@ -66,6 +66,26 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "eu country 2013",
+        sources: [
+          {source: "EU-country.json", projection: "d3.geo.azimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "EU-dico-COUNTRY-2013.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "eu_country-energie",
+            source: "eu-country-energie.csv"
+          },
+          {
+            id: "eu_country-ecommerce",
+            source: "eu-country-ecommerce.csv"
+          },
+        ]
+      },
+      {
         id: "eu nuts-2 2013",
         sources: [
           {source: "EU-nuts-2/EU.json", projection: "d3.geo.azimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 0.8]]},
