@@ -12,7 +12,7 @@ export default {
     "close": "Schließen",
     "or": "oder",
     "and": "und",
-    "none": "none",
+    "none": "Keine",
     "download": "Download",
     "loading": "Laden",
     "search": "Bitte wählen",
@@ -338,6 +338,20 @@ export default {
     "editTitleHere": "Legendenüberschrift bearbeiten"
   },
 
+  "blindness": {
+    "menu.title": "Farbblindheitssimulation",
+    "type": {
+      "protanopia": "Protanopia (Rot-Grün)",
+      "protanomaly": "Protanomaly (Rot-Grün)",
+      "deuteranopia": "Deuteranopia (Rot-Grün)",
+      "deuteranomaly": "Deuteranomaly (Rot-Grün)",
+      "tritanopia": "Tritanopia (Blau-Gelb)",
+      "tritanomaly": "Tritanomaly (Blau-Gelb)",
+      "achromatopsia": "Achromatopsia",
+      "achromatomaly": "Achromatomaly"
+    }
+  },
+
   "basemap": {
     "world": "Welt > Länder (2016)",
     "brazil ufe 2015": "Brasilien > Bundesländer (2015)",
@@ -349,7 +363,9 @@ export default {
     "spain prov 2015": "Spanien > Provinzen (2015)",
     "spain auto 2015": "Spanien > Gemeinden (2015)",
     "us state 2015": "USA > Staaten (2015)",
-    "eu nuts-2 2013": "Europa (2013)"
+    "eu country 2013": "Europa > Staaten (2016)",
+    "eu nuts-2 2013": "Europa > Regionen (NUTS-2, 2013)",
+    "eu nuts-3 2013": "Europa > Gemeinden (NUTS-3, 2013)"
   },
 
   "examples": {
@@ -366,7 +382,12 @@ export default {
     "fr_reg2016-poverty": "Armutsstatistik (2013)",
     "es_prov-pop": "Bevölkerungstatistik (2000-2015)",
     "es_auto-pop": "Bevölkerungstatistik (2000-2015)",
-    "us_state-pop": "Bevölkerungstatistik (2010-2015)"
+    "us_state-pop": "Bevölkerungstatistik (2010-2015)",
+    "eu_country-energie": "Anteil erneuerbarer Energien am Brutto-Endenergieverbrauch (2005-2014)",
+    "eu_country-ecommerce": "Internet-Einkäufe von Einzelpersonen innerhalb von 12 Monaten (2004-2016)",
+    "eu_nuts2-travail": "Durchschnittliche Arbeitsstunden pro Woche (2015)",
+    "eu_nuts2-agriculture": "Landwirtschaftliche Fläche nach Größe der landwirtschaftlichen Betriebe (2013)",
+    "eu_nuts3-pop": "Bevölkerungsdichte (2015)"
   }
   
 };
