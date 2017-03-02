@@ -549,13 +549,29 @@ export default Ember.Component.extend({
       .enterUpdate({
         enter: function(sel) {
           return sel.append("path").classed("linesUp", true)
-            //.attr("clip-path", d => `url(#composition-clip-${d.projection})`); //TODO remove
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
-            //.attr("clip-path", `url(#border-square-clip)`)
             .style({
               "stroke-width": this.get('graphLayout.strokeWidth')+1,
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
+      });
+
+    d3l.select("#borders")
+      .selectAll("path.linesUp-disputed")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("linesUp-disputed", true)
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUpDisputed) )
+            .style({
+              "stroke-width": this.get('graphLayout.strokeWidth')+1,
+              "stroke-dasharray": "5,5",
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
