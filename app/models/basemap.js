@@ -116,7 +116,12 @@ var Basemap = Struct.extend({
           bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
               return a.properties && a.properties.featurecla === "Disputed"; 
             }),
-          linesUp: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up']),
+          linesUp: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up'], function(a, b) { 
+              return !(a.properties && a.properties.featurecla === "Disputed"); 
+          }),
+          linesUpDisputed: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up'], function(a, b) { 
+              return a.properties && a.properties.featurecla === "Disputed"; 
+          }),
           centroids: topojson.feature(j, j.objects.centroid)
         };
     });
