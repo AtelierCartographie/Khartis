@@ -1,3 +1,5 @@
+import d3 from 'npm:d3';
+
 let d3lper = {
 	
 	scale(val) {
@@ -59,7 +61,7 @@ let d3lper = {
       "decimal": i18n.t('d3.format.decimal'),
       "thousands": i18n.t('d3.format.thousands')
     });
-    return d3.locale(locale);
+    return d3.formatLocale(locale);
   },
   
   flow(_) {

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import PatternMaker from 'khartis/utils/pattern-maker';
 
 const DISPLAY_METHOD = {
@@ -43,7 +44,7 @@ export default Ember.Component.extend({
 
     stack.append("rect")
       .classed("scrollable-background", true)
-      .attr({
+      .attrs({
         x: -this.get('margin.left'),
         y: -this.get('margin.top'),
         width: "100%",
@@ -91,10 +92,10 @@ export default Ember.Component.extend({
   }.on("didInsertElement"),
 
   enableZoom() {
-    let zoom = d3.behavior.zoom()
+    let zoom = d3.zoom()
       .scaleExtent([0.5, 1.5])
       .on('zoom', () => {
-          this.set('zoom', d3.event.scale);
+          this.set('zoom', d3.event.transform.k);
       });
       this.d3l().select("g.stack").call(zoom);
   },
@@ -135,16 +136,16 @@ export default Ember.Component.extend({
       return d.qtyC = (cumul += d.qty);
     }, 0);
 
-    let x = d3.scale.linear()
+    let x = d3.scaleLinear()
       .range([0, width])
       .domain(ext)
       .clamp(true);
 
-    let bx = d3.scale.ordinal()
-      .rangePoints([0, width], 0)
+    let bx = d3.scalePoint()
+      .range([0, width], 0)
       .domain(data.map( c => c.val )); //=0 si < interval
     
-		let y = d3.scale.linear()
+		let y = d3.scaleLinear()
       .range([height, 0]);
 			
     if (this.get('method') === DISPLAY_METHOD.CLASSES) {
@@ -152,7 +153,7 @@ export default Ember.Component.extend({
       y.domain([0, Math.floor(d3.max(data, (v) => v.qty ))+2]);
 
       bindAttr = (_) => {
-          _.attr({
+          _.attrs({
             x: d => x(d.val),
             y: d => y(d.qty),
             width: d => x(d.val + interval) - x(d.val),
@@ -182,12 +183,12 @@ export default Ember.Component.extend({
 
       y.domain([0, Math.floor(d3.max(data, (v) => v.qtyC ))+2]);
 
-      let valueLine = d3.svg.line()
+      let valueLine = d3.line()
         .x( d => bx(d.val) )
         .y( d => y(d.qtyC) );
 
       bindAttr = (_) => {
-          _.attr({
+          _.attrs({
             d: d => valueLine(d)
           });
         };
@@ -210,16 +211,14 @@ export default Ember.Component.extend({
         .remove();
     }
 
-    let xAxis = d3.svg.axis()
+    let xAxis = d3.axisBottom()
       .scale(x)
       .tickValues(bands)
-      .tickFormat(d3.format(".2s"))
-      .orient("bottom");
+      .tickFormat(d3.format(".2s"));
 			
-		let yAxis = d3.svg.axis()
+		let yAxis = d3.axisLeft()
       .scale(y)
-      .ticks(Math.min(10, y.domain()[1]))
-      .orient("left");
+      .ticks(Math.min(10, y.domain()[1]));
 			
     stack.select("g.x.axis")
       .attr("transform", "translate(0," + (height+2) + ")")
@@ -235,7 +234,7 @@ export default Ember.Component.extend({
         fillIntervals = this.displayColors ? [{val: ext[0]}].concat(intervalsData) : [];
         
     bindAttr = (_) => {
-        _.attr({
+        _.attrs({
           x: d => x(d.val),
           y: -this.get('margin.top') + 2,
           height: this.get('margin.top') - 4,
@@ -268,12 +267,12 @@ export default Ember.Component.extend({
     sel.exit().remove();
     
     bindAttr = (_) => {
-        _.attr({
+        _.attrs({
           x1: (d) => x(d.val),
           x2: (d) => x(d.val),
           y1: -this.get('margin.top') + 2,
           y2: height+2
-        }).style({
+        }).styles({
           "stroke-width": (d) => d.val == this.get('mapping.scale.valueBreak') ? "2px" : "1px"
         })
       };
@@ -299,14 +298,14 @@ export default Ember.Component.extend({
     /*draw grid*/
     
     bindAttr = (_) => {
-      _.attr({
+      _.attrs({
         transform: d => d3.select(d).attr("transform")
       });
     };
     
     sel = stack.select(".grid")
       .selectAll(".grid-el")
-      .data(stack.selectAll(".y.axis .tick")[0])
+      .data(stack.selectAll(".y.axis .tick").nodes())
       .call(bindAttr);
       
     sel.enter()
@@ -314,7 +313,7 @@ export default Ember.Component.extend({
       .classed("grid-el", true)
       .call(bindAttr)
       .append("line")
-      .attr({
+      .attrs({
         x2: width,
         y2: 0
       });

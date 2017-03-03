@@ -48,9 +48,9 @@ export default Ember.Component.extend({
           return g;
         },
         update: (sel) => {
-          return sel.attr({
+          return sel.attrs({
             transform: d3lper.translate({tx: w/2, ty: h/2})
-          }).style({
+          }).styles({
             fill: this.get('color')
           });
         }

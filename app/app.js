@@ -2,12 +2,17 @@ import Ember from 'ember';
 import Resolver from 'magic-resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
-import d3 from 'd3';
+import d3 from "npm:d3";
+import geoProjections from "npm:d3-geo-projection";
+import "./utils/d3-selection-multi";
 import {isEverGreen} from 'khartis/utils/browser-check'
 import './utils/composite-projection';
 import './utils/d3proto';
 /* global Em */
 
+/* attach d3 geo projection */
+Object.assign(d3, geoProjections);
+console.log(geoProjections);
 let App;
 
 if( isEverGreen() === false){

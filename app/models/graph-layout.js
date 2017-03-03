@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import Struct from './struct';
 import Projection from './projection';

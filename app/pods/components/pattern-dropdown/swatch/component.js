@@ -43,11 +43,11 @@ export default Ember.Component.extend({
     let svg = this.d3l();
     
     let bindAttr = (_) => {
-      _.attr({
+      _.attrs({
         x: 0,
         width: "100%",
         height: "100%"
-      }).style({
+      }).styles({
         fill: this.get('color'),
         mask: (d) => {
           svg.call(d.fn);

@@ -1,4 +1,4 @@
-import d3 from 'd3';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 
 function inside(bbox, x, y) {
@@ -180,8 +180,8 @@ let proj = function() {
     },
 
     _instantiate(projConfig) {
-      let d3Proj = eval(projConfig.fn);
-
+      let d3Proj = Function("d3", `return ${projConfig.fn}`)(d3);
+      
       //apply projConfig initial transforms
       d3Proj.parallels && projConfig.transforms.parallels && d3Proj.parallels(projConfig.transforms.parallels);
       d3Proj.rotate && projConfig.transforms.rotate && d3Proj.rotate(projConfig.transforms.rotate);
@@ -189,7 +189,6 @@ let proj = function() {
       //apply transforms
       let transforms = Object.assign({}, this.transforms, projConfig.transforms);
       d3Proj.lobes && transforms.lobes && d3Proj.lobes(transforms.lobes);
-      
       return d3Proj;
     },
 
@@ -197,7 +196,7 @@ let proj = function() {
 
       let zone = projConfig.zoning || [[0, 0], [1, 1]],
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
-          d3Path = d3.geo.path().projection(fProjection),
+          d3Path = d3.geoPath().projection(fProjection),
 
           pixelBounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features),
           pixelBoundsWidth = pixelBounds[1][0] - pixelBounds[0][0],
@@ -215,8 +214,7 @@ let proj = function() {
           vOffset = (height - fHeight) /2;
           
       let projection = fProjection
-        .center(d3.geo.rotation(fProjection.rotate())(center))
-        .clipExtent([[-width, -height], [2*width, 2*height]])
+        .center(d3.geoRotation(fProjection.rotate())(center))
         .translate([
           (fWidth + margin.get('l') - margin.get('r')) / 2 - (1 - (zone[1][0] - zone[0][0]))*(fWidth - margin.get('h'))/2 + zone[0][0]*(fWidth - margin.get('h')) + hOffset,
           (fHeight + margin.get('t') - margin.get('b')) / 2 - (1 - (zone[1][1] - zone[0][1]))*(fHeight - margin.get('v'))/2 + zone[0][1]*(fHeight - margin.get('v')) + vOffset
@@ -252,4 +250,4 @@ let proj = function() {
 
 }
 
-d3.geo.compositeProjection = proj;
+d3.geoCompositeProjection = proj;

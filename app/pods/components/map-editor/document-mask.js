@@ -7,7 +7,7 @@ export default Ember.Mixin.create({
   documentMaskInit(defs, d3g) {
 
     let vm = defs.append("mask")
-      .attr({
+      .attrs({
         id: "document-mask",
         x: 0,
         y: 0,
@@ -16,13 +16,13 @@ export default Ember.Mixin.create({
       });
 
     vm.append("path")
-      .attr({
+      .attrs({
         "fill-rule": "evenodd"
       })
       .style("fill", "white");
 
     defs.append("clipPath")
-      .attr({
+      .attrs({
         id: "document-clip",
       })
       .append("path");
@@ -65,7 +65,7 @@ export default Ember.Mixin.create({
       .attr("d", `${inner}`);
 
     d3l.selectAll("rect.fg.document")
-      .attr({
+      .attrs({
         "x": -mX,
         "y": -mY,
         "width": w+2*mX,

@@ -63,7 +63,7 @@ let symbol = function(opts = {}) {
       };
       
   let proc = function() {
-    
+
     let defs = this.selectAll("defs");
     
     if (defs.empty()) {
@@ -79,12 +79,12 @@ let symbol = function(opts = {}) {
           shift = 0.2*max;
       
       /*symbol = defs.append("symbol")
-        .attr({
+        .attrs({
           id: id,
           viewBox: Array.from([-shift, -shift, 2*shift, 2*shift], (v, i) => v + conf.viewBox[i]).join(' ')
         });*/
       
-      symbol.append(conf.tag).attr(conf.attrs);
+      symbol.append(conf.tag).attrs(conf.attrs);
       
     }
     
@@ -103,7 +103,7 @@ let symbol = function(opts = {}) {
     return root
       .append("g")
       .attr("transform", `scale(${s})`)
-      .append(conf.tag).attr(conf.attrs);
+      .append(conf.tag).attrs(conf.attrs);
 
   };
 

@@ -53,11 +53,11 @@ export default Ember.Component.extend({
     let svg = this.d3l();
     
     let bindAttr = (_) => {
-      _.attr({
+      _.attrs({
         x: (d,i) => (i*(100/this.get('masks').length))+"%",
         width: (100/this.get('masks').length)+"%",
         height: "100%"
-      }).style({
+      }).styles({
         fill: (d, i) => {
           let fill;
           if (this.get('mapping.scale.diverging')) {
@@ -90,7 +90,7 @@ export default Ember.Component.extend({
 
     sel.enter()
       .append("line")
-      .attr({
+      .attrs({
         x1: "50%",
         x2: "50%",
         y2: "100%",

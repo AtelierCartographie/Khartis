@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import PatternMaker from 'khartis/utils/pattern-maker';
 import SymbolMaker from 'khartis/utils/symbol-maker';
@@ -16,11 +17,11 @@ export default Ember.Mixin.create({
       .classed("legend", true);
     
     //LEGEND DRAG
-    let drag = d3.behavior.drag()
-      .origin(() => {
+    let drag = d3.drag()
+      .subject(() => {
         return {x: legendG.attr('kis:kis:tx'), y: legendG.attr('kis:kis:ty')};
       })
-      .on("dragstart", () => {
+      .on("start", () => {
         d3.event.sourceEvent.stopPropagation();
         legendG.classed("dragging", true);
         this.set('resizingMargin', true);
@@ -31,13 +32,13 @@ export default Ember.Mixin.create({
               tx: Math.min(bbox.width-2, Math.max(d3.event.x, 0)),
               ty: Math.min(bbox.height-10, Math.max(d3.event.y, 0))
             };
-        legendG.attr({
+        legendG.attrs({
          'transform': d3lper.translate(pos), 
           "kis:kis:tx": pos.tx,
           "kis:kis:ty": pos.ty
         });
       })
-      .on("dragend", () => {
+      .on("end", () => {
         legendG.classed("dragging", false);
         this.set('resizingMargin', false);
         let t = this.getViewboxTransform()({
@@ -99,7 +100,7 @@ export default Ember.Mixin.create({
         t = this.getViewboxTransform().invert(t);
       }
 
-      legendG.attr({
+      legendG.attrs({
         "kis:kis:tx": t.x,
         "kis:kis:ty": t.y,
         "transform": d3lper.translate({tx: t.x, ty: t.y})
@@ -109,7 +110,7 @@ export default Ember.Mixin.create({
           contentBox = legendContentG.node().getBBox();
       
       legendG.select("rect.legend-bg")
-        .attr({
+        .attrs({
           x: contentBox.x - padding,
           y: contentBox.y - padding,
           width: contentBox.width + 2*padding,
@@ -155,7 +156,7 @@ export default Ember.Mixin.create({
     if (bgG.empty()) {
       bgG = legendG.append("rect")
         .classed("legend-bg", true)
-        .attr({
+        .attrs({
           "x": -18,
           "y": -5
         })
@@ -180,7 +181,7 @@ export default Ember.Mixin.create({
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
               d.get('mapping.visualization.maxSize') : 10),
             textOffset = xOrigin + 16,
-            formatter = d3Locale.numberFormat(`0,.${d.get('mapping.maxValuePrecision')}f`);
+            formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
         el.selectAll("*").remove();
           
@@ -190,7 +191,7 @@ export default Ember.Mixin.create({
           .attr("kis:kis:flow-css", "wrap-text: true; max-width: 250px")
           .classed("legend-title", true)
           .attr("transform", d3lper.translate({tx: -xOrigin/2}))
-          .style({
+          .styles({
             "font-size": "14px",
             "font-weight": "bold"
           });
@@ -215,7 +216,7 @@ export default Ember.Mixin.create({
           
           //border
           g.append("rect")
-            .attr({
+            .attrs({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "width": 2*r.x,
               "height": 2*r.y,
@@ -226,7 +227,7 @@ export default Ember.Mixin.create({
             });
 
           g.append("rect")
-            .attr({
+            .attrs({
               "transform": d3lper.translate({tx: -r.x, ty: 0}),
               "width": 2*r.x,
               "height": 2*r.y,
@@ -252,7 +253,7 @@ export default Ember.Mixin.create({
             
           if (i === 0) {
             
-            /*g.append("line").attr({
+            /*g.append("line").attrs({
               x1: -2*r.x,
               y1: 0,
               x2: 0,
@@ -262,7 +263,7 @@ export default Ember.Mixin.create({
             
             g.append("text")
               .text( formatter(d.get('mapping.extent')[0]) )
-              .attr({
+              .attrs({
                 x: textOffset - 12,
                 y:  0,
                 dy: "0.3em",
@@ -271,7 +272,7 @@ export default Ember.Mixin.create({
             
           }
           
-          /*g.append("line").attr({
+          /*g.append("line").attrs({
               x1: -2*r.x,
               y1: 2*r.y,
               x2: 0,
@@ -281,7 +282,7 @@ export default Ember.Mixin.create({
           
           g.append("text")
             .text( v => formatter(v) )
-            .attr({
+            .attrs({
               x: textOffset - 12,
               y: 2*r.y,
               dy: "0.3em",
@@ -311,7 +312,7 @@ export default Ember.Mixin.create({
             .attr("transform", d3lper.translate({ty: r.y+d.get('mapping.visualization.stroke')/2 - dy/2}));
 
           symbol.insert(symG, r.x*2)
-            .attr({
+            .attrs({
               "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
               "i:i:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
@@ -323,7 +324,7 @@ export default Ember.Mixin.create({
             
           if (i === 0) {
             
-            g.append("line").attr({
+            g.append("line").attrs({
               x1: 0,
               y1: -2,
               x2: textOffset - 6,
@@ -333,7 +334,7 @@ export default Ember.Mixin.create({
             
             g.append("text")
               .text( formatter(d.get('mapping.extent')[1]) )
-              .attr({
+              .attrs({
                 x: textOffset,
                 y: -2,
                 dy: "0.3em",
@@ -342,7 +343,7 @@ export default Ember.Mixin.create({
             
           }
           
-          g.append("line").attr({
+          g.append("line").attrs({
               x1: 0,
               y1: Math.max(symH+2, 10),
               x2: textOffset - 6,
@@ -352,7 +353,7 @@ export default Ember.Mixin.create({
           
           g.append("text")
             .text( v => formatter(v) )
-            .attr({
+            .attrs({
               x: textOffset,
               y: Math.max(symH+2, 10),
               dy: "0.3em",
@@ -389,7 +390,7 @@ export default Ember.Mixin.create({
               .attr("transform", d3lper.translate({ty: r.y - dy/2}));
 
             symbol.insert(symG, r.x*2)
-              .attr({
+              .attrs({
                 "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
                 "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": d.get('mapping.visualization.strokeColor'),
@@ -404,7 +405,7 @@ export default Ember.Mixin.create({
               .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
 
             g.append("line")
-              .attr({
+              .attrs({
                 x1: 0,
                 y1: r.y - dy/2,
                 x2: r.x,
@@ -416,7 +417,7 @@ export default Ember.Mixin.create({
           d3.select(this).append("g")
             .append("text")
             .text( v => formatter(v) )
-            .attr({
+            .attrs({
               x: textOffset,
               y: r.y - dy/2,
               dy: "0.3em",
@@ -453,7 +454,7 @@ export default Ember.Mixin.create({
               .attr("transform", d3lper.translate({ty: r.y}));
 
             symbol.insert(symG, r.x*2)
-              .attr({
+              .attrs({
                 "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
                 "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": rule.get('strokeColor'),
@@ -473,7 +474,7 @@ export default Ember.Mixin.create({
               .attr("kis:kisflow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
             
             g.append("rect")
-              .attr({
+              .attrs({
                 "width": 2*r.x,
                 "height": 2*r.y,
                 "transform": d3lper.translate({tx: -r.x, ty: 0}),
@@ -482,7 +483,7 @@ export default Ember.Mixin.create({
               });
             
             g.append("rect")
-              .attr({
+              .attrs({
                 "width": 2*r.x,
                 "height": 2*r.y,
                 "transform": d3lper.translate({tx: -r.x, ty: 0}),
@@ -505,7 +506,7 @@ export default Ember.Mixin.create({
           d3.select(this).append("g")
             .append("text")
             .text( rule.get('label') )
-            .attr({
+            .attrs({
               x: textOffset,
               y: r.y,
               dy: "0.3em",
@@ -554,7 +555,7 @@ export default Ember.Mixin.create({
             el.append("g")
               .attr("kis:kis:flow-css", "margin-top: 10; margin-bottom: 10")
               .append("line")
-                .attr({
+                .attrs({
                   x1: 0,
                   y1: 0,
                   x2: 50,

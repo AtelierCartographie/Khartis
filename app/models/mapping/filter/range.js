@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Filter from './abstract';
 
 let RangeFilter = Filter.extend({
@@ -8,7 +9,6 @@ let RangeFilter = Filter.extend({
   deferredChange: Ember.debouncedObserver(
     'range', 'range.[]',
     function() {
-      console.log("change");
       this.notifyDefferedChange();
     }, 1),
 

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Struct from './struct';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 
 let Projection = Struct.extend({
   
@@ -86,7 +86,7 @@ let Projection = Struct.extend({
     10),
   
   projector() {
-    let projector = d3.geo.compositeProjection();
+    let projector = d3.geoCompositeProjection();
     if (this.get('isComposite')) {
       projector.projections = this.get('subProjections');
     } else {

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
@@ -67,7 +68,7 @@ let DataMixin = Ember.Mixin.create({
   },
   
   maxValuePrecision: function() {
-
+    
     let max = 5;
 
     let pre = this.get('values').reduce( (p, v) => {
@@ -80,6 +81,7 @@ let DataMixin = Ember.Mixin.create({
     }, 0);
 
     pre = Math.min(pre, 5);
+    
     
     /*augmente la précision si elle ne permet pas
      *de distinguer les intervalles 
@@ -100,7 +102,7 @@ let DataMixin = Ember.Mixin.create({
     pre = this.get('intervals').reduce( (p, v, i, arr) => {
       return raisePrecision(i > 0 ? arr[i-1] : undefined, v, p);
     }, pre);
-
+    
     return pre;
   }.property('values', 'intervals'),
 
@@ -297,10 +299,10 @@ let SurfaceMixin = Ember.Mixin.create({
         rangeLength;
         
     if (this.get('scale.usesInterval')) {
-      d3Scale = d3.scale.threshold();
+      d3Scale = d3.scaleThreshold();
       rangeLength = intervals.length + 1;
     } else {
-      d3Scale = d3.scale.linear();
+      d3Scale = d3.scaleLinear();
       rangeLength = intervals.length; //2
     };
         
@@ -366,7 +368,7 @@ let SymbolMixin = Ember.Mixin.create({
 
       if (this.get('scale.usesInterval')) {
 
-        contrastScale = d3.scale.threshold();
+        contrastScale = d3.scaleThreshold();
 
         if (this.get('shouldDiverge')) {
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
@@ -391,7 +393,7 @@ let SymbolMixin = Ember.Mixin.create({
 
         contrastScale.domain(intervals).range(range);
 
-        d3Scale = d3.scale.linear().clamp(true);
+        d3Scale = d3.scaleLinear().clamp(true);
         domain = [0, d3.max(range)];
         range = [0, visualization.get('maxSize')];
 
@@ -410,7 +412,7 @@ let SymbolMixin = Ember.Mixin.create({
 
     } else if (type === "color") {
       
-      d3Scale = d3.scale.threshold()
+      d3Scale = d3.scaleThreshold()
 
       if (this.get('scale.diverging')) {
         range = this.get('visualization').colorStops(this.get('scale.diverging'));
