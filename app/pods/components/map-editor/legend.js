@@ -18,6 +18,9 @@ export default Ember.Mixin.create({
     
     //LEGEND DRAG
     let drag = d3.drag()
+      .filter(function() {
+        return !$(d3.event.target).hasClass("no-drag") && !$(d3.event.target).parents(".no-drag").length;
+      })
       .subject(() => {
         return {x: legendG.attr('kis:kis:tx'), y: legendG.attr('kis:kis:ty')};
       })
@@ -187,6 +190,7 @@ export default Ember.Mixin.create({
           
         let label = el.append("g")
           .attr("kis:kis:flow-css", "margin-bottom: 16")
+          .classed("no-drag", true)
           .append("text")
           .attr("kis:kis:flow-css", "wrap-text: true; max-width: 250px")
           .classed("legend-title", true)

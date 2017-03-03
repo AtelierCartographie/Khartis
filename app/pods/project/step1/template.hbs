@@ -92,6 +92,7 @@
         {{ivy-codemirror
           value=model.csv
           valueUpdated=(action (mut model.csv))
+          fileDrop=(action 'fileDroppedInEditor')
           options=(hash placeholder=(x-capitalize (t "project.step1.pasteCsv")) lineNumbers=true)
         }}
         </div>

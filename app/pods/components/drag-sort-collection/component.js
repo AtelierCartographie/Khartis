@@ -58,13 +58,17 @@ export default Ember.Component.extend({
             
             return pos;
           };
+
+      drag = drag.filter(function() {
+        return !$(d3.event.target).hasClass("no-drag") && !$(d3.event.target).parents(".no-drag").length;
+      });
     
       drag.subject(function() {
         return {x: $(this).position().left, y: $(this).position().top};
       });
       
       drag.on("start", function() {
-        if (!$(d3.event.sourceEvent.target).parents(".no-drag").length) {
+        if (!$(d3.event.sourceEvent.target).hasClass("no-drag") && !$(d3.event.sourceEvent.target).parents(".no-drag").length) {
           d3.event.sourceEvent.stopPropagation();
           self.set('wasDragged', false);
         }
