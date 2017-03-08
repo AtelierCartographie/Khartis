@@ -10,7 +10,7 @@ import config from 'khartis/config/environment';
 let DataMixin = Ember.Mixin.create({
   
   values: function() {
-    return this.get('varCol.body')
+    return this.get('filteredBody')
       .filter( c => {
         return !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
         && !isNaN(c.get('postProcessedValue'))

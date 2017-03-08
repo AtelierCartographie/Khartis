@@ -666,22 +666,19 @@ export default Ember.Component.extend({
           
       data = mapping.get('filteredBody').map( (cell) => {
         
-        let geoData = cell.get('row.cells').find( c => c.get('column') == geoDef.get('geo') ).get('postProcessedValue'),
-            val = cell.get('postProcessedValue');
-
-        if (geoData) {
-          return {
-            id: geoData.value[geoKey],
-            value: val,
-            cell: cell,
-            surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
-            point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
-          };
-        }
+        let geoData = cell.get('row.cells')
+          .find( c => c.get('column') == geoDef.get('geo') )
+          .get('postProcessedValue');
+          
+        return {
+          id: geoData.value[geoKey],
+          value: cell.get('postProcessedValue'),
+          cell: cell,
+          surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
+          point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
+        };
         
-        return undefined;
-        
-      }).filter( d => d !== undefined );
+      });
       
       if (graphLayer.get('mapping.visualization.type') === "surface") {
         this.mapSurface(d3Layer, data, graphLayer);
