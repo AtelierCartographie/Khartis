@@ -35,7 +35,7 @@ export default Ember.Mixin.create({
         data = this.get('labellingLayers')
           .filter( gl => gl.get('displayable') )
           .reverse();
-    
+
     let bindAttr = (_) => {
       _.style("opacity", d => d.get('opacity'));
     };
@@ -51,9 +51,11 @@ export default Ember.Mixin.create({
     
     sel.order().exit().remove();
 
-    sel.each(function(d, index) {
-      self.mapData(d3.select(this), d);
-    });
+    this.d3l().select("g.labelling")
+      .selectAll("g.layer")
+      .each(function(d, index) {
+        self.mapData(d3.select(this), d);
+      });
     
   }.observes('labellingLayers.[]', 'labellingLayers.@each._defferedChangeIndicator'),
 
