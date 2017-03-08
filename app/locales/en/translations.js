@@ -17,6 +17,7 @@ export default {
     "loading": "chargement",
     "search": "rechercher",
     "save": "save",
+    "width": "width",
     "yes": "yes",
     "no": "no",
     "error": {

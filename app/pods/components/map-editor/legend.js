@@ -182,7 +182,7 @@ export default Ember.Mixin.create({
         
         let el = d3.select(this),
             xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
-              d.get('mapping.visualization.maxSize') : 10),
+              SymbolMaker.symbol({name: d.get('mapping.visualization.shape'), size: d.get('mapping.visualization.maxSize')}).getSize().x : 10),
             textOffset = xOrigin + 16,
             formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
@@ -299,7 +299,8 @@ export default Ember.Mixin.create({
           
           let symbol = SymbolMaker.symbol({
                 name: d.get('mapping.visualization.shape'),
-                size: d.get('mapping').getScaleOf('size')(val)*2
+                size: d.get('mapping').getScaleOf('size')(val)*2,
+                barWidth: d.get('mapping.visualization.barWidth')
               }),
               r = symbol.getSize();
 
@@ -378,7 +379,8 @@ export default Ember.Mixin.create({
 
             let symbol = SymbolMaker.symbol({
                 name: d.get('mapping.visualization.shape'),
-                size: d.get('mapping').getScaleOf('size')(val)*2
+                size: d.get('mapping').getScaleOf('size')(val)*2,
+                barWidth: d.get('mapping.visualization.barWidth')
               });
 
             r = symbol.getSize();
@@ -444,10 +446,12 @@ export default Ember.Mixin.create({
             let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
                 symbol = SymbolMaker.symbol({
                   name: shape,
-                  size: rule.get('size')*2
-                }),
-                r = symbol.getSize();
-                symH = r.y + d.get('mapping.visualization.stroke');
+                  size: rule.get('size')*2,
+                });
+            
+            r = symbol.getSize();
+
+            let symH = r.y + d.get('mapping.visualization.stroke');
             
             d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
 

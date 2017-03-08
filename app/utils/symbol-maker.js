@@ -21,13 +21,14 @@ let symbol = function(opts = {}) {
               viewBox: [0, 0, 100, 100]
             });
           case "bar":
+            let w = opts.barWidth || 16;
             return Object.assign({}, baseConf, {
               tag: "path",
               attrsFn: (size) => ({
-                d: `M0,0 16,0 16,${size} 0,${size} 0,0Z`
+                d: `M0,0 ${w},0 ${w},${size} 0,${size} 0,0Z`
               }),
-              viewBoxFn: (size) => ([0, 0, 16, size]),
-              sizeFn: (size) => ({x: 16, y: size}),
+              viewBoxFn: (size) => ([0, 0, w, size]),
+              sizeFn: (size) => ({x: w, y: size}),
               anchor: [0.5, 0],
               scalable: false
             });

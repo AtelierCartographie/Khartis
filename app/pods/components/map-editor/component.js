@@ -669,7 +669,7 @@ export default Ember.Component.extend({
         let geoData = cell.get('row.cells')
           .find( c => c.get('column') == geoDef.get('geo') )
           .get('postProcessedValue');
-          
+
         return {
           id: geoData.value[geoKey],
           value: cell.get('postProcessedValue'),
@@ -788,7 +788,7 @@ export default Ember.Component.extend({
       
       if (shape && r > 0) {
         
-        let symbol = SymbolMaker.symbol({name: shape, size: r*2});
+        let symbol = SymbolMaker.symbol({name: shape, size: r*2, barWidth: mapping.get('visualization.barWidth')});
       
         let el = symbol.insert(_);
         
