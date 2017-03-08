@@ -47,7 +47,7 @@ let SymbolVisualization = Struct.extend({
       stroke: this.get('stroke'),
       maxSize: this.get('maxSize'),
       colorBeforeBreak: this.get('colorBeforeBreak'),
-      barWidth: json.barWidth
+      barWidth: this.get('barWidth')
     }, props));
   }
   
