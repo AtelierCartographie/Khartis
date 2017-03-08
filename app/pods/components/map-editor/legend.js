@@ -297,11 +297,14 @@ export default Ember.Mixin.create({
         
         let appendSymbolIntervalLabel = function(val, i) {
           
-          let r = {x: d.get('mapping').getScaleOf('size')(val), y: d.get('mapping').getScaleOf('size')(val)},
-              symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+          let symbol = SymbolMaker.symbol({
+                name: d.get('mapping.visualization.shape'),
+                size: d.get('mapping').getScaleOf('size')(val)*2
+              }),
+              r = symbol.getSize();
 
-          let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12),
-              dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
+          let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12),
+              dy = r.y + d.get('mapping.visualization.stroke') - symH;
       
           d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
 
@@ -310,14 +313,14 @@ export default Ember.Mixin.create({
           symbol.call(svg);
           
           let g = d3.select(this).append("g")
-            .attr("kis:kis:flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+            .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}px; width: ${r.anchorX}px`);
           
           let symG = g.append("g")
-            .attr("transform", d3lper.translate({ty: r.y+d.get('mapping.visualization.stroke')/2 - dy/2}));
+            .attr("transform", d3lper.translate({ty: r.anchorY+d.get('mapping.visualization.stroke')/2 - dy/2}));
 
-          symbol.insert(symG, r.x*2)
+          symbol.insert(symG)
             .attrs({
-              "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+              "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
               "i:i:stroke-width": d.get('mapping.visualization.stroke'),
               "stroke": d.get('mapping.visualization.strokeColor'),
               "fill": d.get('mapping').getScaleOf('color')(val),
@@ -373,36 +376,37 @@ export default Ember.Mixin.create({
 
           if (val !== d.get('mapping.scale.valueBreak')) {
 
-            let symbol = SymbolMaker.symbol({name: d.get('mapping.visualization.shape')});
+            let symbol = SymbolMaker.symbol({
+                name: d.get('mapping.visualization.shape'),
+                size: d.get('mapping').getScaleOf('size')(val)*2
+              });
 
-            r = {x: d.get('mapping').getScaleOf('size')(val), y: d.get('mapping').getScaleOf('size')(val)};
+            r = symbol.getSize();
       
             if (!(r.x > 0 && r.y > 0)) return;
 
-            let symH = Math.max(2*r.y + d.get('mapping.visualization.stroke'), 12);
+            let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12);
               
-            dy = 2*r.y + d.get('mapping.visualization.stroke') - symH;
+            dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
             d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
 
-            symbol.call(svg);
-          
             let g = d3.select(this).append("g")
-            .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+            .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}; width: ${r.anchorX}px`);
 
             let symG = g.append("g")
-              .attr("transform", d3lper.translate({ty: r.y - dy/2}));
+              .attr("transform", d3lper.translate({ty: r.anchorY - dy/2}));
 
-            symbol.insert(symG, r.x*2)
+            symbol.insert(symG)
               .attrs({
-                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
                 "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": d.get('mapping.visualization.strokeColor'),
                 "fill": d.get('mapping').getScaleOf('color')(val),
                 "opacity": d.get('opacity')
               });
           } else {
-            r = {x: 20, y: 12};
+            r = {x: 20, y: 12, anchorY: 12};
             dy = 0;
             d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; margin-bottom: 4px`);
             let g = d3.select(this).append("g")
@@ -417,13 +421,13 @@ export default Ember.Mixin.create({
                 stroke: "#BBBBBB"
               });
           }
-            
+
           d3.select(this).append("g")
             .append("text")
             .text( v => formatter(v) )
             .attrs({
               x: textOffset,
-              y: r.y - dy/2,
+              y: r.anchorY - dy/2,
               dy: "0.3em",
               "font-size": "0.75em"
             });
@@ -438,28 +442,24 @@ export default Ember.Mixin.create({
           if (d.get('mapping.visualization.type') === "symbol") {
 
             let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
-                symH = 2*rule.get('size') + d.get('mapping.visualization.stroke');
-            
-            r = {
-              x: rule.get('size'),
-              y: rule.get('size')
-            };
+                symbol = SymbolMaker.symbol({
+                  name: shape,
+                  size: rule.get('size')*2
+                }),
+                r = symbol.getSize();
+                symH = r.y + d.get('mapping.visualization.stroke');
             
             d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
 
-            let symbol = SymbolMaker.symbol({name: shape});
-      
-            symbol.call(svg);
-            
             let g = d3.select(this).append("g")
-              .attr("kis:kis:flow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+              .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}px; width: ${r.anchorX}px`);
             
             let symG = g.append("g")
-              .attr("transform", d3lper.translate({ty: r.y}));
+              .attr("transform", d3lper.translate({ty: r.anchorY}));
 
-            symbol.insert(symG, r.x*2)
+            symbol.insert(symG)
               .attrs({
-                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke'), r.x*2),
+                "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
                 "i:i:stroke-width": d.get('mapping.visualization.stroke'),
                 "stroke": rule.get('strokeColor'),
                 "fill": rule.get('color'),

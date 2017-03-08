@@ -68,7 +68,7 @@ let DataMixin = Ember.Mixin.create({
   },
   
   maxValuePrecision: function() {
-    
+
     let max = 5;
 
     let pre = this.get('values').reduce( (p, v) => {
@@ -352,6 +352,19 @@ let SymbolMixin = Ember.Mixin.create({
       usesInterval: this.get('scale.usesInterval') || false
     });
   },
+
+  minContrastIndex: function() {
+    return this.get('visualization.shape') !== "bar" ? 0 : 1;
+  }.property('visualization.shape'),
+
+  maxContrastIndex: function() {
+    return this.get('visualization.shape') !== "bar" ? 4 : 5;
+  }.property('visualization.shape'),
+
+  contrastMinMaxIndexesChanged: function() {
+    this.get('scale.contrast') < this.get('minContrastIndex') && this.set('scale.contrast', this.get('minContrastIndex'));
+    this.get('scale.contrast') > this.get('maxContrastIndex') && this.set('scale.contrast', this.get('maxContrastIndex'));
+  }.observes('minContrastIndex', 'maxContrastIndex'),
   
   getScaleOf(type) {
     

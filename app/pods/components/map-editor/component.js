@@ -299,7 +299,6 @@ export default Ember.Component.extend({
         d3lper.sumCoords([tx, ty], bbox[0]),
         d3lper.sumCoords([tx, ty], bbox[1])
       ];
-      console.log(bbox);  
       projection
       .translate([
           projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx')*this.getSize().w,
@@ -792,27 +791,14 @@ export default Ember.Component.extend({
       
       if (shape && r > 0) {
         
-        let symbol = SymbolMaker.symbol({name: shape});
+        let symbol = SymbolMaker.symbol({name: shape, size: r*2});
       
-        symbol.call(svg);
-      
-        let el = symbol.insert(_, r*2);
+        let el = symbol.insert(_);
         
-        if (shape === "bar") {
-          
-          el.attrs({
-              "width": mapping.get('visualization.maxSize'),
-              "height": r*r,
-              "x": -mapping.get('visualization.maxSize') / 2,
-              "y": -r*r
-            });
-          
-        } else {
-          _.select("*").attrs({
-            "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
-          })
-          .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
-        }
+        _.select("*").attrs({
+          "stroke-width": symbol.unscale(mapping.get('visualization.stroke'))
+        })
+        .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
 
         if (shape === "line") {
           strokeColor = fill;
