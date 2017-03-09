@@ -199,6 +199,8 @@ export default Ember.Controller.extend({
 
     d3Node.selectAll("g.margin,g.offset,g.margin-resizer").remove();
     d3Node.selectAll("rect.fg").remove();
+    d3Node.selectAll("#document-mask").remove();
+    d3Node.selectAll("#viewport-mask").remove();
 
     d3Node.append("text")
       .text("Made with Khartis")
