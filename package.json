@@ -27,7 +27,7 @@
     "broccoli-funnel": "^1.0.1",
     "csv-string": "^2.3.0",
     "d3": "^4.7.1",
-    "d3-geo-projection": "^1.2.1",
+    "d3-geo-projection": "^1.2.2",
     "devtron": "^1.4.0",
     "electron": "^1.4.15",
     "electron-packager": "^8.5.1",
