@@ -421,6 +421,8 @@ let SymbolMixin = Ember.Mixin.create({
         range = [0, visualization.get('maxSize')];
         transform = _ => d3Scale(Math.abs(_));
 
+        transform.invert = (_) => d3Scale.invert(Math.abs(_));
+
       };
 
     } else if (type === "color") {

@@ -22,14 +22,18 @@ let symbol = function(opts = {}) {
             });
           case "bar":
             let w = opts.barWidth || 16;
+            let orientation = opts.sign || 1;
+            let foot = 2;
             return Object.assign({}, baseConf, {
               tag: "path",
               attrsFn: (size) => ({
-                d: `M0,0 ${w},0 ${w},${size} 0,${size} 0,0Z`
+                d: orientation >= 0 ? 
+                  `M0,${size} H ${w+foot} M${foot},0 ${w},0 ${w},${size} ${foot},${size} ${foot},0Z`
+                  : `M0,0 H ${w+foot} M${foot},0 ${w},0 ${w},${size} ${foot},${size} ${foot},0Z`
               }),
-              viewBoxFn: (size) => ([0, 0, w, size]),
+              viewBoxFn: (size) => ([0, 0, w+4, size]),
               sizeFn: (size) => ({x: w, y: size}),
-              anchor: [0.5, 0],
+              anchor: [0.5, orientation >= 0 ? 0 : 1],
               scalable: false
             });
           case "line":

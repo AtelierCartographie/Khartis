@@ -783,12 +783,18 @@ export default Ember.Component.extend({
       let _ = d3.select(this),
           shape = converter(d.cell, "shape"),
           r = converter(d.cell, "size"),
+          sign = Math.sign(d.cell.get('postProcessedValue')),
           fill = converter(d.cell, "fill"),
           strokeColor = converter(d.cell, "strokeColor");
       
       if (shape && r > 0) {
         
-        let symbol = SymbolMaker.symbol({name: shape, size: r*2, barWidth: mapping.get('visualization.barWidth')});
+        let symbol = SymbolMaker.symbol({
+          name: shape,
+          size: r*2,
+          sign: sign,
+          barWidth: mapping.get('visualization.barWidth')
+        });
       
         let el = symbol.insert(_);
         
