@@ -1,7 +1,13 @@
 
+## Official documentation on adding new basemaps now available
+
+Please consult the [How to create a basemap page in the wiki](https://github.com/AtelierCartographie/Khartis/wiki/How-to-create-a-basemap-for-Khartis) to find support and details on the integration of new basemaps into Khartis.
+
+The rest of this file is merely for information purposes regarding the various data assets used in compiling the two german basemaps.
+
 ## Preparing open geodata for use in Khartis
 
-It seems like using [mapshaper.org](https://mapshaper.org)  is the most simple way to prepare and integrate the three geometries making up a basemap in Khartis.
+It seems like using [mapshaper.org](https://mapshaper.org) is the most simple way to prepare and integrate the three geometries making up a basemap in Khartis.
 
 The transformation process i initially used is a bit different and could be roughly outlined with:
 
