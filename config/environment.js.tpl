@@ -246,7 +246,7 @@ module.exports = function(environment) {
         attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
         sources: [
           {
-            source: "DE-2016/topojson/bkg-2500-basemap-de-states.json",
+            source: "DE-2016/topojson/bkg-2500-basemap-de-states-lasttoday.json",
             projection: "d3.geo.conicConformal()",
             scale: 0.8, borders: ["l", "r", "t", "b"],
             transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
