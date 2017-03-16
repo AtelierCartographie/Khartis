@@ -247,7 +247,7 @@ module.exports = function(environment) {
         sources: [
           {
             source: "DE-2016/topojson/bkg-2500-basemap-de-states.json",
-            projection: "d3.geoConicConformal()",
+            projection: "d3.geo.conicConformal()",
             scale: 0.8, borders: ["l", "r", "t", "b"],
             transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
             zoning: [[0, 0], [1, 1]]
