@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
@@ -15,7 +16,7 @@ let shuffleArray = function(array) {
 
 let DataMixin = Ember.Mixin.create({
   
-  defaultColorScale: d3.scale.category10(), 
+  defaultColorScale: d3.scaleOrdinal(d3.schemeCategory10), 
   
   getScaleOf(type) {
     
@@ -25,6 +26,8 @@ let DataMixin = Ember.Mixin.create({
     return () => NONE;
       
   },
+
+  maxValuePrecision: 5,
   
   distribution: function() {
       

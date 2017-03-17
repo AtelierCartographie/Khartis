@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 
 const ENABLE_DRAG_FEATURE = false; //TODO : finish
@@ -34,7 +35,7 @@ export default Ember.Mixin.create({
         data = this.get('labellingLayers')
           .filter( gl => gl.get('displayable') )
           .reverse();
-    
+
     let bindAttr = (_) => {
       _.style("opacity", d => d.get('opacity'));
     };
@@ -50,9 +51,11 @@ export default Ember.Mixin.create({
     
     sel.order().exit().remove();
 
-    sel.each(function(d, index) {
-      self.mapData(d3.select(this), d);
-    });
+    this.d3l().select("g.labelling")
+      .selectAll("g.layer")
+      .each(function(d, index) {
+        self.mapData(d3.select(this), d);
+      });
     
   }.observes('labellingLayers.[]', 'labellingLayers.@each._defferedChangeIndicator'),
 
@@ -72,7 +75,7 @@ export default Ember.Mixin.create({
               middle: "middle",
               end: "end"
             }[graphLayer.get('mapping.visualization.anchor')])
-          .style({
+          .styles({
             "font-size": `${visualization.get('size')}em`,
             "fill": visualization.get('color'),
             "stroke": "none",
@@ -81,7 +84,7 @@ export default Ember.Mixin.create({
           .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'))
           .each( function(d) {
             let [tx, ty] = d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry));
-            d3.select(this).attr({
+            d3.select(this).attrs({
               "dy": "0.3em",
               "kis:kis:tx": d => tx,
               "kis:kis:ty": d => ty,
@@ -123,12 +126,12 @@ export default Ember.Mixin.create({
     var self = this;
 
     //LEGEND DRAG
-    return d3.behavior.drag()
-      .origin(function() {
+    return d3.drag()
+      .subject(function() {
         let sel = d3.select(this);
         return {x: sel.attr('kis:kis:tx'), y: sel.attr('kis:kis:ty')};
       })
-      .on("dragstart", function() {
+      .on("start", function() {
         d3.event.sourceEvent.stopPropagation();
         d3.event.sourceEvent.preventDefault();
         d3.select(this).classed("dragging", true);
@@ -142,7 +145,7 @@ export default Ember.Mixin.create({
               ty: Math.min(bgBox.height-10, Math.max(d3.event.y, 0))
             };
         
-        sel.attr({
+        sel.attrs({
          'transform': d3lper.translate(pos), 
           "kis:kis:tx": pos.tx,
           "kis:kis:ty": pos.ty
@@ -154,7 +157,7 @@ export default Ember.Mixin.create({
         .call(self.drawLines, pos.tx, pos.ty);
 
       })
-      .on("dragend", function() {
+      .on("end", function() {
         d3.select(this).classed("dragging", false);
       });
     
@@ -179,7 +182,7 @@ export default Ember.Mixin.create({
         if ((signH > 0 && Math.abs(theta) > π/2) || (signH < 0 && Math.abs(theta) < π/2)) { //middle
           if (hyp0 > 26 && Math.abs(angle([ox, oy], [tx, ty])) % (π/2) > π/3) {
             radius
-              .attr({
+              .attrs({
                 display: "block",
                 x1: ox,
                 y1: oy,
@@ -194,14 +197,14 @@ export default Ember.Mixin.create({
           let hyp = Math.sqrt(Math.pow(tx + anchor[0] - ox, 2) + Math.pow(ty + anchor[1] - oy, 2));
           if (hyp > 18) {
             radius
-              .attr({
+              .attrs({
                 display: "block",
                 x1: ox,
                 y1: oy,
                 x2: tx + anchor[0] - signH*shift,
                 y2: ty
               });
-            end.attr({
+            end.attrs({
               display: null,
               x1: radius.attr("x2"),
               y1: radius.attr("y2"),

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 
 export default Ember.Mixin.create({
 
@@ -13,10 +14,10 @@ export default Ember.Mixin.create({
     this._super();
 
     let zoom = this.get('graphLayout.zoom'),
-        affineT = d3.geo.transform({
+        affineT = d3.geoTransform({
           point: function(x, y) { this.stream.point(x*zoom, y*zoom); },
         }),
-        path = d3.geo.path().projection(affineT);
+        path = d3.geoPath().projection(affineT);
 
     this.drawCompositionBorders(path);
     //this.drawCompositionClipPaths(path);

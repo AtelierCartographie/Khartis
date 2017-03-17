@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Struct from './struct';
 import Projection from './projection';
 import config from 'khartis/config/environment';
@@ -106,9 +107,9 @@ var Basemap = Struct.extend({
               }, {left: [], right: []});
         return {
           projection: j.projection,
-          land: topojson.merge(j, partition.right),
+          land: d3.geoStitch(topojson.merge(j, partition.right)),
           squares: topojson.mesh(j, {type: "GeometryCollection", geometries: partition.left}),
-          lands: topojson.feature(j, j.objects.poly),
+          lands: d3.geoStitch(topojson.feature(j, j.objects.poly)),
           backLands: j.objects['poly-down'] && topojson.feature(j, j.objects['poly-down']),
           borders: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) {
               return !a.properties || a.properties.featurecla === "International";
@@ -116,7 +117,12 @@ var Basemap = Struct.extend({
           bordersDisputed: !j.objects.line ? [] : topojson.mesh(j, j.objects.line, function(a, b) { 
               return a.properties && a.properties.featurecla === "Disputed"; 
             }),
-          linesUp: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up']),
+          linesUp: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up'], function(a, b) { 
+              return !(a.properties && a.properties.featurecla === "Disputed"); 
+          }),
+          linesUpDisputed: !j.objects['line-up'] ? [] : topojson.mesh(j, j.objects['line-up'], function(a, b) { 
+              return a.properties && a.properties.featurecla === "Disputed"; 
+          }),
           centroids: topojson.feature(j, j.objects.centroid)
         };
     });

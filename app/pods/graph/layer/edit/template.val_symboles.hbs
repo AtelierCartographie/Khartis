@@ -95,6 +95,7 @@
             <div class="horizontal half-airy solid flow w7 btn-switch-group">
               <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
               <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
+              <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'bar') 'selected'}}" {{action 'bind' editedLayer.mapping.visualization 'shape' 'bar'}}>{{x-capitalize (t 'visualization.settings.shape.bar')}}</div>
             </div>
           </div>
           <div class="horizontal middle flow">
@@ -104,11 +105,22 @@
             {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
             </div>
           </div>
+
+          {{#if (x-eq editedLayer.mapping.visualization.shape 'bar')}}
+          <div class="horizontal middle flow">
+            <label class="solid w5">{{x-capitalize (t 'general.width')}}</label>
+            <div class="horizontal half-airy solid flow w7">
+            {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.barWidth min=1 max=30}}
+            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.barWidth class="solid w3" min=1 update=(action (mut editedLayer.mapping.visualization.barWidth))}}
+            </div>
+          </div>
+          {{/if}}
+
           {{#unless editedLayer.mapping.scale.usesInterval}}
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
             <div class="horizontal half-airy solid flow w7">
-              {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=0 max=4}}
+              {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=editedLayer.mapping.minContrastIndex max=editedLayer.mapping.maxContrastIndex}}
             </div>
           </div>
           {{/unless}}

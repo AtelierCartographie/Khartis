@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 import config from 'khartis/config/environment';
 import GraphLayer from 'khartis/models/graph-layer';
 import Mapping from 'khartis/models/mapping/mapping';
@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
   
   availableProjections: function() {
     return this.get('model.graphLayout.basemap.availableProjections')
-      .filter( p => p.id !== "lambert_azimuthal_equal_area");
+      //.filter( p => p.id !== "lambert_azimuthal_equal_area");
   }.property('model.graphLayout.availableProjections'),
   
   isInStateVisualization: function() {
@@ -190,7 +190,7 @@ export default Ember.Controller.extend({
         w = this.get('model.graphLayout.width'),
         h = this.get('model.graphLayout.height');
     
-    d3Node.attr({
+    d3Node.attrs({
       width: this.get('model.graphLayout.width'),
       height: this.get('model.graphLayout.height'),
       viewBox: `${x} ${y} ${w} ${h}`,
@@ -199,10 +199,12 @@ export default Ember.Controller.extend({
 
     d3Node.selectAll("g.margin,g.offset,g.margin-resizer").remove();
     d3Node.selectAll("rect.fg").remove();
+    d3Node.selectAll("#document-mask").remove();
+    d3Node.selectAll("#viewport-mask").remove();
 
     d3Node.append("text")
       .text("Made with Khartis")
-      .attr({
+      .attrs({
         "x": x+w,
         "y": y+h,
         "dy": "-0.81em",
@@ -227,7 +229,7 @@ export default Ember.Controller.extend({
       khartisAttrs.push({
         ns: "i",
         attr: "stroke-width",
-        fn: (node) => node.attr({
+        fn: (node) => node.attrs({
               "stroke-width": node.attr(`i:i:stroke-width`),
               "i:i:stroke-width": null
             })
@@ -252,7 +254,7 @@ export default Ember.Controller.extend({
 
       //wrap nodes
       let wrapper = d3Node.append("g")
-            .attr({
+            .attrs({
               "id": "view-box",
               "i:i:extraneous": "self",
               "transform": `translate(${-x}, ${-y})`
@@ -270,7 +272,7 @@ export default Ember.Controller.extend({
     }
 
     khartisAttrs.forEach(kAttr => {
-      d3Node.selectAll(`[${kAttr.ns}\\:${kAttr.attr}]`)[0]
+      d3Node.selectAll(`[${kAttr.ns}\\:${kAttr.attr}]`).nodes()
         .forEach( (node) => {
           kAttr.fn || (kAttr.fn = (node) => node.attr(`${kAttr.ns}:${kAttr.ns}:${kAttr.attr}`, null));
           kAttr.fn(node = d3.select(node));

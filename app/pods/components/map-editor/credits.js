@@ -26,7 +26,7 @@ export default Ember.Mixin.create({
     
     d3l.select("text.map-title")
       .text(this.get('title'))
-      .attr({
+      .attrs({
         "font-size": "2em",
         x: this.get('graphLayout').hOffset(w) + this.get('graphLayout.margin.l'),
         y: this.get('graphLayout').vOffset(h) + this.get('graphLayout.margin.t') - 5
@@ -36,7 +36,7 @@ export default Ember.Mixin.create({
 
    d3l.select("text.map-dataSource")
       .text(this.get('dataSource'))
-      .attr({
+      .attrs({
         "font-size": "0.8em",
         "text-anchor": "end",
         x: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') - 1,
@@ -52,7 +52,7 @@ export default Ember.Mixin.create({
       .select("text")
       .text(this.get('author'))
       .attr("transform", "rotate(-90)")
-      .attr({
+      .attrs({
         "font-size": "0.8em"
       });
    

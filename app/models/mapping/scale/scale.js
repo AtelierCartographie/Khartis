@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Struct from 'khartis/models/struct';
 import {insideInterval, nestedMeans, standardDeviation, jenks} from 'khartis/utils/stats';
 
@@ -7,7 +8,8 @@ const CONTRASTS = {
   1: 1/3,
   2: 0.5,
   3: 1,
-  4: 2
+  4: 2,
+  5: 3
 };
 
 let Scale = Struct.extend({
@@ -24,7 +26,7 @@ let Scale = Struct.extend({
   }.property('valueBreak'),
   
   contrastScale: function() {
-    return d3.scale.pow().exponent(CONTRASTS[this.get('contrast')]);
+    return d3.scalePow().exponent(CONTRASTS[this.get('contrast')]);
   }.property('contrast'),
   
   deferredChange: Ember.debouncedObserver(
@@ -48,7 +50,7 @@ let Scale = Struct.extend({
           let band = (ext[1] - ext[0])/classes;
           return Array.from({length: classes-1}, (v,i) => (i+1)*band+ext[0] );
         } else if (intervalType === "quantile") {
-          return d3.scale.quantile()
+          return d3.scaleQuantile()
             .domain(vals)
             .range(Array.from({length: classes}, (v,i) => i))
             .quantiles();

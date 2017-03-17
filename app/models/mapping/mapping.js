@@ -9,6 +9,7 @@ import LabellingMixins from './mixins/labelling';
 import LegendMixin from './mixins/legend';
 import Colorbrewer from 'khartis/utils/colorbrewer';
 import Rule from './rule';
+import FilterAbstract from './filter/abstract';
 import FilterFactory from './filter/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
 
@@ -43,12 +44,19 @@ let Mapping = Struct.extend(LegendMixin, {
   },
 
   filteredBody: function() {
+    let geoDef = this.get('geoDef'),
+        geoMapped = FilterAbstract.create({
+          run(cell) {
+            let geoCell = cell.get('row.cells').find( c => c.get('column') == geoDef.get('geo') );
+            return geoCell && geoCell.get('postProcessedValue') !== false
+          }
+        });
     if (this.get('filter')) {
-      return this.get('varCol.body').filter( cell => this.get('filter').run(cell) );
+      return this.get('varCol.body').filter( cell => geoMapped.run(cell) && this.get('filter').run(cell) );
     } else {
-      return this.get('varCol.body');
+      return this.get('varCol.body').filter( cell => geoMapped.run(cell) );
     }
-  }.property('filter._defferedChangeIndicator', 'varCol.body'),
+  }.property('filter._defferedChangeIndicator', 'geoDef', 'varCol.body'),
   
   configure: function() {
     switch (this.get('type')) {

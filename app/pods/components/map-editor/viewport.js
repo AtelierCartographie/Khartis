@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 
 export default Ember.Mixin.create({
 
@@ -8,7 +9,7 @@ export default Ember.Mixin.create({
   viewportInit(defs, d3g) {
 
     let vm = defs.append("mask")
-      .attr({
+      .attrs({
         id: "viewport-mask",
         x: 0,
         y: 0,
@@ -17,13 +18,13 @@ export default Ember.Mixin.create({
       });
 
     vm.append("path")
-      .attr({
+      .attrs({
         "fill-rule": "evenodd"
       })
       .style("fill", "white");
 
     defs.append("clipPath")
-      .attr({
+      .attrs({
         id: "viewport-clip",
       })
       .append("path");
@@ -86,7 +87,7 @@ export default Ember.Mixin.create({
       .attr("d", `${inner}`);
 
     d3l.selectAll("rect.fg.viewport, rect.bg")
-      .attr({
+      .attrs({
         "x": -mX,
         "y": -mY,
         "width": w+2*mX,
@@ -145,14 +146,14 @@ export default Ember.Mixin.create({
       {dir: "r", x: this.get('graphLayout.width') - this.get('graphLayout.margin.h'), y: 0, width: 24},
     ];
 
-    let drag = d3.behavior.drag()
-        .on('dragstart', function () {
+    let drag = d3.drag()
+        .on('start', function () {
             d3.event.sourceEvent.stopPropagation();
             d3.event.sourceEvent.preventDefault();
             d3.select(this).classed("dragging", true);
             self.set('resizingMargin', true);
         })
-        .on('dragend', function () {
+        .on('end', function () {
             d3.select(this).classed("dragging", false);
             self.set('resizingMargin', false);
         })
@@ -201,7 +202,7 @@ export default Ember.Mixin.create({
     sel.exit().remove();
       
     d3l.select("rect.bg")
-      .attr({
+      .attrs({
         x: 0,
         y: 0,
         width: w,

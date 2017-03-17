@@ -1,4 +1,5 @@
 import {isFirefox} from 'khartis/utils/browser-check';
+import d3 from 'npm:d3';
 
 let _buildPatternFn = function(id, size, drawer) {
   
@@ -12,7 +13,7 @@ let _buildPatternFn = function(id, size, drawer) {
 
   Fn.prototype.init = function(sel) {
     
-    this.patternId = `pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill.replace("#", "")}` : ""}`;
+    this.patternId = btoa(`pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill}` : ""}`).replace(/\=/g, "");
 
     let defs = sel.selectAll("defs");
   
@@ -25,7 +26,7 @@ let _buildPatternFn = function(id, size, drawer) {
     if (pattern.empty()) {
       
       pattern = defs.append("pattern")
-        .attr({
+        .attrs({
           id: `${this.patternId}`,
           patternUnits: "userSpaceOnUse",
           width: size,
@@ -47,13 +48,13 @@ let _buildPatternFn = function(id, size, drawer) {
         let size = 4096;
         
         mask = defs.append("mask")
-          .attr({
+          .attrs({
             id: this.maskId,
             width: 4096,
             height: 4096
           });
         
-        mask.append("rect").attr({
+        mask.append("rect").attrs({
             x: -(4096/2),
             y: -(4096/2),
             width: 4096,
@@ -116,7 +117,7 @@ Pattern.lines = function(opts = {}) {
     size,
     function(g, stroke = "#FFFFFF") {
       for (let i = 0; i < orientation.length; i++) {
-        g.append("path").attr({
+        g.append("path").attrs({
           d: path(orientation[i]),
           "stroke-width": strokeWidth,
           "stroke": stroke,
@@ -139,7 +140,7 @@ Pattern.circles = function(opts = {}) {
     `circles-${(""+radius).replace(".", "_")}`,
     size,
     function(g, color = "#FFFFFF") {
-      g.append("circle").attr({
+      g.append("circle").attrs({
         cx: size / 2,
         cy: size / 2,
         r: radius,
@@ -159,7 +160,7 @@ Composer.prototype.compose = function(diverging, classes, before, angle, baseStr
   
   let res,
       l,
-      strokeScale = d3.scale.pow().exponent(1).range([1, 8]),
+      strokeScale = d3.scalePow().exponent(1).range([1, 8]),
       maxSize = strokeScale.range()[1] + 4;
 
   if (diverging) {

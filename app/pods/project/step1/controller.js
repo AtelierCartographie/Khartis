@@ -111,6 +111,14 @@ export default Ember.Controller.extend({
       this.set('model.csv', text);
     },
 
+    fileDroppedInEditor(file) {
+      var reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onloadend = (e) => {
+        this.set('model.csv', ab2string(e.target.result));
+      };
+    },
+
     parseCsvContent() {
 
       let sep = CSV.detect(this.get('model.csv'));

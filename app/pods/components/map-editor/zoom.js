@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import {isChrome} from 'khartis/utils/browser-check';
 import zoom2 from 'khartis/utils/d3-zoom2';
@@ -61,19 +62,16 @@ export default Ember.Mixin.create({
         ty = projector.translate()[1]*rs - t[1] * scale;
 
     mapG
-      .attr({
+      .attrs({
         "kis:kis:tx": translate[0],
         "kis:kis:ty": translate[1],
         "kis:kis:s": scale
       })
-      .transition().duration(240).ease("linear")
-      .attr({
-        "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
-      })
-      .each("end", () => {
-
-        if (mapG[0][0].__transition__.count > 1) return;
-
+      .transition()
+      .duration(300)
+      .ease(d3.easeLinear)
+      .on("end", () => {
+        
         mapG.attr("transform", null)
           .selectAll("#layers .shape")
           .attr("transform", null);
@@ -92,6 +90,9 @@ export default Ember.Mixin.create({
         
         this.projectAndDraw();
         
+      })
+      .attrs({
+        "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
       });
     
     /*if (isChrome()) { //désactivé car marche mal

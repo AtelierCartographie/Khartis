@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import {insideInterval, nestedMeans} from 'khartis/utils/stats';
 import ValueMixins from './value';
 import {compressIntervals} from 'khartis/utils/stats';

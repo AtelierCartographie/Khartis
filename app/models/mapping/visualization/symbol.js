@@ -10,6 +10,7 @@ let SymbolVisualization = Struct.extend({
   strokeColor: "#404040",
   stroke: 1,
   maxSize: 10,
+  barWidth: 16,
 
   absoluteMinSize: function() {
     return config.symbolMinMaxSize;
@@ -31,7 +32,7 @@ let SymbolVisualization = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak',
-    'maxSize', 'shape',
+    'maxSize', 'shape', 'barWidth',
     function() {
       this.notifyDefferedChange();
     },
@@ -45,7 +46,8 @@ let SymbolVisualization = Struct.extend({
       strokeColor: this.get('strokeColor'),
       stroke: this.get('stroke'),
       maxSize: this.get('maxSize'),
-      colorBeforeBreak: this.get('colorBeforeBreak')
+      colorBeforeBreak: this.get('colorBeforeBreak'),
+      barWidth: this.get('barWidth')
     }, props));
   }
   
@@ -60,7 +62,8 @@ SymbolVisualization.reopenClass({
       strokeColor: json.strokeColor,
       stroke: json.stroke,
       maxSize: json.maxSize,
-      colorBeforeBreak: json.colorBeforeBreak
+      colorBeforeBreak: json.colorBeforeBreak,
+      barWidth: json.barWidth
     });
   }
 });

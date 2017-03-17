@@ -1,3 +1,5 @@
+import d3 from 'npm:d3';
+
 export function insideInterval(ext, v) {
   return v >= ext[0] && v <= ext[1];
 };

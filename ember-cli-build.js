@@ -25,12 +25,12 @@ module.exports = function(defaults) {
         }
       });
 
-  app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
+  //app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
   app.import("bower_components/spectrum/spectrum.js");
   app.import("bower_components/spectrum/spectrum.css");
   app.import("bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js");
   
-  app.import("vendor/d3.geo.polyhedron.min.js");
+  //app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
   app.import("vendor/codemirror-placeholder.js");
   app.import("vendor/canvas-to-blob-polyfill.js");

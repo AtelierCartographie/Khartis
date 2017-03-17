@@ -1,3 +1,5 @@
+import d3 from 'npm:d3';
+
 let d3_behavior_zoomUnboundedScale = [0, Infinity],
     d3_behavior_zoomUnboundedTranslate = [[-Infinity, -Infinity], [Infinity, Infinity]];
 
@@ -23,8 +25,8 @@ export default function() {
       y1,
       touchtime; // time of last touchstart (to detect double-tap)
 
-  function zoom() {
-    this.on("mousedown.zoom", mousedown)
+  function zoom(sel) {
+    sel.on("mousedown.zoom", mousedown)
         .on("mousemove.zoom", mousemove)
         .on(d3_behavior_zoomWheel + ".zoom", mousewheel)
         .on("dblclick.zoom", dblclick);
@@ -165,7 +167,7 @@ export default function() {
     if (d3.event) {
       d3.event.preventDefault();
     }
-    dispatcher.zoom.apply(this, [scale, translate]);
+    dispatcher._.zoom[0].value.apply(this, [scale, translate]);
   }
 
   function prevent() {
@@ -231,6 +233,6 @@ export default function() {
     dispatch();
   }
 
-  return zoom;//d3.rebind(zoom, event, "on");
+  return zoom;
   
 };

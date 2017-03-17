@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import GraphLayout from 'khartis/models/graph-layout';
 import PatternMaker from 'khartis/utils/pattern-maker';
@@ -76,10 +76,10 @@ export default Ember.Component.extend({
 		var d3g = this.d3l();
     
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
-    d3.ns.prefix.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
-    d3g.attr("xmlns:i", d3.ns.prefix.illustrator);
-    d3.ns.prefix.khartis = 'http://www.sciencespo.fr/cartographie/khartis/';
-    d3g.attr("xmlns:kis", d3.ns.prefix.khartis);
+    d3.namespaces.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
+    d3g.attr("xmlns:i", d3.namespaces.illustrator);
+    d3.namespaces.illustrator = 'http://www.sciencespo.fr/cartographie/khartis/';
+    d3g.attr("xmlns:kis", d3.namespaces.illustrator);
     d3g.style("font-family", "verdana");
 		
 		// ========
@@ -290,7 +290,7 @@ export default Ember.Component.extend({
   },
     
   scaleProjector(projector) {
-
+    
     projector.forEachProjection( projection => {
       let bbox = d3lper.scaleCoords(this.get('graphLayout.zoom'), projection.bboxPx[0], projection.bboxPx[1]),
           tx = this.get('graphLayout.tx')*this.getSize().w,
@@ -312,7 +312,7 @@ export default Ember.Component.extend({
   
   getProjectedPath(idx) {
     
-    let path = d3.geo.path(),
+    let path = d3.geoPath(),
         proj = idx ? this.projectionFor(idx) : this.get('projector');
     
     path.projection(proj);
@@ -323,7 +323,7 @@ export default Ember.Component.extend({
 
   assumePathForLatLon(latLon) {
     
-    let path = d3.geo.path(),
+    let path = d3.geoPath(),
        projs = this.get('projector').projectionsForLatLon(latLon);
     if (projs.length) {
       path.projection(projs[0]);
@@ -344,7 +344,8 @@ export default Ember.Component.extend({
     
     let path = this.getProjectedPath(),
         precision = this.get('graphLayout.precision'),
-        defs = this.d3l().select("defs");
+        defs = this.d3l().select("defs"),
+        ε = 1e-1;
     
     if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
 
@@ -353,7 +354,7 @@ export default Ember.Component.extend({
         .attr("d", path);
     
       defs.select("#grid")
-        .datum(d3.geo.graticule())
+        .datum(d3.geoGraticule())
         .attr("d", path)
         .attr("clip-path", `url(#clip)`);
 
@@ -427,25 +428,25 @@ export default Ember.Component.extend({
     let sphere = this.d3l().select("#backmap").selectAll("use.sphere"),
         grid = this.d3l().select("#backmap").selectAll("use.grid");
 
-    sphere.style({
+    sphere.styles({
       "fill": "none",
       "stroke": this.get('graphLayout.gridColor'),
       "stroke-width": 3
     })
-    .attr({
+    .attrs({
       "xlink:href": `#sphere`,
       "display": this.get('graphLayout.canDisplaySphere') ? null : "none"
     })
     .classed("sphere", true);
   
-    grid.style({
+    grid.styles({
       "fill": "none",
       "stroke": this.get('graphLayout.gridColor')
     })
-    .attr({
+    .attrs({
       "xlink:href": `#grid`,
       "display": this.get('graphLayout.canDisplayGrid') ? null : "none"
-    }).style({
+    }).styles({
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
     })
     .classed("grid", true);
@@ -469,7 +470,7 @@ export default Ember.Component.extend({
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.backLands) )
-            .style({
+            .styles({
               "fill": this.get('graphLayout.backlandsColor')
             });
         }
@@ -485,7 +486,7 @@ export default Ember.Component.extend({
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
-            .style({
+            .styles({
               "fill": this.get('graphLayout.backmapColor')
             });
         }
@@ -500,7 +501,7 @@ export default Ember.Component.extend({
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares) )
-            .style({
+            .styles({
               "stroke": "none",
               "fill": this.get('graphLayout.backmapColor')
             });
@@ -534,7 +535,7 @@ export default Ember.Component.extend({
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares))
-            .style({
+            .styles({
               "stroke-width": 1,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
@@ -549,13 +550,29 @@ export default Ember.Component.extend({
       .enterUpdate({
         enter: function(sel) {
           return sel.append("path").classed("linesUp", true)
-            //.attr("clip-path", d => `url(#composition-clip-${d.projection})`); //TODO remove
         },
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
-            //.attr("clip-path", `url(#border-square-clip)`)
-            .style({
+            .styles({
               "stroke-width": this.get('graphLayout.strokeWidth')+1,
+              "stroke": this.get("graphLayout.stroke"),
+              "fill": "none"
+            });
+        }
+      });
+
+    d3l.select("#borders")
+      .selectAll("path.linesUp-disputed")
+      .data(this.get('graphLayout.showBorders') ? this.get('base') : [])
+      .enterUpdate({
+        enter: function(sel) {
+          return sel.append("path").classed("linesUp-disputed", true)
+        },
+        update: (sel) => {
+          return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUpDisputed) )
+            .styles({
+              "stroke-width": this.get('graphLayout.strokeWidth')+1,
+              "stroke-dasharray": "5,5",
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
@@ -572,7 +589,7 @@ export default Ember.Component.extend({
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.borders) )
             .attr("clip-path", `url(#border-square-clip)`)
-            .style({
+            .styles({
               "stroke-width": 1,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
@@ -590,7 +607,7 @@ export default Ember.Component.extend({
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.bordersDisputed) )
             .attr("clip-path", `url(#border-square-clip)`)
-            .style({
+            .styles({
               "stroke-width": 1,
               "stroke-dasharray": "5,5",
               "stroke": this.get("graphLayout.stroke"),
@@ -626,7 +643,7 @@ export default Ember.Component.extend({
     
     sel.order().exit().remove();
 
-    sel.each(function(d, index) {
+    this.d3l().select("#layers").selectAll("g.layer").each(function(d, index) {
       self.mapData(d3.select(this), d);
     });
     
@@ -649,22 +666,19 @@ export default Ember.Component.extend({
           
       data = mapping.get('filteredBody').map( (cell) => {
         
-        let geoData = cell.get('row.cells').find( c => c.get('column') == geoDef.get('geo') ).get('postProcessedValue'),
-            val = cell.get('postProcessedValue');
+        let geoData = cell.get('row.cells')
+          .find( c => c.get('column') == geoDef.get('geo') )
+          .get('postProcessedValue');
 
-        if (geoData) {
-          return {
-            id: geoData.value[geoKey],
-            value: val,
-            cell: cell,
-            surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
-            point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
-          };
-        }
+        return {
+          id: geoData.value[geoKey],
+          value: cell.get('postProcessedValue'),
+          cell: cell,
+          surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
+          point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
+        };
         
-        return undefined;
-        
-      }).filter( d => d !== undefined );
+      });
       
       if (graphLayer.get('mapping.visualization.type') === "surface") {
         this.mapSurface(d3Layer, data, graphLayer);
@@ -705,7 +719,7 @@ export default Ember.Component.extend({
         return undefined;
         
       }).filter( d => d !== undefined );
-      
+
       if (graphLayer.get('mapping.visualization.type') === "symbol") {
         this.mapSymbol(d3Layer, data, graphLayer);
       } else if (graphLayer.get('mapping.visualization.type') === "text") {
@@ -724,7 +738,7 @@ export default Ember.Component.extend({
 		
     let bindAttr = (_) => {
 
-      _.attr({
+      _.attrs({
           "xlink:href": d => this.registerLandSel(d.id),
           "fill": d => {
             let pattern = converter(d.cell, "texture");
@@ -769,38 +783,31 @@ export default Ember.Component.extend({
       let _ = d3.select(this),
           shape = converter(d.cell, "shape"),
           r = converter(d.cell, "size"),
+          sign = Math.sign(d.cell.get('postProcessedValue')),
           fill = converter(d.cell, "fill"),
           strokeColor = converter(d.cell, "strokeColor");
       
       if (shape && r > 0) {
         
-        let symbol = SymbolMaker.symbol({name: shape});
+        let symbol = SymbolMaker.symbol({
+          name: shape,
+          size: r*2,
+          sign: sign,
+          barWidth: mapping.get('visualization.barWidth')
+        });
       
-        symbol.call(svg);
-      
-        let el = symbol.insert(_, r*2);
+        let el = symbol.insert(_);
         
-        if (shape === "bar") {
-          
-          el.attr({
-              "width": mapping.get('visualization.maxSize'),
-              "height": r*r,
-              "x": -mapping.get('visualization.maxSize') / 2,
-              "y": -r*r
-            });
-          
-        } else {
-          _.select("*").attr({
-            "stroke-width": symbol.unscale(mapping.get('visualization.stroke'), r*2)
-          })
-          .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
-        }
+        _.select("*").attrs({
+          "stroke-width": symbol.unscale(mapping.get('visualization.stroke'))
+        })
+        .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
 
         if (shape === "line") {
           strokeColor = fill;
         }
         
-        el.attr({
+        el.attrs({
             "fill": fill,
             "stroke": strokeColor
           })

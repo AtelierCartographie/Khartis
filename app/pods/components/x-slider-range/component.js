@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import d3lper from  'khartis/utils/d3lper';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 
 const DRAGGER_SIZE = 14;
 
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
     this.set('_tmpValue', this.get('value'));
     
     this.set('scale',
-      d3.scale.linear()
+      d3.scaleLinear()
         .domain([this.get('min'), this.get('max')])
         .clamp(true)
     );
@@ -98,20 +98,17 @@ export default Ember.Component.extend({
       .attr("transform", "translate(6, 16)");
     
     // Axis      
-    var axis = d3.svg.axis()
-      .scale(scale)
-      .orient("bottom")
-      .tickSize(0)
-      .ticks(0);
-    
     let axisG = sliderG.append("g")
       .classed("axis", true)
-      .attr("transform", `translate(${DRAGGER_SIZE/2},0)`)
-      .call(axis);
+      .attr("transform", `translate(${DRAGGER_SIZE/2},0)`);
+      
+    axisG.append("path")
+      .attr("d", `M0,0V0H${scale.range()[1]}V0`)
+      .classed("domain", true);
 
     axisG.append("line")
       .classed("range-line", true)
-      .attr({
+      .attrs({
         x2: width - DRAGGER_SIZE,
         y1: 0,
         y2: 0
@@ -124,7 +121,7 @@ export default Ember.Component.extend({
       if (bandPx > 5) {
         axisG.append("line")
           .classed("ticks", true)
-          .attr({
+          .attrs({
             x1: bandPx,
             y1: 0,
             x2: width - DRAGGER_SIZE,
@@ -144,7 +141,7 @@ export default Ember.Component.extend({
         .classed(ori, true);
 
       dragger.append("polygon")
-        .attr({
+        .attrs({
           points: d3lper.polyPoints([
             [-DRAGGER_SIZE/2, -DRAGGER_SIZE/8],
             [0, -DRAGGER_SIZE/2],
@@ -157,7 +154,7 @@ export default Ember.Component.extend({
       if (this.get('displayTick')) {  
         dragger.append("text")
           .classed("value", true)
-          .attr({
+          .attrs({
             x: 0,
             y: -8,
             "text-anchor": "middle"
@@ -165,7 +162,7 @@ export default Ember.Component.extend({
       }
         
       // Enable dragger drag 
-      var dragBehaviour = d3.behavior.drag();
+      var dragBehaviour = d3.drag();
       dragBehaviour.on("drag", this.moveDragger.bind(this, ori));
       dragger.call(dragBehaviour);
 
@@ -249,13 +246,11 @@ export default Ember.Component.extend({
     this.displayValue();
     
     this.d3l().selectAll(`.slider .dragger.${ori}`)
-      .transition()
-      .ease("cubic-out")
-      .duration(100)
+      .transition(d3.transition().duration(100).ease(d3.easeCubicOut))
       .attr("transform", `translate(${translate + DRAGGER_SIZE / 2}, 0)`);
 
     this.d3l().selectAll(`.slider .range-line`)
-      .attr({
+      .attrs({
         [ori === "L" ? "x1" : "x2"]: translate 
       });
     

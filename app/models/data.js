@@ -3,7 +3,7 @@ import Struct from './struct';
 import GeoDef from './geo-def';
 import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
 import deg2dec from 'khartis/utils/deg2dec';
-/* global d3 */
+import d3 from 'npm:d3';
 
 let RowStruct = Struct.extend({
     header: null,

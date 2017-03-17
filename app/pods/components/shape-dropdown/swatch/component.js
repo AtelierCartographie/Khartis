@@ -32,7 +32,7 @@ export default Ember.Component.extend({
         w = this.$().width(),
         h = this.$().height(),
         r = Math.min(w/2, h/2),
-        symbol = SymbolMaker.symbol({name: this.get('shape')});
+        symbol = SymbolMaker.symbol({name: this.get('shape'), size: 2*(r-MARGIN)});
     
     this.d3l().select("g.swatchs")
       .selectAll("g.swatch")
@@ -44,13 +44,13 @@ export default Ember.Component.extend({
       .enterUpdate({
         enter: function(sel) {
           let g = sel.append("g").classed("swatch", true);
-          symbol.insert(g, 2*(r-MARGIN));
+          symbol.insert(g);
           return g;
         },
         update: (sel) => {
-          return sel.attr({
+          return sel.attrs({
             transform: d3lper.translate({tx: w/2, ty: h/2})
-          }).style({
+          }).styles({
             fill: this.get('color')
           });
         }

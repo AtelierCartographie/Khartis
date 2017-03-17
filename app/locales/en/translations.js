@@ -17,6 +17,7 @@ export default {
     "loading": "chargement",
     "search": "rechercher",
     "save": "save",
+    "width": "width",
     "yes": "yes",
     "no": "no",
     "error": {
@@ -79,6 +80,8 @@ export default {
           "oneColumn": "only one column was found",
           "colNumber": "csv format error: all rows don't have the same number of columns."
         },
+        "noError": "aucune erreur détectée",
+        "correct": "corriger",
         "rowCount": {
           "one": "row imported",
           "other": "rows imported"
@@ -223,7 +226,8 @@ export default {
       "shape": {
         "title": "shape",
         "rect": "rect",
-        "circle": "circle"
+        "circle": "circle",
+        "bar": "bar"
       },
       "size": "size",
       "contrast": "contrast",
@@ -276,6 +280,7 @@ export default {
     "warning": {
       "rule.count": {
         "title": "non-blocking anomaly",
+        "about": "read more",
         "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
         "help": {
           "_": "Veuillez vous assurer de visualiser :",
@@ -362,7 +367,9 @@ export default {
     "german states 2016": "Germany > States (2016)",
     "german districts 2016": "Germany > Districts (2016)",
     "us state 2015": "United States > States (2015)",
-    "eu nuts-2 2013": "Europe 2013"
+    "eu country 2013": "Europe > States (2016)",
+    "eu nuts-2 2013": "Europe > nuts 2 (2013)",
+    "eu nuts-3 2013": "Europe > nuts 3 (2013)"
   },
 
   "examples": {
@@ -380,7 +387,12 @@ export default {
     "de_district_inhabitants": "Population (31/12/2015)",
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
-    "us_state-pop": "Population (2010-2015)"
+    "us_state-pop": "Population (2010-2015)",
+    "eu_country-energie": "Share of renewable energy in gross final energy consumption (2005-2014)",
+    "eu_country-ecommerce": "Internet purchases by individuals in the 12 months (2004-2016)",
+    "eu_nuts2-travail": "Average hours worked per week (2015)",
+    "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
+    "eu_nuts3-pop": "Population density (2015)"
   }
   
 };

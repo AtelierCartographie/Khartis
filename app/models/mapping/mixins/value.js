@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'npm:d3';
 import Rule from '../rule';
 import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
@@ -9,7 +10,7 @@ import config from 'khartis/config/environment';
 let DataMixin = Ember.Mixin.create({
   
   values: function() {
-    return this.get('varCol.body')
+    return this.get('filteredBody')
       .filter( c => {
         return !Ember.isEmpty(c.get('value')) && this.get('varCol.incorrectCells').indexOf(c) === -1
         && !isNaN(c.get('postProcessedValue'))
@@ -81,6 +82,7 @@ let DataMixin = Ember.Mixin.create({
 
     pre = Math.min(pre, 5);
     
+    
     /*augmente la précision si elle ne permet pas
      *de distinguer les intervalles 
      */
@@ -100,8 +102,9 @@ let DataMixin = Ember.Mixin.create({
     pre = this.get('intervals').reduce( (p, v, i, arr) => {
       return raisePrecision(i > 0 ? arr[i-1] : undefined, v, p);
     }, pre);
-
-    return pre;
+    
+    return Math.round(pre);
+    
   }.property('values', 'intervals'),
 
   valueBreakChange: function() {
@@ -297,10 +300,10 @@ let SurfaceMixin = Ember.Mixin.create({
         rangeLength;
         
     if (this.get('scale.usesInterval')) {
-      d3Scale = d3.scale.threshold();
+      d3Scale = d3.scaleThreshold();
       rangeLength = intervals.length + 1;
     } else {
-      d3Scale = d3.scale.linear();
+      d3Scale = d3.scaleLinear();
       rangeLength = intervals.length; //2
     };
         
@@ -350,6 +353,19 @@ let SymbolMixin = Ember.Mixin.create({
       usesInterval: this.get('scale.usesInterval') || false
     });
   },
+
+  minContrastIndex: function() {
+    return this.get('visualization.shape') !== "bar" ? 0 : 1;
+  }.property('visualization.shape'),
+
+  maxContrastIndex: function() {
+    return this.get('visualization.shape') !== "bar" ? 4 : 5;
+  }.property('visualization.shape'),
+
+  contrastMinMaxIndexesChanged: function() {
+    this.get('scale.contrast') < this.get('minContrastIndex') && this.set('scale.contrast', this.get('minContrastIndex'));
+    this.get('scale.contrast') > this.get('maxContrastIndex') && this.set('scale.contrast', this.get('maxContrastIndex'));
+  }.observes('minContrastIndex', 'maxContrastIndex'),
   
   getScaleOf(type) {
     
@@ -366,7 +382,7 @@ let SymbolMixin = Ember.Mixin.create({
 
       if (this.get('scale.usesInterval')) {
 
-        contrastScale = d3.scale.threshold();
+        contrastScale = d3.scaleThreshold();
 
         if (this.get('shouldDiverge')) {
           range = Array.from({length: this.get('scale.classesBeforeBreak')},
@@ -391,7 +407,7 @@ let SymbolMixin = Ember.Mixin.create({
 
         contrastScale.domain(intervals).range(range);
 
-        d3Scale = d3.scale.linear().clamp(true);
+        d3Scale = d3.scaleLinear().clamp(true);
         domain = [0, d3.max(range)];
         range = [0, visualization.get('maxSize')];
 
@@ -406,11 +422,13 @@ let SymbolMixin = Ember.Mixin.create({
         range = [0, visualization.get('maxSize')];
         transform = _ => d3Scale(Math.abs(_));
 
+        transform.invert = (_) => d3Scale.invert(Math.abs(_));
+
       };
 
     } else if (type === "color") {
       
-      d3Scale = d3.scale.threshold()
+      d3Scale = d3.scaleThreshold()
 
       if (this.get('scale.diverging')) {
         range = this.get('visualization').colorStops(this.get('scale.diverging'));

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import d3 from 'd3';
+import d3 from 'npm:d3';
 /* global $ */
 
 export default Ember.Component.extend({
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
       
       let self = this,
           $this = this.$(),
-          drag = d3.behavior.drag(),
+          drag = d3.drag(),
           shiftOveredEl = function(y) {
             
             let pos = {index: undefined},
@@ -58,13 +58,17 @@ export default Ember.Component.extend({
             
             return pos;
           };
+
+      drag = drag.filter(function() {
+        return !$(d3.event.target).hasClass("no-drag") && !$(d3.event.target).parents(".no-drag").length;
+      });
     
-      drag.origin(function() {
+      drag.subject(function() {
         return {x: $(this).position().left, y: $(this).position().top};
       });
       
-      drag.on("dragstart", function() {
-        if (!$(d3.event.sourceEvent.target).parents(".no-drag").length) {
+      drag.on("start", function() {
+        if (!$(d3.event.sourceEvent.target).hasClass("no-drag") && !$(d3.event.sourceEvent.target).parents(".no-drag").length) {
           d3.event.sourceEvent.stopPropagation();
           self.set('wasDragged', false);
         }
@@ -83,7 +87,7 @@ export default Ember.Component.extend({
         });
       });
       
-      drag.on("dragend", function(d, i) {
+      drag.on("end", function(d, i) {
 
         if (!self.get('wasDragged') && !$(d3.event.sourceEvent.target).parents(".no-drag-click").length) {
           self.sendAction('onClick', i);
