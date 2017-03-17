@@ -246,7 +246,7 @@ module.exports = function(environment) {
         attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
         sources: [
           {
-            source: "DE-2016/topojson/bkg-2500-basemap-de-states-lasttoday.json",
+            source: "DE-2016/topojson/bkg-2500-basemap-de-states-q1e4.json",
             projection: "d3.geo.conicConformal()",
             scale: 0.8, borders: ["l", "r", "t", "b"],
             transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
@@ -265,7 +265,7 @@ module.exports = function(environment) {
         attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
         sources: [
           {
-            source: "DE-2016/topojson/bkg-2500-basemap-de-districts.json",
+            source: "DE-2016/topojson/bkg-2500-basemap-de-districts-q1e4.json",
             projection: "d3.geo.conicConformal()",
             scale: 0.8, borders: ["l", "r", "t", "b"],
             transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
@@ -283,7 +283,7 @@ module.exports = function(environment) {
             attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
             license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
             license_url: "https://www.govdata.de/dl-de/by-2-0",
-            description: "Inhabitants, 31. December 2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
             source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
           }
         ]
