@@ -103,7 +103,8 @@ let DataMixin = Ember.Mixin.create({
       return raisePrecision(i > 0 ? arr[i-1] : undefined, v, p);
     }, pre);
     
-    return pre;
+    return Math.round(pre);
+    
   }.property('values', 'intervals'),
 
   valueBreakChange: function() {
