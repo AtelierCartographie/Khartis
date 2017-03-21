@@ -624,12 +624,12 @@ export default Ember.Mixin.create({
         y2: -rValueBreak,
         stroke: "black"
       });*/
-    console.log(minHeight, maxHeight);
-    let width = intervals.length * (d.get('mapping.visualization.barWidth')+2);
+
+    let width = intervals.length * (d.get('mapping.visualization.barWidth')*(1+0.25));
     barG.attr("kis:kis:flow-css", `flow: horizontal; width: ${width}px`);
     axisG.attr("kis:kis:flow-css", `margin-left: 5px`);
     g.attr("kis:kis:flow-css", `flow: horizontal; height: ${maxHeight-minHeight}; width: ${width+20}px; margin-top: ${-minHeight+10}px`);
-    el.attr("kis:kis:flow-css", `flow: vertical; width: ${width+48}px; margin-right: 34; margin-top: 16`);
+    el.attr("kis:kis:flow-css", `flow: vertical; width: ${width+48}px; margin-right: 42; margin-top: 16`);
   },
 
   appendRuleLabel(d, textOffset, formatter, rule, i) {
