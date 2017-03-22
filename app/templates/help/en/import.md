@@ -1,1 +1,1 @@
-Collecting, structuring and identifying data are prerequisite tasks to all maps creation. Special care is needed to avoid to come back at this step later.
+Structuring data are prerequisite tasks to all maps. Special care is needed to avoid a come back at this step later.

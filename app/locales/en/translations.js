@@ -16,7 +16,7 @@ export default {
     "download": "download",
     "loading": "chargement",
     "search": "rechercher",
-    "save": "save",
+    "save": "save project",
     "width": "width",
     "yes": "yes",
     "no": "no",
@@ -45,7 +45,7 @@ export default {
         "selectAMap": "Select a map"
       },
       "tooltip": {
-        "csv": "Comma separated values files that ends with .csv",
+        "csv": "Filename extension .csv use comma as column separator",
         "resumeProject": "Will resume the last project edited on this computer ",
         "importProject": "Import a saved project"
       },
@@ -63,13 +63,13 @@ export default {
       },
       "import": {
         "success": "Import completed successfully",
-        "fatal": "impossible to continue, please edit your csv",
+        "fatal": "impossible to continue, please edit and modify your csv",
         "warningsMessage": {
           "one": "non-blocking anomaly",
           "other": "non-blocking anomalies"
         },
         "warning": {
-          "trim": "some cells have unnecessary spaces at the beginning or end of a word. They were removed when importing"
+          "trim": "Some cells have unnecessary spaces at the beginning or end of a word. They were removed when importing"
         },
         "errorsMessage": {
           "one": "blocking anomaly",
@@ -93,7 +93,7 @@ export default {
         "geoRefColumn": "Geographic column",
         "geoRefColumnNotFound": "No geographic column has been found",
         "tooltip": {
-          "geoRefColumn": "The column from your imported data that maps to a geographic zone"
+          "geoRefColumn": "This is the column of your table that will be used to identify the geography of your data"
         }
       },
       "editColumn": {
@@ -195,7 +195,7 @@ export default {
         "cumulatives": "aggregated",
         "classes": "classed",
         "tooltip": {
-          "title": "Histogram that represents the distribution of the data"
+          "title": "It shows the distribution of occurrences according to the values of the series"
         }
       },
       "title" : "settings",
@@ -203,14 +203,14 @@ export default {
       "discretization": {
         "title": "discretization",
         "tooltip": {
-          "title": "Discretization concerns the process of transferring continuous functions, models, and equations into discrete counterparts"
+          "title": "Breaking the series into classes"
         },
         "method": {
           "unique": "proportional",
           "grouped": "grouped into classes",
           "tooltip": {
-            "unique": "Symbol's size is propotional to values",
-            "grouped": "Values are grouped into classes"
+            "unique": "Each value is translated by a symbol that is strictly proportional to him",
+            "grouped": "Values are grouped into ordered classes"
           }
         },
         "type": {
@@ -266,7 +266,7 @@ export default {
         },
         "taille_valeur": {
           "name": "categories on areas 2",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "color gradient follows values order"
         },
         "cat_symboles": {
           "name": "categories > symbols",
@@ -274,7 +274,7 @@ export default {
         },
         "ordre_symboles": {
           "name": "categories on symbols 2",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "symbols order follows values order"
         }
       }
     },
@@ -284,13 +284,13 @@ export default {
     "warning": {
       "rule.count": {
         "title": "non-blocking anomaly",
-        "about": "read more",
-        "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
+        "about": "",
+        "explenation": "Are you sure that your data contains categories?",
         "help": {
-          "_": "Veuillez vous assurer de visualiser :",
-          "1": "1 / du texte (données nominales)",
-          "2": "2 / des nombres (données ordinales)",
-          "3": "3 / moins de 12 catégories à la fois"
+          "_": "The number of detected occurrences suggests that your data rather show quantities.",
+          "1": "It would be more appropriate to use proportionality or order.",
+          "2": "",
+          "3": ""
         }
       }
     },
@@ -341,7 +341,7 @@ export default {
   },
 
   "legend": {
-    "editTitleHere": "edit legend's title"
+    "editTitleHere": "Edit legend's title"
   },
 
   "blindness": {

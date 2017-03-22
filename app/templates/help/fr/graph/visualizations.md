@@ -1,1 +1,1 @@
-La transformation des données en du dessin constitue l'étape clé. Mais selon les données, certaines visualisations sont plus indiquées que d'autres. Il convient donc de faire le bon choix afin d'éviter les cartes peu lisibles voire celles qui produiraient des contresens.
+La transformation des données en dessin constitue l'étape clé. Selon les données, certaines visualisations sont plus indiquées que d'autres, il convient donc de faire le bon choix afin d'éviter les cartes peu lisibles voire celles qui produiraient des contresens.
