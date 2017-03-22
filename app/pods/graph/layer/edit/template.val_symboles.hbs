@@ -35,7 +35,11 @@
         <div class="solid vertical flow">
         {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
         <ul class="tabs brewer-tabs">
-          <li tab-id="linear-tab">{{t 'visualization.settings.discretization.method.unique'}}</li>
+          <li tab-id="linear-tab">
+            {{#x-tooltip message=(t 'visualization.settings.discretization.method.tooltip.unique')}}
+            <span class="tooltip-trigger">{{t 'visualization.settings.discretization.method.unique'}}</span>
+            {{/x-tooltip}}
+          </li>
           <li tab-id="classes-tab">
             {{#x-tooltip message=(t 'visualization.settings.discretization.method.tooltip.grouped')}}
             <span class="tooltip-trigger">{{t 'visualization.settings.discretization.method.grouped'}}</span>
@@ -118,7 +122,9 @@
 
           {{#unless editedLayer.mapping.scale.usesInterval}}
           <div class="horizontal middle flow">
-            <label class="solid w5">{{x-capitalize (t 'visualization.settings.contrast')}}</label>
+            {{#x-tooltip message=(t 'visualization.settings.contrast.tooltip')}}
+            <label class="solid w5"><span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.contrast.title')}}</span></label>
+            {{/x-tooltip}}
             <div class="horizontal half-airy solid flow w7">
               {{x-slider class="fluid" band=1 value=editedLayer.mapping.scale.contrast min=editedLayer.mapping.minContrastIndex max=editedLayer.mapping.maxContrastIndex}}
             </div>

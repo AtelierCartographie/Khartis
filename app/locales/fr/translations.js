@@ -209,6 +209,7 @@ export default {
           "unique": "proportionnels",
           "grouped": "regroupés en classes",
           "tooltip": {
+            "unique": "La taille des symboles est proportionnelle aux valeurs",
             "grouped": "Les valeurs sont regroupées en classes"
           }
         },
@@ -230,7 +231,10 @@ export default {
          "bar": "barre"
       },
       "size": "taille",
-      "contrast": "contraste",
+      "contrast": {
+        "title": "contraste",
+        "tooltip": "Réglage du contraste"
+      },
       "color": {
         "one": "couleur",
         "other": "couleurs"

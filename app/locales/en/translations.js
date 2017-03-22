@@ -209,6 +209,7 @@ export default {
           "unique": "proportional",
           "grouped": "grouped into classes",
           "tooltip": {
+            "unique": "Symbol's size is propotional to values",
             "grouped": "Values are grouped into classes"
           }
         },
@@ -230,7 +231,10 @@ export default {
         "bar": "bar"
       },
       "size": "size",
-      "contrast": "contrast",
+      "contrast": {
+        "title": "contrast",
+        "tooltip": "Contrast setting"
+      },
       "color": {
         "one": "color",
         "other": "colors"
