@@ -172,7 +172,6 @@ export default Ember.Component.extend({
   }.observes('min', 'max'),
   
   moveDragger(x) {
-    console.log(x);
     x = x !== undefined ? x : d3.event.x
     let scale = this.get('scale'),
         pos = Math.max(0, Math.min(scale.range()[1], x)),
@@ -255,10 +254,6 @@ export default Ember.Component.extend({
   commitValue: function() {
     this.set('value', this.get('_tmpValue'));
   },
-  
-  /*tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
-    this.set('value', this.get('_tmpValue'));
-  }, 120),*/
   
   valueChange: function() {
     
