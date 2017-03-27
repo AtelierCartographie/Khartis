@@ -389,7 +389,7 @@ export default {
     "es_prov-pop": "Bevölkerungstatistik (2000-2015)",
     "es_auto-pop": "Bevölkerungstatistik (2000-2015)",
     "de_district_inhabitants": "Einwohnerzahlen (31.12 2015)",
-    "us_state-pop": "Bevölkerungstatistik (2010-2015)"
+    "us_state-pop": "Bevölkerungstatistik (2010-2015)",
     "us_state-pop": "Bevölkerungstatistik (2010-2015)",
     "eu_country-energie": "Anteil erneuerbarer Energien am Brutto-Endenergieverbrauch (2005-2014)",
     "eu_country-ecommerce": "Internet-Einkäufe von Einzelpersonen innerhalb von 12 Monaten (2004-2016)",
