@@ -360,7 +360,7 @@ export default {
     "world": "Welt > Länder (2016)",
     "brazil ufe 2015": "Brasilien > Bundesländer (2015)",
     "brazil mee 2015": "Brasilien > Mesoregions (2015)",
-    "brazil mie 2015": "mesoregions > Microregions (2015)",
+    "brazil mie 2015": "Brasilien > Microregions (2015)",
     "france dept": "Frankreich > Departments (2016)",
     "france reg 2015": "Frankreich > Regionen (2015)",
     "france reg 2016": "Frankreich > Regionen (2016)",
