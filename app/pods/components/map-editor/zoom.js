@@ -68,7 +68,7 @@ export default Ember.Mixin.create({
         "kis:kis:s": scale
       })
       .transition()
-      .duration(300)
+      .duration(260)
       .ease(d3.easeLinear)
       .on("end", () => {
         

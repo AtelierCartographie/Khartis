@@ -4,7 +4,7 @@ briesemeister,Briesemeister,World,"d3.geoProjection(d3.geoHammerRaw(1.75, 2))","
 interrupted_goode_homolosine,Goode H.,World,d3.geoInterruptedHomolosine(),,150,,,http://bl.ocks.org/mbostock/4448587,,,4,1,2,J. Paul Goode,1923,1,0,0
 lambert_azimuthal_equal_area,LAEA,Region,d3.geoAzimuthalEqualArea(),"[0, -90]",150,,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann lambert,1772,1,1,1
 mollweide,Mollweide,World,d3.geoMollweide(),,150,,,http://bl.ocks.org/mbostock/3734336,longitude,,4,1,2,Karl Mollweide,1805,1,0,0
-natural_earth,Natural Earth,World,d3.geoNaturalEarth(),,150,,,http://bl.ocks.org/mbostock/4479477,longitude,,3,2,4,Tom Patterson,2007,1,0,0
+natural_earth,Natural Earth,World,d3.geoNaturalEarth(),,150,,,http://bl.ocks.org/mbostock/4479477,longitude,,3,2,4,Tom Patterson,2007,1,0,1
 waterman_butterfly,Waterman b.,World,d3.geoPolyhedralWaterman(),"[20, 0]",118,,,http://bl.ocks.org/mbostock/4458497,,"[200, 0]",3,3,3,Steve Waterman,1996,1,1,1
 orthographic,Orthographic,Region,d3.geoOrthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,0,0,1,1,1
 plate_carree,Plate carrée,World,d3.geoEquirectangular(),,150,,,http://bl.ocks.org/mbostock/3757119,longitude,,2,2,4,0,0,1,0,0

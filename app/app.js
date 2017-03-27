@@ -12,7 +12,7 @@ import './utils/d3proto';
 
 /* attach d3 geo projection */
 Object.assign(d3, geoProjections);
-console.log(geoProjections);
+
 let App;
 
 if( isEverGreen() === false){

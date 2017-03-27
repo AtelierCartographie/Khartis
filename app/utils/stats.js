@@ -115,7 +115,7 @@ export function jenks(values, classes) {
 
 export function compressIntervals(intervals, extent = []) {
   return intervals.reduce( (arr, v) => {
-    if (!arr.concat(extent).some( v2 => Math.sign(v2) === Math.sign(v) && Math.abs(v2 - v) < Math.abs(v)*Number.EPSILON )) {
+    if (!arr.concat(extent).some( v2 => Math.sign(v2) === Math.sign(v) && Math.abs(v2 - v) <= Math.abs(v)*Number.EPSILON )) {
       arr.push(v);
     }
     return arr;

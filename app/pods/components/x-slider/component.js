@@ -76,7 +76,8 @@ export default Ember.Component.extend({
   
   draw: function() {
     
-    let margin = {
+    let self = this,
+        margin = {
           l: parseInt( this.$(".slider").css("marginLeft") ),
           r: parseInt( this.$(".slider").css("marginRight") )
         },
@@ -101,7 +102,10 @@ export default Ember.Component.extend({
       .attr("transform", `translate(${DRAGGER_SIZE/2},0)`)
       .append("path")
       .attr("d", `M0,0V0H${scale.range()[1]}V0`)
-      .classed("domain", true);
+      .classed("domain", true)
+      .on("click", function() {
+        self.moveDragger(d3.mouse(this)[0]);
+      });
       
     if (this.get('band') != null) {
       
@@ -167,17 +171,18 @@ export default Ember.Component.extend({
     this.redraw();
   }.observes('min', 'max'),
   
-  moveDragger() {
-      let scale = this.get('scale'),
-           pos = Math.max(0, Math.min(scale.range()[1], d3.event.x)),
-           tmpVal = this.stepValue(this.transform(scale.invert(pos)));
-      
-      this.translate(tmpVal);
-      
-      if (this.get('_tmpValue') != tmpVal) {
-        this.set('_tmpValue', tmpVal);
-        Ember.run.debounce(this, this.commitValue, 120);
-      }
+  moveDragger(x) {
+    x = x !== undefined ? x : d3.event.x
+    let scale = this.get('scale'),
+        pos = Math.max(0, Math.min(scale.range()[1], x)),
+        tmpVal = this.stepValue(this.transform(scale.invert(pos)));
+    
+    this.translate(tmpVal);
+    
+    if (this.get('_tmpValue') != tmpVal) {
+      this.set('_tmpValue', tmpVal);
+      Ember.run.debounce(this, this.commitValue, 100);
+    }
   },
   
   stepValue(val) {
@@ -249,10 +254,6 @@ export default Ember.Component.extend({
   commitValue: function() {
     this.set('value', this.get('_tmpValue'));
   },
-  
-  /*tmpValueChange: Ember.debouncedObserver('_tmpValue', function() {
-    this.set('value', this.get('_tmpValue'));
-  }, 120),*/
   
   valueChange: function() {
     

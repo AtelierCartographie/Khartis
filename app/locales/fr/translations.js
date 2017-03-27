@@ -16,7 +16,7 @@ export default {
     "download": "télécharger",
     "loading": "chargement",
     "search": "rechercher",
-    "save": "enregistrer",
+    "save": "enregistrer le projet",
     "width": "largeur",
     "yes": "oui",
     "no": "non",
@@ -45,11 +45,11 @@ export default {
         "selectAMap": "Sélectionner un fond de carte"
       },
       "tooltip": {
-        "csv": "Fichers de type « comma separated value » finissant par .csv",
+        "csv": "Fichier d'extension .csv avec des virgules en séparateur de colonnes",
         "resumeProject": "Le dernier projet édité sur ce poste sera restauré",
         "importProject": "Importer un projet sauvegardé"
       },
-      "pasteCsv": "coller ici vos données ou glisser un fichier csv",
+      "pasteCsv": "coller ici votre tableau de données ou glisser un fichier csv",
       "downloadCsvModel": "télécharger le modèle (.csv)",
       "importPoject": {
         "title": "Importer un projet Khartis",
@@ -63,13 +63,13 @@ export default {
       },
       "import": {
         "success": "importation réalisée avec succès",
-        "fatal": "impossible de continuer, veuillez éditer votre csv",
+        "fatal": "impossible de continuer, veuillez éditer et modifier votre csv",
         "warningsMessage": {
           "one": "anomalie non bloquante",
           "other": "anomalies non bloquantes"
         },
         "warning": {
-          "trim": "certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
+          "trim": "Certaines cellules contiennent des espaces inutiles en début ou en fin de mot. Ils ont été supprimés lors de l'importation"
         },
         "errorsMessage": {
           "one": "anomalie bloquante",
@@ -78,7 +78,7 @@ export default {
         "error": {
           "header.emptyCell": "l'entête semble incorrecte : certaines cellules sont vides.",
           "oneColumn": "une seule colonne a été trouvée",
-          "colNumber": "csv incorrectement formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
+          "colNumber": "csv mal formaté : toutes les lignes ne possèdent pas le même nombre de colonnes."
         },
         "noError": "aucune erreur détectée",
         "correct": "corriger",
@@ -93,7 +93,7 @@ export default {
         "geoRefColumn": "Colonne de référence géographique",
         "geoRefColumnNotFound": "Aucune colonne géoréférençable n'a été trouvée",
         "tooltip": {
-          "geoRefColumn": "La colonne de votre import identifiant la zone géographique à représenter"
+          "geoRefColumn": "C'est la colonne de votre tableau qui servira à identifier la géographie de vos données"
         }
       },
       "editColumn": {
@@ -106,7 +106,7 @@ export default {
   
   "navigation": {
 
-    "editColumn": "Edition d'une colonne",
+    "editColumn": "Édition d'une colonne",
 
     "sidebar": {
       "data" : "données",
@@ -195,7 +195,7 @@ export default {
         "cumulatives": "cumulées",
         "classes": "classes",
         "tooltip": {
-          "title": "Histogramme permettant de représenter la répartition des données"
+          "title": "Il montre la répartition des occurrences selon les valeurs de la série"
         }
       },
       "title" : "réglages",
@@ -209,7 +209,8 @@ export default {
           "unique": "proportionnels",
           "grouped": "regroupés en classes",
           "tooltip": {
-            "grouped": "Les valeurs sont regroupées en classes"
+            "unique": "Chaque valeur est traduite par un symbole qui lui est strictement proportionnel",
+            "grouped": "Les valeurs sont regroupées en classes ordonnées de symboles"
           }
         },
         "type": {
@@ -230,7 +231,10 @@ export default {
          "bar": "barre"
       },
       "size": "taille",
-      "contrast": "contraste",
+      "contrast": {
+        "title": "contraste",
+        "tooltip": "Réglage du contraste"
+      },
       "color": {
         "one": "couleur",
         "other": "couleurs"
@@ -262,7 +266,7 @@ export default {
         },
         "taille_valeur": {
           "name": "catégories sur surfaces 2",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "le dégradé de couleurs suit l'ordre des valeurs"
         },
         "cat_symboles": {
           "name": "catégories > symboles",
@@ -270,7 +274,7 @@ export default {
         },
         "ordre_symboles": {
           "name": "catégories sur symboles 2",
-          "description": "l'ordre des symbols respecte celui des valeurs"
+          "description": "l'ordre des symboles suit celui des valeurs"
         }
       }
     },
@@ -280,13 +284,13 @@ export default {
     "warning": {
       "rule.count": {
         "title": "anomalie non bloquante",
-        "about": "en savoir plus",
-        "explenation": "attention, il existe plus de 8 catégories. Cela peut entrainer des difficultés à visualiser clairement les données.",
+        "about": "",
+        "explenation": "Êtes-vous sûr que vos données contiennent des catégories ?",
         "help": {
-          "_": "Veuillez vous assurer de visualiser :",
-          "1": "1 / du texte (données nominales)",
-          "2": "2 / des nombres (données ordinales)",
-          "3": "3 / moins de 12 catégories à la fois"
+          "_": "Le nombre d'occurrences détectées laisse penser que vos données montrent plutôt des quantités.",
+          "1": "Il serait alors plus approprié d'utiliser la proportionnalité ou l'ordre.",
+          "2": "",
+          "3": ""
         }
       }
     },
@@ -297,14 +301,14 @@ export default {
       },
       "bigDataSet": {
         "title": "Attention",
-        "content": "Ce calque contient beaucoup de valeurs et cela pourra nuire aux performances de l'application. Voulez-vous continuer ?"
+        "content": "Ce calque contient beaucoup de valeurs et cela pourrait entrainer des problèmes de performances. Voulez-vous continuer ?"
       }
     }
   },
 
   "export": {
     "title": {
-      "labels": "etiquettes",
+      "labels": "étiquettes",
       "styles": "habillage de la carte",
       "sizes": "dimensions",
       "export": "export"
@@ -330,14 +334,14 @@ export default {
       "legend": "légende",
       "width": "largeur",
       "height": "hauteur",
-      "borders": "frontières",
+      "borders": "frontières ou limites",
       "grid": "graticules",
       "background": "fond de carte"
     }
   },
 
   "legend": {
-    "editTitleHere": "editez ici le titre de la légende"
+    "editTitleHere": "Éditez ici le titre de la légende"
   },
 
   "blindness": {

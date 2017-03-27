@@ -82,7 +82,6 @@ let DataMixin = Ember.Mixin.create({
 
     pre = Math.min(pre, 5);
     
-    
     /*augmente la précision si elle ne permet pas
      *de distinguer les intervalles 
      */
