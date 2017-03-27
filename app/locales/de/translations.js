@@ -3,7 +3,7 @@ export default {
   "general": {
     "next": "Weiter",
     "back": "Zurück",
-    "submit": "submit",
+    "submit": "Absenden",
     "cancel": "Abbrechen",
     "import": "Import",
     "continue": "OK",
@@ -12,7 +12,7 @@ export default {
     "close": "Schließen",
     "or": "oder",
     "and": "und",
-    "none": "none",
+    "none": "Keine",
     "download": "Download",
     "loading": "Laden",
     "search": "Bitte wählen",
@@ -30,7 +30,7 @@ export default {
     "thousands": ","
   },
 
-  "help.wiki": "Hilfe - Wiki Khartis",
+  "help.wiki": "Hilfe - Khartis Wiki (Französisch)",
   
   "project": {
    
@@ -79,6 +79,8 @@ export default {
           "oneColumn": "Wir konnten nur eine Spalte identifizieren",
           "colNumber": "CSV-Formatierunsfehler: Zeilen haben eine unterschiedliche Anzahl an Spalten."
         },
+        "noError": "OK",
+        "correct": "Korrektur benötigt",
         "rowCount": {
           "one": "Zeile importiert",
           "other": "Zeilen importiert"
@@ -190,12 +192,12 @@ export default {
         "frequencies": "Häufigkeit",
         "values": "Werte",
         "cumulatives": "Kumulativ",
-        "classes": "klassifiziert",
+        "classes": "Klassifiziert",
         "tooltip": {
           "title": "Histogram zur Verteilung der Werte"
         }
       },
-      "title" : "Einstellungen",
+      "title" : "Darstellungsoptionen",
       "symbols": "Symbole",
       "discretization": {
         "title": "Diskretisierung",
@@ -204,7 +206,7 @@ export default {
         },
         "method": {
           "unique": "Proportional",
-          "grouped": "Wertes in Klassen",
+          "grouped": "Werte in Klassen",
           "tooltip": {
             "grouped": "Werte werden in Klassen gruppiert"
           }
@@ -276,6 +278,7 @@ export default {
     "warning": {
       "rule.count": {
         "title": "Vernachlässigbarer Fehler",
+        "about": "Details",
         "explenation": "Achtung: Es gibt jetzt mehr als 8 Ebenen. Derart viele Ebenen einzusetzen kann die Klarheit bzw. Lesbarkeit der Karte beeinträchtigen.",
         "help": {
           "_": "Bitte achten Sie auf:",
@@ -306,8 +309,8 @@ export default {
     },
     "placeholder": {
       "mapTitle": "Kartentitel",
-      "dataSource": "Datenquelle",
-      "author": "Autor*in",
+      "dataSource": "Lizenzhinweise",
+      "author": "Autor/innen",
       "comment": "Kommentar"
     },
     "settings": {
@@ -335,6 +338,20 @@ export default {
     "editTitleHere": "Legendenüberschrift bearbeiten"
   },
 
+  "blindness": {
+    "menu.title": "Farbblindheitssimulation",
+    "type": {
+      "protanopia": "Protanopia (Rot-Grün)",
+      "protanomaly": "Protanomaly (Rot-Grün)",
+      "deuteranopia": "Deuteranopia (Rot-Grün)",
+      "deuteranomaly": "Deuteranomaly (Rot-Grün)",
+      "tritanopia": "Tritanopia (Blau-Gelb)",
+      "tritanomaly": "Tritanomaly (Blau-Gelb)",
+      "achromatopsia": "Achromatopsia",
+      "achromatomaly": "Achromatomaly"
+    }
+  },
+
   "basemap": {
     "world": "Welt > Länder (2016)",
     "brazil ufe 2015": "Brasilien > Bundesländer (2015)",
@@ -348,7 +365,9 @@ export default {
     "german states 2016": "Deutschland > Länder (2016)",
     "german districts 2016": "Deutschland > Landkreise (2016)",
     "us state 2015": "USA > Staaten (2015)",
-    "eu nuts-2 2013": "Europa (2013)"
+    "eu country 2013": "Europa > Staaten (2016)",
+    "eu nuts-2 2013": "Europa > Regionen (NUTS-2, 2013)",
+    "eu nuts-3 2013": "Europa > Gemeinden (NUTS-3, 2013)"
   },
 
   "examples": {
@@ -367,6 +386,12 @@ export default {
     "es_auto-pop": "Bevölkerungstatistik (2000-2015)",
     "de_district_inhabitants": "Einwohnerzahlen (31.12 2015)",
     "us_state-pop": "Bevölkerungstatistik (2010-2015)"
+    "us_state-pop": "Bevölkerungstatistik (2010-2015)",
+    "eu_country-energie": "Anteil erneuerbarer Energien am Brutto-Endenergieverbrauch (2005-2014)",
+    "eu_country-ecommerce": "Internet-Einkäufe von Einzelpersonen innerhalb von 12 Monaten (2004-2016)",
+    "eu_nuts2-travail": "Durchschnittliche Arbeitsstunden pro Woche (2015)",
+    "eu_nuts2-agriculture": "Landwirtschaftliche Fläche nach Größe der landwirtschaftlichen Betriebe (2013)",
+    "eu_nuts3-pop": "Bevölkerungsdichte (2015)"
   }
   
 };
