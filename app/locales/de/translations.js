@@ -208,7 +208,8 @@ export default {
           "unique": "Proportional",
           "grouped": "Werte in Klassen",
           "tooltip": {
-            "grouped": "Werte werden in Klassen gruppiert"
+            "unique": "Jeder einzelne Wert wird durch ein Symbol dargestellt",
+            "grouped": "Werte werden in Klassen gruppiert und jede Klasse erhält ein Symbol"
           }
         },
         "type": {
@@ -228,7 +229,10 @@ export default {
         "circle": "Kreis"
       },
       "size": "Größe",
-      "contrast": "Kontrast",
+      "contrast": {
+        "title": "Kontrast",
+        "tooltip": "Einstellungen zu Kontrast"
+      },
       "color": {
         "one": "Farbe",
         "other": "Farben"
