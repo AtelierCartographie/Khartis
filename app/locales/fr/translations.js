@@ -233,7 +233,7 @@ export default {
       "size": "taille",
       "contrast": {
         "title": "contraste",
-        "tooltip": "Réglage du contraste"
+        "tooltip": "Comprime ou dilate la taille pour une « lecture » de l’information différente de la normale"
       },
       "color": {
         "one": "couleur",

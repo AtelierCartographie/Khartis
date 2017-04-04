@@ -233,7 +233,7 @@ export default {
       "size": "size",
       "contrast": {
         "title": "contrast",
-        "tooltip": "Contrast setting"
+        "tooltip": "Compress or expand the size for a “reading” of info different from normal"
       },
       "color": {
         "one": "color",
