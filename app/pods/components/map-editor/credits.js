@@ -3,6 +3,16 @@ import d3lper from 'khartis/utils/d3lper';
 
 export default Ember.Mixin.create({
 
+  dataSourceComputed: function() {
+    let ds = this.get('dataSource');
+    console.log(ds, this.get('graphLayout.basemap.mapConfig.attribution'));
+    if (this.get('graphLayout.basemap.mapConfig.attribution')) {
+      return `${this.get('graphLayout.basemap.mapConfig.attribution')}${ds ? ` - ${ds}`:''}`;
+    } else {
+      return ds;
+    }
+  }.property('graphLayout.basemap.mapConfig', 'dataSource'),
+
   creditsInit(d3g) {
 
     d3g.append("text")
@@ -35,7 +45,7 @@ export default Ember.Mixin.create({
    d3l.attr("title", this.get('title'));
 
    d3l.select("text.map-dataSource")
-      .text(this.get('dataSource'))
+      .text(this.get('dataSourceComputed'))
       .attrs({
         "font-size": "0.8em",
         "text-anchor": "end",

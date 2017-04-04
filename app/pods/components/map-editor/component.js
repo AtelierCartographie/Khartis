@@ -32,8 +32,8 @@ export default Ember.Component.extend({
     return this.get('graphLayout.basemap.mapData');
   }.property('graphLayout.basemap.mapData'),
   
-  title: null,
   dataSource: null,
+  title: null,
   author: null,
 
   labellingLayers: [],

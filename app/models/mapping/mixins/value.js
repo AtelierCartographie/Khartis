@@ -323,16 +323,13 @@ let SurfaceMixin = Ember.Mixin.create({
     } else if (this.get('visualization.colors')) {
       
       if (type === "texture") {
-        range = Array.from({length: rangeLength}, () => {fn: PatternMaker.NONE});
+        range = Array.from({length: rangeLength}, () => ({fn: PatternMaker.NONE}));
       } else if (type === "color") {
         range = this.get('colorSet');
       }
     }
-
-    return d3Scale
-      .domain(intervals)
-      .range(range);
-      
+    
+    return d3Scale.domain(intervals).range(range);
   }
   
 });
