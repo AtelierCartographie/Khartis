@@ -261,6 +261,31 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "france circ 2017",
+        sources: [
+          {source: "FR-circ-2017/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-circ-2017/FRA100.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
+          {source: "FR-circ-2017/FRA200.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
+          {source: "FR-circ-2017/FRA300.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
+          {source: "FR-circ-2017/FRA400.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.6, 0.85], [0.8, 1]], borders: ["l", "t"]},
+          {source: "FR-circ-2017/FRA500.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.8, 0.85], [1, 1]], borders: ["l", "r", "t"]}
+        ],
+        dictionary: {
+          source: "FR-dico-circ-2017.json",
+          identifier: "code_circ"
+        },
+        examples: [
+          {
+            id: "fr-pres-2012-t1",
+            source: "fr-pres-2012-t1.csv"
+          },
+          {
+            id: "fr-pres-2012-t2",
+            source: "fr-pres-2012-t2.csv"
+          }
+        ]
+      },
+      {
         id: "spain prov 2015",
         sources: [
           {source: "ES-prov-2015/spain.json", projection: "d3.geoConicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
