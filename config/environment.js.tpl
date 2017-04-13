@@ -272,7 +272,7 @@ module.exports = function(environment) {
         ],
         dictionary: {
           source: "FR-dico-circ-2017.json",
-          identifier: "code_circ"
+          identifier: "ID"
         },
         examples: [
           {
