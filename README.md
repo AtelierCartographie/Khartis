@@ -6,8 +6,8 @@
 Un projet open source de [Sciences Po - Atelier de cartographie](http://www.sciencespo.fr/cartographie/)   
 
 ## Ressources
-* [wiki](https://github.com/AtelierCartographie/Khartis/wiki)
-* [FAQ](https://github.com/AtelierCartographie/Khartis/wiki/FAQ)
+* [la documentation de Khartis](http://www.sciencespo.fr/cartographie/khartis/docs/)
+* [FAQ](http://www.sciencespo.fr/cartographie/khartis/docs/FAQ/)
 
 ## Prerequisites
 
