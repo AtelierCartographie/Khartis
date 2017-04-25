@@ -71,7 +71,7 @@ export default Ember.Controller.extend({
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backmapColor',
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
-    'model.graphLayout.title', 'model.graphLayout.author', 'model.graphLayout.dataSource', 'model.graphLayout.comment',
+    'model.title', 'model.author', 'model.dataSource', 'model.comment',
     'model.graphLayout.margin._defferedChangeIndicator'),
   
   layersChange: function() {

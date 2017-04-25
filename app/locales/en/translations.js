@@ -233,7 +233,7 @@ export default {
       "size": "size",
       "contrast": {
         "title": "contrast",
-        "tooltip": "Contrast setting"
+        "tooltip": "Compress or expand the size for a “reading” of info different from normal"
       },
       "color": {
         "one": "color",
@@ -366,6 +366,7 @@ export default {
     "france dept": "France > departments (2016)",
     "france reg 2015": "France > regions (2015)",
     "france reg 2016": "France > regions (2016)",
+    "france circ 2017": "France > electoral districts (2012 & 2017)",
     "spain prov 2015": "Spain > provinces (2015)",
     "spain auto 2015": "Spain > communities (2015)",
     "german states 2016": "Germany > States (2016)",
@@ -389,6 +390,8 @@ export default {
     "fr_reg2016-pop": "Population (2013)",
     "fr_reg2016-poverty": "Poverty (2013)",
     "de_district_inhabitants": "Population (31/12/2015)",
+    "fr-pres-2012-t1": "Presidential election, 1st round (2012)",
+    "fr-pres-2012-t2": "Presidential election, 2st round (2012)",
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)",

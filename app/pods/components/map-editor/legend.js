@@ -240,7 +240,7 @@ export default Ember.Mixin.create({
               .data(intervals)
               .enterUpdate({
                 enter: (sel) => sel.append("g").classed("row", true),
-                update: (sel) => sel.eachWithArgs(fn, d, textOffset, formatter)
+                update: (sel) => sel.eachWithArgs(fn, svg, d, textOffset, formatter)
               });
           }
             
@@ -266,7 +266,7 @@ export default Ember.Mixin.create({
             .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
-              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, d, textOffset, formatter)
+              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, textOffset, formatter)
             });
         }
         
@@ -292,7 +292,7 @@ export default Ember.Mixin.create({
     'graphLayers.@each._defferedChangeIndicator'),
 
 
-  appendSurfaceIntervalLabel(d, textOffset, formatter, val, i) {
+  appendSurfaceIntervalLabel(svg, d, textOffset, formatter, val, i) {
           
     let r = {x: 24/2, y: 16/2};
 
@@ -321,10 +321,10 @@ export default Ember.Mixin.create({
         y: 0,
         "opacity": d.get('opacity'),
         "fill": () => {
-          
-          let pattern = d.get('mapping').getScaleOf("texture")(val - 0.000000001),
-              color = d.get('mapping').getScaleOf("color")(val - 0.000000001);
-
+          let v = val*(1-Math.sign(val)*Number.EPSILON) - Number.EPSILON;
+          let pattern = d.get('mapping').getScaleOf("texture")(v),
+              color = d.get('mapping').getScaleOf("color")(v);
+          window.test = d.get('mapping').getScaleOf("color");
           if (pattern && pattern.fn != PatternMaker.NONE) {
             let fn = new pattern.fn(false, color);
             fn.init(svg);
@@ -362,7 +362,7 @@ export default Ember.Mixin.create({
       
   },
 
-  appendSymbolIntervalLinearLabel(d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLinearLabel(svg, d, textOffset, formatter, val, i) {
         
     let r, dy;
 
@@ -428,7 +428,7 @@ export default Ember.Mixin.create({
         
   },
 
-  appendSymbolIntervalLabel(d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLabel(svg, d, textOffset, formatter, val, i) {
         
     let symbol = SymbolMaker.symbol({
           name: d.get('mapping.visualization.shape'),
@@ -549,7 +549,6 @@ export default Ember.Mixin.create({
           domain = d3.extent(intervals),
           range = [maxHeight, minHeight];
       function scale(x) {
-        console.log(transform(0));
         return -Math.sign(x)*transform(x-Math.sign(x)*0.0000001)*2;
       }
       scale.invert = function(x) {
@@ -636,7 +635,7 @@ export default Ember.Mixin.create({
     el.attr("kis:kis:flow-css", `flow: vertical; width: ${width+48}px; margin-right: 42; margin-top: 16`);
   },
 
-  appendRuleLabel(d, textOffset, formatter, rule, i) {
+  appendRuleLabel(svg, d, textOffset, formatter, rule, i) {
 
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
         r;
