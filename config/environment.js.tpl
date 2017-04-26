@@ -371,7 +371,7 @@ module.exports = function(environment) {
         examples: [
           {
             id: "de_district_inhabitants",
-            source: "de-destatis-Inhabitants-nuts3-2016.csv",
+            source: "04-DESTATIS-RS-NUTS-Inhabitants-formatted-numers.csv",
             attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
             license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
             license_url: "https://www.govdata.de/dl-de/by-2-0",
