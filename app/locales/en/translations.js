@@ -390,6 +390,7 @@ export default {
     "fr_reg2016-pop": "Population (2013)",
     "fr_reg2016-poverty": "Poverty (2013)",
     "de_district_inhabitants": "Population (31/12/2015)",
+    "de_states_inhabitants_06_15": "Population (2006 - 2015)",
     "fr-pres-2012-t1": "Presidential election, 1st round (2012)",
     "fr-pres-2012-t2": "Presidential election, 2st round (2012)",
     "es_prov-pop": "Population (2000-2015)",

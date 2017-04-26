@@ -393,6 +393,7 @@ export default {
     "fr-pres-2012-t2": "Élection présidentielle, 2nd tour (2012)",
     "es_prov-pop": "Population (2000-2015)",
     "de_district_inhabitants": "Population (31/12/2015)",
+    "de_states_inhabitants_06_15": "Population (2006 - 2015)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)",
     "eu_country-energie": "Énergie renouvelable dans la consommation finale brute d'énergie (2005-2014)",

@@ -349,7 +349,17 @@ module.exports = function(environment) {
           source: "DE-BKG-NUTS1-2016.json",
           identifier: "RS"
         },
-        examples: []
+        examples: [
+          {
+            id: "de_states_inhabitants_06_15",
+            source: "04-DESTATIS-RS-NUTS1-Inhabitants-2006-2015.csv",
+            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
+            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+            license_url: "https://www.govdata.de/dl-de/by-2-0",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
+          }
+        ]
       },
       {
         id: "german districts 2016",
