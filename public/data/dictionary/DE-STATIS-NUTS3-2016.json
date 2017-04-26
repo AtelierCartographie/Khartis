@@ -305,6 +305,11 @@
     "NUTS3": "DE94H"
   },
   {
+    "RS": "02000",
+    "NAME": "Freie und Hansestadt Hamburg",
+    "NUTS3": "DE600"
+  },
+  {
     "RS": "04011",
     "NAME": "Bremen, Stadt",
     "NUTS3": "DE501"
