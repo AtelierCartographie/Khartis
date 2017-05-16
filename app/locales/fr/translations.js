@@ -389,6 +389,8 @@ export default {
     "fr_reg2016-poverty": "Pauvreté (2013)",
     "fr-pres-2012-t1": "Élection présidentielle, 1er tour (2012)",
     "fr-pres-2012-t2": "Élection présidentielle, 2nd tour (2012)",
+    "fr-pres-2017-t1": "Élection présidentielle, 1er tour (2017)",
+    "fr-pres-2017-t2": "Élection présidentielle, 2nd tour (2017)",
     "es_prov-pop": "Population (2000-2015)",
     "es_auto-pop": "Population (2000-2015)",
     "us_state-pop": "Population (2010-2015)",

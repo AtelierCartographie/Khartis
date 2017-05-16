@@ -293,6 +293,14 @@ module.exports = function(environment) {
           {
             id: "fr-pres-2012-t2",
             source: "fr-pres-2012-t2.csv"
+          },
+          {
+            id: "fr-pres-2017-t1",
+            source: "fr-pres-2017-t1.csv"
+          },
+          {
+            id: "fr-pres-2017-t2",
+            source: "fr-pres-2017-t2.csv"
           }
         ]
       },
