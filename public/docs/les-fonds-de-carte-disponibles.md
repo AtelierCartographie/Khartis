@@ -56,6 +56,8 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
 * Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_g%C3%A9ographiques_de_la_France)
 
+* Circonscriptions législatives 2017 depuis [toxicode.fr](http://www.toxicode.fr/circonscriptions)
+
 ### Espagne
 
 * Fonds de carte : [Centro National de Informacion Geografica](http://www.ign.es/ign/main/index.do)
