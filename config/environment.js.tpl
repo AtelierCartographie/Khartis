@@ -341,6 +341,64 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "german states 2016",
+        license: "GeoNutzV",
+        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
+        sources: [
+          {
+            source: "DE-2016/topojson/bkg-2500-basemap-de-states-q1e4.json",
+            projection: "d3.geo.conicConformal()",
+            scale: 0.8, borders: ["l", "r", "t", "b"],
+            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
+            zoning: [[0, 0], [1, 1]]
+          }
+        ],
+        dictionary: {
+          source: "DE-BKG-NUTS1-2016.json",
+          identifier: "RS"
+        },
+        examples: [
+          {
+            id: "de_states_inhabitants_06_15",
+            source: "04-DESTATIS-RS-NUTS1-Inhabitants-2006-2015.csv",
+            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
+            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+            license_url: "https://www.govdata.de/dl-de/by-2-0",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
+          }
+        ]
+      },
+      {
+        id: "german districts 2016",
+        license: "GeoNutzV",
+        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
+        sources: [
+          {
+            source: "DE-2016/topojson/bkg-2500-basemap-de-districts-q1e4.json",
+            projection: "d3.geo.conicConformal()",
+            scale: 0.8, borders: ["l", "r", "t", "b"],
+            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
+            zoning: [[0, 0], [1, 1]]
+          }
+        ],
+        dictionary: {
+          source: "DE-STATIS-NUTS3-2016.json",
+          identifier: "RS"
+        },
+        examples: [
+          {
+            id: "de_district_inhabitants",
+            source: "04-DESTATIS-RS-NUTS-Inhabitants-formatted-numers.csv",
+            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
+            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+            license_url: "https://www.govdata.de/dl-de/by-2-0",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
+          }
+        ]
+      },
+      {
         id: "us state 2015",
         attribution: "basemap from U.S. Census Bureau",
         sources: [

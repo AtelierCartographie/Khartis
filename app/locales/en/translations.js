@@ -49,7 +49,7 @@ export default {
         "resumeProject": "Will resume the last project edited on this computer ",
         "importProject": "Import a saved project"
       },
-      "pasteCsv": "past your data here or drop a csv file",
+      "pasteCsv": "paste your data here or drop a csv file",
       "downloadCsvModel": "download model (.csv)",
       "importPoject": {
         "title": "Import Khartis project",
@@ -369,6 +369,8 @@ export default {
     "france circ 2017": "France > electoral districts (2012 & 2017)",
     "spain prov 2015": "Spain > provinces (2015)",
     "spain auto 2015": "Spain > communities (2015)",
+    "german states 2016": "Germany > States (2016)",
+    "german districts 2016": "Germany > Districts (2016)",
     "us state 2015": "United States > States (2015)",
     "eu country 2013": "Europe > States (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
@@ -387,6 +389,8 @@ export default {
     "fr_reg2015-poverty": "Poverty (2013)",
     "fr_reg2016-pop": "Population (2013)",
     "fr_reg2016-poverty": "Poverty (2013)",
+    "de_district_inhabitants": "Population (31/12/2015)",
+    "de_states_inhabitants_06_15": "Population (2006 - 2015)",
     "fr-pres-2012-t1": "Presidential election, 1st round (2012)",
     "fr-pres-2012-t2": "Presidential election, 2st round (2012)",
     "fr-pres-2017-t1": "Presidential election, 1st round (2017)",
