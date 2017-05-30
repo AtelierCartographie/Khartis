@@ -47,7 +47,10 @@ if( isEverGreen() === false){
   Ember.Component.reopen({
     d3l: function() {
       return d3.select(this.$()[0]);
-    }
+    },
+    customElementId: function() {
+      return this.elementId || Em.guidFor(this);
+    }.property()
   });
 
   Ember.debouncedObserver = function() {

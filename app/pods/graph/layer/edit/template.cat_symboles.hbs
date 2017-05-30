@@ -54,11 +54,11 @@
 
     <div class="settings vertical flow">
 
-    {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
+    {{#o-wrap/rules obj=editedLayer.mapping as |rulesWrap|}}
 
       <div class="vertical flow">
 
-          {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+          {{#o-wrap/brewer obj=editedLayer.mapping as |brewer|}}
 
           <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
@@ -103,7 +103,7 @@
                   </li>
               {{/each}}
           </ul>
-          {{/o-wrap.brewer}}
+          {{/o-wrap/brewer}}
       </div>
 
       <div class="vertical solid flow">
@@ -126,7 +126,7 @@
 
       </div>
 
-    {{/o-wrap.rules}}
+    {{/o-wrap/rules}}
     </div>
   </div>
 </div>

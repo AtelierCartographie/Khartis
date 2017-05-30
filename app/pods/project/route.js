@@ -4,6 +4,8 @@ import {DataStruct} from 'khartis/models/data';
 
 export default Ember.Route.extend({
 
+  store: Ember.inject.service(),
+
   renderTemplate: function () {
     this.render({outlet: "main"});
   },

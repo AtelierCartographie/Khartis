@@ -20,7 +20,7 @@
   {{/x-tooltip}}
   <div class="body">
     <div class="settings vertical flow">
-      {{#o-wrap.diagram as |wrap|}}
+      {{#o-wrap/diagram as |wrap|}}
       <div class="horizontal flow">
         {{distribution-graph mapping=editedLayer.mapping
           displayColors=false
@@ -29,7 +29,7 @@
           yLabel=(t 'visualization.settings.diagram.frequencies')
         }}
       </div>
-      {{/o-wrap.diagram}}
+      {{/o-wrap/diagram}}
         <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
 
         <div class="solid vertical flow">
@@ -106,7 +106,7 @@
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
             <div class="horizontal half-airy solid flow w7">
             {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
-            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
+            {{input-numeric/one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
             </div>
           </div>
 
@@ -115,7 +115,7 @@
             <label class="solid w5">{{x-capitalize (t 'general.width')}}</label>
             <div class="horizontal half-airy solid flow w7">
             {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.barWidth min=1 max=30}}
-            {{input-numeric.one-way numericValue=editedLayer.mapping.visualization.barWidth class="solid w3" min=1 update=(action (mut editedLayer.mapping.visualization.barWidth))}}
+            {{input-numeric/one-way numericValue=editedLayer.mapping.visualization.barWidth class="solid w3" min=1 update=(action (mut editedLayer.mapping.visualization.barWidth))}}
             </div>
           </div>
           {{/if}}
@@ -133,7 +133,7 @@
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.breakValue')}} ?</label>
             <div class="horizontal solid half-airy flow w7">
-              {{input-numeric.one-way
+              {{input-numeric/one-way
                 readonly=(x-true-or-undef editedLayer.mapping.shouldDiverge)
                 numericValue=editedLayer.mapping.scale.valueBreak
                 class="value-break-input solid w5 padding-fix"
@@ -144,14 +144,14 @@
                 placeholder=(t 'general.none')}}
               {{#if editedLayer.mapping.scale.diverging}}
                 {{#if editedLayer.mapping.scale.usesInterval}}
-                  {{#o-wrap.classes-before-break
+                  {{#o-wrap/classes-before-break
                     classes=editedLayer.mapping.scale.classesBeforeBreak
                     totalClasses=editedLayer.mapping.scale.classes
                     possibilities=editedLayer.mapping.possibleClassesBeforeBreak as |wrap|}}
                     {{#if wrap.editable}}
                     {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
                     {{/if}}
-                  {{/o-wrap.classes-before-break}}
+                  {{/o-wrap/classes-before-break}}
                 {{/if}}
               {{/if}}
             </div>

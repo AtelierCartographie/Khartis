@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  store: Ember.inject.service(),
+
   sidebarActiveTab: 'data',
   sidebarTabVisualizationsDisabled: function() {
     return this.get('hasErrors') || !this.get('model.project.geoDef');

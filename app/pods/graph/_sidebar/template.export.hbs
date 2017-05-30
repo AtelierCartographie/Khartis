@@ -168,13 +168,13 @@
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.width')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{input-numeric.one-way numericValue=model.graphLayout.width class="solid w4" min=640 update=(action (mut model.graphLayout.width))}}<small>px</small>
+          {{input-numeric/one-way numericValue=model.graphLayout.width class="solid w4" min=640 update=(action (mut model.graphLayout.width))}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.height')}}</label>
         <div class="horizontal solid half-airy flow w7">
-          {{input-numeric.one-way numericValue=model.graphLayout.height class="solid w4" min=480 update=(action (mut model.graphLayout.height))}}<small>px</small>
+          {{input-numeric/one-way numericValue=model.graphLayout.height class="solid w4" min=480 update=(action (mut model.graphLayout.height))}}<small>px</small>
         </div>
       </div>
       <div class="horizontal middle flow">

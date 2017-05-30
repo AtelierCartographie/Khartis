@@ -2,7 +2,7 @@
   {{#dropdown.trigger}}
     <div class="sp-replacer sp-light">
       <div class="sp-preview">
-        {{pattern-dropdown.swatch color=color pattern=value}}
+        {{pattern-dropdown/swatch color=color pattern=value}}
       </div>
       <div class="sp-dd">▼</div>
     </div>
@@ -13,7 +13,7 @@
     </li>
     {{#each patterns as |pattern|}}
       <li {{action 'bindValue' pattern}}>
-        <div class="swatch">{{pattern-dropdown.swatch color=color pattern=pattern}}</div>
+        <div class="swatch">{{pattern-dropdown/swatch color=color pattern=pattern}}</div>
       </li>
     {{/each}}
   {{/dropdown.list}}

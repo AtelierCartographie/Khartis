@@ -99,7 +99,7 @@ export default Ember.Component.extend({
   },
 
   '$': function () {
-    return $("#" + this.elementId);
+    return $("#" + this.get('customElementId'));
   },
 
   willDestroyElement(){

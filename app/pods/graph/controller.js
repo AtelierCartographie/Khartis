@@ -10,6 +10,8 @@ import {isSafari} from 'khartis/utils/browser-check';
 
 export default Ember.Controller.extend({
   
+  store: Ember.inject.service(),
+
   queryParams: ['currentTab'],
   currentTab: "visualizations",
 

@@ -9,10 +9,10 @@
           <div class="settings horizontal center flow">
 
             <div class="solid vertical airy flow w12">
-                {{#o-wrap.group-cells obj=editedColumn as |oCol|}}
+                {{#o-wrap/group-cells obj=editedColumn as |oCol|}}
 
                     {{#each oCol.groupedIncorrectCells as |group|}}
-                        {{#o-wrap.cell-correction obj=group.cell basemap=model.project.graphLayout.basemap siblings=group.siblings as |oCell|}}
+                        {{#o-wrap/cell-correction obj=group.cell basemap=model.project.graphLayout.basemap siblings=group.siblings as |oCell|}}
 
                             <div class="horizontal airy solid flow column-editor-row">
 
@@ -41,10 +41,10 @@
 
                             </div>
 
-                        {{/o-wrap.cell-correction}}
+                        {{/o-wrap/cell-correction}}
                     {{/each}}
 
-                {{/o-wrap.group-cells}}
+                {{/o-wrap/group-cells}}
             </div>
           </div>
 

@@ -165,6 +165,7 @@ var Version = Ember.Object.extend(Ember.Evented, {
 
     init() {
       this.set('stack', Em.A());
+      this._super();
     },
 
     stackChange: function() {

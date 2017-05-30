@@ -60,8 +60,8 @@
 
     <div class="settings vertical airy flow">
 
-      {{#o-wrap.rules obj=editedLayer.mapping as |rulesWrap|}}
-      {{#o-wrap.brewer obj=editedLayer.mapping as |brewer|}}
+      {{#o-wrap/rules obj=editedLayer.mapping as |rulesWrap|}}
+      {{#o-wrap/brewer obj=editedLayer.mapping as |brewer|}}
 
 
       <div class="vertical flow">
@@ -161,8 +161,8 @@
 
       </div>
 
-      {{/o-wrap.brewer}}
-      {{/o-wrap.rules}}
+      {{/o-wrap/brewer}}
+      {{/o-wrap/rules}}
 
     </div>
   </div>

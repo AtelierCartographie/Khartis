@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+
+  store: Ember.inject.service(),
   
   renderTemplate: function() {
     this.render({ outlet: "content" });

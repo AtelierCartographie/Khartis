@@ -671,29 +671,31 @@ export default Ember.Mixin.create({
         
     } else {
       
-      r = {x: 24/2, y: 16/2};
+      textOffset = 0;
       
-      d3.select(this).attr("kis:kisflow-css", `flow: horizontal; stretch: true; height: ${r.y*2}px; margin-bottom: 4px`);
+      r = {x: 24, y: 16};
+      
+      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${r.y}px; margin-bottom: 4px`);
       
       let pattern = converter(rule, "texture");
       
       let g = d3.select(this).append("g")
-        .attr("kis:kisflow-css", `margin-right: ${-r.x}px; width: ${r.x}px`);
+        .attr("kis:kisflow-css", `width: ${r.x/2}px`);
       
       g.append("rect")
         .attrs({
-          "width": 2*r.x,
-          "height": 2*r.y,
-          "transform": d3lper.translate({tx: -r.x, ty: 0}),
+          "width": r.x,
+          "height": r.y,
+          "transform": d3lper.translate({tx: -r.x/2, ty: 0}),
           "stroke": "#CCCCCC",
           "fill": "none"
         });
       
       g.append("rect")
         .attrs({
-          "width": 2*r.x,
-          "height": 2*r.y,
-          "transform": d3lper.translate({tx: -r.x, ty: 0}),
+          "width": r.x,
+          "height": r.y,
+          "transform": d3lper.translate({tx: -r.x/2, ty: 0}),
           "fill": () => {
           
             let color = rule.get('color');
@@ -715,7 +717,7 @@ export default Ember.Mixin.create({
       .text( rule.get('label') )
       .attrs({
         x: textOffset,
-        y: r.y,
+        y: r.y/2,
         dy: "0.3em",
         "font-size": "0.75em"
       });
