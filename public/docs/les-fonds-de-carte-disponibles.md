@@ -9,7 +9,10 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 | Brésil     | États        | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-ufe-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-UFE-2015.csv)               |
 | Brésil     | microrégions | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-mie-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-MIE-2015.csv)               |
 | Brésil     | mésorégions  | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-mee-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-MEE-2015.csv)               |
-| France     | département  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-dpt-2016)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-DPT-2016.csv)               |
+| France     | communes  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2016)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2016)               |
+| France     | communes  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2017)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2017)               |
+| France     | circonscriptions législatives  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-circ-2017)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-circ-2017.csv)               |
+| France     | départements  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-dpt-2016)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-DPT-2016.csv)               |
 | France     | régions      | 2015 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-reg-2015)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-REG-2015.csv)               |
 | France     | régions      | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-reg-2016)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-REG-2016.csv)               |
 | Espagne    | provinces    | 2015 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/ES-prov-2015)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/ES-dico-PROV-2015.csv)               |
@@ -48,15 +51,19 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
 * Fonds de carte : Open Street Map depuis data.gouv.fr
 
-    * [Département 2016](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/) 
+    * [Communes 2016](http://professionnels.ign.fr/geofla) - Geofla 2016 IGN 
 
-    * [Régions 2016](https://www.data.gouv.fr/fr/datasets/projet-de-redecoupages-des-regions/)
+    * [Communes 2017](http://professionnels.ign.fr/adminexpress) - Admin Express 207 IGN 
+    
+    * [Circonscriptions legislatives 2017](https://www.data.gouv.fr/fr/datasets/carte-des-circonscriptions-legislatives-2012-et-2017/) - Toxicode et Atelier de cartographie via data.gouv.fr
 
-    * [Régions 2014](https://www.data.gouv.fr/fr/datasets/contours-des-regions-francaises-sur-openstreetmap/)
+    * [Département 2016](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/) - Open Street Map depuis data.gouv.fr
 
-* Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_g%C3%A9ographiques_de_la_France)
+    * [Régions 2016](https://www.data.gouv.fr/fr/datasets/projet-de-redecoupages-des-regions/) - Open Street Map depuis data.gouv.fr
 
-* Circonscriptions législatives 2017 depuis [toxicode.fr](http://www.toxicode.fr/circonscriptions)
+    * [Régions 2014](https://www.data.gouv.fr/fr/datasets/contours-des-regions-francaises-sur-openstreetmap/) - Open Street Map depuis data.gouv.fr
+
+* Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_g%C3%A9ographiques_de_la_France) et [Insee - Code officiel géographique](https://www.insee.fr/fr/information/2016807)
 
 ### Espagne
 
