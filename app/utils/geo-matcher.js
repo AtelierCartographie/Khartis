@@ -33,6 +33,11 @@ StringNormalizer.prototype.$ = function(inStr) {
 
 };
 
+export function GeoMatch({type, value}) {
+  this.value = value;
+  this.type = type;
+};
+
 let _strNorm = new StringNormalizer(),
     _cache = new Map();
 
@@ -96,10 +101,10 @@ GeoMatcher.prototype.match = function(code) {
 
     if (o !== undefined) {
       
-      return {
+      return new GeoMatch({
         type: "name",
         value: o
-      };
+      });
       
     }
   }

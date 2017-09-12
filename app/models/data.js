@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Struct from './struct';
 import GeoDef from './geo-def';
-import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
+import {matcher as geoMatcher, GeoMatch} from 'khartis/utils/geo-matcher';
 import deg2dec from 'khartis/utils/deg2dec';
 import d3 from 'npm:d3';
 
@@ -75,12 +75,14 @@ ColumnMeta.reopenClass({
 
 let ColumnStruct = Struct.extend({
   
+    _visitors: null, //not exported
     cells: null, //not exported, visitor pattern
     layout: null,
     meta: null,
     
     init() {
       this._super();
+      this.set('_visitors', Ember.A());
       this.set('cells', Ember.A());
       if (!this.get('meta')) {
         this.set('meta', ColumnMeta.create({
@@ -97,96 +99,101 @@ let ColumnStruct = Struct.extend({
     },
     
     visit(cell) {
-      if (!this.get('cells').some( c => c == cell )) {
-        this.get('cells').addObject(cell);
+      if (!this.get('_visitors').some( c => c == cell )) {
+        this.get('_visitors').addObject(cell);
       }
+    },
+
+    compileVisitors() {
+      this.set('cells', this.get('_visitors'));
     },
     
     header: function() {
+      console.log("header", this.get('cells'), this.get('cells').find( c => c.get('row.header') ));
       return this.get('cells').find( c => c.get('row.header') );
-    }.property('cells.[]'),
+    }.property('cells', 'cells.[]'),
     
     body: function() {
       return this.get('cells').filter( c => !c.get('row.header') );
-    }.property('cells.[]'),
+    }.property('cells', 'cells.[]'),
     
     deferredChange: Ember.debouncedObserver(
-      'body.@each.value', 'body.@each.correctedValue', 'meta.type', 'meta.manual', 
+      'body.@each._defferedChangeIndicator', 'meta.type', 'meta.manual', 
       function() {
         this.notifyDefferedChange();
       },
       10),
     
     autoDetectDataType: Ember.debouncedObserver('cells.@each._defferedChangeIndicator', 'meta.manual', function() {
+
+      if (!this.get('meta.manual')) {
         
-        if (!this.get('meta.manual')) {
-          
-          let headerText = this.get('header').get('value'),
-              p = {
-                text: 0,
-                numeric: 0,
-                geo: 0,
-                lat_dms: 0,
-                lon_dms: 0,
-                lat: 0,
-                lon: 0
-              };
+        let headerText = this.get('header').get('value'),
+            p = {
+              text: 0,
+              numeric: 0,
+              geo: 0,
+              lat_dms: 0,
+              lon_dms: 0,
+              lat: 0,
+              lon: 0
+            };
 
-          let coordTypeFromHeader = function() {
-            if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(headerText)) {
-              return "lon";
-            } else if (/^y|lat(?:\.|itude)?$/i.test(headerText)) {
-              return "lat";
-            }
-            return undefined;
-          };
-
-          this.get('body')
-            .filter( c => !Ember.isEmpty(c.get('value')) )
-            .forEach( (c, i, arr) => {
-
-              let match = geoMatcher.match(c.get('value'));
-              if (match) {
-                  p.geo += 2/arr.length; //twice the strength of other types
-              }
-              
-              if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
-                  p.numeric += 1/arr.length;
-              } else {
-                  if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
-                    p.lat_dms += 1/arr.length;
-                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)$/.test(c.get('value'))) {
-                    p.lon_dms += 1/arr.length;
-                  } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?$/.test(c.get('value'))) {
-                    let type = coordTypeFromHeader();
-                    if (type !== undefined) {
-                      type = type+"_dms";
-                    } else {
-                      type = "text";
-                    }
-                    p[type] += 1/arr.length;
-                  } else {
-                    p.text += 1/arr.length;
-                  }
-              }
-            });
-
-          let type = Object.keys(p).reduce( (r, key) => {
-            return r == null || p[key] > p[r] ? key : r;
-          }, null);
-          
-          if (type === "numeric") {
-            let ntype = coordTypeFromHeader();
-            if (ntype !== undefined) {
-              p[type = ntype] = 1;
-            }
+        let coordTypeFromHeader = function() {
+          if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(headerText)) {
+            return "lon";
+          } else if (/^y|lat(?:\.|itude)?$/i.test(headerText)) {
+            return "lat";
           }
-          
-          this.setProperties({
-            'meta.type': type
+          return undefined;
+        };
+
+        this.get('body')
+          .filter( c => !Ember.isEmpty(c.get('value')) )
+          .forEach( (c, i, arr) => {
+
+            let match = geoMatcher.match(c.get('value'));
+            if (match) {
+              p.geo += 2/arr.length; //twice the strength of other types
+            }
+            
+            if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
+              p.numeric += 1/arr.length;
+            } else {
+                if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
+                  p.lat_dms += 1/arr.length;
+                } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(E|W)$/.test(c.get('value'))) {
+                  p.lon_dms += 1/arr.length;
+                } else if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?$/.test(c.get('value'))) {
+                  let type = coordTypeFromHeader();
+                  if (type !== undefined) {
+                    type = type+"_dms";
+                  } else {
+                    type = "text";
+                  }
+                  p[type] += 1/arr.length;
+                } else {
+                  p.text += 1/arr.length;
+                }
+            }
           });
-          
+
+        let type = Object.keys(p).reduce( (r, key) => {
+          return r == null || p[key] > p[r] ? key : r;
+        }, null);
+        
+        if (type === "numeric") {
+          let ntype = coordTypeFromHeader();
+          if (ntype !== undefined) {
+            p[type = ntype] = 1;
+          }
         }
+        
+        this.setProperties({
+          'meta.type': type
+        });
+        
+      }
         
     }, 50),
     
@@ -224,11 +231,6 @@ let ColumnStruct = Struct.extend({
     
     export() {
       return this._super({
-          layout: {
-            sheet: {
-              width: this.get('layout.sheet.width')
-            }
-          },
           meta: this.get('meta').export()
       });
     }
@@ -237,12 +239,7 @@ let ColumnStruct = Struct.extend({
 ColumnStruct.reopenClass({
   restore(json, refs) {
     return this._super(json, refs, {
-      layout: {
-          sheet: {
-            width: json.layout.sheet.width
-          }
-        },
-        meta: ColumnMeta.restore(json.meta, refs)
+      meta: ColumnMeta.restore(json.meta, refs)
     });
   }
 });
@@ -293,12 +290,11 @@ let CellStruct = Struct.extend({
   init() {
     this._super();
     this.set('state', {
-        sheet: {
-          edited: false,
-          selected: false,
-          resizing: false
-        }
+        sheet: {}
     });
+    if (this.get('column')) {
+      this.get('column').visit(this);
+    }
   },
   
   deferredChange: Ember.debouncedObserver(
@@ -307,12 +303,6 @@ let CellStruct = Struct.extend({
       this.notifyDefferedChange();
     },
     50),
-  
-  onColumnChange: function() {
-    if (this.get('column')) {
-        this.get('column').visit(this);
-    }
-  }.observes('column').on("init"),
   
   export() {
     return this._super({
@@ -353,7 +343,6 @@ let DataStruct = Struct.extend({
     },
     
     availableGeoDefs: function() {
-      
       let sortedCols = this.get('columns').filter( 
             col => ["geo", "lat", "lon", "lat_dms", "lon_dms"].indexOf(col.get('meta.type')) >= 0
           ).sort( (a,b) => d3.ascending(a.get('inconsistency'), b.get('inconsistency')) ),
@@ -512,33 +501,35 @@ DataStruct.reopenClass({
   
     createFromRawData(data) {
         
-        let columns = [],
-            rows = data.map( (r, i) => {
-                let row = RowStruct.create();
-                row.setProperties({
-                    header: i === 0,
-                    cells: r.map ( (c, j) => {
-                        return CellStruct.create({
-                            value: c,
-                            column: columns[j] ? columns[j] : (columns[j] = ColumnStruct.create()),
-                            row: row
-                        });
-                    })
-                });
-                return row;
-            });
-        
-        return this.create({
-            rows: rows,
-            columns: columns
-        });
+      let columns = [],
+          rows = data.map( (r, i) => {
+              let row = RowStruct.create();
+              row.setProperties({
+                  header: i === 0,
+                  cells: r.map ( (c, j) => {
+                    return CellStruct.create({
+                        value: c,
+                        column: columns[j] || (columns[j] = ColumnStruct.create()),
+                        row: row
+                    });
+                  })
+              });
+              return row;
+          });
+      columns.forEach( c => c.compileVisitors() );
+      return this.create({
+          rows: rows,
+          columns: columns
+      });
         
     },
     restore(json, refs = {}) {
-        return this._super(json, refs, {
+        let res = this._super(json, refs, {
           columns: json.columns.map( x => ColumnStruct.restore(x, refs) ),
           rows: json.rows.map( x => RowStruct.restore(x, refs) )
         });
+        res.columns.forEach( c => c.compileVisitors() );
+        return res;
     }
 });
 

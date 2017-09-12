@@ -3,7 +3,7 @@ import Project from 'khartis/models/project';
 /* global Em */
 
 const NS = "khartis-project",
-      SIZE = 1,
+      SIZE = 10,
       MAX = 30,
       FREEZE_EVT = "freeze",
       UNDO_EVT = "undo",
@@ -82,12 +82,11 @@ var Store = Ember.Service.extend({
 
     select(uuid) {
       return new Promise( (res, rej) => {
-        let project = this.get('mounted')[uuid] ?
-          this.get('mounted')[uuid] : this.get('projects').find( p => p._uuid === uuid );
+        let project = this.get('mounted')[uuid] || this.get('projects').find( p => p._uuid === uuid );
         if (project) {
           this.startVersioning(project);
           this.get('mounted')[uuid] = project;
-          Project.restore(project).then( p => res(p) );
+          Project.restore(project).then( p => (console.log(p), res(p)) ).catch(console.log);
         } else {
           res(false);
         }

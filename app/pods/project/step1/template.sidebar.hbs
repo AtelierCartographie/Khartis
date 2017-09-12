@@ -8,6 +8,9 @@
       {{/x-button}}
       {{/x-tooltip}}
     {{/if}}
+    {{#each projects as |p|}}
+      <div {{action 'resumeProject' p}}>{{p.date}}</div>
+    {{/each}}
     {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
     {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
       <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>

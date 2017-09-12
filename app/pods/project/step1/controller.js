@@ -19,6 +19,10 @@ export default Ember.Controller.extend({
   canResumeProject: function() {
     return this.get('store').has();
   }.property('store'),
+
+  projects: function() {
+    return this.get('store').list();
+  }.property('store'),
   
   parsable: function() {
     return this.get('model.csv') && this.get('model.csv').length > 0;
@@ -103,8 +107,9 @@ export default Ember.Controller.extend({
       this.get('model.project.graphLayout').setBasemap(Basemap.create({id: mapId}));
     },
 
-    resumeProject() {
-      this.transitionToRoute('graph', this.get('store').list().get('lastObject._uuid'));
+    resumeProject(project) {
+      let uuid = (project && project._uuid) || this.get('store').list().get('lastObject._uuid');
+      this.transitionToRoute('graph', uuid);
     },
 
     loadCsv(text) {
