@@ -54,14 +54,16 @@ export default Ember.Route.extend({
 
     activate() {
       if (window.process) {
-        const {ipcRenderer} = require('electron');
+        let reqVal = "electron";
+        const {ipcRenderer} = require(reqVal);
         ipcRenderer.send("enter-graph-route");
       }
     },
 
     deactivate() {
       if (window.process) {
-        const {ipcRenderer} = require('electron');
+        let reqVal = "electron";
+        const {ipcRenderer} = require(reqVal);
         ipcRenderer.send("exit-graph-route");
       }
     },

@@ -31,7 +31,8 @@ export default Ember.Route.extend({
 
     didTransition: function didTransition() {
       if (window.process) {
-        const {ipcRenderer} = require('electron');
+        let reqVal = "electron";
+        const {ipcRenderer} = require(reqVal);
         ipcRenderer.on("importProject", (evt, data) => {
           this.send("loadExternalProject", data);
         });
