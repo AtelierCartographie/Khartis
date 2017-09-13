@@ -186,8 +186,7 @@ export default Ember.Controller.extend({
 
   makeThumbnail() {
 
-    console.log(d3.select("svg.map-editor"));
-    if (!d3.select("svg.map-editor")) return Promise.resolve(null);
+    if (d3.select("svg.map-editor").empty()) return Promise.resolve(null);
 
     let svgString = this.exportAsHTML();
 
