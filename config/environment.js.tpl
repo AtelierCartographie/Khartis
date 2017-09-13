@@ -35,6 +35,12 @@ module.exports = function(environment) {
     symbolMinMaxSize: 5,
     symbolMaxMaxSize: 56,
 
+    projectThumbnail: {
+      width: 320,
+      height: 90,
+      quality: 0.68
+    },
+
     maps: [
 
       {

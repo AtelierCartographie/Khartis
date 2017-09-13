@@ -7,6 +7,7 @@ import FilterFactory from 'khartis/models/mapping/filter/factory';
 import Projection from 'khartis/models/projection';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
 import {isSafari} from 'khartis/utils/browser-check';
+import {HOOK_BEFORE_SAVE_PROJECT} from 'khartis/services/store';
 
 export default Ember.Controller.extend({
   
@@ -27,6 +28,17 @@ export default Ember.Controller.extend({
   
   editedLayer: null,
   editedColumn: null,
+
+  init() {
+    this._super();
+    this.get('store').addHook(HOOK_BEFORE_SAVE_PROJECT, this.onBeforeSaveProject.bind(this));
+  },
+
+  onBeforeSaveProject(project) {
+    return this.makeThumbnail().then( data => {
+      project.thumbnail = data;
+    });
+  },
 
   onCurrentTabChange: function() {
     if (this.get('states').indexOf(this.get('currentTab')) !== -1) {
@@ -96,20 +108,18 @@ export default Ember.Controller.extend({
 
   exportPNG() {
 
-    let _this = this;
+    let svgString = this.exportAsHTML();
 
-    var svgString = this.exportAsHTML();
-
-    var fact = 4.16;
-    var canvas = document.getElementById("export-canvas");
+    let fact = 4.16;
+    let canvas = document.getElementById("export-canvas");
     canvas.width = this.get('model.graphLayout.width')*fact;
     canvas.height = this.get('model.graphLayout.height')*fact;
-    var ctx = canvas.getContext("2d");
+    let ctx = canvas.getContext("2d");
     ctx.scale(fact, fact);
-    var DOMURL = self.URL || self.webkitURL || self;
-    var img = new Image();
-    var svg = new Blob([svgString], {type: "image/svg+xml"});
-    var url = DOMURL.createObjectURL(svg);
+    let DOMURL = self.URL || self.webkitURL || self;
+    let img = new Image();
+    let svg = new Blob([svgString], {type: "image/svg+xml"});
+    let url = DOMURL.createObjectURL(svg);
 
     img.onload = function() {
       ctx.drawImage(img, 0, 0);
@@ -171,6 +181,41 @@ export default Ember.Controller.extend({
         
     };
     img.src = url;
+
+  },
+
+  makeThumbnail() {
+
+    console.log(d3.select("svg.map-editor"));
+    if (!d3.select("svg.map-editor")) return Promise.resolve(null);
+
+    let svgString = this.exportAsHTML();
+
+    let fact = 1,
+        h = config.projectThumbnail.height,
+        w = config.projectThumbnail.width,
+        imgWidth = this.get('model.graphLayout.width')*fact,
+        imgHeight = this.get('model.graphLayout.height')*fact,
+        s = w / imgWidth;
+    let canvas = document.getElementById("export-canvas");
+    canvas.width = w;
+    canvas.height = h;
+    let ctx = canvas.getContext("2d");
+    ctx.scale(fact, fact);
+    let DOMURL = self.URL || self.webkitURL || self;
+    let img = new Image();
+    let svg = new Blob([svgString], {type: "image/svg+xml"});
+    let url = DOMURL.createObjectURL(svg);
+
+    return new Promise( (res, rej) => {
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, (imgHeight - h/s) / 2, imgWidth, h/s, 0, 0, w, h);
+        res(canvas.toDataURL("image/jpeg", config.projectThumbnail.quality));
+      };
+      img.src = url;
+
+    });
 
   },
 

@@ -11,6 +11,8 @@ const CURRENT_VERSION = 3.0;
 let Project = Struct.extend({
 
     version: CURRENT_VERSION,
+    date: new Date(),
+    thumbnail: null,
   
     data: null,
     
@@ -58,6 +60,7 @@ let Project = Struct.extend({
       return this._super({
         date: new Date(),
         version: this.get('version'),
+        thumbnail: this.get('thumbnail'),
         data: this.get('data') ? LZString.compressToBase64(JSON.stringify(this.get('data').export())) : null,
         graphLayout: LZString.compressToBase64(JSON.stringify(this.get('graphLayout').export())),
         graphLayers: LZString.compressToBase64(JSON.stringify(this.get('graphLayers').map( gl => gl.export() ))),
@@ -91,6 +94,7 @@ Project.reopenClass({
       let o = this._super(json, refs, {
         date: json.date,
         version: json.version,
+        thumbnail: json.thumbnail,
         title: json.title,
         dataSource: json.dataSource,
         author: json.author,

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Project from 'khartis/models/project';
+import Hookable from 'khartis/mixins/hookable';
 /* global Em */
 
 const NS = "khartis-project",
@@ -8,8 +9,10 @@ const NS = "khartis-project",
       FREEZE_EVT = "freeze",
       UNDO_EVT = "undo",
       REDO_EVT = "redo";
+    
+export const HOOK_BEFORE_SAVE_PROJECT = "hook_bf_merge";
 
-var Store = Ember.Service.extend({
+var Store = Ember.Service.extend(Hookable, {
 
     transient: false,
 
@@ -96,9 +99,11 @@ var Store = Ember.Service.extend({
     persist(project) {
       if (!this.get('projects').some( p => p._uuid === project._uuid )) {
         this.get('projects').addObject( project.export() );
-        this._save();
-        this.get('mounted')[project._uuid] = project.export();
-        return project;
+        return this.processHooks(HOOK_BEFORE_SAVE_PROJECT, [project]).then( () => {
+          this._save();
+          this.get('mounted')[project._uuid] = project.export();
+          return project;
+        });
       } else {
         throw new Error("Can't persist : a project with same UUID is already persisted");
       }
@@ -115,8 +120,10 @@ var Store = Ember.Service.extend({
            json);
         this.get('projects').enumerableContentDidChange();
         this.get('mounted')[project._uuid] = json;
-        this._save();
-        return project;
+        return this.processHooks(HOOK_BEFORE_SAVE_PROJECT, [project]).then( () => {
+          this._save();
+          return project;
+        });
       } else {
         return this.persist(project);
       }

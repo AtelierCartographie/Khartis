@@ -9,7 +9,10 @@
       {{/x-tooltip}}
     {{/if}}
     {{#each projects as |p|}}
-      <div {{action 'resumeProject' p}}>{{p.date}}</div>
+      <div class="project-thumbnail" {{action 'resumeProject' p}}>
+        <img src="{{p.thumbnail}}"/>
+        <span class="project-date">{{format-date p.date "DD/MM/YYYY hh:mm"}}</span>
+      </div>
     {{/each}}
     {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
     {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
