@@ -1,5 +1,5 @@
 export default {
-  
+
   "general": {
     "next": "next",
     "back": "back",
@@ -22,7 +22,7 @@ export default {
     "no": "no",
     "error": {
      "one": "error",
-     "other": "errors" 
+     "other": "errors"
     }
   },
 
@@ -32,11 +32,11 @@ export default {
   },
 
   "help.wiki": "Help - Wiki Khartis",
-  
+
   "project": {
-   
+
     "resume": "resume last project",
-    
+
     "step1": {
       "title": {
         "import": "import",
@@ -52,11 +52,11 @@ export default {
       "pasteCsv": "paste your data here or drop a csv file",
       "downloadCsvModel": "download model (.csv)",
       "importPoject": {
-        "title": "Import Khartis project",
+        "title": "Import or drop a Khartis project",
         "loadError": "Unable to load selected file"
       }
     },
-    
+
     "step2": {
       "title": {
         "preview": "data preview"
@@ -101,9 +101,9 @@ export default {
       },
       "back": "start over by importing new data"
     }
-    
+
   },
-  
+
   "navigation": {
 
     "editColumn": "Edit a column",
@@ -113,7 +113,7 @@ export default {
       "visualisations" : "visualizations",
       "export": "export"
     }
-    
+
   },
 
   "variable.meta": {
@@ -126,7 +126,7 @@ export default {
       "auto": "automatic"
     }
   },
-  
+
   "projection": {
     "title": "projection",
     "settings": {
@@ -180,7 +180,7 @@ export default {
       "description": "Ceci est une description"
     }
   },
-  
+
   "visualization": {
     "title": {
       "choose": "choose a visualization",
@@ -404,5 +404,5 @@ export default {
     "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
     "eu_nuts3-pop": "Population density (2015)"
   }
-  
+
 };
