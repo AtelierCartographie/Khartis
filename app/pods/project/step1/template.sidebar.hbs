@@ -1,28 +1,35 @@
 {{#file-drop class="sidebar-scroll-wrapper" onContentLoaded=(action send "loadExternalProject")}}
-    <div class="help">{{outlet 'help'}}</div>
-    <div class="vertical airy flow project-drop fluid stretched">
+  <div class="help">
+    {{outlet 'help'}}
+    <i class="iconfont iconfont-info-circle"></i>
+  </div>
+  <div class="vertical airy flow project-drop fluid stretched">
 
     {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
       {{#file-loader label="" class="button solid filled primary" onContentLoaded=(action send "loadExternalProject") tagName="div"}}
+        <i class="iconfont iconfont-upload"></i>
         <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
       {{/file-loader}}
     {{/x-tooltip}}
 
-    {{#if canResumeProject}}
+    {{!-- {{#if canResumeProject}}
       {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject') position="right"}}
-      {{#x-button class="solid filled primary" action=(action 'resumeProject')}}
+      {{#x-button class="solid" action=(action 'resumeProject')}}
           <span class="tooltip-trigger">{{x-capitalize (t "project.resume")}}</span>
       {{/x-button}}
       {{/x-tooltip}}
-    {{/if}}
+    {{/if}} --}}
 
     <div class="project-thumbnail-container">
-    {{#each projects as |p|}}
-      <div class="project-thumbnail" {{action 'resumeProject' p}}>
-        <img src="{{p.thumbnail}}"/>
-        <span class="project-date">{{format-date p.date "DD/MM/YYYY hh:mm"}}</span>
-      </div>
-    {{/each}}
+
+      <h3>{{x-capitalize (t "project.resume")}}</h3>
+
+      {{#each projects as |p|}}
+        <div class="project-thumbnail" {{action 'resumeProject' p}}>
+          <img src="{{p.thumbnail}}"/>
+          <span class="project-date">{{format-date p.date "DD/MM/YYYY hh:mm"}}</span>
+        </div>
+      {{/each}}
 
     </div>
 

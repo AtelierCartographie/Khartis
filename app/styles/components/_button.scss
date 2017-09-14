@@ -5,7 +5,7 @@
   text-align: center;
   cursor: pointer;
 
-  
+
 }
 
 button {
@@ -86,4 +86,15 @@ a.button {
   }
 
   margin-bottom: 0.5rem;
+}
+
+
+.import-btn {
+  text-align: left;
+  margin: 0;
+
+  i {
+    color: color(primary);
+    margin-right:1.3rem;
+  }
 }

@@ -1,6 +1,9 @@
 <div class="sidebar-scroll-wrapper">
 
-    <div class="help">{{outlet 'help'}}</div>
+    <div class="help">
+        <i class="iconfont iconfont-info-circle"></i>
+        {{outlet 'help'}}
+    </div>
 
     <div class="report vertical flow">
 
@@ -57,7 +60,7 @@
 
     <div class="geo-ref-column">
 
-                    
+
         <h3 class="title underlined">
           {{#x-tooltip position="right" message=(t 'project.step2.import.tooltip.geoRefColumn')}}
           <span class="tooltip-trigger">{{x-capitalize (t 'project.step2.import.geoRefColumn')}}</span>
