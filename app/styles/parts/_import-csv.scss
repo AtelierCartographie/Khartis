@@ -3,6 +3,7 @@
 }
 
 .step-import {
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -10,11 +11,12 @@
   overflow-y: auto;
   background: #f2f2f2;
 
-  .select-a-map {
-    .dropdown-trigger {
-      @include flow(horizontal, space-between);
-      background-color: white;
-    }
+  .dropdown-trigger {
+    @include flow(horizontal, space-between);
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border:1px solid greys(10%);
+    border-bottom-width: 3px;
   }
 
   .map-preview {
@@ -91,33 +93,11 @@
   }
 
   .import-samples {
-    margin-top: 4rem;
+    margin-top: 2rem;
 
-    h2 {
-      margin: 0 0 0.3rem;
+    .button {
+      margin-left: 2rem;
     }
-
-    ul {
-      display: flex;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      font-size: 1.3rem;
-      cursor: pointer;
-      background-color: color(variable);
-      color: color(text);
-      padding: 0.4rem 1rem;
-      border-radius: 0.2rem;
-
-      &:not(:last-child) {
-        margin-right: 1rem;
-      }
-
-    }
-
   }
 
 }
