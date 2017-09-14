@@ -26,7 +26,7 @@
   }
 
   li:nth-of-type(1) {
-    $bg: #d9d0c8; 
+    $bg: #d9d0c8;
     background: url(images/breadcrumb/step1-data-previous.svg), linear-gradient(to right, $bg, $bg 50%, rgba(0, 0, 0, 0) 51%, rgba(0, 0, 0, 0));
     background-position: right;
     background-repeat: no-repeat;
@@ -39,11 +39,11 @@
     }
 
     z-index: 2;
-    
+
   }
 
   li:nth-of-type(2) {
-    $bg: #ededed;
+    $bg: #fff;
     background: url(images/breadcrumb/step2-viz-next.svg), linear-gradient(to right, $bg, $bg 50%, rgba(0, 0, 0, 0) 51%, rgba(0, 0, 0, 0));
     background-position: right;
     background-repeat: no-repeat;
@@ -66,7 +66,7 @@
 
   li:nth-of-type(3) {
     $bg: #ededed;
-    background: #ededed;
+    background: #fff;
 
     &.active {
       background: color(titles);

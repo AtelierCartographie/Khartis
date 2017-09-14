@@ -45,6 +45,13 @@ small {
     }
   }
 
+  &.primary2 {
+    background-color: color(primary2);
+    &, a {
+      color: greys(white);
+    }
+  }
+
   &.success {
     background-color: color(success);
     &, a {
@@ -72,7 +79,7 @@ small {
       color: greys(white);
     }
   }
-  
+
   &.volet2 {
     background-color: color(volet2);
   }

@@ -71,7 +71,7 @@
         {{/x-button}}
       </div>
     </div>
-    
+
     <h2 class="title">
       {{#file-loader label="" class="import-link" onContentLoaded="loadCsv" tagName="a"}}
       {{x-capitalize (t 'project.step1.title.import')}}
@@ -88,7 +88,7 @@
 
       <div class="vertical airy flow">
         <div class="filled">
-        
+
         {{ivy-codemirror
           value=model.csv
           valueUpdated=(action (mut model.csv))
@@ -97,14 +97,14 @@
         }}
         </div>
       </div>
-      
+
       <div class="horizontal airy flow">
-        {{#x-button class="solid filled primary" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+        {{#x-button class="solid filled primary2" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
             {{x-capitalize (t "general.next")}}
         {{/x-button}}
       </div>
 
-    
+
     </div>
 
     {{#if importReport.length}}
@@ -125,7 +125,7 @@
     </div>
 
     {{/if}}
-    
+
 </div>
 
 

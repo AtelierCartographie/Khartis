@@ -13,7 +13,7 @@
   .select-a-map {
     .dropdown-trigger {
       @include flow(horizontal, space-between);
-      background-color: color(default);
+      background-color: white;
     }
   }
 
@@ -49,11 +49,24 @@
   .importer,
   .report {
     flex: 1;
-    padding: 3rem 0;
+    padding: 4.8rem 0 0 5rem;
     min-width: 52rem;
-    margin: 0 auto;
     width: 76%;
-    max-width: 92rem;
+    max-width: 55rem;
+
+    counter-reset: h3;
+
+    .title {
+      border-bottom: 1px solid color(primary);
+      padding-bottom: 0.5rem;
+
+      &::before {
+        counter-increment: h3;
+        content: counter(h3) ". ";
+      }
+    }
+
+
   }
 
   .importer .label {

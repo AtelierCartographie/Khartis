@@ -67,9 +67,10 @@ a.button {
 }
 
 .dropdown-trigger .add-variable-button {
+
   border-radius: 50%;
-  background-color: color(variable);
-  color: color(titles);
+  background-color: color(primary2);
+  color: #FFF;
   width: 45px;
   height: 45px;
   box-shadow: 2px 2px 5px rgba(#000, 0.5);
@@ -86,6 +87,10 @@ a.button {
   }
 
   margin-bottom: 0.5rem;
+
+  &:hover {
+    background-color: lighten(color(primary2), 30%);
+  }
 }
 
 
