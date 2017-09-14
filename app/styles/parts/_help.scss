@@ -20,12 +20,25 @@
 
 .help {
 
-  font-size: 1.3rem;
+  position: relative;
+  font-size: 1.2rem;
   font-style: italic;
+  margin: 2rem 0;
+  line-height: 1.4;
+
+  padding-left: 3rem;
 
   &.markdown {
     h1 {font-size: 1.2em;}
     h2 { margin: 1.1em; }
+  }
+
+  .iconfont {
+    color: color(primary);
+    font-size: 2rem;
+    position: absolute;
+    top: -.5rem;
+    left: 0;
   }
 
 }
