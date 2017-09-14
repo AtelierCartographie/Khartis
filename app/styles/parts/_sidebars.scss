@@ -104,20 +104,30 @@
 
   .collection {
 
+    border:none;
     margin-right: -20px;
-
     overflow: auto;
-    border: none;
 
     & > li.selected {
       margin-right: 0;
       padding-right:  2.5rem;
       background-color: color(volet2);
+      border-color:transparent;
+
+      .layer-name {
+        font-weight: bold;
+      }
     }
 
     & > li {
       margin-right: 20px;
-      background-color: color(variable);
+      background-color: #FFF;
+      border:2px solid #b2b2b2;
+    }
+
+    & > li:hover {
+      background-color: #efe6df ;
+      border-color: #b29d8d;
     }
 
   }

@@ -5,24 +5,25 @@
   .body.expanded {
     margin-right: -300px;
   }
-  
+
   .graph-topbar {
-    
+
     height: 5.6rem;
-    
+    background:#FFF;
+
     & > * {
       padding-bottom: $gutter / 4;
     }
-    
+
     & > *:nth-child(2n) {
       border-left: 3px solid white;
       border-right: 3px solid white;
     }
-    
+
     .proj-slider {
       margin-top: -5px;
     }
-    
+
     .toggle-projection-button {
       font-size: 3rem;
       line-height: 1em;
@@ -85,7 +86,7 @@
         cursor: grabbing;
       }
     }
-    
+
     .legend {
       cursor: move;
       &.dragging {
@@ -93,37 +94,37 @@
       }
     }
   }
-  
+
 }
 
 .sidebar {
-  
+
   border-right: 1px solid greys(20%);
-  
+
   .content {
     @include flow(vertical, airy);
     @extend %padded;
   }
-  
+
   .bottom-navbar {
     @include flow(middle, solid);
     padding: 0.1rem 1rem 0.1rem 1rem;
     height: 3rem;
     background-color: greys(10%);
     border-bottom: 1px solid greys(15%);
-    
+
     div:nth-child(2) {
       text-align: right;
     }
-    
+
     &.reverse {
       @extend .rtl;
     }
-    
+
   }
 
   .settings {
-    
+
     .accordion-trigger {
       & {
         color: greys(70%);
@@ -132,7 +133,7 @@
       padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;
       border-bottom: 1px solid greys(40%);
     }
-    
+
   }
 
 }

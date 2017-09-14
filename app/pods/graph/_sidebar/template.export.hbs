@@ -9,7 +9,7 @@
       {{textarea class="auto-expand" value=model.comment placeholder=(t 'export.placeholder.comment')}}
       {{/if}}
     </div>
-    
+
     <div class="title underlined">{{x-capitalize (t 'export.title.labels')}}</div>
     <div class="settings vertical flow labelling">
       {{#if model.hasLabelling}}
@@ -125,7 +125,7 @@
 
       {{/if}}
     </div>
-    
+
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
     <div class="settings vertical flow">
       {{#if model.graphLayers.length}}
@@ -162,7 +162,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="title underlined">{{x-capitalize (t 'export.title.sizes')}} {{t 'general.and'}} {{t 'export.title.export'}}</div>
     <div class="settings vertical flow">
       <div class="horizontal middle flow">
@@ -181,11 +181,11 @@
         <label class="solid w4">{{x-capitalize (t 'general.download')}}</label>
         <div class="vertical half-airy solid flow w7">
           <div class="horizontal flow half-airy">
-            {{x-button class="small filled primary" action=(action 'export' 'svg') label="SVG"}}
-            {{x-button class="small filled primary" action=(action 'export' 'png') label="PNG"}}
+            {{x-button class="small filled primary2" action=(action 'export' 'svg') label="SVG"}}
+            {{x-button class="small filled primary2" action=(action 'export' 'png') label="PNG"}}
           </div>
           <div class="solid flow">
-            {{x-button class="small filled primary" action=(action 'export' 'svg' 'illustrator') label="SVG (optimisé illustrator)"}}
+            {{x-button class="small filled primary2" action=(action 'export' 'svg' 'illustrator') label="SVG (optimisé illustrator)"}}
           </div>
         </div>
       </div>
