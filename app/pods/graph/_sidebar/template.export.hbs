@@ -181,11 +181,20 @@
         <label class="solid w4">{{x-capitalize (t 'general.download')}}</label>
         <div class="vertical half-airy solid flow w7">
           <div class="horizontal flow half-airy">
-            {{x-button class="small filled primary2" action=(action 'export' 'svg') label="SVG"}}
-            {{x-button class="small filled primary2" action=(action 'export' 'png') label="PNG"}}
+            {{#x-button class="small filled primary2" action=(action 'export' 'svg')}}
+              <i class="iconfont iconfont-download"></i>
+              SVG
+            {{/x-button}}
+            {{#x-button class="small filled primary2" action=(action 'export' 'png')}}
+              <i class="iconfont iconfont-download"></i>
+              PNG
+            {{/x-button}}
           </div>
           <div class="solid flow">
-            {{x-button class="small filled primary2" action=(action 'export' 'svg' 'illustrator') label="SVG (optimisé illustrator)"}}
+             {{#x-button class="small filled primary2" action=(action 'export' 'svg' 'illustrator')}}
+              <i class="iconfont iconfont-download"></i>
+              SVG (optimisé illustrator)
+            {{/x-button}}
           </div>
         </div>
       </div>

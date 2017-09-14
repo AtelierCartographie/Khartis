@@ -24,11 +24,11 @@
 
     {{#if model.graphLayers.length}}
       {{#drag-sort-collection provider=model.graphLayers onClick=(action 'editLayer') as |layer self|}}
-      
+
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
             <div class="horizontal space-between flow">
-              <div class="horizontal airy baseline flow">
-                {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}
+              <div class="horizontal airy middle flow">
+                {{!-- {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}} --}}
                 <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
               </div>
               <div class="solid horizontal baseline half-airy right flow w4">
@@ -48,9 +48,9 @@
               </div>
             </div>
           </li>
-          
+
       {{/drag-sort-collection}}
     {{/if}}
-    
+
   </div>
 </div>
