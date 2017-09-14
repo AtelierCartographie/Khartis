@@ -1,9 +1,9 @@
-<div class="sidebar-scroll-wrapper">
+{{#file-drop class="sidebar-scroll-wrapper" onContentLoaded=(action send "loadExternalProject")}}
     <div class="help">{{outlet 'help'}}</div>
-    <div class="vertical airy flow">
+    <div class="vertical airy flow project-drop fluid stretched">
 
     {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
-      {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
+      {{#file-loader label="" class="button solid filled primary" onContentLoaded=(action send "loadExternalProject") tagName="div"}}
         <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
       {{/file-loader}}
     {{/x-tooltip}}
@@ -26,8 +26,6 @@
 
     </div>
 
-
-
-    </div>
-</div>
+  </div>
+{{/file-drop}}
 

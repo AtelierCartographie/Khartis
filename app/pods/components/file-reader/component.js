@@ -14,42 +14,42 @@ export default Ember.Component.extend({
 	
 	fReader: null,
   
-  	didInsertElement() {
-          
-      var self = this;
+  didInsertElement() {
+        
+    var self = this;
+  
+    this.set('fReader', new FileReader());
     
-      this.set('fReader', new FileReader());
-      
-      this.$().on("change", function() {
-        self.read(this.files);
-      });
-      
-      this.$().on("click", (e) => e.stopImmediatePropagation() );
-          
-      this.get('fReader').onload = (e) => {
-        
-        if (e.target.result instanceof ArrayBuffer) {
-          
-          this.sendAction('onread', ab2string(e.target.result));
-          
-        }
-        
-      };
-          
-      this.sendAction('onready', this);
-		
-  	},
-	
-    read: function(files) {
-      this.get('fReader').readAsArrayBuffer(files[0]);
-    },
+    this.$().on("change", function() {
+      self.read(this.files);
+    });
     
-    actions: {
+    this.$().on("click", (e) => e.stopImmediatePropagation() );
         
-        trigger: function() {
-            this.$().click();
-        }
+    this.get('fReader').onload = (e) => {
+      
+      if (e.target.result instanceof ArrayBuffer) {
         
-    }
+        this.sendAction('onread', ab2string(e.target.result));
+        
+      }
+      
+    };
+        
+    this.sendAction('onready', this);
+  
+  },
+
+  read: function(files) {
+    this.get('fReader').readAsArrayBuffer(files[0]);
+  },
+  
+  actions: {
+      
+      trigger: function() {
+          this.$().click();
+      }
+      
+  }
 
 });

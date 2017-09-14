@@ -581,7 +581,7 @@ export default Ember.Controller.extend({
           this.get('store').versions().redo();
           break;
         case "freeze":
-          Ember.run.debounce(this, this.freeze, 1000);
+          Ember.run.debounce(this, this.freeze, 1500);
           break;
       }
     }
