@@ -12,6 +12,7 @@ const emberAppLocation     = `file://${dirname}/dist/index.html`;
 const Menu                 = electron.Menu;
 const shell                = electron.shell;
 const fs                   = require("fs");
+const {autoUpdater}        = require("electron-updater");
 
 let mainWindow = null;
 
@@ -32,6 +33,18 @@ app.on('window-all-closed', function onWindowAllClosed() {
 });
 
 app.on('ready', function onReady() {
+
+    app.on('ready', function()  {
+      autoUpdater.checkForUpdates();
+    });
+
+    autoUpdater.on('checking-for-update', () => {
+      console.log("checking for udpate");
+    });
+    autoUpdater.on('update-available', (info) => {
+      console.log("udpate available", info);
+    });
+
     mainWindow = new BrowserWindow({
         width: 1360,
         height: 768,

@@ -1,14 +1,12 @@
-<div class="sidebar-scroll-wrapper">
-
-    <div class="help">
-      {{outlet 'help'}}
-      <i class="iconfont iconfont-info-circle"></i>
-    </div>
-
-    <div class="vertical airy flow">
+{{#file-drop class="sidebar-scroll-wrapper" onContentLoaded=(action send "loadExternalProject")}}
+  <div class="help">
+    {{outlet 'help'}}
+    <i class="iconfont iconfont-info-circle"></i>
+  </div>
+  <div class="vertical airy flow project-drop fluid stretched">
 
     {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
-      {{#file-loader label="" class="button import-btn" onContentLoaded="loadExternalProject" tagName="div"}}
+      {{#file-loader label="" class="button solid filled primary" onContentLoaded=(action send "loadExternalProject") tagName="div"}}
         <i class="iconfont iconfont-upload"></i>
         <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
       {{/file-loader}}
@@ -35,6 +33,6 @@
 
     </div>
 
-    </div>
-</div>
+  </div>
+{{/file-drop}}
 

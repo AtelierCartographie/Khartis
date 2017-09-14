@@ -1,6 +1,6 @@
 {
   "name": "khartis",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "description": "Small description for khartis goes here",
   "private": true,
   "directories": {
@@ -21,17 +21,18 @@
   "license": "MIT",
   "devDependencies": {
     "@types/d3": "^4.5.0",
-    "@types/electron": "^1.4.31",
-    "@types/electron-packager": "^5.1.29",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
     "broccoli-asset-rev": "^2.4.5",
     "broccoli-funnel": "^2.0.1",
     "csv-string": "^2.3.0",
     "d3": "^4.7.1",
     "d3-geo-projection": "^1.2.2",
     "devtron": "^1.4.0",
-    "electron": "^1.7.6",
-    "electron-packager": "^9.0.1",
+    "electron-prebuilt-compile": "1.7.6",
     "electron-rebuild": "^1.6.0",
+    "electron-updater": "^2.8.9",
     "ember-browserify": "1.1.13",
     "ember-cli": "^2.15.1",
     "ember-cli-app-version": "^3.0.0",
@@ -69,6 +70,8 @@
     "text-encoding": "^0.5.2"
   },
   "dependencies": {
+    "electron-compile": "^6.4.1",
+    "electron-protocol-serve": "^1.3.0",
     "topojson": "^1.6.24"
   },
   "main": "electron.js",
@@ -122,5 +125,8 @@
       "ProductName": null,
       "InternalName": null
     }
+  },
+  "config": {
+    "forge": "./ember-electron/electron-forge-config.js"
   }
 }
