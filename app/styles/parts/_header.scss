@@ -6,12 +6,6 @@
     font-size: 2rem;
     font-weight: bold;
     text-decoration: none;
-    &:hover,
-    &.active {
-      background-color: white;
-      color: hsl(0, 0%, 40%);
-      background-color: greys(5%);
-    }
   }
 }
 
@@ -44,13 +38,19 @@
     min-width: 8rem;
   }
 
-  > a:hover,
-  > a.active {
-    color: hsl(0, 0%, 40%);
-    background-color: greys(5%);
-  }
-
   .lang-switcher-item {
     position: relative;
   }
+}
+
+
+.application-header .header-icons a {
+
+  color: rgba(255, 255, 255, 0.6);
+
+  &:hover,
+  &.active {
+    color: #FFF;
+  }
+
 }
