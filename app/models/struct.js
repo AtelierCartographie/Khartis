@@ -15,6 +15,7 @@ let Struct = Ember.Object.extend({
         this.set('_uuid', Struct._nextId.next().value);
     }
    },
+   
    export(opts) {
       return Object.assign({
           _uuid: this.get('_uuid'),
