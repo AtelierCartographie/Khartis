@@ -28,6 +28,10 @@ $colors: (
     shade: darken(#4285f4, $tint-shade-multiplier)
   ),
 
+  primary2: (
+    base: #4f8ba3
+  ),
+
   success:(
     tint: #E3EED5,
     base:  #6D9F36,
@@ -49,6 +53,10 @@ $colors: (
     shade: darken(#f1c40f, $tint-shade-multiplier)
   ),
 
+  disabled: (
+    base: #cbd9df
+  ),
+
   // Theme
   variable: (
     base:#D9D0C8
@@ -57,7 +65,7 @@ $colors: (
     base: #977864
   ),
   volet1: (
-    base: #F3F3F3
+    base: #FFF
   ),
   volet2:(
     base: #E4E4E4

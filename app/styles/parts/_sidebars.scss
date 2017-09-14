@@ -54,14 +54,40 @@
 }
 
 .sidebar-bottom {
+
   height: 70px;
+  padding:10px;
   border-top: 1px solid greys(30%);
+
   & .logo-atelier {
     background-image: url(images/logo-Atelier-NB.svg);
     background-repeat: no-repeat;
-    height: 70px;
-    background-position: center;
-    background-size: 40%;
+    flex:1;
+  }
+
+  & .app-version {
+    font-size:80%;
+    margin-bottom:0.2rem;
+    color: #b3b3b3;
+  }
+
+  .btn-arrow, .btn-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color(primary2);
+  }
+
+  .btn-home i {
+    font-size: 3.5rem;
+  }
+
+  .btn-arrow i {
+    font-size: 5.5rem;
+  }
+
+  .btn-arrow.disabled, .btn-home.disabled {
+    color: color(disabled);
   }
 }
 

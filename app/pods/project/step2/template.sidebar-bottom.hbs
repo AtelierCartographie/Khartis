@@ -1,13 +1,16 @@
-<div class="arrows-navigation left">
-  {{#if model.csv}}
-    {{#x-button class="default btn-prev btn-arrow" action=(action 'back')}}
+<div class="flow vertical">
+    <span class="app-version">Khartis {{app-version hideSha=true}}</span>
+    <a href="http://www.sciencespo.fr/cartographie/" class="logo-atelier" target="_blank"></a>
+</div>
+
+<nav class="flow horizontal right">
+    {{#x-button class="primary btn-home"}}
+        <i class="iconfont iconfont-home"></i>
+    {{/x-button}}
+    {{#x-button class="primary btn-prev btn-arrow" disabled=(x-not model.csv)  action=(action 'back')}}
         <i class="iconfont iconfont-angle-left"></i>
     {{/x-button}}
-  {{/if}}
-</div>
-<a href="http://www.sciencespo.fr/cartographie/" class="fluid logo-atelier clickable" target="_blank"></a>
-<div class="arrows-navigation right">
-  {{#x-button class="primary btn-next btn-arrow" disabled=(x-not model.project.geoDef) invisible=hasErrors action=(action 'next')}}
-      <i class="iconfont iconfont-angle-right"></i>
-  {{/x-button}}
-</div>
+    {{#x-button class="primary btn-next btn-arrow" disabled=(x-not model.project.geoDef) invisible=hasErrors action=(action 'next')}}
+        <i class="iconfont iconfont-angle-right"></i>
+    {{/x-button}}
+</nav>

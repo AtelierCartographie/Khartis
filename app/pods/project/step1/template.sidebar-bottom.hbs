@@ -1,8 +1,16 @@
-<div class="arrows-navigation left">
+<div class="flow vertical">
+    <span class="app-version">Khartis {{app-version hideSha=true}}</span>
+    <a href="http://www.sciencespo.fr/cartographie/" class="logo-atelier" target="_blank"></a>
 </div>
-<a href="http://www.sciencespo.fr/cartographie/" class="fluid logo-atelier clickable" target="_blank"></a>
-<div class="arrows-navigation right">
-    {{#x-button class="primary btn-next btn-arrow" disabled=(x-not parsable) invisible=hasErrors action=(action 'parseCsvContent')}}
-       <i class="iconfont iconfont-angle-right"></i>
+
+<nav class="flow horizontal right">
+    {{#x-button class="primary btn-home"}}
+        <i class="iconfont iconfont-home"></i>
     {{/x-button}}
-</div>
+    {{#x-button class="primary btn-prev btn-arrow" disabled=(x-not parsable) }}
+        <i class="iconfont iconfont-angle-left"></i>
+    {{/x-button}}
+    {{#x-button class="primary btn-next btn-arrow" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
+        <i class="iconfont iconfont-angle-right"></i>
+    {{/x-button}}
+</nav>
