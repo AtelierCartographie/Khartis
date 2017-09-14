@@ -1,6 +1,13 @@
 <div class="sidebar-scroll-wrapper">
     <div class="help">{{outlet 'help'}}</div>
     <div class="vertical airy flow">
+
+    {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
+      {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
+        <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
+      {{/file-loader}}
+    {{/x-tooltip}}
+
     {{#if canResumeProject}}
       {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject') position="right"}}
       {{#x-button class="solid filled primary" action=(action 'resumeProject')}}
@@ -8,17 +15,19 @@
       {{/x-button}}
       {{/x-tooltip}}
     {{/if}}
+
+    <div class="project-thumbnail-container">
     {{#each projects as |p|}}
       <div class="project-thumbnail" {{action 'resumeProject' p}}>
         <img src="{{p.thumbnail}}"/>
         <span class="project-date">{{format-date p.date "DD/MM/YYYY hh:mm"}}</span>
       </div>
     {{/each}}
-    {{#x-tooltip message=(t 'project.step1.tooltip.importProject') position="right"}}
-    {{#file-loader label="" class="button solid filled primary" onContentLoaded="loadExternalProject" tagName="div"}}
-      <span class="tooltip-trigger">{{x-capitalize (t "project.step1.importPoject.title")}}</span>
-    {{/file-loader}}
-    {{/x-tooltip}}
+
+    </div>
+
+
+
     </div>
 </div>
 

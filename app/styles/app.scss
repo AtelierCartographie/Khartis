@@ -7,6 +7,7 @@
 @import "pod-styles";
 @import "parts/import-csv";
 @import "parts/layers-panel";
+@import "parts/project-thumbnail";
 @import "parts/projection-panel";
 @import "parts/configuration-panel";
 @import "parts/help";
@@ -21,7 +22,6 @@
 @import "parts/loader";
 @import "parts/export";
 @import "parts/blindness";
-
 
 html, body {
   height: 100%;

@@ -1,0 +1,46 @@
+.project-thumbnail {
+  position: relative;
+  overflow:hidden;
+  cursor:pointer;
+
+  margin-bottom: 1rem;
+
+  & img {
+    display: block;
+    width:100%;
+  }
+
+  & .project-date {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: #FFF;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    background: color(primary2);
+    opacity: 0.5;
+  }
+
+
+  &:hover {
+
+    & .project-date {
+      color: #000;
+    }
+
+    &::before {
+      display:none;
+    }
+
+  }
+
+}
+
+
