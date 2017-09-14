@@ -54,7 +54,8 @@ export default {
       "importPoject": {
         "title": "Importer ou glisser un projet Khartis",
         "loadError": "Imopssible de charger le fichier sélectionné"
-      }
+      },
+      "search" : "Rechercher un pays, une région, un département..."
     },
 
     "step2": {

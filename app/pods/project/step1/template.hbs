@@ -5,7 +5,10 @@
     </h2>
 
     <div class="vertical airy flow select-a-map">
-      {{#x-dropdown-plus stretch=true as |dropdown|}}
+
+      {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
+
+      {{!-- {{#x-dropdown-plus stretch=true as |dropdown|}}
         {{#dropdown.trigger}}
           {{#if model.project.graphLayout.basemap}}
           {{x-capitalize (t (concat 'basemap.' model.project.graphLayout.basemap.mapConfig.id))}}
@@ -21,7 +24,8 @@
             </li>
           {{/each}}
         {{/dropdown.list}}
-      {{/x-dropdown-plus}}
+      {{/x-dropdown-plus}} --}}
+
     </div>
 
   {{#if model.project.graphLayout.basemap}}

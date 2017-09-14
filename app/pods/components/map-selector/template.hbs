@@ -1,0 +1,16 @@
+{{input type="text" class="map-selector-search" placeholder=(x-capitalize (t 'project.step1.search'))}}
+
+<div class="map-selector-results">
+
+  <h4>Monde et régions du monde</h4>
+  <ul>
+    {{#each queryMaps as |map|}}
+      <li {{action 'select' map.id}}>
+        <span> {{x-capitalize (t (concat 'basemap.' map.id))}}</span>
+        <span>
+          Map preview
+        </span>
+      </li>
+    {{/each}}
+  </ul>
+</div>
