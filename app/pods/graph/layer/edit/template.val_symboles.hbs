@@ -68,31 +68,41 @@
                       <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'quantile'}}>{{t 'visualization.settings.discretization.type.quantile'}}</li>
                       <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'standardDeviation'}}>{{t 'visualization.settings.discretization.type.standardDeviation'}}</li>
                       <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'jenks'}}>{{t 'visualization.settings.discretization.type.jenks'}}</li>
+                      <li {{action 'bindScaleIntervalType' editedLayer.mapping.scale 'manual'}}>{{t 'visualization.settings.discretization.type.manual'}}</li>
                     {{/facet.list}}
                   {{/x-dropdown-plus}}
                 </div>
               </div>
-              <div class="horizontal middle flow">
-                <label class="solid w5">{{x-capitalize (t 'visualization.settings.classes')}}</label>
-                <div class="solid w7">
-                  {{#x-dropdown-plus as |facet|}}
-                    {{#facet.trigger class="filled padded-h"}}
-                      {{editedLayer.mapping.scale.classes}}
-                      <i class="iconfont iconfont-angle-down"></i>
-                    {{/facet.trigger}}
-                    {{#facet.list}}
-                      {{#each editedLayer.mapping.possibleClasses as |count|}}
-                        <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
-                      {{/each}}
-                    {{/facet.list}}
-                  {{/x-dropdown-plus}}
-                </div>
-              </div>
+              {{#unless (x-eq editedLayer.mapping.scale.intervalType 'manual')}}
+                <div class="horizontal middle flow">
+                  <label class="solid w5">{{x-capitalize (t 'visualization.settings.classes')}}</label>
+                  <div class="solid w7">
+                    {{#x-dropdown-plus as |facet|}}
+                      {{#facet.trigger class="filled padded-h"}}
+                        {{editedLayer.mapping.scale.classes}}
+                        <i class="iconfont iconfont-angle-down"></i>
+                      {{/facet.trigger}}
+                      {{#facet.list}}
+                        {{#each editedLayer.mapping.possibleClasses as |count|}}
+                          <li {{action 'bind' editedLayer.mapping.scale 'classes' count}}>{{count}}</li>
+                        {{/each}}
+                      {{/facet.list}}
+                    {{/x-dropdown-plus}}
+                  </div>
+                </div> 
+              {{else}}
+                {{manual-threshold-input
+                  label=(x-capitalize (t 'visualization.settings.thresholds'))
+                  class="horizontal flow"
+                  scale=editedLayer.mapping.scale
+                  min=editedLayer.mapping.extentMin
+                  max=editedLayer.mapping.extentMax
+                }}
+              {{/unless}}
             </div>
             <div id="linear-tab" class="tab-pane {{unless editedLayer.mapping.scale.usesInterval 'active'}}"></div>
           </div>
           {{/x-tabs}}
-          
           
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>

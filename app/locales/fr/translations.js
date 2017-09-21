@@ -14,12 +14,15 @@ export default {
     "and": "et",
     "none": "aucune",
     "download": "télécharger",
+    "overwrite": "écraser",
+    "duplicate": "dupliquer",
     "loading": "chargement",
     "search": "rechercher",
     "save": "enregistrer le projet",
     "width": "largeur",
     "yes": "oui",
     "no": "non",
+    "warning": "warning",
     "error": {
      "one": "erreur",
      "other": "erreurs" 
@@ -53,7 +56,8 @@ export default {
       "downloadCsvModel": "télécharger le modèle (.csv)",
       "importPoject": {
         "title": "Importer un projet Khartis",
-        "loadError": "Imopssible de charger le fichier sélectionné"
+        "loadError": "Imopssible de charger le fichier sélectionné",
+        "projectExists": "Ce projet existe déjà dans votre historique"
       }
     },
     
@@ -200,6 +204,7 @@ export default {
       },
       "title" : "réglages",
       "symbols": "symboles",
+      "thresholds": "seuils",
       "discretization": {
         "title": "discrétisation",
         "tooltip": {
@@ -219,7 +224,8 @@ export default {
           "quantile": "quantiles",
           "standardDeviation": "standardisation",
           "jenks": "jenks",
-          "linear": "aucune"
+          "linear": "aucune",
+          "manual": "manuel"
         }
       },
       "classes": "classes",
@@ -302,6 +308,11 @@ export default {
       "bigDataSet": {
         "title": "Attention",
         "content": "Ce calque contient beaucoup de valeurs et cela pourrait entrainer des problèmes de performances. Voulez-vous continuer ?"
+      },
+      "threshold": {
+        "title": "nouveau seuil",
+        "extent": "borne en dehors de la série statistique",
+        "valueUsed": "borne déjà utilisée"
       }
     }
   },

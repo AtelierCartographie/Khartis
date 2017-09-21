@@ -109,7 +109,6 @@ let ColumnStruct = Struct.extend({
     },
     
     header: function() {
-      console.log("header", this.get('cells'), this.get('cells').find( c => c.get('row.header') ));
       return this.get('cells').find( c => c.get('row.header') );
     }.property('cells', 'cells.[]'),
     

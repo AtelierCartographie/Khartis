@@ -134,6 +134,8 @@ let DataMixin = Ember.Mixin.create({
     } else if (this.get('scale.intervalType') === "mean") {
       max = Math.max(1, Math.log(hl)/Math.log(2));
       return Array.from({length: Math.min(3, max)}, (v, i) => Math.pow(2, (i+1)));
+    } else if (this.get('scale.intervalType') === "manual") {
+      return Array.from({length: 7}, (v, i) => i+1);
     } else {
       return []; //linear
     }

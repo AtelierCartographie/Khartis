@@ -13,6 +13,7 @@ let Rule = Struct.extend({
   pattern: null,
   visible: true,
   shape: null,
+  index: 0,
   
   emptyValue: function() {
     return this.get('label') === Rule.EMPTY_VALUE;
@@ -24,7 +25,7 @@ let Rule = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'color', 'strokeColor', 'visible',
-    'pattern', 'shape', 'size',
+    'pattern', 'shape', 'size', 'index',
     function() {
       this.notifyDefferedChange();
     },
@@ -39,7 +40,8 @@ let Rule = Struct.extend({
       pattern: this.get('pattern'),
       visible: this.get('visible'),
       shape: this.get('shape'),
-      size: this.get('size')
+      size: this.get('size'),
+      index: this.get('index')
     }, props))
   }
   
@@ -58,7 +60,8 @@ Rule.reopenClass({
       pattern: json.pattern,
       visible: json.visible,
       shape: json.shape,
-      size: json.size
+      size: json.size,
+      index: json.index
     });
   }
 });

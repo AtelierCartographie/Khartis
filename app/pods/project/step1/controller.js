@@ -21,7 +21,10 @@ export default Ember.Controller.extend({
   }.property('store'),
 
   projects: function() {
-    return this.get('store').list();
+    return this.get('store').list()
+      .sort((a, b) => {
+        return a.date < b.date ? 1 : -1
+      });
   }.property('store'),
   
   parsable: function() {

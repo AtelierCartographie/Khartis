@@ -1,5 +1,6 @@
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
+import {solve} from './d3-solve-invert';
 
 function inside(bbox, x, y) {
   return x >= bbox[0][0] && x <= bbox[1][0]
@@ -162,6 +163,7 @@ let proj = function() {
     },
 
     projectionsForLatLon(latLon) {
+      console.log("here");
       return this.projs.filter( p => {
         let bbox = [
           p.instance.invert(p.instance.bboxPx[0]),
@@ -180,7 +182,9 @@ let proj = function() {
     },
 
     _instantiate(projConfig) {
+      
       let d3Proj = Function("d3", `return ${projConfig.fn}`)(d3);
+      !d3Proj.invert && (d3Proj.invert = solve(d3Proj));
       
       //apply projConfig initial transforms
       d3Proj.parallels && projConfig.transforms.parallels && d3Proj.parallels(projConfig.transforms.parallels);
@@ -206,12 +210,14 @@ let proj = function() {
           centerY = pixelBounds[0][1] + pixelBoundsHeight / 2,
           center = fProjection.invert([centerX, centerY]),
 
+          
           widthResolution = ((fWidth - margin.get('h'))*(zone[1][0] - zone[0][0]) ) / pixelBoundsWidth,
           heightResolution = ((fHeight - margin.get('v'))*(zone[1][1] - zone[0][1]) ) / pixelBoundsHeight,
-
+          
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
+          console.log(center);
           
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))

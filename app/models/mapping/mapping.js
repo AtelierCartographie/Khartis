@@ -27,6 +27,8 @@ let Mapping = Struct.extend(LegendMixin, {
   rules: null,
 
   colorSet: null,
+
+  ordered: false,
   
   canBeSurface: function() {
     return this.get('geoDef.isGeoRef');
@@ -198,6 +200,7 @@ let Mapping = Struct.extend(LegendMixin, {
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
+      ordered: this.get('ordered'),
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
   }
@@ -214,6 +217,7 @@ Mapping.reopenClass({
       varCol: json.varCol ? refs[json.varCol] : null,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
+      ordered: json.ordered,
       rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
     });
   }

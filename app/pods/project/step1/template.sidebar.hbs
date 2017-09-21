@@ -12,14 +12,7 @@
       {{/file-loader}}
     {{/x-tooltip}}
 
-    {{!-- {{#if canResumeProject}}
-      {{#x-tooltip message=(t 'project.step1.tooltip.resumeProject') position="right"}}
-      {{#x-button class="solid" action=(action 'resumeProject')}}
-          <span class="tooltip-trigger">{{x-capitalize (t "project.resume")}}</span>
-      {{/x-button}}
-      {{/x-tooltip}}
-    {{/if}} --}}
-
+    {{#if canResumeProject}}
     <div class="project-thumbnail-container">
 
       <h3>{{x-capitalize (t "project.resume")}}</h3>
@@ -32,6 +25,7 @@
       {{/each}}
 
     </div>
+    {{/if}}
 
   </div>
 {{/file-drop}}

@@ -65,12 +65,33 @@ let SurfaceMixin = Ember.Mixin.create({
           visible: true,
           color: colorScale(i),
           size: null,
-          shape: null
+          shape: null,
+          index: i
         }));
        
       this.set("rules", rules);
     }
     
+  },
+
+  swapRule(rule, index) {
+    let old = this.get('rules').find( r => r.get('index') === index ),
+        oldColor = old.get('color'),
+        oldIndex = old.get('index');
+    
+    old.setProperties({
+      color: rule.get('color'),
+      index: rule.get('index')
+    });
+
+    rule.setProperties({
+      color: oldColor,
+      index: oldIndex
+    });
+  },
+
+  reorderRules() {
+    this.set('rules', this.get('rules').sort( (a,b) => d3.ascending(a.get('index'), b.get('index')) ));
   },
   
   generateVisualization() {

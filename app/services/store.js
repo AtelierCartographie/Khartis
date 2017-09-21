@@ -17,7 +17,7 @@ var Store = Ember.Service.extend(Hookable, {
     transient: false,
 
     projects: null,
-    mounted: {},
+    mounted: null,
 
     versioning: null,
 
@@ -42,32 +42,54 @@ var Store = Ember.Service.extend(Hookable, {
     },
 
     saveAsFile() {
-      let project = Object.assign({}, this.get('projects')[0]);
+      let project = Object.assign({}, this.get('mounted'));
       
       let json = JSON.stringify(project),
-          blob = new Blob([LZString.compressToBase64(json)], {type: "application/octet-stream"});
+          blob = new Blob([json], {type: "application/octet-stream"});
 
       saveAs(blob, "Projet-Khartis.kh");
     },
 
     loadFromFile(data) {
       return new Promise( (res, rej) => {
-        let json = LZString.decompressFromBase64(data),
-          parsedData; 
+        let json,
+            parsedData; 
+        try {
+          parsedData = JSON.parse(json = data)
+        } catch (e) { //not json, try decompress for old khartis files
+          json = LZString.decompressFromBase64(data);
+        }
         try {
           if (json) {
             parsedData = JSON.parse(json);
-            parsedData._uuid = Project._nextId.next().value;
-            this.set('projects', Em.A([parsedData]));
-            this.set('mounted', {});
-            res(parsedData._uuid);
+            if (parsedData._uuid) {
+              let exists = this.get('projects').some( p => p._uuid === parsedData._uuid );
+              if (exists) {
+                rej({error: "problem:exists", project: parsedData});
+              } else {
+                this.get('projects').unshift(parsedData);
+                this.set('mounted', null);
+                res(parsedData._uuid);
+              }
+            }
           } else {
             throw new Error("Unable to decompress file");
           }
         } catch(e) {
-          rej(false);
+          rej({error: "problem:file"});
         }
       });
+    },
+
+    overwriteProject(project) {
+      let old = this.get('projects').find( p => p._uuid === project._uuid );
+      this.get('projects').splice(this.get('projects').indexOf(old), 1, project);
+    },
+
+    forkProject(project) {
+      project._uuid = Project._nextId.next().value;
+      this.get('projects').unshift(project);
+      return project;
     },
 
     clear() {
@@ -85,11 +107,11 @@ var Store = Ember.Service.extend(Hookable, {
 
     select(uuid) {
       return new Promise( (res, rej) => {
-        let project = this.get('mounted')[uuid] || this.get('projects').find( p => p._uuid === uuid );
+        let project = this.get('projects').find( p => p._uuid === uuid );
         if (project) {
           this.startVersioning(project);
-          this.get('mounted')[uuid] = project;
-          Project.restore(project).then( p => (console.log(p), res(p)) ).catch(console.log);
+          this.set('mounted', project);
+          Project.restore(project).then( p => res(p) ).catch(console.log);
         } else {
           res(false);
         }
@@ -101,7 +123,7 @@ var Store = Ember.Service.extend(Hookable, {
         this.get('projects').addObject( project.export() );
         return this.processHooks(HOOK_BEFORE_SAVE_PROJECT, [project]).then( () => {
           this._save();
-          this.get('mounted')[project._uuid] = project.export();
+          this.set('mounted', project.export());
           return project;
         });
       } else {
@@ -119,7 +141,7 @@ var Store = Ember.Service.extend(Hookable, {
         this.get('projects').splice(this.get('projects').indexOf(old), 1,
            json);
         this.get('projects').enumerableContentDidChange();
-        this.get('mounted')[project._uuid] = json;
+        this.set('mounted', json);
         return this.processHooks(HOOK_BEFORE_SAVE_PROJECT, [project]).then( () => {
           this._save();
           return project;

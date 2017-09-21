@@ -14,12 +14,15 @@ export default {
     "and": "and",
     "none": "none",
     "download": "download",
+    "overwrite": "overwrite",
+    "duplicate": "duplicate",
     "loading": "chargement",
     "search": "rechercher",
     "save": "save project",
     "width": "width",
     "yes": "yes",
     "no": "no",
+    "warning": "warning",
     "error": {
      "one": "error",
      "other": "errors" 
@@ -53,7 +56,8 @@ export default {
       "downloadCsvModel": "download model (.csv)",
       "importPoject": {
         "title": "Import Khartis project",
-        "loadError": "Unable to load selected file"
+        "loadError": "Unable to load selected file",
+        "projectExists": "Project already exists"
       }
     },
     
@@ -200,6 +204,7 @@ export default {
       },
       "title" : "settings",
       "symbols": "symbols",
+      "thresholds": "thresholds",
       "discretization": {
         "title": "discretization",
         "tooltip": {
@@ -219,7 +224,8 @@ export default {
           "quantile": "quantiles",
           "standardDeviation": "standard deviation",
           "jenks": "jenks",
-          "linear": "none"
+          "linear": "none",
+          "manual": "manual"
         }
       },
       "classes": "classes",
@@ -302,6 +308,11 @@ export default {
       "bigDataSet": {
         "title": "Warning",
         "content": "This layer contains a large data set. This could result in performance issues. Do you want to continue ?"
+      },
+      "threshold": {
+        "title": "new threshold",
+        "extent": "threshold is outside of the statistical series",
+        "valueUsed": "threshold is already used"
       }
     }
   },

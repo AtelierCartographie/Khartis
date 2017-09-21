@@ -445,6 +445,13 @@ export default Ember.Controller.extend({
       rule.toggleProperty('visible');
     },
 
+    swapRuleIndex(index, targetIndex) {
+      console.log("swap", index, targetIndex);
+      let rule = this.get('editedLayer.mapping.rules').objectAt(index);
+      this.get('editedLayer.mapping').swapRule(rule, targetIndex);
+      this.get('editedLayer.mapping').reorderRules();
+    },
+
     toggleBordersVisibility() {
       this.toggleProperty('model.graphLayout.showBorders');
     },

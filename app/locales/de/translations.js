@@ -14,11 +14,14 @@ export default {
     "and": "und",
     "none": "Keine",
     "download": "Download",
+    "overwrite": "overwrite",
+    "duplicate": "duplicate",
     "loading": "Laden",
     "search": "Bitte wählen",
     "save": "Speichern",
     "yes": "Ja",
     "no": "Nein",
+    "warning": "warning",
     "error": {
      "one": "Fehler",
      "other": "Fehler" 
@@ -52,7 +55,8 @@ export default {
       "downloadCsvModel": "Download des Modells (.csv)",
       "importPoject": {
         "title": "Khartis Projekt importieren",
-        "loadError": "Fehler beim laden der Datei"
+        "loadError": "Fehler beim laden der Datei",
+        "projectExists": "Project already exists"
       }
     },
     
@@ -199,6 +203,7 @@ export default {
       },
       "title" : "Darstellungsoptionen",
       "symbols": "Symbole",
+      "thresholds": "thresholds",
       "discretization": {
         "title": "Diskretisierung",
         "tooltip": {
@@ -218,7 +223,8 @@ export default {
           "quantile": "Quantile",
           "standardDeviation": "Standardabweichung",
           "jenks": "Jenks-Caspall-Algorithmus",
-          "linear": "Linear"
+          "linear": "Linear",
+          "manual": "manual"
         }
       },
       "classes": "Klassen",
@@ -300,6 +306,11 @@ export default {
       "bigDataSet": {
         "title": "Warnung",
         "content": "Diese Ebene enthält eine große Menge an Daten. Die anstehenden Berechnungen könnten Ihren Browser stark belasten. Möchten Sie fortfahren?"
+      },
+      "threshold": {
+        "title": "new threshold",
+        "extent": "threshold is outside of the statistical series",
+        "valueUsed": "threshold is already used"
       }
     }
   },

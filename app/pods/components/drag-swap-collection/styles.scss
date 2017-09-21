@@ -1,0 +1,26 @@
+& {
+  
+  position: relative;
+  
+  li {
+    cursor: pointer;
+  }
+  
+  li.dragged  {
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    z-index: 9999;
+    cursor: move !important;
+  }
+
+  li.overed {
+    background-color: red;
+  }
+
+  li.ghost {
+    background: grey;
+    border: 2px dashed black;
+  }
+  
+}

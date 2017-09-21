@@ -68,18 +68,40 @@
 
           <div class="title underlined">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
-          <div class="horizontal right solid flow padded-t">
+          <div class="horizontal space-between solid middle flow padded-t">
+            <span>Ordonnées ? {{input type="checkbox" checked=editedLayer.mapping.ordered}}<div class="-h"></div></span>
             <a class="solid button filled" {{action 'randomizeRules'}}><i class="iconfont iconfont-redo"></i></a>
           </div>
 
+          {{#if editedLayer.mapping.ordered}}
+          {{#drag-swap-collection provider=editedLayer.mapping.rules swap=(action 'swapRuleIndex') as |rule self|}}
+            <li>
+              <div class="categories-name categories-surface">
+                  {{#if rule.emptyValue}}
+                      <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
+                  {{else}}
+                      <span class="varname">{{rule.label}}</span>
+                  {{/if}}
+
+                  <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+
+                  <div class="flow">
+                      {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                  </div>
+
+              </div>
+              <div class="categories-controls">
+                  <div class="categories-control categories-fill-color-control">
+                      {{color-picker value=rule.color}}
+                  </div>
+              </div>
+            </li>
+          {{/drag-swap-collection}}
+          {{else}}
           <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
-
               {{#each editedLayer.mapping.rules as |rule|}}
-
                   <li>
-
                     <div class="categories-name categories-surface">
-
                         {{#if rule.emptyValue}}
                             <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
                         {{else}}
@@ -93,7 +115,6 @@
                         </div>
 
                     </div>
-
                     <div class="categories-controls">
                         <div class="categories-control categories-fill-color-control">
                             {{color-picker value=rule.color}}
@@ -104,6 +125,7 @@
 
               {{/each}}
           </ul>
+          {{/if}}
 
       </div>
 

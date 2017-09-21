@@ -20,6 +20,13 @@ let Scale = Struct.extend({
   classesBeforeBreak: 1,
   contrast: 2,
   usesInterval: null,
+  manualIntervals: null,
+
+  init() {
+    this._super();
+    !this.get('manualIntervals') && this.set('manualIntervals', Em.A());
+    this.manualIntervalsChange();
+  },
   
   diverging: function() {
     return this.get('valueBreak') != null && !isNaN(this.get('valueBreak'));
@@ -31,7 +38,7 @@ let Scale = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'intervalType', 'usesInterval', 'classes',
-    'valueBreak', 'classesBeforeBreak', 'contrast',
+    'valueBreak', 'classesBeforeBreak', 'contrast', 'manualIntervals.[]',
     function() {
       this.notifyDefferedChange();
     },
@@ -60,6 +67,8 @@ let Scale = Struct.extend({
           return standardDeviation(vals, classes);
         } else if (intervalType === "jenks") {
           return jenks(vals, classes);
+        } else if (intervalType === "manual") {
+          return this.computeManual(ext);
         }
 
       } else {
@@ -91,8 +100,22 @@ let Scale = Struct.extend({
     }
 
     return intervals;
-    
   },
+
+  computeManual(ext) {
+    let intervals = this.get('manualIntervals')
+      .filter( i => insideInterval(ext, i) );
+    return intervals;
+  },
+
+  manualIntervalsChange: function() {
+    if (this.get('intervalType') === "manual") {
+      this.set('classes', this.get('manualIntervals').length+2);
+      console.log(this.get('manualIntervals').length, this.get('classes'));
+      this.set('classesBeforeBreak', this.get('manualIntervals').reduce( (sum, v) => (v < this.get('valueBreak') ? sum+1:sum), 0 )+1);
+      console.log(this.get('manualIntervals'), this.get('classes'), this.get('classesBeforeBreak'));
+    }
+  }.observes('manualIntervals.[]'),
   
   export(props) {
     return this._super(Object.assign({
@@ -101,7 +124,8 @@ let Scale = Struct.extend({
       valueBreak: this.get('valueBreak'),
       classesBeforeBreak: this.get('classesBeforeBreak'),
       contrast: this.get('contrast'),
-      usesInterval: this.get('usesInterval')
+      usesInterval: this.get('usesInterval'),
+      manualIntervals: this.get('manualIntervals')
     }, props));
   }
   
@@ -116,7 +140,8 @@ Scale.reopenClass({
       valueBreak: json.valueBreak,
       classesBeforeBreak: json.classesBeforeBreak,
       contrast: json.contrast,
-      usesInterval: json.usesInterval
+      usesInterval: json.usesInterval,
+      manualIntervals: json.manualIntervals
     });
     return o;
   }

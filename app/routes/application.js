@@ -45,14 +45,29 @@ export default Ember.Route.extend({
     loadExternalProject(data) {
       this.get('store').loadFromFile(data)
         .then( res => {
-          this.transitionTo('graph', this.get('store').list().get('lastObject._uuid'));
+          this.transitionTo('graph', res);
         })
         .catch( res => {
-          this.get('ModalManager')
-            .show('confirm', Ember.String.capitalize(this.get('i18n').t('project.step1.importPoject.loadError').string),
-              Ember.String.capitalize(this.get('i18n').t('general.error', {count: 1}).string),
-              null,
-              Ember.String.capitalize(this.get('i18n').t('general.cancel').string));
+          if (res.error === "problem:file") {
+            this.get('ModalManager')
+              .show('confirm', Ember.String.capitalize(this.get('i18n').t('project.step1.importPoject.loadError').string),
+                Ember.String.capitalize(this.get('i18n').t('general.error', {count: 1}).string),
+                null,
+                Ember.String.capitalize(this.get('i18n').t('general.cancel').string));
+          } else if (res.error === "problem:exists") {
+            this.get('ModalManager')
+              .show('confirm', Ember.String.capitalize(this.get('i18n').t('project.step1.importPoject.projectExists').string),
+                Ember.String.capitalize(this.get('i18n').t('general.warning', {count: 1}).string),
+                Ember.String.capitalize(this.get('i18n').t('general.overwrite').string),
+                Ember.String.capitalize(this.get('i18n').t('general.duplicate').string))
+              .then( () => {
+                this.get('store').overwriteProject(res.project);
+                this.transitionTo('graph', res.project._uuid);
+              })
+              .catch( () => {
+                this.transitionTo('graph', this.get('store').forkProject(res.project)._uuid);
+              });
+          }
         })
         .catch(console.log)
     },

@@ -103,3 +103,19 @@ a.button {
     margin-right:1.3rem;
   }
 }
+
+.button-circle-o {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+  border: 1px solid color(text);
+  &:hover {
+    border-color: color(primary);
+    .iconfont {
+      color: color(primary);
+    }
+  }
+}
