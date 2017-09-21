@@ -1,5 +1,5 @@
 export default {
-  
+
   "general": {
     "next": "suivant",
     "back": "retour",
@@ -25,7 +25,7 @@ export default {
     "warning": "warning",
     "error": {
      "one": "erreur",
-     "other": "erreurs" 
+     "other": "erreurs"
     }
   },
 
@@ -35,11 +35,11 @@ export default {
   },
 
   "help.wiki": "Aide - Wiki Khartis",
-  
+
   "project": {
-   
+
     "resume": "reprendre le projet en cours",
-    
+
     "step1": {
       "title": {
         "import": "importer",
@@ -55,12 +55,13 @@ export default {
       "pasteCsv": "coller ici votre tableau de données ou glisser un fichier csv",
       "downloadCsvModel": "télécharger le modèle (.csv)",
       "importPoject": {
-        "title": "Importer un projet Khartis",
+        "title": "Importer ou glisser un projet Khartis",
         "loadError": "Imopssible de charger le fichier sélectionné",
         "projectExists": "Ce projet existe déjà dans votre historique"
-      }
+      },
+      "search" : "Rechercher un pays, une région, un département..."
     },
-    
+
     "step2": {
       "title": {
         "preview": "aperçu des données"
@@ -105,9 +106,9 @@ export default {
       },
       "back": "importer de nouvelles données"
     }
-    
+
   },
-  
+
   "navigation": {
 
     "editColumn": "Édition d'une colonne",
@@ -117,7 +118,7 @@ export default {
       "visualisations" : "visualisations",
       "export": "export"
     }
-    
+
   },
 
   "variable.meta": {
@@ -130,7 +131,7 @@ export default {
       "auto": "automatique"
     }
   },
-  
+
   "projection": {
     "title": "projection",
     "settings": {
@@ -184,7 +185,7 @@ export default {
       "description": "Ceci est une description"
     }
   },
-  
+
   "visualization": {
     "title": {
       "choose": "choix d'une visualisation",
@@ -415,5 +416,5 @@ export default {
     "eu_nuts2-agriculture": "Surperficie agricole utilisée (SAU) selon la taille des exploitations (2013)",
     "eu_nuts3-pop": "Densité de population (2015)"
   }
-  
+
 };

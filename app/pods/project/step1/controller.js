@@ -7,7 +7,7 @@ import ab2string from 'khartis/utils/ab2string';
 import config from 'khartis/config/environment';
 
 export default Ember.Controller.extend({
-  
+
   store: Ember.inject.service(),
 
   dictionary: Ember.inject.service(),
@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
   basemap: null,
 
   importReport: null,
-  
+
   canResumeProject: function() {
     return this.get('store').has();
   }.property('store'),
@@ -26,11 +26,11 @@ export default Ember.Controller.extend({
         return a.date < b.date ? 1 : -1
       });
   }.property('store'),
-  
+
   parsable: function() {
     return this.get('model.csv') && this.get('model.csv').length > 0;
   }.property('model.csv'),
-  
+
   examples: function() {
     return this.get('model.project.graphLayout.basemap.mapConfig.examples');
   }.property('model.project.graphLayout.basemap.mapConfig.examples'),
@@ -58,7 +58,7 @@ export default Ember.Controller.extend({
         extraFields.push(field);
       }
     });
-    
+
     csvData = "ID,NAME" + (extraFields.length ? "," + extraFields.join(",") : "") + "\n";
     this.get('model.project.graphLayout.basemap.dictionaryData').forEach( row => {
       rowData = [row[idField]];
@@ -74,38 +74,38 @@ export default Ember.Controller.extend({
     saveAs(blob, "Khartis_template_"+modelName+".csv");
 
   },
-  
+
   loadFile(source) {
-    
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', `${config.rootURL}data/examples/${source}`, true);
     xhr.responseType = 'arraybuffer';
 
     xhr.onload = (e) => {
-      
+
       if (e.target.status == 200) {
-        
+
         let data = CSV.parse(ab2string(e.target.response));
 
         data = data.map( r => {
           return r.map( c => c.trim() );
         });
-        
+
         let project = this.get('model.project');
         project.importRawData(data);
         project.set('csv', null);
         this.transitionToRoute('project.step2', "new");
-        
+
       }
-      
+
     };
 
     xhr.send();
-    
+
   },
-  
+
   actions: {
-    
+
     selectBasemap(mapId) {
       this.get('model.project.graphLayout').setBasemap(Basemap.create({id: mapId}));
     },
@@ -141,9 +141,9 @@ export default Ember.Controller.extend({
           this.transitionToRoute('project.step2', 'new');
         }
       });
-      
+
     },
-    
+
     selectDataSet(set) {
       this.loadFile(set.source);
     },
@@ -151,7 +151,7 @@ export default Ember.Controller.extend({
     downloadTemplate() {
       this.downloadTemplate();
     }
-    
+
   }
-  
+
 });

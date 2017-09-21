@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   dropdownPivot:'top left',
   triggerPivot:'bottom left',
   noWrap: false,
-  
+
   dropdown: null,
 
   didInsertElement: function () {
@@ -63,7 +63,7 @@ export default Ember.Component.extend({
   show() {
 
     this.set('dropdown.expanded', true);
-      
+
     $(document).on('click', this.handleOuterClick)
 
     this.set('open', true)
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
     if(this.get('snapped')){
       this.get('snapped').dispose()
     }
-    
+
     Ember.run.later(() => {
       var snapped = snap(this.get('targetEl')[0], this.get('dropdownPivot'))
         .to(this.get('triggerEl')[0],  this.get('triggerPivot'))
@@ -81,14 +81,16 @@ export default Ember.Component.extend({
       this.set('snapped', snapped);
 
       if (this.get('dropdown.stretch')) {
-        this.get('targetEl').width(this.get('triggerEl').width());
+
+
+        this.get('targetEl').width(this.get('triggerEl').outerWidth());
       }
     });
-    
+
   },
 
   hide() {
-    
+
     this.set('dropdown.expanded', false);
 
     $(document).off('click', this.handleOuterClick)
@@ -109,11 +111,11 @@ export default Ember.Component.extend({
 
     // Make sure document click will not leak
     $(document).off('click', this.handleOuterClick);
-    
+
     if (trigger) {
       trigger.off('click', this.toggle);
     }
-    
+
     if (dropdown) {
       dropdown.off('click', this.toggle)
     }

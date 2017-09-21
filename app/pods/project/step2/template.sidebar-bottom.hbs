@@ -4,9 +4,9 @@
 </div>
 
 <nav class="flow horizontal right">
-    {{#x-button class="primary btn-home"}}
+    {{#link-to 'index' class="primary btn-home"}}
         <i class="iconfont iconfont-home"></i>
-    {{/x-button}}
+    {{/link-to}}
     {{#x-button class="primary btn-prev btn-arrow" disabled=(x-not model.csv)  action=(action 'back')}}
         <i class="iconfont iconfont-angle-left"></i>
     {{/x-button}}

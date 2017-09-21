@@ -3,6 +3,7 @@
 }
 
 .step-import {
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -10,11 +11,12 @@
   overflow-y: auto;
   background: #f2f2f2;
 
-  .select-a-map {
-    .dropdown-trigger {
-      @include flow(horizontal, space-between);
-      background-color: white;
-    }
+  .dropdown-trigger {
+    @include flow(horizontal, space-between);
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border:1px solid greys(10%);
+    border-bottom-width: 3px;
   }
 
   .map-preview {
@@ -90,38 +92,89 @@
     cursor: pointer;
   }
 
-  .import-samples {
-    margin-top: 4rem;
+  .select-a-map-search {
+    padding: 2rem 1rem;
+    border: 1px solid #f0f0f0;
+    position: relative;
 
-    h2 {
-      margin: 0 0 0.3rem;
-    }
-
-    ul {
-      display: flex;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      font-size: 1.3rem;
-      cursor: pointer;
-      background-color: color(variable);
-      color: color(text);
-      padding: 0.4rem 1rem;
-      border-radius: 0.2rem;
-
-      &:not(:last-child) {
-        margin-right: 1rem;
-      }
-
+    &::before {
+      content: '';
+      width:10px;
+      height: 10px;
+      background:red;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
   }
 
+  .import-samples {
+    margin-top: 2rem;
+
+    .button {
+      margin-left: 2rem;
+    }
+  }
+
 }
 
+.map-selector {
+
+  .map-selector-search {
+    padding: 2rem 1rem;
+    border: 1px solid #f0f0f0;
+    position: relative;
+
+    &::before {
+      content: '';
+      width:10px;
+      height: 10px;
+      background:red;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+  }
+
+  .map-selector-results {
+    background:#FFF;
+    border:1px solid #f0f0f0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    ul {
+      list-style: none;
+      padding:0;
+      margin:0;
+      max-height: 280px;
+      overflow-y: scroll;
+    }
+
+    li {
+      padding: 1rem 2rem;
+      display:flex;
+      justify-content: space-between;
+      cursor:pointer;
+    }
+
+    li:not(:last-child){
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    li:hover {
+      background:#f0f0f0;
+    }
+
+    h4 {
+      margin:0;
+      padding: 2rem 3rem;
+      border-bottom: 1px solid #cecece;
+    }
+  }
+
+}
 
 .report-preview {
 
