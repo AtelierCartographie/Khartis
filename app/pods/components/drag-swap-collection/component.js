@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 
   tagName: "ul",
   classNames: ["collection", "drag-sort"],
-  
+
   provider: null,
 
   wasDragged: false,
@@ -16,9 +16,9 @@ export default Ember.Component.extend({
     this.attachDrag();
     
   }.on("didInsertElement"),
-  
+
   attachDrag: function() {
-    
+
     Ember.run.later(this, () => {
       
       let self = this,
@@ -90,14 +90,10 @@ export default Ember.Component.extend({
         if (!self.get('wasDragged') && !$(d3.event.sourceEvent.target).parents(".no-drag-click").length) {
           self.sendAction('onClick', i);
         }
-
+        
         let {index} = toggleOveredClass.call(this, $(this).position().top),
             cur = $(this).index(),
             o = self.get('provider').objectAt(cur);
-            
-        if (index !== undefined && cur !== index) {
-          self.sendAction("swap", cur, index);
-        }
         
         d3.select(this).classed("dragged", false);
         d3.select(this).classed("will-drag", false);
@@ -105,6 +101,10 @@ export default Ember.Component.extend({
         $(this).siblings()
           .toggleClass("overed", false)
           .filter(".ghost").remove();
+          
+        if (index !== undefined && cur !== index) {
+          self.sendAction("swap", cur, index);
+        }
 
       });
       

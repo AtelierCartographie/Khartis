@@ -446,9 +446,9 @@ export default Ember.Controller.extend({
     },
 
     swapRuleIndex(index, targetIndex) {
-      console.log("swap", index, targetIndex);
-      let rule = this.get('editedLayer.mapping.rules').objectAt(index);
-      this.get('editedLayer.mapping').swapRule(rule, targetIndex);
+      let rule = this.get('editedLayer.mapping.rules').objectAt(index),
+          targetRule =  this.get('editedLayer.mapping.rules').objectAt(targetIndex);
+      this.get('editedLayer.mapping').swapRule(rule, targetRule);
       this.get('editedLayer.mapping').reorderRules();
     },
 

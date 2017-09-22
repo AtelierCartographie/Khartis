@@ -6,8 +6,16 @@
   }
   
   div.swatch {
-    width: 24px;
     height: 24px;
   }
   
+  @mixin swatch-size() {
+    @for $i from 1 through 8 {
+      svg.shape-#{$i} {
+        width: (24px) * $i;
+      }
+    }
+  }
+  
+  @include swatch-size();
 }

@@ -1,4 +1,5 @@
 import {isFirefox} from 'khartis/utils/browser-check';
+import SymbolConfig from './symbol-config';
 
 let symbol = function(opts = {}) {
   let name = opts.name,
@@ -93,7 +94,11 @@ let symbol = function(opts = {}) {
               viewBox: [0, 0, 20, 20]
             });
           default:
-            throw new Error("unable to generate symbol with name "+name);
+            if (SymbolConfig[name]) {
+              return Object.assign({}, baseConf, SymbolConfig[name]);
+            } else {
+              throw new Error("unable to generate symbol with name "+name);
+            }
         }
       },
       conf = factory(name);

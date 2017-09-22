@@ -42,7 +42,12 @@ let DataMixin = Ember.Mixin.create({
       return dist;
     }, new Map());
       
-  }.property('varCol')
+  }.property('varCol'),
+
+  reorderRules() {
+    this.set('rules', this.get('rules').sort( (a,b) => d3.ascending(a.get('index'), b.get('index')) ).slice());
+  }
+
   
 });
 
@@ -74,12 +79,11 @@ let SurfaceMixin = Ember.Mixin.create({
     
   },
 
-  swapRule(rule, index) {
-    let old = this.get('rules').find( r => r.get('index') === index ),
-        oldColor = old.get('color'),
-        oldIndex = old.get('index');
+  swapRule(rule, targetRule) {
+    let oldColor = targetRule.get('color'),
+        oldIndex = targetRule.get('index');
     
-    old.setProperties({
+    targetRule.setProperties({
       color: rule.get('color'),
       index: rule.get('index')
     });
@@ -90,10 +94,6 @@ let SurfaceMixin = Ember.Mixin.create({
     });
   },
 
-  reorderRules() {
-    this.set('rules', this.get('rules').sort( (a,b) => d3.ascending(a.get('index'), b.get('index')) ));
-  },
-  
   generateVisualization() {
     if (!this.get('visualization')) {
       this.set('visualization', VisualizationFactory.createInstance("surface"));
@@ -129,7 +129,8 @@ let SymbolMixin = Ember.Mixin.create({
           visible: true,
           color: colorScale(i),
           size: this.get('visualization.maxSize'),
-          shape: shapeScale(i)
+          shape: shapeScale(i),
+          index: i
         }));
        
       this.set("rules", rules);
@@ -142,6 +143,12 @@ let SymbolMixin = Ember.Mixin.create({
       this.set('visualization', VisualizationFactory.createInstance("symbol"));
     }
   },
+
+  orderedChange: function() {
+    if (this.get('visualization')) {
+      this.get('visualization').recomputeAvailableShapes(this.get('ordered'), Math.min(this.get('rules').length, 8), "triangle");
+    }
+  }.observes('ordered').on("init"),
   
   getScaleOf(type) {
     return () => PatternMaker.NONE;

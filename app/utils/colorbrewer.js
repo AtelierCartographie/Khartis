@@ -438,7 +438,6 @@ brewer.Composer = {
     let res = null;
 
     if (diverging) {
-      console.log(palette, classes, before);
       res = brewer.diverging[palette][classes][before].slice(0);
       if (reverse) {
         res = res.slice(0, before).reverse().concat(res.slice(before, classes).reverse());

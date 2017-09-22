@@ -1,5 +1,8 @@
 import Struct from 'khartis/models/struct';
 import config from 'khartis/config/environment';
+import SymbolBrewer from 'khartis/utils/symbolbrewer';
+
+const DEFAULT_UNORDERED_SHAPES = ["circle", "rect", "line", "star", "times"];
 
 let SymbolVisualization = Struct.extend({
   
@@ -7,6 +10,7 @@ let SymbolVisualization = Struct.extend({
   color: "red",
   colorBeforeBreak: "blue",
   shape: "circle",
+  shapeSet: null,
   strokeColor: "#404040",
   stroke: 1,
   maxSize: 10,
@@ -20,7 +24,17 @@ let SymbolVisualization = Struct.extend({
     return config.symbolMaxMaxSize;
   }.property(),
 
-  availableShapes: ["circle", "rect", "line", "star", "times"],
+  availableShapes: DEFAULT_UNORDERED_SHAPES,
+
+  recomputeAvailableShapes(ordered, classes, palette=null) {
+    if (!ordered) {
+      this.set('availableShapes', DEFAULT_UNORDERED_SHAPES);
+      this.set('shapeSet', null);
+    } else {
+      this.set('availableShapes', SymbolBrewer.Composer.compose(palette, classes));
+      !this.get('shapeSet') && this.set('shapeSet', this.get('availableShapes')[0]);
+    }
+  },
   
   colorStops(diverging) {
     if (diverging) {
@@ -43,6 +57,7 @@ let SymbolVisualization = Struct.extend({
       type: this.get('type'),
       color: this.get('color'),
       shape: this.get('shape'),
+      shapeSet: this.get('shapeSet'),
       strokeColor: this.get('strokeColor'),
       stroke: this.get('stroke'),
       maxSize: this.get('maxSize'),
@@ -59,6 +74,7 @@ SymbolVisualization.reopenClass({
       type: json.type,
       color: json.color,
       shape: json.shape,
+      shapeSet: json.shapeSet,
       strokeColor: json.strokeColor,
       stroke: json.stroke,
       maxSize: json.maxSize,
