@@ -6,7 +6,7 @@
     cursor: pointer;
   }
   
-  li.dragged  {
+  .dragged  {
     position: absolute;
     right: 0px;
     left: 0px;
@@ -15,12 +15,11 @@
   }
 
   li.overed {
-    background-color: red;
+    background-color: color(primary);
   }
 
   li.ghost {
-    background: grey;
-    border: 2px dashed black;
+    background: #ddd;
   }
   
 }

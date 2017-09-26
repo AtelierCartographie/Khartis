@@ -10,6 +10,7 @@ export default Ember.Component.extend({
     
     bindValue(shape) {
       this.set('value', shape);
+      this.sendAction('update', shape);
     }
     
   }

@@ -137,6 +137,28 @@ let SymbolMixin = Ember.Mixin.create({
     }
     
   },
+
+  swapRule(rule, targetRule) {
+    let oldColor = targetRule.get('color'),
+        oldShape = targetRule.get('shape'),
+        oldIndex = targetRule.get('index');
+    
+    targetRule.setProperties({
+      color: rule.get('color'),
+      index: rule.get('index'),
+      shape: rule.get('shape')
+    });
+
+    rule.setProperties({
+      color: oldColor,
+      index: oldIndex,
+      shape: oldShape
+    });
+  },
+
+  updateRulesShapeSet(shapeSet) {
+    this.get('rules').forEach( (r, i) => r.set('shape', i < shapeSet.length ? shapeSet[i] : null ));
+  },
   
   generateVisualization() {
     if (!this.get('visualization')) {
@@ -146,7 +168,7 @@ let SymbolMixin = Ember.Mixin.create({
 
   orderedChange: function() {
     if (this.get('visualization')) {
-      this.get('visualization').recomputeAvailableShapes(this.get('ordered'), Math.min(this.get('rules').length, 8), "triangle");
+      this.get('visualization').recomputeAvailableShapes(this.get('ordered'), Math.min(this.get('rules').length, 8), "circle");
     }
   }.observes('ordered').on("init"),
   

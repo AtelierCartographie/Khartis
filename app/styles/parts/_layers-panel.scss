@@ -199,6 +199,36 @@ input[type=text].padding-fix {
     &.categories-surface {
       flex: 3;
     }
+
+    &.categories-symbol-ordered {
+      flex: 3;
+    }
+  }
+
+  li.ordered .categories-name {
+    box-shadow: 0px 2px 5px 0px rgba(64,64,64,0.5);
+  }
+
+  li.ordered .categories-shape-control svg, li.ordered .categories-fill-color-control svg {
+    height: 24px;
+    width: 24px;
+  }
+
+  li.ghost .categories-name {
+    visibility: hidden;
+  }
+
+  li.ordered.dragged {
+    background-color: transparent;
+    border: none;
+  }
+
+  li.ordered.dragged .categories-name {
+    background-color: #fff;
+  }
+
+  li.ordered.dragged .categories-controls {
+    visibility: hidden;
   }
 
   .toggle-visibility {

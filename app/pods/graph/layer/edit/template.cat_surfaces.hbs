@@ -74,8 +74,9 @@
           </div>
 
           {{#if editedLayer.mapping.ordered}}
-          {{#drag-swap-collection provider=editedLayer.mapping.rules swap=(action 'swapRuleIndex') as |rule self|}}
-            <li>
+          {{#drag-swap-collection class="collection categories-list fluid scrollable"
+            provider=editedLayer.mapping.rules swap=(action 'swapRuleIndex') as |rule self|}}
+            <li class="ordered">
               <div class="categories-name categories-surface">
                   {{#if rule.emptyValue}}
                       <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
@@ -92,7 +93,7 @@
               </div>
               <div class="categories-controls">
                   <div class="categories-control categories-fill-color-control">
-                      {{color-picker value=rule.color}}
+                    {{pattern-dropdown/swatch color=rule.color pattern=rule.pattern}}
                   </div>
               </div>
             </li>

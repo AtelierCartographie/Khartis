@@ -3,6 +3,7 @@ import config from 'khartis/config/environment';
 import SymbolBrewer from 'khartis/utils/symbolbrewer';
 
 const DEFAULT_UNORDERED_SHAPES = ["circle", "rect", "line", "star", "times"];
+const DEFAULT_STROKE_COLOR = "#404040";
 
 let SymbolVisualization = Struct.extend({
   

@@ -534,6 +534,10 @@ export default Ember.Controller.extend({
     randomizeRules() {
       this.get('editedLayer.mapping').generateRules(true);
     },
+
+    updateRulesShapeSet(shapeSet) {
+      this.get('editedLayer.mapping').updateRulesShapeSet(shapeSet);
+    },
     
     export(format, target = undefined) {
       if (format === "svg") {

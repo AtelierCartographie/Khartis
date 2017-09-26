@@ -50,6 +50,9 @@ Router.map(function() {
         });
     });
 
+    //used to generate thumbnails on build
+    this.route("map-thumbnails", {path: "map-thumbnails"});
+
 });
 
 export default Router;

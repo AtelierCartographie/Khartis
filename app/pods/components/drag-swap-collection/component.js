@@ -26,10 +26,13 @@ export default Ember.Component.extend({
           drag = d3.drag(),
           insertGhostEl = function() {
             if ($(this).siblings().filter('.ghost').length == 0) {
-              $(document.createElement("li")).toggleClass("ghost", true)
+              $(document.createElement("li"))
                 .css({
                   height: $(this).height()
                 })
+                .attr("class", $(this).attr("class").replace("dragged", ""))
+                .toggleClass("ghost", true)
+                .html($(this).html())
                 .insertAfter($(this));
             }
           },

@@ -129,5 +129,10 @@
   },
   "config": {
     "forge": "./ember-electron/electron-forge-config.js"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/map-thumbnails"
+    ]
   }
 }

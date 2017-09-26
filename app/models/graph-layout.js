@@ -122,7 +122,7 @@ var GraphLayout = Struct.extend({
 	},
 
   setBasemap(basemap) {
-    this.set('basemap', basemap)
+    return this.set('basemap', basemap)
       .setup()
       .then( res => {
         this.set('projection', basemap.assumeProjection());
