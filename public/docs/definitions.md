@@ -1,8 +1,3 @@
-## Contraste
-(à venir)
-
-***
-
 ## Diagramme de fréquence
 (à venir)
 

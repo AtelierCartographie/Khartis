@@ -79,6 +79,115 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "german states 2016",
+        license: "GeoNutzV",
+        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
+        sources: [
+          {
+            source: "DE-2016/topojson/bkg-2500-basemap-de-states-q1e4.json",
+            projection: "d3.geoConicConformal()",
+            scale: 0.8, borders: ["l", "r", "t", "b"],
+            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
+            zoning: [[0, 0], [1, 1]]
+          }
+        ],
+        dictionary: {
+          source: "DE-BKG-NUTS1-2016.json",
+          identifier: "RS"
+        },
+        examples: [
+          {
+            id: "de_states_inhabitants_06_15",
+            source: "04-DESTATIS-RS-NUTS1-Inhabitants-2006-2015.csv",
+            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
+            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+            license_url: "https://www.govdata.de/dl-de/by-2-0",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
+          }
+        ]
+      },
+      {
+        id: "german districts 2016",
+        license: "GeoNutzV",
+        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
+        sources: [
+          {
+            source: "DE-2016/topojson/bkg-2500-basemap-de-districts-q1e4.json",
+            projection: "d3.geoConicConformal()",
+            scale: 0.8, borders: ["l", "r", "t", "b"],
+            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
+            zoning: [[0, 0], [1, 1]]
+          }
+        ],
+        dictionary: {
+          source: "DE-STATIS-NUTS3-2016.json",
+          identifier: "RS"
+        },
+        examples: [
+          {
+            id: "de_district_inhabitants",
+            source: "04-DESTATIS-RS-NUTS-Inhabitants-formatted-numers.csv",
+            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
+            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+            license_url: "https://www.govdata.de/dl-de/by-2-0",
+            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
+            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
+          }
+        ]
+      },
+      {
+        id: "brazil ufe 2015",
+        attribution: "basemap from IBGE",
+        sources: [
+          {source: "BR-ufe-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-UFE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "br_ufe-pop",
+            source: "br-ufe-pop-2010.csv"
+          },
+        ]
+      },
+      {
+        id: "brazil mie 2015",
+        attribution: "basemap from IBGE",
+        sources: [
+          {source: "BR-mie-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-MIE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "",
+            source: ""
+          },
+        ]
+      },
+      {
+        id: "brazil mee 2015",
+        attribution: "basemap from IBGE",
+        sources: [
+          {source: "BR-mee-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "BR-dico-MEE-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "",
+            source: ""
+          },
+        ]
+      },
+      {
         id: "eu country 2013",
         attribution: "basemap from GISCO - Eurostat (European Commission)",
         sources: [
@@ -154,54 +263,59 @@ module.exports = function(environment) {
         ]
       },
       {
-        id: "brazil ufe 2015",
-        attribution: "basemap from IBGE",
+        id: "spain prov 2015",
+        attribution: "basemap from Instituto Geográfico Nacional",
         sources: [
-          {source: "BR-ufe-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "ES-prov-2015/spain.json", projection: "d3.geoConicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-prov-2015/spain-islands.json", projection: "d3.geoConicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
         ],
         dictionary: {
-          source: "BR-dico-UFE-2015.json",
+          source: "ES-dico-PROV-2015.json",
           identifier: "ID"
         },
         examples: [
           {
-            id: "br_ufe-pop",
-            source: "br-ufe-pop-2010.csv"
-          },
+            id: "es_prov-pop",
+            source: "es-prov-pop-2015.csv"
+          }
         ]
       },
       {
-        id: "brazil mie 2015",
-        attribution: "basemap from IBGE",
+        id: "spain auto 2015",
+        attribution: "basemap from Instituto Geográfico Nacional",
         sources: [
-          {source: "BR-mie-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "ES-auto-2015/spain.json", projection: "d3.geoConicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
+          {source: "ES-auto-2015/spain-islands.json", projection: "d3.geoConicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
         ],
         dictionary: {
-          source: "BR-dico-MIE-2015.json",
+          source: "ES-dico-AUTO-2015.json",
           identifier: "ID"
         },
         examples: [
           {
-            id: "",
-            source: ""
-          },
+            id: "es_auto-pop",
+            source: "es-auto-pop-2015.csv"
+          }
         ]
       },
       {
-        id: "brazil mee 2015",
-        attribution: "basemap from IBGE",
+        id: "us state 2015",
+        attribution: "basemap from U.S. Census Bureau",
         sources: [
-          {source: "BR-mee-2015.json", projection: "d3.geoPolyconic()", transforms:{rotate: [54, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "US-state-2015/usa.json", projection: "d3.geoAlbers()", transforms:{rotate: [96, 0], parallels: [29.5, 45.5]}, scale: 1, zoning: [[0, 0], [1, 0.9]]},
+          {source: "US-state-2015/alaska.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [154, 0], parallels: [55, 65]}, scale: 1, zoning: [[0, 0.8], [0.33, 1]], borders: ["r", "t"]},
+          {source: "US-state-2015/hawai.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [157, 0], parallels: [8, 18]}, scale: 0.7, zoning: [[0.33, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "US-state-2015/porto-rico.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [67, 0], parallels: [18, 18]}, scale: 0.45, zoning: [[0.5, 0.95], [0.65, 1]], borders: ["r", "t"]}
         ],
         dictionary: {
-          source: "BR-dico-MEE-2015.json",
+          source: "US-dico-ST-2015.json",
           identifier: "ID"
         },
         examples: [
           {
-            id: "",
-            source: ""
-          },
+            id: "us_state-pop",
+            source: "us-state-pop-2015.csv"
+          }
         ]
       },
       {
@@ -317,118 +431,400 @@ module.exports = function(environment) {
         ]
       },
       {
-        id: "spain prov 2015",
-        attribution: "basemap from Instituto Geográfico Nacional",
+        id: "FR-11 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "ES-prov-2015/spain.json", projection: "d3.geoConicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
-          {source: "ES-prov-2015/spain-islands.json", projection: "d3.geoConicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+          {source: "FR-com-2016/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
-          source: "ES-dico-PROV-2015.json",
+          source: "FR-dico-COM-2016/FR-11.json",
           identifier: "ID"
-        },
-        examples: [
-          {
-            id: "es_prov-pop",
-            source: "es-prov-pop-2015.csv"
-          }
-        ]
+        }
       },
       {
-        id: "spain auto 2015",
-        attribution: "basemap from Instituto Geográfico Nacional",
+        id: "FR-24 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "ES-auto-2015/spain.json", projection: "d3.geoConicConformal()", transforms:{rotate: [3, -40], parallels: [40, 40]}, scale: 0.8, zoning: [[0, 0], [1, 0.85]]},
-          {source: "ES-auto-2015/spain-islands.json", projection: "d3.geoConicConformal()", transforms:{rotate: [15, -28], parallels: [28, 28]}, scale: 0.8, zoning: [[0, 0.85], [0.4, 1]], borders: ["r", "t"]}
+          {source: "FR-com-2016/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
-          source: "ES-dico-AUTO-2015.json",
+          source: "FR-dico-COM-2016/FR-24.json",
           identifier: "ID"
-        },
-        examples: [
-          {
-            id: "es_auto-pop",
-            source: "es-auto-pop-2015.csv"
-          }
-        ]
+        }
       },
       {
-        id: "german states 2016",
-        license: "GeoNutzV",
-        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
+        id: "FR-27 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {
-            source: "DE-2016/topojson/bkg-2500-basemap-de-states-q1e4.json",
-            projection: "d3.geoConicConformal()",
-            scale: 0.8, borders: ["l", "r", "t", "b"],
-            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
-            zoning: [[0, 0], [1, 1]]
-          }
+          {source: "FR-com-2016/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
-          source: "DE-BKG-NUTS1-2016.json",
-          identifier: "RS"
-        },
-        examples: [
-          {
-            id: "de_states_inhabitants_06_15",
-            source: "04-DESTATIS-RS-NUTS1-Inhabitants-2006-2015.csv",
-            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
-            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
-            license_url: "https://www.govdata.de/dl-de/by-2-0",
-            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
-            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
-          }
-        ]
-      },
-      {
-        id: "german districts 2016",
-        license: "GeoNutzV",
-        attribution: "© GeoBasis-DE / BKG 2016 (data changed)",
-        sources: [
-          {
-            source: "DE-2016/topojson/bkg-2500-basemap-de-districts-q1e4.json",
-            projection: "d3.geoConicConformal()",
-            scale: 0.8, borders: ["l", "r", "t", "b"],
-            transforms:{ rotate: [-10, -50], parallels: [ 47.3, 54.9 ] },
-            zoning: [[0, 0], [1, 1]]
-          }
-        ],
-        dictionary: {
-          source: "DE-STATIS-NUTS3-2016.json",
-          identifier: "RS"
-        },
-        examples: [
-          {
-            id: "de_district_inhabitants",
-            source: "04-DESTATIS-RS-NUTS-Inhabitants-formatted-numers.csv",
-            attribution: "© Statistisches Bundesamt (Destatis), GV-ISys, 2017",
-            license: "Datenlizenz Deutschland - Namensnennung - Version 2.0",
-            license_url: "https://www.govdata.de/dl-de/by-2-0",
-            description: "Inhabitants, 31.12.2015 based on Zensus 2011 (DeStatis, auf Basis von GV-ISys).",
-            source_url: "https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html"
-          }
-        ]
-      },
-      {
-        id: "us state 2015",
-        attribution: "basemap from U.S. Census Bureau",
-        sources: [
-          {source: "US-state-2015/usa.json", projection: "d3.geoAlbers()", transforms:{rotate: [96, 0], parallels: [29.5, 45.5]}, scale: 1, zoning: [[0, 0], [1, 0.9]]},
-          {source: "US-state-2015/alaska.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [154, 0], parallels: [55, 65]}, scale: 1, zoning: [[0, 0.8], [0.33, 1]], borders: ["r", "t"]},
-          {source: "US-state-2015/hawai.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [157, 0], parallels: [8, 18]}, scale: 0.7, zoning: [[0.33, 0.9], [0.5, 1]], borders: ["r", "t"]},
-          {source: "US-state-2015/porto-rico.json", projection: "d3.geoConicEqualArea()", transforms:{rotate: [67, 0], parallels: [18, 18]}, scale: 0.45, zoning: [[0.5, 0.95], [0.65, 1]], borders: ["r", "t"]}
-        ],
-        dictionary: {
-          source: "US-dico-ST-2015.json",
+          source: "FR-dico-COM-2016/FR-27.json",
           identifier: "ID"
-        },
-        examples: [
-          {
-            id: "us_state-pop",
-            source: "us-state-pop-2015.csv"
-          }
-        ]
+        }
+      },
+      {
+        id: "FR-28 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-28.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-32 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-32.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-44 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-44.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-52 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-52.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-53 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-53.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-75 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-75.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-76 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-76.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-84 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-84.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-93 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-93.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-94 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FR-94.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA10 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FRA10.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FRA10.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA20 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FRA20.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FRA20.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA30 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FRA30.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FRA30.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA40 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FRA40.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FRA40.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA50 com 2016",
+        attribution: "basemap from Geofla IGN 2016",
+        sources: [
+          {source: "FR-com-2016/FRA50.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2016/FRA50.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-11 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-11.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-24 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-24.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-27 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-27.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-28 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-28.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-32 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-32.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-44 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-44.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-52 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-52.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-53 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-53.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-75 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-75.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-76 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-76.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-84 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-84.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-93 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-93.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-94 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FR-94.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA10 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FRA10.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FRA10.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA20 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FRA20.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FRA20.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA30 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FRA30.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FRA30.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA40 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FRA40.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FRA40.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA50 com 2017",
+        attribution: "basemap from Admin Express IGN 2017",
+        sources: [
+          {source: "FR-com-2017/FRA50.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2017/FRA50.json",
+          identifier: "ID"
+        }
       }
       
     ],

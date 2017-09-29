@@ -3,96 +3,96 @@
     "RS": "01",
     "RS_0": "010000000000",
     "NUTS_1": "DEF",
-    "NAME": "Schleswig-Holstein"
+    "Name": "Schleswig-Holstein"
   },
   {
     "RS": "02",
     "RS_0": "020000000000",
     "NUTS_1": "DE6",
-    "NAME": "Hamburg"
+    "Name": "Hamburg"
   },
   {
     "RS": "03",
     "RS_0": "030000000000",
     "NUTS_1": "DE9",
-    "NAME": "Niedersachsen"
+    "Name": "Niedersachsen"
   },
   {
     "RS": "04",
     "RS_0": "040000000000",
     "NUTS_1": "DE5",
-    "NAME": "Bremen"
+    "Name": "Bremen"
   },
   {
     "RS": "05",
     "RS_0": "050000000000",
     "NUTS_1": "DEA",
-    "NAME": "Nordrhein-Westfalen"
+    "Name": "Nordrhein-Westfalen"
   },
   {
     "RS": "06",
     "RS_0": "060000000000",
     "NUTS_1": "DE7",
-    "NAME": "Hessen"
+    "Name": "Hessen"
   },
   {
     "RS": "07",
     "RS_0": "070000000000",
     "NUTS_1": "DEB",
-    "NAME": "Rheinland-Pfalz"
+    "Name": "Rheinland-Pfalz"
   },
   {
     "RS": "08",
     "RS_0": "080000000000",
     "NUTS_1": "DE1",
-    "NAME": "Baden-Württemberg"
+    "Name": "Baden-Württemberg"
   },
   {
     "RS": "09",
     "RS_0": "090000000000",
     "NUTS_1": "DE2",
-    "NAME": "Bayern"
+    "Name": "Bayern"
   },
   {
     "RS": "10",
     "RS_0": "100000000000",
     "NUTS_1": "DEC",
-    "NAME": "Saarland"
+    "Name": "Saarland"
   },
   {
     "RS": "11",
     "RS_0": "110000000000",
     "NUTS_1": "DE3",
-    "NAME": "Berlin"
+    "Name": "Berlin"
   },
   {
     "RS": "12",
     "RS_0": "120000000000",
     "NUTS_1": "DE4",
-    "NAME": "Brandenburg"
+    "Name": "Brandenburg"
   },
   {
     "RS": "13",
     "RS_0": "130000000000",
     "NUTS_1": "DE8",
-    "NAME": "Mecklenburg-Vorpommern"
+    "Name": "Mecklenburg-Vorpommern"
   },
   {
     "RS": "14",
     "RS_0": "140000000000",
     "NUTS_1": "DED",
-    "NAME": "Sachsen"
+    "Name": "Sachsen"
   },
   {
     "RS": "15",
     "RS_0": "150000000000",
     "NUTS_1": "DEE",
-    "NAME": "Sachsen-Anhalt"
+    "Name": "Sachsen-Anhalt"
   },
   {
     "RS": "16",
     "RS_0": "160000000000",
     "NUTS_1": "DEG",
-    "NAME": "Thüringen"
+    "Name": "Thüringen"
   }
 ]

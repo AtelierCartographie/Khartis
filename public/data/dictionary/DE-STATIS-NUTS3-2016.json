@@ -1,2012 +1,2012 @@
 [
   {
     "RS": "01001",
-    "NAME": "Flensburg, Stadt",
+    "Name": "Flensburg, Stadt",
     "NUTS3": "DEF01"
   },
   {
     "RS": "01002",
-    "NAME": "Kiel, Landeshauptstadt",
+    "Name": "Kiel, Landeshauptstadt",
     "NUTS3": "DEF02"
   },
   {
     "RS": "01003",
-    "NAME": "Lübeck, Hansestadt",
+    "Name": "Lübeck, Hansestadt",
     "NUTS3": "DEF03"
   },
   {
     "RS": "01004",
-    "NAME": "Neumünster, Stadt",
+    "Name": "Neumünster, Stadt",
     "NUTS3": "DEF04"
   },
   {
     "RS": "01051",
-    "NAME": "Dithmarschen",
+    "Name": "Dithmarschen",
     "NUTS3": "DEF05"
   },
   {
     "RS": "01053",
-    "NAME": "Herzogtum Lauenburg",
+    "Name": "Herzogtum Lauenburg",
     "NUTS3": "DEF06"
   },
   {
     "RS": "01054",
-    "NAME": "Nordfriesland",
+    "Name": "Nordfriesland",
     "NUTS3": "DEF07"
   },
   {
     "RS": "01055",
-    "NAME": "Ostholstein",
+    "Name": "Ostholstein",
     "NUTS3": "DEF08"
   },
   {
     "RS": "01056",
-    "NAME": "Pinneberg",
+    "Name": "Pinneberg",
     "NUTS3": "DEF09"
   },
   {
     "RS": "01057",
-    "NAME": "Plön",
+    "Name": "Plön",
     "NUTS3": "DEF0A"
   },
   {
     "RS": "01058",
-    "NAME": "Rendsburg-Eckernförde",
+    "Name": "Rendsburg-Eckernförde",
     "NUTS3": "DEF0B"
   },
   {
     "RS": "01059",
-    "NAME": "Schleswig-Flensburg",
+    "Name": "Schleswig-Flensburg",
     "NUTS3": "DEF0C"
   },
   {
     "RS": "01060",
-    "NAME": "Segeberg",
+    "Name": "Segeberg",
     "NUTS3": "DEF0D"
   },
   {
     "RS": "01061",
-    "NAME": "Steinburg",
+    "Name": "Steinburg",
     "NUTS3": "DEF0E"
   },
   {
     "RS": "01062",
-    "NAME": "Stormarn",
+    "Name": "Stormarn",
     "NUTS3": "DEF0F"
   },
   {
     "RS": "03101",
-    "NAME": "Braunschweig, Stadt",
+    "Name": "Braunschweig, Stadt",
     "NUTS3": "DE911"
   },
   {
     "RS": "03102",
-    "NAME": "Salzgitter, Stadt",
+    "Name": "Salzgitter, Stadt",
     "NUTS3": "DE912"
   },
   {
     "RS": "03103",
-    "NAME": "Wolfsburg, Stadt",
+    "Name": "Wolfsburg, Stadt",
     "NUTS3": "DE913"
   },
   {
     "RS": "03151",
-    "NAME": "Gifhorn",
+    "Name": "Gifhorn",
     "NUTS3": "DE914"
   },
   {
     "RS": "03152",
-    "NAME": "Göttingen",
+    "Name": "Göttingen",
     "NUTS3": "DE915"
   },
   {
     "RS": "03153",
-    "NAME": "Goslar",
+    "Name": "Goslar",
     "NUTS3": "DE916"
   },
   {
     "RS": "03154",
-    "NAME": "Helmstedt",
+    "Name": "Helmstedt",
     "NUTS3": "DE917"
   },
   {
     "RS": "03155",
-    "NAME": "Northeim",
+    "Name": "Northeim",
     "NUTS3": "DE918"
   },
   {
     "RS": "03156",
-    "NAME": "Osterode am Harz",
+    "Name": "Osterode am Harz",
     "NUTS3": "DE919"
   },
   {
     "RS": "03157",
-    "NAME": "Peine",
+    "Name": "Peine",
     "NUTS3": "DE91A"
   },
   {
     "RS": "03158",
-    "NAME": "Wolfenbüttel",
+    "Name": "Wolfenbüttel",
     "NUTS3": "DE91B"
   },
   {
     "RS": "03241",
-    "NAME": "Region Hannover",
+    "Name": "Region Hannover",
     "NUTS3": "DE929"
   },
   {
     "RS": "03251",
-    "NAME": "Diepholz",
+    "Name": "Diepholz",
     "NUTS3": "DE922"
   },
   {
     "RS": "03252",
-    "NAME": "Hameln-Pyrmont",
+    "Name": "Hameln-Pyrmont",
     "NUTS3": "DE923"
   },
   {
     "RS": "03254",
-    "NAME": "Hildesheim",
+    "Name": "Hildesheim",
     "NUTS3": "DE925"
   },
   {
     "RS": "03255",
-    "NAME": "Holzminden",
+    "Name": "Holzminden",
     "NUTS3": "DE926"
   },
   {
     "RS": "03256",
-    "NAME": "Nienburg (Weser)",
+    "Name": "Nienburg (Weser)",
     "NUTS3": "DE927"
   },
   {
     "RS": "03257",
-    "NAME": "Schaumburg",
+    "Name": "Schaumburg",
     "NUTS3": "DE928"
   },
   {
     "RS": "03351",
-    "NAME": "Celle",
+    "Name": "Celle",
     "NUTS3": "DE931"
   },
   {
     "RS": "03352",
-    "NAME": "Cuxhaven",
+    "Name": "Cuxhaven",
     "NUTS3": "DE932"
   },
   {
     "RS": "03353",
-    "NAME": "Harburg",
+    "Name": "Harburg",
     "NUTS3": "DE933"
   },
   {
     "RS": "03354",
-    "NAME": "Lüchow-Dannenberg",
+    "Name": "Lüchow-Dannenberg",
     "NUTS3": "DE934"
   },
   {
     "RS": "03355",
-    "NAME": "Lüneburg",
+    "Name": "Lüneburg",
     "NUTS3": "DE935"
   },
   {
     "RS": "03356",
-    "NAME": "Osterholz",
+    "Name": "Osterholz",
     "NUTS3": "DE936"
   },
   {
     "RS": "03357",
-    "NAME": "Rotenburg (Wümme)",
+    "Name": "Rotenburg (Wümme)",
     "NUTS3": "DE937"
   },
   {
     "RS": "03358",
-    "NAME": "Heidekreis",
+    "Name": "Heidekreis",
     "NUTS3": "DE938"
   },
   {
     "RS": "03359",
-    "NAME": "Stade",
+    "Name": "Stade",
     "NUTS3": "DE939"
   },
   {
     "RS": "03360",
-    "NAME": "Uelzen",
+    "Name": "Uelzen",
     "NUTS3": "DE93A"
   },
   {
     "RS": "03361",
-    "NAME": "Verden",
+    "Name": "Verden",
     "NUTS3": "DE93B"
   },
   {
     "RS": "03401",
-    "NAME": "Delmenhorst, Stadt",
+    "Name": "Delmenhorst, Stadt",
     "NUTS3": "DE941"
   },
   {
     "RS": "03402",
-    "NAME": "Emden, Stadt",
+    "Name": "Emden, Stadt",
     "NUTS3": "DE942"
   },
   {
     "RS": "03403",
-    "NAME": "Oldenburg (Oldenburg), Stadt",
+    "Name": "Oldenburg (Oldenburg), Stadt",
     "NUTS3": "DE943"
   },
   {
     "RS": "03404",
-    "NAME": "Osnabrück, Stadt",
+    "Name": "Osnabrück, Stadt",
     "NUTS3": "DE944"
   },
   {
     "RS": "03405",
-    "NAME": "Wilhelmshaven, Stadt",
+    "Name": "Wilhelmshaven, Stadt",
     "NUTS3": "DE945"
   },
   {
     "RS": "03451",
-    "NAME": "Ammerland",
+    "Name": "Ammerland",
     "NUTS3": "DE946"
   },
   {
     "RS": "03452",
-    "NAME": "Aurich",
+    "Name": "Aurich",
     "NUTS3": "DE947"
   },
   {
     "RS": "03453",
-    "NAME": "Cloppenburg",
+    "Name": "Cloppenburg",
     "NUTS3": "DE948"
   },
   {
     "RS": "03454",
-    "NAME": "Emsland",
+    "Name": "Emsland",
     "NUTS3": "DE949"
   },
   {
     "RS": "03455",
-    "NAME": "Friesland",
+    "Name": "Friesland",
     "NUTS3": "DE94A"
   },
   {
     "RS": "03456",
-    "NAME": "Grafschaft Bentheim",
+    "Name": "Grafschaft Bentheim",
     "NUTS3": "DE94B"
   },
   {
     "RS": "03457",
-    "NAME": "Leer",
+    "Name": "Leer",
     "NUTS3": "DE94C"
   },
   {
     "RS": "03458",
-    "NAME": "Oldenburg",
+    "Name": "Oldenburg",
     "NUTS3": "DE94D"
   },
   {
     "RS": "03459",
-    "NAME": "Osnabrück",
+    "Name": "Osnabrück",
     "NUTS3": "DE94E"
   },
   {
     "RS": "03460",
-    "NAME": "Vechta",
+    "Name": "Vechta",
     "NUTS3": "DE94F"
   },
   {
     "RS": "03461",
-    "NAME": "Wesermarsch",
+    "Name": "Wesermarsch",
     "NUTS3": "DE94G"
   },
   {
     "RS": "03462",
-    "NAME": "Wittmund",
+    "Name": "Wittmund",
     "NUTS3": "DE94H"
   },
   {
     "RS": "02000",
-    "NAME": "Hamburg, Freie und Hansestadt",
+    "Name": "Hamburg, Freie und Hansestadt",
     "NUTS3": "DE600"
   },
   {
     "RS": "04011",
-    "NAME": "Bremen, Stadt",
+    "Name": "Bremen, Stadt",
     "NUTS3": "DE501"
   },
   {
     "RS": "04012",
-    "NAME": "Bremerhaven, Stadt",
+    "Name": "Bremerhaven, Stadt",
     "NUTS3": "DE502"
   },
   {
     "RS": "05111",
-    "NAME": "Düsseldorf, Stadt",
+    "Name": "Düsseldorf, Stadt",
     "NUTS3": "DEA11"
   },
   {
     "RS": "05112",
-    "NAME": "Duisburg, Stadt",
+    "Name": "Duisburg, Stadt",
     "NUTS3": "DEA12"
   },
   {
     "RS": "05113",
-    "NAME": "Essen, Stadt",
+    "Name": "Essen, Stadt",
     "NUTS3": "DEA13"
   },
   {
     "RS": "05114",
-    "NAME": "Krefeld, Stadt",
+    "Name": "Krefeld, Stadt",
     "NUTS3": "DEA14"
   },
   {
     "RS": "05116",
-    "NAME": "Mönchengladbach, Stadt",
+    "Name": "Mönchengladbach, Stadt",
     "NUTS3": "DEA15"
   },
   {
     "RS": "05117",
-    "NAME": "Mülheim an der Ruhr, Stadt",
+    "Name": "Mülheim an der Ruhr, Stadt",
     "NUTS3": "DEA16"
   },
   {
     "RS": "05119",
-    "NAME": "Oberhausen, Stadt",
+    "Name": "Oberhausen, Stadt",
     "NUTS3": "DEA17"
   },
   {
     "RS": "05120",
-    "NAME": "Remscheid, Stadt",
+    "Name": "Remscheid, Stadt",
     "NUTS3": "DEA18"
   },
   {
     "RS": "05122",
-    "NAME": "Solingen, Klingenstadt",
+    "Name": "Solingen, Klingenstadt",
     "NUTS3": "DEA19"
   },
   {
     "RS": "05124",
-    "NAME": "Wuppertal, Stadt",
+    "Name": "Wuppertal, Stadt",
     "NUTS3": "DEA1A"
   },
   {
     "RS": "05154",
-    "NAME": "Kleve",
+    "Name": "Kleve",
     "NUTS3": "DEA1B"
   },
   {
     "RS": "05158",
-    "NAME": "Mettmann",
+    "Name": "Mettmann",
     "NUTS3": "DEA1C"
   },
   {
     "RS": "05162",
-    "NAME": "Rhein-Kreis Neuss",
+    "Name": "Rhein-Kreis Neuss",
     "NUTS3": "DEA1D"
   },
   {
     "RS": "05166",
-    "NAME": "Viersen",
+    "Name": "Viersen",
     "NUTS3": "DEA1E"
   },
   {
     "RS": "05170",
-    "NAME": "Wesel",
+    "Name": "Wesel",
     "NUTS3": "DEA1F"
   },
   {
     "RS": "05314",
-    "NAME": "Bonn, Stadt",
+    "Name": "Bonn, Stadt",
     "NUTS3": "DEA22"
   },
   {
     "RS": "05315",
-    "NAME": "Köln, Stadt",
+    "Name": "Köln, Stadt",
     "NUTS3": "DEA23"
   },
   {
     "RS": "05316",
-    "NAME": "Leverkusen, Stadt",
+    "Name": "Leverkusen, Stadt",
     "NUTS3": "DEA24"
   },
   {
     "RS": "05334",
-    "NAME": "Städteregion Aachen",
+    "Name": "Städteregion Aachen",
     "NUTS3": "DEA2D"
   },
   {
     "RS": "05358",
-    "NAME": "Düren",
+    "Name": "Düren",
     "NUTS3": "DEA26"
   },
   {
     "RS": "05362",
-    "NAME": "Rhein-Erft-Kreis",
+    "Name": "Rhein-Erft-Kreis",
     "NUTS3": "DEA27"
   },
   {
     "RS": "05366",
-    "NAME": "Euskirchen",
+    "Name": "Euskirchen",
     "NUTS3": "DEA28"
   },
   {
     "RS": "05370",
-    "NAME": "Heinsberg",
+    "Name": "Heinsberg",
     "NUTS3": "DEA29"
   },
   {
     "RS": "05374",
-    "NAME": "Oberbergischer Kreis",
+    "Name": "Oberbergischer Kreis",
     "NUTS3": "DEA2A"
   },
   {
     "RS": "05378",
-    "NAME": "Rheinisch-Bergischer Kreis",
+    "Name": "Rheinisch-Bergischer Kreis",
     "NUTS3": "DEA2B"
   },
   {
     "RS": "05382",
-    "NAME": "Rhein-Sieg-Kreis",
+    "Name": "Rhein-Sieg-Kreis",
     "NUTS3": "DEA2C"
   },
   {
     "RS": "05512",
-    "NAME": "Bottrop, Stadt",
+    "Name": "Bottrop, Stadt",
     "NUTS3": "DEA31"
   },
   {
     "RS": "05513",
-    "NAME": "Gelsenkirchen, Stadt",
+    "Name": "Gelsenkirchen, Stadt",
     "NUTS3": "DEA32"
   },
   {
     "RS": "05515",
-    "NAME": "Münster, Stadt",
+    "Name": "Münster, Stadt",
     "NUTS3": "DEA33"
   },
   {
     "RS": "05554",
-    "NAME": "Borken",
+    "Name": "Borken",
     "NUTS3": "DEA34"
   },
   {
     "RS": "05558",
-    "NAME": "Coesfeld",
+    "Name": "Coesfeld",
     "NUTS3": "DEA35"
   },
   {
     "RS": "05562",
-    "NAME": "Recklinghausen",
+    "Name": "Recklinghausen",
     "NUTS3": "DEA36"
   },
   {
     "RS": "05566",
-    "NAME": "Steinfurt",
+    "Name": "Steinfurt",
     "NUTS3": "DEA37"
   },
   {
     "RS": "05570",
-    "NAME": "Warendorf",
+    "Name": "Warendorf",
     "NUTS3": "DEA38"
   },
   {
     "RS": "05711",
-    "NAME": "Bielefeld, Stadt",
+    "Name": "Bielefeld, Stadt",
     "NUTS3": "DEA41"
   },
   {
     "RS": "05754",
-    "NAME": "Gütersloh",
+    "Name": "Gütersloh",
     "NUTS3": "DEA42"
   },
   {
     "RS": "05758",
-    "NAME": "Herford",
+    "Name": "Herford",
     "NUTS3": "DEA43"
   },
   {
     "RS": "05762",
-    "NAME": "Höxter",
+    "Name": "Höxter",
     "NUTS3": "DEA44"
   },
   {
     "RS": "05766",
-    "NAME": "Lippe",
+    "Name": "Lippe",
     "NUTS3": "DEA45"
   },
   {
     "RS": "05770",
-    "NAME": "Minden-Lübbecke",
+    "Name": "Minden-Lübbecke",
     "NUTS3": "DEA46"
   },
   {
     "RS": "05774",
-    "NAME": "Paderborn",
+    "Name": "Paderborn",
     "NUTS3": "DEA47"
   },
   {
     "RS": "05911",
-    "NAME": "Bochum, Stadt",
+    "Name": "Bochum, Stadt",
     "NUTS3": "DEA51"
   },
   {
     "RS": "05913",
-    "NAME": "Dortmund, Stadt",
+    "Name": "Dortmund, Stadt",
     "NUTS3": "DEA52"
   },
   {
     "RS": "05914",
-    "NAME": "Hagen, Stadt der FernUniversität",
+    "Name": "Hagen, Stadt der FernUniversität",
     "NUTS3": "DEA53"
   },
   {
     "RS": "05915",
-    "NAME": "Hamm, Stadt",
+    "Name": "Hamm, Stadt",
     "NUTS3": "DEA54"
   },
   {
     "RS": "05916",
-    "NAME": "Herne, Stadt",
+    "Name": "Herne, Stadt",
     "NUTS3": "DEA55"
   },
   {
     "RS": "05954",
-    "NAME": "Ennepe-Ruhr-Kreis",
+    "Name": "Ennepe-Ruhr-Kreis",
     "NUTS3": "DEA56"
   },
   {
     "RS": "05958",
-    "NAME": "Hochsauerlandkreis",
+    "Name": "Hochsauerlandkreis",
     "NUTS3": "DEA57"
   },
   {
     "RS": "05962",
-    "NAME": "Märkischer Kreis",
+    "Name": "Märkischer Kreis",
     "NUTS3": "DEA58"
   },
   {
     "RS": "05966",
-    "NAME": "Olpe",
+    "Name": "Olpe",
     "NUTS3": "DEA59"
   },
   {
     "RS": "05970",
-    "NAME": "Siegen-Wittgenstein",
+    "Name": "Siegen-Wittgenstein",
     "NUTS3": "DEA5A"
   },
   {
     "RS": "05974",
-    "NAME": "Soest",
+    "Name": "Soest",
     "NUTS3": "DEA5B"
   },
   {
     "RS": "05978",
-    "NAME": "Unna",
+    "Name": "Unna",
     "NUTS3": "DEA5C"
   },
   {
     "RS": "06411",
-    "NAME": "Darmstadt, Wissenschaftsstadt",
+    "Name": "Darmstadt, Wissenschaftsstadt",
     "NUTS3": "DE711"
   },
   {
     "RS": "06412",
-    "NAME": "Frankfurt am Main, Stadt",
+    "Name": "Frankfurt am Main, Stadt",
     "NUTS3": "DE712"
   },
   {
     "RS": "06413",
-    "NAME": "Offenbach am Main, Stadt",
+    "Name": "Offenbach am Main, Stadt",
     "NUTS3": "DE713"
   },
   {
     "RS": "06414",
-    "NAME": "Wiesbaden, Landeshauptstadt",
+    "Name": "Wiesbaden, Landeshauptstadt",
     "NUTS3": "DE714"
   },
   {
     "RS": "06431",
-    "NAME": "Bergstraße",
+    "Name": "Bergstraße",
     "NUTS3": "DE715"
   },
   {
     "RS": "06432",
-    "NAME": "Darmstadt-Dieburg",
+    "Name": "Darmstadt-Dieburg",
     "NUTS3": "DE716"
   },
   {
     "RS": "06433",
-    "NAME": "Groß-Gerau",
+    "Name": "Groß-Gerau",
     "NUTS3": "DE717"
   },
   {
     "RS": "06434",
-    "NAME": "Hochtaunuskreis",
+    "Name": "Hochtaunuskreis",
     "NUTS3": "DE718"
   },
   {
     "RS": "06435",
-    "NAME": "Main-Kinzig-Kreis",
+    "Name": "Main-Kinzig-Kreis",
     "NUTS3": "DE719"
   },
   {
     "RS": "06436",
-    "NAME": "Main-Taunus-Kreis",
+    "Name": "Main-Taunus-Kreis",
     "NUTS3": "DE71A"
   },
   {
     "RS": "06437",
-    "NAME": "Odenwaldkreis",
+    "Name": "Odenwaldkreis",
     "NUTS3": "DE71B"
   },
   {
     "RS": "06438",
-    "NAME": "Offenbach",
+    "Name": "Offenbach",
     "NUTS3": "DE71C"
   },
   {
     "RS": "06439",
-    "NAME": "Rheingau-Taunus-Kreis",
+    "Name": "Rheingau-Taunus-Kreis",
     "NUTS3": "DE71D"
   },
   {
     "RS": "06440",
-    "NAME": "Wetteraukreis",
+    "Name": "Wetteraukreis",
     "NUTS3": "DE71E"
   },
   {
     "RS": "06531",
-    "NAME": "Gießen",
+    "Name": "Gießen",
     "NUTS3": "DE721"
   },
   {
     "RS": "06532",
-    "NAME": "Lahn-Dill-Kreis",
+    "Name": "Lahn-Dill-Kreis",
     "NUTS3": "DE722"
   },
   {
     "RS": "06533",
-    "NAME": "Limburg-Weilburg",
+    "Name": "Limburg-Weilburg",
     "NUTS3": "DE723"
   },
   {
     "RS": "06534",
-    "NAME": "Marburg-Biedenkopf",
+    "Name": "Marburg-Biedenkopf",
     "NUTS3": "DE724"
   },
   {
     "RS": "06535",
-    "NAME": "Vogelsbergkreis",
+    "Name": "Vogelsbergkreis",
     "NUTS3": "DE725"
   },
   {
     "RS": "06611",
-    "NAME": "Kassel, documenta-Stadt",
+    "Name": "Kassel, documenta-Stadt",
     "NUTS3": "DE731"
   },
   {
     "RS": "06631",
-    "NAME": "Fulda",
+    "Name": "Fulda",
     "NUTS3": "DE732"
   },
   {
     "RS": "06632",
-    "NAME": "Hersfeld-Rotenburg",
+    "Name": "Hersfeld-Rotenburg",
     "NUTS3": "DE733"
   },
   {
     "RS": "06633",
-    "NAME": "Kassel",
+    "Name": "Kassel",
     "NUTS3": "DE734"
   },
   {
     "RS": "06634",
-    "NAME": "Schwalm-Eder-Kreis",
+    "Name": "Schwalm-Eder-Kreis",
     "NUTS3": "DE735"
   },
   {
     "RS": "06635",
-    "NAME": "Waldeck-Frankenberg",
+    "Name": "Waldeck-Frankenberg",
     "NUTS3": "DE736"
   },
   {
     "RS": "06636",
-    "NAME": "Werra-Meißner-Kreis",
+    "Name": "Werra-Meißner-Kreis",
     "NUTS3": "DE737"
   },
   {
     "RS": "07111",
-    "NAME": "Koblenz, kreisfreie Stadt",
+    "Name": "Koblenz, kreisfreie Stadt",
     "NUTS3": "DEB11"
   },
   {
     "RS": "07131",
-    "NAME": "Ahrweiler",
+    "Name": "Ahrweiler",
     "NUTS3": "DEB12"
   },
   {
     "RS": "07132",
-    "NAME": "Altenkirchen (Westerwald)",
+    "Name": "Altenkirchen (Westerwald)",
     "NUTS3": "DEB13"
   },
   {
     "RS": "07133",
-    "NAME": "Bad Kreuznach",
+    "Name": "Bad Kreuznach",
     "NUTS3": "DEB14"
   },
   {
     "RS": "07134",
-    "NAME": "Birkenfeld",
+    "Name": "Birkenfeld",
     "NUTS3": "DEB15"
   },
   {
     "RS": "07135",
-    "NAME": "Cochem-Zell",
+    "Name": "Cochem-Zell",
     "NUTS3": "DEB16"
   },
   {
     "RS": "07137",
-    "NAME": "Mayen-Koblenz",
+    "Name": "Mayen-Koblenz",
     "NUTS3": "DEB17"
   },
   {
     "RS": "07138",
-    "NAME": "Neuwied",
+    "Name": "Neuwied",
     "NUTS3": "DEB18"
   },
   {
     "RS": "07140",
-    "NAME": "Rhein-Hunsrück-Kreis",
+    "Name": "Rhein-Hunsrück-Kreis",
     "NUTS3": "DEB19"
   },
   {
     "RS": "07141",
-    "NAME": "Rhein-Lahn-Kreis",
+    "Name": "Rhein-Lahn-Kreis",
     "NUTS3": "DEB1A"
   },
   {
     "RS": "07143",
-    "NAME": "Westerwaldkreis",
+    "Name": "Westerwaldkreis",
     "NUTS3": "DEB1B"
   },
   {
     "RS": "07211",
-    "NAME": "Trier, kreisfreie Stadt",
+    "Name": "Trier, kreisfreie Stadt",
     "NUTS3": "DEB21"
   },
   {
     "RS": "07231",
-    "NAME": "Bernkastel-Wittlich",
+    "Name": "Bernkastel-Wittlich",
     "NUTS3": "DEB22"
   },
   {
     "RS": "07232",
-    "NAME": "Eifelkreis Bitburg-Prüm",
+    "Name": "Eifelkreis Bitburg-Prüm",
     "NUTS3": "DEB23"
   },
   {
     "RS": "07233",
-    "NAME": "Vulkaneifel",
+    "Name": "Vulkaneifel",
     "NUTS3": "DEB24"
   },
   {
     "RS": "07235",
-    "NAME": "Trier-Saarburg",
+    "Name": "Trier-Saarburg",
     "NUTS3": "DEB25"
   },
   {
     "RS": "07311",
-    "NAME": "Frankenthal (Pfalz), kreisfreie Stadt",
+    "Name": "Frankenthal (Pfalz), kreisfreie Stadt",
     "NUTS3": "DEB31"
   },
   {
     "RS": "07312",
-    "NAME": "Kaiserslautern, kreisfreie Stadt",
+    "Name": "Kaiserslautern, kreisfreie Stadt",
     "NUTS3": "DEB32"
   },
   {
     "RS": "07313",
-    "NAME": "Landau in der Pfalz, kreisfreie Stadt",
+    "Name": "Landau in der Pfalz, kreisfreie Stadt",
     "NUTS3": "DEB33"
   },
   {
     "RS": "07314",
-    "NAME": "Ludwigshafen am Rhein, kreisfreie Stadt",
+    "Name": "Ludwigshafen am Rhein, kreisfreie Stadt",
     "NUTS3": "DEB34"
   },
   {
     "RS": "07315",
-    "NAME": "Mainz, kreisfreie Stadt",
+    "Name": "Mainz, kreisfreie Stadt",
     "NUTS3": "DEB35"
   },
   {
     "RS": "07316",
-    "NAME": "Neustadt an der Weinstraße, kreisfreie Stadt",
+    "Name": "Neustadt an der Weinstraße, kreisfreie Stadt",
     "NUTS3": "DEB36"
   },
   {
     "RS": "07317",
-    "NAME": "Pirmasens, kreisfreie Stadt",
+    "Name": "Pirmasens, kreisfreie Stadt",
     "NUTS3": "DEB37"
   },
   {
     "RS": "07318",
-    "NAME": "Speyer, kreisfreie Stadt",
+    "Name": "Speyer, kreisfreie Stadt",
     "NUTS3": "DEB38"
   },
   {
     "RS": "07319",
-    "NAME": "Worms, kreisfreie Stadt",
+    "Name": "Worms, kreisfreie Stadt",
     "NUTS3": "DEB39"
   },
   {
     "RS": "07320",
-    "NAME": "Zweibrücken, kreisfreie Stadt",
+    "Name": "Zweibrücken, kreisfreie Stadt",
     "NUTS3": "DEB3A"
   },
   {
     "RS": "07331",
-    "NAME": "Alzey-Worms",
+    "Name": "Alzey-Worms",
     "NUTS3": "DEB3B"
   },
   {
     "RS": "07332",
-    "NAME": "Bad Dürkheim",
+    "Name": "Bad Dürkheim",
     "NUTS3": "DEB3C"
   },
   {
     "RS": "07333",
-    "NAME": "Donnersbergkreis",
+    "Name": "Donnersbergkreis",
     "NUTS3": "DEB3D"
   },
   {
     "RS": "07334",
-    "NAME": "Germersheim",
+    "Name": "Germersheim",
     "NUTS3": "DEB3E"
   },
   {
     "RS": "07335",
-    "NAME": "Kaiserslautern",
+    "Name": "Kaiserslautern",
     "NUTS3": "DEB3F"
   },
   {
     "RS": "07336",
-    "NAME": "Kusel",
+    "Name": "Kusel",
     "NUTS3": "DEB3G"
   },
   {
     "RS": "07337",
-    "NAME": "Südliche Weinstraße",
+    "Name": "Südliche Weinstraße",
     "NUTS3": "DEB3H"
   },
   {
     "RS": "07338",
-    "NAME": "Rhein-Pfalz-Kreis",
+    "Name": "Rhein-Pfalz-Kreis",
     "NUTS3": "DEB3I"
   },
   {
     "RS": "07339",
-    "NAME": "Mainz-Bingen",
+    "Name": "Mainz-Bingen",
     "NUTS3": "DEB3J"
   },
   {
     "RS": "07340",
-    "NAME": "Südwestpfalz",
+    "Name": "Südwestpfalz",
     "NUTS3": "DEB3K"
   },
   {
     "RS": "08111",
-    "NAME": "Stuttgart, Stadtkreis",
+    "Name": "Stuttgart, Stadtkreis",
     "NUTS3": "DE111"
   },
   {
     "RS": "08115",
-    "NAME": "Böblingen",
+    "Name": "Böblingen",
     "NUTS3": "DE112"
   },
   {
     "RS": "08116",
-    "NAME": "Esslingen",
+    "Name": "Esslingen",
     "NUTS3": "DE113"
   },
   {
     "RS": "08117",
-    "NAME": "Göppingen",
+    "Name": "Göppingen",
     "NUTS3": "DE114"
   },
   {
     "RS": "08118",
-    "NAME": "Ludwigsburg",
+    "Name": "Ludwigsburg",
     "NUTS3": "DE115"
   },
   {
     "RS": "08119",
-    "NAME": "Rems-Murr-Kreis",
+    "Name": "Rems-Murr-Kreis",
     "NUTS3": "DE116"
   },
   {
     "RS": "08121",
-    "NAME": "Heilbronn, Stadtkreis",
+    "Name": "Heilbronn, Stadtkreis",
     "NUTS3": "DE117"
   },
   {
     "RS": "08125",
-    "NAME": "Heilbronn",
+    "Name": "Heilbronn",
     "NUTS3": "DE118"
   },
   {
     "RS": "08126",
-    "NAME": "Hohenlohekreis",
+    "Name": "Hohenlohekreis",
     "NUTS3": "DE119"
   },
   {
     "RS": "08127",
-    "NAME": "Schwäbisch Hall",
+    "Name": "Schwäbisch Hall",
     "NUTS3": "DE11A"
   },
   {
     "RS": "08128",
-    "NAME": "Main-Tauber-Kreis",
+    "Name": "Main-Tauber-Kreis",
     "NUTS3": "DE11B"
   },
   {
     "RS": "08135",
-    "NAME": "Heidenheim",
+    "Name": "Heidenheim",
     "NUTS3": "DE11C"
   },
   {
     "RS": "08136",
-    "NAME": "Ostalbkreis",
+    "Name": "Ostalbkreis",
     "NUTS3": "DE11D"
   },
   {
     "RS": "08211",
-    "NAME": "Baden-Baden, Stadtkreis",
+    "Name": "Baden-Baden, Stadtkreis",
     "NUTS3": "DE121"
   },
   {
     "RS": "08212",
-    "NAME": "Karlsruhe, Stadtkreis",
+    "Name": "Karlsruhe, Stadtkreis",
     "NUTS3": "DE122"
   },
   {
     "RS": "08215",
-    "NAME": "Karlsruhe",
+    "Name": "Karlsruhe",
     "NUTS3": "DE123"
   },
   {
     "RS": "08216",
-    "NAME": "Rastatt",
+    "Name": "Rastatt",
     "NUTS3": "DE124"
   },
   {
     "RS": "08221",
-    "NAME": "Heidelberg, Stadtkreis",
+    "Name": "Heidelberg, Stadtkreis",
     "NUTS3": "DE125"
   },
   {
     "RS": "08222",
-    "NAME": "Mannheim, Stadtkreis",
+    "Name": "Mannheim, Stadtkreis",
     "NUTS3": "DE126"
   },
   {
     "RS": "08225",
-    "NAME": "Neckar-Odenwald-Kreis",
+    "Name": "Neckar-Odenwald-Kreis",
     "NUTS3": "DE127"
   },
   {
     "RS": "08226",
-    "NAME": "Rhein-Neckar-Kreis",
+    "Name": "Rhein-Neckar-Kreis",
     "NUTS3": "DE128"
   },
   {
     "RS": "08231",
-    "NAME": "Pforzheim, Stadtkreis",
+    "Name": "Pforzheim, Stadtkreis",
     "NUTS3": "DE129"
   },
   {
     "RS": "08235",
-    "NAME": "Calw",
+    "Name": "Calw",
     "NUTS3": "DE12A"
   },
   {
     "RS": "08236",
-    "NAME": "Enzkreis",
+    "Name": "Enzkreis",
     "NUTS3": "DE12B"
   },
   {
     "RS": "08237",
-    "NAME": "Freudenstadt",
+    "Name": "Freudenstadt",
     "NUTS3": "DE12C"
   },
   {
     "RS": "08311",
-    "NAME": "Freiburg im Breisgau, Stadtkreis",
+    "Name": "Freiburg im Breisgau, Stadtkreis",
     "NUTS3": "DE131"
   },
   {
     "RS": "08315",
-    "NAME": "Breisgau-Hochschwarzwald",
+    "Name": "Breisgau-Hochschwarzwald",
     "NUTS3": "DE132"
   },
   {
     "RS": "08316",
-    "NAME": "Emmendingen",
+    "Name": "Emmendingen",
     "NUTS3": "DE133"
   },
   {
     "RS": "08317",
-    "NAME": "Ortenaukreis",
+    "Name": "Ortenaukreis",
     "NUTS3": "DE134"
   },
   {
     "RS": "08325",
-    "NAME": "Rottweil",
+    "Name": "Rottweil",
     "NUTS3": "DE135"
   },
   {
     "RS": "08326",
-    "NAME": "Schwarzwald-Baar-Kreis",
+    "Name": "Schwarzwald-Baar-Kreis",
     "NUTS3": "DE136"
   },
   {
     "RS": "08327",
-    "NAME": "Tuttlingen",
+    "Name": "Tuttlingen",
     "NUTS3": "DE137"
   },
   {
     "RS": "08335",
-    "NAME": "Konstanz",
+    "Name": "Konstanz",
     "NUTS3": "DE138"
   },
   {
     "RS": "08336",
-    "NAME": "Lörrach",
+    "Name": "Lörrach",
     "NUTS3": "DE139"
   },
   {
     "RS": "08337",
-    "NAME": "Waldshut",
+    "Name": "Waldshut",
     "NUTS3": "DE13A"
   },
   {
     "RS": "08415",
-    "NAME": "Reutlingen",
+    "Name": "Reutlingen",
     "NUTS3": "DE141"
   },
   {
     "RS": "08416",
-    "NAME": "Tübingen",
+    "Name": "Tübingen",
     "NUTS3": "DE142"
   },
   {
     "RS": "08417",
-    "NAME": "Zollernalbkreis",
+    "Name": "Zollernalbkreis",
     "NUTS3": "DE143"
   },
   {
     "RS": "08421",
-    "NAME": "Ulm, Stadtkreis",
+    "Name": "Ulm, Stadtkreis",
     "NUTS3": "DE144"
   },
   {
     "RS": "08425",
-    "NAME": "Alb-Donau-Kreis",
+    "Name": "Alb-Donau-Kreis",
     "NUTS3": "DE145"
   },
   {
     "RS": "08426",
-    "NAME": "Biberach",
+    "Name": "Biberach",
     "NUTS3": "DE146"
   },
   {
     "RS": "08435",
-    "NAME": "Bodenseekreis",
+    "Name": "Bodenseekreis",
     "NUTS3": "DE147"
   },
   {
     "RS": "08436",
-    "NAME": "Ravensburg",
+    "Name": "Ravensburg",
     "NUTS3": "DE148"
   },
   {
     "RS": "08437",
-    "NAME": "Sigmaringen",
+    "Name": "Sigmaringen",
     "NUTS3": "DE149"
   },
   {
     "RS": "09161",
-    "NAME": "Ingolstadt",
+    "Name": "Ingolstadt",
     "NUTS3": "DE211"
   },
   {
     "RS": "09162",
-    "NAME": "München, Landeshauptstadt",
+    "Name": "München, Landeshauptstadt",
     "NUTS3": "DE212"
   },
   {
     "RS": "09163",
-    "NAME": "Rosenheim",
+    "Name": "Rosenheim",
     "NUTS3": "DE213"
   },
   {
     "RS": "09171",
-    "NAME": "Altötting",
+    "Name": "Altötting",
     "NUTS3": "DE214"
   },
   {
     "RS": "09172",
-    "NAME": "Berchtesgadener Land",
+    "Name": "Berchtesgadener Land",
     "NUTS3": "DE215"
   },
   {
     "RS": "09173",
-    "NAME": "Bad Tölz-Wolfratshausen",
+    "Name": "Bad Tölz-Wolfratshausen",
     "NUTS3": "DE216"
   },
   {
     "RS": "09174",
-    "NAME": "Dachau",
+    "Name": "Dachau",
     "NUTS3": "DE217"
   },
   {
     "RS": "09175",
-    "NAME": "Ebersberg",
+    "Name": "Ebersberg",
     "NUTS3": "DE218"
   },
   {
     "RS": "09176",
-    "NAME": "Eichstätt",
+    "Name": "Eichstätt",
     "NUTS3": "DE219"
   },
   {
     "RS": "09177",
-    "NAME": "Erding",
+    "Name": "Erding",
     "NUTS3": "DE21A"
   },
   {
     "RS": "09178",
-    "NAME": "Freising",
+    "Name": "Freising",
     "NUTS3": "DE21B"
   },
   {
     "RS": "09179",
-    "NAME": "Fürstenfeldbruck",
+    "Name": "Fürstenfeldbruck",
     "NUTS3": "DE21C"
   },
   {
     "RS": "09180",
-    "NAME": "Garmisch-Partenkirchen",
+    "Name": "Garmisch-Partenkirchen",
     "NUTS3": "DE21D"
   },
   {
     "RS": "09181",
-    "NAME": "Landsberg am Lech",
+    "Name": "Landsberg am Lech",
     "NUTS3": "DE21E"
   },
   {
     "RS": "09182",
-    "NAME": "Miesbach",
+    "Name": "Miesbach",
     "NUTS3": "DE21F"
   },
   {
     "RS": "09183",
-    "NAME": "Mühldorf a.Inn",
+    "Name": "Mühldorf a.Inn",
     "NUTS3": "DE21G"
   },
   {
     "RS": "09184",
-    "NAME": "München",
+    "Name": "München",
     "NUTS3": "DE21H"
   },
   {
     "RS": "09185",
-    "NAME": "Neuburg-Schrobenhausen",
+    "Name": "Neuburg-Schrobenhausen",
     "NUTS3": "DE21I"
   },
   {
     "RS": "09186",
-    "NAME": "Pfaffenhofen a.d.Ilm",
+    "Name": "Pfaffenhofen a.d.Ilm",
     "NUTS3": "DE21J"
   },
   {
     "RS": "09187",
-    "NAME": "Rosenheim",
+    "Name": "Rosenheim",
     "NUTS3": "DE21K"
   },
   {
     "RS": "09188",
-    "NAME": "Starnberg",
+    "Name": "Starnberg",
     "NUTS3": "DE21L"
   },
   {
     "RS": "09189",
-    "NAME": "Traunstein",
+    "Name": "Traunstein",
     "NUTS3": "DE21M"
   },
   {
     "RS": "09190",
-    "NAME": "Weilheim-Schongau",
+    "Name": "Weilheim-Schongau",
     "NUTS3": "DE21N"
   },
   {
     "RS": "09261",
-    "NAME": "Landshut",
+    "Name": "Landshut",
     "NUTS3": "DE221"
   },
   {
     "RS": "09262",
-    "NAME": "Passau",
+    "Name": "Passau",
     "NUTS3": "DE222"
   },
   {
     "RS": "09263",
-    "NAME": "Straubing",
+    "Name": "Straubing",
     "NUTS3": "DE223"
   },
   {
     "RS": "09271",
-    "NAME": "Deggendorf",
+    "Name": "Deggendorf",
     "NUTS3": "DE224"
   },
   {
     "RS": "09272",
-    "NAME": "Freyung-Grafenau",
+    "Name": "Freyung-Grafenau",
     "NUTS3": "DE225"
   },
   {
     "RS": "09273",
-    "NAME": "Kelheim",
+    "Name": "Kelheim",
     "NUTS3": "DE226"
   },
   {
     "RS": "09274",
-    "NAME": "Landshut",
+    "Name": "Landshut",
     "NUTS3": "DE227"
   },
   {
     "RS": "09275",
-    "NAME": "Passau",
+    "Name": "Passau",
     "NUTS3": "DE228"
   },
   {
     "RS": "09276",
-    "NAME": "Regen",
+    "Name": "Regen",
     "NUTS3": "DE229"
   },
   {
     "RS": "09277",
-    "NAME": "Rottal-Inn",
+    "Name": "Rottal-Inn",
     "NUTS3": "DE22A"
   },
   {
     "RS": "09278",
-    "NAME": "Straubing-Bogen",
+    "Name": "Straubing-Bogen",
     "NUTS3": "DE22B"
   },
   {
     "RS": "09279",
-    "NAME": "Dingolfing-Landau",
+    "Name": "Dingolfing-Landau",
     "NUTS3": "DE22C"
   },
   {
     "RS": "09361",
-    "NAME": "Amberg",
+    "Name": "Amberg",
     "NUTS3": "DE231"
   },
   {
     "RS": "09362",
-    "NAME": "Regensburg",
+    "Name": "Regensburg",
     "NUTS3": "DE232"
   },
   {
     "RS": "09363",
-    "NAME": "Weiden i.d.OPf.",
+    "Name": "Weiden i.d.OPf.",
     "NUTS3": "DE233"
   },
   {
     "RS": "09371",
-    "NAME": "Amberg-Sulzbach",
+    "Name": "Amberg-Sulzbach",
     "NUTS3": "DE234"
   },
   {
     "RS": "09372",
-    "NAME": "Cham",
+    "Name": "Cham",
     "NUTS3": "DE235"
   },
   {
     "RS": "09373",
-    "NAME": "Neumarkt i.d.OPf.",
+    "Name": "Neumarkt i.d.OPf.",
     "NUTS3": "DE236"
   },
   {
     "RS": "09374",
-    "NAME": "Neustadt a.d.Waldnaab",
+    "Name": "Neustadt a.d.Waldnaab",
     "NUTS3": "DE237"
   },
   {
     "RS": "09375",
-    "NAME": "Regensburg",
+    "Name": "Regensburg",
     "NUTS3": "DE238"
   },
   {
     "RS": "09376",
-    "NAME": "Schwandorf",
+    "Name": "Schwandorf",
     "NUTS3": "DE239"
   },
   {
     "RS": "09377",
-    "NAME": "Tirschenreuth",
+    "Name": "Tirschenreuth",
     "NUTS3": "DE23A"
   },
   {
     "RS": "09461",
-    "NAME": "Bamberg",
+    "Name": "Bamberg",
     "NUTS3": "DE241"
   },
   {
     "RS": "09462",
-    "NAME": "Bayreuth",
+    "Name": "Bayreuth",
     "NUTS3": "DE242"
   },
   {
     "RS": "09463",
-    "NAME": "Coburg",
+    "Name": "Coburg",
     "NUTS3": "DE243"
   },
   {
     "RS": "09464",
-    "NAME": "Hof",
+    "Name": "Hof",
     "NUTS3": "DE244"
   },
   {
     "RS": "09471",
-    "NAME": "Bamberg",
+    "Name": "Bamberg",
     "NUTS3": "DE245"
   },
   {
     "RS": "09472",
-    "NAME": "Bayreuth",
+    "Name": "Bayreuth",
     "NUTS3": "DE246"
   },
   {
     "RS": "09473",
-    "NAME": "Coburg",
+    "Name": "Coburg",
     "NUTS3": "DE247"
   },
   {
     "RS": "09474",
-    "NAME": "Forchheim",
+    "Name": "Forchheim",
     "NUTS3": "DE248"
   },
   {
     "RS": "09475",
-    "NAME": "Hof",
+    "Name": "Hof",
     "NUTS3": "DE249"
   },
   {
     "RS": "09476",
-    "NAME": "Kronach",
+    "Name": "Kronach",
     "NUTS3": "DE24A"
   },
   {
     "RS": "09477",
-    "NAME": "Kulmbach",
+    "Name": "Kulmbach",
     "NUTS3": "DE24B"
   },
   {
     "RS": "09478",
-    "NAME": "Lichtenfels",
+    "Name": "Lichtenfels",
     "NUTS3": "DE24C"
   },
   {
     "RS": "09479",
-    "NAME": "Wunsiedel i.Fichtelgebirge",
+    "Name": "Wunsiedel i.Fichtelgebirge",
     "NUTS3": "DE24D"
   },
   {
     "RS": "09561",
-    "NAME": "Ansbach",
+    "Name": "Ansbach",
     "NUTS3": "DE251"
   },
   {
     "RS": "09562",
-    "NAME": "Erlangen",
+    "Name": "Erlangen",
     "NUTS3": "DE252"
   },
   {
     "RS": "09563",
-    "NAME": "Fürth",
+    "Name": "Fürth",
     "NUTS3": "DE253"
   },
   {
     "RS": "09564",
-    "NAME": "Nürnberg",
+    "Name": "Nürnberg",
     "NUTS3": "DE254"
   },
   {
     "RS": "09565",
-    "NAME": "Schwabach",
+    "Name": "Schwabach",
     "NUTS3": "DE255"
   },
   {
     "RS": "09571",
-    "NAME": "Ansbach",
+    "Name": "Ansbach",
     "NUTS3": "DE256"
   },
   {
     "RS": "09572",
-    "NAME": "Erlangen-Höchstadt",
+    "Name": "Erlangen-Höchstadt",
     "NUTS3": "DE257"
   },
   {
     "RS": "09573",
-    "NAME": "Fürth",
+    "Name": "Fürth",
     "NUTS3": "DE258"
   },
   {
     "RS": "09574",
-    "NAME": "Nürnberger Land",
+    "Name": "Nürnberger Land",
     "NUTS3": "DE259"
   },
   {
     "RS": "09575",
-    "NAME": "Neustadt a.d.Aisch-Bad Windsheim",
+    "Name": "Neustadt a.d.Aisch-Bad Windsheim",
     "NUTS3": "DE25A"
   },
   {
     "RS": "09576",
-    "NAME": "Roth",
+    "Name": "Roth",
     "NUTS3": "DE25B"
   },
   {
     "RS": "09577",
-    "NAME": "Weißenburg-Gunzenhausen",
+    "Name": "Weißenburg-Gunzenhausen",
     "NUTS3": "DE25C"
   },
   {
     "RS": "09661",
-    "NAME": "Aschaffenburg",
+    "Name": "Aschaffenburg",
     "NUTS3": "DE261"
   },
   {
     "RS": "09662",
-    "NAME": "Schweinfurt",
+    "Name": "Schweinfurt",
     "NUTS3": "DE262"
   },
   {
     "RS": "09663",
-    "NAME": "Würzburg",
+    "Name": "Würzburg",
     "NUTS3": "DE263"
   },
   {
     "RS": "09671",
-    "NAME": "Aschaffenburg",
+    "Name": "Aschaffenburg",
     "NUTS3": "DE264"
   },
   {
     "RS": "09672",
-    "NAME": "Bad Kissingen",
+    "Name": "Bad Kissingen",
     "NUTS3": "DE265"
   },
   {
     "RS": "09673",
-    "NAME": "Rhön-Grabfeld",
+    "Name": "Rhön-Grabfeld",
     "NUTS3": "DE266"
   },
   {
     "RS": "09674",
-    "NAME": "Haßberge",
+    "Name": "Haßberge",
     "NUTS3": "DE267"
   },
   {
     "RS": "09675",
-    "NAME": "Kitzingen",
+    "Name": "Kitzingen",
     "NUTS3": "DE268"
   },
   {
     "RS": "09676",
-    "NAME": "Miltenberg",
+    "Name": "Miltenberg",
     "NUTS3": "DE269"
   },
   {
     "RS": "09677",
-    "NAME": "Main-Spessart",
+    "Name": "Main-Spessart",
     "NUTS3": "DE26A"
   },
   {
     "RS": "09678",
-    "NAME": "Schweinfurt",
+    "Name": "Schweinfurt",
     "NUTS3": "DE26B"
   },
   {
     "RS": "09679",
-    "NAME": "Würzburg",
+    "Name": "Würzburg",
     "NUTS3": "DE26C"
   },
   {
     "RS": "09761",
-    "NAME": "Augsburg",
+    "Name": "Augsburg",
     "NUTS3": "DE271"
   },
   {
     "RS": "09762",
-    "NAME": "Kaufbeuren",
+    "Name": "Kaufbeuren",
     "NUTS3": "DE272"
   },
   {
     "RS": "09763",
-    "NAME": "Kempten (Allgäu)",
+    "Name": "Kempten (Allgäu)",
     "NUTS3": "DE273"
   },
   {
     "RS": "09764",
-    "NAME": "Memmingen",
+    "Name": "Memmingen",
     "NUTS3": "DE274"
   },
   {
     "RS": "09771",
-    "NAME": "Aichach-Friedberg",
+    "Name": "Aichach-Friedberg",
     "NUTS3": "DE275"
   },
   {
     "RS": "09772",
-    "NAME": "Augsburg",
+    "Name": "Augsburg",
     "NUTS3": "DE276"
   },
   {
     "RS": "09773",
-    "NAME": "Dillingen a.d.Donau",
+    "Name": "Dillingen a.d.Donau",
     "NUTS3": "DE277"
   },
   {
     "RS": "09774",
-    "NAME": "Günzburg",
+    "Name": "Günzburg",
     "NUTS3": "DE278"
   },
   {
     "RS": "09775",
-    "NAME": "Neu-Ulm",
+    "Name": "Neu-Ulm",
     "NUTS3": "DE279"
   },
   {
     "RS": "09776",
-    "NAME": "Lindau (Bodensee)",
+    "Name": "Lindau (Bodensee)",
     "NUTS3": "DE27A"
   },
   {
     "RS": "09777",
-    "NAME": "Ostallgäu",
+    "Name": "Ostallgäu",
     "NUTS3": "DE27B"
   },
   {
     "RS": "09778",
-    "NAME": "Unterallgäu",
+    "Name": "Unterallgäu",
     "NUTS3": "DE27C"
   },
   {
     "RS": "09779",
-    "NAME": "Donau-Ries",
+    "Name": "Donau-Ries",
     "NUTS3": "DE27D"
   },
   {
     "RS": "09780",
-    "NAME": "Oberallgäu",
+    "Name": "Oberallgäu",
     "NUTS3": "DE27E"
   },
   {
     "RS": "10041",
-    "NAME": "Regionalverband Saarbrücken",
+    "Name": "Regionalverband Saarbrücken",
     "NUTS3": "DEC01"
   },
   {
     "RS": "10042",
-    "NAME": "Merzig-Wadern",
+    "Name": "Merzig-Wadern",
     "NUTS3": "DEC02"
   },
   {
     "RS": "10043",
-    "NAME": "Neunkirchen",
+    "Name": "Neunkirchen",
     "NUTS3": "DEC03"
   },
   {
     "RS": "10044",
-    "NAME": "Saarlouis",
+    "Name": "Saarlouis",
     "NUTS3": "DEC04"
   },
   {
     "RS": "10045",
-    "NAME": "Saarpfalz-Kreis",
+    "Name": "Saarpfalz-Kreis",
     "NUTS3": "DEC05"
   },
   {
     "RS": "10046",
-    "NAME": "St. Wendel",
+    "Name": "St. Wendel",
     "NUTS3": "DEC06"
   },
   {
     "RS": "11000",
-    "NAME": "Berlin, Stadt",
+    "Name": "Berlin, Stadt",
     "NUTS3": "DE300"
   },
   {
     "RS": "12051",
-    "NAME": "Brandenburg an der Havel, Stadt",
+    "Name": "Brandenburg an der Havel, Stadt",
     "NUTS3": "DE401"
   },
   {
     "RS": "12052",
-    "NAME": "Cottbus, Stadt",
+    "Name": "Cottbus, Stadt",
     "NUTS3": "DE402"
   },
   {
     "RS": "12053",
-    "NAME": "Frankfurt (Oder), Stadt",
+    "Name": "Frankfurt (Oder), Stadt",
     "NUTS3": "DE403"
   },
   {
     "RS": "12054",
-    "NAME": "Potsdam, Stadt",
+    "Name": "Potsdam, Stadt",
     "NUTS3": "DE404"
   },
   {
     "RS": "12060",
-    "NAME": "Barnim",
+    "Name": "Barnim",
     "NUTS3": "DE405"
   },
   {
     "RS": "12061",
-    "NAME": "Dahme-Spreewald",
+    "Name": "Dahme-Spreewald",
     "NUTS3": "DE406"
   },
   {
     "RS": "12062",
-    "NAME": "Elbe-Elster",
+    "Name": "Elbe-Elster",
     "NUTS3": "DE407"
   },
   {
     "RS": "12063",
-    "NAME": "Havelland",
+    "Name": "Havelland",
     "NUTS3": "DE408"
   },
   {
     "RS": "12064",
-    "NAME": "Märkisch-Oderland",
+    "Name": "Märkisch-Oderland",
     "NUTS3": "DE409"
   },
   {
     "RS": "12065",
-    "NAME": "Oberhavel",
+    "Name": "Oberhavel",
     "NUTS3": "DE40A"
   },
   {
     "RS": "12066",
-    "NAME": "Oberspreewald-Lausitz",
+    "Name": "Oberspreewald-Lausitz",
     "NUTS3": "DE40B"
   },
   {
     "RS": "12067",
-    "NAME": "Oder-Spree",
+    "Name": "Oder-Spree",
     "NUTS3": "DE40C"
   },
   {
     "RS": "12068",
-    "NAME": "Ostprignitz-Ruppin",
+    "Name": "Ostprignitz-Ruppin",
     "NUTS3": "DE40D"
   },
   {
     "RS": "12069",
-    "NAME": "Potsdam-Mittelmark",
+    "Name": "Potsdam-Mittelmark",
     "NUTS3": "DE40E"
   },
   {
     "RS": "12070",
-    "NAME": "Prignitz",
+    "Name": "Prignitz",
     "NUTS3": "DE40F"
   },
   {
     "RS": "12071",
-    "NAME": "Spree-Neiße",
+    "Name": "Spree-Neiße",
     "NUTS3": "DE40G"
   },
   {
     "RS": "12072",
-    "NAME": "Teltow-Fläming",
+    "Name": "Teltow-Fläming",
     "NUTS3": "DE40H"
   },
   {
     "RS": "12073",
-    "NAME": "Uckermark",
+    "Name": "Uckermark",
     "NUTS3": "DE40I"
   },
   {
     "RS": "13003",
-    "NAME": "Rostock",
+    "Name": "Rostock",
     "NUTS3": "DE803"
   },
   {
     "RS": "13004",
-    "NAME": "Schwerin",
+    "Name": "Schwerin",
     "NUTS3": "DE804"
   },
   {
     "RS": "13071",
-    "NAME": "Mecklenburgische Seenplatte",
+    "Name": "Mecklenburgische Seenplatte",
     "NUTS3": "DE80J"
   },
   {
     "RS": "13072",
-    "NAME": "Landkreis Rostock",
+    "Name": "Landkreis Rostock",
     "NUTS3": "DE80K"
   },
   {
     "RS": "13073",
-    "NAME": "Vorpommern-Rügen",
+    "Name": "Vorpommern-Rügen",
     "NUTS3": "DE80L"
   },
   {
     "RS": "13074",
-    "NAME": "Nordwestmecklenburg",
+    "Name": "Nordwestmecklenburg",
     "NUTS3": "DE80M"
   },
   {
     "RS": "13075",
-    "NAME": "Vorpommern-Greifswald",
+    "Name": "Vorpommern-Greifswald",
     "NUTS3": "DE80N"
   },
   {
     "RS": "13076",
-    "NAME": "Ludwigslust-Parchim",
+    "Name": "Ludwigslust-Parchim",
     "NUTS3": "DE80O"
   },
   {
     "RS": "14511",
-    "NAME": "Chemnitz, Stadt",
+    "Name": "Chemnitz, Stadt",
     "NUTS3": "DED41"
   },
   {
     "RS": "14521",
-    "NAME": "Erzgebirgskreis",
+    "Name": "Erzgebirgskreis",
     "NUTS3": "DED42"
   },
   {
     "RS": "14522",
-    "NAME": "Mittelsachsen",
+    "Name": "Mittelsachsen",
     "NUTS3": "DED43"
   },
   {
     "RS": "14523",
-    "NAME": "Vogtlandkreis",
+    "Name": "Vogtlandkreis",
     "NUTS3": "DED44"
   },
   {
     "RS": "14524",
-    "NAME": "Zwickau",
+    "Name": "Zwickau",
     "NUTS3": "DED45"
   },
   {
     "RS": "14612",
-    "NAME": "Dresden, Stadt",
+    "Name": "Dresden, Stadt",
     "NUTS3": "DED21"
   },
   {
     "RS": "14625",
-    "NAME": "Bautzen",
+    "Name": "Bautzen",
     "NUTS3": "DED2C"
   },
   {
     "RS": "14626",
-    "NAME": "Görlitz",
+    "Name": "Görlitz",
     "NUTS3": "DED2D"
   },
   {
     "RS": "14627",
-    "NAME": "Meißen",
+    "Name": "Meißen",
     "NUTS3": "DED2E"
   },
   {
     "RS": "14628",
-    "NAME": "Sächsische Schweiz-Osterzgebirge",
+    "Name": "Sächsische Schweiz-Osterzgebirge",
     "NUTS3": "DED2F"
   },
   {
     "RS": "14713",
-    "NAME": "Leipzig, Stadt",
+    "Name": "Leipzig, Stadt",
     "NUTS3": "DED51"
   },
   {
     "RS": "14729",
-    "NAME": "Leipzig",
+    "Name": "Leipzig",
     "NUTS3": "DED52"
   },
   {
     "RS": "14730",
-    "NAME": "Nordsachsen",
+    "Name": "Nordsachsen",
     "NUTS3": "DED53"
   },
   {
     "RS": "15001",
-    "NAME": "Dessau-Roßlau, Stadt",
+    "Name": "Dessau-Roßlau, Stadt",
     "NUTS3": "DEE01"
   },
   {
     "RS": "15002",
-    "NAME": "Halle (Saale), Stadt",
+    "Name": "Halle (Saale), Stadt",
     "NUTS3": "DEE02"
   },
   {
     "RS": "15003",
-    "NAME": "Magdeburg, Landeshauptstadt",
+    "Name": "Magdeburg, Landeshauptstadt",
     "NUTS3": "DEE03"
   },
   {
     "RS": "15081",
-    "NAME": "Altmarkkreis Salzwedel",
+    "Name": "Altmarkkreis Salzwedel",
     "NUTS3": "DEE04"
   },
   {
     "RS": "15082",
-    "NAME": "Anhalt-Bitterfeld",
+    "Name": "Anhalt-Bitterfeld",
     "NUTS3": "DEE05"
   },
   {
     "RS": "15083",
-    "NAME": "Börde",
+    "Name": "Börde",
     "NUTS3": "DEE07"
   },
   {
     "RS": "15084",
-    "NAME": "Burgenlandkreis",
+    "Name": "Burgenlandkreis",
     "NUTS3": "DEE08"
   },
   {
     "RS": "15085",
-    "NAME": "Harz",
+    "Name": "Harz",
     "NUTS3": "DEE09"
   },
   {
     "RS": "15086",
-    "NAME": "Jerichower Land",
+    "Name": "Jerichower Land",
     "NUTS3": "DEE06"
   },
   {
     "RS": "15087",
-    "NAME": "Mansfeld-Südharz",
+    "Name": "Mansfeld-Südharz",
     "NUTS3": "DEE0A"
   },
   {
     "RS": "15088",
-    "NAME": "Saalekreis",
+    "Name": "Saalekreis",
     "NUTS3": "DEE0B"
   },
   {
     "RS": "15089",
-    "NAME": "Salzlandkreis",
+    "Name": "Salzlandkreis",
     "NUTS3": "DEE0C"
   },
   {
     "RS": "15090",
-    "NAME": "Stendal",
+    "Name": "Stendal",
     "NUTS3": "DEE0D"
   },
   {
     "RS": "15091",
-    "NAME": "Wittenberg",
+    "Name": "Wittenberg",
     "NUTS3": "DEE0E"
   },
   {
     "RS": "16051",
-    "NAME": "Erfurt, Stadt",
+    "Name": "Erfurt, Stadt",
     "NUTS3": "DEG01"
   },
   {
     "RS": "16052",
-    "NAME": "Gera, Stadt",
+    "Name": "Gera, Stadt",
     "NUTS3": "DEG02"
   },
   {
     "RS": "16053",
-    "NAME": "Jena, Stadt",
+    "Name": "Jena, Stadt",
     "NUTS3": "DEG03"
   },
   {
     "RS": "16054",
-    "NAME": "Suhl, Stadt",
+    "Name": "Suhl, Stadt",
     "NUTS3": "DEG04"
   },
   {
     "RS": "16055",
-    "NAME": "Weimar, Stadt",
+    "Name": "Weimar, Stadt",
     "NUTS3": "DEG05"
   },
   {
     "RS": "16056",
-    "NAME": "Eisenach, Stadt",
+    "Name": "Eisenach, Stadt",
     "NUTS3": "DEG0N"
   },
   {
     "RS": "16061",
-    "NAME": "Eichsfeld",
+    "Name": "Eichsfeld",
     "NUTS3": "DEG06"
   },
   {
     "RS": "16062",
-    "NAME": "Nordhausen",
+    "Name": "Nordhausen",
     "NUTS3": "DEG07"
   },
   {
     "RS": "16063",
-    "NAME": "Wartburgkreis",
+    "Name": "Wartburgkreis",
     "NUTS3": "DEG0P"
   },
   {
     "RS": "16064",
-    "NAME": "Unstrut-Hainich-Kreis",
+    "Name": "Unstrut-Hainich-Kreis",
     "NUTS3": "DEG09"
   },
   {
     "RS": "16065",
-    "NAME": "Kyffhäuserkreis",
+    "Name": "Kyffhäuserkreis",
     "NUTS3": "DEG0A"
   },
   {
     "RS": "16066",
-    "NAME": "Schmalkalden-Meiningen",
+    "Name": "Schmalkalden-Meiningen",
     "NUTS3": "DEG0B"
   },
   {
     "RS": "16067",
-    "NAME": "Gotha",
+    "Name": "Gotha",
     "NUTS3": "DEG0C"
   },
   {
     "RS": "16068",
-    "NAME": "Sömmerda",
+    "Name": "Sömmerda",
     "NUTS3": "DEG0D"
   },
   {
     "RS": "16069",
-    "NAME": "Hildburghausen",
+    "Name": "Hildburghausen",
     "NUTS3": "DEG0E"
   },
   {
     "RS": "16070",
-    "NAME": "Ilm-Kreis",
+    "Name": "Ilm-Kreis",
     "NUTS3": "DEG0F"
   },
   {
     "RS": "16071",
-    "NAME": "Weimarer Land",
+    "Name": "Weimarer Land",
     "NUTS3": "DEG0G"
   },
   {
     "RS": "16072",
-    "NAME": "Sonneberg",
+    "Name": "Sonneberg",
     "NUTS3": "DEG0H"
   },
   {
     "RS": "16073",
-    "NAME": "Saalfeld-Rudolstadt",
+    "Name": "Saalfeld-Rudolstadt",
     "NUTS3": "DEG0I"
   },
   {
     "RS": "16074",
-    "NAME": "Saale-Holzland-Kreis",
+    "Name": "Saale-Holzland-Kreis",
     "NUTS3": "DEG0J"
   },
   {
     "RS": "16075",
-    "NAME": "Saale-Orla-Kreis",
+    "Name": "Saale-Orla-Kreis",
     "NUTS3": "DEG0K"
   },
   {
     "RS": "16076",
-    "NAME": "Greiz",
+    "Name": "Greiz",
     "NUTS3": "DEG0L"
   },
   {
     "RS": "16077",
-    "NAME": "Altenburger Land",
+    "Name": "Altenburger Land",
     "NUTS3": "DEG0M"
   }
 ]
