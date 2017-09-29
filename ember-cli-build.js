@@ -8,7 +8,10 @@ module.exports = function(defaults) {
   var conf = env(EmberApp.env()),
       app = new EmberApp(defaults, {
         babel: {
-          includePolyfill: true
+          includePolyfill: true,
+          plugins: [
+            'transform-object-rest-spread'
+          ]
         },
         fingerprint: {
           exclude: ['assets/images/']

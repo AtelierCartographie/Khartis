@@ -134,6 +134,8 @@ input[type=text].padding-fix {
 // Categories
 .categories-list {
 
+  border: none;
+
   > li {
     //height: 35px;
     display: flex;
@@ -200,9 +202,16 @@ input[type=text].padding-fix {
       flex: 3;
     }
 
-    &.categories-symbol-ordered {
+    &.categories-symbol-ordered, &.categories-surface-ordered {
       flex: 3;
+      border-top-left-radius: 1.7rem;
+      border-bottom-left-radius: 1.7rem;
+      margin-left: 0.1rem;
     }
+  }
+
+  li.ordered {
+    background: transparent;
   }
 
   li.ordered .categories-name {
@@ -219,12 +228,15 @@ input[type=text].padding-fix {
   }
 
   li.ordered.dragged {
-    background-color: transparent;
     border: none;
   }
 
-  li.ordered.dragged .categories-name {
+  li.ordered .categories-name {
     background-color: #fff;
+  }
+
+  li.ordered.overed .categories-name {
+    background-color: color(primary);
   }
 
   li.ordered.dragged .categories-controls {

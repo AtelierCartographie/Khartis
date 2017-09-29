@@ -41,6 +41,12 @@ module.exports = function(environment) {
       quality: 0.68
     },
 
+    mapThumbnail: {
+      generate: true,
+      height: 41,
+      color: "#90ABBD"
+    },
+
     maps: [
 
       {
@@ -483,6 +489,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.mapThumbnail.generate = true;
   }
 
   return ENV;

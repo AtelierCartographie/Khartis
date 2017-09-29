@@ -1,18 +1,25 @@
 & {
-  
+
+  $height: 24px;
+  $width: 24px;
+
   svg {
     height: 24px;
-    width: 24px;
+    margin-bottom: -4px;
+  }
+
+  .dropdown-trigger svg {
+    height: 18px;
   }
   
   div.swatch {
-    height: 24px;
+    height: $height;
   }
   
   @mixin swatch-size() {
     @for $i from 1 through 8 {
       svg.shape-#{$i} {
-        width: (24px) * $i;
+        width: ($width) * $i;
       }
     }
   }

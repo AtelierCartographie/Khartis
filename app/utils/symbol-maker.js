@@ -93,6 +93,16 @@ let symbol = function(opts = {}) {
               }],
               viewBox: [0, 0, 20, 20]
             });
+          case "triangle":
+            return Object.assign({}, baseConf, {
+              els: [{
+                tag: "polygon",
+                attrs: {
+                  points: "6 0 0 10 12 10 6 0"
+                },
+              }],
+              viewBox: [0, 0, 12, 10]
+            });
           default:
             if (SymbolConfig[name]) {
               return Object.assign({}, baseConf, SymbolConfig[name]);
@@ -122,8 +132,8 @@ let symbol = function(opts = {}) {
       .attr("transform", `scale(${s})`);
 
     conf.els.forEach(el => {
-      let attrs = el.attrsFn ? el.attrsFn(conf.size) : el.attrs;
-      attrs.transform = `translate(${-conf.viewBox[2]*conf.anchor[0]}, ${-conf.viewBox[3]*(1-conf.anchor[1])})`;
+      let attrs = Object.assign({}, el.attrsFn ? el.attrsFn(conf.size) : el.attrs);
+      attrs.transform = `translate(${-conf.viewBox[2]*conf.anchor[0]}, ${-conf.viewBox[3]*(1-conf.anchor[1])}) ` + (attrs.transform || "");
       g.append(el.tag).attrs(attrs);
     });
     

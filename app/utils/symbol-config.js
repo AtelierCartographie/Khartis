@@ -150,7 +150,7 @@ export default {
         y: 4.47,
         width: 11.31,
         height: 1,
-        transform:"translate(-2.05 4.99) rotate(-45)"
+        transform: "translate(-2.05 4.99) rotate(-45)"
       }
     }],
     viewBox: [0, 0, 10, 10]
@@ -361,5 +361,5 @@ export default {
       },
     }],
     viewBox: [0, 0, 12, 10]
-  },
+  }
 };

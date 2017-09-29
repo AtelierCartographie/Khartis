@@ -8,7 +8,7 @@ import CategoryMixins from './mixins/category';
 import LabellingMixins from './mixins/labelling';
 import LegendMixin from './mixins/legend';
 import Colorbrewer from 'khartis/utils/colorbrewer';
-import Rule from './rule';
+import {RuleFactory} from './rule';
 import FilterAbstract from './filter/abstract';
 import FilterFactory from './filter/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
@@ -92,6 +92,7 @@ let Mapping = Struct.extend(LegendMixin, {
     this.generateVisualization();
     this.generateRules();
     this.configureScale();
+    this.postConfigure();
   }.observes('type').on("init"),
   
   getScaleOf(type) {
@@ -105,6 +106,9 @@ let Mapping = Struct.extend(LegendMixin, {
   },
 
   configureScale() {
+  },
+
+  postConfigure() {
   },
 
   usePattern: Ember.computed('visualization.pattern', {
@@ -167,7 +171,7 @@ let Mapping = Struct.extend(LegendMixin, {
     let visualization = this.get('visualization');
 
     if (mode === "fill") {
-      return rule.get('visible') ? rule.color : "none";
+      return rule.get('visible') ? rule.get('color') : "none";
     } else if (mode === "texture" && rule.get('pattern')) {
       return rule.get('visible') ? PatternMaker.Composer.build(rule.get('pattern')) : {fn: PatternMaker.NONE};
     } else if (mode === "texture" && !rule.get('pattern') && this.get('usePattern')) {
@@ -185,7 +189,7 @@ let Mapping = Struct.extend(LegendMixin, {
     'type',
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
-    'rules.@each._defferedChangeIndicator', 'colorSet',
+    'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',
     'filter._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();
@@ -218,7 +222,7 @@ Mapping.reopenClass({
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
       ordered: json.ordered,
-      rules: json.rules ? json.rules.map( r => Rule.restore(r, refs) ) : null
+      rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null
     });
   }
   

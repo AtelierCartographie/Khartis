@@ -1,5 +1,15 @@
+import colorScaleChromatic from 'npm:d3-scale-chromatic';
+
+console.log(colorScaleChromatic);
 // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
 let brewer = {
+
+  categorical: {
+    schemeAccent: colorScaleChromatic.schemeAccent,
+    schemeDark2: colorScaleChromatic.schemeDark2,
+    schemePastel2: colorScaleChromatic.schemePastel2,
+    schemeSet2: colorScaleChromatic.schemeSet2
+  },
 
   sequential: {
     BuGn: {
@@ -433,7 +443,7 @@ Object.keys(brewer.diverging).forEach(function(pid){
 
 brewer.Composer = {
 
-  compose(palette, diverging, reverse, classes, before) {
+  compose(palette, diverging, reverse, classes, before, categorical=false) {
 
     let res = null;
 
@@ -443,8 +453,13 @@ brewer.Composer = {
         res = res.slice(0, before).reverse().concat(res.slice(before, classes).reverse());
       }
     } else {
-      res = brewer.sequential[palette][classes].slice(0);
-      reverse ? res.reverse() : void(0);
+      if (!categorical) {
+        res = brewer.sequential[palette][classes].slice(0);
+        reverse && res.reverse();
+      } else {
+        console.log(palette);
+        res = brewer.categorical[palette].slice(0);
+      }
     }
 
     return res;

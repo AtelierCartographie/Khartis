@@ -1,9 +1,13 @@
 import Struct from 'khartis/models/struct';
 import config from 'khartis/config/environment';
 import SymbolBrewer from 'khartis/utils/symbolbrewer';
+import ColorBrewer from 'khartis/utils/colorbrewer';
 
 const DEFAULT_UNORDERED_SHAPES = ["circle", "rect", "line", "star", "times"];
 const DEFAULT_STROKE_COLOR = "#404040";
+const DEFAULT_STROKE = 0;
+const DEFAULT_MAX_SIZE = 10;
+const DEFAULT_COLOR_SET = "schemeAccent";
 
 let SymbolVisualization = Struct.extend({
   
@@ -12,9 +16,10 @@ let SymbolVisualization = Struct.extend({
   colorBeforeBreak: "blue",
   shape: "circle",
   shapeSet: null,
-  strokeColor: "#404040",
-  stroke: 1,
-  maxSize: 10,
+  colorSet: DEFAULT_COLOR_SET,
+  strokeColor: DEFAULT_STROKE_COLOR,
+  stroke: DEFAULT_STROKE,
+  maxSize: DEFAULT_MAX_SIZE,
   barWidth: 16,
 
   absoluteMinSize: function() {
@@ -27,14 +32,35 @@ let SymbolVisualization = Struct.extend({
 
   availableShapes: DEFAULT_UNORDERED_SHAPES,
 
-  recomputeAvailableShapes(ordered, classes, palette=null) {
+  resetToDefaults() {
+    this.setProperties({
+      stroke: DEFAULT_STROKE,
+      maxSize: DEFAULT_MAX_SIZE
+    });
+  },
+
+  recomputeAvailableShapes(ordered, classes, forceShapeSetUpdate=false) {
     if (!ordered) {
       this.set('availableShapes', DEFAULT_UNORDERED_SHAPES);
       this.set('shapeSet', null);
     } else {
-      this.set('availableShapes', SymbolBrewer.Composer.compose(palette, classes));
-      !this.get('shapeSet') && this.set('shapeSet', this.get('availableShapes')[0]);
+      let shapes = SymbolBrewer.Composer.compose(this.get('shape'), classes);
+      this.setProperties({
+        'availableShapes': shapes,
+        'shapeSet': (!this.get('shapeSet') || forceShapeSetUpdate) ? shapes[0] : this.get('shapeSet')
+      });
     }
+  },
+
+  composeColorSet(length = 8) {
+    return ColorBrewer.Composer.compose(
+      this.get('colorSet'),
+      false,
+      false,
+      length,
+      0,
+      true
+    );
   },
   
   colorStops(diverging) {
@@ -59,6 +85,7 @@ let SymbolVisualization = Struct.extend({
       color: this.get('color'),
       shape: this.get('shape'),
       shapeSet: this.get('shapeSet'),
+      colorSet: this.get('colorSet'),
       strokeColor: this.get('strokeColor'),
       stroke: this.get('stroke'),
       maxSize: this.get('maxSize'),
@@ -76,6 +103,7 @@ SymbolVisualization.reopenClass({
       color: json.color,
       shape: json.shape,
       shapeSet: json.shapeSet,
+      colorSet: json.colorSet || DEFAULT_COLOR_SET,
       strokeColor: json.strokeColor,
       stroke: json.stroke,
       maxSize: json.maxSize,

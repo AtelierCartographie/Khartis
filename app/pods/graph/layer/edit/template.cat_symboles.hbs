@@ -64,15 +64,62 @@
 
           <div class="horizontal space-between solid middle flow padded-t">
             <span>Ordonnées ? {{input type="checkbox" checked=editedLayer.mapping.ordered}}<div class="-h"></div></span>
-            {{#if editedLayer.mapping.ordered}}
-            {{shape-dropdown
-              shapes=editedLayer.mapping.visualization.availableShapes
-              value=editedLayer.mapping.visualization.shapeSet
-              color="#977864"
-              update=(action 'updateRulesShapeSet')
-            }}
-            {{/if}}
+            {{#unless editedLayer.mapping.ordered}}
+            <a class="solid button filled" {{action 'randomizeRules'}}><i class="iconfont iconfont-redo"></i></a>
+            <div class="horizontal solid flow layer-color-selector">
+            {{#x-dropdown-plus as |facet|}}
+              {{#facet.trigger class="filled"}}
+                {{color-swatch class="layer-color-swatch"
+                  colors=(get brewer.categoricalColorSetMap editedLayer.mapping.visualization.colorSet)
+                }}
+                <i class="iconfont iconfont-angle-down"></i>
+              {{/facet.trigger}}
+              {{#facet.list}}
+                {{#each brewer.categoricalColorSet as |colorSet|}}
+                  <li {{action 'bind' editedLayer.mapping.visualization 'colorSet' colorSet.key}}>
+                    {{color-swatch class="layer-color-swatch" colors=colorSet.colors}}
+                  </li>
+                {{/each}}
+              {{/facet.list}}
+            {{/x-dropdown-plus}}
+            </div>
+            {{/unless}}
           </div>
+
+          {{#if editedLayer.mapping.ordered}}
+            <div class="horizontal solid middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
+              <div class="horizontal half-airy solid flow w7 btn-switch-group">
+                <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'updateShapeSetShape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
+                <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'updateShapeSetShape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
+                <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'triangle') 'selected'}}" {{action 'updateShapeSetShape' 'triangle'}}>{{x-capitalize (t 'visualization.settings.shape.triangle')}}</div>
+              </div>
+            </div>
+            <div class="horizontal solid middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.symbols')}}</label>
+              <div class="horizontal half-airy solid flow w7">
+                {{shape-dropdown
+                  shapes=editedLayer.mapping.visualization.availableShapes
+                  value=editedLayer.mapping.visualization.shapeSet
+                  color=editedLayer.mapping.visualization.color
+                  update=(action 'updateRulesShapeSet')
+                }}
+              </div>
+            </div>
+            <div class="horizontal solid middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+              <div class="horizontal half-airy solid flow w7">
+              {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
+              {{input-numeric/one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
+              </div>
+            </div>
+            <div class="horizontal solid middle flow">
+              <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
+              <div class="horizontal half-airy solid flow w7">
+                {{color-picker value=editedLayer.mapping.visualization.color}}
+              </div>
+            </div>
+          {{/if}}
 
           {{#if editedLayer.mapping.ordered}}
           {{#drag-swap-collection class="collection categories-list fluid scrollable"
@@ -86,11 +133,6 @@
                         <span class="varname">{{rule.label}}</span>
                   {{/if}}
 
-                  <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-
-                  <div class="flow">
-                      {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
-                  </div>
                 </div>
 
                 <div class="categories-controls">
@@ -146,12 +188,14 @@
 
         <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
 
+        {{#unless editedLayer.mapping.ordered}}
         <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.strokeSize')}}</label>
             <div class="horizontal half-airy solid flow w7">
                 {{x-slider class="fluid" band=0.5 value=editedLayer.mapping.visualization.stroke min=0 max=6}}
             </div>
         </div>
+        {{/unless}}
 
         <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>

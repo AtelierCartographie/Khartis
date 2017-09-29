@@ -42,7 +42,7 @@ export default AbstractComponent.extend({
 
             resolve(
                 levenshteined.filter( x => {
-                    return (x.lv <= 2); //Math.log(Math.pow(this.get('query').length+1, 4/5))) 
+                    return (x.lv <= 2);
                 }).sortBy('lv').map( x => x.val )
             );
 
@@ -52,8 +52,8 @@ export default AbstractComponent.extend({
     
 });
 
-var tolerance = 0;
-var TolerentLevenshtein = function(a, b) {
+const tolerance = 0;
+export const TolerentLevenshtein = function(a, b) {
     
     a = a.toLowerCase();
     b = b.toLowerCase();
@@ -67,7 +67,7 @@ var TolerentLevenshtein = function(a, b) {
     return Levenshtein(a, b);
 };
 
-var Levenshtein = function(a, b) {
+const Levenshtein = function(a, b) {
     
   if(a.length == 0) return b.length; 
   if(b.length == 0) return a.length; 

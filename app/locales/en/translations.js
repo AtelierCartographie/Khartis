@@ -235,7 +235,8 @@ export default {
         "title": "shape",
         "rect": "rect",
         "circle": "circle",
-        "bar": "bar"
+        "bar": "bar",
+        "triangle": "triangle"
       },
       "size": "size",
       "contrast": {

@@ -77,9 +77,6 @@ var GraphLayout = Struct.extend({
   backmapColor: "#cfd1d1",
 
   backlandsColor: function() {
-    /*let color = d3.rgb(this.get('backmapColor')),
-        contrast = d3lper.yiqColor(color);
-    return contrast === "lighten" ? color.brighter(0.222) : color.darker(0.222);*/
     return "#e0e1e1";
   }.property('backmapColor'),
   

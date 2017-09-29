@@ -1,14 +1,23 @@
 import Struct from 'khartis/models/struct';
 
+const DEFAULT_COLORS_SEQUENTIAL = "BuGn";
+const DEFAULT_COLORS_CATEGORICAL = "schemeAccent";
+
 let SurfaceVisualization = Struct.extend({
   
   type: "surface",
   pattern: null,
-  colors: "BuGn",
+  colors: DEFAULT_COLORS_SEQUENTIAL,
   stroke: 2,
   reverse: false,
   patternColor: null,
   patternColorBefore: null,
+
+  resetToDefaults(categorical=false) {
+    this.setProperties({
+      colors: categorical ? DEFAULT_COLORS_CATEGORICAL:DEFAULT_COLORS_SEQUENTIAL
+    });
+  },
 
   deferredChange: Ember.debouncedObserver(
     'colors', 'stroke', 'pattern', 'patternColor',

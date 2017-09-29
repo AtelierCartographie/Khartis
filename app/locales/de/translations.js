@@ -232,7 +232,8 @@ export default {
       "shape": {
         "title": "Form",
         "rect": "Rechteck",
-        "circle": "Kreis"
+        "circle": "Kreis",
+        "triangle": "triangle"
       },
       "size": "Größe",
       "contrast": {

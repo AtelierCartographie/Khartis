@@ -445,6 +445,10 @@ export default Ember.Controller.extend({
       rule.toggleProperty('visible');
     },
 
+    updateShapeSetShape(shape) {
+      this.set('editedLayer.mapping.visualization.shape', shape);
+    },
+
     swapRuleIndex(index, targetIndex) {
       let rule = this.get('editedLayer.mapping.rules').objectAt(index),
           targetRule =  this.get('editedLayer.mapping.rules').objectAt(targetIndex);

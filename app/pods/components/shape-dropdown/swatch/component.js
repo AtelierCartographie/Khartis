@@ -18,6 +18,8 @@ export default Ember.Component.extend({
   
   color: null,
 
+  margin: MARGIN,
+
   shapeLength: function() {
     return `shape-${this.get('shape') instanceof Array ? this.get('shape').length : 1}`;
   }.property('shape'),
@@ -38,6 +40,7 @@ export default Ember.Component.extend({
   drawSymbol: function() {
     
     let svg = this.d3l(),
+        margin = this.get('margin'),
         w = this.$().width(),
         h = this.$().height(),
         r = Math.min(w/2, h/2),
@@ -54,7 +57,7 @@ export default Ember.Component.extend({
         enter: function(sel) {
           let g = sel.append("g").classed("swatch", true);
           g.each( function(d) {
-            let symbol = SymbolMaker.symbol({name: d, size: 2*(r-MARGIN)});
+            let symbol = SymbolMaker.symbol({name: d, size: 2*(r-margin)});
             symbol.insert(d3.select(this));
           });
           return g;
