@@ -156,7 +156,7 @@ let ColumnStruct = Struct.extend({
               p.geo += 2/arr.length; //twice the strength of other types
             }
             
-            if (/^\-?([\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
+            if (/^\-?(\d+|[\d\,\s]+(\.\d+)?|[\d\.\s]+(\,\d+))$/.test(c.get('value'))) {
               p.numeric += 1/arr.length;
             } else {
                 if (/^1?[0-9]{1,2}°(\s*[0-6]?[0-9]')(\s*[\d\.]+")?(N|S)$/.test(c.get('value'))) {
@@ -347,12 +347,11 @@ let DataStruct = Struct.extend({
           ).sort( (a,b) => d3.ascending(a.get('inconsistency'), b.get('inconsistency')) ),
           seen = [];
       
-      return sortedCols.reduce( (arr, col, i) => {
+      let ret = sortedCols.reduce( (arr, col, i) => {
         
         if (seen.indexOf(col) === -1) {
         
           let lat, lon;
-        
           switch (col.get('meta.type')) {
             case "geo":
               arr.push(GeoDef.createWithColumns({geo: col}));
@@ -361,28 +360,28 @@ let DataStruct = Struct.extend({
               lon = sortedCols.slice(i).find( c => c.get('meta.type') === "lon" );
               if (lon) {
                 seen.push(lon);
-                arr.push(GeoDef.createWithColumns({lat: col, lon: lon}));
+                arr.push(GeoDef.createWithColumns({lat: col, lon}));
               }
               break;
             case "lon":
               lat = sortedCols.slice(i).find( c => c.get('meta.type') === "lat" );
               if (lat) {
                 seen.push(lat);
-                arr.push(GeoDef.createWithColumns({lat: lat, lon: col}));
+                arr.push(GeoDef.createWithColumns({lat, lon: col}));
               }
               break;
             case "lat_dms":
               lon = sortedCols.slice(i).find( c => c.get('meta.type') === "lon_dms" );
               if (lon) {
                 seen.push(lon);
-                arr.push(GeoDef.createWithColumns({lat: col, lon: lon}));
+                arr.push(GeoDef.createWithColumns({lat: col, lon}));
               }
               break;
             case "lon_dms":
               lat = sortedCols.slice(i).find( c => c.get('meta.type') === "lat_dms" );
               if (lat) {
                 seen.push(lat);
-                arr.push(GeoDef.createWithColumns({lat: lat, lon: col}));
+                arr.push(GeoDef.createWithColumns({lat, lon: col}));
               }
               break;
             default:
@@ -393,7 +392,10 @@ let DataStruct = Struct.extend({
         
         return arr;
         
-      }, Em.A() ); 
+      }, Em.A() );
+
+      ret.forEach( r => console.log(r.get('isLatLon')));
+      return ret;
         
     }.property('columns', 'columns.@each._defferedChangeIndicator'),
     

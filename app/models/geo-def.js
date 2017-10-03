@@ -41,6 +41,18 @@ let GeoDef = Struct.extend({
   lon: function() {
     return this.get('columns')[1];
   }.property('isLatLon'),
+
+  latLonCouples: function() {
+    let lat = this.get('lat'),
+        lon = this.get('lon'),
+        min = Math.min(lat.get('body').length, lon.get('body').length),
+        couples = [];
+
+    for (let i = 0; i < min; i++) {
+      couples.push({lat: lat.get('body')[i], lon: lon.get('body')[i]});
+    }
+    return couples;
+  }.property('isLatLon'),
   
   type: function() {
     if (this.get('isGeoRef')) {
