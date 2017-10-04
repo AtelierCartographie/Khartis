@@ -163,7 +163,6 @@ let proj = function() {
     },
 
     projectionsForLatLon(latLon) {
-      console.log("here");
       return this.projs.filter( p => {
         let bbox = [
           p.instance.invert(p.instance.bboxPx[0]),

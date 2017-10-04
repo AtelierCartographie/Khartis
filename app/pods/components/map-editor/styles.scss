@@ -16,7 +16,7 @@
     &.l, &.r { cursor: ew-resize; }
   }
 
-  .fg, use.feature.surface {
+  .fg, .feature.surface, .feature.symbol {
     pointer-events: none;
   }
 

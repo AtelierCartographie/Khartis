@@ -69,16 +69,20 @@ export default Ember.Component.extend({
       
       drag.on("start", function() {
         if (!$(d3.event.sourceEvent.target).hasClass("no-drag") && !$(d3.event.sourceEvent.target).parents(".no-drag").length) {
-          d3.event.sourceEvent.stopPropagation();
           self.set('wasDragged', false);
         }
       });
       
       drag.on("drag", function() {
 
+        if (!self.get('wasDragged')) {
+          setTimeout(function() {
+            self.set('wasDragged', true);
+          }, 50);
+          return;
+        }
+
         d3.select(this).classed("dragged", true);
-        d3.select(this).classed("will-drag", false);
-        self.set('wasDragged', true);
 
         shiftOveredEl.call(this, d3.event.y);
         
@@ -102,7 +106,6 @@ export default Ember.Component.extend({
         }
         
         d3.select(this).classed("dragged", false);
-        d3.select(this).classed("will-drag", false);
 
           $(this).siblings().css({
             "margin-top": "",

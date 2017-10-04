@@ -13,25 +13,22 @@ export default Ember.Mixin.create({
     zoom = zoom2()
       .scaleExtent([1, 12])
       .band(0.5)
-      .on("zoom", (scale, translate) => {
-        this.zoomAndDrag(scale, translate);
-      })
+      .on("zoom", this.zoomAndDrag.bind(this))
       .scale(this.get('graphLayout.zoom'));
     
-    let updateTxTy = () => {
-      zoom.translate([
-        this.get('relTx'),
-        this.get('relTy')
-      ]);
-    }
-    this.addObserver('relTx', 'relTy', updateTxTy);
-    updateTxTy();
-
+    this.updateTxTy(this.get('relTx'), this.get('relTy'));
     d3g.call(zoom);
 
   },
 
-  relTx: Ember.computed('graphLayout.tx', {
+  updateTxTy(relTx, relTy) {
+    zoom.translate([
+      relTx,
+      relTy
+    ]);
+  },
+
+  relTx: Ember.computed('graphLayout.tx', '$width', {
     get() {
       return this.get('graphLayout.tx')*this.getSize().w;
     },
@@ -41,7 +38,7 @@ export default Ember.Mixin.create({
     }
   }),
 
-  relTy: Ember.computed('graphLayout.ty', {
+  relTy: Ember.computed('graphLayout.ty', '$height', {
     get() {
       return this.get('graphLayout.ty')*this.getSize().h;
     },
@@ -68,26 +65,28 @@ export default Ember.Mixin.create({
         "kis:kis:s": scale
       })
       .transition()
-      .duration(260)
+      .duration(160)
       .ease(d3.easeLinear)
       .on("end", () => {
-        
-        mapG.attr("transform", null)
-          .selectAll("#layers .shape")
-          .attr("transform", null);
+
+        let relTx = parseFloat(mapG.attr("kis:kis:tx")),
+            relTy = parseFloat(mapG.attr("kis:kis:ty"));
+
+        //this.updateTxTy(relTx, relTy);
         
         this.get('graphLayout').beginPropertyChanges();
         
         this.setProperties({
           "graphLayout.zoom": parseFloat(mapG.attr("kis:kis:s")),
-          relTx: parseFloat(mapG.attr("kis:kis:tx")),
-          relTy: parseFloat(mapG.attr("kis:kis:ty"))
+          relTx,
+          relTy 
         });
-        
+
         this.scaleProjector(projector);
         
         this.get('graphLayout').endPropertyChanges();
-        
+
+        mapG.attr("transform", null);
         this.projectAndDraw();
         
       })
@@ -112,7 +111,9 @@ export default Ember.Mixin.create({
   },
   
   zoomAndDragChange: function() {
-    
+
+    this.updateTxTy(this.get('relTx'), this.get('relTy'));
+
     let projector = this.get('projector'),
         ds = projector.scale() / projector.resolution,
         tx = projector.translate()[0] - projector.initialTranslate[0]*ds,
@@ -143,7 +144,7 @@ export default Ember.Mixin.create({
       }
       
     }
-    
-  }.observes('graphLayout.zoom', 'graphLayout.tx', 'graphLayout.ty')
+
+  }.observes('graphLayout.zoom', 'graphLayout.tx', 'graphLayout.ty', '$width', '$height')
 
 });

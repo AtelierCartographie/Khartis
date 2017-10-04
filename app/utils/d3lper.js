@@ -42,6 +42,10 @@ let d3lper = {
         return d.join(",");
     }).join(" ");
   },
+
+  distance(pt1, pt2) {
+    return Math.sqrt((pt2[0]-pt1[0])*(pt2[0]-pt1[0]), (pt2[1]-pt1[1])*(pt2[1]-pt1[1]));
+  },
 	
 	yiqColor(d3Color) {
 	  let r = d3Color.r,
