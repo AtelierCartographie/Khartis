@@ -74,8 +74,14 @@
                 hasHoverFeature=true
                 defaultGeoDef=model.geoDef
                 onAskVersioning="onAskVersioning"
+                onElementOver=(action 'onMapElementOver')
+                onElementOut=(action 'onMapElementOut')
               }}
             {{/if}}
+
+            <div class="popup-hover" style="position: absolute; top: 0; left: 0">
+              {{hoverInfo}}
+            </div>
 
             {{outlet "configuration-panel"}}
 

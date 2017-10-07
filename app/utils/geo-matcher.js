@@ -10,11 +10,11 @@ let StringNormalizer = function() {
       "s": "ß",
       "u": "ùúûü",
       "y": "ÿ",
-      " ": "-"
+      " ": "\\-"
     },
     mapKeys = Object.keys(map);
 
-  this.rgx = new RegExp(Object.values(map).map( v => `([${v.replace(/\-/g, "\\-")}])` ).join("|"), "g");
+  this.rgx = new RegExp(Object.values(map).map( v => `([${v}])` ).join("|"), "g");
   this.consume = function(grps) {
     for (let i = 0; i < grps.length; i++) {
       if (grps[i]) {
@@ -27,10 +27,9 @@ let StringNormalizer = function() {
 
 StringNormalizer.prototype.$ = function(inStr) {
   let self = this;
-  return inStr.replace(this.rgx, function() {
+  return inStr.toLowerCase().replace(this.rgx, function() {
       return self.consume(Array.prototype.slice.call(arguments, 1, arguments.length-2));
   });
-
 };
 
 export function GeoMatch({type, value}) {
@@ -78,19 +77,19 @@ GeoMatcher.prototype.match = function(code) {
 
   if (code && code.length > 0) {
     
-    let str = _strNorm.$((""+code).toLowerCase().trim()),
+    let str = _strNorm.$((""+code).trim()),
         strEq = function(s) {
-          return str && s && str === _strNorm.$((""+s).toLowerCase());
+          return str && s && str === _strNorm.$((""+s));
         },
         dic = this.dic,
-        lIndex = this._lIndex,
         cidx = _cache.get(str),
-        o = cidx >= 0 ? dic[cidx] : undefined;
+        o = cidx >= 0 ? dic[cidx] : undefined,
+        indexed;
     
     if (o === undefined) {
-      if (lIndex.has(str.length)) {
-        for (var [idx, keys] of lIndex.get(str.length).entries()) {
-          if (keys.some( k => strEq(dic[idx][k], str) )) {
+      if (indexed = this._indexGet(str)) {
+        for (var [idx, keys] of indexed) {
+          if (keys.some( k => strEq(dic[idx][k]) )) {
             _cache.set(str, idx);
             o = dic[idx];
             break;
@@ -119,12 +118,17 @@ GeoMatcher.prototype._buildIndex = function() {
   this._lIndex = new Map();
   this._dic.forEach( (r, idx) => {
     this.keyCodes.forEach( k => {
-      let l = (""+r[k]).length;
+      let str = _strNorm.$(""+r[k]),
+          l = str.length << 8 | str.toLowerCase().codePointAt(0);
       !this._lIndex.has(l) && this._lIndex.set(l, new Map());
       !this._lIndex.get(l).has(idx) && this._lIndex.get(l).set(idx, []);
       this._lIndex.get(l).get(idx).push(k);
     });
   });
+};
+GeoMatcher.prototype._indexGet = function(str) {
+  let res = this._lIndex.get(str.length << 8 | str.codePointAt(0));
+  return res && res.entries();
 };
 
 let matcher = new GeoMatcher();

@@ -29,6 +29,8 @@ export default Ember.Controller.extend({
   editedLayer: null,
   editedColumn: null,
 
+  hoverInfo: "",
+
   init() {
     this._super();
     this.get('store').addHook(HOOK_BEFORE_SAVE_PROJECT, this.onBeforeSaveProject.bind(this));
@@ -585,6 +587,16 @@ export default Ember.Controller.extend({
 
     navigateToExport() {
       this.send('selectState', 'export');
+    },
+
+    onMapElementOver(data) {
+      if (data.row) {
+        this.set("hoverInfo", data.row.get('cells').reduce( (out, c) => out += c.get('value'), ""));
+      }
+    },
+
+    onMapElementOut() {
+      this.set("hoverInfo", "");
     },
     
     onAskVersioning(type) {
