@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
   editedLayer: null,
   editedColumn: null,
 
-  hoverInfo: "",
+  hoveredData: null,
 
   init() {
     this._super();
@@ -590,13 +590,13 @@ export default Ember.Controller.extend({
     },
 
     onMapElementOver(data) {
-      if (data.row) {
-        this.set("hoverInfo", data.row.get('cells').reduce( (out, c) => out += c.get('value'), ""));
+      if (data) {
+        this.set("hoveredData", data);
       }
     },
 
     onMapElementOut() {
-      this.set("hoverInfo", "");
+      this.set("hoveredData", null);
     },
     
     onAskVersioning(type) {

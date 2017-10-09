@@ -211,9 +211,8 @@ let ColumnStruct = Struct.extend({
           checkFn = inconsistency[this.get('meta.type')];
 
       let cells = this.get('body')
-        .filter( c => !Ember.isEmpty(c.get('value')) )
         .filter( (c, i, arr) => {
-          return !checkFn(c.get('value')); 
+          return !Ember.isEmpty(c.get('value')) && !checkFn(c.get('value')); 
         });
         
       return cells;
@@ -221,7 +220,7 @@ let ColumnStruct = Struct.extend({
     }.property('_defferedChangeIndicator'),
     
     correctedCells: function() {
-      return this.get('body').filter( (c) => c.get('corrected') );
+      return this.get('body').filter( c => c.get('corrected') );
     }.property('_defferedChangeIndicator'),
     
     inconsistency: function() {

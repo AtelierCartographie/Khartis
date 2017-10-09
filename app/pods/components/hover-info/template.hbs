@@ -1,0 +1,25 @@
+<ul>
+{{#each geoInfos as |info|}}
+  <li>
+    <span class="col-header">
+      <h3>{{info.label}}</h3>
+    </span>
+  </li>
+{{/each}}
+  <li class="separator"></li>
+{{#each cellInfos as |info|}}
+  <li>
+    <span class="col-header">
+      {{#if info.mapped}}
+      <b>{{info.column.header.value}}</b>
+      {{else}}
+      {{info.column.header.value}}
+      {{/if}}
+      :
+    </span>
+    <span class="col-value">
+      {{info.value}}
+    </span>
+  </li>
+{{/each}}
+</ul>

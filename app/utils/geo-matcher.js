@@ -114,6 +114,10 @@ GeoMatcher.prototype.match = function(code) {
 GeoMatcher.prototype._keys = undefined;
 GeoMatcher.prototype._dic = undefined;
 GeoMatcher.prototype._lIndex = undefined;
+
+/*génération d'un cache basé sur la longueur de la chaine, codé sur 8 bits
+  puis le code unicode du premier caractère
+*/
 GeoMatcher.prototype._buildIndex = function() {
   this._lIndex = new Map();
   this._dic.forEach( (r, idx) => {

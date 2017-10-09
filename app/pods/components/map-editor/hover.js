@@ -88,12 +88,13 @@ export default Ember.Mixin.create({
     } else {
 
       let data = lands.map( l => {
-        let cell = this.get('defaultGeoDef.geo.body').find(c => c.get('postProcessedValue').value[geoKey] === l.feature.properties[geoKey]),
+        let cell = this.get('defaultGeoDef.geo.body').find(c => c.get('postProcessedValue').value && c.get('postProcessedValue').value[geoKey] === l.feature.properties[geoKey]),
             row = (cell && cell.get('row')) || null;
         return {
           land: l,
           data: {
-            row
+            row,
+            land: l.feature.properties
           }
         }
       });

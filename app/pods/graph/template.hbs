@@ -79,9 +79,9 @@
               }}
             {{/if}}
 
-            <div class="popup-hover" style="position: absolute; top: 0; left: 0">
-              {{hoverInfo}}
-            </div>
+            {{#if hoveredData}}
+              {{hover-info data=hoveredData layers=model.graphLayers}}
+            {{/if}}
 
             {{outlet "configuration-panel"}}
 
