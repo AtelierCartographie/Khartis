@@ -67,7 +67,7 @@
     "ember-source": "~2.15.0",
     "emberx-select": "2.0.2",
     "ivy-codemirror": "git://github.com/IvyApp/ivy-codemirror.git#master",
-    "khartis-thumbnailer": "git://github.com/AtelierCartographie/khartis-thumbnailer.git#master",
+    "khartis-build-tools": "git://github.com/AtelierCartographie/khartis-build-tools.git#master",
     "loader.js": "4.2.3",
     "text-encoding": "^0.5.2"
   },
