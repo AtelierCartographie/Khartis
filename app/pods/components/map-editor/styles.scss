@@ -28,4 +28,25 @@
     cursor: pointer;
   }
 
+  .hover-land.overed {
+    stroke: #404040;
+  }
+
+  .hover-point {
+    circle {
+      fill: none;
+    }
+    path {
+      stroke: rgb(255, 200, 0);
+      fill: rgba(0, 0, 0, 0.0001);
+    }
+  }
+
+  .hover-point.overed {
+    circle {
+      fill: rgba(0, 0, 255, 0.3);
+    }
+  }
+
 }
+

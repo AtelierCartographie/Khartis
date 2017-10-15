@@ -5,10 +5,26 @@ import d3lper from 'khartis/utils/d3lper';
 export default Ember.Mixin.create({
 
   defaultGeoDef: null,
+  hoverEnabled: false,
 
   projectAndDraw() {
     this._super();
-    this.bindHover();
+    this.hoverCompute();
+  },
+  
+  hoverCompute: function() {
+    if (this.get('hoverEnabled')) {
+      this.bindHover();
+    } else {
+      this.unbindHover();
+    }
+  }.observes('hoverEnabled'),
+
+  unbindHover() {
+    let d3l = this.d3l(),
+        backmap = d3l.select("#backmap");
+    backmap.selectAll("g.hover-point, g.hover-land")
+      .remove();
   },
 
   bindHover() {
@@ -24,21 +40,26 @@ export default Ember.Mixin.create({
       let points = this.get('defaultGeoDef.latLonCouples').reduce( (out, couple, index) => {
         
         let lat = couple.lat.get('postProcessedValue'),
-            lon = couple.lon.get('postProcessedValue'),
-            path = this.assumePathForLatLon([lat, lon]),
-            xy = path.centroid({
-              type: "Point",
-              coordinates: [
-                lon,
-                lat
-              ]
-            });
+            lon = couple.lon.get('postProcessedValue');
+            
+        if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
 
-        out.push({
-          xy,
-          coordinates: [lon, lat],
-          row: couple.lat.get('row')
-        });
+          let path = this.assumePathForLatLon([lat, lon]),
+              xy = path.centroid({
+                type: "Point",
+                coordinates: [
+                  lon,
+                  lat
+                ]
+              });
+
+          out.push({
+            xy,
+            coordinates: [lon, lat],
+            row: couple.lat.get('row')
+          });
+
+        }
 
         return out;
 
@@ -53,35 +74,42 @@ export default Ember.Mixin.create({
         return {poly, data: points[i]};
       });
 
-      backmap.selectAll("path.hover-point")
+      backmap.selectAll("g.hover-point")
         .data(data)
         .enterUpdate({
           enter: function(sel) {
-            return sel.append("path").classed("hover-point", true)
+            let g = sel.append("g").classed("hover-point", true)
               .on("mouseover", function() {
-                d3.select(this).classed("overed", true);
+                d3.select(this).classed("mouseover", true);
               })
               .on("mousemove", function(d) {
-                if (d3.select(this).classed("overed")) {
+                if (d3.select(this).classed("mouseover")) {
                   let [mouseX, mouseY] = d3.mouse(d3l.node());
                   if (d3lper.distance(d.data.xy, [mouseX, mouseY]) < 30) {
+                    d3.select(this).classed("overed", true);
                     self.sendAction('onElementOver', d.data);
                   } else {
+                    d3.select(this).classed("overed", false);
                     self.sendAction('onElementOut');
                   }
                 }
               })
-              .on("mouseout", d => function() {
-                d3.select(this).classed("overed", false);
+              .on("mouseout", function(d) {
+                d3.select(this).classed("mouseover", false)
+                  .classed("overed", false);
                 self.sendAction('onElementOut');
               });
+            g.append("path");
+            g.append("circle").attr("r", 3);
+            return g;
           },
           update: (sel) => {
-            return sel.attr("d", d => d.poly ? "M" + d.poly.join("L") + "Z" : null )
-              .styles({
-                "stroke": "rgba(255, 0, 0, 1)",
-                "fill": "rgba(0, 0, 255, 0.1)"
-              });
+            sel.select("path").attr("d", d => d && d.poly ? "M" + d.poly.join("L") + "Z" : null );
+            sel.select("circle").attrs({
+              cx: d => (d && d.data.xy[0]) || null,
+              cy: d => (d && d.data.xy[1]) || null
+            });
+            return sel;
           }
         });
 
@@ -104,11 +132,13 @@ export default Ember.Mixin.create({
         .enterUpdate({
           enter: function(sel) {
             return sel.append("path").classed("hover-land", true)
-              .on("mouseover", d => {
+              .on("mouseover", function(d) {
                 self.sendAction('onElementOver', d.data);
+                d3.select(this).classed("overed", true);
               })
-              .on("mouseout", d => {
+              .on("mouseout", function(d) {
                 self.sendAction('onElementOut');
+                d3.select(this).classed("overed", false);
               });
           },
           update: (sel) => {

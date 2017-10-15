@@ -139,7 +139,7 @@ let ColumnStruct = Struct.extend({
             };
 
         let coordTypeFromHeader = function() {
-          if (/^(?:lon(?:g?\.|gitude)?|lng|x)$/i.test(headerText)) {
+          if (/^(?:lon(?:g\.?|gitude)?|lng|x)$/i.test(headerText)) {
             return "lon";
           } else if (/^y|lat(?:\.|itude)?$/i.test(headerText)) {
             return "lat";

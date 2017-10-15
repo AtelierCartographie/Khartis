@@ -29,6 +29,7 @@ export default Ember.Controller.extend({
   editedLayer: null,
   editedColumn: null,
 
+  tooltipEnabled: false,
   hoveredData: null,
 
   init() {
@@ -522,6 +523,10 @@ export default Ember.Controller.extend({
       if (this.get('model.graphLayout.zoom') > 0) {
         this.decrementProperty('model.graphLayout.zoom');
       }
+    },
+
+    toggleTooltip() {
+      this.toggleProperty('tooltipEnabled');
     },
 
     onIntervalTypeTabChange(id) {

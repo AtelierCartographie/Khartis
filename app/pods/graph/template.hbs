@@ -72,6 +72,7 @@
                 hasMappingFeature=true
                 hasCompositionBordersFeature=model.graphLayout.projection.isComposite
                 hasHoverFeature=true
+                hoverEnabled=tooltipEnabled
                 defaultGeoDef=model.geoDef
                 onAskVersioning="onAskVersioning"
                 onElementOver=(action 'onMapElementOver')
@@ -89,6 +90,7 @@
               <div class="bordered button control-button zoom" {{action 'resetTranslate'}}><i class="iconfont iconfont-move"></i></div>
               <div class="bordered button control-button zoom-plus" {{action 'zoomPlus'}}><i class="iconfont iconfont-plus"></i></div>
               <div class="bordered button control-button zoom-minus" {{action 'zoomMoins'}}><i class="iconfont iconfont-minus"></i></div>
+              <div class="bordered button control-button tooltip-toggle {{if tooltipEnabled 'selected'}}" {{action 'toggleTooltip'}}><i class="iconfont iconfont-info"></i></div>
               <div class="separator"></div>
               {{#x-dropdown-plus as |facet|}}
                 {{#facet.trigger class=(concat "bordered button control-button " (if model.blindnessMode 'selected')) triggerPivot="top left" dropdownPivot="top right"}}
