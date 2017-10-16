@@ -135,7 +135,7 @@ let DataMixin = Ember.Mixin.create({
       max = Math.max(1, Math.log(hl)/Math.log(2));
       return Array.from({length: Math.min(3, max)}, (v, i) => Math.pow(2, (i+1)));
     } else if (this.get('scale.intervalType') === "manual") {
-      return Array.from({length: 7}, (v, i) => i+1);
+      return Array.from({length: 7}, (v, i) => i+2);
     } else {
       return []; //linear
     }
@@ -150,6 +150,8 @@ let DataMixin = Ember.Mixin.create({
     } else if (this.get('scale.intervalType') === "mean") {
       //return Array.from({length: Math.floor(this.get('scale.classes') / 2) - 1}, (v, i) =>  2 * (i + 1)); désactivé pour le moment
       return [this.get('scale.classes') / 2];
+    } else if (this.get('scale.intervalType') === "manual") {
+      return Array.from({length: lgt+1}, (v, i) => (i+1));
     } else {
       return []; //linear
     }
@@ -330,7 +332,7 @@ let SurfaceMixin = Ember.Mixin.create({
         range = this.get('colorSet');
       }
     }
-    
+
     return d3Scale.domain(intervals).range(range);
   }
   

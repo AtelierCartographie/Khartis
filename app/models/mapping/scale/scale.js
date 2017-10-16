@@ -104,18 +104,19 @@ let Scale = Struct.extend({
 
   computeManual(ext) {
     let intervals = this.get('manualIntervals')
-      .filter( i => insideInterval(ext, i) );
+    .filter( i => insideInterval(ext, i, true) )
+    .sort((a,b) => {
+      return a > b ? 1:-1;
+    });
     return intervals;
   },
 
   manualIntervalsChange: function() {
     if (this.get('intervalType') === "manual") {
-      this.set('classes', this.get('manualIntervals').length+2);
-      console.log(this.get('manualIntervals').length, this.get('classes'));
+      this.set('classes', this.get('manualIntervals').length+1);
       this.set('classesBeforeBreak', this.get('manualIntervals').reduce( (sum, v) => (v < this.get('valueBreak') ? sum+1:sum), 0 )+1);
-      console.log(this.get('manualIntervals'), this.get('classes'), this.get('classesBeforeBreak'));
     }
-  }.observes('manualIntervals.[]'),
+  }.observes('manualIntervals.[]', 'valueBreak'),
   
   export(props) {
     return this._super(Object.assign({

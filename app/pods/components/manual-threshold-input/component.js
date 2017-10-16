@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     return this.get('scale.manualIntervals').sort((a,b) => {
       return a > b ? 1:-1;
     });
-  }.property('scale.manualIntervals.[]'),
+  }.property('scale.manualIntervals.[]', 'scale.valueBreak'),
 
   thresholdsSortedBeforeBreak: function() {
     return this.get('scale.manualIntervals')
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
       .sort((a,b) => {
         return a > b ? 1:-1;
       });
-  }.property('scale.manualIntervals.[]'),
+  }.property('scale.manualIntervals.[]', 'scale.valueBreak'),
 
   thresholdsSortedAfterBreak: function() {
     return this.get('scale.manualIntervals')
@@ -35,11 +35,11 @@ export default Ember.Component.extend({
       .sort((a,b) => {
         return a > b ? 1:-1;
       });
-  }.property('scale.manualIntervals.[]'),
+  }.property('scale.manualIntervals.[]', 'scale.valueBreak'),
 
   actions: {
     addThreshold() {
-      if (this.get('value') != null) {
+      if (this.get('value') != null && this.get('canAddThreshold')) {
         let errMsg;
         if (this.get('value') < this.get('min') || this.get('value') > this.get('max')) {
           errMsg = "visualization.alert.threshold.extent";

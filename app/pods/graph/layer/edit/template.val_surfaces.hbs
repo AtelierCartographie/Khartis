@@ -98,14 +98,16 @@
                 placeholder=(t 'general.none')}}
               {{#if editedLayer.mapping.scale.diverging}}
                 {{#if editedLayer.mapping.scale.usesInterval}}
-                  {{#o-wrap/classes-before-break
-                    classes=editedLayer.mapping.scale.classesBeforeBreak
-                    totalClasses=editedLayer.mapping.scale.classes
-                    possibilities=editedLayer.mapping.possibleClassesBeforeBreak as |wrap|}}
-                    {{#if wrap.editable}}
-                    {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
-                    {{/if}}
-                  {{/o-wrap/classes-before-break}}
+                  {{#unless (x-eq editedLayer.mapping.scale.intervalType 'manual')}}
+                    {{#o-wrap/classes-before-break
+                      classes=editedLayer.mapping.scale.classesBeforeBreak
+                      totalClasses=editedLayer.mapping.scale.classes
+                      possibilities=editedLayer.mapping.possibleClassesBeforeBreak as |wrap|}}
+                      {{#if wrap.editable}}
+                      {{x-slider class="fluid offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                      {{/if}}
+                    {{/o-wrap/classes-before-break}}
+                  {{/unless}}
                 {{/if}}
               {{/if}}
             </div>

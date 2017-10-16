@@ -1,7 +1,7 @@
 <label class="solid w5">{{label}}</label>
 <div class="solid w7">
   <div class="horizontal solid half-airy flow">
-    {{input-numeric numericValue=value class="solid w10"}}
+    {{input-numeric numericValue=value class="solid w10" action=(action 'addThreshold' on="enter")}}
     {{#if canAddThreshold}}
     <a {{action 'addThreshold'}} class="solid w2"><span class="button-circle-o"><i class="iconfont iconfont-plus-thin"></i></span></a>
     {{/if}}

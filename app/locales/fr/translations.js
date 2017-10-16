@@ -226,7 +226,7 @@ export default {
           "standardDeviation": "standardisation",
           "jenks": "jenks",
           "linear": "aucune",
-          "manual": "manuel"
+          "manual": "seuils manuels"
         }
       },
       "classes": "classes",
