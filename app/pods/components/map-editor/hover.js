@@ -22,8 +22,8 @@ export default Ember.Mixin.create({
 
   unbindHover() {
     let d3l = this.d3l(),
-        backmap = d3l.select("#backmap");
-    backmap.selectAll("g.hover-point, g.hover-land")
+        foremap = d3l.select("#map").selectOrCreate("#foremap", function() { return this.append("g").attr("id", "foremap")});
+    foremap.selectAll("g.hover-point, g.hover-land")
       .remove();
   },
 
@@ -31,7 +31,7 @@ export default Ember.Mixin.create({
     let self = this,
       d3l = this.d3l(),
       geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
-      backmap = d3l.select("#map").selectOrCreate("#foremap", function() { return this.append("g").attr("id", "foremap")}),
+      foremap = d3l.select("#map").selectOrCreate("#foremap", function() { return this.append("g").attr("id", "foremap")}),
       lands = this.getFeaturesFromBase("lands"),
       size = this.getSize();
 
@@ -74,7 +74,7 @@ export default Ember.Mixin.create({
         return {poly, data: points[i]};
       });
 
-      backmap.selectAll("g.hover-point")
+      foremap.selectAll("g.hover-point")
         .data(data)
         .enterUpdate({
           enter: function(sel) {
@@ -127,7 +127,7 @@ export default Ember.Mixin.create({
         }
       });
 
-      backmap.selectAll("path.hover-land")
+      foremap.selectAll("path.hover-land")
         .data(data)
         .enterUpdate({
           enter: function(sel) {
