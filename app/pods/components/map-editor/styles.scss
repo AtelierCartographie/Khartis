@@ -28,8 +28,13 @@
     cursor: pointer;
   }
 
+  .hover-land {
+    stroke: none;
+    fill: rgba(0, 0, 0, 0.0001);
+  }
+
   .hover-land.overed {
-    stroke: #404040;
+    fill: rgba(color(primary), 0.45);
   }
 
   .hover-point {
@@ -37,8 +42,8 @@
       fill: none;
     }
     path {
-      stroke: rgb(255, 200, 0);
-      fill: rgba(0, 0, 0, 0.0001);
+      stroke: none;
+      fill: rgba(0, 0, 0, 0.00001);
     }
   }
 

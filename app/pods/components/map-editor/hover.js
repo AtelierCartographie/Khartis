@@ -31,7 +31,7 @@ export default Ember.Mixin.create({
     let self = this,
       d3l = this.d3l(),
       geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
-      backmap = d3l.select("#backmap"),
+      backmap = d3l.select("#map").selectOrCreate("#foremap", function() { return this.append("g").attr("id", "foremap")}),
       lands = this.getFeaturesFromBase("lands"),
       size = this.getSize();
 
@@ -142,11 +142,7 @@ export default Ember.Mixin.create({
               });
           },
           update: (sel) => {
-            return sel.attr("d", d => d.land.path(d.land.feature) )
-              .styles({
-                "stroke": "none",
-                "fill": "rgba(0, 0, 0, 0.0001)"
-              });
+            return sel.attr("d", d => d.land.path(d.land.feature) );
           }
         });
     }

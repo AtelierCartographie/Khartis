@@ -38,3 +38,8 @@ d3.selection.prototype.eachWithArgs = function(callback, ...args) {
 
   return this;
 }
+
+d3.selection.prototype.selectOrCreate = function(selector, createFn) {
+  let sel = this.select(selector);
+  return (!sel.empty() && sel) || createFn.call(this);
+}
