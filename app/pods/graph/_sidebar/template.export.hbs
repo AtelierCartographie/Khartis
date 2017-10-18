@@ -19,7 +19,7 @@
           <div class="horizontal solid half-airy flow w8">
             <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
               {{#x-dropdown-plus as |facet|}}
-                {{#facet.trigger class="horizontal space-between flow filled"}}
+                {{#facet.trigger class="horizontal space-between flow filled on-white"}}
                     <div class="solid">{{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</div>
                     <div classs="fluid padded-h">{{layer.mapping.varCol.header.value}}</div>
                     <i class="iconfont iconfont-angle-down"></i>
@@ -44,14 +44,14 @@
         <div class="horizontal middle flow">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.color')}}</label>
           <div class="horizontal solid flow w5">
-            {{color-picker value=layer.mapping.visualization.color}}
+            {{color-picker class="on-white" value=layer.mapping.visualization.color}}
           </div>
         </div>
         <div class="horizontal middle flow">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.filter')}}</label>
           <div class="horizontal solid flow w5">
             {{#x-dropdown-plus as |facet|}}
-              {{#facet.trigger class="horizontal space-between flow filled"}}
+              {{#facet.trigger class="horizontal space-between flow filled on-white"}}
                 {{#if layer.mapping.filter}}
                   <div class="solid">{{data-type-icon meta=layer.mapping.filter.varCol.meta inconsistency=layer.mapping.filter.varCol.inconsistency}}</div>
                   <div classs="fluid padded-h">{{layer.mapping.filter.varCol.header.value}}</div>
@@ -81,7 +81,7 @@
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.categories')}}</label>
           <div class="horizontal solid flow w5">
             {{#x-dropdown-plus as |facet|}}
-              {{#facet.trigger class="horizontal space-between flow filled padded-l"}}
+              {{#facet.trigger class="horizontal space-between flow filled padded-l on-white"}}
                 {{x-capitalize (t 'export.settings.labelling.chooseCategories')}}
                 <i class="iconfont iconfont-angle-down"></i>
               {{/facet.trigger}}
@@ -141,7 +141,7 @@
         <div class="horizontal solid half-airy flow w7">
           <a {{action 'toggleBordersVisibility'}}><i class="iconfont {{if model.graphLayout.showBorders 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
           {{#if model.graphLayout.showBorders}}
-          {{color-picker value=model.graphLayout.stroke}}
+          {{color-picker class="on-white" value=model.graphLayout.stroke}}
           {{/if}}
         </div>
       </div>
@@ -150,7 +150,7 @@
         <div class="horizontal solid half-airy flow w7">
           <a {{action 'toggleGridVisibility' layer}}><i class="iconfont {{if model.graphLayout.showGrid 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
           {{#if model.graphLayout.showGrid}}
-          {{color-picker value=model.graphLayout.gridColor}}
+          {{color-picker class="on-white" value=model.graphLayout.gridColor}}
           {{/if}}
         </div>
       </div>
@@ -158,7 +158,7 @@
         <label class="solid w4">{{x-capitalize (t 'export.settings.background')}}</label>
         <div class="horizontal solid half-airy flow w7">
           <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
-          {{color-picker value=model.graphLayout.backmapColor}}
+          {{color-picker class="on-white" value=model.graphLayout.backmapColor}}
         </div>
       </div>
     </div>

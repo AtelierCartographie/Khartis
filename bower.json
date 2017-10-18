@@ -5,7 +5,6 @@
     "normalize.css": "3.0.3",
     "codemirror": "~5.13.0",
     "ember-cli-codemirror-shim": "~0.0.1",
-    "spectrum": "https://github.com/AtelierCartographie/spectrum.git",
     "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
     "d3-composite-projections": "^0.4.0"
   },

@@ -65,6 +65,7 @@
     "ember-normalize": "0.0.9",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.15.0",
+    "ember-wormhole": "^0.5.2",
     "emberx-select": "2.0.2",
     "ivy-codemirror": "git://github.com/IvyApp/ivy-codemirror.git#master",
     "khartis-build-tools": "git://github.com/AtelierCartographie/khartis-build-tools.git#master",

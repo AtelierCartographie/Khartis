@@ -1,5 +1,5 @@
 & {
-  & + .of-stroke {
+  .of-stroke {
     .sp-preview-inner {
       margin: 2.5px 2.5px 2.5px 2.5px;
       border-width: 3px;
@@ -7,7 +7,7 @@
     }
   }
   
-  & + .sp-replacer {
+  .sp-replacer {
     
     background-color: white;
     border-radius: 2px;
@@ -29,5 +29,9 @@
       line-height: 20px;
     }
     
+  }
+
+  &.on-white .sp-replacer {
+    background-color: greys(5%);
   }
 }

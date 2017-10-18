@@ -1,14 +1,80 @@
+@import "../vendors/spectrum";
+
 /* color picker customization*/
 .sp-container {
+  @extend .with-relief;
   padding: 2px;
+  background-color: #FAFAFA;
+  border: 1px solid greys(20%);
+}
+
+.sp-content-container {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .sp-picker-container {
   border: none;
 }
 
+.sp-color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 16%;
+}
+
+.sp-hue {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 88%;
+  height: 100%;
+}
+
+.sp-palette .sp-thumb-el:hover, .sp-palette .sp-thumb-el.sp-thumb-active {
+  border-color: greys(40%);
+  border-style: 3px solid;
+}
+
+.sp-palette .sp-thumb-dark.sp-thumb-active  {
+  .sp-thumb-inner {
+    background-image: none;
+  }
+  .iconfont {
+    color: white;
+  }
+}
+
+.sp-palette .sp-thumb-light.sp-thumb-active {
+  .sp-thumb-inner {
+    background-image: none;
+  }
+  .iconfont {
+    color: #404040;
+  }
+}
+
+.sp-palette .sp-thumb-active .iconfont {
+  position: absolute;
+  left: 2px;
+  top: 0;
+}
+
+.sp-button-container.sp-cf {
+  text-align: right;
+  background-color: greys(10%);
+  border-top: 1px solid greys(20%);
+  margin: 0px -2px -2px -2px;
+  padding: 3px 3px 3px 3px;
+  float:none;
+}
+
 .sp-container button, .sp-container button:hover {
   @extend .button;
+  @extend .small;
   background-color: color(primary);
   background-image: none;
   border: none;
