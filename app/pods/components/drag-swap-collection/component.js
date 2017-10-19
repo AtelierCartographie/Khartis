@@ -2,19 +2,21 @@ import Ember from 'ember';
 import d3 from 'npm:d3';
 /* global $ */
 
+const MODE_SWAP = "swap";
+const MODE_SHIFT = "shift";
+
 export default Ember.Component.extend({
 
   tagName: "ul",
   classNames: ["collection", "drag-sort"],
+  mode: MODE_SHIFT,
 
   provider: null,
 
   wasDragged: false,
   
   onInsert: function() {
-    
     this.attachDrag();
-    
   }.on("didInsertElement"),
 
   attachDrag: function() {
@@ -106,7 +108,11 @@ export default Ember.Component.extend({
           .filter(".ghost").remove();
           
         if (index !== undefined && cur !== index) {
-          self.sendAction("swap", cur, index);
+          if (self.get('mode') == MODE_SWAP) {
+            self.sendAction("swap", cur, index);
+          } else {
+            self.sendAction("shift", cur, index);
+          }
         }
 
       });

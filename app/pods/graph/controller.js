@@ -439,6 +439,10 @@ export default Ember.Controller.extend({
     bindScaleIntervalType(scale, type) {
       scale.set('intervalType', type);
     },
+
+    bindPattern(pattern) {
+      this.set('editedLayer.mapping.visualization.pattern', pattern.fork());
+    },
     
     bind(root, prop, value) {
       root.set(prop, value);
@@ -452,10 +456,8 @@ export default Ember.Controller.extend({
       this.set('editedLayer.mapping.visualization.shape', shape);
     },
 
-    swapRuleIndex(index, targetIndex) {
-      let rule = this.get('editedLayer.mapping.rules').objectAt(index),
-          targetRule =  this.get('editedLayer.mapping.rules').objectAt(targetIndex);
-      this.get('editedLayer.mapping').swapRule(rule, targetRule);
+    shiftRuleIndex(index, targetIndex) {
+      this.get('editedLayer.mapping').shiftRule(index, targetIndex);
       this.get('editedLayer.mapping').reorderRules();
     },
 

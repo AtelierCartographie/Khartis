@@ -91,13 +91,13 @@
 
           {{#if editedLayer.mapping.ordered}}
           {{#drag-swap-collection class="collection categories-list fluid scrollable"
-            provider=editedLayer.mapping.rules swap=(action 'swapRuleIndex') as |rule self|}}
+            provider=editedLayer.mapping.rules shift=(action 'shiftRuleIndex') as |rule self|}}
             <li class="ordered">
               <div class="categories-name categories-surface-ordered">
                   {{#if rule.emptyValue}}
                       <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
                   {{else}}
-                      <span class="varname">{{rule.label}}</span>
+                      <span class="varname">{{rule.label}} {{rule.index}}</span>
                   {{/if}}
               </div>
               <div class="categories-controls">
