@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Struct from '../struct';
+import Pattern from './pattern';
 import {CellStruct} from '../data';
 
 const visualizationProxy = function(prop) {
@@ -26,7 +27,7 @@ let Rule = Struct.extend({
 
   deferredChange: Ember.debouncedObserver(
     'color', 'strokeColor', 'visible',
-    'pattern', 'shape', 'size', 'index',
+    'pattern', 'pattern.stroke', 'shape', 'size', 'index',
     function() {
       this.notifyDefferedChange();
     },
@@ -48,7 +49,7 @@ let Rule = Struct.extend({
       visible: this.get('visible'),
       color: this.get('color'),
       strokeColor: this.get('strokeColor'),
-      pattern: this.get('pattern'),
+      pattern: (this.get('pattern') && this.get('pattern').export()) || null,
       size: this.get('size')
     }, props))
   }
@@ -68,7 +69,7 @@ Rule.reopenClass({
       visible: json.visible,
       color: json.color,
       strokeColor: json.strokeColor,
-      pattern: json.pattern,
+      pattern: (json.pattern && Pattern.restore(json.pattern, refs)) || null,
       size: json.size
     });
   }

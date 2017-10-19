@@ -59,13 +59,13 @@ function paletteTemplate (p, color, className, opts) {
             var swatchStyle = "background-color:" + tiny.toRgbString();
             html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /><i class="iconfont iconfont-check"></i></span>');
         } else {
-            var cls = 'sp-clear-display';
-            html.push($('<div />')
-                .append($('<span data-color="" style="background-color:transparent;" class="' + cls + '"></span>')
-                    .attr('title', opts.noColorSelectedText)
-                )
-                .html()
-            );
+            // var cls = 'sp-clear-display';
+            // html.push($('<div />')
+            //     .append($('<span data-color="" style="background-color:transparent;" class="' + cls + '"></span>')
+            //         .attr('title', opts.noColorSelectedText)
+            //     )
+            //     .html()
+            // );
         }
     }
     return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
@@ -84,6 +84,7 @@ function instanceOptions(o, callbackContext) {
     opts.callbacks = {
         'move': bind(opts.move, callbackContext),
         'change': bind(opts.change, callbackContext),
+        'cancel': bind(opts.cancel, callbackContext),
         'show': bind(opts.show, callbackContext),
         'hide': bind(opts.hide, callbackContext),
         'beforeShow': bind(opts.beforeShow, callbackContext)
@@ -139,9 +140,7 @@ function spectrum(element, o) {
         textInput = container.find(".sp-input"),
         paletteContainer = container.find(".sp-palette"),
         initialColorContainer = container.find(".sp-initial"),
-        cancelButton = container.find(".sp-cancel"),
         clearButton = container.find(".sp-clear"),
-        chooseButton = container.find(".sp-choose"),
         toggleButton = container.find(".sp-palette-toggle"),
         isInput = boundElement.is("input"),
         offsetElement = boundElement,
@@ -200,39 +199,36 @@ function spectrum(element, o) {
             clearButton.hide();
         }
 
-        if (flat) {
-            boundElement.after(container).hide();
-        }
-        else {
+        // if (flat) {
+        //     boundElement.after(container).hide();
+        // }
+        // else {
 
-            var appendTo = opts.appendTo === "parent" ? boundElement.parent() : $(opts.appendTo);
-            if (appendTo.length !== 1) {
-                appendTo = $("body");
-            }
+        //     // var appendTo = opts.appendTo === "parent" ? boundElement.parent() : $(opts.appendTo);
+        //     // if (appendTo.length !== 1) {
+        //     //     appendTo = $("body");
+        //     // }
 
-            appendTo.append(container);
-        }
+        //     // appendTo.append(container);
+        // }
 
         updateSelectionPaletteFromStorage();
 
-        offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
-            if (!disabled) {
-                toggle();
-            }
+        // offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
+        //     if (!disabled) {
+        //         toggle();
+        //     }
 
-            e.stopPropagation();
+        //     e.stopPropagation();
 
-            if (!$(e.target).is("input")) {
-                e.preventDefault();
-            }
-        });
+        //     if (!$(e.target).is("input")) {
+        //         e.preventDefault();
+        //     }
+        // });
 
         if(boundElement.is(":disabled") || (opts.disabled === true)) {
             disable();
         }
-
-        // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
-        container.click(stopPropagation);
 
         // Handle user typed input
         textInput.change(setFromTextInput);
@@ -240,13 +236,6 @@ function spectrum(element, o) {
             setTimeout(setFromTextInput, 1);
         });
         textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
-
-        cancelButton.on("click.spectrum", function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            revert();
-            hide();
-        });
 
         clearButton.attr("title", opts.clearText);
         clearButton.on("click.spectrum", function (e) {
@@ -258,20 +247,6 @@ function spectrum(element, o) {
             if(flat) {
                 //for the flat style, this is a change event
                 updateOriginalInput(true);
-            }
-        });
-
-        chooseButton.on("click.spectrum", function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            if (IE && textInput.is(":focus")) {
-                textInput.trigger('change');
-            }
-
-            if (isValid()) {
-                updateOriginalInput(true);
-                hide();
             }
         });
 
@@ -520,6 +495,7 @@ function spectrum(element, o) {
     }
 
     function show() {
+
         var event = $.Event('beforeShow.spectrum');
 
         if (visible) {
@@ -533,7 +509,7 @@ function spectrum(element, o) {
             return;
         }
 
-        hideAll();
+        //hideAll();
         visible = true;
 
         $(doc).on("keydown.spectrum", onkeydown);
@@ -544,7 +520,6 @@ function spectrum(element, o) {
 
         reflow();
         updateUI();
-
         colorOnShow = get();
 
         drawInitial();
@@ -560,7 +535,10 @@ function spectrum(element, o) {
     }
 
     function clickout(e) {
-        // Return on right click.
+        // if container is an ancestor
+        if ($(e.target).closest(container).length) { return; }
+        if ($(e.target).closest(boundElement).length) { return; }
+        // Return on right click
         if (e.button == 2) { return; }
 
         // If a drag event was happening during the mouseup, don't hide
@@ -593,8 +571,8 @@ function spectrum(element, o) {
     }
 
     function revert() {
-        set(colorOnShow, true);
-        triggerValueChange();
+      set(colorOnShow, true);
+      triggerCancel();
     }
 
     function set(color, ignoreFormatChange) {
@@ -673,25 +651,25 @@ function spectrum(element, o) {
             displayColor = '';
 
           //reset background info for preview element
-        previewElement.removeClass("sp-clear-display");
-        previewElement.css({
-            'background-color': 'transparent',
-            'border-color': 'transparent'
-        });
+        // previewElement.removeClass("sp-clear-display");
+        // previewElement.css({
+        //     'background-color': 'transparent',
+        //     'border-color': 'transparent'
+        // });
 
         if (!realColor && allowEmpty) {
             // Update the replaced elements background with icon indicating no color selection
-            previewElement.addClass("sp-clear-display");
+            //previewElement.addClass("sp-clear-display");
         }
         else {
             var realHex = realColor.toHexString(),
                 realRgb = realColor.toRgbString();
 
             // Update the replaced elements background color (with actual selected color)
-            previewElement.css({
-                'background-color': opts.backgroundPreview ? realRgb : "transparent",
-                'border-color': opts.borderPreview ? realRgb : "transparent"
-            });
+            // previewElement.css({
+            //     'background-color': opts.backgroundPreview ? realRgb : "transparent",
+            //     'border-color': opts.borderPreview ? realRgb : "transparent"
+            // });
 
             if (opts.showAlpha) {
                 var rgb = realColor.toRgb();
@@ -775,6 +753,11 @@ function spectrum(element, o) {
     function triggerValueChange() {
       var color = get();
       callbacks.change(color);
+    }
+
+    function triggerCancel() {
+      var color = get();
+      callbacks.cancel(color);
     }
 
     function updateOriginalInput(fireCallback) {
@@ -876,6 +859,7 @@ function spectrum(element, o) {
     var spect = {
         show: show,
         hide: hide,
+        revert: revert,
         toggle: toggle,
         reflow: reflow,
         option: option,

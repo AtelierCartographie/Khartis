@@ -1,9 +1,18 @@
-<div class='sp-replacer {{if stroke 'of-stroke' 'of-fill'}}'>
-    <div class='sp-preview'><div class='sp-preview-inner'></div></div>
+<div class='sp-replacer {{if stroke 'of-stroke' 'of-fill'}}' {{action 'togglePicker'}}>
+    <div class='sp-preview'>
+      <div class='sp-preview-inner'>
+        {{pattern-swatch
+          pattern=selectedPattern
+          count=1
+          color=value
+        }}
+      </div>
+    </div>
     <div class='sp-dd'><i class="iconfont iconfont-angle-down"></i></div>
 </div>
 {{#ember-wormhole to="picker-wormhole"}}
   <div id="color-picker-{{customElementId}}" class='sp-container sp-hidden'>
+    {{#if pickerOpened}}
     <div class="sp-content-container">
       <div class='sp-palette-container'>
         <div class='sp-palette sp-thumb sp-cf'></div>
@@ -39,9 +48,37 @@
         <div class='sp-initial sp-thumb sp-cf'></div>
       </div>
     </div>
-    <div class='sp-button-container sp-cf'>
-      <a class='sp-cancel' href='#'>{{t 'general.cancel'}}</a>
-      <button type='button' class='sp-choose'>{{t 'general.close'}}</button>
+    {{#if patternChooserEnabled}}
+    <div class="sp-pattern-container">
+      <div class="sp-fieldset">
+        <span class="sp-fieldset-label">{{x-capitalize (t 'visualization.settings.pattern' count=2)}}</span>
+      </div>
+      <ul>
+      {{#each patternPalette as |pattern|}}
+        <li class="sp-pattern-swatch">
+          <a {{action 'selectPattern' pattern}}>
+          {{pattern-swatch
+            pattern=pattern
+            count=1
+            color=value
+            class=(if (x-eq pattern.key selectedPattern.key) 'selected')
+          }}
+          </a>
+        </li>
+      {{/each}}
+      </ul>
+      {{#if selectedPattern}}
+        <div class="sp-pattern-slider">
+          <label>{{x-capitalize (t 'visualization.settings.size')}}</label>
+          {{x-slider class="fluid offset-slider" band=0.5 value=selectedPattern.stroke min=1 max=12}}
+        </div>
+      {{/if}}
     </div>
+    {{/if}}
+    <div class='sp-button-container sp-cf'>
+      <a class='sp-cancel' href='#' {{action 'revert'}}>{{t 'general.cancel'}}</a>
+      <button type='button' class='sp-choose' {{action 'close'}}>{{t 'general.close'}}</button>
+    </div>
+    {{/if}}
   </div>
 {{/ember-wormhole}}

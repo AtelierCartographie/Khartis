@@ -18,10 +18,7 @@ let Struct = Ember.Object.extend({
    
    export(opts) {
       return Object.assign({
-          _uuid: this.get('_uuid'),
-          toJson() {
-            return {hello: "world"}
-          }
+          _uuid: this.get('_uuid')
       }, opts);
    }
 });

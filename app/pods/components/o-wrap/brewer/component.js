@@ -4,9 +4,9 @@ import PatternMaker from 'khartis/utils/pattern-maker';
 import CategoryMixin from 'khartis/models/mapping/mixins/category';
 /* global Em */
 
+const ANGLES = [0, 45, 90, 135];
+
 export default WrapperAbstract.extend({
-  
-  angles: [0, 45, 90, 135],
   
   availableColorSets: function() {
     let categoricalScheme = CategoryMixin.Data.detect(this.get('obj')) && !this.get('obj.ordered'),
@@ -84,7 +84,7 @@ export default WrapperAbstract.extend({
   }.property('categoricalColorSet.[]'),
   
   availablePatterns: function() {
-    return this.angles.map( (angle) => {
+    return ANGLES.map( (angle) => {
         return PatternMaker.Composer.build({
           angle: angle,
           stroke: 1,

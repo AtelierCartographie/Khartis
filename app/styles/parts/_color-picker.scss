@@ -1,16 +1,23 @@
 @import "../vendors/spectrum";
 
+$sp-bg: #FAFAFA;
+
 /* color picker customization*/
 .sp-container {
   @extend .with-relief;
   padding: 2px;
-  background-color: #FAFAFA;
+  background-color: $sp-bg;
   border: 1px solid greys(20%);
 }
 
 .sp-content-container {
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+.sp-palette-container {
+  padding-right: 5px;
+  border: none;
 }
 
 .sp-picker-container {
@@ -72,7 +79,7 @@
   float:none;
 }
 
-.sp-container button, .sp-container button:hover {
+.sp-container button.sp-choose, .sp-container button.sp-choose:hover {
   @extend .button;
   @extend .small;
   background-color: color(primary);
@@ -87,3 +94,45 @@
   transition: none;
   text-shadow: none;
 }
+
+.sp-pattern-container {
+  
+  ul {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    li.sp-pattern-swatch {
+      display: inline-block;
+      list-style-type: none;
+      width: 24px;
+      height: 18px;
+      margin-right: $gutter; 
+    }
+  }
+
+  .sp-fieldset {
+    border-bottom: 1px solid greys(20%);
+    text-align: center;
+    overflow-y: visible;
+    line-height: 0.1em;
+    .sp-fieldset-label {
+      padding: 1px 6px 1px 6px;
+      background: $sp-bg;
+      font-size: 0.9em;
+    }
+  }
+
+  .sp-pattern-slider {
+    @include flow(horizontal, middle, airy);
+    margin: 0px auto 10px auto;
+    width: 50%;
+    label {
+      font-size: 0.85em;
+    }
+    .offset-slider {
+      width: 100px;
+      margin-left: 5px;
+      margin-top: -1px;
+    }
+  }
+}
+

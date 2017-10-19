@@ -16,6 +16,8 @@ export default Ember.Component.extend({
   count: 0,
   
   mapping: null,
+
+  color: null,
   
   draw: function() {
     
@@ -29,24 +31,30 @@ export default Ember.Component.extend({
   
   masks: function() {
     let r = [];
-    if (this.get('mapping.scale.diverging')) {
-      r.push(
-        PatternMaker.Composer.build({
-          angle: this.get('pattern.angle'),
-          stroke: this.get('pattern.stroke'),
-          type: "circles"
-        })
-      )
+    if (this.get('pattern') != PatternMaker.NONE && this.get('pattern') != null) {
+      if (this.get('pattern.type') === "circles" || this.get('mapping.scale.diverging')) {
+        r.push(
+          PatternMaker.Composer.build({
+            angle: this.get('pattern.angle'),
+            stroke: this.get('pattern.stroke'),
+            type: "circles"
+          })
+        )
+      }
+      if (this.get('pattern.type') === "lines") {
+        r.push(
+          PatternMaker.Composer.build({
+            angle: this.get('pattern.angle'),
+            stroke: this.get('pattern.stroke'),
+            type: "lines"
+          })
+        );
+      }
+    } else {
+      r.push(PatternMaker.NONE);
     }
-    r.push(
-      PatternMaker.Composer.build({
-        angle: this.get('pattern.angle'),
-        stroke: this.get('pattern.stroke'),
-        type: "lines"
-      })
-    );
     return r;
-  }.property('count', 'pattern', 'mapping.scale.diverging'),
+  }.property('count', 'pattern', 'pattern.stroke', 'mapping.scale.diverging'),
   
   drawMasks: function() {
     
@@ -60,14 +68,18 @@ export default Ember.Component.extend({
       }).styles({
         fill: (d, i) => {
           let fill;
-          if (this.get('mapping.scale.diverging')) {
+          if (this.get('mapping') && this.get('mapping.scale.diverging')) {
             fill = this.get(i === 0 ? 'mapping.patternColorReverse' : 'mapping.patternColor');
           } else {
-            fill = this.get('mapping.patternColor');
+            fill = (this.get('mapping') && this.get('mapping.patternColor')) || this.get('color');
           }
-          let fn = new d.fn(false, fill);
-          fn.init(svg);
-          return `url(${fn.url()})`
+          if (d != PatternMaker.NONE) {
+            let fn = new d.fn(false, fill);
+            fn.init(svg);
+            return `url(${fn.url()})`
+          } else {
+            return fill;
+          }
         }
       })
     };
@@ -98,7 +110,7 @@ export default Ember.Component.extend({
       });
 
     sel.exit().remove();
-    
-  }.observes('masks.[]', 'mapping.scale.diverging', 'mapping.patternColor')
+
+  }.observes('masks.[]', 'pattern.stroke', 'mapping.scale.diverging', 'mapping.patternColor', 'color')
   
 });

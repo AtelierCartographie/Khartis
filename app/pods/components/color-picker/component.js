@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import spectrum from './spectrum';
+import PatternMaker from 'khartis/utils/pattern-maker';
+
+const ANGLES = [0, 45, 90, 135];
 
 export default Ember.Component.extend({
+
+  pickerOpened: false,
 
   value: null,
   showInput: true,
@@ -9,6 +14,11 @@ export default Ember.Component.extend({
   stroke: false,
   liveRendering: true,
   showPalette: true,
+
+  patternChooserEnabled: false,
+
+  selectedPattern: null,
+  selectedPatternOnShow: null,
 
   init() {
     if (!document.getElementById("picker-wormhole")) {
@@ -30,33 +40,83 @@ export default Ember.Component.extend({
     ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2"]
   ],
 
-  didInsertElement: function() {
-    let spect = spectrum(this.$('.sp-replacer').get(0), {
-      container: document.getElementById(`color-picker-${this.get('customElementId')}`),
-      color: this.get('value'),
-      showInput: this.get('showInput'),
-      showAlpha: this.get('showAlpha'),
-      preferredFormat: "rgb",
-      palette: this.get('palette'),
-      showPalette: this.get('showPalette'),
-      borderPreview: this.get('stroke'),
-      backgroundPreview: !this.get('stroke'),
-      replacerClassName: this.get('stroke') ? 'of-stroke' : 'of-fill',
-      move: (color) => {
-        if (this.get('liveRendering')) {
+  patternPalette: function() {
+    return [
+      PatternMaker.NONE,
+      ...ANGLES.map( (angle) => {
+        return PatternMaker.Composer.build({
+          angle: angle,
+          stroke: 1,
+          type: "lines"
+        });
+      }),
+      PatternMaker.Composer.build({
+        stroke: 1,
+        type: "circles"
+      })
+    ];
+  }.property(),
+
+  didRender() {
+    this._super(...arguments);
+    if (this.get('pickerOpened') && !this.get('spectrum')) {
+      let spect = spectrum(this.$('.sp-replacer').get(0), {
+        container: document.getElementById(`color-picker-${this.get('customElementId')}`),
+        color: this.get('value'),
+        showInput: this.get('showInput'),
+        showAlpha: this.get('showAlpha'),
+        preferredFormat: "rgb",
+        palette: this.get('palette'),
+        showPalette: this.get('showPalette'),
+        borderPreview: this.get('stroke'),
+        backgroundPreview: !this.get('stroke'),
+        replacerClassName: this.get('stroke') ? 'of-stroke' : 'of-fill',
+        move: (color) => {
+          if (this.get('liveRendering')) {
+            this.set('value', color.toRgbString());
+          }
+        },
+        change: (color) => {
           this.set('value', color.toRgbString());
+        },
+        cancel: (color) => {
+          this.set('value', color.toRgbString());
+          this.set('selectedPattern', this.get('selectedPatternOnShow'));
+        },
+        hide: () => {
+          this.set('pickerOpened', false);
         }
-      },
-      change: (color) => {
-        console.log("change");
-        this.set('value', color.toRgbString());
-      }
-    });
-    this.set('spectrum', spect);
+      });
+      spect.show();
+      this.set('spectrum', spect);
+      this.set('selectedPatternOnShow', (this.get('selectedPattern') && this.get('selectedPattern').fork()) || null);
+    } else if (!this.get('pickerOpened')) {
+      this.set('spectrum', null);
+    }
   },
 
   valueChange: function() {
-    this.get('spectrum').set(this.get('value'));
-  }.observes('value')
+    this.get('spectrum') && this.get('spectrum').set(this.get('value'));
+  }.observes('value'),
+
+  actions: {
+    togglePicker(e) {
+      if (!this.get('pickerOpened')) {
+        this.set('pickerOpened', true);
+      } else {
+        this.get('spectrum').hide();
+      }
+    },
+    selectPattern(pattern) {
+      this.set('selectedPattern', pattern != PatternMaker.NONE ? pattern.fork() : null);
+    },
+    close() {
+      this.get('spectrum').hide();
+    },
+    revert() {
+      this.get('spectrum').revert();
+      this.get('spectrum').hide();
+    }
+  }
 
 });

@@ -1,5 +1,6 @@
 import {isFirefox} from 'khartis/utils/browser-check';
 import d3 from 'npm:d3';
+import PatternStruct from 'khartis/models/mapping/pattern';
 
 let _buildPatternFn = function(id, size, drawer) {
   
@@ -217,13 +218,13 @@ Composer.prototype.build = function({angle, stroke, type, size}) {
         size: size
       });
 
-  return {
+  return PatternStruct.create({
     angle: angle,
     stroke: stroke,
     key: fn.id(),
     type: type,
     fn: fn
-  };
+  });
 };
 
 const NONE = function() {};

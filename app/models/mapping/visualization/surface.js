@@ -1,4 +1,5 @@
 import Struct from 'khartis/models/struct';
+import Pattern from '../pattern';
 
 const DEFAULT_COLORS_SEQUENTIAL = "BuGn";
 const DEFAULT_COLORS_CATEGORICAL = "schemeAccent";
@@ -20,7 +21,7 @@ let SurfaceVisualization = Struct.extend({
   },
 
   deferredChange: Ember.debouncedObserver(
-    'colors', 'stroke', 'pattern', 'patternColor',
+    'colors', 'stroke', 'pattern', 'pattern.stroke', 'patternColor',
     'patternColorBefore', 'reverse',
     function() {
       this.notifyDefferedChange();
@@ -30,7 +31,7 @@ let SurfaceVisualization = Struct.extend({
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),
-      pattern: this.get('pattern'),
+      pattern: (this.get('pattern') && this.get('pattern').export()) || null,
       colors: this.get('colors'),
       stroke: this.get('stroke'),
       reverse: this.get('reverse'),
@@ -45,7 +46,7 @@ SurfaceVisualization.reopenClass({
   restore(json, refs = {}) {
     return this._super(json, refs, {
       type: json.type,
-      pattern: json.pattern,
+      pattern: (json.pattern && Pattern.restore(json.pattern, refs)) || null,
       colors: json.colors,
       stroke: json.stroke,
       reverse: json.reverse,
