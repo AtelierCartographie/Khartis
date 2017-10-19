@@ -259,7 +259,7 @@ let SurfaceMixin = Ember.Mixin.create({
       this.get('visualization.reverse')
     );
     
-  }.property('visualization.pattern', 'scale.classes',
+  }.property('visualization.pattern', 'visualization.pattern.stroke', 'scale.classes',
   'scale.classesBeforeBreak', 'scale.diverging', 'visualization.reverse'),
 
   patternColor: Ember.computed('colorSet.[]', {

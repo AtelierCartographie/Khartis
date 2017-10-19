@@ -104,6 +104,34 @@ let SurfaceMixin = Ember.Mixin.create({
     });
   },
 
+  shiftRule(oldIndex, newIndex) {
+    let ascending = newIndex > oldIndex,
+        colorByIndex = this.get('rules').reduce( (out, r) => {
+          out[r.get('index')] = r.get('color');
+          return out;
+        }, {});
+    this.get('rules').forEach( r => {
+      let idx = r.get('index');
+      if (r.get('index') === oldIndex) {
+        idx = newIndex;
+      } else {
+        if (ascending) {
+          if (r.get('index') > oldIndex && r.get('index') <= newIndex) {
+            idx--;
+          }
+        } else {
+          if (r.get('index') >= newIndex && r.get('index') < oldIndex) {
+            idx++;
+          }
+        }
+      }
+      r.setProperties({
+        index: idx,
+        color: colorByIndex[idx]
+      });
+    });
+  },
+
   getColorSet(length) {
     length = Math.min(length || this.get('rules').length, 8);
     return ColorBrewer.Composer.compose(
@@ -211,6 +239,34 @@ let SymbolMixin = Ember.Mixin.create({
     rule.setProperties({
       index: oldIndex,
       shape: oldShape
+    });
+  },
+
+  shiftRule(oldIndex, newIndex) {
+    let ascending = newIndex > oldIndex,
+        shapeByIndex = this.get('rules').reduce( (out, r) => {
+          out[r.get('index')] = r.get('shape');
+          return out;
+        }, {});
+    this.get('rules').forEach( r => {
+      let idx = r.get('index');
+      if (r.get('index') === oldIndex) {
+        idx = newIndex;
+      } else {
+        if (ascending) {
+          if (r.get('index') > oldIndex && r.get('index') <= newIndex) {
+            idx--;
+          }
+        } else {
+          if (r.get('index') >= newIndex && r.get('index') < oldIndex) {
+            idx++;
+          }
+        }
+      }
+      r.setProperties({
+        index: idx,
+        shape: shapeByIndex[idx]
+      });
     });
   },
 

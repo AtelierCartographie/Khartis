@@ -123,7 +123,7 @@
 
           {{#if editedLayer.mapping.ordered}}
           {{#drag-swap-collection class="collection categories-list fluid scrollable"
-            provider=editedLayer.mapping.rules swap=(action 'swapRuleIndex') as |rule self|}}
+            provider=editedLayer.mapping.rules shift=(action 'shiftRuleIndex') as |rule self|}}
             <li class="ordered">
               <div class="categories-name categories-symbol-ordered">
 

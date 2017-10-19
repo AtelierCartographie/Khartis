@@ -236,6 +236,7 @@ export default {
         "triangle": "triangle"
       },
       "size": "Größe",
+      "scale": "scale",
       "contrast": {
         "title": "Kontrast",
         "tooltip": "Einstellungen zu Kontrast"

@@ -239,6 +239,7 @@ export default {
          "triangle": "triangle"
       },
       "size": "taille",
+      "scale": "Échelle",
       "contrast": {
         "title": "contraste",
         "tooltip": "Comprime ou dilate la taille pour une « lecture » de l’information différente de la normale"
