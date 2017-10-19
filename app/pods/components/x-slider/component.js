@@ -82,7 +82,7 @@ export default Ember.Component.extend({
           r: parseInt( this.$(".slider").css("marginRight") )
         },
         tickSize = 6,
-        width = (this.$().width() - (margin.l + margin.r));
+        width = (this.element.clientWidth - (margin.l + margin.r));
     
     let scale = this.get('scale');
     
@@ -221,7 +221,7 @@ export default Ember.Component.extend({
     
     let translate = this.get('scale')(this.get('transform').invert(val)) + DRAGGER_SIZE / 2;
     
-    this.displayValue();
+    this.get('displayTick') && this.displayValue();
     
     this.d3l().selectAll(".slider .dragger")
       .transition(d3.transition().duration(100).ease(d3.easeCubicOut))

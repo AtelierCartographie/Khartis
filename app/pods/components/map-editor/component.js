@@ -64,13 +64,22 @@ export default Ember.Component.extend({
   },
 
   getFeaturesFromBase(ns, ns2 = "features") {
-    
     return this.get('base').reduce( (col, base) => {
       let path = this.getProjectedPath(base.projection);
       return col.concat(
         base[ns][ns2].map(f => ({path: path, feature: f}))
       );
     }, []);
+  },
+
+  getFeaturesIndexFromBase(geoKey, ns, ns2 = "features") {
+    return this.get('base').reduce( (index, base) => {
+      let path = this.getProjectedPath(base.projection);
+      base[ns][ns2].forEach(f => {
+        index[f.properties[geoKey]] = {path: path, feature: f}
+      });
+      return index;
+    }, {});
   },
   
 	draw: function() {

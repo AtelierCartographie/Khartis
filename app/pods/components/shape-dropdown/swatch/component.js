@@ -41,8 +41,8 @@ export default Ember.Component.extend({
     
     let svg = this.d3l(),
         margin = this.get('margin'),
-        w = this.$().width(),
-        h = this.$().height(),
+        w = this.element.clientWidth,
+        h = this.element.clientHeight,
         data = this.get('isMultiple') ? this.get('shape') : [this.get('shape')],
         r = Math.min(w/data.length/2, h/2);
     

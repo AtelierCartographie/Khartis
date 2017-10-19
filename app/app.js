@@ -46,7 +46,7 @@ if( isEverGreen() === false){
 
   Ember.Component.reopen({
     d3l: function() {
-      return d3.select(this.$()[0]);
+      return d3.select(this.element);
     },
     customElementId: function() {
       return this.elementId || Em.guidFor(this);

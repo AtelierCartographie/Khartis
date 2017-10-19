@@ -257,6 +257,10 @@ let CellStruct = Struct.extend({
     return this.get('row.cells').indexOf(this);
   },
   
+  colIndex() {
+    return this.get('column.cells').indexOf(this);
+  },
+  
   isFirstOfRow() {
     return this.index() === 0;
   },

@@ -36,12 +36,14 @@ export default Ember.Mixin.create({
       });
   },
 
+  displayableLayers: Ember.computed('graphLayers.[]', 'graphLayers.@each.displayable', function() {
+    return this.get('graphLayers').filter( gl => gl.get('displayable') ).reverse();
+  }),
+
   drawLayers: function() {
     
     let self = this,
-        data = this.get('graphLayers')
-          .filter( gl => gl.get('displayable') )
-          .reverse();
+        data = this.get('displayableLayers');
           
     let bindAttr = (_) => {
       _.attr("stroke-width", d => d.get("mapping.visualization.stroke"))
@@ -66,7 +68,7 @@ export default Ember.Mixin.create({
     this.drawLandSel();
     this.reorderLayers();
     
-  }.observes('graphLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
+  }.observes('displayableLayers.[]', 'graphLayers.@each._defferedChangeIndicator'),
   
 	mapData(d3Layer, graphLayer) {
     
@@ -77,21 +79,20 @@ export default Ember.Mixin.create({
 
     if (geoDef.get('isGeoRef')) {
 
-      let lands = this.getFeaturesFromBase("lands"),
-          centroids = this.getFeaturesFromBase("centroids");
+      let landsIdx = this.getFeaturesIndexFromBase(geoKey, "lands"),
+          centroidsIdx = this.getFeaturesIndexFromBase(geoKey, "centroids");
           
       data = mapping.get('filteredBody').map( (cell) => {
         
-        let geoData = cell.get('row.cells')
-          .find( c => c.get('column') == geoDef.get('geo') )
+        let geoData = geoDef.get('geo.cells').objectAt(cell.colIndex())
           .get('postProcessedValue');
 
         return {
           id: geoData.value[geoKey],
           value: cell.get('postProcessedValue'),
           cell: cell,
-          surface: lands.find( f => f.feature.properties[geoKey] === geoData.value[geoKey]),
-          point: centroids.find( f => f.feature.properties[geoKey] === geoData.value[geoKey])
+          surface: landsIdx[geoData.value[geoKey]],
+          point: centroidsIdx[geoData.value[geoKey]]
         };
         
       });
