@@ -179,7 +179,7 @@ let Mapping = Struct.extend(LegendMixin, {
     } else if (mode === "size") {
       return rule.get('size');
     } else if (mode === "shape") {
-      return rule.get('visible') ? (rule.get('shape') ? rule.get('shape') : visualization.get('shape') ) : null;
+      return rule.get('visible') ? rule.get('shape') : null;
     } else if (mode === "strokeColor") {
       return rule.get('visible') ? rule.get('strokeColor') : null;
     }

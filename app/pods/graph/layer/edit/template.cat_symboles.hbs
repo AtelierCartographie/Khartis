@@ -88,34 +88,35 @@
 
           {{#if editedLayer.mapping.ordered}}
             <div class="horizontal solid middle flow">
-              <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
-              <div class="horizontal half-airy solid flow w7 btn-switch-group">
+              <label class="solid w4">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
+              <div class="horizontal half-airy solid flow w8 btn-switch-group">
                 <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'circle') 'selected'}}" {{action 'updateShapeSetShape' 'circle'}}>{{x-capitalize (t 'visualization.settings.shape.circle')}}</div>
                 <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'rect') 'selected'}}" {{action 'updateShapeSetShape' 'rect'}}>{{x-capitalize (t 'visualization.settings.shape.rect')}}</div>
                 <div class="small button filled primary {{if (x-eq editedLayer.mapping.visualization.shape 'triangle') 'selected'}}" {{action 'updateShapeSetShape' 'triangle'}}>{{x-capitalize (t 'visualization.settings.shape.triangle')}}</div>
               </div>
             </div>
             <div class="horizontal solid middle flow">
-              <label class="solid w5">{{x-capitalize (t 'visualization.settings.symbols')}}</label>
-              <div class="horizontal half-airy solid flow w7">
+              <label class="solid w4">{{x-capitalize (t 'visualization.settings.symbols')}}</label>
+              <div class="horizontal half-airy solid flow w8">
                 {{shape-dropdown
                   shapes=editedLayer.mapping.visualization.availableShapes
                   value=editedLayer.mapping.visualization.shapeSet
                   color=editedLayer.mapping.visualization.color
                   update=(action 'updateRulesShapeSet')
+                  class="ordered-symbol-dropdown"
                 }}
               </div>
             </div>
             <div class="horizontal solid middle flow">
-              <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
-              <div class="horizontal half-airy solid flow w7">
+              <label class="solid w4">{{x-capitalize (t 'visualization.settings.size')}}</label>
+              <div class="horizontal half-airy solid flow w8">
               {{x-slider class="fluid offset-slider" band=1 value=editedLayer.mapping.visualization.maxSize min=editedLayer.mapping.visualization.absoluteMinSize max=editedLayer.mapping.visualization.absoluteMaxSize}}
               {{input-numeric/one-way numericValue=editedLayer.mapping.visualization.maxSize class="solid w3" min=editedLayer.mapping.visualization.absoluteMinSize update=(action (mut editedLayer.mapping.visualization.maxSize))}}
               </div>
             </div>
             <div class="horizontal solid middle flow">
-              <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
-              <div class="horizontal half-airy solid flow w7">
+              <label class="solid w4">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
+              <div class="horizontal half-airy solid flow w8">
                 {{color-picker value=editedLayer.mapping.visualization.color}}
               </div>
             </div>
@@ -143,7 +144,7 @@
             </li>
           {{/drag-swap-collection}}
           {{else}}
-          <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
+          <ul class="collection categories-list fluid scrollable">
               {{#each editedLayer.mapping.rules as |rule|}}
                   <li>
 
@@ -158,14 +159,14 @@
                         <a class="toggle-visibility" {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
 
                         <div class="flow">
-                              {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
+                            {{x-progress class="categories-progress" value=rule.qty max=rulesWrap.maxQty}}
                         </div>
                       </div>
 
                       <div class="categories-controls">
 
                           <div class="categories-control categories-shape-control">
-                              {{shape-dropdown shapes=editedLayer.mapping.visualization.availableShapes value=rule.shape  color="#977864" }}
+                              {{shape-dropdown shapes=editedLayer.mapping.visualization.availableShapes value=rule.shape  color="#977864" transparent=true }}
                           </div>
 
                           <div class="categories-control categories-fill-color-control">

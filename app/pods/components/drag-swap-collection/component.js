@@ -86,7 +86,7 @@ export default Ember.Component.extend({
         toggleOveredClass.call(this, d3.event.y);
         
         $(this).css({
-           "top": d3.event.y
+           "top": d3.event.y + $this.scrollTop()
         });
       });
       
@@ -96,7 +96,7 @@ export default Ember.Component.extend({
           self.sendAction('onClick', i);
         }
         
-        let {index} = toggleOveredClass.call(this, $(this).position().top),
+        let {index} = toggleOveredClass.call(this, $(this).position().top + $this.scrollTop()),
             cur = $(this).index(),
             o = self.get('provider').objectAt(cur);
         

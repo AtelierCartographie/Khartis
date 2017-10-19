@@ -263,7 +263,7 @@ export default Ember.Mixin.create({
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
           el.selectAll("g.rule")
-            .data(d.get('mapping.rules').filter( r => r.get('visible') ).slice(0, 10))
+            .data(d.get('mapping.rules').filter( r => r.get('visible') && r.get('shape') ).slice(0, 10))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
               update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, textOffset, formatter)

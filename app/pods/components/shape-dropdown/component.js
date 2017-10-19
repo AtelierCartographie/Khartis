@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   shapes: null,
   color: null,
 
+  transparent: false,
+
   actions: {
     
     bindValue(shape) {

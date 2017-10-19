@@ -43,8 +43,8 @@ export default Ember.Component.extend({
         margin = this.get('margin'),
         w = this.$().width(),
         h = this.$().height(),
-        r = Math.min(w/2, h/2),
-        data = this.get('isMultiple') ? this.get('shape') : [this.get('shape')];
+        data = this.get('isMultiple') ? this.get('shape') : [this.get('shape')],
+        r = Math.min(w/data.length/2, h/2);
     
     this.d3l().select("g.swatchs")
       .selectAll("g.swatch")
@@ -57,8 +57,10 @@ export default Ember.Component.extend({
         enter: function(sel) {
           let g = sel.append("g").classed("swatch", true);
           g.each( function(d) {
-            let symbol = SymbolMaker.symbol({name: d, size: 2*(r-margin)});
-            symbol.insert(d3.select(this));
+            if (d) {
+              let symbol = SymbolMaker.symbol({name: d, size: 2*(r-margin)});
+              symbol.insert(d3.select(this));
+            }
           });
           return g;
         },

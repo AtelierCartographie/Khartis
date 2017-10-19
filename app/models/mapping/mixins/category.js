@@ -197,8 +197,8 @@ let SymbolMixin = Ember.Mixin.create({
           colorScale = (index) => {
             return index < colors.length ? colors[index] : "#dddddd";
           },
-          shapeScale = (index) => {
-            return index < shapes.length ? shapes[index] : "circle";
+          shapeScale = (index, noValue = "circle") => {
+            return index < shapes.length ? shapes[index] : noValue;
           };
       
       let rules = values.sort((a, b) => d3.descending(a.qty, b.qty))
@@ -207,7 +207,7 @@ let SymbolMixin = Ember.Mixin.create({
             return OrderedSymbolRule.create({
               cells: dist.cells,
               label: dist.val,
-              shape: shapeScale(i),
+              shape: shapeScale(i, null),
               index: i,
               visualization: this.get('visualization')
             });

@@ -108,9 +108,16 @@ let OrderedSymbolRule = AbstractOrderedRule.extend({
   type: "ordered-symbol",
 
   color: visualizationProxy('color'),
-  size: visualizationProxy('maxSize'),
   strokeColor: visualizationProxy('strokeColor'),
-  stroke: visualizationProxy('stroke')
+  stroke: visualizationProxy('stroke'),
+  size: Ember.computed('visualization.maxSize', 'index', {
+    get() {
+      return this.get('visualization.maxSize') + Math.pow(this.get('index')+1, 2);
+    },
+    set(k, v) {
+      return v;
+    }
+  })
   
 });
 

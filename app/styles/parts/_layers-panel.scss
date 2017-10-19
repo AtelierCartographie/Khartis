@@ -131,10 +131,15 @@ input[type=text].padding-fix {
 }
 
 
+
 // Categories
 .categories-list {
 
   border: none;
+
+  &.collection.scrollable {
+    overflow-y: scroll;
+  }
 
   > li {
     //height: 35px;
