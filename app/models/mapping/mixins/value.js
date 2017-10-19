@@ -27,7 +27,6 @@ let DataMixin = Ember.Mixin.create({
   }.property('values'),
 
   allNegative: function() {
-    console.log(this.get('values'), this.get('values').every( v => v <= 0 ));
     return this.get('values').every( v => v <= 0 );
   }.property('values'),
 

@@ -393,7 +393,6 @@ let DataStruct = Struct.extend({
         
       }, Em.A() );
 
-      ret.forEach( r => console.log(r.get('isLatLon')));
       return ret;
         
     }.property('columns', 'columns.@each._defferedChangeIndicator'),

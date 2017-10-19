@@ -1,6 +1,5 @@
 import colorScaleChromatic from 'npm:d3-scale-chromatic';
 
-console.log(colorScaleChromatic);
 // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
 let brewer = {
 
@@ -457,7 +456,6 @@ brewer.Composer = {
         res = brewer.sequential[palette][classes].slice(0);
         reverse && res.reverse();
       } else {
-        console.log(palette);
         res = brewer.categorical[palette].slice(0);
       }
     }

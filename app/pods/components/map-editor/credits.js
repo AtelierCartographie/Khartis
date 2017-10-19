@@ -5,7 +5,6 @@ export default Ember.Mixin.create({
 
   dataSourceComputed: function() {
     let ds = this.get('dataSource');
-    console.log(ds, this.get('graphLayout.basemap.mapConfig.attribution'));
     if (this.get('graphLayout.basemap.mapConfig.attribution')) {
       return `${this.get('graphLayout.basemap.mapConfig.attribution')}${ds ? ` - ${ds}`:''}`;
     } else {

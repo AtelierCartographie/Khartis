@@ -23,7 +23,6 @@ FilterFactory.reopenClass({
   },
   
   restoreInstance(json, refs) {
-    console.log(json);
     if (json != null) {
       let o = this.classForType(json.type).restore(json, refs);
       return o;

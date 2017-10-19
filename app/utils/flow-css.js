@@ -34,7 +34,7 @@ export function parseCss(el) {
       if (CSS.hasOwnProperty(couple[0].trim())) {
         instructions.push({name: couple[0].trim(), val: couple[1].trim()});
       } else {
-        console.log(`Unrocognized flow css : ${couple[0]} -- skipping`);
+        //console.log(`Unrocognized flow css : ${couple[0]} -- skipping`);
       }
     } else {
       throw new Error(`Unrocognized flow css : ${s}`);

@@ -216,7 +216,6 @@ let proj = function() {
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
-          console.log(center);
           
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))
