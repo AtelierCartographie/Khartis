@@ -350,7 +350,10 @@ export default {
       "height": "height",
       "borders": "borders",
       "grid": "graticules",
-      "background": "basemap"
+      "background": "basemap",
+      "image": "image",
+      "vector": "vectoriel",
+      "optimised": "optimised"
     }
   },
 

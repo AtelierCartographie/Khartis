@@ -350,7 +350,10 @@ export default {
       "height": "hauteur",
       "borders": "frontières ou limites",
       "grid": "graticules",
-      "background": "fond de carte"
+      "background": "fond de carte",
+      "image": "image",
+      "vector": "vecteur",
+      "optimised": "optimisé"
     }
   },
 

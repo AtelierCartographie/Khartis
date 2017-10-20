@@ -347,7 +347,10 @@ export default {
       "height": "Höhe",
       "borders": "Rand",
       "grid": "Raster",
-      "background": "Basiskarte"
+      "background": "Basiskarte",
+      "image": "image",
+      "vector": "vectoriel",
+      "optimised": "optimised"
     }
   },
 
