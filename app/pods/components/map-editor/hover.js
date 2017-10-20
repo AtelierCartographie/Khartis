@@ -18,16 +18,63 @@ export default Ember.Mixin.create({
     } else {
       this.unbindHover();
     }
-  }.observes('hoverEnabled'),
+  }.observes('hoverEnabled', 'graphLayers.[]'),
 
   unbindHover() {
     let d3l = this.d3l(),
         foremap = d3l.select("#map").selectOrCreate("#foremap", function() { return this.append("g").attr("id", "foremap")});
-    foremap.selectAll("g.hover-point, g.hover-land")
-      .remove();
+
+    foremap.selectAll("g.hover-point, path.hover-land").remove();
+
+    if (this.get('defaultGeoDef').get('isLatLon') && !this.get('graphLayers.length')) {
+
+      let points = this.get('defaultGeoDef.latLonCouples').reduce( (out, couple, index) => {
+        
+        let lat = couple.lat.get('postProcessedValue'),
+            lon = couple.lon.get('postProcessedValue');
+            
+        if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
+          let path = this.assumePathForLatLon([lat, lon]),
+              xy = path.centroid({
+                type: "Point",
+                coordinates: [
+                  lon,
+                  lat
+                ]
+              });
+
+          out.push({
+            xy
+          });
+        }
+
+        return out;
+
+      }, []);
+
+      foremap.selectAll("g.static-point")
+        .data(points)
+        .enterUpdate({
+          enter: function(sel) {
+            let g = sel.append("g").classed("static-point", true)
+            g.append("circle").attr("r", 3);
+            return g;
+          },
+          update: (sel) => {
+            sel.select("circle").attrs({
+              cx: d => (d && d.xy[0]) || null,
+              cy: d => (d && d.xy[1]) || null
+            });
+            return sel;
+          }
+        });
+
+    } else {
+      foremap.selectAll("g.static-point").remove();
+    }
   },
 
-  bindHover() {
+  bindHover(enabled) {
     let self = this,
       d3l = this.d3l(),
       geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
@@ -73,12 +120,13 @@ export default Ember.Mixin.create({
       let data = voronoi(points).polygons().map( (poly, i) => {
         return {poly, data: points[i]};
       });
-
+      foremap.selectAll("g.static-point:not(.hover-point)").remove();
       foremap.selectAll("g.hover-point")
         .data(data)
         .enterUpdate({
           enter: function(sel) {
             let g = sel.append("g").classed("hover-point", true)
+              .classed("static-point", self.get('graphLayers').length === 0)
               .on("mouseover", function() {
                 d3.select(this).classed("mouseover", true);
               })

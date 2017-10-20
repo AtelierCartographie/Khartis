@@ -43,7 +43,13 @@
     }
     path {
       stroke: none;
-      fill: rgba(0, 0, 0, 0.00001);
+      fill: rgba(0, 0, 0, 0.0001);
+    }
+  }
+
+  .static-point, .hover-point.static-point {
+    circle {
+      fill: #404040;
     }
   }
 
