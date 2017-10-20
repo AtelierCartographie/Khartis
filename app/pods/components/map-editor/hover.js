@@ -11,6 +11,10 @@ export default Ember.Mixin.create({
     this._super();
     this.hoverCompute();
   },
+
+  hasActiveLayer: function() {
+    return this.get('graphLayers').some( gl => gl.get('visible') && gl.get('mapping.type') != null );
+  }.property('graphLayers.@each.visible', 'graphLayers.@each.mapping.type'),
   
   hoverCompute: function() {
     if (this.get('hoverEnabled')) {
@@ -18,7 +22,39 @@ export default Ember.Mixin.create({
     } else {
       this.unbindHover();
     }
-  }.observes('hoverEnabled', 'graphLayers.[]'),
+  }.observes('hoverEnabled', 'hasActiveLayer'),
+
+  latLonCouplesPoints() {
+
+    return this.get('defaultGeoDef.latLonCouples').reduce( (out, couple, index) => {
+      
+      let lat = couple.lat.get('postProcessedValue'),
+          lon = couple.lon.get('postProcessedValue');
+          
+      if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
+
+        let path = this.assumePathForLatLon([lat, lon]),
+            xy = path.centroid({
+              type: "Point",
+              coordinates: [
+                lon,
+                lat
+              ]
+            });
+
+        out.push({
+          xy,
+          coordinates: [lon, lat],
+          row: couple.lat.get('row')
+        });
+
+      }
+
+      return out;
+
+    }, []);
+
+  },
 
   unbindHover() {
     let d3l = this.d3l(),
@@ -26,31 +62,9 @@ export default Ember.Mixin.create({
 
     foremap.selectAll("g.hover-point, path.hover-land").remove();
 
-    if (this.get('defaultGeoDef').get('isLatLon') && !this.get('graphLayers.length')) {
+    if (this.get('defaultGeoDef').get('isLatLon') && !this.get('hasActiveLayer')) {
 
-      let points = this.get('defaultGeoDef.latLonCouples').reduce( (out, couple, index) => {
-        
-        let lat = couple.lat.get('postProcessedValue'),
-            lon = couple.lon.get('postProcessedValue');
-            
-        if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
-          let path = this.assumePathForLatLon([lat, lon]),
-              xy = path.centroid({
-                type: "Point",
-                coordinates: [
-                  lon,
-                  lat
-                ]
-              });
-
-          out.push({
-            xy
-          });
-        }
-
-        return out;
-
-      }, []);
+      let points = this.latLonCouplesPoints();
 
       foremap.selectAll("g.static-point")
         .data(points)
@@ -84,33 +98,7 @@ export default Ember.Mixin.create({
 
     if (this.get('defaultGeoDef').get('isLatLon')) {
 
-      let points = this.get('defaultGeoDef.latLonCouples').reduce( (out, couple, index) => {
-        
-        let lat = couple.lat.get('postProcessedValue'),
-            lon = couple.lon.get('postProcessedValue');
-            
-        if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
-
-          let path = this.assumePathForLatLon([lat, lon]),
-              xy = path.centroid({
-                type: "Point",
-                coordinates: [
-                  lon,
-                  lat
-                ]
-              });
-
-          out.push({
-            xy,
-            coordinates: [lon, lat],
-            row: couple.lat.get('row')
-          });
-
-        }
-
-        return out;
-
-      }, []);
+      let points = this.latLonCouplesPoints();
 
       let voronoi = d3.voronoi()
         .x( d => d.xy[0] )
@@ -120,13 +108,12 @@ export default Ember.Mixin.create({
       let data = voronoi(points).polygons().map( (poly, i) => {
         return {poly, data: points[i]};
       });
-      foremap.selectAll("g.static-point:not(.hover-point)").remove();
+      foremap.selectAll("g.static-point").remove();
       foremap.selectAll("g.hover-point")
         .data(data)
         .enterUpdate({
           enter: function(sel) {
             let g = sel.append("g").classed("hover-point", true)
-              .classed("static-point", self.get('graphLayers').length === 0)
               .on("mouseover", function() {
                 d3.select(this).classed("mouseover", true);
               })

@@ -38,16 +38,13 @@
   }
 
   .hover-point {
-    circle {
-      fill: none;
-    }
     path {
       stroke: none;
       fill: rgba(0, 0, 0, 0.0001);
     }
   }
 
-  .static-point, .hover-point.static-point {
+  .static-point, .hover-point {
     circle {
       fill: #404040;
     }

@@ -111,7 +111,7 @@ let symbol = function(opts = {}) {
             }
         }
       },
-      conf = factory(name);
+      conf = factory();
       
   let proc = function() {};
 
