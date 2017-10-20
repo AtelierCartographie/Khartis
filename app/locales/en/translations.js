@@ -148,6 +148,10 @@ export default {
       "name": "Atlantis",
       "description": "Ceci est une description"
     },
+    "bertin": {
+      "name": "Bertin",
+      "description": "Ceci est une description"
+    },
     "briesemeister": {
       "name": "Briesemeister",
       "description": "Ceci est une description"

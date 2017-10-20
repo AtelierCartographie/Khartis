@@ -146,6 +146,10 @@ export default {
       "name": "Atlantis",
       "description": "(Transverse Mollweide) Pseudozylindrisch, Flächentreu, John Bartholomew (1948) (Quelle: csiss.org, Public Domain, Paul B. Andersson)"
     },
+    "bertin": {
+      "name": "Bertin",
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
+    },
     "briesemeister": {
       "name": "Briesemeister",
       "description": "Schiefachsige und neu skalierte Version der Hammer Projektion, William A. Briesemeister (1953) (Quelle: kartenprojektionen.de, CC-BY-SA-4.0)"
