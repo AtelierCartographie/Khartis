@@ -36,61 +36,61 @@ export function solve(project, precision) {
     return grid;
   }
 
-  function insideBounds(coords, bounds) {
-    let cartesianBounds = [...project([bounds[0], bounds[1]]), ...project([bounds[2], bounds[3]])];
-    return (coords[0] - cartesianBounds[0])*(coords[0] - cartesianBounds[2]) <= 0
-      && (coords[1] - cartesianBounds[1])*(coords[1] - cartesianBounds[3]) <= 0;
+  function makeQuadGridArroundPoint(centerPoint, width, height) {
+    let grid = [],
+        stepX = width/2,
+        stepY = height/2;
+    for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < 2; j++) {
+        grid[i*2+j] = [
+          Math.max(-180, centerPoint[0]+(i-1)*stepX),
+          Math.max(-90, centerPoint[1]+(j-1)*stepY),
+          Math.min(180, centerPoint[0]+i*stepX),
+          Math.min(90, centerPoint[1]+j*stepY)
+        ];
+      }
+    }
+    return grid;
   }
 
-  function boundsDistance(coords, bounds) {
-    let cartesianBounds = [
-      project([bounds[0]*deg, bounds[1]*deg]),
-      project([bounds[0]*deg, bounds[3]*deg]),
-      project([bounds[2]*deg, bounds[1]*deg]),
-      project([bounds[2]*deg, bounds[3]*deg])
+  function nearestNode(coords, bounds) {
+    let nodes = [
+      [bounds[0], bounds[1]],
+      [bounds[0], bounds[3]],
+      [bounds[2], bounds[1]],
+      [bounds[2], bounds[3]]
     ];
-    return cartesianBounds.reduce( (sum, point) => {
-      return sum += (point[0] - coords[0])*(point[0] - coords[0]) + (point[1] - coords[1])*(point[1] - coords[1]);
-    }, 0);
-  }
-
-  function nearestCorner(coords, bounds) {
-    let corners = [
-      [bounds[0]*deg, bounds[1]*deg],
-      [bounds[0]*deg, bounds[3]*deg],
-      [bounds[2]*deg, bounds[1]*deg],
-      [bounds[2]*deg, bounds[3]*deg]
-    ];
-    return corners.reduce( (out, point) => {
-      let cartPoint = project(point);
+    return nodes.reduce( (out, node) => {
+      let cartPoint = project([node[0], node[1]]);
       let sqrtDist = (cartPoint[0] - coords[0])*(cartPoint[0] - coords[0]) + (cartPoint[1] - coords[1])*(cartPoint[1] - coords[1]);
       if (sqrtDist < out.min) {
-        return {min: sqrtDist, point};
+        return {min: sqrtDist, node};
       }
       return out;
-    }, {min: +Infinity, point: null}).point;
+    }, {min: +Infinity, node: null});
   }
 
   function invert(coords) {
-    let maxIteration = 30,
+    let maxIteration = 16,
         iteration = 0,
-        bounds = [-pi+epsilon, -halfPi-epsilon, pi-epsilon, halfPi+epsilon];
+        bounds = [-180+epsilon, -90-epsilon, 180-epsilon, 90+epsilon],
+        grid = makeGrid(bounds, 3); //first grid of 3*3 nodes
     while (iteration < maxIteration) {
-      let grid = makeGrid(bounds, 2);
       let min = grid.reduce( (out, b) => {
-        let sqrtDist = boundsDistance(coords, b);
-        if (sqrtDist < out.min) {
+        let nearest = nearestNode(coords, b);
+        if (nearest.min < out.min) {
           return {
-            min: sqrtDist,
+            ...nearest,
             bound: b
           };
         }
         return out;
-       }, {min: +Infinity, bound: null});
+       }, {min: +Infinity, node: null, bound: null});
       bounds = min.bound;
+      grid = makeQuadGridArroundPoint(min.node, bounds[2]-bounds[0], bounds[3] - bounds[1]);
       iteration++;
     }
-    return nearestCorner(coords, bounds);
+    return nearestNode(coords, bounds).node;
   }
 
   return invert;

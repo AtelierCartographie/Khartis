@@ -116,13 +116,13 @@ export default Ember.Component.extend({
 		
     // HANDLE RESIZE
     let $size = () => {
-      let $width = this.$().parent().width(),
-          $height = this.$().parent().height();
+      let $width = this.element.parentElement.clientWidth,
+          $height = this.element.parentElement.clientHeight;
       
       if ($width != this.get('$width') || $height != this.get('$height')) {
         this.setProperties({
-          '$width': this.$().parent().width(),
-          '$height': this.$().parent().height()
+          '$width': this.element.parentElement.clientWidth,
+          '$height': this.element.parentElement.clientHeight
         });
       }
     };
@@ -318,8 +318,8 @@ export default Ember.Component.extend({
       ];
       projection
       .translate([
-          projection.initialTranslate[0]*this.get('graphLayout.zoom')+this.get('graphLayout.tx')*this.getSize().w,
-          projection.initialTranslate[1]*this.get('graphLayout.zoom')+this.get('graphLayout.ty')*this.getSize().h
+          projection.initialTranslate[0]*this.get('graphLayout.zoom')+tx,
+          projection.initialTranslate[1]*this.get('graphLayout.zoom')+ty
         ])
       .scale(projection.resolution * this.get('graphLayout.zoom'))
       .clipExtent(bbox);
@@ -361,8 +361,7 @@ export default Ember.Component.extend({
     
     let path = this.getProjectedPath(),
         precision = this.get('graphLayout.precision'),
-        defs = this.d3l().select("defs"),
-        ε = 1e-1;
+        defs = this.d3l().select("defs");
     
     if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
 

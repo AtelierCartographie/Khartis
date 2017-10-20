@@ -58,28 +58,26 @@ export default Ember.Mixin.create({
         tx = projector.translate()[0]*rs - t[0] * scale,
         ty = projector.translate()[1]*rs - t[1] * scale;
 
+    mapG.__kis_tx = translate[0];
+    mapG.__kis_ty = translate[1];
+    mapG.__kis_s = scale;
     mapG
-      .attrs({
-        "kis:kis:tx": translate[0],
-        "kis:kis:ty": translate[1],
-        "kis:kis:s": scale
-      })
       .transition()
       .duration(160)
       .ease(d3.easeLinear)
       .on("end", () => {
 
-        let relTx = parseFloat(mapG.attr("kis:kis:tx")),
-            relTy = parseFloat(mapG.attr("kis:kis:ty"));
+        let relTx = mapG.__kis_tx,
+            relTy = mapG.__kis_ty;
 
         //this.updateTxTy(relTx, relTy);
         
         this.get('graphLayout').beginPropertyChanges();
         
         this.setProperties({
-          "graphLayout.zoom": parseFloat(mapG.attr("kis:kis:s")),
+          "graphLayout.zoom": mapG.__kis_s,
           relTx,
-          relTy 
+          relTy
         });
 
         this.scaleProjector(projector);

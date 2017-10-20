@@ -1,6 +1,6 @@
 id,Name,Scale,d3.geo,.rotate,.scale,.clipAngle,.lobes,d3-link,.center,.rotate-alternative,Score area,Score angle,Score distance,Author,Year,translation_x,translation_y,rotation_z
 atlantis,Atlantis,World,d3.geoMollweide(),"[30, -45, 90]",150,,,http://bl.ocks.org/mbostock/4519975,,,4,1,2,John Bartholomew,1948,1,1,1
-bertin,Bertin,World,d3.geoProjection(d3.geoBertin1953Raw()),"[-16.5, -42]",176.57,,,https://github.com/d3/d3-geo-projection#geoBertin1953,,,4,1,2,Jacques Bertin,1953,1,0,0
+bertin,Bertin,World,d3.geoProjection(d3.geoBertin1953Raw()),"[-16.5, -42]",176.57,,,https://github.com/d3/d3-geo-projection#geoBertin1953,,,4,1,2,Jacques Bertin,1953,0,0,0
 briesemeister,Briesemeister,World,"d3.geoProjection(d3.geoHammerRaw(1.75, 2))","[-10, -45]",190,,,http://bl.ocks.org/mbostock/4519926,,,4,1,2,William A. Briesemeister,1953,1,0,0
 interrupted_goode_homolosine,Goode H.,World,d3.geoInterruptedHomolosine(),,150,,,http://bl.ocks.org/mbostock/4448587,,,4,1,2,J. Paul Goode,1923,1,0,0
 lambert_azimuthal_equal_area,LAEA,Region,d3.geoAzimuthalEqualArea(),"[0, -90]",150,,,http://bl.ocks.org/mbostock/3757101,longitude and latitude,,4,1,2,Johann lambert,1772,1,1,1
