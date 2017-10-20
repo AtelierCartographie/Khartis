@@ -39,8 +39,8 @@
 
 	<div class="clearfix"></div>
     {{#if shouldDisplaySuggestions}}
-	<div class="suggestions-wrapper {{if loading 'loading'}} loading-{{loading}}">
-		<div class="suggestions">
+	<div class="suggestions-wrapper {{if loading 'loading'}} loading-{{loading}}" tabindex="-1">
+		<div class="suggestions" tabindex="-1">
 			{{#each suggestions as |o|}}
 			<div {{action 'select' o}} class="suggestion">
 				{{yield (x-facet 'suggestionRow') o this}}

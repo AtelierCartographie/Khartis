@@ -77,27 +77,19 @@ export default Ember.Component.extend({
     },
 
     click: function () {
-        
-        this.$('input').focus();
-        
+      this.$('input').focus();
     },
 
     raisedMinLength: function () {
-
-        return this.get('query.length') >= this.get('queryMinLength');
-
+      return this.get('query.length') >= this.get('queryMinLength');
     }.property('query', 'queryMinLength'),
 
     raisedMaxLength: function () {
-
-        return (!this.get('async') && this.get('selection.length') == this.get('suggestionProvider.length')) || this.get('selection.length') >= this.get('selectionMaxLength');
-
+      return (!this.get('async') && this.get('selection.length') == this.get('suggestionProvider.length')) || this.get('selection.length') >= this.get('selectionMaxLength');
     }.property('selectionMaxLength', 'selection.[]', 'suggestionProvider.[]', 'async'),
 
     shouldDisplaySuggestions: function () {
-
-        return this.get('editable') && this.get('query').length >= this.get('queryMinLength') && !this.get('raisedMaxLength');
-
+      return this.get('editable') && this.get('query').length >= this.get('queryMinLength') && !this.get('raisedMaxLength');
     }.property('query', 'raisedMaxLength'),
 
     /* DATA */
@@ -197,7 +189,8 @@ export default Ember.Component.extend({
     },
 
     hideSuggestions: function () {
-        this.$('.suggestions-wrapper').fadeOut(100);
+      console.log("hide");
+      this.$('.suggestions-wrapper').fadeOut(100);
     },
 
     actions: {
@@ -254,7 +247,7 @@ export default Ember.Component.extend({
 
                 event.preventDefault();
 
-            } else if (event.keyCode === 13) {
+            } else if (event.keyCode === 13) { //enter
 
                 var $suggestions = this.$('.suggestion'),
                     $active = this.$('.suggestion.active'),
@@ -284,12 +277,13 @@ export default Ember.Component.extend({
         },
 
         focusLost: function (event) {
-            setTimeout(() => {
-                if (!this.isDestroyed && !this.$(":focus").length) {
-                    this.hideSuggestions();
-                    this.set('query', '');
-                    this.$().removeClass("focused");
-                }
+          setTimeout(() => {
+            console.log("focus lost", this.$(":focus").length, this.isDestroyed, !this.isDestroyed && !this.$(":focus").length);
+            if (!this.isDestroyed && !this.$(":focus").length) {
+                this.hideSuggestions();
+                this.set('query', '');
+                this.$().removeClass("focused");
+              }
             }, 140);
         },
 
