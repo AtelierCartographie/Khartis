@@ -149,7 +149,7 @@ export default {
       "description": "Ceci est une description"
     },
     "bertin": {
-      "name": "Bertin",
+      "name": "Bertin (1953)",
       "description": "Ceci est une description"
     },
     "briesemeister": {
