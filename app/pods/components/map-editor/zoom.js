@@ -5,8 +5,8 @@ import {isChrome} from 'khartis/utils/browser-check';
 import zoom2 from 'khartis/utils/d3-zoom2';
 
 let zoom;
-
 export default Ember.Mixin.create({
+
 
   zoomInit(d3g) {
 
@@ -49,7 +49,7 @@ export default Ember.Mixin.create({
   }),
 
   zoomAndDrag(scale, translate) {
-    
+
     let mapG = this.d3l().select("g.map"),
         projector = this.get('projector'),
         t = projector.initialTranslate,
@@ -57,36 +57,19 @@ export default Ember.Mixin.create({
         rs = scale/ds,
         tx = projector.translate()[0]*rs - t[0] * scale,
         ty = projector.translate()[1]*rs - t[1] * scale;
-
-    mapG.__kis_tx = translate[0];
-    mapG.__kis_ty = translate[1];
-    mapG.__kis_s = scale;
+        
+    mapG.node().__kis_tx = translate[0];
+    mapG.node().__kis_ty = translate[1];
+    mapG.node().__kis_s = scale;
     mapG
       .transition()
-      .duration(160)
+      .duration(120)
       .ease(d3.easeLinear)
+      .on("start", () => {
+        this.get('refreshDebouncer') && Ember.run.cancel(this.get('refreshDebouncer'));
+      })
       .on("end", () => {
-
-        let relTx = mapG.__kis_tx,
-            relTy = mapG.__kis_ty;
-
-        //this.updateTxTy(relTx, relTy);
-        
-        this.get('graphLayout').beginPropertyChanges();
-        
-        this.setProperties({
-          "graphLayout.zoom": mapG.__kis_s,
-          relTx,
-          relTy
-        });
-
-        this.scaleProjector(projector);
-        
-        this.get('graphLayout').endPropertyChanges();
-
-        mapG.attr("transform", null);
-        this.projectAndDraw();
-        
+        this.set('refreshDebouncer', Ember.run.debounce(this, this.refreshMap, 400));
       })
       .attrs({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
@@ -106,6 +89,24 @@ export default Ember.Mixin.create({
     }*/
     
     
+  },
+
+  refreshDebouncer: null,
+  refreshMap() {
+    let mapG = this.d3l().select("g.map"),
+        mapGNode = mapG.node();
+    this.get('graphLayout').beginPropertyChanges();
+
+    this.setProperties({
+      "graphLayout.zoom": mapGNode.__kis_s,
+      relTx: mapGNode.__kis_tx,
+      relTy: mapGNode.__kis_ty
+    });
+
+    this.scaleProjector(this.get('projector'));
+    this.get('graphLayout').endPropertyChanges();
+    this.projectAndDraw();
+    mapG.attr("transform", null);
   },
   
   zoomAndDragChange: function() {

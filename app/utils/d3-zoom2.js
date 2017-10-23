@@ -18,7 +18,7 @@ export default function() {
       scale0, // scale when we started touching
       scaleExtent = d3_behavior_zoomUnboundedScale,
       dispatcher = d3.dispatch("zoom"),
-      band = 0.001,
+      band = 0.0001,
       x0,
       x1,
       y0,
@@ -213,7 +213,7 @@ export default function() {
 
   function mousewheel() {
     if (!translate0) translate0 = location(d3.mouse(this));
-    let commited = scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .002) * absScale);
+    let commited = scaleTo(Math.pow(2, d3_behavior_zoomDelta() * .003) * absScale);
     translateTo(d3.mouse(this), translate0);
     if (commited) {
       dispatch();

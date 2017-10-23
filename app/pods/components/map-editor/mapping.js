@@ -193,16 +193,23 @@ export default Ember.Mixin.create({
     let svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
         converter = mapping.fn(),
-        sortedData = data.sort((a, b) => d3.descending(converter(a.cell, "size"), converter(b.cell, "size")));
+        sortedData = data
+          .map( d => ({
+            size: converter(d.cell, "size"),
+            centroid: d.point.path.centroid(d.point.feature.geometry),
+            data: d
+          }))
+          .filter( d => !isNaN(d.centroid[0]) && !isNaN(d.centroid[1]))
+          .sort((a, b) => d3.descending(a.size, b.size));
 		
     let shapeFn = function(d) {
       
       let _ = d3.select(this),
-          shape = converter(d.cell, "shape"),
-          r = converter(d.cell, "size"),
-          sign = Math.sign(d.cell.get('postProcessedValue')),
-          fill = converter(d.cell, "fill"),
-          strokeColor = converter(d.cell, "strokeColor");
+          shape = converter(d.data.cell, "shape"),
+          r = d.size,
+          sign = Math.sign(d.data.cell.get('postProcessedValue')),
+          fill = converter(d.data.cell, "fill"),
+          strokeColor = converter(d.data.cell, "strokeColor");
       
       if (shape && r > 0) {
         
@@ -237,13 +244,11 @@ export default Ember.Mixin.create({
    let bindAttr = (_) => {
 
       _.attr("transform", d => { 
-        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-        
+        let [tx, ty] = d.centroid;
         return d3lper.translate({
           tx: tx,
           ty: ty
-        })
-        
+        });
       });
       
       _.selectAll(".shape").remove();
@@ -258,10 +263,7 @@ export default Ember.Mixin.create({
     
     let centroidSel = d3Layer
 			.selectAll("g.feature")
-      .data(sortedData.filter( d => {
-        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-        return !isNaN(tx) && !isNaN(ty);
-      }))
+      .data(sortedData)
       .call(bindAttr);
       
     centroidSel.enter()
