@@ -7,7 +7,7 @@ Le tableau ci-dessous liste les projections avec leurs notes.
 | Name             | Note surface | Note distance | Note angle | Auteur                            | Année de création |
 |:-----------------|:-------------|:--------------|:-----------|:----------------------------------|:------------------|
 | Atlantis         | 3            | 1             | 0          | John Bartholomew                  | 1948              |
-| Bertin (1953)*   | 3            | 1             | 0          | Jacques Bertin / Philippe Rivière | 1953/2017         |
+| Bertin (1953)*   | 2            | 1             | 0          | Jacques Bertin / Philippe Rivière | 1953/2017         |
 | Briesemeister    | 3            | 1             | 0          | William A. Briesemeister          | 1953              |
 | Goode Homolosine | 3            | 1             | 0          | J. Paul Goode                     | 1923              |
 | Lambert Azimuthal Equal-Area | 3            | 1             | 0          | Johann Lambert            | 1772              |
