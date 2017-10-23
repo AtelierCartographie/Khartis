@@ -69,7 +69,7 @@ export default Ember.Mixin.create({
         this.get('refreshDebouncer') && Ember.run.cancel(this.get('refreshDebouncer'));
       })
       .on("end", () => {
-        this.set('refreshDebouncer', Ember.run.debounce(this, this.refreshMap, 400));
+        this.set('refreshDebouncer', Ember.run.debounce(this, this.refreshMap, 360));
       })
       .attrs({
         "transform": `${d3lper.translate({tx: translate[0] - tx, ty: translate[1] - ty})} scale(${rs})`
