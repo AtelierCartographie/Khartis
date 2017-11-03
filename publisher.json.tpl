@@ -2,6 +2,6 @@
   "transport": {
     "module": "github",
     "repository": "apezel/khartis-electron-release",
-    "token": "77bbf6cf5568402537a69a081d6bd21dcbe88649"
+    "token": ""
   }
 }

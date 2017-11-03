@@ -23,3 +23,4 @@ testem.log
 yarn.lock
 
 electron-out/
+publisher.json
