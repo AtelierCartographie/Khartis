@@ -32,8 +32,14 @@ module.exports = function(environment) {
       }
     },
 
-    symbolMinMaxSize: 5,
-    symbolMaxMaxSize: 56,
+    symbolMinMaxSize: {
+      proportional: 5,
+      categorical: 2
+    },
+    symbolMaxMaxSize: {
+      proportional: 56,
+      categorical: 30
+    },
 
     projectThumbnail: {
       width: 320,

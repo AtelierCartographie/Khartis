@@ -13,12 +13,19 @@
       list-style-type: none;
       
       text-align: center;
+      font-weight: bold;
       cursor: pointer;
+
+
+      &:not(.active) {
+        color: greys(50%);
+      }
       
       &.active {
-        border-bottom: 3px solid color(primary);
+        border-bottom: 3px solid color(text);
         cursor: default;
       }
+      
     }
     
   }

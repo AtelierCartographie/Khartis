@@ -22,12 +22,16 @@ let SymbolVisualization = Struct.extend({
   maxSize: DEFAULT_MAX_SIZE,
   barWidth: 16,
 
+  mainType: function() {
+    return this.get('type').split(".")[0];
+  }.property('type'),
+
   absoluteMinSize: function() {
-    return config.symbolMinMaxSize;
+    return config.symbolMinMaxSize.proportional;
   }.property(),
 
   absoluteMaxSize: function() {
-    return config.symbolMaxMaxSize;
+    return config.symbolMaxMaxSize.proportional;
   }.property(),
 
   availableShapes: DEFAULT_UNORDERED_SHAPES,
@@ -113,4 +117,15 @@ SymbolVisualization.reopenClass({
   }
 });
 
+const SymbolVisualizationCategorical = SymbolVisualization.extend({
+  type: "symbol.categorical",
+  absoluteMinSize: function() {
+    return config.symbolMinMaxSize.categorical;
+  }.property(),
+  absoluteMaxSize: function() {
+    return config.symbolMaxMaxSize.categorical;
+  }.property()
+});
+
 export default SymbolVisualization;
+export {SymbolVisualizationCategorical};

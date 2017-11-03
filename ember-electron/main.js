@@ -4,7 +4,7 @@ const { dirname, join, resolve } = require('path');
 const isDev = require('electron-is-dev');
 const protocolServe = require('electron-protocol-serve');
 const fs = require("fs");
-const {autoUpdater} = require("electron-updater");
+const autoUpdater = require('electron-simple-updater');
 
 let mainWindow = null;
 
@@ -24,12 +24,29 @@ protocolServe({
 //     submitURL: 'https://your-domain.com/url-to-submit',
 //     autoSubmit: true
 // });
-
+autoUpdater.init({
+  url: "https://raw.githubusercontent.com/apezel/khartis-electron-release/master/updates.json",
+  checkUpdateOnStart: false,
+  autoDownload: false
+});
 autoUpdater.on('checking-for-update', () => {
   console.log("checking for udpate");
 });
-autoUpdater.on('update-available', (info) => {
-  console.log("udpate available", info);
+autoUpdater.on('update-available', (meta) => {
+  dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Install and Relaunch', 'Later'],
+    defaultId: 0,
+    message: 'A new version of ' + app.getName() + ' is available. \n',
+    detail: "hey"
+  }, response => {
+    if (response === 0) {
+      autoUpdater.downloadUpdate();
+    }
+  });
+});
+autoUpdater.on('update-downloaded', (meta) => {
+  autoUpdater.quitAndInstall();
 });
 
 app.on('window-all-closed', () => {
@@ -40,7 +57,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 
-  if (!isDev) {
+  if (!isDev || true) {
     autoUpdater.checkForUpdates();
   }
 
@@ -115,7 +132,7 @@ app.on('ready', () => {
   delete mainWindow.module;
 
   // If you want to open up dev tools programmatically, call
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   const emberAppLocation = 'serve://dist';
 

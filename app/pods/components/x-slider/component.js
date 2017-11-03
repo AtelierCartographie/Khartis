@@ -181,7 +181,7 @@ export default Ember.Component.extend({
     
     if (this.get('_tmpValue') != tmpVal) {
       this.set('_tmpValue', tmpVal);
-      Ember.run.debounce(this, this.commitValue, 100);
+      Ember.run.debounce(this, this.commitValue, 80);
     }
   },
   

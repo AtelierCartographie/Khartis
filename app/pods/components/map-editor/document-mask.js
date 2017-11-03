@@ -34,7 +34,7 @@ export default Ember.Mixin.create({
       .attr("height", "100%")
       .attr("opacity", 0.9)
       .attr("mask", `url(#document-mask)`)
-      .attr("fill", "#cdcdcd");
+      .attr("fill", this.get('displayDocumentMask') ? "#cdcdcd":"#e2e2e2");
 
     this.updateDocumentMask();
 
@@ -70,8 +70,8 @@ export default Ember.Mixin.create({
         "y": -mY,
         "width": w+2*mX,
         "height": h+2*mY,
-        "display": !this.get('displayDocumentMask') ? "none":null
-      });
+        "fill": this.get('displayDocumentMask') ? "#cdcdcd":"#e2e2e2"
+      })
     
     // ===========
 		

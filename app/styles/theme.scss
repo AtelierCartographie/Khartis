@@ -96,15 +96,31 @@ small {
   border: 1px solid greys(10%);
 }
 
-.bordered {
+.bordered, .bordered-r, .bordered-l, .bordered-t, .bordered-b {
 
   border-width: 1px;
-  border-style: solid;
 
   & {
     border-color: color(text);
   }
 
+}
+
+.bordered {
+  border-style: solid;
+}
+
+.bordered-r {
+  border-right-style: solid;
+}
+.bordered-l {
+  border-left-style: solid;
+}
+.bordered-t {
+  border-top-style: solid;
+}
+.bordered-b {
+  border-bottom-style: solid;
 }
 
 .text-default {

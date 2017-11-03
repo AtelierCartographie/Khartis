@@ -21,7 +21,6 @@ export default Ember.Mixin.create({
 
     this.drawCompositionBorders(path);
     //this.drawCompositionClipPaths(path);
-    //this.drawTest(path);
   },
 
   drawCompositionClipPaths: function(path) {
@@ -39,30 +38,6 @@ export default Ember.Mixin.create({
             .attr("d", d => path(this.bboxToPolygon(d.instance.bboxPx)) )
             .attr("fill-rule", "evenodd")
             .attr("fill", "white");
-
-          return el;
-        },
-        update: (sel) => {
-          return sel.select("path").attr("d", d => path(this.bboxToPolygon(d.instance.bboxPx)) )
-            .attr("transform", `translate(${this.get('graphLayout.tx')*this.getSize().w}, ${this.get('graphLayout.ty')*this.getSize().h})`);
-        }
-      });
-  },
-
-  drawTest: function(path) {
-    this.d3l().selectAll(".composition-clipping-rect")
-      .data(this.get('projector').projections)
-      .enterUpdate({
-        enter: (sel) => {
-
-          let el = sel.append("g")
-            .attr("id", d => `composition-rect-${d.idx}`)
-            .classed("composition-clipping-rect", true);
-            
-          el.append("path")
-            .attr("d", d => path(this.bboxToPolygon(d.instance.bboxPx)) )
-            .style("fill", "#404040")
-            .style("stroke", "red")
 
           return el;
         },

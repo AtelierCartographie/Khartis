@@ -1,6 +1,6 @@
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
-import {solve} from './d3-solve-invert';
+import {solve} from './d3-solve-invert-2';
 
 function inside(bbox, x, y) {
   return x >= bbox[0][0] && x <= bbox[1][0]

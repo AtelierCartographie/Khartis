@@ -181,7 +181,7 @@ export default Ember.Mixin.create({
       _.each( function(d, i) {
         
         let el = d3.select(this),
-            xOrigin = (d.get('mapping.visualization.type') === "symbol" ?
+            xOrigin = (d.get('mapping.visualization.mainType') === "symbol" ?
               SymbolMaker.symbol({name: d.get('mapping.visualization.shape'), size: d.get('mapping.visualization.maxSize')}).getSize().x : 10),
             textOffset = xOrigin + 16,
             formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
@@ -210,7 +210,7 @@ export default Ember.Mixin.create({
         });
           
         //re-calcul de l'offset du texte si il y a des rules symboles
-        if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.type') === "symbol") {
+        if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.mainType') === "symbol") {
           xOrigin = Math.max.apply(null, [xOrigin].concat(d.get('mapping.rules').map( r => r.get('size') )));
           textOffset = xOrigin + 16;
         }
@@ -640,7 +640,7 @@ export default Ember.Mixin.create({
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
         r;
 
-    if (d.get('mapping.visualization.type') === "symbol") {
+    if (d.get('mapping.visualization.mainType') === "symbol") {
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
           symbol = SymbolMaker.symbol({

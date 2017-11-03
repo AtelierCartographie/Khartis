@@ -4,7 +4,7 @@
     <div class="vertical airy padded flow">
         <h2 class="title">{{x-capitalize (t 'project.step2.title.preview')}}</h2>
 
-        <div class="report-preview fluid">
+        <div class="report-preview">
             <table>
                 <thead>
                     <tr>
@@ -23,6 +23,11 @@
                     {{/each}}
                 </tbody>
             </table>
+        </div>
+        <div class="horizontal right padded-v solid flow">
+          {{#x-button class="solid filled primary2" disabled=(x-some (x-not model.project.geoDef) hasErrors) action=(action 'next')}}
+            {{x-capitalize (t "general.next")}}
+          {{/x-button}}
         </div>
 
     </div>

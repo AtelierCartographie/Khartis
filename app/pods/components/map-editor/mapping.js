@@ -20,16 +20,16 @@ export default Ember.Mixin.create({
     this.d3l().select("#layers")
       .selectAll(".layer, #borders")
       .sort((a,b) => {
-          if (a.isBorderLayer && b.get('mapping.visualization.type') === "surface") {
+          if (a.isBorderLayer && b.get('mapping.visualization.mainType') === "surface") {
             return 1;
-          } else if (b.isBorderLayer && a.get('mapping.visualization.type') === "surface") {
+          } else if (b.isBorderLayer && a.get('mapping.visualization.mainType') === "surface") {
             return -1;
-          } else if (a.isBorderLayer && b.get('mapping.visualization.type') === "symbol") {
+          } else if (a.isBorderLayer && b.get('mapping.visualization.mainType') === "symbol") {
             let idx = layers.indexOf(b);
-            return layers.some((v, i) => i < idx && v.get('mapping.visualization.type') === "surface") ? 1 : -1;
-          } else if (b.isBorderLayer && a.get('mapping.visualization.type') === "symbol") {
+            return layers.some((v, i) => i < idx && v.get('mapping.visualization.mainType') === "surface") ? 1 : -1;
+          } else if (b.isBorderLayer && a.get('mapping.visualization.mainType') === "symbol") {
             let idx = layers.indexOf(a);
-            return layers.some((v, i) => i < idx && v.get('mapping.visualization.type') === "surface") ? -1 : 1;
+            return layers.some((v, i) => i < idx && v.get('mapping.visualization.mainType') === "surface") ? -1 : 1;
           } else {
             return layers.indexOf(a) < layers.indexOf(b) ? 1 : -1;
           }
@@ -97,11 +97,11 @@ export default Ember.Mixin.create({
         
       });
       
-      if (graphLayer.get('mapping.visualization.type') === "surface") {
+      if (graphLayer.get('mapping.visualization.mainType') === "surface") {
         this.mapSurface(d3Layer, data, graphLayer);
-      } else if (graphLayer.get('mapping.visualization.type') === "symbol") {
+      } else if (graphLayer.get('mapping.visualization.mainType') === "symbol") {
         this.mapSymbol(d3Layer, data, graphLayer);
-      } else if (graphLayer.get('mapping.visualization.type') === "text") {
+      } else if (graphLayer.get('mapping.visualization.mainType') === "text") {
         this.mapText(d3Layer, data, graphLayer);
       }
       
@@ -137,9 +137,9 @@ export default Ember.Mixin.create({
         
       }).filter( d => d !== undefined );
 
-      if (graphLayer.get('mapping.visualization.type') === "symbol") {
+      if (graphLayer.get('mapping.visualization.mainType') === "symbol") {
         this.mapSymbol(d3Layer, data, graphLayer);
-      } else if (graphLayer.get('mapping.visualization.type') === "text") {
+      } else if (graphLayer.get('mapping.visualization.mainType') === "text") {
         this.mapText(d3Layer, data, graphLayer);
       }
       

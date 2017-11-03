@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Struct from 'khartis/models/struct';
 import SurfaceVisualization from './surface';
-import SymbolVisualization from './symbol';
+import {default as SymbolVisualization, SymbolVisualizationCategorical} from './symbol';
 import TextVisualization from './text';
 
 let VisualizationFactory = Ember.Object.extend({});
@@ -13,6 +13,8 @@ VisualizationFactory.reopenClass({
         return SurfaceVisualization;
       case "symbol":
         return SymbolVisualization;
+      case "symbol.categorical":
+        return SymbolVisualizationCategorical;
       case "text":
         return TextVisualization;
     }

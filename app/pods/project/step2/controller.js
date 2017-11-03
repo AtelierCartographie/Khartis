@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
   }.property('model.project.report.errors'),
   
   bodyPreview: function() {
-    return this.get('model.project.data.body').slice(0, 15);
+    return this.get('model.project.data.body').slice(0, 1000);
   }.property('model.project.data.body.[]'),
 
   setupGeoDef: function() {

@@ -289,7 +289,7 @@ let SymbolMixin = Ember.Mixin.create({
   
   generateVisualization() {
     if (!this.get('visualization')) {
-      this.set('visualization', VisualizationFactory.createInstance("symbol"));
+      this.set('visualization', VisualizationFactory.createInstance("symbol.categorical"));
     }
   },
 

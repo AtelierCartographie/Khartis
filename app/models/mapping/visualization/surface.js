@@ -14,6 +14,10 @@ let SurfaceVisualization = Struct.extend({
   patternColor: null,
   patternColorBefore: null,
 
+  mainType: function() {
+    return this.get('type').split(".")[0];
+  }.property('type'),
+
   resetToDefaults(categorical=false) {
     this.setProperties({
       colors: categorical ? DEFAULT_COLORS_CATEGORICAL:DEFAULT_COLORS_SEQUENTIAL
