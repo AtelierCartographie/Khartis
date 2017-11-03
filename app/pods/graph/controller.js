@@ -250,6 +250,17 @@ export default Ember.Controller.extend({
     d3Node.selectAll("rect.fg").remove();
     d3Node.selectAll("#document-mask").remove();
     d3Node.selectAll("#viewport-mask").remove();
+    d3Node.selectAll("#foremap").remove();
+
+    //replace rgba with rgb+fill-opacity
+    d3Node.selectAll("*[fill^=rgba]")
+      .each(function() {
+        let el = d3.select(this),
+            rgba = el.attr("fill"),
+            color = d3.color(rgba);
+        el.attr("fill", `rgb(${color.r}, ${color.g}, ${color.b})`)
+          .attr("fill-opacity", color.opacity);
+      });
 
     d3Node.append("text")
       .text("Made with Khartis")

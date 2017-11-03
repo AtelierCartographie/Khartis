@@ -163,6 +163,10 @@ export default Ember.Component.extend({
       this.reopen(ViewportFeature, {displayOffsets: this.get('displayDocumentMask')});
       this.viewportInit(defs, d3g);
     }
+    if (this.get('hasCreditsFeature')) {
+      this.reopen(CreditsFeature);
+      this.creditsInit(d3g);
+    }
     if (this.get('hasLegendFeature')) {
       this.reopen(LegendFeature);
       this.legendInit();
@@ -178,10 +182,6 @@ export default Ember.Component.extend({
     if (this.get('hasCompositionBordersFeature')) {
       this.reopen(CompositionBordersFeature);
       this.compositionBordersInit(mapG);
-    }
-    if (this.get('hasCreditsFeature')) {
-      this.reopen(CreditsFeature);
-      this.creditsInit(d3g);
     }
     if (this.get('hasDocumentMaskFeature')) {
       this.reopen(DocumentMaskFeature, {displayDocumentMask: this.get('displayDocumentMask')});
