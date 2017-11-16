@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog {{additionnalClass}}">
 	<div class="modal-content">
 	  <div class="modal-header">
 	    <h4 class="modal-title">{{{title}}}</h4>
@@ -10,7 +10,9 @@
           {{#if cancelLabel}}
           <button class="button small filled default pull-left" {{action 'cancel'}}>{{cancelLabel}}</button>
           {{/if}}
+          {{#if rejectLabel}}
           <button class="button small filled default" {{action 'reject'}}>{{rejectLabel}}</button>
+          {{/if}}
           {{#if acceptLabel}}
           <button class="button small danger filled" {{action 'accept'}}>{{acceptLabel}}</button>
           {{/if}}

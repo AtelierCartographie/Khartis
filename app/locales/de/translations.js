@@ -5,6 +5,7 @@ export default {
     "back": "Zurück",
     "submit": "Absenden",
     "cancel": "Abbrechen",
+    "later": "Later",
     "import": "Import",
     "continue": "OK",
     "validate": "Eingaben prüfen",
@@ -34,6 +35,13 @@ export default {
   },
 
   "help.wiki": "Hilfe - Khartis Wiki (Französisch)",
+
+  "updater": {
+    "title": "An update is available",
+    "installAndRestart": "Install and restart",
+    "releaseNotes": "release notes",
+    "installation": "Install..."
+  },
   
   "project": {
    

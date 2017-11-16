@@ -6,6 +6,7 @@ var ConfirmDialog = XModal.extend({
   layoutName: "components/confirm-dialog",
 
   classNames: ["modal", "fade", "confirm"],
+  additionnalClass: null,
 
   title: null,
   message: null,
@@ -34,14 +35,15 @@ var ConfirmDialog = XModal.extend({
 
   },
 
-  show: function(message, title="Confirmation", acceptLabel="Accepter", rejectLabel="Annuler", cancelLabel=null) {
-
+  show: function(message, title="Confirmation", acceptLabel="Accepter", rejectLabel="Annuler", cancelLabel=null, additionnalClass=null) {
+    
     this.setProperties({
-      message: message,
-      title: title,
-      acceptLabel: acceptLabel,
-      rejectLabel: rejectLabel,
-      cancelLabel: cancelLabel
+      message,
+      title,
+      acceptLabel,
+      rejectLabel,
+      cancelLabel,
+      additionnalClass
     });
 
     this.$().modal({

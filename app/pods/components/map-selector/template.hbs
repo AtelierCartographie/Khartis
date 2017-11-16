@@ -8,7 +8,7 @@
       <li {{action 'select' map.id}}>
         <span> {{x-capitalize (t (concat 'basemap.' map.id))}}</span>
         <span>
-          <img src="{{r-url (concat 'assets/images/map-thumbnails/' map.id)}}.png"/>
+          <img src="{{r-url (concat 'assets/images/map-thumbnails/' map.id spaceToDash=true)}}.png"/>
         </span>
       </li>
     {{/each}}

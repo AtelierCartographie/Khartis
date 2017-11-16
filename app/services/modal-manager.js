@@ -19,15 +19,12 @@ var XModalManager = Ember.Service.extend({
 	show: function(name) {
 
 		var modal = this.get('modals').find(x => x.get('name') == name);
-
+    console.log(arguments);
 		if (modal) {
-
 			return modal.show.apply(modal, Array.prototype.slice.call(arguments, 1));
-
 		}
 
 		throw `Modal ${name} not found`;
-
 	},
 
 	hide: function(name) {

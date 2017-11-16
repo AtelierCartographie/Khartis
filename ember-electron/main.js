@@ -27,23 +27,14 @@ protocolServe({
 autoUpdater.init({
   url: "https://raw.githubusercontent.com/apezel/khartis-electron-release/master/updates.json",
   checkUpdateOnStart: false,
-  autoDownload: false
+  autoDownload: false,
+  version: app.getVersion()
 });
 autoUpdater.on('checking-for-update', () => {
   console.log("checking for udpate");
 });
 autoUpdater.on('update-available', (meta) => {
-  dialog.showMessageBox({
-    type: 'question',
-    buttons: ['Install and Relaunch', 'Later'],
-    defaultId: 0,
-    message: 'A new version of ' + app.getName() + ' is available. \n',
-    detail: "hey"
-  }, response => {
-    if (response === 0) {
-      autoUpdater.downloadUpdate();
-    }
-  });
+  mainWindow.webContents.send('updateAvailable', meta);
 });
 autoUpdater.on('update-downloaded', (meta) => {
   autoUpdater.quitAndInstall();
@@ -56,10 +47,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-
-  if (!isDev || true) {
-    autoUpdater.checkForUpdates();
-  }
 
   mainWindow = new BrowserWindow({
     width: 1360,
@@ -121,12 +108,24 @@ app.on('ready', () => {
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 
+  ipcMain.on("startup", function() {
+    console.log("startup");
+    if (!isDev || true) {
+      console.log("check for update");
+      autoUpdater.checkForUpdates();
+    }
+  });
+
   ipcMain.on("enter-graph-route", function() {
     menu.items[1].submenu.items[0].enabled = true;
   });
 
   ipcMain.on("exit-graph-route", function() {
     menu.items[1].submenu.items[0].enabled = false;
+  });
+  
+  ipcMain.on("acceptUpdate", function() {
+      autoUpdater.downloadUpdate();
   });
 
   delete mainWindow.module;

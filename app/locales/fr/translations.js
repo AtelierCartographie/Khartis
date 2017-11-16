@@ -5,6 +5,7 @@ export default {
     "back": "retour",
     "submit": "envoyer",
     "cancel": "annuler",
+    "later": "plus tard",
     "import": "importer",
     "continue": "continuer",
     "validate": "valider",
@@ -35,6 +36,13 @@ export default {
   },
 
   "help.wiki": "Aide - Wiki Khartis",
+
+  "updater": {
+    "title": "Une mise à jour est disponible",
+    "installAndRestart": "Installer et relancer",
+    "releaseNotes": "notes de mise à jour",
+    "installation": "Installation en cours"
+  },
 
   "project": {
 
