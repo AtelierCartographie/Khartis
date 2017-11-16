@@ -34,7 +34,7 @@ module.exports = function(environment) {
 
     symbolMinMaxSize: {
       proportional: 5,
-      categorical: 2
+      categorical: 5
     },
     symbolMaxMaxSize: {
       proportional: 56,

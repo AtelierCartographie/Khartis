@@ -112,7 +112,8 @@ let OrderedSymbolRule = AbstractOrderedRule.extend({
   stroke: visualizationProxy('stroke'),
   size: Ember.computed('visualization.maxSize', 'index', {
     get() {
-      return this.get('visualization.maxSize') + Math.sqrt(this.get('index')+1);
+      let range = (this.get('visualization.maxSize') - this.get('visualization.absoluteMinSize')) || 1;
+      return  this.get('visualization.absoluteMinSize') + range / this.get('visualization.shapeSet.length') * this.get('index');
     },
     set(k, v) {
       return v;
