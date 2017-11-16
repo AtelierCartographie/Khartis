@@ -1,0 +1,7 @@
+{
+  "darwin-x64-prod": {
+    "update": "https://github.com/AtelierCartographie/Khartis/releases/download/khartis-v2.0.0/release.json",
+    "install": "https://github.com/AtelierCartographie/Khartis/releases/download/khartis-v2.0.0/khartis-2.0.0.dmg",
+    "version": "2.0.0"
+  }
+}
