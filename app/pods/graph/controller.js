@@ -39,7 +39,11 @@ export default Ember.Controller.extend({
 
   onBeforeSaveProject(project) {
     return this.makeThumbnail().then( data => {
-      project.thumbnail = data;
+      if (project.set) {
+        project.set('thumbnail', data);
+      } else {
+        project.thumbnail = data;
+      }
     });
   },
 

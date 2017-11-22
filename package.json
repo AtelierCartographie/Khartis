@@ -166,7 +166,7 @@
     }
   },
   "updater": {
-    "url": "https://raw.githubusercontent.com/apezel/khartis-electron-release/master/updates.json"
+    "url": "https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/updates.json"
   },
   "ember-addon": {}
 }

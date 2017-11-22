@@ -25,7 +25,7 @@ protocolServe({
 //     autoSubmit: true
 // });
 autoUpdater.init({
-  url: "https://raw.githubusercontent.com/apezel/khartis-electron-release/master/updates.json",
+  url: "https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/updates.json",
   checkUpdateOnStart: false,
   autoDownload: false,
   version: app.getVersion()
@@ -102,6 +102,15 @@ app.on('ready', () => {
           }
         }
       ]
+    },
+    {
+      label: "Edit",
+      submenu: [
+          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+      ]
     }
   ];
 
@@ -131,7 +140,7 @@ app.on('ready', () => {
   delete mainWindow.module;
 
   // If you want to open up dev tools programmatically, call
-  mainWindow.openDevTools();
+  isDev && mainWindow.openDevTools();
 
   const emberAppLocation = 'serve://dist';
 

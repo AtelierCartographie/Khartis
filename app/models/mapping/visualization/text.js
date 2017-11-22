@@ -8,6 +8,10 @@ let TextVisualization = Struct.extend({
   anchor: "middle",
   overwrites: {},
 
+  mainType: function() {
+    return this.get('type').split(".")[0];
+  }.property('type'),
+
   getGeometry(id, geom) {
     return this.get('overwrites')[id] || geom;
   },

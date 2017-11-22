@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   
+  updatePresented: false,
   store: Ember.inject.service(),
   
   beforeModel() {
@@ -82,6 +83,9 @@ export default Ember.Route.extend({
 
     presentUpdate(data) {
 
+      if (this.get('updatePresented')) return;
+      this.set('updatePresented', true);
+      
       console.info("An update is available");
 
       let reqVal = "electron";
