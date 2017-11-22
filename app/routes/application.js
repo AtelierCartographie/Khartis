@@ -1,18 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  
+
   updatePresented: false,
   store: Ember.inject.service(),
-  
+
   beforeModel() {
     return this.get('Dictionary').load();
   },
-  
+
   actions: {
-      
+
     navigateTo(url) {
-      
+
       switch(url) {
         case 'spreadsheet':
           this.transitionTo(url, this.get('store').versions().current()._uuid);
@@ -23,9 +23,9 @@ export default Ember.Route.extend({
         default:
           this.transitionTo(url);
       }
-      
+
     },
-    
+
     setLocale(locale) {
       this.set('i18n.locale', locale);
     },
@@ -83,17 +83,27 @@ export default Ember.Route.extend({
 
     presentUpdate(data) {
 
+
       if (this.get('updatePresented')) return;
       this.set('updatePresented', true);
-      
+
       console.info("An update is available");
 
       let reqVal = "electron";
       const ipcRenderer = window.process && require(reqVal).ipcRenderer;
-      
+
       /*get and convert markdown to html using github api*/
       //extract tag from url
-      let [user, repo, tag] = data.update.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)(.*)\//).slice(1);
+      // https://github.com/AtelierCartographie/Khartis/releases/download/khartis-v2.0.0"
+      // github.com / user / repo / tag
+      data.update = data.update + '/';
+      let repoUrl = data.update.endsWith('/') ? data.update.substring(0, data.update.length - 1) : data.update;
+      var fragments = repoUrl.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)(.*)/)
+
+      if( ! fragments) console.error("Updater: unable to parse Github URL");
+
+      // let [user, repo, tag] = data.update.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)(.*)\//).slice(1);
+      let [user, repo, tag] = fragments.slice(1);
 
       new Promise((res, rej) => {
         var xhr = new XMLHttpRequest();
@@ -151,7 +161,7 @@ export default Ember.Route.extend({
       });
 
     }
-    
-  } 
-    
+
+  }
+
 });
