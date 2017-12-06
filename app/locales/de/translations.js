@@ -461,6 +461,10 @@ export default {
     "eu_nuts2-travail": "Durchschnittliche Arbeitsstunden pro Woche (2015)",
     "eu_nuts2-agriculture": "Landwirtschaftliche Fläche nach Größe der landwirtschaftlichen Betriebe (2013)",
     "eu_nuts3-pop": "Bevölkerungsdichte (2015)"
+  },
+
+  "importMap": {
+    "title": "Import a map"
   }
   
 };

@@ -1,16 +1,19 @@
 import Ember from 'ember';
+import Basemap from './basemap';
 import d3 from 'npm:d3';
 import Struct from './struct';
 import Projection from './projection';
 import config from 'khartis/config/environment';
 import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
+import {csvHeaderToJs} from 'khartis/utils/csv-helpers';
 import ab2string from 'khartis/utils/ab2string';
 import CSV from 'npm:csv-string';
-import {csvHeaderToJs} from 'khartis/utils/csv-helpers';
 import topojson from 'npm:topojson';
 
-var Basemap = Struct.extend({
+var ImportedBasemap = Basemap.extend({
   
+  type: "imported",
+
   id: null,
 
   /* transients */
@@ -40,16 +43,6 @@ var Basemap = Struct.extend({
 
   idChange: function() {
 
-    this.setProperties({
-      mapConfig: null,
-      mapData: null,
-      dictionaryData: null
-    });
-
-    if (this.get('id') !== null) {
-      this.set('mapConfig', config.maps.find( c => c.id === this.get('id') ));
-    }
-
   }.observes('id').on("init"),
 
   setup() {
@@ -61,41 +54,30 @@ var Basemap = Struct.extend({
   },
 
   loadMapData() {
-
+    console.log(this.get('mapConfig'));
     if (!this.get('mapData')) {
-      
-      let promises = this.get('mapConfig.sources').map( source => {
-        
-        return new Promise((res, rej) => {
-          
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', `${config.rootURL}data/map/${source.source}`, true);
-
-          xhr.onload = (e) => {
-            
-            if (e.target.status == 200) {
-              res({source: source, topojson: e.target.response});
-            }
-            
-          };
-
-          xhr.send();
-        
-        });
-
-      });
-
-      return Promise.all(promises).then( sources => this.set('mapData', this.computeMapSources(sources) ));
-
-    } else {
-      return new Promise((res, rej) => res(this.get('mapData')) );
+        this.set('mapData', this.computeMapSources(this.normalizeLayers(this.get('mapConfig.sources'))));
     }
-    
+    return new Promise((res, rej) => res(this.get('mapData')) );
   },
+
+  normalizeLayers(sources) {
+    console.log(sources);
+    sources.forEach( source => {
+      let basename = Object.keys(source.topojson.objects)[0];
+      Object.keys(source.topojson.objects).forEach( (k, i) => {
+        let name = i == 0 ? "poly" : k.replace(basename+"::", "");
+        source.topojson.objects[name] = source.topojson.objects[k];
+        source.topojson.objects[k] = undefined;
+      });
+      source.topojson.objects["poly-down"] = source.topojson.objects["poly"];
+    });
+    return sources;
+  },  
 
   computeMapSources(sources) {
     let parts = sources.map( (source, idx) => {
-          let j = JSON.parse(source.topojson);
+          let j = source.topojson;
           j.projection = idx+1;
           return j;
         });
@@ -129,28 +111,13 @@ var Basemap = Struct.extend({
   },
 
   loadDictionaryData() {
-		
     return new Promise( (res, rej) => {
-      
       if (!this.get('dictionaryData')) {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', `${config.rootURL}data/dictionary/${this.get('mapConfig.dictionary.source')}`, true);
-
-        xhr.onload = (e) => {
-          
-          if (e.target.status == 200) {
-            res(geoMatcher.dic = this.set('dictionaryData', JSON.parse(e.target.responseText).map( x => Ember.Object.create(x))));
-          }
-          
-        };
-
-        xhr.send();
-      } else {
-        res(geoMatcher.dic = this.get('dictionaryData'));
+        this.set('dictionaryData', this.get('mapConfig.dictionary.source'));
       }
-      
+
+      res(geoMatcher.dic = this.get('dictionaryData'));
     });
-		
 	},
 
   loadProjections: function() {
@@ -203,24 +170,29 @@ var Basemap = Struct.extend({
     },
     50),
   
-  export(opts = {}) {
-    return this._super(Object.assign(opts, {
-      id: this.get('id')
-    }));
+  export() {
+    return this._super({
+      id: this.get('id'),
+      type: this.get('type'),
+      mapConfig: this.get('mapConfig')
+    });
   }
   
 });
 
-Basemap.reopenClass({
+ImportedBasemap.reopenClass({
   
   restore(json, refs = {}) {
+    console.log("restore");
       let o = this._super(json, refs);
       o.setProperties({
-        id: json.id
+        id: json.id,
+        type: json.type,
+        mapConfig: json.mapConfig
       });
       return o;
   }
     
 });
 
-export default Basemap;
+export default ImportedBasemap;

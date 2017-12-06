@@ -1,0 +1,68 @@
+<div class="modal-dialog modal--large">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">{{x-capitalize (t 'importMap.title')}}</h3>
+        </div>
+
+        <div class="modal-body">
+
+          {{#if isProcessing}}
+          <div class="loading-bar"></div>
+          {{/if}}
+
+          {{#if isAskingForLayers}}
+          Choisissez les couches à importer.
+          <ul class="collection">
+            {{#each layersCbx as |cbx|}}
+            <li class="padded">
+              <div class="horizontal airy middle flow">
+                <div class="solid horizontal airy middle flow w7">
+                  <span>{{input type="checkbox" class="no-close clickable" checked=cbx.checked}}<div class="-h"></div></span>
+                  <span class="layer-title">{{cbx.layer.label}}</span>
+                </div>
+                <span>
+                  avec l'identifiant
+                </span>
+                {{#x-dropdown-plus as |facet|}}
+                  {{#facet.trigger class="filled on-white"}}
+                    {{cbx.selectedPropKey}}
+                    <i class="iconfont iconfont-angle-down"></i>
+                  {{/facet.trigger}}
+                  {{#facet.list}}
+                    {{#each cbx.layer.propKeys as |key|}}
+                    <li {{action 'selectPropKey' cbx key}} class="airy flow">
+                      {{key}}
+                    </li>
+                    {{/each}}
+                  {{/facet.list}}
+                {{/x-dropdown-plus}}
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          {{/if}}
+
+          {{#if (x-eq state 'finish')}}
+          Les fichiers ont bien été traités, voulez-vous les importer ?
+          {{/if}}
+            
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="button filled default" {{action 'reject'}}>{{x-capitalize (t 'general.cancel')}}</button>
+            {{#if isStateValid}}
+            <button type="button" class="button filled primary" {{action 'next'}}>
+              {{#if (x-eq state 'finish')}}
+              {{x-capitalize (t 'general.import')}}
+              {{else}}
+              {{x-capitalize (t 'general.next')}}
+              {{/if}}
+            </button>
+            {{/if}}
+        </div>
+
+    </div>
+
+</div>

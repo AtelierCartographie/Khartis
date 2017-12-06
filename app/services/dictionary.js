@@ -23,12 +23,16 @@ var Dictionary = Ember.Service.extend(Ember.Evented, {
 		
     return new Promise( (res, rej) => {
       
-      this.set('data.maps', config.maps);
+      this.set('data.maps', Em.A(config.maps));
       res(true);
 
     });
 		
-	}
+  },
+  
+  addImportedMap: function(map) {
+    this.get('data.maps').push(map);
+  }
   
 	
 });
