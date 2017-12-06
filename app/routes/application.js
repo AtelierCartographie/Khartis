@@ -98,11 +98,10 @@ export default Ember.Route.extend({
       // github.com / user / repo / tag
       data.update = data.update + '/';
       let repoUrl = data.update.endsWith('/') ? data.update.substring(0, data.update.length - 1) : data.update;
-      var fragments = repoUrl.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)(.*)/)
+      let fragments = repoUrl.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)([^\/]+)(?:\/release\.json)?/);
 
       if( ! fragments) console.error("Updater: unable to parse Github URL");
 
-      // let [user, repo, tag] = data.update.match(/(?:github\.com\/)(.*)\/(.*)(?:\/releases\/download\/)(.*)\//).slice(1);
       let [user, repo, tag] = fragments.slice(1);
 
       new Promise((res, rej) => {

@@ -468,6 +468,10 @@ export default {
     "eu_nuts2-travail": "Average hours worked per week (2015)",
     "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
     "eu_nuts3-pop": "Population density (2015)"
+  },
+
+  "importMap": {
+    "title": "Import a map"
   }
 
 };

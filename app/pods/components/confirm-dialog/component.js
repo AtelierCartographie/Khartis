@@ -24,15 +24,10 @@ var ConfirmDialog = XModal.extend({
   _promise: null,
 
   didInsertElement: function() {
-
     this.get('ModalManager').connect(this);
-
     this.$().on('hidden.bs.modal', e => {
-
       this.sendAction('reject');
-
     });
-
   },
 
   show: function(message, title="Confirmation", acceptLabel="Accepter", rejectLabel="Annuler", cancelLabel=null, additionnalClass=null) {

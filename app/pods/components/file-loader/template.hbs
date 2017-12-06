@@ -1,2 +1,6 @@
 {{#if label.length}}<span>{{label}}</span>{{/if}}{{yield}}
-{{file-reader onready="onFileReaderReady" onread="onread"}}
+{{#if (x-eq handler 'reader')}}
+  {{file-reader onready="onFileReaderReady" onread="onread" accept=accept}}
+{{else if (x-eq handler 'uploader')}}
+  {{file-uploader onready="onFileReaderReady" onchange="onchange" accept=accept}}
+{{/if}}

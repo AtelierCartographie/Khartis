@@ -4,6 +4,7 @@ import d3lper from 'khartis/utils/d3lper';
 import Struct from './struct';
 import Projection from './projection';
 import Basemap from './basemap';
+import ImportedBasemap from './imported-basemap';
 
 const MARGIN_DEFAULTS = {t: 30, b: 30, l: 16, r: 16};
 
@@ -90,11 +91,11 @@ var GraphLayout = Struct.extend({
 	autoCenter: false,
 
   canDisplayGrid: function() {
-    return !this.get('projection.isComposite');
+    return !this.get('projection.isComposite') && !this.get('basemap.type') === "imported";
   }.property('projection', 'projection.isComposite'),
 
   canDisplaySphere: function() {
-    return !this.get('projection.isComposite');
+    return !this.get('projection.isComposite') && !this.get('basemap.type') === "imported";
   }.property('projection', 'projection.isComposite'),
 	
   tx: 0,
@@ -158,10 +159,18 @@ GraphLayout.reopenClass({
     let o = GraphLayout.create({margin: Margin.create()});
     return o;
   },
+
+  restoreBasemap(json) {
+    if (json) {
+      return (json.type === "imported" ? ImportedBasemap : Basemap).restore(json);
+    }
+    return null;
+  },
   
   restore(json, refs = {}) {
+    console.log(json.basemap);
       let o = this._super(json, refs, {
-        basemap: json.basemap ? Basemap.restore(json.basemap) : null,
+        basemap: GraphLayout.restoreBasemap(json.basemap),
         backgroundColor: json.backgroundColor,
         backmapColor: json.backmapColor,
         gridColor: json.gridColor,

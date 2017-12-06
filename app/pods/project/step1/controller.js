@@ -3,6 +3,7 @@ import CSV from 'npm:csv-string';
 import Project from 'khartis/models/project';
 import {DataStruct} from 'khartis/models/data';
 import Basemap from 'khartis/models/basemap';
+import ImportedBasemap from 'khartis/models/imported-basemap';
 import ab2string from 'khartis/utils/ab2string';
 import config from 'khartis/config/environment';
 
@@ -106,8 +107,13 @@ export default Ember.Controller.extend({
 
   actions: {
 
-    selectBasemap(mapId) {
-      this.get('model.project.graphLayout').setBasemap(Basemap.create({id: mapId}));
+    selectBasemap(map) {
+      if (map.custom) {
+        console.log(map);
+        this.get('model.project.graphLayout').setBasemap(ImportedBasemap.create({mapConfig: map}));
+      } else {
+        this.get('model.project.graphLayout').setBasemap(Basemap.create({id: map.id}));
+      }
     },
 
     resumeProject(project) {
@@ -125,6 +131,15 @@ export default Ember.Controller.extend({
       reader.onloadend = (e) => {
         this.set('model.csv', ab2string(e.target.result));
       };
+    },
+
+    importBasemap(files) {
+      this.get('ModalManager')
+        .show('modal-mapshaper', {model: files})
+        .then( mapConfigs => {
+          this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
+          console.log(this.get('dictionary.data.maps'));
+        });
     },
 
     parseCsvContent() {

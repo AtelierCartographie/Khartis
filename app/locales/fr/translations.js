@@ -468,6 +468,10 @@ export default {
     "eu_nuts2-travail": "Heures moyennes travaillées par semaine (2015)",
     "eu_nuts2-agriculture": "Surperficie agricole utilisée (SAU) selon la taille des exploitations (2013)",
     "eu_nuts3-pop": "Densité de population (2015)"
+  },
+
+  "importMap": {
+    "title": "Importer une carte"
   }
 
 };

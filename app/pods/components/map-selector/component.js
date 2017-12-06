@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   filterText: null,
 
-  queryMaps:Ember.computed('maps', 'filterText', function() {
+  queryMaps:Ember.computed('maps', 'maps.[]', 'filterText', function() {
     if (this.get('filterText') && this.get('filterText').length) {
 
       var levenshteined = this.get('maps').map( basemap => {
@@ -28,8 +28,8 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    select(id){
-      this.sendAction('onSelect', id)
+    select(map) {
+      this.sendAction('onSelect', map)
     }
   }
 

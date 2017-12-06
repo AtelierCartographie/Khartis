@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     
     label: "Choisir un fichier",
+    handler: "reader", //ou uploader
+    accept: "*",
     
     fileReaderComponent: null,
     
@@ -12,13 +14,17 @@ export default Ember.Component.extend({
     
     actions: {
         
-        onFileReaderReady: function(c) {
-            this.set('fileReaderComponent', c);
-        },
-        
-        onread: function(text) {
-            this.sendAction('onContentLoaded', text);
-        }
+      onFileReaderReady: function(c) {
+        this.set('fileReaderComponent', c);
+      },
+      
+      onread: function(text) {
+        this.sendAction('onContentLoaded', text);
+      },
+
+      onchange: function(files) {
+        this.sendAction('onFileSelected', files);
+      }
         
     }
 });
