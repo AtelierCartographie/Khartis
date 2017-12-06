@@ -58,11 +58,11 @@ var ImportedBasemap = Basemap.extend({
     if (!this.get('mapData')) {
         this.set('mapData', this.computeMapSources(this.normalizeLayers(this.get('mapConfig.sources'))));
     }
+    console.log(this.get('mapData'));
     return new Promise((res, rej) => res(this.get('mapData')) );
   },
 
   normalizeLayers(sources) {
-    console.log(sources);
     sources.forEach( source => {
       let basename = Object.keys(source.topojson.objects)[0];
       Object.keys(source.topojson.objects).forEach( (k, i) => {

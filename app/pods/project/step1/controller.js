@@ -138,7 +138,6 @@ export default Ember.Controller.extend({
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
           this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
-          console.log(this.get('dictionary.data.maps'));
         });
     },
 
