@@ -496,7 +496,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   function processLayers() {
     var commands = [
       {name:"centroid", cmds: internal.parseCommands("-points centroid")},
-      {name:"line", cmds: internal.parseCommands("-innerlines")}
+      //{name:"line", cmds: internal.parseCommands("-innerlines")}
     ];
 
     return Sequence(getTargetLayers().map(function(target) {

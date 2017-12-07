@@ -109,9 +109,9 @@ var Store = Ember.Service.extend(Hookable, {
       return new Promise( (res, rej) => {
         let project = this.get('projects').find( p => p._uuid === uuid );
         if (project) {
+          project = Project.restore(project).then( p => res(p) ).catch(console.log);
           this.startVersioning(project);
           this.set('mounted', project);
-          Project.restore(project).then( p => res(p) ).catch(console.log);
         } else {
           res(false);
         }

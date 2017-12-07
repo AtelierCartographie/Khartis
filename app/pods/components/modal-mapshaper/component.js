@@ -54,12 +54,28 @@ var MapShaperModal = XModal.extend({
     return tuples.map( (tuple, i) => {
       let file = tuple.files[0];
       let json = JSON.parse(file.content);
+
+      //normalize names
+      let basename;
+      Object.keys(json.objects).forEach( (k, i) => {
+        let name;
+        if (i === 0) {
+          name = "poly";
+          basename = k;
+        } else {
+          name = k.replace(basename+"::", "");
+        }
+        json.objects[name] = json.objects[k];
+        json.objects[k] = undefined;
+      });
+      json.objects["poly-down"] = json.objects["poly"];
+
       return {
         id: file.filename,
         custom: true,
         attribution: "",
         sources: [
-          {topojson: json}
+          {topojson: json, projection: "d3.geoMercator()"}
         ],
         dictionary: {
           source: tuple.dict,
@@ -130,6 +146,10 @@ var MapShaperModal = XModal.extend({
         this.get('_promise').resolve(this.get('mapConfigs'));
         this.hide();
       }
+    },
+    downloadDebug(mc) {
+      let blob = new Blob([JSON.stringify(mc.sources[0].topojson)], {type: "application/octet-stream"});
+      saveAs(blob, mc.id);
     }
   }
 });
