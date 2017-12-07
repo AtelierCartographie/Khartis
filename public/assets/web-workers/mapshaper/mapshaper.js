@@ -18874,8 +18874,6 @@ api.runCommand = function(cmd, catalog, cb) {
 
     } else if (name == 'innerlines') {
       outputLayers = internal.applyCommand(api.innerlines, targetLayers, arcs, opts);
-      console.log(outputLayers);
-
     } else if (name == 'join') {
       internal.applyCommand(api.join, targetLayers, targetDataset, source, opts);
 

@@ -264,7 +264,7 @@ function Model() {
 function ImportControl(model, importedCb, noFilesCb, opts) {
 
   var queuedFiles = [];
-  var _importOpts = utils.defaults({no_topology: true, auto_snap: true}, opts);
+  var _importOpts = utils.defaults({no_topology: false, auto_snap: true}, opts);
 
   var receiveFiles = this.receiveFiles = function(files) {
     var prevSize = queuedFiles.length;
@@ -467,6 +467,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
             if (err) {
               handleExportError(err);
             } else {
+              console.log(tuples[0].files[0].content);
               exportCb(tuples);
             }
           });
@@ -495,8 +496,8 @@ var ExportControl = function(model, layerListCb, exportCb) {
 
   function processLayers() {
     var commands = [
-      {name:"centroid", cmds: internal.parseCommands("-points centroid")},
-      {name:"line", cmds: internal.parseCommands("-innerlines")}
+      {name:"line", cmds: internal.parseCommands("-innerlines")},
+      {name:"centroid", cmds: internal.parseCommands("-points centroid")}
     ];
 
     return Sequence(getTargetLayers().map(function(target) {
@@ -518,8 +519,10 @@ var ExportControl = function(model, layerListCb, exportCb) {
               dataset: copiedDs
             };
             model.addDataset(copiedDs);
+            console.log(copiedTgt);
             applyCommands(copiedTgt, command.cmds, function(outputTarget) {
               !outputTarget.layers && (outputTarget.layers = [outputTarget.layer]);
+              console.log(outputTarget);
               resSub(outputTarget);
             });
           });
@@ -548,7 +551,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
           postArcs = active2.dataset.arcs,
           postArcCount = postArcs ? postArcs.size() : 0,
           sameArcs = prevArcs == postArcs && postArcCount == prevArcCount;
-
+      console.log(active2);
       // restore default logging options, in case they were changed by the command
       internal.setStateVar('QUIET', false);
       internal.setStateVar('VERBOSE', false);
