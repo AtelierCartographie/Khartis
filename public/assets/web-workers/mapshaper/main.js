@@ -483,7 +483,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   }
 
   function simplify() {
-    var commands = internal.parseCommands("-simplify keep-shapes 10%");
+    var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes 1%");
     return Sequence(getTargetLayers().map(function(target) {
       return new Deffered(function(res, rej) {
         applyCommands(target, commands, function() {
@@ -496,7 +496,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   function processLayers() {
     var commands = [
       {name:"centroid", cmds: internal.parseCommands("-points centroid")},
-      //{name:"line", cmds: internal.parseCommands("-innerlines")}
+      {name:"line", cmds: internal.parseCommands("-innerlines")}
     ];
 
     return Sequence(getTargetLayers().map(function(target) {
