@@ -56,24 +56,11 @@ var ImportedBasemap = Basemap.extend({
   loadMapData() {
     console.log(this.get('mapConfig'));
     if (!this.get('mapData')) {
-        this.set('mapData', this.computeMapSources(this.normalizeLayers(this.get('mapConfig.sources'))));
+        this.set('mapData', this.computeMapSources(this.get('mapConfig.sources')));
     }
     console.log(this.get('mapData'));
     return new Promise((res, rej) => res(this.get('mapData')) );
   },
-
-  normalizeLayers(sources) {
-    sources.forEach( source => {
-      let basename = Object.keys(source.topojson.objects)[0];
-      Object.keys(source.topojson.objects).forEach( (k, i) => {
-        let name = i == 0 ? "poly" : k.replace(basename+"::", "");
-        source.topojson.objects[name] = source.topojson.objects[k];
-        source.topojson.objects[k] = undefined;
-      });
-      source.topojson.objects["poly-down"] = source.topojson.objects["poly"];
-    });
-    return sources;
-  },  
 
   computeMapSources(sources) {
     let parts = sources.map( (source, idx) => {
@@ -183,7 +170,7 @@ var ImportedBasemap = Basemap.extend({
 ImportedBasemap.reopenClass({
   
   restore(json, refs = {}) {
-    console.log("restore");
+    console.log("restore", json);
       let o = this._super(json, refs);
       o.setProperties({
         id: json.id,

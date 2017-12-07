@@ -31,8 +31,8 @@ let proj = function() {
           idx: projConfig.idx,
           fn: projConfig.projection,
           transforms: projConfig.transforms || {},
-          scale: projConfig.scale,
-          zoning: projConfig.zoning,
+          scale: projConfig.scale != null ? projConfig.scale : 1,
+          zoning: projConfig.zoning || [[0, 0], [1, 1]],
           bounds: projConfig.bounds,
           borders: projConfig.borders || [],
           instance: null
@@ -140,6 +140,7 @@ let proj = function() {
     },
 
     configure(mapData, width, height, fWidth, fHeight, margin) {
+      console.log(mapData);
       this.projs.forEach( projConfig => {
         this._configureProjection(
           projConfig,
@@ -183,7 +184,7 @@ let proj = function() {
     _instantiate(projConfig) {
       
       let d3Proj = Function("d3", `return ${projConfig.fn}`)(d3);
-
+      console.log(d3Proj.invert);
       !d3Proj.invert && (d3Proj.invert = solve(d3Proj));
       
       //apply projConfig initial transforms
@@ -197,8 +198,8 @@ let proj = function() {
     },
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
-
-      let zone = projConfig.zoning || [[0, 0], [1, 1]],
+      console.log(features);
+      let zone = projConfig.zoning,
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geoPath().projection(fProjection),
 
