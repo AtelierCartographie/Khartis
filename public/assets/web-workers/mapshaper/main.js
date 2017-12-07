@@ -483,7 +483,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   }
 
   function simplify() {
-    var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes 1%");
+    var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes 5%");
     return Sequence(getTargetLayers().map(function(target) {
       return new Deffered(function(res, rej) {
         applyCommands(target, commands, function() {
