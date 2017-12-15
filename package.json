@@ -74,7 +74,7 @@
     "khartis-build-tools": "git://github.com/AtelierCartographie/khartis-build-tools.git#master",
     "loader.js": "4.2.3",
     "text-encoding": "^0.5.2",
-    "topojson": "^1.6.24"
+    "topojson": "^3.0.2"
   },
   "dependencies": {
     "electron-compile": "^6.4.2",

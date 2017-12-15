@@ -41,8 +41,7 @@ var model;
 var exportControl;
 var importControl;
 
-var importedCb = function(layers) {
-  console.log("import -> ok");
+var importedCb = function() {
   exportControl.export();
 };
 
@@ -51,16 +50,16 @@ var noFilesCb = function() {
 };
 
 var listLayerCb = function(layers) {
+  console.log(layers);
   postMessage({action: "list-layers", layers});
 };
 
 var exportCb = function(tuples) {
   postMessage({action: "exported", tuples});
-}
+};
 
 self.addEventListener('message', function(e) {
 
-    console.log("message");
   var data = e.data;
   if (data.action === "init") {
     model = new Model();

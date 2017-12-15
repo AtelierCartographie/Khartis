@@ -45,7 +45,7 @@ var MapShaperModal = XModal.extend({
   layersCbx: function() {
     return this.get('layers').map(layer => Ember.Object.create({
       checked: true,
-      selectedPropKey: layer.propKeys[0],
+      selectedPropKey: (layer.propKeys.find( p => p.unique ) || layer.propKeys[0] || {field: null}).field,
       layer
     }) )
   }.property('layers.[]'),
@@ -68,7 +68,6 @@ var MapShaperModal = XModal.extend({
         json.objects[name] = json.objects[k];
         json.objects[k] = undefined;
       });
-      json.objects["poly-down"] = json.objects["poly"];
 
       return {
         id: file.filename,

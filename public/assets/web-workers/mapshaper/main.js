@@ -24,9 +24,11 @@ internal.writeFiles = function(files, opts, done) {
 };
 
 utils.isReadableFileType = function(filename) {
-  var ext = utils.getFileExtension(filename).toLowerCase();
-  return !!internal.guessInputFileType(filename) || internal.couldBeDsvFile(filename) ||
-    internal.isZipFile(filename);
+  var ext = utils.getFileExtension(filename).toLowerCase(),
+      fileType = internal.guessInputFileType(filename);
+      // APYX : ignore text files
+  return fileType !== "text" && (!!internal.guessInputFileType(filename) || internal.couldBeDsvFile(filename) ||
+    internal.isZipFile(filename));
 }
 
 utils.readZipFile = function(file, cb) {
@@ -463,6 +465,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
       targetLayers = layers;
       simplify().then(function() {
         return processLayers().then(function(targets) {
+          console.log(targets);
           exportTargets(targets, function(err, tuples) {
             if (err) {
               handleExportError(err);
@@ -495,21 +498,22 @@ var ExportControl = function(model, layerListCb, exportCb) {
   }
 
   function processLayers() {
+
     var commands = [
       {name:"line", cmds: internal.parseCommands("-innerlines")},
       {name:"centroid", cmds: internal.parseCommands("-points centroid")}
     ];
 
-    return Sequence(getTargetLayers().map(function(target) {
+    return Sequence(getTargetLayers().map(function(target, idx) {
       
       return new Deffered(function(resMain, rej) {
         Sequence(commands.map(function(command) {
           return new Deffered(function(resSub, rej) {
-            command.cmds.forEach(function(c) { c.options.target = "default"; });
+            command.cmds.forEach(function(c) { c.options.target = target.layers[0]._uuid; });
             var copiedDs = internal.copyDataset(target.dataset);
             var copiedTgt = {
               layers: copiedDs.layers.reduce(function(out, lyr, i) {
-                var oriLyr = target.layers.find(function(lyr2) {return lyr2.match_id === i});
+                var oriLyr = target.layers.find(function(lyr2) {return lyr2.match_id === idx+i});
                 if (oriLyr) {
                   lyr.name = oriLyr.name+"::"+command.name;
                   out.push(lyr);
@@ -519,10 +523,8 @@ var ExportControl = function(model, layerListCb, exportCb) {
               dataset: copiedDs
             };
             model.addDataset(copiedDs);
-            console.log(copiedTgt);
-            applyCommands(copiedTgt, command.cmds, function(outputTarget) {
+            applyCommands(target, command.cmds, function(outputTarget) {
               !outputTarget.layers && (outputTarget.layers = [outputTarget.layer]);
-              console.log(outputTarget);
               resSub(outputTarget);
             });
           });
@@ -551,7 +553,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
           postArcs = active2.dataset.arcs,
           postArcCount = postArcs ? postArcs.size() : 0,
           sameArcs = prevArcs == postArcs && postArcCount == prevArcCount;
-      console.log(active2);
+
       // restore default logging options, in case they were changed by the command
       internal.setStateVar('QUIET', false);
       internal.setStateVar('VERBOSE', false);
@@ -572,6 +574,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
         var tuple = {};
         opts = {};
         if (!opts.format) opts.format = getSelectedFormat();
+        console.log(subTargets);
         tuple.files = internal.exportTargetLayers(subTargets, opts);
         tuple.dict = internal.exportProperties(subTargets[0].layers[0].data, {});
         out.push(tuple);
@@ -591,10 +594,29 @@ var ExportControl = function(model, layerListCb, exportCb) {
       layers.push({
         _uuid: ++layerUUID,
         label: lyr.name || '[unnamed layer]',
-        propKeys: lyr.data.getFields()
+        propKeys: getPossibleKeys(lyr.data)
       })
     });
     return layers;
+  }
+
+  function getPossibleKeys(data) {
+    var fields = data.getFields(),
+        props = internal.exportProperties(data, {});
+    
+    return fields.map(f => {
+      return {
+        field: f,
+        unique: !props.some(function(seen, row) {
+          if (seen.indexOf(row[f]) == -1) {
+            seen.push(row[f]);
+            return false;
+          } else {
+            return true;
+          }
+        }.bind(props, []))
+      }
+    });
   }
 
   function getInputFormats() {
