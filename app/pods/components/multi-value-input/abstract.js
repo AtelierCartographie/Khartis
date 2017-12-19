@@ -278,7 +278,6 @@ export default Ember.Component.extend({
 
         focusLost: function (event) {
           setTimeout(() => {
-            console.log("focus lost", this.$(":focus").length, this.isDestroyed, !this.isDestroyed && !this.$(":focus").length);
             if (!this.isDestroyed && !this.$(":focus").length) {
                 this.hideSuggestions();
                 this.set('query', '');

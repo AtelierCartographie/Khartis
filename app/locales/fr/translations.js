@@ -110,7 +110,8 @@ export default {
         }
       },
       "editColumn": {
-        "unrecognizedColumns": "Certaines cellules n'ont pas été reconnues"
+        "unrecognizedColumns": "Certaines cellules n'ont pas été reconnues",
+        "autoCorrect": "correction auto."
       },
       "back": "importer de nouvelles données"
     }

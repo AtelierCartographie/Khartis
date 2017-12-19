@@ -108,7 +108,8 @@ export default {
         }
       },
       "editColumn": {
-        "unrecognizedColumns": "Einige Werte konnten wir nicht zuordnen"
+        "unrecognizedColumns": "Einige Werte konnten wir nicht zuordnen",
+        "autoCorrect": "auto correct"
       },
       "back": "Von vorne: Neue CSV-Datei importieren"
     }
