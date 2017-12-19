@@ -67,7 +67,7 @@ export const TolerentLevenshtein = function(a, b) {
     return Levenshtein(a, b);
 };
 
-const Levenshtein = function(a, b) {
+export const Levenshtein = function(a, b) {
     
   if(a.length == 0) return b.length; 
   if(b.length == 0) return a.length; 

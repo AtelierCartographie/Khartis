@@ -6,11 +6,9 @@ import {matcher as geoMatcher} from 'khartis/utils/geo-matcher';
 export default WrapperAbstract.extend({
 
   siblings: null,
-  basemap: null,
-
-  dictionary: function() {
-    return this.get('basemap.dictionaryData');
-  }.property('basemap'),
+  dictionary: null,
+  nameKey: null,
+  idKey: null,
 
   dictionaryValue: Ember.computed('obj.correctedValue', {
     get() {
@@ -19,33 +17,14 @@ export default WrapperAbstract.extend({
     },
     set(k,v) {
       if (v !== null) {
-        this.set('obj.correctedValue', v.get(this.get('basemap.mapConfig.dictionary.identifier')));
+        this.set('obj.correctedValue', v.get(this.get('idKey')));
       } else {
         this.set('obj.correctedValue', null);
       }
+      this.sendAction('manuallyEdited', this.get('obj'));
       return v;
     }
   }),
-  
-  nameKey: function() {
-
-    let ks = [
-      "name_ISO_"+this.get('i18n.locale').toUpperCase(),
-      "name_"+this.get('i18n.locale').toUpperCase(),
-      "Name",
-      "name",
-      "name_EN"
-    ];
-    
-    for (let k of ks) {
-      if (geoMatcher.keyCodes.indexOf(k) !== -1) {
-        return k;
-      }
-    }
-
-    return geoMatcher.keyCodes[0];
-
-  }.property('basemap', 'i18n.locale'),
   
   filterFields: function() {
     return Em.A(basemap.get('mapConfig.dictionary.identifier'), this.get('nameKey'));
