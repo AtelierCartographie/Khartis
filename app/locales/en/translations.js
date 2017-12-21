@@ -338,6 +338,7 @@ export default {
       "labels": "labels",
       "styles": "map layout",
       "sizes": "dimensions",
+      "legend": "legende",
       "export": "export"
     },
     "placeholder": {
@@ -348,7 +349,6 @@ export default {
     },
     "settings": {
       "labelling": {
-        "show": "show",
         "size": "size",
         "color": "color",
         "filter": "filter by",
@@ -356,9 +356,15 @@ export default {
         "chooseCategories": "choose",
         "threshold": "threshold",
         "selectAll": "select all",
-        "unselectAll": "unselect all"
+        "unselectAll": "unselect all",
       },
-      "legend": "legend",
+      "show": "show",
+      "reset": "reset",
+      "edit": "edit",
+      "legend": {
+        "chooseLegend": "choose"
+      },
+      "title": "titre",
       "width": "width",
       "height": "height",
       "borders": "borders",

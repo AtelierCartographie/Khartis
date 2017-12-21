@@ -335,6 +335,7 @@ export default {
       "labels": "Bezeichner",
       "styles": "Kartenstil",
       "sizes": "Größe",
+      "legend": "legende",
       "export": "Export"
     },
     "placeholder": {
@@ -345,7 +346,6 @@ export default {
     },
     "settings": {
       "labelling": {
-        "show": "Anzeigen",
         "size": "Größe",
         "color": "Farbe",
         "filter": "Filtern nach",
@@ -353,9 +353,15 @@ export default {
         "chooseCategories": "Bitte auswählen",
         "threshold": "Schwellenwert",
         "selectAll": "Alles auswählen",
-        "unselectAll": "Auswahl aufheben"
+        "unselectAll": "Auswahl aufheben",
       },
-      "legend": "Legende",
+      "show": "Anzeigen",
+      "reset": "reset",
+      "edit": "edit",
+      "legend": {
+        "chooseLegend": "choose"
+      },
+      "title": "titre",
       "width": "Breite",
       "height": "Höhe",
       "borders": "Rand",

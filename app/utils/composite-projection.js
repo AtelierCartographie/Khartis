@@ -1,10 +1,27 @@
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import {solve} from './d3-solve-invert-2';
+import proj4 from 'npm:proj4';
+
+const pi = Math.PI;
+const deg = 180/pi;
+const rad2deg = function(rad) { return rad * 180 / pi };
+const deg2rad = function(deg) { return deg * pi / 180 };
 
 function inside(bbox, x, y) {
   return x >= bbox[0][0] && x <= bbox[1][0]
   && y <= bbox[0][1] && y >= bbox[1][1];
+}
+
+function wkt2Proj(wkt) {
+  let proj4Proj = proj4(wkt),
+      projection = function(lambda, phi) {
+        return proj4Proj.forward([lambda, phi].map(rad2deg));
+      };
+  projection.invert = function(x, y) {
+    return proj4Proj.inverse([x, y]).map(deg2rad);
+  }
+  return d3.geoProjection(projection);
 }
 
 let proj = function() {
@@ -26,10 +43,11 @@ let proj = function() {
     isValid: false,
 
     set projections(projs) {
-      this.projs = projs.map( projConfig => ( 
+      console.log(projs);
+      this.projs = projs.map( projConfig => (
         {
           idx: projConfig.idx,
-          fn: projConfig.projection,
+          fn: projConfig.wkt ? wkt2Proj(projConfig.wkt) : projConfig.projection,
           transforms: projConfig.transforms || {},
           scale: projConfig.scale != null ? projConfig.scale : 1,
           zoning: projConfig.zoning || [[0, 0], [1, 1]],
@@ -140,7 +158,6 @@ let proj = function() {
     },
 
     configure(mapData, width, height, fWidth, fHeight, margin) {
-      console.log(mapData);
       this.projs.forEach( projConfig => {
         this._configureProjection(
           projConfig,
@@ -183,8 +200,9 @@ let proj = function() {
 
     _instantiate(projConfig) {
       
-      let d3Proj = Function("d3", `return ${projConfig.fn}`)(d3);
-      console.log(d3Proj.invert);
+      console.log(projConfig, typeof projConfig.fn);
+      let d3Proj = typeof projConfig.fn === "function" ? projConfig.fn : Function("d3", `return ${projConfig.fn}`)(d3);
+
       !d3Proj.invert && (d3Proj.invert = solve(d3Proj));
       
       //apply projConfig initial transforms
@@ -198,7 +216,7 @@ let proj = function() {
     },
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
-      console.log(features);
+
       let zone = projConfig.zoning,
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geoPath().projection(fProjection),

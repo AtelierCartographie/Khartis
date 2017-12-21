@@ -15,7 +15,7 @@
       {{#if model.hasLabelling}}
       {{#each model.labellingLayers as |layer|}}
         <div class="horizontal middle flow">
-          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.show')}}</label>
+          <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
           <div class="horizontal solid half-airy flow w8">
             <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
               {{#x-dropdown-plus as |facet|}}
@@ -117,7 +117,7 @@
       {{else}}
 
       <div class="horizontal middle flow">
-        <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.show')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
         <div class="horizontal solid half-airy flow w8">
           <a {{action 'toggleLabellingVisibility'}}><i class="iconfont {{if model.hasLabelling 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
@@ -126,16 +126,55 @@
       {{/if}}
     </div>
 
-    <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
+  {{#if model.graphLayers.length}}
+    <div class="title underlined">{{x-capitalize (t 'export.title.legend')}}</div>
     <div class="settings vertical flow">
-      {{#if model.graphLayers.length}}
       <div class="horizontal middle flow">
-        <label class="solid w4">{{x-capitalize (t 'export.settings.legend')}}</label>
-        <div class="horizontal solid half-airy flow w7">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
+        <div class="horizontal solid half-airy flow w3">
           <a {{action 'toggleLegendVisibility'}}><i class="iconfont {{if model.graphLayout.showLegend 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.reset')}}</label>
+        <div class="horizontal solid half-airy flow w1">
+          <a {{action 'resetLegendSettings'}}><i class="iconfont iconfont-undo"></i></a>
+        </div>
+      </div>
+      {{#o-wrap/legend-settings as |settings|}}
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.edit')}}</label>
+        <div class="horizontal solid flow w5">
+          {{#x-dropdown-plus as |facet|}}
+            {{#facet.trigger class="horizontal space-between flow filled padded-l on-white"}}
+              {{#if settings.obj}}
+                {{settings.obj.mapping.varCol.header.value}}
+              {{else}}
+                {{x-capitalize (t 'export.settings.legend.chooseLegend')}}
+              {{/if}}
+              <i class="iconfont iconfont-angle-down"></i>
+            {{/facet.trigger}}
+            {{#facet.list}}
+              {{#each model.graphLayers as |layer|}}
+              <li {{action 'editLayerLegend' layer target=settings}} class="horizontal middle airy flow">
+                <div classs="fluid padded-h">{{layer.mapping.varCol.header.value}}</div>
+              </li>
+              {{/each}}
+            {{/facet.list}}
+          {{/x-dropdown-plus}}
+        </div>
+      </div>
+      {{#if settings.obj}}
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.title')}}</label>
+        {{input value=settings.legendTitle}}
       </div>
       {{/if}}
+      {{/o-wrap/legend-settings}}
+    </div>
+    {{/if}}
+
+
+    <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
+    <div class="settings vertical flow">
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.borders')}}</label>
         <div class="horizontal solid half-airy flow w7">

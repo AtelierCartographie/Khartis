@@ -336,6 +336,7 @@ export default {
   "export": {
     "title": {
       "labels": "étiquettes",
+      "legend": "légende",
       "styles": "habillage de la carte",
       "sizes": "dimensions",
       "export": "export"
@@ -348,7 +349,6 @@ export default {
     },
     "settings": {
       "labelling": {
-        "show": "afficher",
         "size": "taille",
         "color": "couleur",
         "filter": "filtrer selon",
@@ -356,9 +356,15 @@ export default {
         "chooseCategories": "choisir",
         "threshold": "seuil",
         "selectAll": "tout cocher",
-        "unselectAll": "tout décocher"
+        "unselectAll": "tout décocher",
       },
-      "legend": "légende",
+      "show": "afficher",
+      "reset": "réinitialiser",
+      "edit": "Éditer",
+      "legend": {
+        "chooseLegend": "choisir"
+      },
+      "title": "titre",
       "width": "largeur",
       "height": "hauteur",
       "borders": "frontières ou limites",

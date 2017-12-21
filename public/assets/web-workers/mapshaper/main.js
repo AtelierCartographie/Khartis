@@ -463,14 +463,13 @@ var ExportControl = function(model, layerListCb, exportCb) {
   this.export = function(layers) {
     if (layers) {
       targetLayers = layers;
-      simplify().then(function() {
+      simplify().then(function(simplifyPcts) {
         return processLayers().then(function(targets) {
-          console.log(targets);
           exportTargets(targets, function(err, tuples) {
             if (err) {
               handleExportError(err);
             } else {
-              console.log(tuples[0].files[0].content);
+              tuples.forEach( (tuple, i) => tuple.simplifyPct = simplifyPcts[i] );
               exportCb(tuples);
             }
           });
@@ -486,12 +485,26 @@ var ExportControl = function(model, layerListCb, exportCb) {
     console.log(Array.prototype.slice.apply(arguments).join(" "));
   }
 
-  function simplify() {
-    var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes 5%");
+
+  function simplify(pct) {
+    pct = pct || 100;
+    var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes "+pct+"%");
     return Sequence(getTargetLayers().map(function(target) {
       return new Deffered(function(res, rej) {
-        applyCommands(target, commands, function() {
-          res();
+        //console.log("out", internal.calcSimplifyStats(target.dataset.arcs));
+        applyCommands(target, commands, function(out) {
+          let stats = internal.calcSimplifyStats(out.dataset.arcs);
+          if (stats.retained > 15000) {
+            if (pct > Math.round(15000 / stats.uniqueCount * 100) + 1) {
+              pct = Math.round(15000 / stats.uniqueCount * 100 + 1);
+            }
+            simplify(pct - 1)
+              .then(function() {
+                res(pct - 1);
+              });
+          } else {
+            res(pct);
+          }
         });
       });
     }));
@@ -574,9 +587,9 @@ var ExportControl = function(model, layerListCb, exportCb) {
         var tuple = {};
         opts = {};
         if (!opts.format) opts.format = getSelectedFormat();
-        console.log(subTargets);
         tuple.files = internal.exportTargetLayers(subTargets, opts);
         tuple.dict = internal.exportProperties(subTargets[0].layers[0].data, {});
+        tuple.proj4Wkt = internal.getProjInfo(subTargets[0].dataset);
         out.push(tuple);
         return out;
       }, []);
