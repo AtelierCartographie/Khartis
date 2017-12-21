@@ -463,13 +463,17 @@ var ExportControl = function(model, layerListCb, exportCb) {
   this.export = function(layers) {
     if (layers) {
       targetLayers = layers;
+      var projections = extractProjections(getTargetLayers());
       simplify().then(function(simplifyPcts) {
         return processLayers().then(function(targets) {
           exportTargets(targets, function(err, tuples) {
             if (err) {
               handleExportError(err);
             } else {
-              tuples.forEach( (tuple, i) => tuple.simplifyPct = simplifyPcts[i] );
+              tuples.forEach( (tuple, i) => {
+                tuple.simplifyPct = simplifyPcts[i]
+                tuple.proj4Wkt = projections[i];
+              });
               exportCb(tuples);
             }
           });
@@ -483,6 +487,10 @@ var ExportControl = function(model, layerListCb, exportCb) {
   function handleExportError(e) {
     console.log(e, e.stack);
     console.log(Array.prototype.slice.apply(arguments).join(" "));
+  }
+
+  function extractProjections(targets) {
+    return targets.map( tgt => internal.getProjInfo(tgt.dataset) );
   }
 
 
@@ -589,7 +597,6 @@ var ExportControl = function(model, layerListCb, exportCb) {
         if (!opts.format) opts.format = getSelectedFormat();
         tuple.files = internal.exportTargetLayers(subTargets, opts);
         tuple.dict = internal.exportProperties(subTargets[0].layers[0].data, {});
-        tuple.proj4Wkt = internal.getProjInfo(subTargets[0].dataset);
         out.push(tuple);
         return out;
       }, []);
