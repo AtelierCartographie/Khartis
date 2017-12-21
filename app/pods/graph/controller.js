@@ -582,6 +582,12 @@ export default Ember.Controller.extend({
     setBlindnessMode(mode) {
       this.set('model.blindnessMode', mode);
     },
+
+    resetLegendSettings() {
+      this.get('model.graphLayers').forEach( layer => {
+        layer.set('legendTitle', null);
+      });
+    },
     
     next() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);

@@ -51,7 +51,7 @@
           Les fichiers ont bien été traités, voulez-vous les importer ?
           <br/><br/><b>DEBUG</b><br/>
           {{#each mapConfigs as |mc|}}
-            <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a><br/>
+            <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
           {{/each}}
           {{/if}}
             

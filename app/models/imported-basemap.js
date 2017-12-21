@@ -54,11 +54,9 @@ var ImportedBasemap = Basemap.extend({
   },
 
   loadMapData() {
-    console.log(this.get('mapConfig'));
     if (!this.get('mapData')) {
         this.set('mapData', this.computeMapSources(this.get('mapConfig.sources')));
     }
-    console.log(this.get('mapData'));
     return new Promise((res, rej) => res(this.get('mapData')) );
   },
 

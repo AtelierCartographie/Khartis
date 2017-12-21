@@ -74,12 +74,13 @@ var MapShaperModal = XModal.extend({
         custom: true,
         attribution: "",
         sources: [
-          {topojson: json, projection: "d3.geoMercator()"}
+          {topojson: json, projection: "wkt", wkt: tuple.proj4Wkt}
         ],
         dictionary: {
           source: tuple.dict,
           identifier: this.get('dictIds')[i]
-        }
+        },
+        _debug_simplify: tuple.simplifyPct
       }
     });
   },
