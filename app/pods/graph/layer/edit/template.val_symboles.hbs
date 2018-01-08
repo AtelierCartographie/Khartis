@@ -207,7 +207,7 @@
                 <span class="varname">{{rule.label}}</span><span>({{rule.qty}})</span>
               {{/if}}
             </div>
-            <div class="solid w4 text-right no-drag">
+            <div class="solid horizontal right flow w4 no-drag">
               <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
               {{color-picker value=rule.color}}
             </div>
