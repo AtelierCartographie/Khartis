@@ -172,14 +172,15 @@ export default Ember.Mixin.create({
         .classed("legend-content", true);
     }
     
-    containerG.attr("kis:kis:flow-css", "flow: horizontal; padding-left: 5; height: 500; width: "+width);  
+    containerG.flowClass("horizontal flow")
+      .flowStyle( `padding-left: 5px; height: 500px; width: ${width}px`);
     
     let bindLayer = (_) => {
       
-      _.attr("kis:kis:flow-css", "flow: vertical; stretch: true; margin-right: 34; margin-top: 16");
+      _.flowClass("vertical stretched flow").flowStyle("margin-right: 34px; margin-top: 16px");
       
       _.each( function(d, i) {
-        
+
         let el = d3.select(this),
             xOrigin = (d.get('mapping.visualization.mainType') === "symbol" ?
               SymbolMaker.symbol({name: d.get('mapping.visualization.shape'), size: d.get('mapping.visualization.maxSize')}).getSize().x : 10),
@@ -189,10 +190,10 @@ export default Ember.Mixin.create({
         el.selectAll("*").remove();
           
         let label = el.append("g")
-          .attr("kis:kis:flow-css", "margin-bottom: 16")
+          .flowStyle("margin-bottom: 16px")
           .classed("no-drag", true)
+          .flowInclude()
           .append("text")
-          .attr("kis:kis:flow-css", "wrap-text: true; max-width: 350px")
           .classed("legend-title", true)
           .attr("transform", d3lper.translate({tx: -xOrigin/2}))
           .styles({
@@ -201,6 +202,8 @@ export default Ember.Mixin.create({
           });
         
         label.text(d.get('legendTitleComputed'));
+ 
+        d3lper.wrapText(label.node(), 200);
 
         label.on("click", function() {
           if (d3.event.defaultPrevented) return;
@@ -211,7 +214,7 @@ export default Ember.Mixin.create({
           
         //re-calcul de l'offset du texte si il y a des rules symboles
         if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.mainType') === "symbol") {
-          xOrigin = Math.max.apply(null, [xOrigin].concat(d.get('mapping.rules').map( r => r.get('size') )));
+          xOrigin = Math.max.apply(null, [xOrigin].concat(d.get('mapping.rules').filter( r => r.get('visible') && r.get('shape') ).map( r => r.get('size') )));
           textOffset = xOrigin + 16;
         }
 
@@ -243,19 +246,18 @@ export default Ember.Mixin.create({
                 update: (sel) => sel.eachWithArgs(fn, svg, d, textOffset, formatter)
               });
           }
-            
           if (d.get('mapping.rules').length) {
             
             el.append("g")
-              .attr("kis:kis:flow-css", "margin-top: 10; margin-bottom: 10")
-              .append("line")
-                .attrs({
-                  x1: 0,
-                  y1: 0,
-                  x2: 50,
-                  y2: 0,
-                  stroke: "#BBBBBB"
-                });
+            .flowStyle("margin-top: 10px; margin-bottom: 10px")
+            .append("line")
+            .attrs({
+              x1: 0,
+              y1: 0,
+              x2: 50,
+              y2: 0,
+              stroke: "#BBBBBB"
+            });
             
           }
           
@@ -263,7 +265,7 @@ export default Ember.Mixin.create({
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
           el.selectAll("g.rule")
-            .data(d.get('mapping.rules').filter( r => r.get('visible') && r.get('shape') ).slice(0, 10))
+            .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, 10))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
               update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, textOffset, formatter)
@@ -296,15 +298,14 @@ export default Ember.Mixin.create({
           
     let r = {x: 24/2, y: 16/2};
 
-    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
+    d3.select(this).flowClass("horizontal solid stretched flow")
+      .flowStyle(`height: ${2*r.y}px; index: ${i};`);
         
-    let g = d3.select(this).append("g")
-      .attr("kis:kis:flow-css", `margin-right: -${r.x}px`);
+    let g = d3.select(this).append("g");
     
     //border
     g.append("rect")
       .attrs({
-        "transform": d3lper.translate({tx: -r.x, ty: 0}),
         "width": 2*r.x,
         "height": 2*r.y,
         y: 0,
@@ -315,7 +316,6 @@ export default Ember.Mixin.create({
 
     g.append("rect")
       .attrs({
-        "transform": d3lper.translate({tx: -r.x, ty: 0}),
         "width": 2*r.x,
         "height": 2*r.y,
         y: 0,
@@ -336,14 +336,15 @@ export default Ember.Mixin.create({
         "stroke-width": 0
       });
       
-    g = d3.select(this).append("g");
+    g = d3.select(this).append("g")
+      .flowStyle("margin-left: 3px;");
       
     if (i === 0) {
       
       g.append("text")
         .text( formatter(d.get('mapping.extent')[0]) )
         .attrs({
-          x: textOffset - 12,
+          x: textOffset,
           y:  0,
           dy: "0.3em",
           "font-size": "0.75em"
@@ -354,7 +355,7 @@ export default Ember.Mixin.create({
     g.append("text")
       .text( v => formatter(v) )
       .attrs({
-        x: textOffset - 12,
+        x: textOffset,
         y: 2*r.y,
         dy: "0.3em",
         "font-size": "0.75em"
@@ -382,12 +383,18 @@ export default Ember.Mixin.create({
         
       dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+      d3.select(this).flowClass("horizontal stretched solid flow").flowStyle(`height: ${symH}px; margin-bottom: 4px`);
 
       let g = d3.select(this).append("g")
-        .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}; width: ${r.anchorX}px`);
+        .flowComputed("margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+            .nodes().map( n => n.getBoundingClientRect().width);
+          return Math.max.apply(undefined, widths)/2+"px";
+        })
+        .flowStyle(`width:${textOffset}px`);
 
       let symG = g.append("g")
+        .classed("symG", true)
         .attr("transform", d3lper.translate({ty: r.anchorY - dy/2}));
 
       symbol.insert(symG)
@@ -398,29 +405,38 @@ export default Ember.Mixin.create({
           "fill": d.get('mapping').getScaleOf('color')(val),
           "opacity": d.get('opacity')
         });
+
     } else {
+
       r = {x: 20, y: 12, anchorY: 12};
       dy = 0;
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; margin-bottom: 4px`);
+
+      d3.select(this).flowClass("horizontal stretched solid flow")
+        .flowStyle(`height: ${2*r.y}px; margin-bottom: 4px`);
 
       let g = d3.select(this).append("g")
-        .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
+        .flowComputed("margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+            .nodes().map( n => n.getBoundingClientRect().width);
+          return Math.max.apply(undefined, widths)/2+"px";
+        })
+        .flowStyle(`width:${textOffset}px`);
 
       g.append("line")
         .attrs({
-          x1: 0,
-          y1: r.y - dy/2,
-          x2: r.x,
-          y2: r.y - dy/2,
+          x1: -r.x / 2,
+          y1: r.y,
+          x2: r.x / 2,
+          y2: r.y,
           stroke: "#BBBBBB"
         });
     }
 
     d3.select(this).append("g")
+      .flowInclude()
       .append("text")
       .text( v => formatter(v) )
       .attrs({
-        x: textOffset,
         y: r.anchorY - dy/2,
         dy: "0.3em",
         "font-size": "0.75em"
@@ -440,14 +456,27 @@ export default Ember.Mixin.create({
     let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12),
         dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+    d3.select(this).flowClass("horizontal solid stretched flow")
+      .flowStyle(`position: relative; height: ${symH}px; margin-bottom: 4px`);
 
     if (!(r.x > 0 && r.y > 0)) return;
 
     let g = d3.select(this).append("g")
-      .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}px; width: ${r.anchorX}px`);
+      .flowComputed("margin-left", function() {
+        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, widths)/2+"px";
+      })
+      .flowComputed("width", function() {
+        let symWidths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map( n => n.getBoundingClientRect().width);
+        let textWidths = d3.select(this.parentElement.parentElement).selectAll("text.symText")
+          .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, textWidths)+textOffset+"px";
+      });
     
     let symG = g.append("g")
+      .classed("symG", true)
       .attr("transform", d3lper.translate({ty: r.anchorY+d.get('mapping.visualization.stroke')/2 - dy/2}));
 
     symbol.insert(symG)
@@ -459,7 +488,13 @@ export default Ember.Mixin.create({
         "opacity": d.get('opacity')
       });
       
-    g = d3.select(this).append("g");
+    g = d3.select(this).append("g")
+      .flowClass("outer fluid")
+      .flowComputed("margin-left", function() {
+        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, widths)/2+"px";
+      })
       
     if (i === 0) {
       
@@ -472,6 +507,7 @@ export default Ember.Mixin.create({
       });
       
       g.append("text")
+        .classed("symText", true)
         .text( formatter(d.get('mapping.extent')[1]) )
         .attrs({
           x: textOffset,
@@ -491,6 +527,7 @@ export default Ember.Mixin.create({
       });
     
     g.append("text")
+      .classed("symText", true)
       .text( v => formatter(v) )
       .attrs({
         x: textOffset,
@@ -526,7 +563,8 @@ export default Ember.Mixin.create({
         
       let dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; margin-right: 2px`);
+      d3.select(this).flowClass("horizontal solid")
+        .flowStyle(`height: ${symH}px; margin-right: 2px`);
 
       let symG = d3.select(this).append("g");
 
@@ -614,8 +652,7 @@ export default Ember.Mixin.create({
       .scale(customScale())
       .ticks(6);
 
-    axisG.attr("transform", "translate(-3, 0)")
-		  .call(yAxis);
+    axisG.call(yAxis);
 
     /*//add value break axis
     let rValueBreak = d.get('mapping').getScaleOf('size')(d.get('mapping.scale.valueBreak'))*2;
@@ -629,10 +666,10 @@ export default Ember.Mixin.create({
       });*/
 
     let width = intervals.length * (d.get('mapping.visualization.barWidth')*(1+0.25));
-    barG.attr("kis:kis:flow-css", `flow: horizontal; width: ${width}px`);
-    axisG.attr("kis:kis:flow-css", `margin-left: 5px`);
-    g.attr("kis:kis:flow-css", `flow: horizontal; height: ${maxHeight-minHeight}; width: ${width+20}px; margin-top: ${-minHeight+10}px`);
-    el.attr("kis:kis:flow-css", `flow: vertical; width: ${width+48}px; margin-right: 42; margin-top: 16`);
+    barG.flowClass("horizontal flow");
+    axisG.flowStyle(`margin-left: 5px`);
+    g.flowClass("horizontal flow").flowStyle(`margin-top: ${-minHeight+10}px`);
+    el.flowClass("vertical flow").flowStyle(`margin-right: 42px; margin-top: 16px`);
   },
 
   appendRuleLabel(svg, d, textOffset, formatter, rule, i) {
@@ -652,12 +689,19 @@ export default Ember.Mixin.create({
 
       let symH = r.y + d.get('mapping.visualization.stroke');
       
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
+      d3.select(this).flowClass("horizontal stretched solid flow")
+        .flowStyle(`height: ${symH}px; margin-bottom: 4px`);
 
       let g = d3.select(this).append("g")
-        .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}px; width: ${r.anchorX}px`);
+        .flowStyle(`width: ${textOffset}px`)
+        .flowComputed("margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+            .nodes().map( n => n.getBoundingClientRect().width);
+          return Math.max.apply(undefined, widths)/2+"px";
+        });
       
       let symG = g.append("g")
+        .classed("symG", true)
         .attr("transform", d3lper.translate({ty: r.anchorY}));
 
       symbol.insert(symG)
@@ -671,22 +715,20 @@ export default Ember.Mixin.create({
         
     } else {
       
-      textOffset = 0;
-      
       r = {x: 24, y: 16};
-      
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${r.y}px; margin-bottom: 4px`);
+
+      d3.select(this).flowClass("horizontal stretched solid flow")
+        .flowStyle(`height: ${r.y}px; margin-bottom: 4px`);
       
       let pattern = converter(rule, "texture");
       
       let g = d3.select(this).append("g")
-        .attr("kis:kisflow-css", `width: ${r.x/2}px`);
+        .flowStyle(`width: ${textOffset}px; margin-right: 3px`);
       
       g.append("rect")
         .attrs({
           "width": r.x,
           "height": r.y,
-          "transform": d3lper.translate({tx: -r.x/2, ty: 0}),
           "stroke": "#CCCCCC",
           "fill": "none"
         });
@@ -695,7 +737,6 @@ export default Ember.Mixin.create({
         .attrs({
           "width": r.x,
           "height": r.y,
-          "transform": d3lper.translate({tx: -r.x/2, ty: 0}),
           "fill": () => {
           
             let color = rule.get('color');
@@ -713,10 +754,11 @@ export default Ember.Mixin.create({
     }
     
     d3.select(this).append("g")
+      .flowInclude()
       .append("text")
       .text( rule.get('label') )
       .attrs({
-        x: textOffset,
+        x: 0,
         y: r.y/2,
         dy: "0.3em",
         "font-size": "0.75em"
