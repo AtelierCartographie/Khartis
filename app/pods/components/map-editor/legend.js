@@ -173,7 +173,7 @@ export default Ember.Mixin.create({
     }
     
     containerG.flowClass("horizontal flow")
-      .flowStyle( `padding-left: 5px; height: 500px; width: ${width}px`);
+      .flowStyle(`padding-left: 5px; height: 500px;`);
     
     let bindLayer = (_) => {
       
@@ -190,15 +190,18 @@ export default Ember.Mixin.create({
         el.selectAll("*").remove();
           
         let label = el.append("g")
-          .flowStyle("margin-bottom: 16px")
+          .flowStyle("margin-bottom: 16px; margin-left: 50%")
+          // .flowComputed("margin-left", function() {
+          //   console.log("recompute -> "+this.parentElement.getBoundingClientRect().width/2);
+          //   return this.parentElement.getBoundingClientRect().width/2+"px";
+          // })
           .classed("no-drag", true)
-          .flowInclude()
           .append("text")
           .classed("legend-title", true)
-          .attr("transform", d3lper.translate({tx: -xOrigin/2}))
           .styles({
             "font-size": "14px",
-            "font-weight": "bold"
+            "font-weight": "bold",
+            "text-anchor": "middle"
           });
         
         label.text(d.get('legendTitleComputed'));
