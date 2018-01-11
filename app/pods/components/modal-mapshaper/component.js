@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import XModal from '../x-modal/component';
+import ImportedBasemap from 'khartis/models/imported-basemap';
 
 var MapShaperModal = XModal.extend({
 
@@ -8,7 +9,7 @@ var MapShaperModal = XModal.extend({
   classNames: ["modal", "fade", "confirm"],
   name: 'modal-mapshaper',
   _promise: null,
-
+  preventBackdropClick: true,
   model: null,
   workerStream: null,
   layers: null,
@@ -50,6 +51,7 @@ var MapShaperModal = XModal.extend({
     }) )
   }.property('layers.[]'),
 
+<<<<<<< HEAD
   buildMapConfigs(tuples) {
     return tuples.map( (tuple, i) => {
       let file = tuple.files[0];
@@ -84,13 +86,20 @@ var MapShaperModal = XModal.extend({
       }
     });
   },
+=======
+  
+>>>>>>> df209dc14321f59dc7d72d983fa729379ddf0bb6
 
   onImportWorkerMessage(data) {
     if (data.action === "list-layers") {
       this.set('layers', data.layers);
       this.set('state', "layers");
     } else if (data.action === "exported") {
+<<<<<<< HEAD
       this.set('mapConfigs', this.buildMapConfigs(data.tuples));
+=======
+      this.set('mapConfigs', ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds')));
+>>>>>>> df209dc14321f59dc7d72d983fa729379ddf0bb6
       this.set('state', 'finish');
     }
   },

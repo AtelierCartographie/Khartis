@@ -166,9 +166,43 @@ var ImportedBasemap = Basemap.extend({
 });
 
 ImportedBasemap.reopenClass({
+
+  buildMapConfigs(tuples, dictIds) {
+    return tuples.map( (tuple, i) => {
+      let file = tuple.files[0];
+      let json = JSON.parse(file.content);
+
+      //normalize names
+      let basename;
+      Object.keys(json.objects).forEach( (k, i) => {
+        let name;
+        if (i === 0) {
+          name = "poly";
+          basename = k;
+        } else {
+          name = k.replace(basename+"::", "");
+        }
+        json.objects[name] = json.objects[k];
+        json.objects[k] = undefined;
+      });
+
+      return {
+        id: file.filename,
+        custom: true,
+        attribution: "",
+        sources: [
+          {topojson: json, projection: "wkt", wkt: tuple.proj4Wkt}
+        ],
+        dictionary: {
+          source: tuple.dict,
+          identifier: dictIds[i]
+        },
+        _debug_simplify: tuple.simplifyPct
+      }
+    });
+  },
   
   restore(json, refs = {}) {
-    console.log("restore", json);
       let o = this._super(json, refs);
       o.setProperties({
         id: json.id,

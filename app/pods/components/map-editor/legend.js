@@ -173,19 +173,19 @@ export default Ember.Mixin.create({
         .classed("legend-content", true);
     }
 
-    let flowLayout = new FlowLayout(containerG, orientation);
+    let flowLayout = new FlowLayout(containerG, `g-${orientation}`);
     
     containerG.flowClass("flow")
-      .flowClass("v-mode", "horizontal")
-      .flowClass("h-mode", "vertical")
+      .flowClass("g-v-mode", "horizontal")
+      .flowClass("g-h-mode", "vertical")
       .flowStyle(`padding-left: 5px;`);
     
     let bindLayer = (_) => {
 
       _.flowClass("stretched vertical flow")
         .flowStyle("margin-top: 16px")
-        .flowStyle("v-mode", "margin-right: 34px")
-        .flowStyle("h-mode", "margin-bottom: 34px");
+        .flowStyle("g-v-mode", "margin-right: 34px")
+        .flowStyle("g-h-mode", "margin-bottom: 34px");
       
       _.each( function(d, i) {
 
@@ -199,7 +199,7 @@ export default Ember.Mixin.create({
           
         let label = el.append("g")
           .flowStyle("margin-bottom: 16px")
-          .flowStyle("v-mode", "margin-left: 50%")
+          .flowStyle("g-v-mode", "margin-left: 50%")
           .classed("no-drag", true)
           .append("text")
           .classed("legend-title", true)
@@ -229,7 +229,8 @@ export default Ember.Mixin.create({
         let contentEl = el.append("g")
           .flowClass("stretched flow")
           .flowClass("h-mode", "horizontal")
-          .flowClass("v-mode", "vertical");
+          .flowClass("v-mode", "vertical")
+          .flowState(orientation);
 
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           

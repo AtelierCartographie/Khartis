@@ -490,7 +490,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   }
 
   function extractProjections(targets) {
-    return targets.map( tgt => internal.getProjInfo(tgt.dataset) );
+    return targets.map( tgt => internal.getProjInfo(taggedTemplateExpression.dataset) );
   }
 
 

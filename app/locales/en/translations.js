@@ -367,6 +367,11 @@ export default {
       "title": "titre",
       "width": "width",
       "height": "height",
+      "orientation": {
+        "title": "orientation",
+        "horizontal": "horizontal",
+        "vertical": "vertical"
+      },
       "borders": "borders",
       "grid": "graticules",
       "background": "basemap",
