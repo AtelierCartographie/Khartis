@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import XModal from '../x-modal/component';
+import ImportedBasemap from 'khartis/models/imported-basemap';
 
 var MapShaperModal = XModal.extend({
 
@@ -8,7 +9,7 @@ var MapShaperModal = XModal.extend({
   classNames: ["modal", "fade", "confirm"],
   name: 'modal-mapshaper',
   _promise: null,
-
+  preventBackdropClick: true,
   model: null,
   workerStream: null,
   layers: null,
@@ -50,47 +51,14 @@ var MapShaperModal = XModal.extend({
     }) )
   }.property('layers.[]'),
 
-  buildMapConfigs(tuples) {
-    return tuples.map( (tuple, i) => {
-      let file = tuple.files[0];
-      let json = JSON.parse(file.content);
-
-      //normalize names
-      let basename;
-      Object.keys(json.objects).forEach( (k, i) => {
-        let name;
-        if (i === 0) {
-          name = "poly";
-          basename = k;
-        } else {
-          name = k.replace(basename+"::", "");
-        }
-        json.objects[name] = json.objects[k];
-        json.objects[k] = undefined;
-      });
-
-      return {
-        id: file.filename,
-        custom: true,
-        attribution: "",
-        sources: [
-          {topojson: json, projection: "wkt", wkt: tuple.proj4Wkt}
-        ],
-        dictionary: {
-          source: tuple.dict,
-          identifier: this.get('dictIds')[i]
-        },
-        _debug_simplify: tuple.simplifyPct
-      }
-    });
-  },
+  
 
   onImportWorkerMessage(data) {
     if (data.action === "list-layers") {
       this.set('layers', data.layers);
       this.set('state', "layers");
     } else if (data.action === "exported") {
-      this.set('mapConfigs', this.buildMapConfigs(data.tuples));
+      this.set('mapConfigs', ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds')));
       this.set('state', 'finish');
     }
   },

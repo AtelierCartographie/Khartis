@@ -364,6 +364,11 @@ export default {
       "title": "titre",
       "width": "Breite",
       "height": "Höhe",
+      "orientation": {
+        "title": "orientation",
+        "horizontal": "horizontal",
+        "vertical": "vertical"
+      },
       "borders": "Rand",
       "grid": "Raster",
       "background": "Basiskarte",

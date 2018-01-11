@@ -176,7 +176,7 @@ export default Ember.Mixin.create({
     
     let bindLayer = (_) => {
       
-      _.attr("kis:kis:flow-css", "flow: vertical; stretch: true; margin-right: 34; margin-top: 16");
+      _.attr("kis:kis:flow-css", d => `flow: vertical; stretch: true; margin-right: 34; margin-top: 16`);
       
       _.each( function(d, i) {
         
@@ -208,6 +208,9 @@ export default Ember.Mixin.create({
             d.set('legendTitle', val);
           });
         });
+
+        let dataEl = el.append("g")
+          .attr("kis:kis:flow-css", `flow: ${d.legendOrientation}; cross-align: ${d.legendOrientation === "horizontal" ? "middle":"top"}; stretch: true;`);
           
         //re-calcul de l'offset du texte si il y a des rules symboles
         if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.mainType') === "symbol") {
@@ -234,9 +237,9 @@ export default Ember.Mixin.create({
           }
           
           if (d.get('mapping.visualization.shape') === "bar") {
-            self.appendBarIntervals(el, intervals, d, formatter);
+            self.appendBarIntervals(dataEl, intervals, d, formatter);
           } else {
-            el.selectAll("g.row")
+            dataEl.selectAll("g.row")
               .data(intervals)
               .enterUpdate({
                 enter: (sel) => sel.append("g").classed("row", true),
@@ -246,7 +249,7 @@ export default Ember.Mixin.create({
             
           if (d.get('mapping.rules').length) {
             
-            el.append("g")
+            dataEl.append("g")
               .attr("kis:kis:flow-css", "margin-top: 10; margin-bottom: 10")
               .append("line")
                 .attrs({
@@ -262,7 +265,7 @@ export default Ember.Mixin.create({
         }
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
-          el.selectAll("g.rule")
+          dataEl.selectAll("g.rule")
             .data(d.get('mapping.rules').filter( r => r.get('visible') && r.get('shape') ).slice(0, 10))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
@@ -294,9 +297,10 @@ export default Ember.Mixin.create({
 
   appendSurfaceIntervalLabel(svg, d, textOffset, formatter, val, i) {
           
-    let r = {x: 24/2, y: 16/2};
+    let r = {x: 24/2, y: 16/2},
+        margin = `margin-${d.legendOrientation === "vertical" ? "top: 0px" : "right: 4px"}`;
 
-    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; margin-top: ${ i > 0 ? 0 : 0 }px`);
+    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; index: ${i}; ${margin}`);
         
     let g = d3.select(this).append("g")
       .attr("kis:kis:flow-css", `margin-right: -${r.x}px`);
@@ -366,6 +370,8 @@ export default Ember.Mixin.create({
         
     let r, dy;
 
+    let margin = `margin-${d.legendOrientation === "vertical" ? "bottom: 4px" : "right: 4px"}`;
+
     if (val !== d.get('mapping.scale.valueBreak')) {
 
       let symbol = SymbolMaker.symbol({
@@ -382,7 +388,7 @@ export default Ember.Mixin.create({
         
       dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; ${margin}`);
 
       let g = d3.select(this).append("g")
         .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}; width: ${r.anchorX}px`);
@@ -401,7 +407,7 @@ export default Ember.Mixin.create({
     } else {
       r = {x: 20, y: 12, anchorY: 12};
       dy = 0;
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; margin-bottom: 4px`);
+      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${2*r.y}px; ${margin}`);
 
       let g = d3.select(this).append("g")
         .attr("kis:kis:flow-css", `margin-right: ${-r.x}; width: ${r.x}px`);
@@ -435,12 +441,13 @@ export default Ember.Mixin.create({
           size: d.get('mapping').getScaleOf('size')(val)*2,
           barWidth: d.get('mapping.visualization.barWidth')
         }),
-        r = symbol.getSize();
+        r = symbol.getSize(),
+        margin = `margin-${d.legendOrientation === "vertical" ? "bottom: 4px" : "right: 4px"}`;
 
     let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12),
         dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; margin-bottom: 4px`);
+    d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${symH}px; ${margin}`);
 
     if (!(r.x > 0 && r.y > 0)) return;
 
@@ -627,7 +634,7 @@ export default Ember.Mixin.create({
         y2: -rValueBreak,
         stroke: "black"
       });*/
-
+    
     let width = intervals.length * (d.get('mapping.visualization.barWidth')*(1+0.25));
     barG.attr("kis:kis:flow-css", `flow: horizontal; width: ${width}px`);
     axisG.attr("kis:kis:flow-css", `margin-left: 5px`);
@@ -638,24 +645,30 @@ export default Ember.Mixin.create({
   appendRuleLabel(svg, d, textOffset, formatter, rule, i) {
 
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
+        margin = `margin-${d.legendOrientation === "vertical" ? `bottom: 4px` : "right: 6px"}`,
         r;
 
     if (d.get('mapping.visualization.mainType') === "symbol") {
 
+      
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
-          symbol = SymbolMaker.symbol({
-            name: shape,
-            size: rule.get('size')*2,
-          });
+      symbol = SymbolMaker.symbol({
+        name: shape,
+        size: rule.get('size')*2,
+      });
       
       r = symbol.getSize();
+      
+      if (d.legendOrientation === "horizontal") {
+        textOffset = r.x / 2 + 4;
+      }
 
       let symH = r.y + d.get('mapping.visualization.stroke');
       
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; stretch: true; margin-bottom: 4px`);
+      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; height: ${symH}px; ${margin}`);
 
       let g = d3.select(this).append("g")
-        .attr("kis:kis:flow-css", `margin-right: ${-r.anchorX}px; width: ${r.anchorX}px`);
+        .attr("kis:kis:flow-css", `margin-right: 0px; width: ${r.anchorX}px`);
       
       let symG = g.append("g")
         .attr("transform", d3lper.translate({ty: r.anchorY}));
@@ -675,7 +688,7 @@ export default Ember.Mixin.create({
       
       r = {x: 24, y: 16};
       
-      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${r.y}px; margin-bottom: 4px`);
+      d3.select(this).attr("kis:kis:flow-css", `flow: horizontal; stretch: true; height: ${r.y}px; ${margin}`);
       
       let pattern = converter(rule, "texture");
       

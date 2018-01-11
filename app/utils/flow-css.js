@@ -20,7 +20,8 @@ const CSS = {
   "min-height": function(val, bbox) { if (bbox.height < cssPx(val)) bbox.height = cssPx(val) },
   "max-width": function(val, bbox) { if (bbox.width > cssPx(val)) bbox.height = cssPx(val) },
   "max-height": function(val, bbox) { if (bbox.height > cssPx(val)) bbox.height = cssPx(val) },
-  "wrap-text": function() {}
+  "wrap-text": function() {},
+  "cross-align": function(val) { return val; }
 };
 
 export function cssPx(val) { return parseFloat(val.replace("px", "")); }
@@ -80,10 +81,12 @@ export default function flow(_) {
   
   function distribute(el) {
     
-    let elDesc = getDescriptor(el),
-        [coordAttr, sizeAttr] = elDesc.css.get("flow").val === "vertical" ? ["y", "height"] : ["x", "width"],
-        [crossCoordAttr, crossSizeAttr] = elDesc.css.get("flow").val === "vertical" ?  ["x", "width"] : ["y", "height"],
+    let elDesc = getDescriptor(el);
+    if (!elDesc.css.get("flow")) return;
+
+    let [coordAttr, sizeAttr, crossCoordAttr, crossSizeAttr] = elDesc.css.get("flow").val === "vertical" ? ["y", "height", "x", "width"] : ["x", "width", "y", "height"],
         [padBefore, padAfter, crossPadBefore, crossPadAfter] = elDesc.css.get("flow").val === "vertical" ?  ["t", "b", "l", "r"] : ["l", "r", "t", "b"],
+        crossAlign = elDesc.css.get("cross-align"),
         childs = el.childNodes;
     
     //compute size of every solid children
@@ -123,7 +126,8 @@ export default function flow(_) {
     //final layout
     let pos = 0,
         crossMax = 0,
-        crossShift = 0;
+        crossShift = 0,
+        elementsBox = {width: 0, height: 0};
     d3.selectAll(childs).each( function() {
       
       if (computedBBoxs.has(this)) {
@@ -181,11 +185,32 @@ export default function flow(_) {
             pos += cssPx(css.get('margin-right').val);
           }
         }
+
+        elementsBox[sizeAttr] = pos;
+        elementsBox[crossSizeAttr] = Math.max(elementsBox[crossSizeAttr], bbox[crossSizeAttr]);
         
       }
       
     } );
-    
+    //alignment TODO : support other alignments than cross-align: middle;
+    if (crossAlign) {
+      d3.selectAll(childs).each( function() {
+        if (computedBBoxs.has(this)) {
+          let {bbox, padBox, css} = getDescriptor(this);
+          if (crossAlign.val === "middle") {
+            bbox[crossCoordAttr] += (elementsBox[crossSizeAttr] - bbox[crossSizeAttr]) / 2;
+            d3.select(this).attr("transform", `translate(${bbox.x}, ${bbox.y})`)
+          }
+        }
+      });
+    }
+
+    if (!d3.select(el).attr("kis:kis:"+crossSizeAttr)) {
+      let {bbox} = getDescriptor(el);
+      d3.select(el).attr("kis:kis:"+crossSizeAttr,  elementsBox[crossSizeAttr]);
+      bbox.width = elementsBox[crossSizeAttr];
+      distribute(el.parentNode);
+    }
     
   };
 

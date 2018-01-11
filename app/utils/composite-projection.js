@@ -19,6 +19,7 @@ function wkt2Proj(wkt) {
         return proj4Proj.forward([lambda, phi].map(rad2deg));
       };
   projection.invert = function(x, y) {
+    console.log(x, y);
     return proj4Proj.inverse([x, y]).map(deg2rad);
   }
   return d3.geoProjection(projection);

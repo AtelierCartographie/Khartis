@@ -367,6 +367,11 @@ export default {
       "title": "titre",
       "width": "largeur",
       "height": "hauteur",
+      "orientation": {
+        "title": "orientation",
+        "horizontal": "horizontal",
+        "vertical": "vertical"
+      },
       "borders": "frontières ou limites",
       "grid": "graticules",
       "background": "fond de carte",
