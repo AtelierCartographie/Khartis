@@ -1,7 +1,7 @@
 import d3 from "npm:d3";
 
 const NS = "flow:flow:",
-      shift = 0, //-1000,
+      shift = -1000,
       trueFn = () => true;
 
 let incId = 0;
@@ -160,7 +160,7 @@ FlowLayout.prototype.commit = function() {
   
     this.applyLayout(this.ROOT_EL.firstChild);
 
-    //this.clearRoot();
+    this.clearRoot();
 
   });
 
