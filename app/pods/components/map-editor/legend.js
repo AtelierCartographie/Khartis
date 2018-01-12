@@ -8,6 +8,8 @@ import ValueMixin from 'khartis/models/mapping/mixins/value';
 import TextEditor from './text-editor/component';
 import {compressIntervals} from 'khartis/utils/stats';
 
+const RULES_LIMIT = 8;
+
 export default Ember.Mixin.create({
   
   resizingMargin: false,
@@ -148,7 +150,7 @@ export default Ember.Mixin.create({
         legendG = this.d3l().selectAll("g.legend"),
         containerG = legendG.selectAll("g.legend-content"),
         bgG = legendG.selectAll("rect.legend-bg"),
-        orientation = "h-mode";
+        orientation = this.get('graphLayout.legendStacking') === "vertical" ? "v-mode" : "h-mode";
     
     if (!this.get('graphLayout.showLegend') || !this.get('graphLayers').length) {
       containerG.remove();
@@ -173,19 +175,20 @@ export default Ember.Mixin.create({
         .classed("legend-content", true);
     }
 
-    let flowLayout = new FlowLayout(containerG, `g-${orientation}`);
+    let flowLayout = new FlowLayout(containerG);
     
     containerG.flowClass("flow")
-      .flowClass("g-v-mode", "horizontal")
-      .flowClass("g-h-mode", "vertical")
+      .flowState(`g-${orientation}`)
+      .flowClass("g-h-mode", "horizontal")
+      .flowClass("g-v-mode", "vertical")
       .flowStyle(`padding-left: 5px;`);
     
     let bindLayer = (_) => {
 
       _.flowClass("stretched vertical flow")
         .flowStyle("margin-top: 16px")
-        .flowStyle("g-v-mode", "margin-right: 34px")
-        .flowStyle("g-h-mode", "margin-bottom: 34px");
+        .flowStyle("g-h-mode", "margin-right: 34px")
+        .flowStyle("g-v-mode", "margin-bottom: 34px");
       
       _.each( function(d, i) {
 
@@ -199,14 +202,13 @@ export default Ember.Mixin.create({
           
         let label = el.append("g")
           .flowStyle("margin-bottom: 16px")
-          .flowStyle("g-v-mode", "margin-left: 50%")
           .classed("no-drag", true)
           .append("text")
           .classed("legend-title", true)
           .styles({
             "font-size": "14px",
             "font-weight": "bold",
-            "text-anchor": "middle"
+            "text-anchor": "left"
           });
         
         label.text(d.get('legendTitleComputed'));
@@ -230,7 +232,7 @@ export default Ember.Mixin.create({
           .flowClass("stretched flow")
           .flowClass("h-mode", "horizontal")
           .flowClass("v-mode", "vertical")
-          .flowState(orientation);
+          .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
 
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           
@@ -257,7 +259,7 @@ export default Ember.Mixin.create({
               .data(intervals)
               .enterUpdate({
                 enter: (sel) => sel.append("g").classed("row", true),
-                update: (sel) => sel.eachWithArgs(fn, svg, orientation, d, textOffset, formatter)
+                update: (sel) => sel.eachWithArgs(fn, svg, d, textOffset, formatter)
               });
           }
           if (d.get('mapping.rules').length) {
@@ -279,10 +281,10 @@ export default Ember.Mixin.create({
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
           contentEl.selectAll("g.rule")
-            .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, 10))
+            .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
-              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, orientation, d, textOffset, formatter)
+              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, textOffset, formatter)
             });
         }
         
@@ -304,11 +306,11 @@ export default Ember.Mixin.create({
       this.updateLegendOpacity();
     });
     
-  }.observes('i18n.locale', 'graphLayout.showLegend', 'graphLayers.[]',
+  }.observes('i18n.locale', 'graphLayout.showLegend', 'graphLayout.legendStacking', 'graphLayers.[]',
     'graphLayers.@each._defferedChangeIndicator'),
 
 
-  appendSurfaceIntervalLabel(svg, orientation, d, textOffset, formatter, val, i) {
+  appendSurfaceIntervalLabel(svg, d, textOffset, formatter, val, i) {
           
     let r = {x: 24/2, y: 16/2};
 
@@ -328,7 +330,6 @@ export default Ember.Mixin.create({
     };
         
     let g = d3.select(this).append("g")
-      .flowInclude()
       .flowStyle("v-mode", `width: ${textOffset}px`)
       .flowComputed("h-mode", "width", function() {
         return hModeWidth(this.parentElement.parentElement);
@@ -390,7 +391,7 @@ export default Ember.Mixin.create({
           y:  0,
           dy: "0.3em",
           "font-size": "0.75em",
-          "text-anchor": orientation === "h-mode" ? "middle" : null
+          "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
         });
         
       }
@@ -405,14 +406,43 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": orientation === "h-mode" ? "middle" : null
+        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
       });
       
   },
 
-  appendSymbolIntervalLinearLabel(svg, orientation, d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLinearLabel(svg, d, textOffset, formatter, val, i) {
         
     let r, dy;
+
+    let hModeWidth = function(node) {
+      const margin = 10;
+      let textEls = d3.select(node).selectAll("text.symLbl, g.symG").nodes(),
+          symEls = d3.select(node).selectAll("g.symG").nodes(),
+          widths = [];
+      for (let i = 1; i < textEls.length; i++) {
+        widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+10);
+      }
+      for (let i = 1; i < symEls.length; i++) {
+        widths.push(symEls[i-1].getBoundingClientRect().width/2+symEls[i].getBoundingClientRect().width/2+10);
+      }
+      return Math.max.apply(undefined, widths)+"px";
+    };
+
+
+    let g = d3.select(this).append("g")
+      .flowStyle("position: relative")
+      .flowStyle("v-mode", `width:${textOffset}px`)
+      .flowStyle("h-mode", `margin-right:10px`)
+      .flowComputed("h-mode", "margin-top", function() {
+        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map(n => n.getBoundingClientRect().height);
+        return Math.max.apply(undefined, heights)/2 +"px";
+      })
+      .flowComputed("h-mode", "margin-left", function() {
+        return d3.select(this.parentElement.parentElement.parentElement).selectAll("g.row")
+          .nodes()[0].getBoundingClientRect().width/2 + "px";
+      });
 
     if (val !== d.get('mapping.scale.valueBreak')) {
 
@@ -430,19 +460,23 @@ export default Ember.Mixin.create({
         
       dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
-      d3.select(this).flowClass("horizontal stretched solid flow").flowStyle(`height: ${symH}px; margin-bottom: 4px`);
-
-      let g = d3.select(this).append("g")
-        .flowComputed("margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-            .nodes().map( n => n.getBoundingClientRect().width);
-          return Math.max.apply(undefined, widths)/2+"px";
-        })
-        .flowStyle(`width:${textOffset}px`);
+      d3.select(this)
+        .flowClass("horizontal stretched solid flow")
+        .flowStyle(`height: ${symH}px; margin-bottom: 4px`);
 
       let symG = g.append("g")
         .classed("symG", true)
-        .attr("transform", d3lper.translate({ty: r.anchorY - dy/2}));
+        .flowStyle("v-mode", `margin-top: ${r.anchorY - dy/2}px`)
+        .flowComputed("v-mode", "margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+            .nodes().map( n => n.getBoundingClientRect().width);
+          return Math.max.apply(undefined, widths)/2+"px";
+        })
+        .flowComputed("h-mode", "margin-top", function() {
+          let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+            .nodes().map(n => n.getBoundingClientRect().height);
+          return (Math.max.apply(undefined, heights) - this.getBoundingClientRect().height)/2 +"px";
+        });
 
       symbol.insert(symG)
         .attrs({
@@ -461,37 +495,72 @@ export default Ember.Mixin.create({
       d3.select(this).flowClass("horizontal stretched solid flow")
         .flowStyle(`height: ${2*r.y}px; margin-bottom: 4px`);
 
-      let g = d3.select(this).append("g")
-        .flowComputed("margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+      g.flowComputed("h-mode", "width", function() {
+        let siblingW = 0;
+        if (d3.select(this.parentElement.previousSibling).select(".symG").node()) {
+          siblingW = d3.select(this.parentElement.previousSibling).select(".symG").node().getBoundingClientRect().width
+        } else if (d3.select(this.parentElement.nextSibling).select(".symG").node()) {
+          siblingW = d3.select(this.parentElement.nextSibling).select(".symG").node().getBoundingClientRect().width
+        }
+        return Math.max(
+          this.getBoundingClientRect().width,
+          siblingW
+        )+"px";
+      });
+
+      let line = g.append("line")
+        .flowComputed("v-mode", "margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
             .nodes().map( n => n.getBoundingClientRect().width);
           return Math.max.apply(undefined, widths)/2+"px";
-        })
-        .flowStyle(`width:${textOffset}px`);
+        });
 
-      g.append("line")
-        .attrs({
+      if (d.legendOrientation === "vertical") {
+        line.attrs({
           x1: -r.x / 2,
           y1: r.y,
           x2: r.x / 2,
           y2: r.y,
           stroke: "#BBBBBB"
         });
+      } else {
+        line.attrs({
+          x1: 0,
+          y1: -textOffset / 2,
+          x2: 0,
+          y2: textOffset / 2,
+          stroke: "#BBBBBB"
+        });
+      }
     }
 
-    d3.select(this).append("g")
-      .flowInclude()
+    g.append("g")
+      .flowStyle("position: absolute")
+      .flowStyle("h-mode", `left: 0px;`)
+      .flowStyle("v-mode", `left: ${textOffset}px; top: ${r.anchorY - dy/2}px`)
+      .flowComputed("v-mode", "margin-left", function() {
+        let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+        .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, widths)/2+"px";
+      })
+      .flowComputed("h-mode", "top", function() {
+        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+        .nodes().map(n => n.getBoundingClientRect().height);
+        return (Math.max.apply(undefined, heights)/2 + 12) +"px";
+      })
       .append("text")
+      .classed("symLbl", true)
       .text( v => formatter(v) )
       .attrs({
-        y: r.anchorY - dy/2,
+        y: 0,
         dy: "0.3em",
-        "font-size": "0.75em"
+        "font-size": "0.75em",
+        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
       });
         
   },
 
-  appendSymbolIntervalLabel(svg, orientation, d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLabel(svg, d, textOffset, formatter, val, i) {
         
     let symbol = SymbolMaker.symbol({
           name: d.get('mapping.visualization.shape'),
@@ -504,27 +573,74 @@ export default Ember.Mixin.create({
         dy = r.y + d.get('mapping.visualization.stroke') - symH;
 
     d3.select(this).flowClass("horizontal solid stretched flow")
-      .flowStyle(`position: relative; height: ${symH}px; margin-bottom: 4px`);
+      .flowStyle(`position: relative; margin-bottom: 4px`)
+      .flowStyle("v-mode", `height: ${symH}px`)
+      .flowComputed("h-mode", "margin-left", function() {
+        if (!this.previousSibling) {
+          return d3.select(this.parentElement.parentElement).selectAll("g.row")
+            .nodes()[0].getBoundingClientRect().width/2 + "px";
+        } else {
+          return "0px";
+        }
+      })
+      .flowComputed("h-mode", "height", function() {
+        let heights = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map(n => n.getBoundingClientRect().height);
+        return Math.max.apply(undefined, heights) +"px";
+      })
+      .flowComputed("h-mode", "width", function() {
+        let margin = 8;
+        let widthSym = d3.select(this).selectAll("g.symG")
+          .nodes()[0].getBoundingClientRect().width + margin*2;
+        let widthsTextInner = d3.select(this).selectAll("text.symLbl")
+          .nodes().map(n => n.getBoundingClientRect().width);
+        let widthTextPreviousSibling = 0;
+        if (this.previousSibling) {
+          widthTextPreviousSibling = d3.select(this.previousSibling).selectAll("text.symLbl").nodes()[0].getBoundingClientRect().width;
+        }
+        let widths = [
+          widthSym,
+          (widthsTextInner.length == 2 && (widthsTextInner[0]+widthsTextInner[1])/2+10) || 0,
+          (widthsTextInner[widthsTextInner.length-1]+widthTextPreviousSibling)/2+10
+        ];
+        return Math.max.apply(undefined, widths) +"px";
+      });
 
     if (!(r.x > 0 && r.y > 0)) return;
 
     let g = d3.select(this).append("g")
-      .flowComputed("margin-left", function() {
+      .flowStyle("position: relative")
+      .flowClass("h-mode", "horizontal center stretched flow")
+      .flowStyle("h-mode", "width: 100%")
+      .flowComputed("v-mode", "margin-left", function() {
         let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
           .nodes().map( n => n.getBoundingClientRect().width);
         return Math.max.apply(undefined, widths)/2+"px";
       })
-      .flowComputed("width", function() {
+      .flowComputed("v-mode", "width", function() {
         let symWidths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
           .nodes().map( n => n.getBoundingClientRect().width);
-        let textWidths = d3.select(this.parentElement.parentElement).selectAll("text.symText")
+        let textWidths = d3.select(this.parentElement.parentElement).selectAll("text.symLbl")
           .nodes().map( n => n.getBoundingClientRect().width);
         return Math.max.apply(undefined, textWidths)+textOffset+"px";
+      })
+      .flowComputed("h-mode", "margin-top", function() {
+        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map(n => n.getBoundingClientRect().height);
+        return Math.max.apply(undefined, heights)/2 +"px";
       });
+      
     
     let symG = g.append("g")
       .classed("symG", true)
-      .attr("transform", d3lper.translate({ty: r.anchorY+d.get('mapping.visualization.stroke')/2 - dy/2}));
+      .flowStyle("v-mode", `margin-top: ${r.anchorY+d.get('mapping.visualization.stroke')/2 - dy/2}px`)
+      .flowStyle("h-mode", `margin-left: ${r.x}px`)
+      .flowClass("h-mode", "solid")
+      .flowComputed("h-mode", "margin-top", function() {
+        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map(n => n.getBoundingClientRect().height);
+        return (Math.max.apply(undefined, heights) - this.getBoundingClientRect().height)/2 +"px";
+      });
 
     symbol.insert(symG)
       .attrs({
@@ -535,52 +651,105 @@ export default Ember.Mixin.create({
         "opacity": d.get('opacity')
       });
       
-    g = d3.select(this).append("g")
-      .flowClass("outer fluid")
-      .flowComputed("margin-left", function() {
-        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, widths)/2+"px";
+    g = g.append("g").flowClass("outer fluid flow-no-size")
+      .flowStyle("width: 100%; height: 100%")
+      .flowComputed("h-mode", "top", function() {
+        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+        .nodes().map(n => n.getBoundingClientRect().height);
+        return (Math.max.apply(undefined, heights)/2) +"px";
       })
+
+    let line;
       
     if (i === 0) {
+
+      let firstStepG = g.append("g")
+        .flowClass("flow-no-size")
+        .flowStyle("position: absolute; left: 0px")
+        .flowStyle("v-mode", "top: 0px");
       
-      g.append("line").attrs({
-        x1: 0,
-        y1: -2,
-        x2: textOffset - 6,
-        y2: -2,
-        stroke: "black"
-      });
+      line = firstStepG.append("line");
       
-      g.append("text")
-        .classed("symText", true)
+      if (d.legendOrientation === "vertical") {
+        line.attrs({
+          x1: 0,
+          y1: -2,
+          x2: textOffset - 6,
+          y2: -2,
+          stroke: "black"
+        });
+      } else {
+        line.attrs({
+          x1: 0,
+          y1: -textOffset,
+          x2: 0,
+          y2: 0,
+          stroke: "black"
+        });
+      }
+      
+      firstStepG.append("text")
+        .classed("symLbl", true)
+        .flowStyle("h-mode", "position: absolute; top: 12px")
+        .flowStyle("v-mode", `margin-left: ${textOffset}px`)
+        .flowComputed("v-mode", "margin-left", function() {
+          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map( n => n.getBoundingClientRect().width);
+          return Math.max.apply(undefined, widths)/2+"px";
+        })
         .text( formatter(d.get('mapping.extent')[1]) )
         .attrs({
-          x: textOffset,
-          y: -2,
+          x: 0,
+          y: 0,
           dy: "0.3em",
-          "font-size": "0.75em"
+          "font-size": "0.75em",
+          "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
         });
       
     }
+
+    g = g.append("g")
+      .flowClass("flow-no-size")
+      .flowStyle("position: absolute;")
+      .flowStyle("v-mode", `left: 0px; top: ${Math.max(symH+2, 10)}px`)
+      .flowStyle("h-mode", "left: 100%; top: 0px");
     
-    g.append("line").attrs({
-        x1: 0,
-        y1: Math.max(symH+2, 10),
-        x2: textOffset - 6,
-        y2: Math.max(symH+2, 10),
-        stroke: "black"
-      });
+    line = g.append("line");
+    
+    if (d.legendOrientation === "vertical") {
+      line.attrs({
+          x1: 0,
+          y1: 0,
+          x2: textOffset - 6,
+          y2: 0,
+          stroke: "black"
+        });
+    } else {
+      line.attrs({
+          x1: 0,
+          y1: -textOffset,
+          x2: 0,
+          y2: 0,
+          stroke: "black"
+        });
+    }
     
     g.append("text")
-      .classed("symText", true)
+      .classed("symLbl", true)
+      .flowStyle("h-mode", "position: absolute; top: 12px")
+      .flowStyle("v-mode", `margin-left: ${textOffset}px`)
+      .flowComputed("v-mode", "margin-left", function() {
+        let widths = d3.select(this.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
+        .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, widths)/2+"px";
+      })
       .text( v => formatter(v) )
       .attrs({
-        x: textOffset,
-        y: Math.max(symH+2, 10),
+        x: 0,
+        y: 0,
         dy: "0.3em",
-        "font-size": "0.75em"
+        "font-size": "0.75em",
+        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
       });
   },
 
@@ -719,12 +888,27 @@ export default Ember.Mixin.create({
     el.flowClass("vertical flow").flowStyle(`margin-right: 42px; margin-top: 16px`);
   },
 
-  appendRuleLabel(svg, orientation, d, textOffset, formatter, rule, i) {
+  appendRuleLabel(svg, d, textOffset, formatter, rule, i) {
 
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
         r;
 
+    let g = d3.select(this).append("g")
+      .flowClass("horizontal flow")
+      .flowStyle("v-mode", `margin-right: 3px;`)
+      .flowComputed("v-mode", "margin-left", function() {
+        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
+          .nodes().map( n => n.getBoundingClientRect().width);
+        return Math.max.apply(undefined, widths)/2+"px";
+      });
+
     if (d.get('mapping.visualization.mainType') === "symbol") {
+
+      g.flowComputed("h-mode", "margin-top", function() {
+        let heights = d3.select(this.parentElement.parentElement).selectAll("g.rule")
+          .nodes().map(n => n.getBoundingClientRect().height);
+        return Math.max.apply(undefined, heights)/2 - +"px";
+      });
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
           symbol = SymbolMaker.symbol({
@@ -737,19 +921,12 @@ export default Ember.Mixin.create({
       let symH = r.y + d.get('mapping.visualization.stroke');
       
       d3.select(this).flowClass("horizontal stretched solid flow")
-        .flowStyle(`height: ${symH}px; margin-bottom: 4px`);
+        .flowStyle("v-mode", `height: ${symH/2}px; margin-bottom: 4px; margin-top: ${symH/2}px`);
 
-      let g = d3.select(this).append("g")
-        .flowStyle(`width: ${textOffset}px`)
-        .flowComputed("margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-            .nodes().map( n => n.getBoundingClientRect().width);
-          return Math.max.apply(undefined, widths)/2+"px";
-        });
-      
       let symG = g.append("g")
         .classed("symG", true)
-        .attr("transform", d3lper.translate({ty: r.anchorY}));
+        .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 10px; margin-left: ${r.x/2}px`)
+        .flowStyle("v-mode", `width: ${textOffset}px;`);
 
       symbol.insert(symG)
         .attrs({
@@ -765,14 +942,16 @@ export default Ember.Mixin.create({
       r = {x: 24, y: 16};
 
       d3.select(this).flowClass("horizontal stretched solid flow")
-        .flowStyle(`height: ${r.y}px; margin-bottom: 4px`);
+        .flowStyle("v-mode", `height: ${r.y/2}px; margin-bottom: 5px; margin-top: ${r.y/2}px`);
       
       let pattern = converter(rule, "texture");
+
+      let swatchG = g.append("g")
+        .flowStyle(`margin-top: ${-r.y/2}px`)
+        .flowStyle("v-mode", `width: ${textOffset}px`)
+        .flowStyle("h-mode", `margin-right: 10px`);
       
-      let g = d3.select(this).append("g")
-        .flowStyle(`width: ${textOffset}px; margin-right: 3px`);
-      
-      g.append("rect")
+      swatchG.append("rect")
         .attrs({
           "width": r.x,
           "height": r.y,
@@ -780,7 +959,7 @@ export default Ember.Mixin.create({
           "fill": "none"
         });
       
-      g.append("rect")
+      swatchG.append("rect")
         .attrs({
           "width": r.x,
           "height": r.y,
@@ -800,13 +979,14 @@ export default Ember.Mixin.create({
       
     }
     
-    d3.select(this).append("g")
-      .flowInclude()
+    g.append("g")
+      .flowInclude("v-mode")
+      .flowStyle("h-mode", "margin-right: 20px")
       .append("text")
       .text( rule.get('label') )
       .attrs({
         x: 0,
-        y: r.y/2,
+        y: 0,
         dy: "0.3em",
         "font-size": "0.75em"
       });

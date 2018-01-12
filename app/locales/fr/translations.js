@@ -362,6 +362,7 @@ export default {
       "reset": "réinitialiser",
       "edit": "Éditer",
       "legend": {
+        "stacking": "empilage",
         "chooseLegend": "choisir"
       },
       "title": "titre",

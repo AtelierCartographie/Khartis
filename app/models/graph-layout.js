@@ -87,6 +87,7 @@ var GraphLayout = Struct.extend({
   gridColor: "#e1e3ee",
   
   showLegend: null,
+  legendStacking: "horizontal",
 	
 	autoCenter: false,
 
@@ -97,6 +98,34 @@ var GraphLayout = Struct.extend({
   canDisplaySphere: function() {
     return !this.get('projection.isComposite') && !this.get('basemap.type') === "imported";
   }.property('projection', 'projection.isComposite'),
+
+  legendStackingHori: Ember.computed('legendStacking', {
+    get() {
+      return this.get('legendStacking') === "horizontal";
+    },
+    set(k,v) {
+      if (v) {
+        this.set('legendStacking', "horizontal");
+      } else {
+        this.set('orientationVerti', true);
+      }
+      return v;
+    }
+  }),
+
+  legendStackingVerti: Ember.computed('legendStacking', {
+    get() {
+      return this.get('legendStacking') === "vertical";
+    },
+    set(k,v) {
+      if (v) {
+        this.set('legendStacking', "vertical");
+      } else {
+        this.set('orientationHori', true);
+      }
+      return v;
+    }
+  }),
 	
   tx: 0,
   ty: 0,
@@ -145,6 +174,7 @@ var GraphLayout = Struct.extend({
       showBorders: this.get('showBorders'),
       showGrid: this.get('showGrid'),
       showLegend: this.get('showLegend'),
+      legendStacking : this.get('legendStacking'),
       legendTx: this.get('legendTx'),
       legendTy: this.get('legendTy'),
       legendOpacity: this.get('legendOpacity')
@@ -186,6 +216,7 @@ GraphLayout.reopenClass({
         showBorders: json.showBorders,
         showGrid: json.showGrid,
         showLegend: json.showLegend,
+        legendStacking: json.legendStacking || "horizontal",
         legendTx: json.legendTx,
         legendTy: json.legendTy,
         legendOpacity: json.legendOpacity
