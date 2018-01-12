@@ -188,7 +188,7 @@ export default Ember.Mixin.create({
       _.flowClass("stretched vertical flow")
         .flowStyle("margin-top: 16px")
         .flowStyle("g-h-mode", "margin-right: 34px")
-        .flowStyle("g-v-mode", "margin-bottom: 34px");
+        .flowStyle("g-v-mode", "margin-bottom: 24px");
       
       _.each( function(d, i) {
 
