@@ -201,6 +201,7 @@ export default Ember.Mixin.create({
         el.selectAll("*").remove();
           
         let label = el.append("g")
+          .flowClass("vertical solid flow")
           .flowStyle("margin-bottom: 16px")
           .classed("no-drag", true)
           .append("text")
@@ -229,10 +230,12 @@ export default Ember.Mixin.create({
         }
 
         let contentEl = el.append("g")
-          .flowClass("stretched flow")
+          .flowClass("solid flow")
           .flowClass("h-mode", "horizontal")
           .flowClass("v-mode", "vertical")
           .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+
+        let ruleEl = contentEl;
 
         if (ValueMixin.Data.detect(d.get('mapping'))) {
           
@@ -264,8 +267,16 @@ export default Ember.Mixin.create({
           }
           if (d.get('mapping.rules').length) {
             
-            contentEl.append("g")
-              .flowStyle("margin-top: 10px; margin-bottom: 10px")
+            ruleEl = el.append("g")
+              .flowClass("solid flow")
+              .flowClass("h-mode", "horizontal")
+              .flowClass("v-mode", "vertical")
+              .flowStyle("h-mode", "position: relative; margin-top: 20px; padding-top: 14px;")
+              .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+
+            ruleEl.append("g")
+              .flowStyle("v-mode", "margin-top: 10px; margin-bottom: 10px")
+              .flowStyle("h-mode", "position: absolute; top: 0px; left: 0px")
               .append("line")
               .attrs({
                 x1: 0,
@@ -280,7 +291,7 @@ export default Ember.Mixin.create({
         }
         
         if (d.get('mapping.rules') && d.get('mapping.rules').length) {
-          contentEl.selectAll("g.rule")
+          ruleEl.selectAll("g.rule")
             .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
@@ -907,7 +918,7 @@ export default Ember.Mixin.create({
       g.flowComputed("h-mode", "margin-top", function() {
         let heights = d3.select(this.parentElement.parentElement).selectAll("g.rule")
           .nodes().map(n => n.getBoundingClientRect().height);
-        return Math.max.apply(undefined, heights)/2 - +"px";
+        return Math.max.apply(undefined, heights)/2 +"px";
       });
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
