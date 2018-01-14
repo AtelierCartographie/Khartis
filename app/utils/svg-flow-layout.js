@@ -139,6 +139,7 @@ FlowLayout.prototype.applyLayout = function(domEl) {
             elemRect = domEl.getBoundingClientRect(),
             offsetLeft = elemRect.left - parentRect.left,
             offsetTop = elemRect.top - parentRect.top;
+
         d3.select(nodeSvg).attr("transform", `translate(${offsetLeft}, ${offsetTop})`);
 
         if (nodeSvg.tagName !== "g") { //apply width and height
@@ -160,7 +161,7 @@ FlowLayout.prototype.commit = function() {
   
     this.applyLayout(this.ROOT_EL.firstChild);
 
-    this.clearRoot();
+    //this.clearRoot();
 
   });
 

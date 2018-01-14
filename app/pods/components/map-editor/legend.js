@@ -201,7 +201,7 @@ export default Ember.Mixin.create({
         el.selectAll("*").remove();
           
         let label = el.append("g")
-          .flowClass("vertical solid flow")
+          .flowClass("vertical solid")
           .flowStyle("margin-bottom: 16px")
           .classed("no-drag", true)
           .append("text")
@@ -432,10 +432,10 @@ export default Ember.Mixin.create({
           symEls = d3.select(node).selectAll("g.symG").nodes(),
           widths = [];
       for (let i = 1; i < textEls.length; i++) {
-        widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+10);
+        widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+margin);
       }
       for (let i = 1; i < symEls.length; i++) {
-        widths.push(symEls[i-1].getBoundingClientRect().width/2+symEls[i].getBoundingClientRect().width/2+10);
+        widths.push(symEls[i-1].getBoundingClientRect().width/2+symEls[i].getBoundingClientRect().width/2+margin);
       }
       return Math.max.apply(undefined, widths)+"px";
     };
@@ -449,11 +449,20 @@ export default Ember.Mixin.create({
         let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
           .nodes().map(n => n.getBoundingClientRect().height);
         return Math.max.apply(undefined, heights)/2 +"px";
-      })
-      .flowComputed("h-mode", "margin-left", function() {
-        return d3.select(this.parentElement.parentElement.parentElement).selectAll("g.row")
-          .nodes()[0].getBoundingClientRect().width/2 + "px";
       });
+      // .flowComputed("h-mode", "margin-left", function() {
+      //   return d3.select(this.parentElement.parentElement.parentElement).selectAll("g.row")
+      //     .nodes()[0].getBoundingClientRect().width/2 + "px";
+      // });
+
+    d3.select(this).flowComputed("h-mode", "margin-left", function() {
+      if (!this.previousSibling) {
+        return d3.select(this.parentElement.parentElement).selectAll("g.row")
+          .nodes()[0].getBoundingClientRect().width/2 + "px";
+      } else {
+        return "0px";
+      }
+    });
 
     if (val !== d.get('mapping.scale.valueBreak')) {
 
@@ -936,7 +945,7 @@ export default Ember.Mixin.create({
 
       let symG = g.append("g")
         .classed("symG", true)
-        .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 10px; margin-left: ${r.x/2}px`)
+        .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 4px; margin-left: ${r.x/2}px`)
         .flowStyle("v-mode", `width: ${textOffset}px;`);
 
       symbol.insert(symG)
@@ -959,8 +968,8 @@ export default Ember.Mixin.create({
 
       let swatchG = g.append("g")
         .flowStyle(`margin-top: ${-r.y/2}px`)
-        .flowStyle("v-mode", `width: ${textOffset}px`)
-        .flowStyle("h-mode", `margin-right: 10px`);
+        .flowStyle("v-mode", `width: ${textOffset}px; margin-right: 2px`)
+        .flowStyle("h-mode", `margin-right: 4px`);
       
       swatchG.append("rect")
         .attrs({
