@@ -13,6 +13,10 @@ export default WrapperAbstract.extend({
     }
   }),
 
+  orientationAvailable: function() {
+    return this.get('obj.mapping.visualization.shape') !== "bar";
+  }.property('obj.mapping.visualization.shape'),
+
   orientationHori: Ember.computed('obj.legendOrientation', {
     get() {
       return this.get('obj.legendOrientation') === "horizontal";

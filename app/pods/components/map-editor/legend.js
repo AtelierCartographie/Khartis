@@ -8,7 +8,9 @@ import ValueMixin from 'khartis/models/mapping/mixins/value';
 import TextEditor from './text-editor/component';
 import {compressIntervals} from 'khartis/utils/stats';
 
-const RULES_LIMIT = 8;
+const RULES_LIMIT = 8,
+      MARGIN_SYMBOL_TEXT = 6,
+      MARGIN_SURFACE_TEXT = 6;
 
 export default Ember.Mixin.create({
   
@@ -193,9 +195,6 @@ export default Ember.Mixin.create({
       _.each( function(d, i) {
 
         let el = d3.select(this),
-            xOrigin = (d.get('mapping.visualization.mainType') === "symbol" ?
-              SymbolMaker.symbol({name: d.get('mapping.visualization.shape'), size: d.get('mapping.visualization.maxSize')}).getSize().x : 10),
-            textOffset = xOrigin + 16,
             formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
         el.selectAll("*").remove();
@@ -222,18 +221,14 @@ export default Ember.Mixin.create({
             d.set('legendTitle', val);
           });
         });
-          
-        //re-calcul de l'offset du texte si il y a des rules symboles
-        if (d.get('mapping.rules') && d.get('mapping.rules').length && d.get('mapping.visualization.mainType') === "symbol") {
-          xOrigin = Math.max.apply(null, [xOrigin].concat(d.get('mapping.rules').filter( r => r.get('visible') && r.get('shape') ).map( r => r.get('size') )));
-          textOffset = xOrigin + 16;
-        }
 
         let contentEl = el.append("g")
           .flowClass("solid flow")
           .flowClass("h-mode", "horizontal")
           .flowClass("v-mode", "vertical")
-          .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+          .flowState(
+            d.legendOrientation === "horizontal" && d.get('mapping.visualization.shape') !== "bar" ? "h-mode":"v-mode"
+          );
 
         let ruleEl = contentEl;
 
@@ -262,7 +257,7 @@ export default Ember.Mixin.create({
               .data(intervals)
               .enterUpdate({
                 enter: (sel) => sel.append("g").classed("row", true),
-                update: (sel) => sel.eachWithArgs(fn, svg, d, textOffset, formatter)
+                update: (sel) => sel.eachWithArgs(fn, svg, d, formatter)
               });
           }
           if (d.get('mapping.rules').length) {
@@ -278,12 +273,24 @@ export default Ember.Mixin.create({
               .flowStyle("v-mode", "margin-top: 10px; margin-bottom: 10px")
               .flowStyle("h-mode", "position: absolute; top: 0px; left: 0px")
               .append("line")
-              .attrs({
-                x1: 0,
-                y1: 0,
-                x2: 50,
-                y2: 0,
-                stroke: "#BBBBBB"
+              .flowComputedAttrs("v-mode", function() {
+                let maxW = d3lper.selectionMaxWidth(contentEl.selectAll("g.symG"));
+                return {
+                  x1: 0,
+                  y1: 0,
+                  x2: Math.max(maxW, 30),
+                  y2: 0,
+                  stroke: "#BBBBBB"
+                }
+              })
+              .flowComputedAttrs("h-mode", function() {
+                return {
+                  x1: 0,
+                  y1: 0,
+                  x2: 50,
+                  y2: 0,
+                  stroke: "#BBBBBB"
+                }
               });
             
           }
@@ -295,7 +302,7 @@ export default Ember.Mixin.create({
             .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
-              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, textOffset, formatter)
+              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, formatter)
             });
         }
         
@@ -321,14 +328,14 @@ export default Ember.Mixin.create({
     'graphLayers.@each._defferedChangeIndicator'),
 
 
-  appendSurfaceIntervalLabel(svg, d, textOffset, formatter, val, i) {
+  appendSurfaceIntervalLabel(svg, d, formatter, val, i) {
           
     let r = {x: 24/2, y: 16/2};
 
     d3.select(this).flowClass("horizontal solid flow")
       .flowClass("v-mode", "stretched")
       .flowStyle(`height: ${2*r.y}px; index: ${i};`)
-      .flowStyle("h-mode", "position: relative");
+      .flowStyle("h-mode", "margin-bottom: 2px; position: relative");
 
     let hModeWidth = function(node) {
       const margin = 10;
@@ -337,11 +344,11 @@ export default Ember.Mixin.create({
       for (let i = 1; i < textEls.length; i++) {
         widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+10);
       }
-      return Math.max.apply(undefined, widths)+"px";
+      return Math.max.apply(undefined, widths);
     };
         
     let g = d3.select(this).append("g")
-      .flowStyle("v-mode", `width: ${textOffset}px`)
+      .flowStyle("v-mode", `width: ${2*r.x}px`)
       .flowComputed("h-mode", "width", function() {
         return hModeWidth(this.parentElement.parentElement);
       });
@@ -395,8 +402,9 @@ export default Ember.Mixin.create({
       
       g.append("text")
         .classed("symLbl", true)
-        .text( formatter(d.get('mapping.extent')[0]) )
+        .flowStyle("v-mode", `position: absolute; margin-left: ${MARGIN_SURFACE_TEXT}px`)
         .flowStyle("h-mode", `position: absolute; margin-top: ${2*r.y+12}px`)
+        .text( formatter(d.get('mapping.extent')[0]) )
         .attrs({
           x: 0,
           y:  0,
@@ -409,7 +417,7 @@ export default Ember.Mixin.create({
       
       g.append("text")
       .classed("symLbl", true)
-      .flowStyle("v-mode", `margin-top: ${2*r.y}px`)
+      .flowStyle("v-mode", `margin-left: ${MARGIN_SURFACE_TEXT}px; margin-top: ${2*r.y}px`)
       .flowStyle("h-mode", `position: absolute; left: 100%; margin-top: ${2*r.y+12}px`)
       .text( v => formatter(v) )
       .attrs({
@@ -422,47 +430,29 @@ export default Ember.Mixin.create({
       
   },
 
-  appendSymbolIntervalLinearLabel(svg, d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLinearLabel(svg, d, formatter, val, i) {
         
     let r, dy;
-
-    let hModeWidth = function(node) {
-      const margin = 10;
-      let textEls = d3.select(node).selectAll("text.symLbl, g.symG").nodes(),
-          symEls = d3.select(node).selectAll("g.symG").nodes(),
-          widths = [];
-      for (let i = 1; i < textEls.length; i++) {
-        widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+margin);
-      }
-      for (let i = 1; i < symEls.length; i++) {
-        widths.push(symEls[i-1].getBoundingClientRect().width/2+symEls[i].getBoundingClientRect().width/2+margin);
-      }
-      return Math.max.apply(undefined, widths)+"px";
-    };
-
-
-    let g = d3.select(this).append("g")
-      .flowStyle("position: relative")
-      .flowStyle("v-mode", `width:${textOffset}px`)
-      .flowStyle("h-mode", `margin-right:10px`)
-      .flowComputed("h-mode", "margin-top", function() {
-        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map(n => n.getBoundingClientRect().height);
-        return Math.max.apply(undefined, heights)/2 +"px";
-      });
-      // .flowComputed("h-mode", "margin-left", function() {
-      //   return d3.select(this.parentElement.parentElement.parentElement).selectAll("g.row")
-      //     .nodes()[0].getBoundingClientRect().width/2 + "px";
-      // });
 
     d3.select(this).flowComputed("h-mode", "margin-left", function() {
       if (!this.previousSibling) {
         return d3.select(this.parentElement.parentElement).selectAll("g.row")
-          .nodes()[0].getBoundingClientRect().width/2 + "px";
+          .nodes()[0].getBoundingClientRect().width/2;
       } else {
-        return "0px";
+        return 0;
       }
     });
+
+    let g = d3.select(this).append("g")
+      .flowStyle("position: relative")
+      .flowStyle("h-mode", `margin-right:10px`)
+      .flowComputed("h-mode", "margin-top", function() {
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+      })
+      .flowComputed("v-mode", "width", function() {
+        console.log(this.parentElement.parentElement.parentElement);
+        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+      });
 
     if (val !== d.get('mapping.scale.valueBreak')) {
 
@@ -488,14 +478,11 @@ export default Ember.Mixin.create({
         .classed("symG", true)
         .flowStyle("v-mode", `margin-top: ${r.anchorY - dy/2}px`)
         .flowComputed("v-mode", "margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-            .nodes().map( n => n.getBoundingClientRect().width);
-          return Math.max.apply(undefined, widths)/2+"px";
+          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
         })
         .flowComputed("h-mode", "margin-top", function() {
-          let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-            .nodes().map(n => n.getBoundingClientRect().height);
-          return (Math.max.apply(undefined, heights) - this.getBoundingClientRect().height)/2 +"px";
+          let maxH = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          return (maxH - this.getBoundingClientRect().height)/2 +"px";
         });
 
       symbol.insert(symG)
@@ -525,48 +512,43 @@ export default Ember.Mixin.create({
         return Math.max(
           this.getBoundingClientRect().width,
           siblingW
-        )+"px";
+        );
       });
 
       let line = g.append("line")
         .flowComputed("v-mode", "margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-            .nodes().map( n => n.getBoundingClientRect().width);
-          return Math.max.apply(undefined, widths)/2+"px";
+          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+        })
+        .flowComputedAttrs("v-mode", function() {
+          return {
+            x1: -r.x / 2,
+            y1: r.y,
+            x2: r.x / 2,
+            y2: r.y,
+            stroke: "#BBBBBB"
+          }
+        })
+        .flowComputedAttrs("h-mode", function() {
+          let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          return {
+            x1: 0,
+            y1: -maxH / 2,
+            x2: 0,
+            y2: maxH / 2,
+            stroke: "#BBBBBB"
+          }
         });
-
-      if (d.legendOrientation === "vertical") {
-        line.attrs({
-          x1: -r.x / 2,
-          y1: r.y,
-          x2: r.x / 2,
-          y2: r.y,
-          stroke: "#BBBBBB"
-        });
-      } else {
-        line.attrs({
-          x1: 0,
-          y1: -textOffset / 2,
-          x2: 0,
-          y2: textOffset / 2,
-          stroke: "#BBBBBB"
-        });
-      }
     }
 
     g.append("g")
       .flowStyle("position: absolute")
       .flowStyle("h-mode", `left: 0px;`)
-      .flowStyle("v-mode", `left: ${textOffset}px; top: ${r.anchorY - dy/2}px`)
-      .flowComputed("v-mode", "margin-left", function() {
-        let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-        .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, widths)/2+"px";
+      .flowStyle("v-mode", `margin-left: ${MARGIN_SYMBOL_TEXT}px; top: ${r.anchorY - dy/2}px`)
+      .flowComputed("v-mode", "left", function() {
+        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
       })
       .flowComputed("h-mode", "top", function() {
-        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-        .nodes().map(n => n.getBoundingClientRect().height);
-        return (Math.max.apply(undefined, heights)/2 + 12) +"px";
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 + 12;
       })
       .append("text")
       .classed("symLbl", true)
@@ -580,7 +562,7 @@ export default Ember.Mixin.create({
         
   },
 
-  appendSymbolIntervalLabel(svg, d, textOffset, formatter, val, i) {
+  appendSymbolIntervalLabel(svg, d, formatter, val, i) {
         
     let symbol = SymbolMaker.symbol({
           name: d.get('mapping.visualization.shape'),
@@ -598,15 +580,13 @@ export default Ember.Mixin.create({
       .flowComputed("h-mode", "margin-left", function() {
         if (!this.previousSibling) {
           return d3.select(this.parentElement.parentElement).selectAll("g.row")
-            .nodes()[0].getBoundingClientRect().width/2 + "px";
+            .nodes()[0].getBoundingClientRect().width/2;
         } else {
           return "0px";
         }
       })
       .flowComputed("h-mode", "height", function() {
-        let heights = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map(n => n.getBoundingClientRect().height);
-        return Math.max.apply(undefined, heights) +"px";
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement).selectAll("g.symG"));
       })
       .flowComputed("h-mode", "width", function() {
         let margin = 8;
@@ -623,7 +603,7 @@ export default Ember.Mixin.create({
           (widthsTextInner.length == 2 && (widthsTextInner[0]+widthsTextInner[1])/2+10) || 0,
           (widthsTextInner[widthsTextInner.length-1]+widthTextPreviousSibling)/2+10
         ];
-        return Math.max.apply(undefined, widths) +"px";
+        return Math.max.apply(undefined, widths);
       });
 
     if (!(r.x > 0 && r.y > 0)) return;
@@ -633,21 +613,10 @@ export default Ember.Mixin.create({
       .flowClass("h-mode", "horizontal center stretched flow")
       .flowStyle("h-mode", "width: 100%")
       .flowComputed("v-mode", "margin-left", function() {
-        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, widths)/2+"px";
-      })
-      .flowComputed("v-mode", "width", function() {
-        let symWidths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map( n => n.getBoundingClientRect().width);
-        let textWidths = d3.select(this.parentElement.parentElement).selectAll("text.symLbl")
-          .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, textWidths)+textOffset+"px";
+        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement).selectAll("g.symG")) / 2;
       })
       .flowComputed("h-mode", "margin-top", function() {
-        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map(n => n.getBoundingClientRect().height);
-        return Math.max.apply(undefined, heights)/2 +"px";
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
       });
       
     
@@ -657,9 +626,8 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", `margin-left: ${r.x}px`)
       .flowClass("h-mode", "solid")
       .flowComputed("h-mode", "margin-top", function() {
-        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map(n => n.getBoundingClientRect().height);
-        return (Math.max.apply(undefined, heights) - this.getBoundingClientRect().height)/2 +"px";
+        let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        return (maxH - this.getBoundingClientRect().height)/2;
       });
 
     symbol.insert(symG)
@@ -674,13 +642,9 @@ export default Ember.Mixin.create({
     g = g.append("g").flowClass("outer fluid flow-no-size")
       .flowStyle("width: 100%; height: 100%")
       .flowComputed("h-mode", "top", function() {
-        let heights = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-        .nodes().map(n => n.getBoundingClientRect().height);
-        return (Math.max.apply(undefined, heights)/2) +"px";
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
       })
 
-    let line;
-      
     if (i === 0) {
 
       let firstStepG = g.append("g")
@@ -688,34 +652,35 @@ export default Ember.Mixin.create({
         .flowStyle("position: absolute; left: 0px")
         .flowStyle("v-mode", "top: 0px");
       
-      line = firstStepG.append("line");
-      
-      if (d.legendOrientation === "vertical") {
-        line.attrs({
-          x1: 0,
-          y1: -2,
-          x2: textOffset - 6,
-          y2: -2,
-          stroke: "black"
+      firstStepG.append("line")
+        .flowComputedAttrs("v-mode", function() {
+          let maxW = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          return {
+            x1: 0,
+            y1: -2,
+            x2: maxW / 2,
+            y2: -2,
+            stroke: "black"
+          };
+        })
+        .flowComputedAttrs("h-mode", function() {
+          let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          return {
+            x1: 0,
+            y1: -maxH,
+            x2: 0,
+            y2: 0,
+            stroke: "black"
+          };
         });
-      } else {
-        line.attrs({
-          x1: 0,
-          y1: -textOffset,
-          x2: 0,
-          y2: 0,
-          stroke: "black"
-        });
-      }
-      
+
       firstStepG.append("text")
         .classed("symLbl", true)
         .flowStyle("h-mode", "position: absolute; top: 12px")
-        .flowStyle("v-mode", `margin-left: ${textOffset}px`)
         .flowComputed("v-mode", "margin-left", function() {
-          let widths = d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map( n => n.getBoundingClientRect().width);
-          return Math.max.apply(undefined, widths)/2+"px";
+          return d3lper.selectionMaxWidth(
+            d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
+          ) / 2 + MARGIN_SYMBOL_TEXT;
         })
         .text( formatter(d.get('mapping.extent')[1]) )
         .attrs({
@@ -734,34 +699,36 @@ export default Ember.Mixin.create({
       .flowStyle("v-mode", `left: 0px; top: ${Math.max(symH+2, 10)}px`)
       .flowStyle("h-mode", "left: 100%; top: 0px");
     
-    line = g.append("line");
-    
-    if (d.legendOrientation === "vertical") {
-      line.attrs({
+    g.append("line")
+      .flowComputedAttrs("v-mode", function() {
+        let maxW = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        return {
           x1: 0,
           y1: 0,
-          x2: textOffset - 6,
+          x2: maxW / 2,
           y2: 0,
           stroke: "black"
-        });
-    } else {
-      line.attrs({
+        };
+      })
+      .flowComputedAttrs("h-mode", function() {
+        console.log(this.parentElement.parentElement.parentElement.parentElement);
+        let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        return {
           x1: 0,
-          y1: -textOffset,
+          y1: -maxH,
           x2: 0,
           y2: 0,
           stroke: "black"
-        });
-    }
+        };
+      });
     
     g.append("text")
       .classed("symLbl", true)
       .flowStyle("h-mode", "position: absolute; top: 12px")
-      .flowStyle("v-mode", `margin-left: ${textOffset}px`)
       .flowComputed("v-mode", "margin-left", function() {
-        let widths = d3.select(this.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
-        .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, widths)/2+"px";
+        return d3lper.selectionMaxWidth(
+          d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
+        ) / 2 + MARGIN_SYMBOL_TEXT;
       })
       .text( v => formatter(v) )
       .attrs({
@@ -802,7 +769,8 @@ export default Ember.Mixin.create({
       d3.select(this).flowClass("horizontal solid")
         .flowStyle(`height: ${symH}px; margin-right: 2px`);
 
-      let symG = d3.select(this).append("g");
+      let symG = d3.select(this).append("g")
+          .classed("barG", true);
 
       symbol.insert(symG)
         .attrs({
@@ -901,33 +869,35 @@ export default Ember.Mixin.create({
         stroke: "black"
       });*/
 
-    let width = intervals.length * (d.get('mapping.visualization.barWidth')*(1+0.25));
     barG.flowClass("horizontal flow");
     axisG.flowStyle(`margin-left: 5px`);
     g.flowClass("horizontal flow").flowStyle(`margin-top: ${-minHeight+10}px`);
-    el.flowClass("vertical flow").flowStyle(`margin-right: 42px; margin-top: 16px`);
+    el.flowClass("vertical solid flow").flowStyle(`margin-right: 32px`)
+      .flowComputed("height", function() {
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement).selectAll("g.barG"));
+      })
+      .flowComputed("margin-left", function() {
+        return d3lper.selectionMaxWidth(d3.select(this.parentElement).selectAll("g.barG")) / 2;
+      });
   },
 
-  appendRuleLabel(svg, d, textOffset, formatter, rule, i) {
+  appendRuleLabel(svg, d, formatter, rule, i) {
 
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
+        isSymbol = d.get('mapping.visualization.mainType') === "symbol",
         r;
 
     let g = d3.select(this).append("g")
       .flowClass("horizontal flow")
       .flowStyle("v-mode", `margin-right: 3px;`)
       .flowComputed("v-mode", "margin-left", function() {
-        let widths = d3.select(this.parentElement.parentElement).selectAll("g.symG")
-          .nodes().map( n => n.getBoundingClientRect().width);
-        return Math.max.apply(undefined, widths)/2+"px";
+        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
       });
 
-    if (d.get('mapping.visualization.mainType') === "symbol") {
+    if (isSymbol) {
 
       g.flowComputed("h-mode", "margin-top", function() {
-        let heights = d3.select(this.parentElement.parentElement).selectAll("g.rule")
-          .nodes().map(n => n.getBoundingClientRect().height);
-        return Math.max.apply(undefined, heights)/2 +"px";
+        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement).selectAll("g.symG")) / 2;
       });
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
@@ -946,7 +916,9 @@ export default Ember.Mixin.create({
       let symG = g.append("g")
         .classed("symG", true)
         .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 4px; margin-left: ${r.x/2}px`)
-        .flowStyle("v-mode", `width: ${textOffset}px;`);
+        .flowComputed("v-mode", "width", function() {
+          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+        });
 
       symbol.insert(symG)
         .attrs({
@@ -968,8 +940,7 @@ export default Ember.Mixin.create({
 
       let swatchG = g.append("g")
         .flowStyle(`margin-top: ${-r.y/2}px`)
-        .flowStyle("v-mode", `width: ${textOffset}px; margin-right: 2px`)
-        .flowStyle("h-mode", `margin-right: 4px`);
+        .flowStyle("v-mode", `width: ${r.x}px; margin-right: 2px`);
       
       swatchG.append("rect")
         .attrs({
@@ -1000,7 +971,7 @@ export default Ember.Mixin.create({
     }
     
     g.append("g")
-      .flowInclude("v-mode")
+      .flowStyle(`margin-left: ${isSymbol ? MARGIN_SYMBOL_TEXT : MARGIN_SURFACE_TEXT}px`)
       .flowStyle("h-mode", "margin-right: 20px")
       .append("text")
       .text( rule.get('label') )

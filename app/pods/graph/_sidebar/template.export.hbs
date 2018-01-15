@@ -178,6 +178,7 @@
         <label class="solid w4">{{x-capitalize (t 'export.settings.title')}}</label>
         {{input value=settings.legendTitle}}
       </div>
+      {{#if settings.orientationAvailable}}
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.orientation.title')}}</label>
         <div class="solid horizontal half-airy middle flow w4">
@@ -189,6 +190,7 @@
           <span class="layer-title">{{x-capitalize (t 'export.settings.orientation.vertical')}}</span>
         </div>
       </div>
+      {{/if}}
       {{/if}}
       {{/o-wrap/legend-settings}}
     </div>

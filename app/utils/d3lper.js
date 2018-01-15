@@ -102,6 +102,14 @@ let d3lper = {
         }
       }
     });
+  },
+
+  selectionMaxWidth(sel) {
+    return Math.max.apply(undefined, sel.nodes().map( n => n.getBoundingClientRect().width ));
+  },
+
+  selectionMaxHeight(sel) {
+    return Math.max.apply(undefined, sel.nodes().map( n => n.getBoundingClientRect().height ));
   }
 	
 	
