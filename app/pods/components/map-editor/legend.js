@@ -450,8 +450,9 @@ export default Ember.Mixin.create({
         return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
       })
       .flowComputed("v-mode", "width", function() {
-        console.log(this.parentElement.parentElement.parentElement);
-        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+        let maxSymG = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+        let maxSymLbl = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symLbl"));
+        return maxSymG + maxSymLbl + MARGIN_SYMBOL_TEXT;
       });
 
     if (val !== d.get('mapping.scale.valueBreak')) {
