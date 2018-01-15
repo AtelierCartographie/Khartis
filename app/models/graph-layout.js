@@ -92,11 +92,11 @@ var GraphLayout = Struct.extend({
 	autoCenter: false,
 
   canDisplayGrid: function() {
-    return !this.get('projection.isComposite') && !this.get('basemap.type') === "imported";
+    return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
   }.property('projection', 'projection.isComposite'),
 
   canDisplaySphere: function() {
-    return !this.get('projection.isComposite') && !this.get('basemap.type') === "imported";
+    return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
   }.property('projection', 'projection.isComposite'),
 
   legendStackingHori: Ember.computed('legendStacking', {
