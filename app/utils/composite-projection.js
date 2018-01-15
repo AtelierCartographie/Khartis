@@ -200,7 +200,6 @@ let proj = function() {
 
     _instantiate(projConfig) {
       
-      console.log(projConfig, typeof projConfig.fn);
       let d3Proj = typeof projConfig.fn === "function" ? projConfig.fn : Function("d3", `return ${projConfig.fn}`)(d3);
 
       !d3Proj.invert && (d3Proj.invert = solve(d3Proj));
@@ -235,7 +234,7 @@ let proj = function() {
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
-      console.log(center);
+      
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))
         .translate([
