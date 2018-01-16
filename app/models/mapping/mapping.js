@@ -28,6 +28,8 @@ let Mapping = Struct.extend(LegendMixin, {
 
   colorSet: null,
 
+  legendMaxValuePrecision: null,
+
   ordered: false,
   
   canBeSurface: function() {
@@ -190,7 +192,7 @@ let Mapping = Struct.extend(LegendMixin, {
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',
-    'filter._defferedChangeIndicator',
+    'filter._defferedChangeIndicator', 'maxValuePrecision',
     function() {
       this.notifyDefferedChange();
     },
@@ -204,6 +206,7 @@ let Mapping = Struct.extend(LegendMixin, {
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
+      legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
       ordered: this.get('ordered'),
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
@@ -221,6 +224,7 @@ Mapping.reopenClass({
       varCol: json.varCol ? refs[json.varCol] : null,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
+      legendMaxValuePrecision: json.legendMaxValuePrecision,
       ordered: json.ordered,
       rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null
     });

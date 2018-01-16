@@ -191,6 +191,13 @@
         </div>
       </div>
       {{/if}}
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.legend.roundValue')}}</label>
+        <div class="horizontal half-airy flow">
+          {{input-numeric numericValue=settings.maxValuePrecision isInteger=true class="solid w2" max=9}}
+          <small>{{t 'export.settings.legend.valuePrecision'}}</small>
+        </div>
+      </div>
       {{/if}}
       {{/o-wrap/legend-settings}}
     </div>

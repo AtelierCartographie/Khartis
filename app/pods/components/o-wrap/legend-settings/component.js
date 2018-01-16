@@ -45,6 +45,16 @@ export default WrapperAbstract.extend({
     }
   }),
 
+  maxValuePrecision: Ember.computed('obj.legendMaxValuePrecision', {
+    get() {
+      return this.get('obj.mapping.maxValuePrecision');
+    },
+    set(k, v) {
+      this.set('obj.mapping.legendMaxValuePrecision', v);
+      return this.get('obj.mapping.maxValuePrecision');
+    }
+  }),
+
   init() {
     this._super();
   },

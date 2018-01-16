@@ -68,6 +68,10 @@ let DataMixin = Ember.Mixin.create({
   
   maxValuePrecision: function() {
 
+    if (this.get('legendMaxValuePrecision') != null) {
+      return this.get('legendMaxValuePrecision');
+    }
+
     let max = 5;
 
     let pre = this.get('values').reduce( (p, v) => {
@@ -103,7 +107,7 @@ let DataMixin = Ember.Mixin.create({
     
     return Math.round(pre);
     
-  }.property('values', 'intervals'),
+  }.property('values', 'intervals', 'legendMaxValuePrecision'),
 
   valueBreakChange: function() {
     

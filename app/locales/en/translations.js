@@ -363,7 +363,9 @@ export default {
       "edit": "edit",
       "legend": {
         "stacking": "stacking",
-        "chooseLegend": "choose"
+        "chooseLegend": "choose",
+        "roundValue": "round values",
+        "valuePrecision": "decimals"
       },
       "title": "titre",
       "width": "width",
