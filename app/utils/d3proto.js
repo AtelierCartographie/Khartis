@@ -43,3 +43,11 @@ d3.selection.prototype.selectOrCreate = function(selector, createFn) {
   let sel = this.select(selector);
   return (!sel.empty() && sel) || createFn.call(this);
 }
+
+d3.selection.prototype.closestParent = function(selector) {
+    let candidates = Array.prototype.slice.apply(document.querySelectorAll(selector));
+    for (let n = this.node(); n.parentElement; n = n.parentElement) {
+      if (candidates.indexOf(n) !== -1) return d3.select(n);
+    }
+    return d3.select({});
+};

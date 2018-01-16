@@ -337,9 +337,9 @@ export default Ember.Mixin.create({
       .flowStyle(`height: ${2*r.y}px; index: ${i};`)
       .flowStyle("h-mode", "margin-bottom: 2px; position: relative");
 
-    let hModeWidth = function(node) {
+    let hModeWidth = function(sel) {
       const margin = 10;
-      let textEls = d3.select(node).selectAll("text.symLbl").nodes(),
+      let textEls = sel.selectAll("text.symLbl").nodes(),
       widths = [];
       for (let i = 1; i < textEls.length; i++) {
         widths.push(textEls[i-1].getBoundingClientRect().width/2+textEls[i].getBoundingClientRect().width/2+10);
@@ -350,7 +350,7 @@ export default Ember.Mixin.create({
     let g = d3.select(this).append("g")
       .flowStyle("v-mode", `width: ${2*r.x}px`)
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(this.parentElement.parentElement);
+        return hModeWidth(d3.select(this).closestParent(".legend-label"));
       });
     
     //border
@@ -365,7 +365,7 @@ export default Ember.Mixin.create({
       })
       .flowStyle("h-mode", "position: absolute")
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(this.parentElement.parentElement.parentElement);
+        return hModeWidth(d3.select(this).closestParent(".legend-label"));
       });
 
     g.append("rect")
@@ -391,7 +391,7 @@ export default Ember.Mixin.create({
       })
       .flowStyle("h-mode", "position: absolute")
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(this.parentElement.parentElement.parentElement);
+        return hModeWidth(d3.select(this).closestParent(".legend-label"));
       });
       
     g = d3.select(this).append("g")
@@ -436,7 +436,7 @@ export default Ember.Mixin.create({
 
     d3.select(this).flowComputed("h-mode", "margin-left", function() {
       if (!this.previousSibling) {
-        return d3.select(this.parentElement.parentElement).selectAll("g.row")
+        return d3.select(this).closestParent(".legend-label").selectAll("g.row")
           .nodes()[0].getBoundingClientRect().width/2;
       } else {
         return 0;
@@ -447,11 +447,11 @@ export default Ember.Mixin.create({
       .flowStyle("position: relative")
       .flowStyle("h-mode", `margin-right:10px`)
       .flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
       })
       .flowComputed("v-mode", "width", function() {
-        let maxSymG = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
-        let maxSymLbl = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symLbl"));
+        let maxSymG = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        let maxSymLbl = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("text.symLbl"));
         return maxSymG + maxSymLbl + MARGIN_SYMBOL_TEXT;
       });
 
@@ -479,10 +479,10 @@ export default Ember.Mixin.create({
         .classed("symG", true)
         .flowStyle("v-mode", `margin-top: ${r.anchorY - dy/2}px`)
         .flowComputed("v-mode", "margin-left", function() {
-          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
         })
         .flowComputed("h-mode", "margin-top", function() {
-          let maxH = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
           return (maxH - this.getBoundingClientRect().height)/2 +"px";
         });
 
@@ -518,7 +518,7 @@ export default Ember.Mixin.create({
 
       let line = g.append("line")
         .flowComputed("v-mode", "margin-left", function() {
-          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
         })
         .flowComputedAttrs("v-mode", function() {
           return {
@@ -530,7 +530,7 @@ export default Ember.Mixin.create({
           }
         })
         .flowComputedAttrs("h-mode", function() {
-          let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -maxH / 2,
@@ -546,10 +546,10 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", `left: 0px;`)
       .flowStyle("v-mode", `margin-left: ${MARGIN_SYMBOL_TEXT}px; top: ${r.anchorY - dy/2}px`)
       .flowComputed("v-mode", "left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
       })
       .flowComputed("h-mode", "top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 + 12;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 + 12;
       })
       .append("text")
       .classed("symLbl", true)
@@ -580,14 +580,14 @@ export default Ember.Mixin.create({
       .flowStyle("v-mode", `height: ${symH}px`)
       .flowComputed("h-mode", "margin-left", function() {
         if (!this.previousSibling) {
-          return d3.select(this.parentElement.parentElement).selectAll("g.row")
+          return d3.select(this).closestParent(".legend-label").selectAll("g.row")
             .nodes()[0].getBoundingClientRect().width/2;
         } else {
           return "0px";
         }
       })
       .flowComputed("h-mode", "height", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement).selectAll("g.symG"));
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
       })
       .flowComputed("h-mode", "width", function() {
         let margin = 8;
@@ -614,10 +614,10 @@ export default Ember.Mixin.create({
       .flowClass("h-mode", "horizontal center stretched flow")
       .flowStyle("h-mode", "width: 100%")
       .flowComputed("v-mode", "margin-left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement).selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
       })
       .flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
       });
       
     
@@ -627,7 +627,7 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", `margin-left: ${r.x}px`)
       .flowClass("h-mode", "solid")
       .flowComputed("h-mode", "margin-top", function() {
-        let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
         return (maxH - this.getBoundingClientRect().height)/2;
       });
 
@@ -643,7 +643,7 @@ export default Ember.Mixin.create({
     g = g.append("g").flowClass("outer fluid flow-no-size")
       .flowStyle("width: 100%; height: 100%")
       .flowComputed("h-mode", "top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
       })
 
     if (i === 0) {
@@ -655,7 +655,7 @@ export default Ember.Mixin.create({
       
       firstStepG.append("line")
         .flowComputedAttrs("v-mode", function() {
-          let maxW = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -2,
@@ -665,7 +665,7 @@ export default Ember.Mixin.create({
           };
         })
         .flowComputedAttrs("h-mode", function() {
-          let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -maxH,
@@ -680,7 +680,7 @@ export default Ember.Mixin.create({
         .flowStyle("h-mode", "position: absolute; top: 12px")
         .flowComputed("v-mode", "margin-left", function() {
           return d3lper.selectionMaxWidth(
-            d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
+            d3.select(this).closestParent(".legend-label").selectAll("g.symG")
           ) / 2 + MARGIN_SYMBOL_TEXT;
         })
         .text( formatter(d.get('mapping.extent')[1]) )
@@ -702,7 +702,7 @@ export default Ember.Mixin.create({
     
     g.append("line")
       .flowComputedAttrs("v-mode", function() {
-        let maxW = d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
         return {
           x1: 0,
           y1: 0,
@@ -713,7 +713,7 @@ export default Ember.Mixin.create({
       })
       .flowComputedAttrs("h-mode", function() {
         console.log(this.parentElement.parentElement.parentElement.parentElement);
-        let maxH = d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG"));
+        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
         return {
           x1: 0,
           y1: -maxH,
@@ -728,7 +728,7 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", "position: absolute; top: 12px")
       .flowComputed("v-mode", "margin-left", function() {
         return d3lper.selectionMaxWidth(
-          d3.select(this.parentElement.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")
+          d3.select(this).closestParent(".legend-label").selectAll("g.symG")
         ) / 2 + MARGIN_SYMBOL_TEXT;
       })
       .text( v => formatter(v) )
@@ -870,10 +870,10 @@ export default Ember.Mixin.create({
         stroke: "black"
       });*/
 
-    barG.flowClass("horizontal flow");
-    axisG.flowStyle(`margin-left: 5px`);
+    barG.flowClass("horizontal solid flow");
+    axisG.flowClass("solid").flowStyle(`margin-left: 5px`);
     g.flowClass("horizontal flow").flowStyle(`margin-top: ${-minHeight+10}px`);
-    el.flowClass("vertical solid flow").flowStyle(`margin-right: 32px`)
+    el.flowClass("vertical solid flow").flowStyle(`margin-right: 22px`)
       .flowComputed("height", function() {
         return d3lper.selectionMaxHeight(d3.select(this.parentElement).selectAll("g.barG"));
       })
@@ -892,13 +892,13 @@ export default Ember.Mixin.create({
       .flowClass("horizontal flow")
       .flowStyle("v-mode", `margin-right: 3px;`)
       .flowComputed("v-mode", "margin-left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
       });
 
     if (isSymbol) {
 
       g.flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this.parentElement.parentElement).selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
       });
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
@@ -918,7 +918,7 @@ export default Ember.Mixin.create({
         .classed("symG", true)
         .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 4px; margin-left: ${r.x/2}px`)
         .flowComputed("v-mode", "width", function() {
-          return d3lper.selectionMaxWidth(d3.select(this.parentElement.parentElement.parentElement.parentElement).selectAll("g.symG")) / 2 +"px";
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
         });
 
       symbol.insert(symG)

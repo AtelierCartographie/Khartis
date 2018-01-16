@@ -183,7 +183,7 @@ FlowLayout.prototype.commit = function() {
   
     this.applyLayout(this.ROOT_EL.firstChild);
 
-    this.clearRoot();
+    //this.clearRoot();
 
   });
 
