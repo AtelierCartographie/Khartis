@@ -5,6 +5,7 @@ import Struct from './struct';
 import Projection from './projection';
 import Basemap from './basemap';
 import ImportedBasemap from './imported-basemap';
+import LegendLayout from './legend/legend-layout';
 
 const MARGIN_DEFAULTS = {t: 30, b: 30, l: 16, r: 16};
 
@@ -87,7 +88,7 @@ var GraphLayout = Struct.extend({
   gridColor: "#e1e3ee",
   
   showLegend: null,
-  legendStacking: "horizontal",
+  legendLayout: null,
 	
 	autoCenter: false,
 
@@ -99,34 +100,6 @@ var GraphLayout = Struct.extend({
     return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
   }.property('projection', 'projection.isComposite'),
 
-  legendStackingHori: Ember.computed('legendStacking', {
-    get() {
-      return this.get('legendStacking') === "horizontal";
-    },
-    set(k,v) {
-      if (v) {
-        this.set('legendStacking', "horizontal");
-      } else {
-        this.set('orientationVerti', true);
-      }
-      return v;
-    }
-  }),
-
-  legendStackingVerti: Ember.computed('legendStacking', {
-    get() {
-      return this.get('legendStacking') === "vertical";
-    },
-    set(k,v) {
-      if (v) {
-        this.set('legendStacking', "vertical");
-      } else {
-        this.set('orientationHori', true);
-      }
-      return v;
-    }
-  }),
-	
   tx: 0,
   ty: 0,
 	width: 900,
@@ -134,11 +107,22 @@ var GraphLayout = Struct.extend({
 	margin: null,
   zoom: 1,
   precision: 2.5,
+
+  /* to remove */
   legendTx: null,
   legendTy: null,
   legendOpacity: 0.85,
+  legendStacking: "horizontal",
+  /* -- */
   
   projection: null,
+
+  init() {
+    this._super();
+    if (!this.get('legendLayout')) {
+      this.set('legendLayout', LegendLayout.create());
+    }
+  },
 
 	hOffset: function(screenWidth) {
 		return (screenWidth - this.get('width')) / 2;
@@ -177,8 +161,15 @@ var GraphLayout = Struct.extend({
       legendStacking : this.get('legendStacking'),
       legendTx: this.get('legendTx'),
       legendTy: this.get('legendTy'),
-      legendOpacity: this.get('legendOpacity')
+      legendOpacity: this.get('legendOpacity'),
+      legendLayout: this.get('legendLayout').export()
     });
+  },
+
+  restoreLegend(json, refs) {
+    if (json.legendLayout) {
+      this.set('legendLayout', LegendLayout.restore(json.legendLayout, refs));
+    }
   }
   
 });
@@ -198,7 +189,6 @@ GraphLayout.reopenClass({
   },
   
   restore(json, refs = {}) {
-    console.log(json.basemap);
       let o = this._super(json, refs, {
         basemap: GraphLayout.restoreBasemap(json.basemap),
         backgroundColor: json.backgroundColor,
@@ -215,11 +205,7 @@ GraphLayout.reopenClass({
         precision: json.precision,
         showBorders: json.showBorders,
         showGrid: json.showGrid,
-        showLegend: json.showLegend,
-        legendStacking: json.legendStacking || "horizontal",
-        legendTx: json.legendTx,
-        legendTy: json.legendTy,
-        legendOpacity: json.legendOpacity
+        showLegend: json.showLegend
       });
       return o;
   }

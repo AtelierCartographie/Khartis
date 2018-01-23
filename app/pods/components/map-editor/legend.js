@@ -15,62 +15,135 @@ const RULES_LIMIT = 8,
 export default Ember.Mixin.create({
   
   resizingMargin: false,
+  overRectElement: null,
+  anchorLineElement: null,
 
   legendInit() {
-
-    let legendG = this.d3l().append("g")
-      .classed("legend", true);
-    
-    //LEGEND DRAG
-    let drag = d3.drag()
-      .filter(function() {
-        return !$(d3.event.target).hasClass("no-drag") && !$(d3.event.target).parents(".no-drag").length;
-      })
-      .subject(() => {
-        return {x: legendG.attr('kis:kis:tx'), y: legendG.attr('kis:kis:ty')};
-      })
-      .on("start", () => {
-        d3.event.sourceEvent.stopPropagation();
-        legendG.classed("dragging", true);
-        this.set('resizingMargin', true);
-      })
-      .on("drag", () => {
-        let bbox = this.d3l().select(".bg").node().getBBox(),
-            pos = {
-              tx: Math.min(bbox.width-2, Math.max(d3.event.x, 0)),
-              ty: Math.min(bbox.height-10, Math.max(d3.event.y, 0))
-            };
-        legendG.attrs({
-         'transform': d3lper.translate(pos), 
-          "kis:kis:tx": pos.tx,
-          "kis:kis:ty": pos.ty
-        });
-      })
-      .on("end", () => {
-        legendG.classed("dragging", false);
-        this.set('resizingMargin', false);
-        let t = this.getViewboxTransform()({
-          x: legendG.attr('kis:kis:tx'),
-          y: legendG.attr('kis:kis:ty')
-        });
-        this.get('graphLayout').setProperties({
-          legendTx: t.x,
-          legendTy: t.y
-        });
-        this.sendAction('onAskVersioning', "freeze");
-      });
-    
+    this.d3l().append("g").classed("legend", true);
     this.drawLegend();
-    legendG.call(drag);
     this.updateLegendOpacity();
-    
+    this.set(
+      'overRectElement',
+      this.d3l().append("rect")
+        .classed("legend-over-rect", true)
+        .style("visibility", "hidden")
+    );
+    this.set(
+      'anchorLineElement',
+      this.d3l().append("line")
+        .classed("legend-anchor-line", true)
+        .style("visibility", "hidden")
+    );
+    this.hideOverRect();
   },
-  
-  updateLegendPosition: function() {
-    
-    let legendG = this.d3l().select("g.legend"),
-        legendContentG = legendG.select("g.legend-content"),
-        t = {x: this.get('graphLayout.legendTx'), y: this.get('graphLayout.legendTy')};
+
+  displayOverRect(node) {
+    let svgBox = this.d3l().node().getBoundingClientRect(),
+        nodeBox = node.getBoundingClientRect();
+    this.get('overRectElement')
+      .attrs({
+        x: nodeBox.x - svgBox.x,
+        y: nodeBox.y - svgBox.y,
+        width: nodeBox.width,
+        height: nodeBox.height,
+        opacity: 0.3
+      })
+      .style("visibility", "visible");
+  },
+
+  hideOverRect() {
+    this.get('overRectElement')
+      .attrs({
+        x: -1000,
+        y: -1000,
+        width: 0,
+        height: 0,
+        opacity: 0
+      })
+      .style("visibility", "visible");
+  },
+
+  displayAnchorLine(node, anchor) {
+    let margin = 3,
+        svgBox = this.d3l().node().getBoundingClientRect(),
+        nodeBox = node.getBoundingClientRect(),
+        rPos = {
+          x: nodeBox.x - svgBox.x,
+          y: nodeBox.y - svgBox.y
+        },
+        coords = {x1: 0, x2: 0, y1: 0, y2: 0};
+    if (anchor === "left") coords = {x1: rPos.x - margin, x2: rPos.x - margin, y1: rPos.y, y2: rPos.y + nodeBox.height};
+    if (anchor === "right") coords = {x1: rPos.x + nodeBox.width + margin, x2: rPos.x + nodeBox.width + margin, y1: rPos.y, y2: rPos.y + nodeBox.height};
+    if (anchor === "top") coords = {x1: rPos.x, x2: rPos.x + nodeBox.width, y1: rPos.y - margin, y2: rPos.y - margin};
+    if (anchor === "bottom") coords = {x1: rPos.x, x2: rPos.x + nodeBox.width, y1: rPos.y + nodeBox.height + margin, y2: rPos.y + nodeBox.height + margin};
+    this.get('anchorLineElement')
+      .attrs({
+        ...coords,
+        opacity: 0.3
+      })
+      .style("visibility", "visible");
+  },
+
+  hideAnchorLine() {
+    this.get('anchorLineElement')
+      .attrs({
+        opacity: 0,
+        stroke: null
+      })
+      .style("visibility", "visible");
+  },
+
+  getLegendBlockUnderPoint() {
+    const margin = 10;
+    let [mouseX, mouseY] = d3.mouse(document.body);
+    let selectedLayerEl;
+    if (d3.select(this).classed("legend-layer")) {
+      selectedLayerEl = d3.select(this).node();
+    } else {
+      selectedLayerEl = d3.select(this).selectAll("g.legend-layer").nodes()
+        .find( n => {
+          let bbox = n.getBoundingClientRect();
+          return mouseX > bbox.x + margin && mouseX <= bbox.x + bbox.width - margin
+            && mouseY > bbox.y + margin && mouseY <= bbox.y + bbox.height - margin;
+        });
+    }
+    if (selectedLayerEl) { //check if layer is part of a multiple group
+      let parentGroupEl = d3.select(selectedLayerEl).closestParent("g.legend-group"),
+          parentGroup = parentGroupEl.datum();
+      if (!parentGroup.get('isMultiple')) {
+        return parentGroupEl.node(); //layer can't be selected if alone, fallback to group
+      }
+    }
+    return selectedLayerEl || this;
+  },
+
+  getLegendAnchorUnderPoint(excludeSel) {
+    let [mouseX, mouseY] = d3.mouse(document.body);
+    let excludes = excludeSel.classed("legend-group") ? excludeSel.selectAll("g.legend-layer").nodes() : [excludeSel.node()];
+    let layerEls = this.d3l().selectAll("g.legend-layer").nodes()
+      .filter( n => {
+        let bbox = n.getBoundingClientRect();
+        return excludes.indexOf(n) === -1 && mouseX > bbox.x && mouseX <= bbox.x + bbox.width
+          && mouseY > bbox.y && mouseY <= bbox.y + bbox.height;
+      })
+      .reverse();
+    if (layerEls.length) {
+      let n = layerEls[0],
+          anchors = {vertical: null, horizontal: null};
+      let bbox = n.getBoundingClientRect();
+      if (mouseX < bbox.x + bbox.width / 2 ) anchors.horizontal = "left";
+      if (mouseX >= bbox.x + bbox.width / 2 ) anchors.horizontal = "right";
+      if (mouseY < bbox.y + bbox.height / 2 ) anchors.vertical = "top";
+      if (mouseY >= bbox.y + bbox.height / 2 ) anchors.vertical = "bottom";
+      return {lyr: n, anchors};
+    }
+    return {lyr: null, anchors: null};
+  },
+
+  updateLegendPosition: function(legendG, group) {
+
+    let legendContentG = legendG.select("g.legend-content"),
+        t = {x: group.get('tx'), y: group.get('ty')};
     
     if (!legendG.node()) {
       return;
@@ -98,9 +171,9 @@ export default Ember.Mixin.create({
         } else {
           //fix tx, ty
           t.y = h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + vPadding;
-          this.get('graphLayout').setProperties({
-              legendTx: t.x,
-              legendTy: t.y
+          group.setProperties({
+              tx: t.x,
+              ty: t.y
             });
         }
         
@@ -124,6 +197,18 @@ export default Ember.Mixin.create({
           width: contentBox.width + 2*padding,
           height: contentBox.height + 2*padding,
         });
+
+      legendG.selectAll("g.legend-layer").each(function() {
+        let lyrEl = d3.select(this),
+            lyrBox = lyrEl.node().getBoundingClientRect();
+
+        lyrEl.select("rect.legend-layer-bg")
+          .attrs({
+            width: lyrBox.width,
+            height: lyrBox.height
+          });
+
+      });
         
     } else {
       if (autoMargin) {
@@ -131,51 +216,182 @@ export default Ember.Mixin.create({
       }
     }
     
-  }.observes('$width', '$height',
-    'graphLayout.legendTx', 'graphLayout.legendTy',
-    'graphLayout.width', 'graphLayout.height', 'graphLayout.margin.manual'),
+  }/*.observes('$width', '$height',
+    'graphLayout.tx', 'graphLayout.legendLayout.groups.@each.tx', 'graphLayout.legendLayout.groups.@each.ty',
+    'graphLayout.width', 'graphLayout.height', 'graphLayout.margin.manual')*/,
   
   updateLegendOpacity: function() {
-    
-    this.d3l().selectAll("g.legend rect.legend-bg")
-      .style("opacity", this.get('graphLayout.legendOpacity'));
-      
-  }.observes('graphLayout.legendOpacity'),
+    this.d3l().selectAll("g.legend-group rect.legend-bg")
+      .style("opacity", this.get('graphLayout.legendLayout.opacity'));
+  }.observes('graphLayout.legendLayout.opacity'),
   
   drawLegend: function() {
 
+    let groups = this.get('graphLayout.legendLayout.groups');
+
+    if (!this.get('graphLayout.showLegend') || !this.get('graphLayers').length) {
+      groups = [];
+    }
+
+    this.d3l().select("g.legend").selectAll("g.legend-group")
+      .data(groups)
+      .enterUpdate({
+        enter: sel => this.initLegendGroup(sel),
+        update: sel => sel.eachWithArgs(this.drawLegendGroup, this)
+      });
+
+  }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height', 'graphLayout.margin.manual',
+    'i18n.locale', 'graphLayout.showLegend', 'graphLayout.legendLayout.stacking', 
+    'graphLayout.legendLayout.groups.[]',
+    'graphLayers.[]',
+    'graphLayers.@each._defferedChangeIndicator'),
+
+  initLegendGroup(sel) {
+    
     let self = this,
-        svg = this.d3l(),
-        layers = this.get('graphLayers'),
-        d3Locale = d3lper.getLocale(this.get('i18n')),
-        width = layers.length * 120,
-        legendG = this.d3l().selectAll("g.legend"),
+      legendG = sel.append("g").classed("legend-group", true);
+
+    legendG.append("rect")
+      .classed("legend-bg", true)
+      .attrs({
+        "x": -18,
+        "y": -5
+      })
+      .attr("stroke", "#F0F0F0")
+      .attr("fill", "white");
+    legendG.append("g").classed("legend-content", true);
+
+    legendG.each( function() { self.bindDrag(d3.select(this)); } );
+    
+    //handle mouseover
+    legendG.on("mousemove", function() {
+      self.displayOverRect(self.getLegendBlockUnderPoint.bind(this)());
+    }).on("mouseout", function() {
+      self.hideOverRect();
+    });
+
+    return legendG;
+  },
+
+  bindDrag(legendG) {
+
+    let self = this;
+
+    //LEGEND DRAG
+    let drag = d3.drag()
+    .filter(function() {
+      let el = self.getLegendBlockUnderPoint.bind(this)();
+      return el == this && !$(d3.event.target).hasClass("no-drag") && !$(d3.event.target).parents(".no-drag").length;
+    })
+    .subject(() => {
+      let bg = this.d3l().select(".bg").node(),
+          pos = {x: parseInt(legendG.attr('kis:kis:tx')), y: parseInt(legendG.attr('kis:kis:ty'))},
+          xyBgRelative = d3lper.xyRelativeTo(bg, legendG.node()),
+          xyParentGroupRelative = {x: 0, y: 0};
+      if (legendG.classed("legend-layer")) {
+        xyParentGroupRelative = d3lper.xyRelativeTo(legendG.node(), legendG.closestParent("g.legend-group").node());
+        pos.x = xyParentGroupRelative.x;
+        pos.y = xyParentGroupRelative.y;
+      }
+      return {
+        ...pos,
+        rx: xyBgRelative.x + pos.x,
+        ry: xyBgRelative.y + pos.y
+      };
+    })
+    .on("start", () => {
+      d3.event.sourceEvent.stopPropagation();
+      legendG.classed("dragging", true);
+      this.set('resizingMargin', true);
+      this.hideOverRect();
+    })
+    .on("drag", () => {
+      let bg = this.d3l().select(".bg").node(),
+          bbox = bg.getBBox(),
+          pos = {
+            tx: Math.min(d3.event.subject.rx + bbox.width-2, Math.max(d3.event.x, d3.event.subject.rx)),
+            ty: Math.min(d3.event.subject.ry + bbox.height-10, Math.max(d3.event.y, d3.event.subject.ry))
+          };
+      legendG.attrs({
+        'transform': d3lper.translate(pos), 
+        "kis:kis:tx": pos.tx,
+        "kis:kis:ty": pos.ty
+      });
+
+      //check if element is overing a layer
+      let {lyr, anchors} = this.getLegendAnchorUnderPoint(legendG);
+      if (lyr) {
+        this.displayAnchorLine(lyr, anchors[this.get('graphLayout.legendLayout.stacking')]);
+      } else {
+        this.hideAnchorLine();
+      }
+
+    })
+    .on("end", (d) => {
+
+      this.hideAnchorLine();
+      legendG.classed("dragging", false);
+      this.set('resizingMargin', false);
+
+      let {lyr, anchors} = this.getLegendAnchorUnderPoint(legendG);
+      if (lyr) { // not translate, just modify group and layers 
+        let anchor = anchors[this.get('graphLayout.legendLayout.stacking')],
+            layers = this.get('graphLayout.legendLayout').detachLayers(d),
+            lyrDatum = d3.select(lyr).datum(),
+            lyrGrp = this.get('graphLayout.legendLayout').getLayerGroup(lyrDatum);
+        if (anchor === "left" || anchor === "top") {
+          lyrGrp.appendBefore(lyrDatum, layers);
+        } else if (anchor === "right" || anchor === "bottom") {
+          lyrGrp.appendAfter(lyrDatum, layers);
+        }
+        this.get('graphLayout.legendLayout').cleanGroups();
+      } else {
+        if (legendG.classed("legend-layer")) {
+          //coordinates are relative to old group
+          let oldGrp = legendG.closestParent("g.legend-group");
+          let tOldGrp = this.getViewboxTransform()({
+            x: oldGrp.attr('kis:kis:tx'),
+            y: oldGrp.attr('kis:kis:ty'),
+          });
+          let grp = this.get('graphLayout.legendLayout').layerToGroup(d);
+          let t = this.getViewboxTransform()({
+            x: parseInt(oldGrp.attr('kis:kis:tx')) + parseInt(legendG.attr('kis:kis:tx')),
+            y: parseInt(oldGrp.attr('kis:kis:ty')) + parseInt(legendG.attr('kis:kis:ty'))
+          });
+          grp.setProperties({
+            tx: t.x,
+            ty: t.y
+          });
+          this.get('graphLayout.legendLayout').addGroupIfNeeded(grp);
+          this.get('graphLayout.legendLayout').cleanGroups();
+        } else if (legendG.classed("legend-group")) {
+          let t = this.getViewboxTransform()({
+            x: legendG.attr('kis:kis:tx'),
+            y: legendG.attr('kis:kis:ty')
+          });
+          d.setProperties({
+            tx: t.x,
+            ty: t.y
+          });
+        }
+      }
+      this.sendAction('onAskVersioning', "freeze");
+    });
+
+    legendG.call(drag);
+
+  },
+
+  drawLegendGroup(self, group, i) {
+
+    let legendG = d3.select(this),
         containerG = legendG.selectAll("g.legend-content"),
         bgG = legendG.selectAll("rect.legend-bg"),
-        orientation = this.get('graphLayout.legendStacking') === "vertical" ? "v-mode" : "h-mode";
+        svg = self.d3l(),
+        layers = group.get('layers'),
+        d3Locale = d3lper.getLocale(self.get('i18n')),
+        orientation = self.get('graphLayout.legendLayout.stacking') === "vertical" ? "v-mode" : "h-mode";
     
-    if (!this.get('graphLayout.showLegend') || !this.get('graphLayers').length) {
-      containerG.remove();
-      bgG.remove();
-      this.updateLegendPosition();
-      return;
-    }
-    
-    if (bgG.empty()) {
-      bgG = legendG.append("rect")
-        .classed("legend-bg", true)
-        .attrs({
-          "x": -18,
-          "y": -5
-        })
-        .attr("stroke", "#F0F0F0")
-        .attr("fill", "white");
-    }
-    
-    if (containerG.empty()) {
-      containerG = legendG.append("g")
-        .classed("legend-content", true);
-    }
 
     let flowLayout = new FlowLayout(containerG);
     
@@ -197,7 +413,15 @@ export default Ember.Mixin.create({
         let el = d3.select(this),
             formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
 
+        self.bindDrag(el);
         el.selectAll("*").remove();
+
+        let layerBg = el.append("rect")
+          .classed("legend-layer-bg", true)
+          .attrs({
+            x: 0,
+            y: 0
+          });
           
         let label = el.append("g")
           .flowClass("vertical solid")
@@ -212,7 +436,7 @@ export default Ember.Mixin.create({
           });
         
         label.text(d.get('legendTitleComputed'));
- 
+
         d3lper.wrapText(label.node(), 200);
 
         label.on("click", function() {
@@ -310,22 +534,21 @@ export default Ember.Mixin.create({
       
     };
     
-    containerG.selectAll("g.legend-label")
-      .data(this.get('graphLayers').filter( gl => gl.get('displayable') ))
+    containerG.selectAll("g.legend-layer")
+      .data(layers.filter( gl => gl.get('displayable') ))
       .enterUpdate({
-        enter: (sel) => sel.append("g").classed("legend-label", true),
+        enter: (sel) => sel.append("g").classed("legend-layer", true),
         update: (sel) => sel.call(bindLayer)
       })
     
     flowLayout.commit();
     
     Ember.run.later(() => {
-      this.updateLegendPosition();
-      this.updateLegendOpacity();
+      self.updateLegendPosition(legendG, group);
+      self.updateLegendOpacity();
     });
     
-  }.observes('i18n.locale', 'graphLayout.showLegend', 'graphLayout.legendStacking', 'graphLayers.[]',
-    'graphLayers.@each._defferedChangeIndicator'),
+  },
 
 
   appendSurfaceIntervalLabel(svg, d, formatter, val, i) {
@@ -350,7 +573,7 @@ export default Ember.Mixin.create({
     let g = d3.select(this).append("g")
       .flowStyle("v-mode", `width: ${2*r.x}px`)
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(d3.select(this).closestParent(".legend-label"));
+        return hModeWidth(d3.select(this).closestParent(".legend-layer"));
       });
     
     //border
@@ -365,7 +588,7 @@ export default Ember.Mixin.create({
       })
       .flowStyle("h-mode", "position: absolute")
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(d3.select(this).closestParent(".legend-label"));
+        return hModeWidth(d3.select(this).closestParent(".legend-layer"));
       });
 
     g.append("rect")
@@ -391,7 +614,7 @@ export default Ember.Mixin.create({
       })
       .flowStyle("h-mode", "position: absolute")
       .flowComputed("h-mode", "width", function() {
-        return hModeWidth(d3.select(this).closestParent(".legend-label"));
+        return hModeWidth(d3.select(this).closestParent(".legend-layer"));
       });
       
     g = d3.select(this).append("g")
@@ -436,7 +659,7 @@ export default Ember.Mixin.create({
 
     d3.select(this).flowComputed("h-mode", "margin-left", function() {
       if (!this.previousSibling) {
-        return d3.select(this).closestParent(".legend-label").selectAll("g.row")
+        return d3.select(this).closestParent(".legend-layer").selectAll("g.row")
           .nodes()[0].getBoundingClientRect().width/2;
       } else {
         return 0;
@@ -447,11 +670,11 @@ export default Ember.Mixin.create({
       .flowStyle("position: relative")
       .flowStyle("h-mode", `margin-right:10px`)
       .flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2 +"px";
       })
       .flowComputed("v-mode", "width", function() {
-        let maxSymG = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
-        let maxSymLbl = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("text.symLbl"));
+        let maxSymG = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
+        let maxSymLbl = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("text.symLbl"));
         return maxSymG + maxSymLbl + MARGIN_SYMBOL_TEXT;
       });
 
@@ -479,10 +702,10 @@ export default Ember.Mixin.create({
         .classed("symG", true)
         .flowStyle("v-mode", `margin-top: ${r.anchorY - dy/2}px`)
         .flowComputed("v-mode", "margin-left", function() {
-          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2 +"px";
         })
         .flowComputed("h-mode", "margin-top", function() {
-          let maxH = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
           return (maxH - this.getBoundingClientRect().height)/2 +"px";
         });
 
@@ -518,7 +741,7 @@ export default Ember.Mixin.create({
 
       let line = g.append("line")
         .flowComputed("v-mode", "margin-left", function() {
-          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
         })
         .flowComputedAttrs("v-mode", function() {
           return {
@@ -530,7 +753,7 @@ export default Ember.Mixin.create({
           }
         })
         .flowComputedAttrs("h-mode", function() {
-          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -maxH / 2,
@@ -546,10 +769,10 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", `left: 0px;`)
       .flowStyle("v-mode", `margin-left: ${MARGIN_SYMBOL_TEXT}px; top: ${r.anchorY - dy/2}px`)
       .flowComputed("v-mode", "left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
       })
       .flowComputed("h-mode", "top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 + 12;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2 + 12;
       })
       .append("text")
       .classed("symLbl", true)
@@ -580,14 +803,14 @@ export default Ember.Mixin.create({
       .flowStyle("v-mode", `height: ${symH}px`)
       .flowComputed("h-mode", "margin-left", function() {
         if (!this.previousSibling) {
-          return d3.select(this).closestParent(".legend-label").selectAll("g.row")
+          return d3.select(this).closestParent(".legend-layer").selectAll("g.row")
             .nodes()[0].getBoundingClientRect().width/2;
         } else {
           return "0px";
         }
       })
       .flowComputed("h-mode", "height", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
       })
       .flowComputed("h-mode", "width", function() {
         let margin = 8;
@@ -614,10 +837,10 @@ export default Ember.Mixin.create({
       .flowClass("h-mode", "horizontal center stretched flow")
       .flowStyle("h-mode", "width: 100%")
       .flowComputed("v-mode", "margin-left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       })
       .flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       });
       
     
@@ -627,7 +850,7 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", `margin-left: ${r.x}px`)
       .flowClass("h-mode", "solid")
       .flowComputed("h-mode", "margin-top", function() {
-        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
         return (maxH - this.getBoundingClientRect().height)/2;
       });
 
@@ -643,7 +866,7 @@ export default Ember.Mixin.create({
     g = g.append("g").flowClass("outer fluid flow-no-size")
       .flowStyle("width: 100%; height: 100%")
       .flowComputed("h-mode", "top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       })
 
     if (i === 0) {
@@ -655,7 +878,7 @@ export default Ember.Mixin.create({
       
       firstStepG.append("line")
         .flowComputedAttrs("v-mode", function() {
-          let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+          let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -2,
@@ -665,7 +888,7 @@ export default Ember.Mixin.create({
           };
         })
         .flowComputedAttrs("h-mode", function() {
-          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+          let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
           return {
             x1: 0,
             y1: -maxH,
@@ -680,7 +903,7 @@ export default Ember.Mixin.create({
         .flowStyle("h-mode", "position: absolute; top: 12px")
         .flowComputed("v-mode", "margin-left", function() {
           return d3lper.selectionMaxWidth(
-            d3.select(this).closestParent(".legend-label").selectAll("g.symG")
+            d3.select(this).closestParent(".legend-layer").selectAll("g.symG")
           ) / 2 + MARGIN_SYMBOL_TEXT;
         })
         .text( formatter(d.get('mapping.extent')[1]) )
@@ -702,7 +925,7 @@ export default Ember.Mixin.create({
     
     g.append("line")
       .flowComputedAttrs("v-mode", function() {
-        let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        let maxW = d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
         return {
           x1: 0,
           y1: 0,
@@ -713,7 +936,7 @@ export default Ember.Mixin.create({
       })
       .flowComputedAttrs("h-mode", function() {
         console.log(this.parentElement.parentElement.parentElement.parentElement);
-        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG"));
+        let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
         return {
           x1: 0,
           y1: -maxH,
@@ -728,7 +951,7 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", "position: absolute; top: 12px")
       .flowComputed("v-mode", "margin-left", function() {
         return d3lper.selectionMaxWidth(
-          d3.select(this).closestParent(".legend-label").selectAll("g.symG")
+          d3.select(this).closestParent(".legend-layer").selectAll("g.symG")
         ) / 2 + MARGIN_SYMBOL_TEXT;
       })
       .text( v => formatter(v) )
@@ -892,13 +1115,13 @@ export default Ember.Mixin.create({
       .flowClass("horizontal flow")
       .flowStyle("v-mode", `margin-right: 3px;`)
       .flowComputed("v-mode", "margin-left", function() {
-        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       });
 
     if (isSymbol) {
 
       g.flowComputed("h-mode", "margin-top", function() {
-        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2;
+        return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       });
 
       let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
@@ -918,7 +1141,7 @@ export default Ember.Mixin.create({
         .classed("symG", true)
         .flowStyle("h-mode", `width: ${r.x/2}px; margin-right: 4px; margin-left: ${r.x/2}px`)
         .flowComputed("v-mode", "width", function() {
-          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-label").selectAll("g.symG")) / 2 +"px";
+          return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2 +"px";
         });
 
       symbol.insert(symG)

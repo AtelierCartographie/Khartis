@@ -16,8 +16,26 @@
     &.l, &.r { cursor: ew-resize; }
   }
 
-  .fg, .feature.surface, .feature.symbol {
+  .fg, .feature.surface, .feature.symbol, .legend-over-rect {
     pointer-events: none;
+  }
+
+  .legend-anchor-line {
+    stroke-width: 4px;
+    stroke: color(success);
+  }
+
+  .legend-over-rect {
+    fill: color(primary2);
+  }
+
+  .legend-layer-bg {
+    opacity: 0.00001;
+    fill: white;
+  }
+
+  .legend-layer.dragging .legend-layer-bg {
+    opacity: 0.85;
   }
 
   .labelling line.radius, .labelling line.end {

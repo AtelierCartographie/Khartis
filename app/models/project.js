@@ -6,7 +6,9 @@ import GraphLayer from './graph-layer';
 import GeoDef from './geo-def';
 /* global Em */
 
-const CURRENT_VERSION = 3.0;
+const CURRENT_VERSION = 3.1;
+const VERSION_LZ_STRING= 3.0;
+const VERSION_LEGEND_2 = 3.1;
 
 let Project = Struct.extend({
 
@@ -86,11 +88,7 @@ Project.reopenClass({
     },
     
     restore(json, refs = {}) {
-      if (json.version && json.version >= 3) {
-        json.data = (json.data && JSON.parse(LZString.decompressFromBase64(json.data))) || null;
-        json.graphLayout = JSON.parse(LZString.decompressFromBase64(json.graphLayout));
-        json.graphLayers = JSON.parse(LZString.decompressFromBase64(json.graphLayers));
-      }
+      json = this.backwardCompatibility(json);
       let o = this._super(json, refs, {
         date: json.date,
         version: json.version,
@@ -119,8 +117,33 @@ Project.reopenClass({
           geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
           report: json.report
         });
+        o.get('graphLayout').restoreLegend(json.graphLayout, refs);
         return o;
       });
+    },
+
+    backwardCompatibility(json) {
+      let ret = Object.assign({}, json);
+      !ret.version && (ret.version = 2);
+      if (ret.version >= VERSION_LZ_STRING) {
+        ret.data = (ret.data && JSON.parse(LZString.decompressFromBase64(ret.data))) || null;
+        ret.graphLayout = JSON.parse(LZString.decompressFromBase64(ret.graphLayout));
+        ret.graphLayers = JSON.parse(LZString.decompressFromBase64(ret.graphLayers));
+      }
+
+      if (ret.version < VERSION_LEGEND_2) {
+        console.log("here version");
+        ret.graphLayout.legendLayout = {
+          groups: Em.A([{
+            layers: ret.graphLayers.map( gl => gl._uuid ),
+            tx: ret.graphLayout.legendTx,
+            ty: ret.graphLayout.legendTy
+          }]),
+          stacking: "horizontal",
+          opacity: ret.graphLayout.legendOpacity
+        }
+      }
+      return ret;
     }
     
 });

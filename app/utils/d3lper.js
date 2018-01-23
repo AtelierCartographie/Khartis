@@ -1,14 +1,5 @@
 import d3 from 'npm:d3';
 
-// export function parseTransformTranslate(value) {
-//   if (value == null) return {x: 0, y: 0};
-//   if (!svgNode) svgNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
-//   svgNode.setAttribute("transform", value);
-//   if (!(value = svgNode.transform.baseVal.consolidate())) return {x: 0, y: 0};
-//   value = value.matrix;
-//   return {x: value.e, y: value.f};
-// }
-
 let d3lper = {
 	
 	scale(val) {
@@ -35,6 +26,13 @@ let d3lper = {
 
   scaleCoords(scale, ...args) {
     return args.map( (coords) => [coords[0]*scale, coords[1]*scale] );
+  },
+
+  xyRelativeTo(from, to) {
+    return {
+      x: from.getBoundingClientRect().x - to.getBoundingClientRect().x,
+      y: from.getBoundingClientRect().y - to.getBoundingClientRect().y
+    }
   },
 
   polyPoints(arr) {

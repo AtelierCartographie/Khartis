@@ -44,6 +44,7 @@ export default Ember.Controller.extend({
       } else {
         project.thumbnail = data;
       }
+
     });
   },
 
@@ -93,7 +94,8 @@ export default Ember.Controller.extend({
     'model.graphLayout.backgroundColor', 'model.graphLayout.backmapColor',
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
     'model.title', 'model.author', 'model.dataSource', 'model.comment',
-    'model.graphLayout.margin._defferedChangeIndicator'),
+    'model.graphLayout.margin._defferedChangeIndicator',
+    'model.graphLayout.legendLayout._defferedChangeIndicator'),
   
   layersChange: function() {
 
@@ -193,16 +195,16 @@ export default Ember.Controller.extend({
 
   makeThumbnail() {
 
-    if (d3.select("svg.map-editor").empty()) return Promise.resolve(null);
+    if (d3.select("svg.map-editor").empty()) return Promise.resolve();
 
     let svgString = this.exportAsHTML();
-
+    
     let fact = 1,
-        h = config.projectThumbnail.height,
-        w = config.projectThumbnail.width,
-        imgWidth = this.get('model.graphLayout.width')*fact,
-        imgHeight = this.get('model.graphLayout.height')*fact,
-        s = w / imgWidth;
+    h = config.projectThumbnail.height,
+    w = config.projectThumbnail.width,
+    imgWidth = this.get('model.graphLayout.width')*fact,
+    imgHeight = this.get('model.graphLayout.height')*fact,
+    s = w / imgWidth;
     let canvas = document.getElementById("export-canvas");
     canvas.width = w;
     canvas.height = h;
@@ -212,17 +214,22 @@ export default Ember.Controller.extend({
     let img = new Image();
     let svg = new Blob([svgString], {type: "image/svg+xml"});
     let url = DOMURL.createObjectURL(svg);
-
+    
     return new Promise( (res, rej) => {
-
+      
       img.onload = function() {
         ctx.drawImage(img, 0, (imgHeight - h/s) / 2, imgWidth, h/s, 0, 0, w, h);
         res(canvas.toDataURL("image/jpeg", config.projectThumbnail.quality));
+        DOMURL.revokeObjectURL(url);
+      };
+      img.onerror = function(e) {
+        rej(e);
       };
       img.src = url;
-
-    });
-
+      
+    })
+    .catch(console.log);
+    
   },
 
   exportAsHTML(compatibility = {}) {
@@ -356,7 +363,7 @@ export default Ember.Controller.extend({
   },
   
   freeze: function() {
-    this.get('store').versions().freeze(this.get('model').export());
+    this.get('store').versions().freeze(this.get('model'));
   },
   
   invertSliderFn: function() {
@@ -386,6 +393,7 @@ export default Ember.Controller.extend({
     addLayer(col) {
       let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
       this.get('model.graphLayers').unshiftObject(layer);
+      this.get('model.graphLayout.legendLayout').addLayer(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },
     
@@ -406,6 +414,7 @@ export default Ember.Controller.extend({
           Ember.String.capitalize(this.get('i18n').t('general.cancel').string))
         .then(() => {
           this.get('model.graphLayers').removeObject(layer);
+          this.get('model.graphLayout.legendLayout').removeLayer(layer);
         });
     },
 

@@ -163,15 +163,14 @@ var Store = Ember.Service.extend(Hookable, {
     },
 
     startVersioning(project) {
-      let self = this,
-          versioning = Version.begin(project),
-          changeFn = function() {
-            self.merge(this.current());
+      let versioning = Version.begin(project),
+          changeFn = function(current) {
+            this.merge(current);
           };
 
-      versioning.on(FREEZE_EVT, changeFn)
-           .on(UNDO_EVT, changeFn)
-           .on(REDO_EVT, changeFn);
+      versioning.on(FREEZE_EVT, changeFn.bind(this))
+           .on(UNDO_EVT, changeFn.bind(this))
+           .on(REDO_EVT, changeFn.bind(this));
 
       return this.set('versioning', versioning);
     },
@@ -240,7 +239,7 @@ var Version = Ember.Object.extend(Ember.Evented, {
       if (JSON.stringify(project) !== JSON.stringify(this.current())) {
         this.set('stack', this.get('stack').slice(0, this.get('needle') + 1));
         this.get('stack').addObject(project);
-        this.trigger(FREEZE_EVT);
+        this.trigger(FREEZE_EVT, this.current());
       }
       return project;
     }
