@@ -28,12 +28,7 @@ let DataMixin = Ember.Mixin.create({
       
   },
 
-  maxValuePrecision: function() {
-    if (this.get('legendMaxValuePrecision') != null) {
-      return this.get('legendMaxValuePrecision');
-    }
-    return 5;
-  }.property('legendMaxValuePrecision'),
+  maxValuePrecision: null,
   
   distribution: function() {
       

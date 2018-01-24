@@ -51,6 +51,7 @@ const FlowLayout = function(sel) {
     return new FlowLayout(sel, mode);
   }
   this.sel = sel;
+  this.rootSvg = sel.closestParent("svg").node();
   sel.node().__flow = this;
 };
 
@@ -183,7 +184,7 @@ FlowLayout.prototype.commit = function() {
   
     this.applyLayout(this.ROOT_EL.firstChild);
 
-    //this.clearRoot();
+    this.clearRoot();
 
   });
 

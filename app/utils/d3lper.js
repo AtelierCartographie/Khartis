@@ -108,6 +108,15 @@ let d3lper = {
 
   selectionMaxHeight(sel) {
     return Math.max.apply(undefined, [0, ...sel.nodes().map( n => n.getBoundingClientRect().height )]);
+  },
+
+  absoluteSVGBox(svg, element) {
+    let xy = svg.createSVGPoint(),
+        elemBox = element.getBoundingClientRect();
+    xy.x = elemBox.x;
+    xy.y = elemBox.y;
+    xy = xy.matrixTransform(svg.getScreenCTM().inverse());
+    return {x: xy.x, y: xy.y, width: elemBox.width*svg.getScreenCTM().inverse().d, height: elemBox.height*svg.getScreenCTM().inverse().a};
   }
 	
 	

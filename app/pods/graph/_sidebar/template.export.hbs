@@ -191,6 +191,7 @@
         </div>
       </div>
       {{/if}}
+      {{#if settings.precisionSettable}}
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.legend.roundValue')}}</label>
         <div class="horizontal half-airy flow">
@@ -198,6 +199,7 @@
           <small>{{t 'export.settings.legend.valuePrecision'}}</small>
         </div>
       </div>
+      {{/if}}
       {{/if}}
       {{/o-wrap/legend-settings}}
     </div>

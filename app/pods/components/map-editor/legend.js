@@ -38,12 +38,11 @@ export default Ember.Mixin.create({
   },
 
   displayOverRect(node) {
-    let svgBox = this.d3l().node().getBoundingClientRect(),
-        nodeBox = node.getBoundingClientRect();
+    let nodeBox = d3lper.absoluteSVGBox(this.d3l().node(), node);
     this.get('overRectElement')
       .attrs({
-        x: nodeBox.x - svgBox.x,
-        y: nodeBox.y - svgBox.y,
+        x: nodeBox.x,
+        y: nodeBox.y,
         width: nodeBox.width,
         height: nodeBox.height,
         opacity: 0.3
@@ -65,17 +64,12 @@ export default Ember.Mixin.create({
 
   displayAnchorLine(node, anchor) {
     let margin = 3,
-        svgBox = this.d3l().node().getBoundingClientRect(),
-        nodeBox = node.getBoundingClientRect(),
-        rPos = {
-          x: nodeBox.x - svgBox.x,
-          y: nodeBox.y - svgBox.y
-        },
+        nodeBox = d3lper.absoluteSVGBox(this.d3l().node(), node),
         coords = {x1: 0, x2: 0, y1: 0, y2: 0};
-    if (anchor === "left") coords = {x1: rPos.x - margin, x2: rPos.x - margin, y1: rPos.y, y2: rPos.y + nodeBox.height};
-    if (anchor === "right") coords = {x1: rPos.x + nodeBox.width + margin, x2: rPos.x + nodeBox.width + margin, y1: rPos.y, y2: rPos.y + nodeBox.height};
-    if (anchor === "top") coords = {x1: rPos.x, x2: rPos.x + nodeBox.width, y1: rPos.y - margin, y2: rPos.y - margin};
-    if (anchor === "bottom") coords = {x1: rPos.x, x2: rPos.x + nodeBox.width, y1: rPos.y + nodeBox.height + margin, y2: rPos.y + nodeBox.height + margin};
+    if (anchor === "left") coords = {x1: nodeBox.x - margin, x2: nodeBox.x - margin, y1: nodeBox.y, y2: nodeBox.y + nodeBox.height};
+    if (anchor === "right") coords = {x1: nodeBox.x + nodeBox.width + margin, x2: nodeBox.x + nodeBox.width + margin, y1: nodeBox.y, y2: nodeBox.y + nodeBox.height};
+    if (anchor === "top") coords = {x1: nodeBox.x, x2: nodeBox.x + nodeBox.width, y1: nodeBox.y - margin, y2: nodeBox.y - margin};
+    if (anchor === "bottom") coords = {x1: nodeBox.x, x2: nodeBox.x + nodeBox.width, y1: nodeBox.y + nodeBox.height + margin, y2: nodeBox.y + nodeBox.height + margin};
     this.get('anchorLineElement')
       .attrs({
         ...coords,
@@ -216,9 +210,7 @@ export default Ember.Mixin.create({
       }
     }
     
-  }/*.observes('$width', '$height',
-    'graphLayout.tx', 'graphLayout.legendLayout.groups.@each.tx', 'graphLayout.legendLayout.groups.@each.ty',
-    'graphLayout.width', 'graphLayout.height', 'graphLayout.margin.manual')*/,
+  },
   
   updateLegendOpacity: function() {
     this.d3l().selectAll("g.legend-group rect.legend-bg")
@@ -411,7 +403,13 @@ export default Ember.Mixin.create({
       _.each( function(d, i) {
 
         let el = d3.select(this),
-            formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
+            formatter;
+            
+        if (d.get('mapping.maxValuePrecision') != null) {
+          formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
+        } else {
+          formatter = t => t;
+        }
 
         self.bindDrag(el);
         el.selectAll("*").remove();
@@ -425,7 +423,7 @@ export default Ember.Mixin.create({
           
         let label = el.append("g")
           .flowClass("vertical solid")
-          .flowStyle("margin-bottom: 16px")
+          .flowStyle("margin-bottom: 8px; margin-top: 1em;")
           .classed("no-drag", true)
           .append("text")
           .classed("legend-title", true)
@@ -526,7 +524,7 @@ export default Ember.Mixin.create({
             .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
             .enterUpdate({
               enter: (sel) => sel.append("g").classed("rule", true),
-              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d, formatter)
+              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d)
             });
         }
         
@@ -1105,7 +1103,7 @@ export default Ember.Mixin.create({
       });
   },
 
-  appendRuleLabel(svg, d, formatter, rule, i) {
+  appendRuleLabel(svg, d, rule, i) {
 
     let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
         isSymbol = d.get('mapping.visualization.mainType') === "symbol",
