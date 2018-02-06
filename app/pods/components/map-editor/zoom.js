@@ -10,6 +10,8 @@ export default Ember.Mixin.create({
 
   zoomInit(d3g) {
 
+    this.d3l().classed("with-zoom-feature", true);
+
     zoom = zoom2()
       .scaleExtent([1, 12])
       .band(0.5)
@@ -51,6 +53,7 @@ export default Ember.Mixin.create({
   zoomAndDrag(scale, translate) {
 
     let mapG = this.d3l().select("g.map"),
+        zoomables = this.d3l().selectAll(".zoomable"),
         projector = this.get('projector'),
         t = projector.initialTranslate,
         ds = projector.scale() / projector.resolution,
@@ -61,7 +64,7 @@ export default Ember.Mixin.create({
     mapG.node().__kis_tx = translate[0];
     mapG.node().__kis_ty = translate[1];
     mapG.node().__kis_s = scale;
-    mapG
+    zoomables
       .transition()
       .duration(120)
       .ease(d3.easeLinear)
@@ -106,7 +109,7 @@ export default Ember.Mixin.create({
     this.scaleProjector(this.get('projector'));
     this.get('graphLayout').endPropertyChanges();
     this.projectAndDraw();
-    mapG.attr("transform", null);
+    this.d3l().selectAll(".zoomable").attr("transform", null);
   },
   
   zoomAndDragChange: function() {

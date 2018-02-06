@@ -23,6 +23,7 @@ export default {
     "width": "width",
     "yes": "yes",
     "no": "no",
+    "add": "ajouter",
     "warning": "warning",
     "error": {
      "one": "error",
@@ -381,6 +382,14 @@ export default {
       "image": "image",
       "vector": "vectoriel",
       "optimised": "optimised"
+    },
+    "drawings": {
+      "text": "text",
+      "arrow": "arrow",
+      "curve": "curve",
+      "strokeWidth": "stroke",
+      "dash": "dash",
+      "shapes": "shapes"
     }
   },
 

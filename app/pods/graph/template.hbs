@@ -72,16 +72,23 @@
                 hasMappingFeature=true
                 hasCompositionBordersFeature=model.graphLayout.projection.isComposite
                 hasHoverFeature=true
+                hasDrawingFeature=true
                 hoverEnabled=tooltipEnabled
                 defaultGeoDef=model.geoDef
+                eventNotifier=mapEditorEventNotifier
                 onAskVersioning="onAskVersioning"
                 onElementOver=(action 'onMapElementOver')
                 onElementOut=(action 'onMapElementOut')
+                onDrawingFeatureSelected=(action 'onDrawingFeatureSelected')
               }}
             {{/if}}
 
             {{#if hoveredData}}
               {{hover-info data=hoveredData layers=model.graphLayers}}
+            {{/if}}
+
+            {{#if selectedDrawingFeature}}
+              {{drawing-feature-info data=selectedDrawingFeature}}
             {{/if}}
 
             {{outlet "configuration-panel"}}

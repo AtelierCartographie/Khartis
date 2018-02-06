@@ -439,6 +439,7 @@ export default Ember.Mixin.create({
 
         label.on("click", function() {
           if (d3.event.defaultPrevented) return;
+          d3.event.preventDefault();
           TextEditor.showAt("legend-title-editor", this, d.get('legendTitleComputed'), function(val) {
             d.set('legendTitle', val);
           });

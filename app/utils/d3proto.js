@@ -51,3 +51,22 @@ d3.selection.prototype.closestParent = function(selector) {
     }
     return d3.select({});
 };
+
+/* return children elements undere point that matches querySelector */
+d3.selection.prototype.selectUnderPoint = function(selector, [x, y]) {
+  let candidates = Array.prototype.slice.apply(this.node().querySelectorAll(selector)),
+      processed = [];
+      
+  for (let el = document.elementFromPoint(x, y); el && el != document.documentElement; el = document.elementFromPoint(x, y)) {
+    processed.push({el, pointerEvents: el.style.pointerEvents});
+    el.style.pointerEvents = 'none';
+  }
+
+  return d3.selectAll(
+    processed
+      .map( proc => (proc.el.style.pointerEvents = proc.pointerEvents, proc.el) )
+      .filter( el => candidates.indexOf(el) !== -1 )
+      .reverse()
+    );
+
+}

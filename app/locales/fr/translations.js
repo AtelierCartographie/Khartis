@@ -24,6 +24,7 @@ export default {
     "yes": "oui",
     "no": "non",
     "warning": "warning",
+    "add": "ajouter",
     "error": {
      "one": "erreur",
      "other": "erreurs"
@@ -381,6 +382,14 @@ export default {
       "image": "image",
       "vector": "vecteur",
       "optimised": "optimisé"
+    },
+    "drawings": {
+      "text": "text",
+      "arrow": "fléche",
+      "curve": "courbure",
+      "strokeWidth": "Épaisseur",
+      "dash": "pointillés",
+      "shapes": "formes"
     }
   },
 

@@ -1,0 +1,19 @@
+& {
+  @extend .with-relief;
+  position: absolute;
+  top: 2rem;
+  right: 6rem;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 4px;
+  min-width: 20rem;
+
+  .head {
+    margin-bottom: 0;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}

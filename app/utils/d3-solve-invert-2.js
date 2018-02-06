@@ -61,7 +61,6 @@ export function solve(project, precision) {
     while (grid.stepX > precision && grid.stepY > precision) {
       grid = reBoundGrid(grid, nearest.node);
       nearest = nearestNode(coords, grid.nodes);
-      console.log(nearest.ratio);
       it++;
     }
     console.log(`itérations : ${it}`);

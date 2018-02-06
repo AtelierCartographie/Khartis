@@ -190,6 +190,13 @@ let proj = function() {
       } ).map(p => p.instance);
     },
 
+    projectionsForXY(xy) {
+      return this.projs.filter( p => {
+        console.log(p.instance.bboxPx);
+        return inside(p.instance.bboxPx, xy[1], xy[0]);
+      } ).map(p => p.instance);
+    },
+
     forEachProjection(f) {
       this.projs.forEach( p => f(p.instance) );
     },
@@ -234,7 +241,7 @@ let proj = function() {
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
-      
+
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))
         .translate([

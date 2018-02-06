@@ -1,0 +1,16 @@
+{{#x-dropdown-plus as |facet|}}
+    {{#facet.trigger class="horizontal space-between flow filled on-white"}}
+        {{drawing-feature-info/marker-selection/swatch marker=selected}}
+        <i class="iconfont iconfont-angle-down"></i>
+    {{/facet.trigger}}
+    {{#facet.list}}
+        <li {{action 'selectMarker' null}} class="horizontal middle airy flow">
+            aucun
+        </li>
+        {{#each markers as |marker|}}
+        <li {{action 'selectMarker' marker}} class="horizontal middle airy flow">
+            {{drawing-feature-info/marker-selection/swatch marker=marker}}
+        </li>
+        {{/each}}
+    {{/facet.list}}
+{{/x-dropdown-plus}}

@@ -12,10 +12,12 @@ import CompositionBordersFeature from './composition-borders';
 import CreditsFeature from './credits';
 import DocumentMaskFeature from './document-mask';
 import HoverFeature from './hover';
+import DrawingFeature from './drawing';
+import { EventNotifierFeature } from './event-notifier';
 
 /* global Em */
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(EventNotifierFeature, {
   
   tagName: "svg",
   attributeBindings: ['width', 'height', 'xmlns', 'version'],
@@ -24,11 +26,12 @@ export default Ember.Component.extend({
   height: "100%",
   xmlns: 'http://www.w3.org/2000/svg',
   version: '1.1',
-  
+
   $width: null,
   $height: null,
 	
-	graphLayout: null,
+  graphLayout: null,
+  
 	base: function() {
     return this.get('graphLayout.basemap.mapData');
   }.property('graphLayout.basemap.mapData'),
@@ -52,6 +55,7 @@ export default Ember.Component.extend({
   hasCreditsFeature: true,
   hasDocumentMaskFeature: true,
   hasHoverFeature: false,
+  hasDrawingFeature: false,
   /* ---- */
 
   windowLocation: function() {
@@ -138,6 +142,7 @@ export default Ember.Component.extend({
       .attr("id", "outerMap", true)
       .append("g")
       .classed("map", true)
+      .classed("zoomable", true)
       .attr("id", "map");
     
     let backMap = mapG.append("g")
@@ -178,6 +183,10 @@ export default Ember.Component.extend({
     if (this.get('hasLabellingFeature')) {
       this.reopen(LabellingFeature);
       this.labellingInit(mapG);
+    }
+    if (this.get('hasDrawingFeature')) {
+      this.reopen(DrawingFeature);
+      this.drawingInit(defs, mapG);
     }
     if (this.get('hasCompositionBordersFeature')) {
       this.reopen(CompositionBordersFeature);
@@ -342,6 +351,19 @@ export default Ember.Component.extend({
     
     let path = d3.geoPath(),
        projs = this.get('projector').projectionsForLatLon(latLon);
+    if (projs.length) {
+      path.projection(projs[0]);
+    } else {
+      path.projection(this.get('projector'));
+    }
+    
+    return path;
+  },
+
+  assumePathForXY(xy) {
+    
+    let path = d3.geoPath(),
+       projs = this.get('projector').projectionsForXY(xy);
     if (projs.length) {
       path.projection(projs[0]);
     } else {

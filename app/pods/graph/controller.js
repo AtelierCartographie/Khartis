@@ -8,6 +8,8 @@ import Projection from 'khartis/models/projection';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
 import {isSafari} from 'khartis/utils/browser-check';
 import {HOOK_BEFORE_SAVE_PROJECT} from 'khartis/services/store';
+import { START_DRAWING_EVENT } from '../components/map-editor/drawing';
+import EventNotifier from '../components/map-editor/event-notifier';
 
 export default Ember.Controller.extend({
   
@@ -31,6 +33,9 @@ export default Ember.Controller.extend({
 
   tooltipEnabled: false,
   hoveredData: null,
+  selectedDrawingFeature: null,
+
+  mapEditorEventNotifier: EventNotifier.create(),
 
   init() {
     this._super();
@@ -597,6 +602,10 @@ export default Ember.Controller.extend({
         layer.set('legendTitle', null);
       });
     },
+
+    addDrawing(type) {
+      this.get('mapEditorEventNotifier').trigger(START_DRAWING_EVENT, type);
+    },
     
     next() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);
@@ -634,6 +643,10 @@ export default Ember.Controller.extend({
 
     onMapElementOut() {
       this.set("hoveredData", null);
+    },
+
+    onDrawingFeatureSelected(feature) {
+      this.set('selectedDrawingFeature', feature);
     },
     
     onAskVersioning(type) {

@@ -205,6 +205,7 @@
     </div>
     {{/if}}
 
+    <!-- Habillage -->
 
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
     <div class="settings vertical flow">
@@ -231,6 +232,22 @@
         <div class="horizontal solid half-airy flow w7">
           <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
           {{color-picker class="on-white" value=model.graphLayout.backmapColor}}
+        </div>
+      </div>
+      <!-- drawing -->
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'general.add')}}</label>
+        <div class="solid horizontal half-airy middle flow w4">
+          <a {{action 'addDrawing' 'text'}}>
+            <span><i class="iconfont iconfont-text"></i></span>
+            <span>{{x-capitalize (t 'export.drawings.text')}}</span>
+          </a>
+        </div>
+        <div class="solid horizontal half-airy middle flow w4">
+          <a {{action 'addDrawing' 'line'}}>
+            <span><i class="iconfont iconfont-text"></i></span>
+            <span>{{x-capitalize (t 'export.drawings.arrow')}}</span>
+          </a>
         </div>
       </div>
     </div>

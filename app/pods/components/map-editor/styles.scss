@@ -74,5 +74,41 @@
     }
   }
 
+  &.drawing-text {
+    cursor: text;  
+  }
+
+  &.drawing-arrow {
+    cursor: crosshair;
+  }
+
+  &.with-zoom-feature .map {
+    cursor: -webkit-grab;
+    cursor: grab;
+    &.dragging {
+      cursor: -webkit-grabbing;
+      cursor: grabbing;
+    }
+  }
+
+  .drawing .draw-marker {
+    * {
+      pointer-events: none;
+      visibility: inherit;
+    }
+    circle {
+      fill: color(primary2);
+    }
+    line {
+      stroke: color(primary2);
+    }
+  }
+
+  .drawing rect.drawing-feature-box {
+    fill: rgba(255, 255, 255, 0.001);
+    stroke: color(primary2);
+    cursor: move;
+  }
+
 }
 

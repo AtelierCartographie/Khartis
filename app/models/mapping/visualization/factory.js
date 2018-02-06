@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Struct from 'khartis/models/struct';
 import SurfaceVisualization from './surface';
 import {default as SymbolVisualization, SymbolVisualizationCategorical} from './symbol';
 import TextVisualization from './text';

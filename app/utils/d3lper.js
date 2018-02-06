@@ -1,4 +1,5 @@
 import d3 from 'npm:d3';
+import {Vector} from './vector';
 
 let d3lper = {
 	
@@ -43,6 +44,19 @@ let d3lper = {
 
   distance(pt1, pt2) {
     return Math.sqrt((pt2[0]-pt1[0])*(pt2[0]-pt1[0]), (pt2[1]-pt1[1])*(pt2[1]-pt1[1]));
+  },
+
+  curveLine(points, pctDistance) {
+    let vect = Vector.fromPoints(points[0] ,points[1]),
+        normal = vect.normal(),
+        ptMiddle = [vect.x / 2 + points[0][0], vect.y / 2 + points[0][1]],
+        scaledNormal = normal.scale(pctDistance),
+        deviatiedPt = [ptMiddle[0] + scaledNormal.x, ptMiddle[1] + scaledNormal.y];
+    return [
+      points[0],
+      deviatiedPt,
+      points[1]
+    ];
   },
 	
 	yiqColor(d3Color) {
@@ -100,6 +114,20 @@ let d3lper = {
         }
       }
     });
+  },
+
+  multilineText: function(textEl, text)  {
+      let lines = (text || "").split(/\n/g),
+          lineHeight = 1.1, // ems
+          y = textEl.attr("y"),
+          dy = parseFloat(textEl.attr("dy"));
+      if (isNaN(dy)) {
+        dy = 0;
+      }
+      textEl.text(null);
+      lines.forEach( line => {
+        textEl.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(line);
+      } );
   },
 
   selectionMaxWidth(sel) {

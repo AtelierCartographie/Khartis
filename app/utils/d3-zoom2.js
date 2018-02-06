@@ -190,9 +190,14 @@ export default function() {
     d3.event.preventDefault();
 
     function mousemove() {
-      moved = 1;
-      translateTo(d3.mouse(target), l);
-      dispatch();
+      if (!moved) {
+        let newL = location(d3.mouse(target));
+        moved = (newL[0] !== l[0] && newL[1] !== l[1]) ? 1 : 0;
+      }
+      if (moved) {
+        translateTo(d3.mouse(target), l);
+        dispatch();
+      }
     }
 
     function mouseup() {

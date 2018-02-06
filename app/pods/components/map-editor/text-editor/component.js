@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import snap, {forceUpdate} from 'khartis/utils/snap';
 
 const EV_NS = "text-editor";
 

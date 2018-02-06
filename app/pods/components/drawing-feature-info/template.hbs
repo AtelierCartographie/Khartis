@@ -1,0 +1,61 @@
+<div class="vertical flow padded">
+  <div class="horizontal solid filled primary overflows head padded-h">
+    <b>Réglages</b>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
+    <div class="horizontal half-airy solid flow w7">
+      {{color-picker value=data.color}}
+    </div>
+  </div>
+  {{#if (x-eq data.type 'line')}}
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.curve')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid offset-slider" band=0.05 value=data.curve min=-1 max=1}}
+    </div>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.strokeWidth')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid offset-slider" band=1 value=data.strokeWidth min=1 max=20}}
+    </div>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.dash')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid offset-slider" band=1 value=data.dash min=1 max=20}}
+    </div>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.shapes')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+      {{drawing-feature-info/marker-selection selected=data.markerStart markers=(x-array 'arrow-marker-start' 'rect-marker' 'circle-marker')}}
+      {{drawing-feature-info/marker-selection selected=data.markerEnd markers=(x-array 'arrow-marker-end' 'rect-marker' 'circle-marker')}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if (x-eq data.type 'text')}}
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid offset-slider" band=1 value=data.fontSize min=6 max=42}}
+    </div>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+      <div class="button filled {{if (x-eq data.align 'start') 'success' 'default'}}" {{action (mut data.align) 'start'}}><i class="iconfont iconfont-align-left"></i></div>
+      <div class="button filled {{if (x-eq data.align 'middle') 'success' 'default'}}" {{action (mut data.align) 'middle'}}><i class="iconfont iconfont-align-center"></i></div>
+      <div class="button filled {{if (x-eq data.align 'end') 'success' 'default'}}" {{action (mut data.align) 'end'}}><i class="iconfont iconfont-align-right"></i></div>
+    </div>
+  </div>
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+    {{textarea class="auto-expand" value=data.text placeholder=(t 'export.placeholder.comment')}}
+    </div>
+  </div>
+  {{/if}}
+</div>

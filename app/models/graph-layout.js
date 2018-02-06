@@ -6,6 +6,7 @@ import Projection from './projection';
 import Basemap from './basemap';
 import ImportedBasemap from './imported-basemap';
 import LegendLayout from './legend/legend-layout';
+import DrawingFactory from './drawing/factory';
 
 const MARGIN_DEFAULTS = {t: 30, b: 30, l: 16, r: 16};
 
@@ -89,6 +90,8 @@ var GraphLayout = Struct.extend({
   
   showLegend: null,
   legendLayout: null,
+
+  drawings: null,
 	
 	autoCenter: false,
 
@@ -107,13 +110,6 @@ var GraphLayout = Struct.extend({
 	margin: null,
   zoom: 1,
   precision: 2.5,
-
-  /* to remove */
-  legendTx: null,
-  legendTy: null,
-  legendOpacity: 0.85,
-  legendStacking: "horizontal",
-  /* -- */
   
   projection: null,
 
@@ -121,6 +117,9 @@ var GraphLayout = Struct.extend({
     this._super();
     if (!this.get('legendLayout')) {
       this.set('legendLayout', LegendLayout.create());
+    }
+    if (!this.get('drawings')) {
+      this.set('drawings', Em.A());
     }
   },
 
@@ -162,7 +161,8 @@ var GraphLayout = Struct.extend({
       legendTx: this.get('legendTx'),
       legendTy: this.get('legendTy'),
       legendOpacity: this.get('legendOpacity'),
-      legendLayout: this.get('legendLayout').export()
+      legendLayout: this.get('legendLayout').export(),
+      drawings: this.get('drawings').map( d => d.export() )
     });
   },
 
@@ -205,7 +205,8 @@ GraphLayout.reopenClass({
         precision: json.precision,
         showBorders: json.showBorders,
         showGrid: json.showGrid,
-        showLegend: json.showLegend
+        showLegend: json.showLegend,
+        drawings: (json.drawings && json.drawings.map( d => DrawingFactory.restoreInstance(d, refs) )) || null
       });
       return o;
   }
