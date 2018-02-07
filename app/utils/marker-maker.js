@@ -21,12 +21,12 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
     let self = this;
     let baseUrl = isFirefox() ? window.location : "";
     let id = `${name}-${this._nodeIdx(node)}`;
-    let viewBox = `0 0 10 10`;
+    let viewBox = `0 0 ${10+strokeWidth} ${10+strokeWidth}`,
+        markerSel;
     if (name === "arrow-marker-start") {
-        defs.selectOrCreate(`marker#${id}`, function() {
+        markerSel = defs.selectOrCreate(`marker#${id}`, function() {
             let m = this.append("marker")
                 .attr("id", id)
-                .attr("viewBox", viewBox)
                 .attr("refX", 5)
                 .attr("refY", 5)
                 .attr("orient", "auto");
@@ -34,10 +34,9 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
             return m;
         });
     } else if (name === "arrow-marker-end") {
-        defs.selectOrCreate(`marker#${id}`, function() {
+        markerSel = defs.selectOrCreate(`marker#${id}`, function() {
             let m = this.append("marker")
                 .attr("id", id)
-                .attr("viewBox", viewBox)
                 .attr("refX", 5)
                 .attr("refY", 5)
                 .attr("orient", "auto");
@@ -45,10 +44,9 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
             return m;
         });
     } else if (name === "circle-marker") {
-        defs.selectOrCreate(`marker#${id}`, function() {
+        markerSel = defs.selectOrCreate(`marker#${id}`, function() {
             let m = this.append("marker")
                 .attr("id", id)
-                .attr("viewBox", viewBox)
                 .attr("refX", 5)
                 .attr("refY", 5)
                 .attr("orient", "auto");
@@ -56,10 +54,9 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
             return m;
         });
     } else if (name === "rect-marker") {
-        defs.selectOrCreate(`marker#${id}`, function() {
+        markerSel = defs.selectOrCreate(`marker#${id}`, function() {
             let m = this.append("marker")
                 .attr("id", id)
-                .attr("viewBox", viewBox)
                 .attr("refX", 5)
                 .attr("refY", 5)
                 .attr("orient", "auto");
@@ -67,7 +64,14 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
             return m;
         });
     }
-    return `${baseUrl}#${id}`;
+    markerSel.attr("viewBox", viewBox)
+        .attr("markerWidth", 10)
+        .attr("markerHeight", 10);
+
+    return {
+        id,
+        url: `${baseUrl}#${id}`
+    };
 };
 
 MarkerMaker.prototype.appendContent = function(name, sel) {

@@ -872,7 +872,16 @@ function spectrum(element, o) {
         },
         get: get,
         destroy: destroy,
-        container: container
+        container: container,
+        detachListeners: function() {
+            callbacks = {
+                beforeShow: noop,
+                move: noop,
+                change: noop,
+                show: noop,
+                hide: noop
+            };
+        }
     };
 
     spect.id = spectrums.push(spect) - 1;

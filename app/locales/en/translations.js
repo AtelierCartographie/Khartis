@@ -389,7 +389,10 @@ export default {
       "curve": "curve",
       "strokeWidth": "stroke",
       "dash": "dash",
-      "shapes": "shapes"
+      "shapes": "shapes",
+      "align": "align",
+      "text": "text",
+      "anchor": "anchor"
     }
   },
 

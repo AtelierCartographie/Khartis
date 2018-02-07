@@ -1,21 +1,23 @@
 import Ember from 'ember';
 import AbstractDrawing from './abstract-drawing';
+import Coordinates from './coordinates';
 
 let Line = AbstractDrawing.extend({
     type: "line",
-    xEnd: null,
-    yEnd: null,
-    geoXEnd: null,
-    geoYEnd: null,
-    curve: null,
+    ptEnd: null,
+    curve: 0,
     markerStart: null,
     markerEnd: "arrow-marker-end",
-    strokeWidth: null,
+    strokeWidth: 3,
     dash: 0,
+
+    canBeGeoPositioned: function() {
+        return this.get('pt.canBeGeoPositioned') && this.get('ptEnd.canBeGeoPositioned');
+    }.property('pt.canBeGeoPositioned', 'ptEnd.canBeGeoPositioned'),
 
     getCoordinates() {
         return this._super().concat(
-             this.get('positioning') === "geo" ? [[this.get('geoXEnd'), this.get('geoYEnd')]] : [[this.get('xEnd'), this.get('yEnd')]]
+             [this.get('ptEnd')]
         );
     },
 
@@ -27,20 +29,18 @@ let Line = AbstractDrawing.extend({
     },
 
     deferredChange: Ember.debouncedObserver(
-        'positioning', 'x', 'y', 'geoX', 'geoY',
+        'positioning', 'pt._defferedChangeIndicator',
+        'ptEnd._defferedChangeIndicator',
         'color', 'curve', 'markerStart', 'markerEnd',
         'strokeWidth', 'dash',
         function() {
           this.notifyDefferedChange();
         },
-        25),
+        20),
 
     export(props) {
         return this._super(Object.assign({
-            xEnd: this.get('xEnd'),
-            yEnd: this.get('yEnd'),
-            geoXEnd: this.get('geoXEnd'),
-            geoYEnd: this.get('geoYEnd'),
+            ptEnd: this.get('ptEnd').export(),
             curve: this.get('curve'),
             markerStart: this.get('markerStart'),
             markerEnd: this.get('markerEnd'),
@@ -54,10 +54,7 @@ Line.reopenClass({
     restore(json, refs = {}, opts = {}) {
         return this._super(json, refs, {
             ...opts,
-            xEnd: json.xEnd,
-            yEnd: json.yEnd,
-            geoXEnd: json.geoXEnd,
-            geoYEnd: json.geoYEnd,
+            ptEnd: Coordinates.restore(json.ptEnd, refs),
             curve: json.curve,
             markerStart: json.markerStart,
             markerEnd: json.markerEnd,

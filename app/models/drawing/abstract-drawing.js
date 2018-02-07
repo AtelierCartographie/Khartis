@@ -1,34 +1,28 @@
 import Ember from 'ember';
 import Struct from '../struct';
+import Coordinates from './coordinates';
 
 let AbstractDrawing = Struct.extend({
     type: null,
-    x: null,
-    y: null,
-    geoX: null,
-    geoY: null,
+    pt: null,
     positioning: null,
     color: "black",
 
+    //transient
+    dirtyCoordinates: false,
+    
+    canBeGeoPositioned: function() {
+        return this.get('pt.canBeGeoPositioned');
+    }.property('pt.canBeGeoPositioned'),
+
     getCoordinates() {
-        if (this.get('positioning') === "geo") {
-            return [
-                [this.get('geoX'), this.get('geoY')]
-            ];
-        } else {
-            return [
-                [this.get('x'), this.get('y')]
-            ];
-        }
+        return [this.get('pt')];
     },
 
     export(props) {
         return this._super(Object.assign({
             type: this.get('type'),
-            x: this.get('x'),
-            y: this.get('y'),
-            geoX: this.get('geoX'),
-            geoY: this.get('geoY'),
+            pt: this.get('pt').export(),
             positioning: this.get('positioning'),
             color: this.get('color')
         }, props));
@@ -40,10 +34,7 @@ AbstractDrawing.reopenClass({
       return this._super(json, refs, {
         ...opts,
         type: json.type,
-        x: json.x,
-        y: json.y,
-        geoX: json.geoX,
-        geoY: json.geoY,
+        pt: Coordinates.restore(json.pt, refs),
         positioning: json.positioning,
         color: json.color
       });

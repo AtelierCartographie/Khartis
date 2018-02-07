@@ -20,7 +20,6 @@ export default Ember.Mixin.create({
         path = d3.geoPath().projection(affineT);
 
     this.drawCompositionBorders(path);
-    //this.drawCompositionClipPaths(path);
   },
 
   drawCompositionClipPaths: function(path) {

@@ -8,7 +8,7 @@ import Projection from 'khartis/models/projection';
 import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
 import {isSafari} from 'khartis/utils/browser-check';
 import {HOOK_BEFORE_SAVE_PROJECT} from 'khartis/services/store';
-import { START_DRAWING_EVENT } from '../components/map-editor/drawing';
+import { DRAWING_EVENT } from '../components/map-editor/drawing';
 import EventNotifier from '../components/map-editor/event-notifier';
 
 export default Ember.Controller.extend({
@@ -33,6 +33,7 @@ export default Ember.Controller.extend({
 
   tooltipEnabled: false,
   hoveredData: null,
+  drawingToolsEnabled: false,
   selectedDrawingFeature: null,
 
   mapEditorEventNotifier: EventNotifier.create(),
@@ -91,6 +92,10 @@ export default Ember.Controller.extend({
   helpTemplate: function() {
     return `help/{locale}/graph/${this.get('state')}`;
   }.property('state'),
+
+  shouldDisplayDrawingTools: function() {
+    return this.get('state') === "export" && this.get('drawingToolsEnabled');
+  }.property('state', 'drawingToolsEnabled'),
   
   layoutChange: function() {
     this.send('onAskVersioning', 'freeze');
@@ -100,7 +105,8 @@ export default Ember.Controller.extend({
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
     'model.title', 'model.author', 'model.dataSource', 'model.comment',
     'model.graphLayout.margin._defferedChangeIndicator',
-    'model.graphLayout.legendLayout._defferedChangeIndicator'),
+    'model.graphLayout.legendLayout._defferedChangeIndicator',
+    'model.graphLayout.drawings.@each._defferedChangeIndicator'),
   
   layersChange: function() {
 
@@ -603,9 +609,10 @@ export default Ember.Controller.extend({
       });
     },
 
-    addDrawing(type) {
-      this.get('mapEditorEventNotifier').trigger(START_DRAWING_EVENT, type);
-    },
+    //TODO : remove if drawing mode accepted
+    // addDrawing(type) {
+    //   this.get('mapEditorEventNotifier').trigger(DRAWING_EVENT, type);
+    // },
     
     next() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);
@@ -645,8 +652,22 @@ export default Ember.Controller.extend({
       this.set("hoveredData", null);
     },
 
+    toggleDrawingTools() {
+      this.toggleProperty('drawingToolsEnabled');
+      if (this.get('drawingToolsEnabled')) {
+        this.get('mapEditorEventNotifier').trigger(DRAWING_EVENT, "activate");
+      } else {
+        this.get('mapEditorEventNotifier').trigger(DRAWING_EVENT, "deactivate");
+      }
+    },
+
     onDrawingFeatureSelected(feature) {
       this.set('selectedDrawingFeature', feature);
+    },
+    
+    onDeleteDrawingFeature(feature) {
+      this.get('model.graphLayout.drawings').removeObject(feature);
+      this.set('selectedDrawingFeature', null);
     },
     
     onAskVersioning(type) {

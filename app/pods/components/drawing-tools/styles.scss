@@ -1,0 +1,31 @@
+& {
+  @extend .with-relief;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 4px;
+  min-width: 3rem;
+
+  .head {
+    margin-bottom: 0;
+  }
+
+  .button {
+    height: 3rem;
+    margin-top: 0;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+    &:last-child {
+      border-bottom: none;
+    }
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+    &.selected {
+      background-color: color(primary2);
+      color: white;
+    }
+  }
+}

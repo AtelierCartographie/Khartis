@@ -87,8 +87,12 @@
               {{hover-info data=hoveredData layers=model.graphLayers}}
             {{/if}}
 
+            {{#if shouldDisplayDrawingTools}}
+            {{drawing-tools eventNotifier=mapEditorEventNotifier}}
+            {{/if}}
+
             {{#if selectedDrawingFeature}}
-              {{drawing-feature-info data=selectedDrawingFeature}}
+              {{drawing-feature-info data=selectedDrawingFeature onDeleteFeature=(action 'onDeleteDrawingFeature')}}
             {{/if}}
 
             {{outlet "configuration-panel"}}

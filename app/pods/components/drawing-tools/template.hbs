@@ -1,0 +1,14 @@
+<div class="vertical flow padded">
+  <div class="horizontal solid middle flow filled primary overflows head padded-h">
+    <b>Outils</b>
+  </div>
+  <div class="fluid button overflows {{if (x-eq selectedState 'select') 'selected'}}" {{action 'switchDrawingState' 'select'}}>
+    <i class="iconfont iconfont-mouse-pointer"></i>
+  </div>
+  <div class="fluid button overflows {{if (x-eq selectedState 'text') 'selected'}}" {{action 'switchDrawingState' 'text'}}>
+    <i class="iconfont iconfont-text"></i>
+  </div>
+  <div class="fluid button overflows {{if (x-eq selectedState 'line') 'selected'}}" {{action 'switchDrawingState' 'line'}}>
+    <i class="iconfont iconfont-line"></i>
+  </div> 
+</div>

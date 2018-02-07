@@ -27,7 +27,7 @@ export const EventNotifierFeature = Ember.Mixin.create({
             throw new Error("Passed event notifier is null or not an instance of EventNotifier");
         }
     }),
-
+    
     unregisterNotifier(notifier) {
         this._super(notifier);
     },

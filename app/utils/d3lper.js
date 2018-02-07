@@ -43,7 +43,7 @@ let d3lper = {
   },
 
   distance(pt1, pt2) {
-    return Math.sqrt((pt2[0]-pt1[0])*(pt2[0]-pt1[0]), (pt2[1]-pt1[1])*(pt2[1]-pt1[1]));
+    return Math.sqrt((pt2[0]-pt1[0])*(pt2[0]-pt1[0]) + (pt2[1]-pt1[1])*(pt2[1]-pt1[1]));
   },
 
   curveLine(points, pctDistance) {
@@ -117,6 +117,7 @@ let d3lper = {
   },
 
   multilineText: function(textEl, text)  {
+    if (!textEl.empty()) {
       let lines = (text || "").split(/\n/g),
           lineHeight = 1.1, // ems
           y = textEl.attr("y"),
@@ -128,6 +129,7 @@ let d3lper = {
       lines.forEach( line => {
         textEl.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(line);
       } );
+    }
   },
 
   selectionMaxWidth(sel) {

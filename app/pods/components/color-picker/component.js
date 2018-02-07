@@ -95,6 +95,10 @@ export default Ember.Component.extend({
     }
   },
 
+  willDestroyElement() {
+    this.get('spectrum') && this.get('spectrum').detachListeners();
+  },
+
   valueChange: function() {
     this.get('spectrum') && this.get('spectrum').set(this.get('value'));
   }.observes('value'),

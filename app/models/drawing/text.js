@@ -8,13 +8,13 @@ let Text = AbstractDrawing.extend({
     align: "middle",
 
     deferredChange: Ember.debouncedObserver(
-        'positioning', 'x', 'y', 'geoX', 'geoY',
+        'positioning', 'pt._defferedChangeIndicator',
         'color', 'text', 'fontSize',
         'align',
         function() {
           this.notifyDefferedChange();
         },
-        25),
+        20),
 
     export(props) {
         return this._super(Object.assign({

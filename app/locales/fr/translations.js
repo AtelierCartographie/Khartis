@@ -389,7 +389,10 @@ export default {
       "curve": "courbure",
       "strokeWidth": "Épaisseur",
       "dash": "pointillés",
-      "shapes": "formes"
+      "shapes": "formes",
+      "align": "alignement",
+      "text": "text",
+      "anchor": "ancrage"
     }
   },
 

@@ -2,14 +2,17 @@ import Ember from 'ember';
 import d3 from 'npm:d3';
 import TextDrawing from 'khartis/models/drawing/text';
 import LineDrawing from 'khartis/models/drawing/line';
+import Coordinates from 'khartis/models/drawing/coordinates';
 import d3lper from '../../../utils/d3lper';
 import markerMaker from '../../../utils/marker-maker';
 
-export const START_DRAWING_EVENT = "startDrawing";
+export const DRAWING_EVENT = "drawingEvent";
 
 const LineGenerator = d3.line().curve(d3.curveBasis);
 
 export default Ember.Mixin.create({
+
+    drawingToolsEnabled: false,
 
     drawingClickedPoints: null,
 
@@ -36,7 +39,7 @@ export default Ember.Mixin.create({
         drawMarkerG.append("line");
 
         this.d3l().on("click.drawingselect", this.drawingMapClick.bind(this));
-
+        
         if (this.get("_eventNotifier")) {
             this.bindDrawingEvents(this.get("_eventNotifier"));
         }
@@ -51,7 +54,7 @@ export default Ember.Mixin.create({
     },
 
     drawingMapClick() {
-        if (d3.event.defaultPrevented) return;
+        if (!this.get('drawingToolsEnabled') || d3.event.defaultPrevented) return;
         let ori = [d3.event.clientX, d3.event.clientY],
             crossPoints = [
                 ori,
@@ -64,7 +67,6 @@ export default Ember.Mixin.create({
             .reduce( (flat, pt) => {
                 return flat.concat(this.d3l().selectUnderPoint(".graphic path, .graphic text", pt).nodes());
             }, []);
-
         if (els.length) {
             this.selectFeature(d3.select(els[0]).datum());
         } else {
@@ -127,8 +129,11 @@ export default Ember.Mixin.create({
         }
     }.observes('drawingSelectedFeature'),
 
-    drawingDraw: function() {
+    drawingDraw() {
         let self = this;
+
+        //first re-compute dirty coordinates if need
+        this.recomputeDirtyCoordinates();
 
         const graphicsCreation = function(sel) {
             let graphics = sel.append("g").classed("graphic", true);
@@ -152,16 +157,20 @@ export default Ember.Mixin.create({
                 .attr("stroke-dasharray", d.getDashArray());
             
             if (d.get('markerStart')) {
-                let markerId = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerStart'), line.node(), d.get('strokeWidth'));
-                line.attr("marker-start", `url(${markerId})`);
-                d3.select(markerId)
+                let marker = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerStart'), line.node(), d.get('strokeWidth'));
+                line.attr("marker-start", `url(${marker.url})`);
+                d3.select(`#${marker.id}`)
                     .attr("fill", d.get('color'));
+            } else {
+                line.attr("marker-start", null);
             }
             if (d.get('markerEnd')) {
-                let markerId = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerEnd'), line.node(), d.get('strokeWidth'));
-                line.attr("marker-end", `url(${markerId})`);
-                d3.select(markerId)
+                let marker = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerEnd'), line.node(), d.get('strokeWidth'));
+                line.attr("marker-end", `url(${marker.url})`);
+                d3.select(`#${marker.id}`)
                     .attr("fill", d.get('color'));
+            } else {
+                line.attr("marker-end", null);
             }
         };
 
@@ -174,16 +183,15 @@ export default Ember.Mixin.create({
         }
 
         this.d3l().select(".drawing.positioning-geo").selectAll("g.graphic")
-            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "geo" ))
+            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "geo" ), d => d._uuid)
             .enterUpdate({
                 enter: graphicsCreation,
                 update: (n) => {
                     let self = this;
                     n.each(function(d, i) {
-                        let path = self.assumePathForLatLon([d.get('geoX'), d.get('geoY')]);
-                        let [tx, ty] = path.centroid({type: "Point", coordinates: [d.get('geoX'), d.get('geoY')]});
+                        let [tx, ty] = self.xyFromLatLon(d.get('pt').getGeo());
                         if (d.get('type') === "line") {
-                            let [txEnd, tyEnd] = path.centroid({type: "Point", coordinates: [d.get('geoXEnd'), d.get('geoYEnd')]});
+                            let [txEnd, tyEnd] = self.xyFromLatLon(d.get('ptEnd').getGeo());
                             let points = d3lper.curveLine([
                                 [tx, ty],
                                 [txEnd, tyEnd]
@@ -197,18 +205,17 @@ export default Ember.Mixin.create({
                 }
             });
             this.d3l().select(".drawing.positioning-absolute").selectAll("g.graphic")
-            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "absolute" ))
+            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "absolute" ), d => d._uuid)
             .enterUpdate({
                 enter: graphicsCreation,
                 update: (n) => {
                     let self = this;
                     n.each(function(d, i) {
-                        let tx = d.get('x');
-                        let ty = d.get('y');
+                        let [tx, ty] = d.get('pt').getXY();
                         if (d.get('type') === "line") {
                             let points = d3lper.curveLine([
                                 [tx, ty],
-                                [d.get('xEnd'), d.get('yEnd')]
+                                d.get('ptEnd').getXY()
                             ], d.get('curve') || 0);
                             lineAttrs(d3.select(this).select("path"), d, points);
                         } else {
@@ -221,24 +228,53 @@ export default Ember.Mixin.create({
 
         this.drawingDrawFeatureBox();
 
+    },
+
+    drawingsChange: function() {
+        if (this.get('drawingSelectedFeature')) {
+            let exist = this.get('graphLayout.drawings').find( f => f == this.get('drawingSelectedFeature'));
+            if (!exist) {
+                this.set('drawingSelectedFeature', null);
+            }
+        }
+        this.drawingDraw();
     }.observes('graphLayout.drawings.[]', 'graphLayout.drawings.@each._defferedChangeIndicator'),
 
-    startDrawing(type) {
-        this.unselectFeature();
-        this.set('drawingClickedPoints', Em.A());
-        this.d3l().on("mousemove.drawing", this.drawingDrawMarker.bind(this));
+    handleDrawingEvent(type) {
         switch(type) {
+            case 'select':
+                this.stopDrawingEditMode();
+                break;
+            case 'activate':
+                this.set('drawingToolsEnabled', true);
+                break;
+            case 'deactivate':
+                this.unselectFeature();
+                this.stopDrawingEditMode();
+                this.set('drawingToolsEnabled', false);
+                break;
             case 'text':
-                this.d3l().classed("drawing-text", true);
-                this.d3l().classed("drawing-arrow", false);
+                this.startDrawingEditMode();
                 this.d3l().on("click.drawing", this.drawHandlerText.bind(this));
                 break;
             case 'line':
-                this.d3l().classed("drawing-arrow", true);
-                this.d3l().classed("drawing-text", false);
+                this.startDrawingEditMode();
                 this.d3l().on("click.drawing", this.drawHandlerLine.bind(this));
                 break;
         }
+    },
+
+    startDrawingEditMode() {
+        this.unselectFeature();
+        this.set('drawingClickedPoints', Em.A());
+        this.d3l().on("mousemove.drawing", this.drawingDrawMarker.bind(this));
+    },
+
+    stopDrawingEditMode() {
+        this.set('drawingClickedPoints', null);
+        this.hideDrawingMarker();
+        this.d3l().on("click.drawing", null);
+        this.d3l().on("mousemove.drawing", null);
     },
 
     endDrawing(type) {
@@ -255,39 +291,25 @@ export default Ember.Mixin.create({
             if (positioningType === "geo") {
                 this.get('graphLayout.drawings').addObject(newDrawing = LineDrawing.create({
                     ...positionings[0],
-                    xEnd: positionings[1].x,
-                    xEnd: positionings[1].x,
-                    geoXEnd: positionings[1].geoX,
-                    geoYEnd: positionings[1].geoY,
-                    curve: 0
+                    ptEnd: positionings[1].pt,
                 }));
             } else {
                 this.get('graphLayout.drawings').addObject(newDrawing = LineDrawing.create({
                     positioning: "absolute",
-                    x: positionings[0].x,
-                    y: positionings[0].y,
-                    xEnd: positionings[1].x,
-                    yEnd: positionings[1].y,
-                    curve: 0
+                    pt: positionings[0].pt,
+                    ptEnd: positionings[1].pt
                 }));
             }
         }
-        this.d3l().on("click.drawing", null);
-        this.d3l().on("mousemove.drawing", null);
-        this.set('drawingClickedPoints', null);
-        this.d3l().classed("drawing-arrow", false);
-        this.d3l().classed("drawing-text", false);
-        this.hideDrawingMarker();
         this.selectFeature(newDrawing);
     },
 
-    endMoving(feature, tx, ty) {
-        console.log("endmoving");
+    endMovingDraw(feature, tx, ty) {
         let points;
         if (feature.get('positioning') === "geo") {
-            points = feature.getCoordinates().map(this.xyFromLonLat.bind(this));
+            points = feature.getCoordinates().map(c => this.xyFromLatLon(c.getGeo()));
         } else {
-            points = feature.getCoordinates();
+            points = feature.getCoordinates().map(c => c.getXY());
         }
         points.forEach( p => {
             p[0] += tx;
@@ -296,28 +318,23 @@ export default Ember.Mixin.create({
         let positionings = points.map(this.drawPositioningFromPoint.bind(this));
         if (feature.get('type') === "text") {
             feature.setProperties({
-                ...positionings[0]
+                positioning: positionings[0].positioning === "absolute" ? "absolute" : feature.get('positioning'),
+                pt: positionings[0].pt
             });
         } else if (feature.get('type') === "line") {
-            let positioningType = positionings.reduce(
+            let computedPositioning = positionings.reduce(
                 (out, p) => (out === "absolute" || p.positioning === "absolute") ? "absolute" : p.positioning 
             );
-            if (positioningType === "geo") {
+            if (computedPositioning === "geo" && feature.get('positioning') === "geo") {
                 feature.setProperties({
                     ...positionings[0],
-                    xEnd: positionings[1].x,
-                    xEnd: positionings[1].x,
-                    geoXEnd: positionings[1].geoX,
-                    geoYEnd: positionings[1].geoY,
+                    ptEnd: positionings[1].pt
                 });
             } else {
-                console.log("absolute");
                 feature.setProperties({
                     positioning: "absolute",
-                    x: positionings[0].x,
-                    y: positionings[0].y,
-                    xEnd: positionings[1].x,
-                    yEnd: positionings[1].y,
+                    pt: positionings[0].pt,
+                    ptEnd: positionings[1].pt
                 });
             }
         }
@@ -340,6 +357,7 @@ export default Ember.Mixin.create({
     },
 
     selectFeature(data) {
+        this.get('_eventNotifier').trigger(DRAWING_EVENT, 'select');
         this.set('drawingSelectedFeature', data);
         this.sendAction('onDrawingFeatureSelected', data);
     },
@@ -360,6 +378,10 @@ export default Ember.Mixin.create({
             })
             .on("start", () => {
                 d3.event.sourceEvent.stopPropagation();
+                graphicSel.attrs({
+                    "kis:kis:tx": 0,
+                    "kis:kis:ty": 0
+                });
             })
             .on("drag", () => {
 
@@ -376,7 +398,7 @@ export default Ember.Mixin.create({
 
             })
             .on("end", (d) => {
-                this.endMoving(
+                this.endMovingDraw(
                     d,
                     parseInt(graphicSel.attr('kis:kis:tx')),
                     parseInt(graphicSel.attr('kis:kis:ty'))
@@ -398,10 +420,13 @@ export default Ember.Mixin.create({
 
     drawingBindKeyboard(graphicSel) {
         $(document).bind('keyup.drawing', event => {
-            const {key} = event;
-            if (key === "Delete" || key === "Backspace") {
-                this.get('graphLayout.drawings').removeObject(this.get('drawingSelectedFeature'));
-                this.unselectFeature();
+            if (event.target == document.body) {
+                const {key} = event;
+                if (key === "Delete" || key === "Backspace") {
+                    event.preventDefault();
+                    this.get('graphLayout.drawings').removeObject(this.get('drawingSelectedFeature'));
+                    this.unselectFeature();
+                }
             }
         });
     },
@@ -411,25 +436,55 @@ export default Ember.Mixin.create({
             [geoX, geoY] = path.projection().invert([x, y]);
         if (!isNaN(geoX) && !isNaN(geoY)) {
             let [x2, y2] = path.centroid({type: "Point", coordinates: [geoX, geoY]});
-            if ((d3lper.distance([x, y], [x2, y2]) < 1)) { //outside of projection area
-                return {geoX, geoY, x, y, positioning: "geo"};
+            if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 0.5) { //inside of projection area
+                return {pt: Coordinates.create({x, y, geoX, geoY}), positioning: "geo"};
             }
         }
-        return {x, y, positioning: "absolute"};
+        return {pt: Coordinates.create({x, y}), positioning: "absolute"};
     },
 
-    xyFromLonLat([geoX, geoY]) {
-        let path = this.assumePathForLatLon([geoX, geoY]);
-        return path.centroid({type: "Point", coordinates: [geoX, geoY]});
+    xyFromLatLon(coords) {
+        let path = this.assumePathForLatLon(coords);
+        return path.centroid({type: "Point", coordinates: coords});
+    },
+
+    latLonFromXY(coords) {
+        let path = this.assumePathForXY(coords);
+        return path.projection().invert(coords);
+    },
+
+    recomputeDirtyCoordinates() {
+        this.get('graphLayout.drawings').forEach( feature => {
+            if (feature.get('dirtyCoordinates')) {
+                if (feature.get('positioning') === "absolute") {
+                    feature.getCoordinates().forEach( coord => {
+                        let xy = this.xyFromLatLon([coord.get('geoX'), coord.get('geoY')]);
+                        coord.setProperties({
+                            x: xy[0],
+                            y: xy[1]
+                        });
+                    });
+                } else if (feature.get('positioning') === "geo") {
+                    feature.getCoordinates().forEach( coord => {
+                        let latLon = this.latLonFromXY([coord.get('x'), coord.get('y')]);
+                        coord.setProperties({
+                            geoX: latLon[0],
+                            geoY: latLon[1]
+                        });
+                    });
+                }
+                feature.set('dirtyCoordinates', false);
+            }
+        });
     },
 
     bindDrawingEvents(notifier) {
-        notifier.on(START_DRAWING_EVENT, this, this.startDrawing);
+        notifier.on(DRAWING_EVENT, this, this.handleDrawingEvent);
     },
 
     unregisterNotifier(notifier) {
         this._super(notifier);
-        notifier.off(START_DRAWING_EVENT, this, this.startDrawing);
+        notifier.off(DRAWING_EVENT, this, this.handleDrawingEvent);
     },
 
     registerNotifier(notifier) {

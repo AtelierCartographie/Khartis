@@ -235,20 +235,8 @@
         </div>
       </div>
       <!-- drawing -->
-      <div class="horizontal middle flow">
-        <label class="solid w4">{{x-capitalize (t 'general.add')}}</label>
-        <div class="solid horizontal half-airy middle flow w4">
-          <a {{action 'addDrawing' 'text'}}>
-            <span><i class="iconfont iconfont-text"></i></span>
-            <span>{{x-capitalize (t 'export.drawings.text')}}</span>
-          </a>
-        </div>
-        <div class="solid horizontal half-airy middle flow w4">
-          <a {{action 'addDrawing' 'line'}}>
-            <span><i class="iconfont iconfont-text"></i></span>
-            <span>{{x-capitalize (t 'export.drawings.arrow')}}</span>
-          </a>
-        </div>
+      <div class="horizontal solid middle center flow padded-t">
+        <div class="w4 button small filled {{if drawingToolsEnabled 'success' 'default'}}" {{action 'toggleDrawingTools'}}>{{if drawingToolsEnabled 'Masquer les outils de dessin' 'Activer les outils de dessin'}}</div>
       </div>
     </div>
 

@@ -1,6 +1,7 @@
 <div class="vertical flow padded">
-  <div class="horizontal solid filled primary overflows head padded-h">
+  <div class="horizontal space-between solid middle flow filled primary overflows head padded-h">
     <b>Réglages</b>
+    <div class="button" {{action 'deleteFeature'}}><i class="iconfont iconfont-trash"></i></div>
   </div>
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
@@ -12,7 +13,7 @@
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'export.drawings.curve')}}</label>
     <div class="horizontal half-airy solid flow w7">
-    {{x-slider class="fluid offset-slider" band=0.05 value=data.curve min=-1 max=1}}
+    {{x-slider class="fluid offset-slider" band=0.02 value=data.curve min=-1 max=1}}
     </div>
   </div>
   <div class="horizontal middle flow">
@@ -40,11 +41,11 @@
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
     <div class="horizontal half-airy solid flow w7">
-    {{x-slider class="fluid offset-slider" band=1 value=data.fontSize min=6 max=42}}
+    {{x-slider class="fluid offset-slider" band=1 value=data.fontSize min=6 max=56}}
     </div>
   </div>
   <div class="horizontal middle flow">
-    <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.align')}}</label>
     <div class="horizontal half-airy solid flow w7">
       <div class="button filled {{if (x-eq data.align 'start') 'success' 'default'}}" {{action (mut data.align) 'start'}}><i class="iconfont iconfont-align-left"></i></div>
       <div class="button filled {{if (x-eq data.align 'middle') 'success' 'default'}}" {{action (mut data.align) 'middle'}}><i class="iconfont iconfont-align-center"></i></div>
@@ -52,10 +53,24 @@
     </div>
   </div>
   <div class="horizontal middle flow">
-    <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.text')}}</label>
     <div class="horizontal half-airy solid flow w7">
-    {{textarea class="auto-expand" value=data.text placeholder=(t 'export.placeholder.comment')}}
+    {{textarea class="auto-expand" value=(get data 'text') focus-out=(action 'dataTextFocusOut')}}
     </div>
   </div>
   {{/if}}
+  <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.anchor')}}</label>
+    <div class="horizontal half-airy solid flow w7 btn-switch-group">
+      <div class="small button filled primary {{if (x-eq data.positioning 'geo') 'selected'}}" {{action 'changePositioning' 'geo'}}>sur la carte</div>
+      <div class="small button filled primary {{if (x-eq data.positioning 'absolute') 'selected'}}" {{action 'changePositioning' 'absolute'}}>sur la page</div>
+    </div>
+  </div>
+  {{#unless data.canBeGeoPositioned}}
+  <div class="horizontal middle flow">
+    <div class="horizontal padded filled default solid flow positioning-warning">
+      <span class="text-warning">Le dessin n'a pu être ancré sur la carte, il a été ancré sur la page</span>
+    </div>
+  </div>
+  {{/unless}}
 </div>

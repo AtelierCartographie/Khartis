@@ -56,11 +56,14 @@ d3.selection.prototype.closestParent = function(selector) {
 d3.selection.prototype.selectUnderPoint = function(selector, [x, y]) {
   let candidates = Array.prototype.slice.apply(this.node().querySelectorAll(selector)),
       processed = [];
-      
-  for (let el = document.elementFromPoint(x, y); el && el != document.documentElement; el = document.elementFromPoint(x, y)) {
-    processed.push({el, pointerEvents: el.style.pointerEvents});
-    el.style.pointerEvents = 'none';
-  }
+   
+    for (let el = document.elementFromPoint(x, y); el && el != document.documentElement; el = document.elementFromPoint(x, y)) {
+      if (el.tagName === "tspan") {
+        el = el.parentElement;
+      }
+      processed.push({el, pointerEvents: el.style.pointerEvents});
+      el.style.pointerEvents = 'none';
+    }
 
   return d3.selectAll(
     processed
