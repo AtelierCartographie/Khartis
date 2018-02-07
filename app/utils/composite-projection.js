@@ -186,7 +186,6 @@ let proj = function() {
         let bbox = p.instance.bboxPx
           .map( c => [c[0]*scale+tx, c[1]*scale+ty])
           .map( c => p.instance.invert(c) );
-        console.log(bbox, latLon[1], latLon[0]);
         return inside(bbox, latLon[1], latLon[0]);
       } ).map(p => p.instance);
     },
