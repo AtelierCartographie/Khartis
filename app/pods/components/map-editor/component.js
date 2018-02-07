@@ -350,7 +350,12 @@ export default Ember.Component.extend(EventNotifierFeature, {
   assumePathForLatLon(latLon) {
     
     let path = d3.geoPath(),
-       projs = this.get('projector').projectionsForLatLon(latLon);
+       projs = this.get('projector').projectionsForLatLon(
+        latLon,
+        this.get('graphLayout.zoom'),
+        this.get('graphLayout.tx')*this.getSize().w,
+        this.get('graphLayout.ty')*this.getSize().h
+      );
     if (projs.length) {
       path.projection(projs[0]);
     } else {
@@ -361,9 +366,13 @@ export default Ember.Component.extend(EventNotifierFeature, {
   },
 
   assumePathForXY(xy) {
-    
     let path = d3.geoPath(),
-       projs = this.get('projector').projectionsForXY(xy);
+       projs = this.get('projector').projectionsForXY(
+        xy,
+        this.get('graphLayout.zoom'),
+        this.get('graphLayout.tx')*this.getSize().w,
+        this.get('graphLayout.ty')*this.getSize().h
+      );
     if (projs.length) {
       path.projection(projs[0]);
     } else {

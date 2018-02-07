@@ -9,8 +9,10 @@ const rad2deg = function(rad) { return rad * 180 / pi };
 const deg2rad = function(deg) { return deg * pi / 180 };
 
 function inside(bbox, x, y) {
-  return x >= bbox[0][0] && x <= bbox[1][0]
-  && y <= bbox[0][1] && y >= bbox[1][1];
+  return (x >= bbox[0][0] && x <= bbox[1][0]
+    && y <= bbox[0][1] && y >= bbox[1][1])
+    || (x >= bbox[0][0] && x <= bbox[1][0]
+      && y >= bbox[0][1] && y <= bbox[1][1]);
 }
 
 function wkt2Proj(wkt) {
@@ -179,20 +181,23 @@ let proj = function() {
       return p.instance;
     },
 
-    projectionsForLatLon(latLon) {
+    projectionsForLatLon(latLon, scale, tx, ty) {
       return this.projs.filter( p => {
-        let bbox = [
-          p.instance.invert(p.instance.bboxPx[0]),
-          p.instance.invert(p.instance.bboxPx[1])
-        ];
+        let bbox = p.instance.bboxPx
+          .map( c => [c[0]*scale+tx, c[1]*scale+ty])
+          .map( c => p.instance.invert(c) );
+        console.log(bbox, latLon[1], latLon[0]);
         return inside(bbox, latLon[1], latLon[0]);
       } ).map(p => p.instance);
     },
 
-    projectionsForXY(xy) {
+    projectionsForXY(xy, scale, tx, ty) {
+      let coords = [
+        xy[0]/scale - tx,
+        xy[1]/scale - ty
+      ];
       return this.projs.filter( p => {
-        console.log(p.instance.bboxPx);
-        return inside(p.instance.bboxPx, xy[1], xy[0]);
+        return inside(p.instance.bboxPx, xy[0], xy[1]);
       } ).map(p => p.instance);
     },
 

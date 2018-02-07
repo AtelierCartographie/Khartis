@@ -39,7 +39,11 @@ export default Ember.Mixin.create({
         drawMarkerG.append("line");
 
         this.d3l().on("click.drawingselect", this.drawingMapClick.bind(this));
-        
+        this.d3l().on("dblclick.drawingselect", function() {
+            d3.event.stopImmediatePropagation();
+            console.log("doubleclick");
+        });
+
         if (this.get("_eventNotifier")) {
             this.bindDrawingEvents(this.get("_eventNotifier"));
         }
@@ -54,6 +58,7 @@ export default Ember.Mixin.create({
     },
 
     drawingMapClick() {
+        console.log("click");
         if (!this.get('drawingToolsEnabled') || d3.event.defaultPrevented) return;
         let ori = [d3.event.clientX, d3.event.clientY],
             crossPoints = [
@@ -444,7 +449,7 @@ export default Ember.Mixin.create({
     },
 
     xyFromLatLon(coords) {
-        let path = this.assumePathForLatLon(coords);
+        let path = this.assumePathForLatLon([coords[1], coords[0]]);
         return path.centroid({type: "Point", coordinates: coords});
     },
 
