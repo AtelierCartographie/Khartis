@@ -33,20 +33,25 @@ export default Ember.Mixin.create({
           
       if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
 
-        let path = this.assumePathForLatLon([lat, lon]),
-            xy = path.centroid({
-              type: "Point",
-              coordinates: [
-                lon,
-                lat
-              ]
-            });
+        let path = this.assumePathForLatLon([lat, lon]);
 
-        out.push({
-          xy,
-          coordinates: [lon, lat],
-          row: couple.lat.get('row')
-        });
+        if (path) {
+          
+          xy = path.centroid({
+            type: "Point",
+            coordinates: [
+              lon,
+              lat
+            ]
+          });
+
+          out.push({
+            xy,
+            coordinates: [lon, lat],
+            row: couple.lat.get('row')
+          });
+
+        }
 
       }
 

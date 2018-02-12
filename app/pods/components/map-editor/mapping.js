@@ -114,23 +114,26 @@ export default Ember.Mixin.create({
             lat = cell.get('row.cells').find( c => c.get('column') == geoDef.get('lat') ).get('postProcessedValue');
 
         if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
-          return {
-            id: `coord-${index}`,
-            value: val,
-            cell: cell,
-            point: {
-              path: this.assumePathForLatLon([lat, lon]),
-              feature: {
-                geometry: {
-                  type: "Point",
-                  coordinates: [
-                    lon,
-                    lat
-                  ]
+          let latLonPath = this.assumePathForLatLon([lat, lon]);
+          if (latLonPath) {
+            return {
+              id: `coord-${index}`,
+              value: val,
+              cell: cell,
+              point: {
+                path: latLonPath,
+                feature: {
+                  geometry: {
+                    type: "Point",
+                    coordinates: [
+                      lon,
+                      lat
+                    ]
+                  }
                 }
               }
-            }
-          };
+            };
+          }
         }
         
         return undefined;

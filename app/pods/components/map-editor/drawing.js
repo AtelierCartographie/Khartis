@@ -58,7 +58,6 @@ export default Ember.Mixin.create({
     },
 
     drawingMapClick() {
-        console.log("click");
         if (!this.get('drawingToolsEnabled') || d3.event.defaultPrevented) return;
         let ori = [d3.event.clientX, d3.event.clientY],
             crossPoints = [
@@ -140,6 +139,8 @@ export default Ember.Mixin.create({
         //first re-compute dirty coordinates if need
         this.recomputeDirtyCoordinates();
 
+        this.updateGeoForAbsoluteDrawings();
+
         const graphicsCreation = function(sel) {
             let graphics = sel.append("g").classed("graphic", true);
             graphics.each(function(d, i) {
@@ -183,7 +184,11 @@ export default Ember.Mixin.create({
             text.attr("font-size", d.get('fontSize'))
                 .attr("fill", d.get('color'))
                 .attr("text-anchor", d.get('align'))
-                .attr("transform", d3lper.translate({tx, ty}));
+                .attr("transform", d3lper.translate({tx, ty}))
+                .attr("font-weight", d.get('bold') ? "bold" : "normal")
+                .attr("font-weight", d.get('bold') ? "bold" : "normal")
+                .attr("text-decoration", d.get('underline') ? "underline" : null)
+                .attr("font-style", d.get('italic') ? "italic" : null)
             d3lper.multilineText(text, d.get('text'));
         }
 
@@ -437,12 +442,14 @@ export default Ember.Mixin.create({
     },
 
     drawPositioningFromPoint([x, y]) {
-        let path = this.assumePathForXY([x, y]),
-            [geoX, geoY] = path.projection().invert([x, y]);
-        if (!isNaN(geoX) && !isNaN(geoY)) {
-            let [x2, y2] = path.centroid({type: "Point", coordinates: [geoX, geoY]});
-            if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 0.5) { //inside of projection area
-                return {pt: Coordinates.create({x, y, geoX, geoY}), positioning: "geo"};
+        let path = this.assumePathForXY([x, y]);
+        if (path) {
+            let geoC = path.projection().invert([x, y]);
+            if (geoC != undefined && !isNaN(geoC[0]) && !isNaN(geoC[1])) {
+                let [x2, y2] = path.centroid({type: "Point", coordinates: geoC});
+                if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 1) { //inside of projection area
+                    return {pt: Coordinates.create({x, y, geoX: geoC[0], geoY: geoC[1]}), positioning: "geo"};
+                }
             }
         }
         return {pt: Coordinates.create({x, y}), positioning: "absolute"};
@@ -450,12 +457,40 @@ export default Ember.Mixin.create({
 
     xyFromLatLon(coords) {
         let path = this.assumePathForLatLon([coords[1], coords[0]]);
-        return path.centroid({type: "Point", coordinates: coords});
+        if (path) {
+            return path.centroid({type: "Point", coordinates: coords});
+        } else {
+            return [NaN, NaN];
+        }
     },
 
     latLonFromXY(coords) {
         let path = this.assumePathForXY(coords);
         return path.projection().invert(coords);
+    },
+    
+    updateGeoForAbsoluteDrawings() {
+        this.get('graphLayout.drawings')
+            .filter( feature => feature.get('positioning') === "absolute" )
+            .forEach( feature => {
+                feature.getCoordinates().forEach( pt => {
+                    let positioning = this.drawPositioningFromPoint(pt.getXY());
+                    if (positioning.positioning === "geo") {
+                        pt.setProperties({
+                            'geoX': positioning.pt.get('geoX'),
+                            'geoY': positioning.pt.get('geoY')
+                        });
+                    } else {
+                        pt.setProperties({
+                            'geoX': null,
+                            'geoY': null
+                        });
+                    }
+                });
+                if (feature.get('positioning') === "geo" && !feature.get('canBeGeoPositioned')) {
+                    feature.set('positioning', "absolute");
+                }
+            });
     },
 
     recomputeDirtyCoordinates() {

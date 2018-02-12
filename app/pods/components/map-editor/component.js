@@ -357,12 +357,10 @@ export default Ember.Component.extend(EventNotifierFeature, {
         this.get('graphLayout.ty')*this.getSize().h
       );
     if (projs.length) {
-      path.projection(projs[0]);
+      return path.projection(projs[0]);
     } else {
-      path.projection(this.get('projector'));
+      return null;
     }
-    
-    return path;
   },
 
   assumePathForXY(xy) {
@@ -374,12 +372,10 @@ export default Ember.Component.extend(EventNotifierFeature, {
         this.get('graphLayout.ty')*this.getSize().h
       );
     if (projs.length) {
-      path.projection(projs[0]);
+      return path.projection(projs[0]);
     } else {
-      path.projection(this.get('projector'));
+      return null;
     }
-    
-    return path;
   },
 
   redraw: function() {

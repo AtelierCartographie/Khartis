@@ -9,6 +9,7 @@ const rad2deg = function(rad) { return rad * 180 / pi };
 const deg2rad = function(deg) { return deg * pi / 180 };
 
 function inside(bbox, x, y) {
+  console.log(bbox);
   return (x >= bbox[0][0] && x <= bbox[1][0]
     && y <= bbox[0][1] && y >= bbox[1][1])
     || (x >= bbox[0][0] && x <= bbox[1][0]
@@ -184,9 +185,9 @@ let proj = function() {
     projectionsForLatLon(latLon, scale, tx, ty) {
       return this.projs.filter( p => {
         let bbox = p.instance.bboxPx
-          .map( c => [c[0]*scale+tx, c[1]*scale+ty])
-          .map( c => p.instance.invert(c) );
-        return inside(bbox, latLon[1], latLon[0]);
+          .map( c => [c[0]*scale+tx, c[1]*scale+ty]);
+        let xy = p.instance(latLon);
+        return !isNaN(xy[0]) && !isNaN(xy[1]) && inside(bbox, xy[0], xy[1]);
       } ).map(p => p.instance);
     },
 

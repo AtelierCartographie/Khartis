@@ -6,11 +6,14 @@ let Text = AbstractDrawing.extend({
     text: "text...",
     fontSize: 12,
     align: "middle",
+    underline: false,
+    bold: false,
+    italic: false,
 
     deferredChange: Ember.debouncedObserver(
         'positioning', 'pt._defferedChangeIndicator',
-        'color', 'text', 'fontSize',
-        'align',
+        'color', 'text', 'fontSize', 
+        'align', 'underline', 'bold', 'italic',
         function() {
           this.notifyDefferedChange();
         },
@@ -20,7 +23,10 @@ let Text = AbstractDrawing.extend({
         return this._super(Object.assign({
             text: this.get('text'),
             fontSize: this.get('fontSize'),
-            align: this.get('align')
+            align: this.get('align'),
+            underline: this.get('underline'),
+            bold: this.get('bold'),
+            italic: this.get('italic')
         }, props));
     }
 });
@@ -31,7 +37,10 @@ Text.reopenClass({
             ...opts,
             text: json.text,
             fontSize: json.fontSize,
-            align: json.align
+            align: json.align,
+            underline: json.underline,
+            bold: json.bold,
+            italic: json.italic
         });
     }
 });

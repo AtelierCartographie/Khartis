@@ -53,6 +53,14 @@
     </div>
   </div>
   <div class="horizontal middle flow">
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.textDecoration')}}</label>
+    <div class="horizontal half-airy solid flow w7">
+      <div class="button filled {{if data.underline 'success' 'default'}}" {{action (mut data.underline) (x-not data.underline)}}><i class="iconfont iconfont-text-underline"></i></div>
+      <div class="button filled {{if data.bold 'success' 'default'}}" {{action (mut data.bold) (x-not data.bold)}}><i class="iconfont iconfont-text-bold"></i></div>
+      <div class="button filled {{if data.italic 'success' 'default'}}" {{action (mut data.italic) (x-not data.italic)}}><i class="iconfont iconfont-text-italic"></i></div>
+    </div>
+  </div>
+  <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'export.drawings.text')}}</label>
     <div class="horizontal half-airy solid flow w7">
     {{textarea class="auto-expand" value=(get data 'text') focus-out=(action 'dataTextFocusOut')}}
