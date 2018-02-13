@@ -6,7 +6,7 @@
   font-size: 0.9em;
   background: rgba(255, 255, 255, 0.86);
   border-radius: 4px;
-  min-width: 20rem;
+  min-width: 25rem;
 
   .head {
     margin-bottom: 0;
@@ -19,5 +19,12 @@
 
   .positioning-warning {
     max-width: 200px;
+  }
+
+  textarea.auto-expand {
+    &:focus {
+      margin-top: $gutter/3;
+      margin-bottom: $gutter/3;
+    }
   }
 }

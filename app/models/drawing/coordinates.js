@@ -18,8 +18,12 @@ let Coordinates = Struct.extend({
         return [this.get('x'), this.get('y')];
     },
 
-    getGeo() {
+    getLonLat() {
         return [this.get('geoX'), this.get('geoY')];
+    },
+
+    getLatLon() {
+        return [this.get('geoY'), this.get('geoX')];
     },
 
     canBeGeoPositioned : function() {

@@ -25,7 +25,7 @@
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'export.drawings.dash')}}</label>
     <div class="horizontal half-airy solid flow w7">
-    {{x-slider class="fluid offset-slider" band=1 value=data.dash min=1 max=20}}
+    {{x-slider class="fluid offset-slider" band=1 value=data.dash min=0 max=20}}
     </div>
   </div>
   <div class="horizontal middle flow">
@@ -42,6 +42,7 @@
     <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
     <div class="horizontal half-airy solid flow w7">
     {{x-slider class="fluid offset-slider" band=1 value=data.fontSize min=6 max=56}}
+    {{input-numeric/one-way numericValue=data.fontSize class="solid w4" min=6 max=56 update=(action (mut data.fontSize))}}
     </div>
   </div>
   <div class="horizontal middle flow">

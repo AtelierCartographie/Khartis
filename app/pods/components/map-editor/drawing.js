@@ -193,15 +193,15 @@ export default Ember.Mixin.create({
         }
 
         this.d3l().select(".drawing.positioning-geo").selectAll("g.graphic")
-            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "geo" ), d => d._uuid)
+            .data(this.get('graphLayout.drawings').filter( d => d.get('positioning') === "geo" && this.featureIsGeoDiplayable(d) ), d => d._uuid)
             .enterUpdate({
                 enter: graphicsCreation,
                 update: (n) => {
                     let self = this;
                     n.each(function(d, i) {
-                        let [tx, ty] = self.xyFromLatLon(d.get('pt').getGeo());
+                        let [tx, ty] = self.xyFromLatLon(d.get('pt').getLatLon());
                         if (d.get('type') === "line") {
-                            let [txEnd, tyEnd] = self.xyFromLatLon(d.get('ptEnd').getGeo());
+                            let [txEnd, tyEnd] = self.xyFromLatLon(d.get('ptEnd').getLatLon());
                             let points = d3lper.curveLine([
                                 [tx, ty],
                                 [txEnd, tyEnd]
@@ -317,7 +317,7 @@ export default Ember.Mixin.create({
     endMovingDraw(feature, tx, ty) {
         let points;
         if (feature.get('positioning') === "geo") {
-            points = feature.getCoordinates().map(c => this.xyFromLatLon(c.getGeo()));
+            points = feature.getCoordinates().map(c => this.xyFromLatLon(c.getLatLon()));
         } else {
             points = feature.getCoordinates().map(c => c.getXY());
         }
@@ -446,9 +446,12 @@ export default Ember.Mixin.create({
         if (path) {
             let geoC = path.projection().invert([x, y]);
             if (geoC != undefined && !isNaN(geoC[0]) && !isNaN(geoC[1])) {
-                let [x2, y2] = path.centroid({type: "Point", coordinates: geoC});
-                if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 1) { //inside of projection area
-                    return {pt: Coordinates.create({x, y, geoX: geoC[0], geoY: geoC[1]}), positioning: "geo"};
+                let path2 = this.assumePathForLatLon([geoC[1], geoC[0]]);
+                if (path2) {
+                    let [x2, y2] = path2.centroid({type: "Point", coordinates: geoC});
+                    if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 1) { //inside of projection area
+                        return {pt: Coordinates.create({x, y, geoX: geoC[0], geoY: geoC[1]}), positioning: "geo"};
+                    }
                 }
             }
         }
@@ -456,15 +459,15 @@ export default Ember.Mixin.create({
     },
 
     xyFromLatLon(coords) {
-        let path = this.assumePathForLatLon([coords[1], coords[0]]);
+        let path = this.assumePathForLatLon(coords);
         if (path) {
-            return path.centroid({type: "Point", coordinates: coords});
+            return path.centroid({type: "Point", coordinates: [coords[1], coords[0]]});
         } else {
-            return [NaN, NaN];
+            return null;
         }
     },
 
-    latLonFromXY(coords) {
+    lonLatFromXY(coords) {
         let path = this.assumePathForXY(coords);
         return path.projection().invert(coords);
     },
@@ -473,6 +476,7 @@ export default Ember.Mixin.create({
         this.get('graphLayout.drawings')
             .filter( feature => feature.get('positioning') === "absolute" )
             .forEach( feature => {
+                //try to compute geo coordinates
                 feature.getCoordinates().forEach( pt => {
                     let positioning = this.drawPositioningFromPoint(pt.getXY());
                     if (positioning.positioning === "geo") {
@@ -487,9 +491,14 @@ export default Ember.Mixin.create({
                         });
                     }
                 });
-                if (feature.get('positioning') === "geo" && !feature.get('canBeGeoPositioned')) {
-                    feature.set('positioning', "absolute");
-                }
+            });
+    },
+
+    featureIsGeoDiplayable(feature) {
+        return feature.getCoordinates()
+            .every( pt => {
+                let xy = this.xyFromLatLon(pt.getLatLon());
+                return xy != null && !isNaN(xy[0]) && !isNaN(xy[1]);
             });
     },
 
@@ -498,7 +507,7 @@ export default Ember.Mixin.create({
             if (feature.get('dirtyCoordinates')) {
                 if (feature.get('positioning') === "absolute") {
                     feature.getCoordinates().forEach( coord => {
-                        let xy = this.xyFromLatLon([coord.get('geoX'), coord.get('geoY')]);
+                        let xy = this.xyFromLatLon([coord.get('geoY'), coord.get('geoX')]);
                         coord.setProperties({
                             x: xy[0],
                             y: xy[1]
@@ -506,10 +515,10 @@ export default Ember.Mixin.create({
                     });
                 } else if (feature.get('positioning') === "geo") {
                     feature.getCoordinates().forEach( coord => {
-                        let latLon = this.latLonFromXY([coord.get('x'), coord.get('y')]);
+                        let lonLat = this.lonLatFromXY([coord.get('x'), coord.get('y')]);
                         coord.setProperties({
-                            geoX: latLon[0],
-                            geoY: latLon[1]
+                            geoX: lonLat[0],
+                            geoY: lonLat[1]
                         });
                     });
                 }
