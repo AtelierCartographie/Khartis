@@ -74,9 +74,8 @@ export default Ember.Mixin.create({
             } else if (autoActivate) {
                 this.get('eventNotifier').trigger(DRAWING_EVENT, "preactivate");
                 this.selectFeature(d3.select(els[0]).datum());
-            } else {
-                this.get('d3Zoom').discardDblclick();
             }
+            this.get('d3Zoom').discardDblclick();
         } else {
             this.unselectFeature();
         }
