@@ -19,6 +19,7 @@ export default function() {
       scaleExtent = d3_behavior_zoomUnboundedScale,
       dispatcher = d3.dispatch("zoom"),
       band = 0.0001,
+      dblclickDiscarded = false,
       x0,
       x1,
       y0,
@@ -103,6 +104,13 @@ export default function() {
     translate[0] = tx;
     translate[1] = ty;
     dispatch();
+  };
+
+  zoom.discardDblclick = function() {
+    dblclickDiscarded = true;
+    setTimeout(function() {
+      dblclickDiscarded = false;
+    }, 100);
   };
     
 
@@ -232,7 +240,7 @@ export default function() {
   }
 
   function dblclick() {
-    console.log("zoom");
+    if (dblclickDiscarded) return;
     var p = d3.mouse(this), l = location(p), k = Math.log(scale) / Math.LN2;
     scaleTo(Math.pow(2, d3.event.shiftKey ? Math.ceil(k) - 1 : Math.floor(k) + 1));
     translateTo(p, l);

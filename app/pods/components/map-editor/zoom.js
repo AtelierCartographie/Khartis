@@ -2,29 +2,29 @@ import Ember from 'ember';
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import {isChrome} from 'khartis/utils/browser-check';
-import zoom2 from 'khartis/utils/d3-zoom2';
+import zoomCustom from 'khartis/utils/d3-zoom-custom';
 
-let zoom;
 export default Ember.Mixin.create({
 
+  d3Zoom: null,
 
   zoomInit(d3g) {
 
     this.d3l().classed("with-zoom-feature", true);
 
-    zoom = zoom2()
+    let zoom = zoomCustom()
       .scaleExtent([1, 12])
       .band(0.5)
       .on("zoom", this.zoomAndDrag.bind(this))
       .scale(this.get('graphLayout.zoom'));
     
+    this.set('d3Zoom', zoom);
     this.updateTxTy(this.get('relTx'), this.get('relTy'));
     d3g.call(zoom);
-
   },
 
   updateTxTy(relTx, relTy) {
-    zoom.translate([
+    this.get('d3Zoom').translate([
       relTx,
       relTy
     ]);
@@ -132,13 +132,13 @@ export default Ember.Mixin.create({
           m = this.get('graphLayout.margin');
        
       if (Math.abs(shiftX) <= 0.1 && Math.abs(shiftY) <= 0.1) {
-        zoom.toPoint(
+        this.get('d3Zoom').toPoint(
           this.get('graphLayout.zoom'),
           (w - m.get('h')) / 2 + m.l,
           (h - m.get('v')) / 2 + m.t
         );
       } else {
-        zoom.toScaleAndTranslate(
+        this.get('d3Zoom').toScaleAndTranslate(
           this.get('graphLayout.zoom'),
           this.get('relTx'),
           this.get('relTy')

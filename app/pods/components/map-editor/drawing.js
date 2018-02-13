@@ -38,11 +38,8 @@ export default Ember.Mixin.create({
         drawMarkerG.append("circle");
         drawMarkerG.append("line");
 
-        this.d3l().on("click.drawingselect", this.drawingMapClick.bind(this));
-        this.d3l().on("dblclick.drawingselect", function() {
-            d3.event.stopImmediatePropagation();
-            console.log("doubleclick");
-        });
+        this.d3l().on("click.drawingselect", this.drawingMapClick.bind(this, false));
+        this.d3l().on("dblclick.drawingselect", this.drawingMapClick.bind(this, true));
 
         if (this.get("_eventNotifier")) {
             this.bindDrawingEvents(this.get("_eventNotifier"));
@@ -57,8 +54,8 @@ export default Ember.Mixin.create({
         this.drawingDraw();
     },
 
-    drawingMapClick() {
-        if (!this.get('drawingToolsEnabled') || d3.event.defaultPrevented) return;
+    drawingMapClick(autoActivate) {
+        if (d3.event.defaultPrevented) return;
         let ori = [d3.event.clientX, d3.event.clientY],
             crossPoints = [
                 ori,
@@ -72,7 +69,14 @@ export default Ember.Mixin.create({
                 return flat.concat(this.d3l().selectUnderPoint(".graphic path, .graphic text", pt).nodes());
             }, []);
         if (els.length) {
-            this.selectFeature(d3.select(els[0]).datum());
+            if (this.get('drawingToolsEnabled')) {
+                this.selectFeature(d3.select(els[0]).datum());
+            } else if (autoActivate) {
+                this.get('eventNotifier').trigger(DRAWING_EVENT, "preactivate");
+                this.selectFeature(d3.select(els[0]).datum());
+            } else {
+                this.get('d3Zoom').discardDblclick();
+            }
         } else {
             this.unselectFeature();
         }
