@@ -42,9 +42,9 @@ export default Ember.Controller.extend({
     this._super();
     this.get('store').addHook(HOOK_BEFORE_SAVE_PROJECT, this.onBeforeSaveProject.bind(this));
     this.get('mapEditorEventNotifier').on(DRAWING_EVENT, this, function(type) {
-      if (type === "preactivate" && !this.get('drawingToolsEnabled')) {
-        this.set('drawingToolsEnabled', true);
-        this.send('navigateToExport');
+      if (type === "preactivate") {
+        !this.get('drawingToolsEnabled') && this.set('drawingToolsEnabled', true);
+        !this.get('isInStateExport') && this.send('navigateToExport');
       }
     });
   },
