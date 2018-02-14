@@ -166,18 +166,30 @@ export default Ember.Mixin.create({
                 .attr("stroke-dasharray", d.getDashArray());
             
             if (d.get('markerStart')) {
-                let marker = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerStart'), line.node(), d.get('strokeWidth'));
+                let marker = markerMaker.buildMarker(
+                    self.d3l().select("defs"),
+                    d.get('markerStart'),
+                    line.node(),
+                    d.get('strokeWidth'),
+                    d.get('markerStartScale')
+                );
                 line.attr("marker-start", `url(${marker.url})`);
                 d3.select(`#${marker.id}`)
-                    .attr("fill", d.get('color'));
+                    .attr("fill", d.get('markerStartColor') || d.get('color'));
             } else {
                 line.attr("marker-start", null);
             }
             if (d.get('markerEnd')) {
-                let marker = markerMaker.buildMarker(self.d3l().select("defs"), d.get('markerEnd'), line.node(), d.get('strokeWidth'));
+                let marker = markerMaker.buildMarker(
+                    self.d3l().select("defs"),
+                    d.get('markerEnd'),
+                    line.node(),
+                    d.get('strokeWidth'),
+                    d.get('markerEndScale')
+                );
                 line.attr("marker-end", `url(${marker.url})`);
                 d3.select(`#${marker.id}`)
-                    .attr("fill", d.get('color'));
+                    .attr("fill", d.get('markerEndColor') || d.get('color'));
             } else {
                 line.attr("marker-end", null);
             }

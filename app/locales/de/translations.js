@@ -389,7 +389,10 @@ export default {
       "shapes": "shapes",
       "align": "align",
       "text": "text",
-      "anchor": "anchor"
+      "anchor": "anchor",
+      "scale": "scale",
+      "symbol": "symbol",
+      "inherited": "inherited"
     }
   },
 

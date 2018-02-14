@@ -5,6 +5,20 @@ export default Ember.Component.extend({
 
   data: null,
 
+  inheritedMarkerEndColor: Ember.computed('data.markerEndColor', {
+    get() {
+      return this.get('data.markerEndColor') == null;
+    },
+    set(k, v) {
+      if (v) {
+        this.set('data.markerEndColor', null);
+      } else {
+        this.set('data.markerEndColor', this.get('data.color'));
+      }
+      return v;
+    }
+  }),
+
   actions: {
     deleteFeature() {
       this.sendAction('onDeleteFeature', this.get('data'));

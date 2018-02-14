@@ -392,7 +392,10 @@ export default {
       "shapes": "formes",
       "align": "alignement",
       "text": "text",
-      "anchor": "ancrage"
+      "anchor": "ancrage",
+      "scale": "Échelle",
+      "symbol": "symbole",
+      "inherited": "héritée"
     }
   },
 

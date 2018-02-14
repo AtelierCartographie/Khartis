@@ -12,11 +12,6 @@
     margin-bottom: 0;
   }
 
-  svg {
-    width: 12px;
-    height: 12px;
-  }
-
   .positioning-warning {
     max-width: 200px;
   }
@@ -27,4 +22,19 @@
       margin-bottom: $gutter/3;
     }
   }
+
+  .subsetting-marker {
+    margin-top: 1rem;
+    margin-bottom: $gutter/3;
+  }
+
+  .marker-trigger-button {
+    svg {
+      width: 12px;
+      height: 12px;
+      margin-top: 0.5em;
+    }
+  }
+
+
 }

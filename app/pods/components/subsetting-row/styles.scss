@@ -1,0 +1,18 @@
+& {
+    $color: color(default);
+    position: relative;
+    margin-top: 1rem;
+    background-color: $color;
+    box-shadow: inset 0px 2px 4px 0px #C0C0C0;
+    .arrow {
+        $width: 1rem;
+        position: absolute;
+        margin-left: -$width;
+        top: -0.9rem;
+        width: 0; 
+        height: 0;
+        border-left: $width solid transparent;
+        border-right: $width solid transparent;
+        border-bottom: $width solid #C0C0C0;
+    }
+}

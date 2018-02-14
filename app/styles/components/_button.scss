@@ -52,6 +52,9 @@ button {
 .button.small {
   line-height: 1.8em;
   font-size: 0.9em;
+  .iconfont:before {
+    line-height: 0.8em;
+  }
 }
 
 a.button {

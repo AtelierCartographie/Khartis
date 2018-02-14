@@ -17,7 +17,7 @@ MarkerMaker.prototype._nodeIdx = function(node) {
     return idx;
 };
 
-MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) {
+MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1, scale = 0.6) {
     let self = this;
     let baseUrl = isFirefox() ? window.location : "";
     let id = `${name}-${this._nodeIdx(node)}`;
@@ -64,9 +64,10 @@ MarkerMaker.prototype.buildMarker = function(defs, name, node, strokeWidth = 1) 
             return m;
         });
     }
+
     markerSel.attr("viewBox", viewBox)
-        .attr("markerWidth", 10)
-        .attr("markerHeight", 10);
+        .attr("markerWidth", 10*scale)
+        .attr("markerHeight", 10*scale);
 
     return {
         id,

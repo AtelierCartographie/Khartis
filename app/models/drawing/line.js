@@ -8,6 +8,10 @@ let Line = AbstractDrawing.extend({
     curve: 0,
     markerStart: null,
     markerEnd: "arrow-marker-end",
+    markerStartColor: null,
+    markerEndColor: null,
+    markerStartScale: 1,
+    markerEndScale: 1,
     strokeWidth: 3,
     dash: 0,
 
@@ -33,6 +37,7 @@ let Line = AbstractDrawing.extend({
         'ptEnd._defferedChangeIndicator',
         'color', 'curve', 'markerStart', 'markerEnd',
         'strokeWidth', 'dash',
+        'markerStartColor', 'markerEndColor', 'markerStartScale', 'markerEndScale',
         function() {
           this.notifyDefferedChange();
         },
@@ -45,7 +50,11 @@ let Line = AbstractDrawing.extend({
             markerStart: this.get('markerStart'),
             markerEnd: this.get('markerEnd'),
             strokeWidth: this.get('strokeWidth'),
-            dash: this.get('dash')
+            dash: this.get('dash'),
+            markerStartColor: this.get('markerStartColor'),
+            markerEndColor: this.get('markerEndColor'),
+            markerStartScale: this.get('markerStartScale'),
+            markerEndScale: this.get('markerEndScale')
         }, props));
     }
 });
@@ -59,7 +68,11 @@ Line.reopenClass({
             markerStart: json.markerStart,
             markerEnd: json.markerEnd,
             strokeWidth: json.strokeWidth,
-            dash: json.dash
+            dash: json.dash,
+            markerStartColor: json.markerStartColor,
+            markerEndColor: json.markerEndColor,
+            markerStartScale: json.markerStartScale,
+            markerEndScale: json.markerEndScale
         });
     }
 });
