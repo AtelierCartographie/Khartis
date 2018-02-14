@@ -389,10 +389,15 @@ export default {
       "shapes": "shapes",
       "align": "align",
       "text": "text",
-      "anchor": "anchor",
       "scale": "scale",
       "symbol": "symbol",
-      "inherited": "inherited"
+      "inherited": "inherited",
+      "anchor": {
+        "title": "ancrage",
+        "onMap": "on the map",
+        "onPage": "on page",
+        "warning": "this drawing can't be anchored on the map, it has been anchored on the page"
+      }
     }
   },
 

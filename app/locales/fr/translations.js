@@ -392,10 +392,15 @@ export default {
       "shapes": "formes",
       "align": "alignement",
       "text": "text",
-      "anchor": "ancrage",
       "scale": "Échelle",
       "symbol": "symbole",
-      "inherited": "héritée"
+      "inherited": "héritée",
+      "anchor": {
+        "title": "ancrage",
+        "onMap": "sur la carte",
+        "onPage": "sur la page",
+        "warning": "le dessin n'a pu être ancré sur la carte, il a été ancré sur la page"
+      }
     }
   },
 

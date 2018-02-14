@@ -279,27 +279,30 @@ export default Ember.Mixin.create({
                 this.set('drawingToolsEnabled', false);
                 break;
             case 'text':
-                this.startDrawingEditMode();
+                this.startDrawingEditMode('text');
                 this.d3l().on("click.drawing", this.drawHandlerText.bind(this));
                 break;
             case 'line':
-                this.startDrawingEditMode();
+                this.startDrawingEditMode('line');
                 this.d3l().on("click.drawing", this.drawHandlerLine.bind(this));
                 break;
         }
     },
 
-    startDrawingEditMode() {
+    startDrawingEditMode(mode) {
         this.unselectFeature();
         this.set('drawingClickedPoints', Em.A());
         this.d3l().on("mousemove.drawing", this.drawingDrawMarker.bind(this));
+        this.d3l().classed(`drawing-${mode}`, true);
     },
-
+    
     stopDrawingEditMode() {
         this.set('drawingClickedPoints', null);
         this.hideDrawingMarker();
         this.d3l().on("click.drawing", null);
         this.d3l().on("mousemove.drawing", null);
+        this.d3l().classed(`drawing-line`, false);
+        this.d3l().classed(`drawing-text`, false);
     },
 
     endDrawing(type) {

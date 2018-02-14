@@ -5,6 +5,20 @@ export default Ember.Component.extend({
 
   data: null,
 
+  inheritedMarkerStartColor: Ember.computed('data.markerStartColor', {
+    get() {
+      return this.get('data.markerStartColor') == null;
+    },
+    set(k, v) {
+      if (v) {
+        this.set('data.markerStartColor', null);
+      } else {
+        this.set('data.markerStartColor', this.get('data.color'));
+      }
+      return v;
+    }
+  }),
+
   inheritedMarkerEndColor: Ember.computed('data.markerEndColor', {
     get() {
       return this.get('data.markerEndColor') == null;

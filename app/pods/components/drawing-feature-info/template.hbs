@@ -139,16 +139,16 @@
   </div>
   {{/if}}
   <div class="horizontal middle flow">
-    <label class="solid w5">{{x-capitalize (t 'export.drawings.anchor')}}</label>
+    <label class="solid w5">{{x-capitalize (t 'export.drawings.anchor.title')}}</label>
     <div class="horizontal half-airy solid flow w7 btn-switch-group">
-      <div class="small button filled primary {{if (x-eq data.positioning 'geo') 'selected'}}" {{action 'changePositioning' 'geo'}}>sur la carte</div>
-      <div class="small button filled primary {{if (x-eq data.positioning 'absolute') 'selected'}}" {{action 'changePositioning' 'absolute'}}>sur la page</div>
+      <div class="small button filled primary {{if (x-eq data.positioning 'geo') 'selected'}}" {{action 'changePositioning' 'geo'}}>{{x-capitalize (t 'export.drawings.anchor.onMap')}}</div>
+      <div class="small button filled primary {{if (x-eq data.positioning 'absolute') 'selected'}}" {{action 'changePositioning' 'absolute'}}>{{x-capitalize (t 'export.drawings.anchor.onPage')}}</div>
     </div>
   </div>
   {{#unless data.canBeGeoPositioned}}
   <div class="horizontal middle flow">
     <div class="horizontal padded filled default solid flow positioning-warning">
-      <span class="text-warning">Le dessin n'a pu être ancré sur la carte, il a été ancré sur la page</span>
+      <span class="text-warning">{{x-capitalize (t 'export.drawings.anchor.warning')}}</span>
     </div>
   </div>
   {{/unless}}

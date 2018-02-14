@@ -82,13 +82,23 @@
     cursor: crosshair;
   }
 
-  &.with-zoom-feature .map {
-    cursor: -webkit-grab;
-    cursor: grab;
-    &.dragging {
-      cursor: -webkit-grabbing;
-      cursor: grabbing;
+  &.with-zoom-feature {
+    &:not([class*="drawing-"]) {
+      cursor: -webkit-grab;
+      cursor: grab;
+      & map.dragging {
+        cursor: -webkit-grabbing;
+        cursor: grabbing;
+      }
     }
+  }
+
+  &.drawing-line {
+    cursor: crosshair;
+  }
+
+  &.drawing-text {
+    cursor: text;
   }
 
   .drawing .draw-marker {
