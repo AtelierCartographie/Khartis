@@ -51,8 +51,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "import",
-        "fileCsv": "a csv file",
+        "import": "import data by copy-pasted from a spreadsheet or drag & drop a",
+        "fileCsv": "csv file",
         "testData": "Try our sample datasets",
         "selectAMap": "Select a map"
       },

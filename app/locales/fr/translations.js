@@ -51,8 +51,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "importer",
-        "fileCsv": "un fichier csv",
+        "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer d'un",
+        "fileCsv": "fichier csv",
         "testData": "Essayer nos données test",
         "selectAMap": "Sélectionner un fond de carte"
       },
