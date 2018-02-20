@@ -364,7 +364,7 @@ export default {
       "reset": "réinitialiser",
       "edit": "Éditer",
       "legend": {
-        "stacking": "empilage",
+        "stacking": "présentation",
         "chooseLegend": "choisir",
         "roundValue": "arrondir les valeurs",
         "valuePrecision": "chiffres après la virgules"

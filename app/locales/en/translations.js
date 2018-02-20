@@ -364,7 +364,7 @@ export default {
       "reset": "reset",
       "edit": "edit",
       "legend": {
-        "stacking": "stacking",
+        "stacking": "presentation",
         "chooseLegend": "choose",
         "roundValue": "round values",
         "valuePrecision": "decimals"
