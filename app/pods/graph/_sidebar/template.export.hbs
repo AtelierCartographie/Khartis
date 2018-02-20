@@ -205,6 +205,30 @@
     </div>
     {{/if}}
 
+    <!-- drawings -->
+
+    <div class="title underlined">{{x-capitalize (t 'export.title.drawings')}}</div>
+    <div class="settings vertical flow">
+      <div class="horizontal middle flow">  
+        <label class="solid w5">{{x-capitalize (t 'export.settings.show')}}</label>
+        <div class="horizontal solid half-airy flow w3">
+          <a {{action 'toggleDrawingTools'}}><i class="iconfont {{if drawingToolsEnabled 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+        </div>
+      </div>
+      <div class="horizontal middle flow">  
+        <label class="solid w5">{{x-capitalize (t 'export.drawings.addText')}}</label>
+        <div class="horizontal solid half-airy flow w3">
+          <a {{action 'activateDrawingTool' 'text'}} class="add-text-drawing-button"><i class="iconfont iconfont-text"></i></a>
+        </div>
+      </div>
+      <div class="horizontal middle flow">  
+        <label class="solid w5">{{x-capitalize (t 'export.drawings.addLine')}}</label>
+        <div class="horizontal solid half-airy flow w3">
+          <a {{action 'activateDrawingTool' 'line'}} class="add-arrow-drawing-button"><i class="iconfont iconfont-draw-arrow"></i></a>
+        </div>
+      </div>
+    </div>
+
     <!-- Habillage -->
 
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
@@ -233,10 +257,6 @@
           <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
           {{color-picker class="on-white" value=model.graphLayout.backmapColor}}
         </div>
-      </div>
-      <!-- drawing -->
-      <div class="horizontal solid middle center flow padded-t">
-        <div class="w4 button small filled {{if drawingToolsEnabled 'success' 'default'}}" {{action 'toggleDrawingTools'}}>{{if drawingToolsEnabled 'Masquer les outils de dessin' 'Activer les outils de dessin'}}</div>
       </div>
     </div>
 

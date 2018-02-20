@@ -270,6 +270,9 @@ export default Ember.Mixin.create({
             case 'select':
                 this.stopDrawingEditMode();
                 break;
+            case 'unselect':
+                this.unselectFeature();
+                break;
             case 'activate':
                 this.set('drawingToolsEnabled', true);
                 break;

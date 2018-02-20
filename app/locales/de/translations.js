@@ -337,7 +337,8 @@ export default {
       "styles": "Kartenstil",
       "sizes": "Größe",
       "legend": "legende",
-      "export": "Export"
+      "export": "Export",
+      "drawings": "drawing tools"
     },
     "placeholder": {
       "mapTitle": "Kartentitel",
@@ -382,7 +383,8 @@ export default {
     },
     "drawings": {
       "text": "text",
-      "arrow": "fléche",
+      "addText": "add text",
+      "addLine": "add arrow",
       "curve": "curve",
       "strokeWidth": "stroke",
       "dash": "dash",
@@ -396,7 +398,11 @@ export default {
         "title": "ancrage",
         "onMap": "on the map",
         "onPage": "on page",
-        "warning": "this drawing can't be anchored on the map, it has been anchored on the page"
+        "warning": "this drawing can't be anchored on the map, it has been anchored on the page",
+        "tooltip": {
+          "onMap": "Object follows map's geography",
+          "onPage": "Object's postiion is fixed in page"
+        }
       }
     }
   },

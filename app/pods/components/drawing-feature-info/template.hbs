@@ -1,7 +1,7 @@
 <div class="vertical flow padded">
   <div class="horizontal space-between solid middle flow filled primary overflows head padded-h">
     <b>Réglages</b>
-    <div class="button" {{action 'deleteFeature'}}><i class="iconfont iconfont-trash"></i></div>
+    <div class="button" {{action 'close'}}><i class="iconfont iconfont-times"></i></div>
   </div>
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=1)}}</label>
@@ -110,9 +110,9 @@
   {{#if (x-eq data.type 'text')}}
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
-    <div class="horizontal half-airy solid flow w7">
-    {{x-slider class="fluid" band=1 value=data.fontSize min=6 max=56}}
-    {{input-numeric/one-way numericValue=data.fontSize class="solid w4" min=6 max=56 update=(action (mut data.fontSize))}}
+    <div class="horizontal half-airy solid middle flow w7">
+    {{x-slider class="fluid" band=1 value=data.fontSize min=6 max=64}}
+    {{input-numeric/one-way numericValue=data.fontSize class="solid w4" min=6 max=64 update=(action (mut data.fontSize))}}
     </div>
   </div>
   <div class="horizontal middle flow">
@@ -141,8 +141,12 @@
   <div class="horizontal middle flow">
     <label class="solid w5">{{x-capitalize (t 'export.drawings.anchor.title')}}</label>
     <div class="horizontal half-airy solid flow w7 btn-switch-group">
+      {{#x-tooltip message=(t 'export.drawings.anchor.tooltip.onMap')}}
       <div class="small button filled primary {{if (x-eq data.positioning 'geo') 'selected'}}" {{action 'changePositioning' 'geo'}}>{{x-capitalize (t 'export.drawings.anchor.onMap')}}</div>
+      {{/x-tooltip}}
+      {{#x-tooltip message=(t 'export.drawings.anchor.tooltip.onPage')}}
       <div class="small button filled primary {{if (x-eq data.positioning 'absolute') 'selected'}}" {{action 'changePositioning' 'absolute'}}>{{x-capitalize (t 'export.drawings.anchor.onPage')}}</div>
+      {{/x-tooltip}}
     </div>
   </div>
   {{#unless data.canBeGeoPositioned}}
@@ -152,4 +156,7 @@
     </div>
   </div>
   {{/unless}}
+  <div {{action 'deleteFeature'}} class="horizontal middle flow overflows button-delete-feature">
+    Supprimer
+  </div>
 </div>

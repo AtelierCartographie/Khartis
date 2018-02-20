@@ -670,6 +670,12 @@ export default Ember.Controller.extend({
     onDrawingFeatureSelected(feature) {
       this.set('selectedDrawingFeature', feature);
     },
+
+    activateDrawingTool(type) {
+      this.set('drawingToolsEnabled', true);
+      this.get('mapEditorEventNotifier').triggerThen(DRAWING_EVENT, "activate")
+        .then( eventNotifier => eventNotifier.trigger(DRAWING_EVENT, type) );
+    },
     
     onDeleteDrawingFeature(feature) {
       this.get('model.graphLayout.drawings').removeObject(feature);

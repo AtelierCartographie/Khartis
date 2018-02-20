@@ -1,8 +1,8 @@
 & {
   @extend .with-relief;
   position: absolute;
-  top: 2rem;
-  right: 6rem;
+  bottom: 2rem;
+  left: 8rem;
   font-size: 0.9em;
   background: rgba(255, 255, 255, 0.86);
   border-radius: 4px;
@@ -34,6 +34,18 @@
       width: 12px;
       height: 12px;
       margin-top: 0.5em;
+    }
+  }
+
+  .button-delete-feature {
+    @extend .button;
+    @extend .large;
+    @extend .filled;
+    @extend .default;
+    margin-top: $gutter/2;
+    border-top: 1px solid grey;
+    &:hover {
+      @extend .primary;
     }
   }
 

@@ -340,7 +340,8 @@ export default {
       "styles": "map layout",
       "sizes": "dimensions",
       "legend": "legende",
-      "export": "export"
+      "export": "export",
+      "drawings": "drawing tools"
     },
     "placeholder": {
       "mapTitle": "map title",
@@ -385,7 +386,8 @@ export default {
     },
     "drawings": {
       "text": "text",
-      "arrow": "arrow",
+      "addText": "add text",
+      "addLine": "add arrow",
       "curve": "curve",
       "strokeWidth": "stroke",
       "dash": "dash",
@@ -399,7 +401,11 @@ export default {
         "title": "ancrage",
         "onMap": "on the map",
         "onPage": "on page",
-        "warning": "this drawing can't be anchored on the map, it has been anchored on the page"
+        "warning": "this drawing can't be anchored on the map, it has been anchored on the page",
+        "tooltip": {
+          "onMap": "Object follows map's geography",
+          "onPage": "Object's postiion is fixed in page"
+        }
       }
     }
   },

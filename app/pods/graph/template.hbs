@@ -92,7 +92,9 @@
             {{/if}}
 
             {{#if selectedDrawingFeature}}
-              {{drawing-feature-info data=selectedDrawingFeature onDeleteFeature=(action 'onDeleteDrawingFeature')}}
+              {{drawing-feature-info data=selectedDrawingFeature
+                eventNotifier=mapEditorEventNotifier
+                onDeleteFeature=(action 'onDeleteDrawingFeature')}}
             {{/if}}
 
             {{outlet "configuration-panel"}}

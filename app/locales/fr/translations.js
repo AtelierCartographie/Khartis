@@ -340,7 +340,8 @@ export default {
       "legend": "légende",
       "styles": "habillage de la carte",
       "sizes": "dimensions",
-      "export": "export"
+      "export": "export",
+      "drawings": "outils de dessin",
     },
     "placeholder": {
       "mapTitle": "titre de la carte",
@@ -385,7 +386,8 @@ export default {
     },
     "drawings": {
       "text": "text",
-      "arrow": "fléche",
+      "addText": "ajouter un texte",
+      "addLine": "ajouter une flèche",
       "curve": "courbure",
       "strokeWidth": "Épaisseur",
       "dash": "pointillés",
@@ -399,7 +401,11 @@ export default {
         "title": "ancrage",
         "onMap": "sur la carte",
         "onPage": "sur la page",
-        "warning": "le dessin n'a pu être ancré sur la carte, il a été ancré sur la page"
+        "warning": "le dessin n'a pu être ancré sur la carte, il a été ancré sur la page",
+        "tooltip": {
+          "onMap": "L'objet suit la géographie de la carte",
+          "onPage": "L'objet est fixe dans la page"
+        }
       }
     }
   },

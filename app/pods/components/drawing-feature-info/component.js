@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import d3 from 'npm:d3';
+import { DRAWING_EVENT } from '../map-editor/drawing';
 
 export default Ember.Component.extend({
 
@@ -34,6 +35,9 @@ export default Ember.Component.extend({
   }),
 
   actions: {
+    close() {
+      this.get('eventNotifier').trigger(DRAWING_EVENT, "unselect");
+    },
     deleteFeature() {
       this.sendAction('onDeleteFeature', this.get('data'));
     },
