@@ -380,8 +380,8 @@ export default {
       "image": {
         "title": "image",
         "normal": "normal",
-        "large": "large",
-        "xLarge": "extra large"
+        "large": "large (@2x)",
+        "xLarge": "extra large (@3x)"
       },
       "vector": "vectoriel",
       "optimised": "optimised"
