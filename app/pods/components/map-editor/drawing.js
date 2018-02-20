@@ -32,6 +32,7 @@ export default Ember.Mixin.create({
             .classed("positioning-absolute", true);
 
         let drawMarkerG = gAbs.append("g")
+            .attr("kis:kis:transient", "true")
             .classed("draw-marker", true)
             .style("visibility", "hidden");
 
@@ -120,7 +121,9 @@ export default Ember.Mixin.create({
                 let selectedEl = drawingZone.node().children[0];
                 let nodeBox = d3lper.absoluteSVGBox(this.d3l().node(), selectedEl);
                 let rect = drawingZone.selectOrCreate("rect.drawing-feature-box", function() {
-                    return this.append("rect").classed("drawing-feature-box", true);
+                    return this.append("rect")
+                        .classed("drawing-feature-box", true)
+                        .attr("kis:kis:transient", "true");
                 }).attrs({
                     x: nodeBox.x,
                     y: nodeBox.y,

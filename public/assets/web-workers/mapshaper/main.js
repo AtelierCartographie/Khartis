@@ -499,7 +499,6 @@ var ExportControl = function(model, layerListCb, exportCb) {
     var commands = internal.parseCommands("-proj wgs84 -simplify keep-shapes "+pct+"%");
     return Sequence(getTargetLayers().map(function(target) {
       return new Deffered(function(res, rej) {
-        //console.log("out", internal.calcSimplifyStats(target.dataset.arcs));
         applyCommands(target, commands, function(out) {
           let stats = internal.calcSimplifyStats(out.dataset.arcs);
           if (stats.retained > 15000) {

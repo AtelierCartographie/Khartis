@@ -93,8 +93,10 @@ export default Ember.Component.extend(EventNotifierFeature, {
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
     d3.namespaces.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
     d3g.attr("xmlns:i", d3.namespaces.illustrator);
-    d3.namespaces.illustrator = 'http://www.sciencespo.fr/cartographie/khartis/';
-    d3g.attr("xmlns:kis", d3.namespaces.illustrator);
+    d3.namespaces.khartis = 'http://www.sciencespo.fr/cartographie/khartis/';
+    d3g.attr("xmlns:kis", d3.namespaces.khartis);
+    d3.namespaces.flowcss = 'http://www.apyx.fr/flowcss/';
+    d3g.attr("xmlns:flow", d3.namespaces.flowcss);
     d3g.style("font-family", "verdana");
 		
 		// ========

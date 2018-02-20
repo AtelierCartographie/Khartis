@@ -26,12 +26,14 @@ export default Ember.Mixin.create({
       'overRectElement',
       this.d3l().append("rect")
         .classed("legend-over-rect", true)
+        .attr("kis:kis:transient", "true")
         .style("visibility", "hidden")
     );
     this.set(
       'anchorLineElement',
       this.d3l().append("line")
         .classed("legend-anchor-line", true)
+        .attr("kis:kis:transient", "true")
         .style("visibility", "hidden")
     );
     this.hideOverRect();
@@ -199,7 +201,8 @@ export default Ember.Mixin.create({
         lyrEl.select("rect.legend-layer-bg")
           .attrs({
             width: lyrBox.width,
-            height: lyrBox.height
+            height: lyrBox.height,
+            "kis:kis:transient": "true"
           });
 
       });
