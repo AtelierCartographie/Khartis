@@ -37,7 +37,7 @@ export default Ember.Mixin.create({
 
         if (path) {
           
-          xy = path.centroid({
+          let xy = path.centroid({
             type: "Point",
             coordinates: [
               lon,

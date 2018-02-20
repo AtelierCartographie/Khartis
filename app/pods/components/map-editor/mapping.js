@@ -87,15 +87,19 @@ export default Ember.Mixin.create({
         let geoData = geoDef.get('geo.cells').objectAt(cell.colIndex())
           .get('postProcessedValue');
 
-        return {
-          id: geoData.value[geoKey],
-          value: cell.get('postProcessedValue'),
-          cell: cell,
-          surface: landsIdx[geoData.value[geoKey]],
-          point: centroidsIdx[geoData.value[geoKey]]
-        };
+        if (geoData) {
+          return {
+            id: geoData.value[geoKey],
+            value: cell.get('postProcessedValue'),
+            cell: cell,
+            surface: landsIdx[geoData.value[geoKey]],
+            point: centroidsIdx[geoData.value[geoKey]]
+          };
+        } else {
+          return undefined;
+        }
         
-      });
+      }).filter( r => r != undefined );
       
       if (graphLayer.get('mapping.visualization.mainType') === "surface") {
         this.mapSurface(d3Layer, data, graphLayer);
