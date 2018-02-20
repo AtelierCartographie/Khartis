@@ -132,11 +132,10 @@ export default Ember.Controller.extend({
     saveAs(blob, "export_khartis.svg");
   },
 
-  exportPNG() {
+  exportPNG(fact = 1) {
 
     let svgString = this.exportAsHTML();
 
-    let fact = 4.16;
     let canvas = document.getElementById("export-canvas");
     canvas.width = this.get('model.graphLayout.width')*fact;
     canvas.height = this.get('model.graphLayout.height')*fact;
@@ -181,7 +180,7 @@ export default Ember.Controller.extend({
             let left = arrayBuffer.slice(0, firstIDATChunkPos),
                 right = arrayBuffer.slice(firstIDATChunkPos);
 
-            let extraBuffer = build_pHYs(300);
+            let extraBuffer = build_pHYs(Math.round(72*fact));
 
             let meta = {
               "Comment": "Made with Khartis",
@@ -593,11 +592,11 @@ export default Ember.Controller.extend({
       this.get('editedLayer.mapping').updateRulesShapeSet(shapeSet);
     },
     
-    export(format, target = undefined) {
+    export(format, opts = undefined) {
       if (format === "svg") {
-        this.exportSVG(target === "illustrator");
+        this.exportSVG(opts === "illustrator");
       } else {
-        this.exportPNG();
+        this.exportPNG(opts);
       }
     },
     

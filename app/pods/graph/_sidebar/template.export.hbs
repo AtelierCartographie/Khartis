@@ -278,10 +278,25 @@
         <label class="solid w4">{{x-capitalize (t 'general.download')}}</label>
         <div class="horizontal half-airy solid flow w7 export-button-group">
           <div class="solid flow">
-            {{#x-button class="small filled primary2" action=(action 'export' 'png')}}
-              <i class="iconfont iconfont-download"></i>
-              {{x-capitalize (t 'export.settings.image')}} (.png)
-            {{/x-button}}
+            {{#x-dropdown-plus as |facet|}}
+              {{#facet.trigger dropdownPivot="bottom left" triggerPivot="top left"}}
+                {{#x-button class="small filled primary2"}}
+                  <i class="iconfont iconfont-download normal-size"></i>
+                  {{x-capitalize (t 'export.settings.image.title')}} (.png)
+                {{/x-button}}
+              {{/facet.trigger}}
+              {{#facet.list}}
+                <li class="horizontal middle center airy flow no-close padded-h" {{action 'export' 'png' 1}}>
+                  {{x-capitalize (t 'export.settings.image.normal')}}
+                </li>
+                <li class="horizontal middle center airy flow no-close padded-h" {{action 'export' 'png' 2}}>
+                  {{x-capitalize (t 'export.settings.image.large')}}
+                </li>
+                <li class="horizontal middle center airy flow no-close padded-h" {{action 'export' 'png' 3}}>
+                  {{x-capitalize (t 'export.settings.image.xLarge')}}
+                </li>
+              {{/facet.list}}
+            {{/x-dropdown-plus}}
           </div>
           <div class="solid flow">
             {{#x-dropdown-plus as |facet|}}

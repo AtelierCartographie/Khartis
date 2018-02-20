@@ -377,7 +377,12 @@ export default {
       "borders": "Rand",
       "grid": "Raster",
       "background": "Basiskarte",
-      "image": "image",
+      "image": {
+        "title": "image",
+        "normal": "normal",
+        "large": "large",
+        "xLarge": "extra large"
+      },
       "vector": "vectoriel",
       "optimised": "optimised"
     },

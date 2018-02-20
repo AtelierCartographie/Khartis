@@ -380,7 +380,12 @@ export default {
       "borders": "borders",
       "grid": "graticules",
       "background": "basemap",
-      "image": "image",
+      "image": {
+        "title": "image",
+        "normal": "normal",
+        "large": "large",
+        "xLarge": "extra large"
+      },
       "vector": "vectoriel",
       "optimised": "optimised"
     },

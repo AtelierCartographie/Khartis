@@ -380,7 +380,12 @@ export default {
       "borders": "frontières ou limites",
       "grid": "graticules",
       "background": "fond de carte",
-      "image": "image",
+      "image": {
+        "title": "image",
+        "normal": "normale",
+        "large": "grande",
+        "xLarge": "très grande"
+      },
       "vector": "vecteur",
       "optimised": "optimisé"
     },
