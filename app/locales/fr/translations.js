@@ -51,8 +51,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer d'un",
-        "fileCsv": "fichier csv",
+        "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer",
+        "fileCsv": "un fichier csv",
         "testData": "Essayer nos données test",
         "selectAMap": "Sélectionner un fond de carte"
       },
@@ -383,8 +383,8 @@ export default {
       "image": {
         "title": "image",
         "normal": "normale",
-        "large": "grande",
-        "xLarge": "très grande"
+        "large": "grande (@2x)",
+        "xLarge": "très grande (@3x)"
       },
       "vector": "vecteur",
       "optimised": "optimisé"
