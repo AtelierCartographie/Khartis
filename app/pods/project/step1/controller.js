@@ -109,7 +109,6 @@ export default Ember.Controller.extend({
 
     selectBasemap(map) {
       if (map.custom) {
-        console.log(map);
         this.get('model.project.graphLayout').setBasemap(ImportedBasemap.create({mapConfig: map}));
       } else {
         this.get('model.project.graphLayout').setBasemap(Basemap.create({id: map.id}));

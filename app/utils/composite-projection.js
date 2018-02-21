@@ -173,6 +173,33 @@ let proj = function() {
       this.isValid = true;
     },
 
+    checkValidity(mapData) {
+      let errors = [];
+      this.projs.forEach( projConfig => {
+        try {
+          let features = mapData.find( d => d.projection === projConfig.idx ).land,
+              fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
+              d3Path = d3.geoPath().projection(fProjection);
+
+          if (features && features.coordinates.length) {
+            let bounds = d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features);
+            if (!isFinite(bounds[0][0]) || isNaN(bounds[0][0])) {
+              errors.push("noBounds");
+              return;
+            }
+            fProjection.invert(bounds[0]);
+          } else {
+            errors.push("noLand"); 
+          }
+        } catch (e) {
+          console.log(e);
+          errors.push("projectionError");
+          return;
+        }
+      });
+      return (errors.length && errors) || null;
+    },
+
     projectionAt(idx) {
       let p = this.projs.find( p => p.idx === idx );
       if (!p.instance) {
@@ -225,11 +252,6 @@ let proj = function() {
     },
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
-
-      let d_zone = projConfig.zoning,
-          d_fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
-          d_d3Path = d3.geoPath().projection(d_fProjection);
-      console.log(projConfig.bounds, features, d_d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features));
 
       let zone = projConfig.zoning,
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),

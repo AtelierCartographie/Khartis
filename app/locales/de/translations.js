@@ -517,7 +517,9 @@ export default {
     "error": {
       "title": "error",
       "noFile": "No valid file found",
-      "unknow": "Unable to process selected files"
+      "unknow": "Unable to process selected files",
+      "unknownProjection": "unknow projection",
+      "layersOnError": "some layers have errors"
     }
   }
   

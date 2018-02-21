@@ -524,7 +524,9 @@ export default {
     "error": {
       "title": "erreur",
       "noFile": "Aucun fichier valide trouvé",
-      "unknow": "Impossible de traiter les fichiers sélectionnés"
+      "unknow": "Impossible de traiter les fichiers sélectionnés",
+      "unknownProjection": "projection non reconnue",
+      "layersOnError": "des couches contiennent des erreurs"
     }
   }
 

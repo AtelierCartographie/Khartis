@@ -24,21 +24,17 @@ var ImportedBasemap = Basemap.extend({
   /* ---------- */
 
   compositeProjection: function() {
-    return this.get('mapConfig.sources').length > 1 || this.get('projectionProvided');
-  }.property('mapConfig'),
+    return true;
+  }.property(),
 
   projectionProvided: function() {
-    return this.get('mapConfig.sources').find( s => s.projection );
+    return true;
   }.property('mapConfig'),
 
   assumeProjection() {
-    if (this.get('compositeProjection')) {
-      return Projection.createComposite(
-        this.get('mapConfig.sources').map( (s, idx) => Object.assign({}, s, {idx: idx+1}) )
-      );
-    } else {
-      return this.get('availableProjections').find( p => p.id === (this.get('mapConfig.sources')[0].projection || config.projection.default) );
-    }
+    return Projection.createComposite(
+      this.get('mapConfig.sources').map( (s, idx) => Object.assign({}, s, {idx: idx+1}) )
+    );
   },
 
   idChange: function() {
@@ -199,6 +195,13 @@ ImportedBasemap.reopenClass({
         },
         _debug_simplify: tuple.simplifyPct
       }
+    });
+  },
+
+  checkValidity(mapConfig) {
+    let basemap = ImportedBasemap.create({mapConfig});
+    return basemap.loadMapData().then( data => {
+      return basemap.assumeProjection().projector().checkValidity(data);
     });
   },
   

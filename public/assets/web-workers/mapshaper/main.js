@@ -269,11 +269,10 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   var _importOpts = utils.defaults({no_topology: false, auto_snap: true}, opts);
 
   var receiveFiles = this.receiveFiles = function(files) {
-    var prevSize = queuedFiles.length;
     files = handleZipFiles(utils.toArray(files));
     addFilesToQueue(files);
     if (queuedFiles.length === 0) {
-      noFilesCb();
+      //noFilesCb();
       return;
     }
     submitFiles();
@@ -448,7 +447,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
 
 /* EXPORT */
 
-var ExportControl = function(model, layerListCb, exportCb) {
+var ExportControl = function(model, layerListCb, exportCb, errorCb) {
 
   var targetLayers = null;
 
@@ -456,6 +455,10 @@ var ExportControl = function(model, layerListCb, exportCb) {
     if (layers) {
       targetLayers = layers;
       var projections = extractProjections(getTargetLayers());
+      if (projections.find(p => p === "[unknown]")) {
+        errorCb("unknownProjection");
+        return;
+      }
       simplify().then(function(simplifyPcts) {
         return processLayers().then(function(targets) {
           exportTargets(targets, function(err, tuples) {
@@ -479,6 +482,7 @@ var ExportControl = function(model, layerListCb, exportCb) {
   function handleExportError(e) {
     console.log(e, e.stack);
     console.log(Array.prototype.slice.apply(arguments).join(" "));
+    errorCb("unknow");
   }
 
   function extractProjections(targets) {

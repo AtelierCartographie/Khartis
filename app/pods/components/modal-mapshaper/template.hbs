@@ -52,11 +52,26 @@
           {{/if}}
 
           {{#if (x-eq state 'finish')}}
-          {{x-capitalize (t 'importMap.success')}}
-          <br/><br/><b>DEBUG</b><br/>
-          {{#each mapConfigs as |mc|}}
-            <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
-          {{/each}}
+            {{#if mapConfigs.length}}
+            {{x-capitalize (t 'importMap.success')}}
+            {{/if}}
+            {{#if mapConfigsOnError.length}}
+              <b>{{x-capitalize (t 'importMap.error.layersOnError')}}</b><br/>
+              {{#each mapConfigsOnError as |mc|}}
+                {{mc.id}} : 
+                {{#each mc._debug_errors as |err|}}
+                  {{err}} &nbsp;
+                {{/each}}
+                <br/>
+              {{/each}}
+            {{/if}}
+            <br/><br/><b>DEBUG</b><br/>
+            {{#each mapConfigs as |mc|}}
+              <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
+            {{/each}}
+            {{#each mapConfigsOnError as |mc|}}
+              <a style="text-decoration: underline; color: red;" {{action 'downloadDebug' mc}}>[Erreur] Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
+            {{/each}}
           {{/if}}
             
         </div>

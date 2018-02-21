@@ -15,6 +15,7 @@ var MapShaperModal = XModal.extend({
   layers: null,
   dictIds: null,
   mapConfigs: null,
+  mapConfigsOnError: null,
 
   state: null,
   errorMessage: null,
@@ -39,8 +40,8 @@ var MapShaperModal = XModal.extend({
       return false;
     } else if (this.get('isAskingForLayers')) {
       return this.get('layersCbx').find( cbx => cbx.get('checked') );
-    } else {
-      return true;
+    } else if (this.get('state') === "finish") {
+      return this.get('mapConfigs.length');
     }
   }.property('state', 'layersCbx.@each.checked'),
 
@@ -52,16 +53,37 @@ var MapShaperModal = XModal.extend({
     }) )
   }.property('layers.[]'),
 
-  
-
   onImportWorkerMessage(data) {
     if (data.action === "list-layers") {
       this.set('layers', data.layers);
       this.set('state', "layers");
     } else if (data.action === "exported") {
-      this.set('mapConfigs', ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds')));
-      this.set('state', 'finish');
-    } else if (data.action === "import-error") {
+      let mapConfigs = ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds'));
+      Promise.all(mapConfigs.map( mc => ImportedBasemap.checkValidity(mc) ) )
+        .then( errorsArr => {
+          let partition = errorsArr.reduce( (out, errors, i) => {
+            if (errors) {
+              mapConfigs[i]._debug_errors = errors;
+              out.invalid.push(mapConfigs[i]);
+            } else {
+              out.valid.push(mapConfigs[i]);
+            }
+            return out;
+          }, {valid: [], invalid: []});
+          this.set('mapConfigs', partition.valid);
+          this.set('mapConfigsOnError', partition.invalid);
+          this.set('state', 'finish');
+        })
+        .catch( e => {
+          console.log(e);
+          this.setProperties({
+            state: 'error',
+            errorMessage: 'unknow'
+          });
+        });
+      
+    } else if (data.action === "import-error" || data.action === "export-error") {
+      this.set('state', "error");
       this.set('errorMessage', data.error);
     }
   },
