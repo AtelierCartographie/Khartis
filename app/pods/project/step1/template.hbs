@@ -7,27 +7,9 @@
     <div class="vertical airy flow select-a-map">
 
       {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
-      {{#file-loader class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
+      {{#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
         Charger un fond de carte
       {{/file-loader}}
-
-      {{!-- {{#x-dropdown-plus stretch=true as |dropdown|}}
-        {{#dropdown.trigger}}
-          {{#if model.project.graphLayout.basemap}}
-          {{x-capitalize (t (concat 'basemap.' model.project.graphLayout.basemap.mapConfig.id))}}
-          {{else}}
-          {{x-capitalize (t 'general.search')}}
-          {{/if}}
-          <i class="iconfont iconfont-angle-down"></i>
-        {{/dropdown.trigger}}
-        {{#dropdown.list}}
-          {{#each dictionary.data.maps as |map|}}
-            <li {{action 'selectBasemap' map.id}}>
-              {{x-capitalize (t (concat 'basemap.' map.id))}}
-            </li>
-          {{/each}}
-        {{/dropdown.list}}
-      {{/x-dropdown-plus}} --}}
 
     </div>
 

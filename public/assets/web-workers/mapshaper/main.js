@@ -263,7 +263,7 @@ function Model() {
   return self;
 }
 
-function ImportControl(model, importedCb, noFilesCb, opts) {
+function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
 
   var queuedFiles = [];
   var _importOpts = utils.defaults({no_topology: false, auto_snap: true}, opts);
@@ -281,8 +281,7 @@ function ImportControl(model, importedCb, noFilesCb, opts) {
 
   //handlers
   function handleImportError() {
-    console.log(arguments);
-    console.log(Array.prototype.slice.apply(arguments).join(" "));
+    errorCb("general");
   }
 
   function addFilesToQueue(files) {
@@ -388,22 +387,16 @@ function ImportControl(model, importedCb, noFilesCb, opts) {
 
   function importFileContent(type, path, content, importOpts) {
     var size = content.byteLength || content.length, // ArrayBuffer or string
-        showMsg = size > 4e7, // don't show message if dataset is small
-        delay = 0;
+        delay = 35;
 
-    importOpts.files = [path]; // TODO: try to remove this
-    if (showMsg) {
-      //gui.showProgressMessage('Importing');
-      delay = 35;
-    }
+    importOpts.files = [path];
+
     setTimeout(function() {
       var dataset;
       try {
         dataset = internal.importFileContent(content, path, importOpts);
         dataset.info.no_repair = importOpts.no_repair;
         model.addDataset(dataset);
-        //importDataset = dataset;
-        //importCount++;
         readNext();
       } catch(e) {
         handleImportError(e, path);
@@ -456,7 +449,6 @@ function ImportControl(model, importedCb, noFilesCb, opts) {
 /* EXPORT */
 
 var ExportControl = function(model, layerListCb, exportCb) {
-  var unsupportedMsg = "Exporting is not supported in this browser";
 
   var targetLayers = null;
 
@@ -490,9 +482,8 @@ var ExportControl = function(model, layerListCb, exportCb) {
   }
 
   function extractProjections(targets) {
-    return targets.map( tgt => internal.getProjInfo(taggedTemplateExpression.dataset) );
+    return targets.map( tgt => internal.getProjInfo(tgt.dataset) );
   }
-
 
   function simplify(pct) {
     pct = pct || 100;
@@ -638,26 +629,12 @@ var ExportControl = function(model, layerListCb, exportCb) {
     });
   }
 
-  function getInputFormats() {
-    return model.getDatasets().reduce(function(memo, d) {
-      var fmts = d.info && d.info.input_formats || [];
-      return memo.concat(fmts);
-    }, []);
-  }
-
-  function getDefaultExportFormat() {
-    var dataset = model.getActiveLayer().dataset;
-    return dataset.info && dataset.info.input_formats &&
-        dataset.info.input_formats[0] || 'geojson';
-  }
-
   function getSelectedFormat() {
     return "topojson";
   }
 
   function getTargetLayers() {
     var ids = targetLayers.map(l => l._uuid).join(',');
-    console.log(ids);
     return ids ? model.findCommandTargets(ids) : [];
   }
 };

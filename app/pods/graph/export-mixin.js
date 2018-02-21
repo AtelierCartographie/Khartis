@@ -1,149 +1,150 @@
 import Ember from 'ember';
+import config from 'khartis/config/environment';
 import d3 from 'npm:d3';
+import {concatBuffers, uint32ToStr, calcCRC, build_pHYs, build_tEXt, tracePNGChunks} from 'khartis/utils/png-utils';
+import {isSafari} from 'khartis/utils/browser-check';
+import { exportAsHTML } from 'khartis/utils/svg-exporter';
 
 export default Ember.Mixin.create({
 
-    exportAsHTML(compatibility = {}) {
-    
-        try {
-            var isFileSaverSupported = !!new Blob();
-        } catch (e) {
-            alert("blob not supported");
-        }
-    
-        let node = d3.select("svg.map-editor")
-            .node().cloneNode(true);
-            
-        let d3Node = d3.select(node);
-        
-        let x = parseInt(d3Node.selectAll("g.offset line.vertical-left").attr("x1")),
-            y = parseInt(d3Node.selectAll("g.offset line.horizontal-top").attr("y1")),
-            w = this.get('model.graphLayout.width'),
-            h = this.get('model.graphLayout.height');
-        
-        d3Node.attrs({
-          width: this.get('model.graphLayout.width'),
-          height: this.get('model.graphLayout.height'),
-          viewBox: `${x} ${y} ${w} ${h}`,
-          title: d3Node.attr('title') || "Khartis project"
-        });
-    
-        d3Node.selectAll("g.margin,g.offset,g.margin-resizer").remove();
-        d3Node.selectAll("rect.fg").remove();
-        d3Node.selectAll("#document-mask").remove();
-        d3Node.selectAll("#viewport-mask").remove();
-        d3Node.selectAll("#foremap").remove();
-    
-        //replace rgba with rgb+fill-opacity
-        d3Node.selectAll("*[fill^=rgba]")
-          .each(function() {
-            let el = d3.select(this),
-                rgba = el.attr("fill"),
-                color = d3.color(rgba);
-            el.attr("fill", `rgb(${color.r}, ${color.g}, ${color.b})`)
-              .attr("fill-opacity", color.opacity);
-          });
-    
-        d3Node.append("text")
-          .text("Made with Khartis")
-          .attrs({
-            "x": x+w,
-            "y": y+h,
-            "dy": "-0.81em",
-            "dx": "-0.81em",
-            "font-size": "0.8em",
-            "text-anchor": "end"
-          });
-          
-        d3Node.select("#outerMap")
-          .attr("clip-path", "url(#viewport-clip)");
-    
-        //netooyage des attributs internes
-        let khartisAttrs = [
-          {ns: "kis", attr: "tx", fn: null},
-          {ns: "kis", attr: "ty", fn: null},
-          {ns: "kis", attr: "height", fn: null},
-          {ns: "kis", attr: "width", fn: null},
-          {ns: "kis", attr: "transient", fn: (node) => node.remove() },
-          {ns: "flow", attr: "style", fn: null},
-          {ns: "flow", attr: "class", fn: null},
-          {ns: "flow", attr: "include", fn: null}
-        ];
-    
-        if (compatibility.illustrator) {
-          khartisAttrs.push({
-            ns: "i",
-            attr: "stroke-width",
-            fn: (node) => node.attrs({
-                  "stroke-width": node.attr(`i:i:stroke-width`),
-                  "i:i:stroke-width": null
-                })
-          });
-    
-          d3Node.select(".legend").attr("i:i:layer", "yes").attr("id", "legend");
-          d3Node.select("#outerMap").attr("i:i:layer", "yes");
-          d3Node.selectAll("*[display='none']").remove();
-    
-          d3Node.selectAll("g.layer.surface").each( function(d, i) {
-            d3.select(this).attr("id", `viz-surface${i > 0 ? '-'+i: ''}`);
-          });
-    
-          d3Node.selectAll("g.layer.symbol").each( function(d, i) {
-            d3.select(this).attr("id", `viz-symbol${i > 0 ? '-'+i: ''}`);
-          });
-    
-          //remove #map node
-          let mapChilds = d3Node.selectAll("#map > *").remove().nodes();
-          mapChilds.forEach( node => d3Node.select("#outerMap").append( () => node) );
-          d3Node.select("#map").remove();
-    
-          //wrap nodes
-          let wrapper = d3Node.append("g")
-                .attrs({
-                  "id": "view-box",
-                  "i:i:extraneous": "self",
-                  "transform": `translate(${-x}, ${-y})`
-                });
-    
-          [].slice.call(d3Node.node().children).forEach( node => {
-            if (node != wrapper.node() && ['g', 'text', 'rect'].indexOf(node.tagName)+1) {
-              wrapper.append(() => d3.select(node).remove().node());
-            }
-          });
-    
-          //rewrite viewport because illustrator doesn't read x y
-          d3Node.attr("viewBox", `0 0 ${w} ${h}`);
-    
-        }
-    
-        khartisAttrs.forEach(kAttr => {
-          d3Node.selectAll(`[${kAttr.ns}\\:${kAttr.attr}]`).nodes()
-            .forEach( (node) => {
-              kAttr.fn || (kAttr.fn = (node) => node.attr(`${kAttr.ns}:${kAttr.ns}:${kAttr.attr}`, null));
-              kAttr.fn(node = d3.select(node));
-            });
-        });
+    exportSVG(targetIllustrator) {
+        let compatibility = targetIllustrator ? { illustrator: true } : undefined,
+            html = exportAsHTML(
+                d3.select("svg.map-editor"),
+                this.get('model.graphLayout.width'),
+                this.get('model.graphLayout.height'),
+                compatibility
+            ),
+            blob = new Blob([html], { type: isSafari() ? "application/octet-stream" : "image/svg+xml" });
+        saveAs(blob, "export_khartis.svg");
+    },
 
-        //flow cleanup
-        d3Node.selectAll("*").nodes()
-            .forEach( node => {
-                Array.prototype.slice.call(node.attributes).forEach(function(attr) {
-                    if (attr.name.indexOf("flow:") === 0) {
-                        node.removeAttributeNode(attr);
+    exportPNG(fact = 1) {
+
+        let svgString = exportAsHTML(
+            d3.select("svg.map-editor"),
+            this.get('model.graphLayout.width'),
+            this.get('model.graphLayout.height')
+        );
+
+        let canvas = document.getElementById("export-canvas");
+        canvas.width = this.get('model.graphLayout.width') * fact;
+        canvas.height = this.get('model.graphLayout.height') * fact;
+        let ctx = canvas.getContext("2d");
+        ctx.scale(fact, fact);
+        let DOMURL = self.URL || self.webkitURL || self;
+        let img = new Image();
+        let svg = new Blob([svgString], { type: "image/svg+xml" });
+        let url = DOMURL.createObjectURL(svg);
+
+        img.onerror = function (e) {
+            console.log(e, e.message);
+        };
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(function (blob) {
+
+                var arrayBuffer;
+                var fileReader = new FileReader();
+                fileReader.onload = function () {
+
+                    arrayBuffer = this.result;
+                    let dv = new DataView(arrayBuffer),
+                        firstIDATChunkPos = undefined,
+                        pos = 8,
+                        getUint32 = function () {
+                            var data = dv.getUint32(pos, false);
+                            pos += 4;
+                            return data;
+                        };
+
+                    //find first IDAT chunk
+                    while (pos < dv.buffer.byteLength) {
+                        let size = getUint32(),
+                            name = uint32ToStr(getUint32());
+                        if (name === "IDAT" && !firstIDATChunkPos) {
+                            firstIDATChunkPos = pos - 8;
+                            break;
+                        } else {
+                            pos += size;
+                        }
+                        getUint32(); //crc
                     }
-                });
-            });
-                  
-        let html = d3Node.node()
-          .outerHTML
-          .replace(/http:[^\)"]*?#/g, "#")
-          .replace(/&quot;/, "")
-          .replace(/NS\d+\:/g, "xlink:");
-    
-        d3Node.remove();
-    
-        return html;
-        
-      }
+
+                    let left = arrayBuffer.slice(0, firstIDATChunkPos),
+                        right = arrayBuffer.slice(firstIDATChunkPos);
+
+                    let extraBuffer = build_pHYs(Math.round(72 * fact));
+
+                    let meta = {
+                        "Comment": "Made with Khartis",
+                        "Software": "Khartis"
+                    };
+
+                    for (let k in meta) {
+                        extraBuffer = concatBuffers(build_tEXt(k, meta[k]), extraBuffer);
+                    }
+
+                    let pngBuffer = concatBuffers(concatBuffers(left, extraBuffer), right);
+
+                    //tracePNGChunks(pngBuffer);
+
+                    saveAs(new Blob([pngBuffer], { type: isSafari() ? "application/octet-stream" : "image/png" }), "export_khartis.png");
+                    DOMURL.revokeObjectURL(url);
+
+                };
+                fileReader.readAsArrayBuffer(blob);
+
+            }, "image/png", 1);
+
+
+        };
+        img.src = url;
+
+    },
+
+    makeThumbnail() {
+
+        if (d3.select("svg.map-editor").empty()) return Promise.resolve();
+
+        let svgString = exportAsHTML(
+            d3.select("svg.map-editor"),
+            this.get('model.graphLayout.width'),
+            this.get('model.graphLayout.height')
+        );
+
+        let fact = 1,
+            h = config.projectThumbnail.height,
+            w = config.projectThumbnail.width,
+            imgWidth = this.get('model.graphLayout.width') * fact,
+            imgHeight = this.get('model.graphLayout.height') * fact,
+            s = w / imgWidth;
+        let canvas = document.getElementById("export-canvas");
+        canvas.width = w;
+        canvas.height = h;
+        let ctx = canvas.getContext("2d");
+        ctx.scale(fact, fact);
+        let DOMURL = self.URL || self.webkitURL || self;
+        let img = new Image();
+        let svg = new Blob([svgString], { type: "image/svg+xml" });
+        let url = DOMURL.createObjectURL(svg);
+
+        return new Promise((res, rej) => {
+
+            img.onload = function () {
+                ctx.drawImage(img, 0, (imgHeight - h / s) / 2, imgWidth, h / s, 0, 0, w, h);
+                res(canvas.toDataURL("image/jpeg", config.projectThumbnail.quality));
+                DOMURL.revokeObjectURL(url);
+            };
+            img.onerror = function (e) {
+                rej(e);
+            };
+            img.src = url;
+
+        }).catch(console.log);
+
+    }
+
 
 });

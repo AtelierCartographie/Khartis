@@ -5,7 +5,6 @@ importScripts(
   '/assets/web-workers/mapshaper/rsvp.js',
   '/assets/web-workers/mapshaper/modules.js',
   '/assets/web-workers/mapshaper/mapshaper.js',
-  '/assets/web-workers/mapshaper/manifest.js',
   '/assets/web-workers/mapshaper/main.js'
 );
 
@@ -46,11 +45,14 @@ var importedCb = function() {
 };
 
 var noFilesCb = function() {
-  console.log("no file");
+  postMessage({action: "import-error", error: "noFile"})
+};
+
+var generalErrorCb = function() {
+  postMessage({action: "import-error", error: "unknow"})
 };
 
 var listLayerCb = function(layers) {
-  console.log(layers);
   postMessage({action: "list-layers", layers});
 };
 
@@ -63,7 +65,7 @@ self.addEventListener('message', function(e) {
   var data = e.data;
   if (data.action === "init") {
     model = new Model();
-    importControl = new ImportControl(model, importedCb, noFilesCb);
+    importControl = new ImportControl(model, importedCb, noFilesCb, generalErrorCb);
     exportControl = new ExportControl(model, listLayerCb, exportCb);
     importControl.receiveFiles(data.files);
   } else if (data.action === "processLayers") {

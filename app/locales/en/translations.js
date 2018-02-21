@@ -517,7 +517,15 @@ export default {
   },
 
   "importMap": {
-    "title": "Import a map"
+    "title": "Import a map",
+    "success": "Files have been successfuly processed. Do you want to import ?",
+    "selectLayer": "Select layers to import",
+    "withId": "with identifier",
+    "error": {
+      "title": "error",
+      "noFile": "No valid file found",
+      "unknow": "Unable to process selected files"
+    }
   }
 
 };

@@ -17,6 +17,7 @@ var MapShaperModal = XModal.extend({
   mapConfigs: null,
 
   state: null,
+  errorMessage: null,
 
   didInsertElement: function() {
     this.get('ModalManager').connect(this);
@@ -60,6 +61,8 @@ var MapShaperModal = XModal.extend({
     } else if (data.action === "exported") {
       this.set('mapConfigs', ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds')));
       this.set('state', 'finish');
+    } else if (data.action === "import-error") {
+      this.set('errorMessage', data.error);
     }
   },
 

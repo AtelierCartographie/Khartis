@@ -226,6 +226,11 @@ let proj = function() {
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
 
+      let d_zone = projConfig.zoning,
+          d_fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
+          d_d3Path = d3.geoPath().projection(d_fProjection);
+      console.log(projConfig.bounds, features, d_d3Path.bounds(projConfig.bounds === "Sphere" ? {type: "Sphere"} : features));
+
       let zone = projConfig.zoning,
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geoPath().projection(fProjection),
@@ -244,6 +249,7 @@ let proj = function() {
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
+
 
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))

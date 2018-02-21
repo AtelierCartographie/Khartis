@@ -517,7 +517,15 @@ export default {
   },
 
   "importMap": {
-    "title": "Importer une carte"
+    "title": "Importer une carte",
+    "success": "Les fichiers ont bien été traités, voulez-vous les importer ?",
+    "selectLayer": "Choisissez les couches à importer.",
+    "withId": "avec l'identifiant",
+    "error": {
+      "title": "erreur",
+      "noFile": "Aucun fichier valide trouvé",
+      "unknow": "Impossible de traiter les fichiers sélectionnés"
+    }
   }
 
 };

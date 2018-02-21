@@ -13,7 +13,7 @@
           {{/if}}
 
           {{#if isAskingForLayers}}
-          Choisissez les couches à importer.
+          {{x-capitalize (t 'importMap.selectLayer')}}
           <ul class="collection">
             {{#each layersCbx as |cbx|}}
             <li class="padded">
@@ -23,7 +23,7 @@
                   <span class="layer-title">{{cbx.layer.label}}</span>
                 </div>
                 <span>
-                  avec l'identifiant
+                  {{x-capitalize (t 'importMap.withId')}}
                 </span>
                 {{#x-dropdown-plus as |facet|}}
                   {{#facet.trigger class="filled on-white"}}
@@ -47,8 +47,12 @@
           </ul>
           {{/if}}
 
+          {{#if (x-eq state 'error')}}
+            {{x-capitalize (t 'importMap.error.title')}} : {{x-capitalize (t (concat 'importMap.error.' errorMessage))}}
+          {{/if}}
+
           {{#if (x-eq state 'finish')}}
-          Les fichiers ont bien été traités, voulez-vous les importer ?
+          {{x-capitalize (t 'importMap.success')}}
           <br/><br/><b>DEBUG</b><br/>
           {{#each mapConfigs as |mc|}}
             <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>

@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 	tagName: "input",
 
 	attributeBindings: ['multiple', 'type', 'accept'],
-	classNames: ["file-uplpader"],
+	classNames: ["file-uploader"],
 
 	multiple: false,
 	type: 'file',
@@ -13,9 +13,7 @@ export default Ember.Component.extend({
   didInsertElement() {
 
     var self = this;
-    console.log("hello");
     this.$().on("change", function() {
-      console.log("hello2");
       self.sendAction('onchange', this.files);
     });
 
