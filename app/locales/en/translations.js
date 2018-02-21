@@ -337,11 +337,11 @@ export default {
   "export": {
     "title": {
       "labels": "labels",
-      "styles": "map layout",
+      "styles": "customize",
       "sizes": "dimensions",
       "legend": "legende",
       "export": "export",
-      "drawings": "drawing tools"
+      "drawings": "drawings"
     },
     "placeholder": {
       "mapTitle": "map title",
@@ -391,8 +391,11 @@ export default {
     },
     "drawings": {
       "text": "text",
-      "addText": "add text",
-      "addLine": "add arrow",
+      "addDrawing": {
+        "1": "Add text",
+        "2": "or an arrows",
+        "3": "using the toolbar on the right side of the screen"
+      },
       "curve": "curve",
       "strokeWidth": "stroke",
       "dash": "dash",
@@ -411,6 +414,10 @@ export default {
           "onMap": "Object follows map's geography",
           "onPage": "Object's postiion is fixed in page"
         }
+      },
+      "helper": {
+        "text": "Click on the map to add text",
+        "arrow": "Click on the map to add an arrow"
       }
     }
   },
@@ -419,17 +426,28 @@ export default {
     "editTitleHere": "Edit legend's title"
   },
 
-  "blindness": {
-    "menu.title": "Color blindness simulation",
-    "type": {
-      "protanopia": "protanopia (red-green)",
-      "protanomaly": "protanomaly (red-green)",
-      "deuteranopia": "deuteranopia (red-green)",
-      "deuteranomaly": "deuteranomaly (red-green)",
-      "tritanopia": "tritanopia (blue-yellow)",
-      "tritanomaly": "tritanomaly (blue-yellow)",
-      "achromatopsia": "achromatopsia",
-      "achromatomaly": "achromatomaly"
+  "toolbar": {
+    "blindness": {
+      "menu.title": "Color blindness simulation",
+      "type": {
+        "protanopia": "protanopia (red-green)",
+        "protanomaly": "protanomaly (red-green)",
+        "deuteranopia": "deuteranopia (red-green)",
+        "deuteranomaly": "deuteranomaly (red-green)",
+        "tritanopia": "tritanopia (blue-yellow)",
+        "tritanomaly": "tritanomaly (blue-yellow)",
+        "achromatopsia": "achromatopsia",
+        "achromatomaly": "achromatomaly"
+      }
+    },
+    "tooltip": {
+      "center": "Center the map",
+      "zoomin": "Zoom in",
+      "zoomout": "Zoom out",
+      "info": "Information on a map object",
+      "blindness": "Color blindness simulation",
+      "drawText": "Add a text",
+      "drawArrow": "Add an arrow"
     }
   },
 

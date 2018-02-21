@@ -31,7 +31,7 @@ export default Ember.Controller.extend(ExportMixin, {
 
   tooltipEnabled: false,
   hoveredData: null,
-  drawingToolsEnabled: false,
+  drawingToolsEnabled: true,
   selectedDrawingFeature: null,
 
   mapEditorEventNotifier: EventNotifier.create(),
@@ -40,7 +40,7 @@ export default Ember.Controller.extend(ExportMixin, {
     this._super();
     this.get('store').addHook(HOOK_BEFORE_SAVE_PROJECT, this.onBeforeSaveProject.bind(this));
     this.get('mapEditorEventNotifier').on(DRAWING_EVENT, this, function(type) {
-      if (type === "preactivate") {
+      if (type === "pre-awake") {
         !this.get('drawingToolsEnabled') && this.set('drawingToolsEnabled', true);
         !this.get('isInStateExport') && this.send('navigateToExport');
       }

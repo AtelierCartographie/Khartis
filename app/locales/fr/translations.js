@@ -338,10 +338,10 @@ export default {
     "title": {
       "labels": "étiquettes",
       "legend": "légende",
-      "styles": "habillage de la carte",
+      "styles": "personnaliser",
       "sizes": "dimensions",
       "export": "export",
-      "drawings": "outils de dessin",
+      "drawings": "habillage",
     },
     "placeholder": {
       "mapTitle": "titre de la carte",
@@ -391,7 +391,11 @@ export default {
     },
     "drawings": {
       "text": "text",
-      "addText": "ajouter un texte",
+      "addDrawing": {
+        "1": "Ajouter un texte",
+        "2": "ou une flèche",
+        "3": "à l’aide de la barre d’outils verticale à droite"
+      },
       "addLine": "ajouter une flèche",
       "curve": "courbure",
       "strokeWidth": "Épaisseur",
@@ -411,6 +415,10 @@ export default {
           "onMap": "L'objet suit la géographie de la carte",
           "onPage": "L'objet est fixe dans la page"
         }
+      },
+      "helper": {
+        "text": "Cliquer sur la carte pour ajouter du texte",
+        "arrow": "Cliquer sur la carte pour ajouter une flèche"
       }
     }
   },
@@ -419,17 +427,28 @@ export default {
     "editTitleHere": "Éditez ici le titre de la légende"
   },
 
-  "blindness": {
-    "menu.title": "Simulation de daltonisme",
-    "type": {
-      "protanopia": "protanopie (rouge-vert)",
-      "protanomaly": "protanomalie (rouge-vert)",
-      "deuteranopia": "deutéranopie (rouge-vert)",
-      "deuteranomaly": "deutéranomalie (rouge-vert)",
-      "tritanopia": "tritanopie (bleu-jaune)",
-      "tritanomaly": "tritanomalie (bleu-jaune)",
-      "achromatopsia": "achromatopsie",
-      "achromatomaly": "achromatomalie"
+  "toolbar": {
+    "blindness": {
+      "menu.title": "Simulation de daltonisme",
+      "type": {
+        "protanopia": "protanopie (rouge-vert)",
+        "protanomaly": "protanomalie (rouge-vert)",
+        "deuteranopia": "deutéranopie (rouge-vert)",
+        "deuteranomaly": "deutéranomalie (rouge-vert)",
+        "tritanopia": "tritanopie (bleu-jaune)",
+        "tritanomaly": "tritanomalie (bleu-jaune)",
+        "achromatopsia": "achromatopsie",
+        "achromatomaly": "achromatomalie"
+      }
+    },
+    "tooltip": {
+      "center": "Centrer la carte",
+      "zoomin": "Zoom avant",
+      "zoomout": "Zoom arrière",
+      "info": "Information sur un élément de la carte",
+      "blindness": "Simulation de daltonisme",
+      "drawText": "Ajouter un texte",
+      "drawArrow": "Ajouter une flèche"
     }
   },
 

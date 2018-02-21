@@ -1,8 +1,8 @@
 & {
   @extend .with-relief;
   position: absolute;
-  bottom: 2rem;
-  left: 8rem;
+  top: 2rem;
+  right: 6rem;
   font-size: 0.9em;
   background: rgba(255, 255, 255, 0.86);
   border-radius: 4px;
@@ -43,7 +43,7 @@
     @extend .filled;
     @extend .default;
     margin-top: $gutter/2;
-    border-top: 1px solid grey;
+    border-top: 1px solid color(default, shade);
     &:hover {
       @extend .primary;
     }

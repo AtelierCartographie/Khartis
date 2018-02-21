@@ -12,7 +12,8 @@ const LineGenerator = d3.line().curve(d3.curveBasis);
 
 export default Ember.Mixin.create({
 
-    drawingToolsEnabled: false,
+    drawingToolsEnabled: true,
+    drawingToolsIdle: false,
 
     drawingClickedPoints: null,
 
@@ -70,10 +71,10 @@ export default Ember.Mixin.create({
                 return flat.concat(this.d3l().selectUnderPoint(".graphic path, .graphic text", pt).nodes());
             }, []);
         if (els.length) {
-            if (this.get('drawingToolsEnabled')) {
+            if (!this.get('drawingToolsIdle')) {
                 this.selectFeature(d3.select(els[0]).datum());
             } else if (autoActivate) {
-                this.get('eventNotifier').trigger(DRAWING_EVENT, "preactivate");
+                this.get('eventNotifier').trigger(DRAWING_EVENT, "pre-awake");
                 this.selectFeature(d3.select(els[0]).datum());
             }
             this.get('d3Zoom').discardDblclick();
@@ -138,6 +139,12 @@ export default Ember.Mixin.create({
             this.drawingUnbindKeyboard();
         }
     }.observes('drawingSelectedFeature'),
+
+    drawingToolsEnabledChange: function() {
+        this.d3l().selectAll('.drawing')
+            .attr("kis:kis:transient", this.get('drawingToolsEnabled')?  null : "true")
+            .style("display", this.get('drawingToolsEnabled') ? null : "none");
+    }.observes('drawingToolsEnabled'),
 
     drawingDraw() {
         let self = this;
@@ -275,6 +282,14 @@ export default Ember.Mixin.create({
                 break;
             case 'unselect':
                 this.unselectFeature();
+                break;
+            case 'awake':
+                this.set('drawingToolsIdle', false);
+                break;
+            case 'idle':
+                this.unselectFeature();
+                this.stopDrawingEditMode();
+                this.set('drawingToolsIdle', true);
                 break;
             case 'activate':
                 this.set('drawingToolsEnabled', true);

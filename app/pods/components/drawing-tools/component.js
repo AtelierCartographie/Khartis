@@ -12,12 +12,12 @@ export default Ember.Component.extend({
   },
 
   didInsertElement() {
-    this.get('eventNotifier').trigger(DRAWING_EVENT, "activate");
+    this.get('eventNotifier').trigger(DRAWING_EVENT, "awake");
     this.get('eventNotifier').trigger(DRAWING_EVENT, "select");
   },
   
   willDestroyElement() {
-    this.get('eventNotifier').trigger(DRAWING_EVENT, "deactivate");
+    this.get('eventNotifier').trigger(DRAWING_EVENT, "idle");
     this.get('eventNotifier').off(DRAWING_EVENT, this, this.handleDrawingEvent);
   },
 
@@ -27,7 +27,11 @@ export default Ember.Component.extend({
 
   actions: {
     switchDrawingState(state) {
+      if (state !== this.get('selectedState')) {
         this.get('eventNotifier').trigger(DRAWING_EVENT, state);
+      } else {
+        this.get('eventNotifier').trigger(DRAWING_EVENT, "select");
+      }
     }
   }
 

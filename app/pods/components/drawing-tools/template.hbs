@@ -1,14 +1,10 @@
-<div class="vertical flow padded">
-  <div class="horizontal solid middle flow filled primary overflows head padded-h">
-    <b>Outils</b>
-  </div>
-  <div class="fluid button overflows {{if (x-eq selectedState 'select') 'selected'}}" {{action 'switchDrawingState' 'select'}}>
-    <i class="iconfont iconfont-mouse-pointer"></i>
-  </div>
-  <div class="fluid button overflows {{if (x-eq selectedState 'text') 'selected'}}" {{action 'switchDrawingState' 'text'}}>
+  {{#x-tooltip message=(t 'toolbar.tooltip.drawText') position="left"}}
+  <div class="fluid button control-button draw-text {{if (x-eq selectedState 'text') 'selected'}}" {{action 'switchDrawingState' 'text'}}>
     <i class="iconfont iconfont-text"></i>
   </div>
-  <div class="fluid button overflows {{if (x-eq selectedState 'line') 'selected'}}" {{action 'switchDrawingState' 'line'}}>
-    <i class="iconfont iconfont-line"></i>
+  {{/x-tooltip}}
+  {{#x-tooltip message=(t 'toolbar.tooltip.drawArrow') position="left"}}
+  <div class="fluid button control-button {{if (x-eq selectedState 'line') 'selected'}}" {{action 'switchDrawingState' 'line'}}>
+    <i class="iconfont iconfont-draw-arrow"></i>
   </div> 
-</div>
+  {{/x-tooltip}}

@@ -210,26 +210,23 @@
     <div class="title underlined">{{x-capitalize (t 'export.title.drawings')}}</div>
     <div class="settings vertical flow">
       <div class="horizontal middle flow">  
-        <label class="solid w5">{{x-capitalize (t 'export.settings.show')}}</label>
+        <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
         <div class="horizontal solid half-airy flow w3">
           <a {{action 'toggleDrawingTools'}}><i class="iconfont {{if drawingToolsEnabled 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
       </div>
       <div class="horizontal middle flow">  
-        <label class="solid w5">{{x-capitalize (t 'export.drawings.addText')}}</label>
-        <div class="horizontal solid half-airy flow w3">
+        <label class="solid w12">
+          {{x-capitalize (t 'export.drawings.addDrawing.1')}}
           <a {{action 'activateDrawingTool' 'text'}} class="add-text-drawing-button"><i class="iconfont iconfont-text"></i></a>
-        </div>
-      </div>
-      <div class="horizontal middle flow">  
-        <label class="solid w5">{{x-capitalize (t 'export.drawings.addLine')}}</label>
-        <div class="horizontal solid half-airy flow w3">
+          {{t 'export.drawings.addDrawing.2'}}
           <a {{action 'activateDrawingTool' 'line'}} class="add-arrow-drawing-button"><i class="iconfont iconfont-draw-arrow"></i></a>
-        </div>
+          {{t 'export.drawings.addDrawing.3'}}
+        </label>
       </div>
     </div>
 
-    <!-- Habillage -->
+    <!-- Présentation -->
 
     <div class="title underlined">{{x-capitalize (t 'export.title.styles')}}</div>
     <div class="settings vertical flow">

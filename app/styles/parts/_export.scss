@@ -19,6 +19,7 @@
 }
 
 .add-text-drawing-button, .add-arrow-drawing-button {
+  display: inline-block;
   width: 2rem;
   height: 2rem;
   border: 1px solid color(text);
@@ -29,10 +30,8 @@
 }
 
 .add-text-drawing-button {
-  padding-left: 0.25em;
-  background-color: black;
+  padding-left: 0.22em;
   .iconfont {
-    color: white;
     font-size: 0.9em;
   }
 }
