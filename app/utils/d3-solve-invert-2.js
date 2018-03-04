@@ -1,43 +1,52 @@
 const epsilon = 1e-6;
 const pi = Math.PI;
 const halfPi = pi / 2;
-const {atan2, cos, sin, asin, abs, sqrt} = Math;
-const deg = 180/pi;
+const {abs, sqrt} = Math;
 
 export function solve(project, precision) {
 
   function clampX(x) {
-    return Math.min(Math.max(-180, x), 180);
+    if (x < -180) {
+      return 180+(x%180);
+    } else if (x > 180) {
+      return -180+(x%180)
+    } else {
+      return x;
+    }
   }
 
-  function clampY(x) {
-    return Math.min(Math.max(-90, x), 90);
+  function clampY(y) {
+    if (y < -90) {
+      return 90+(y%90);
+    } else if (y > 90) {
+      return -90+(y%90)
+    } else {
+      return y;
+    }
   }
 
   function makeGrid(bounds, center = [0,0]) {
     let nodes = [],
-        s = 3,
-        stepX = (bounds[2]-bounds[0])/s,
-        stepY = (bounds[3]-bounds[1])/s;
-    for (let i = 0; i < s; i+=2) {
-      for (let j = 0; j < s; j+=2) {
-        nodes[i*2+j] = [
-          clampX(center[0] + (i-1)*stepX),
-          clampY(center[1] + (j-1)*stepY)
+        s = 3, //should be impair
+        start = Math.floor(s/2),
+        stepX = bounds[0]/s,
+        stepY = bounds[1]/s;
+    for (let i = 0; i < s; i++) {
+      for (let j = 0; j < s; j++) {
+        nodes[i*s+j] = [
+          clampX(center[0] + (i-start)*stepX),
+          clampY(center[1] + (j-start)*stepY)
         ];
       }
     }
-    nodes.push(center);
     return {nodes, stepX, stepY};
   }
 
   function reBoundGrid(grid, node) {
     let bounds = [
-        node[0]-grid.stepX,
-        node[1]-grid.stepY,
-        node[0]+grid.stepX,
-        node[1]+grid.stepY
-      ];
+          2.1*grid.stepX,
+          2.1*grid.stepY
+        ];
     return makeGrid(bounds, node);
   }
 
@@ -53,18 +62,40 @@ export function solve(project, precision) {
   }
 
   function invert(coords) {
-    let precision = 10e-7,
-      it = 0,
-      bounds = [-180+epsilon, -90-epsilon, 180-epsilon, 90+epsilon],
-      grid = makeGrid(bounds, [0,0]),
-      nearest = nearestNode(coords, grid.nodes);
-    while (grid.stepX > precision && grid.stepY > precision) {
+    let distPrecision = 1e-4,
+        coordPrecision = 10e-7,
+        it = 0,
+        bounds = [360, 180],
+        grid = makeGrid(bounds, [0,0]),
+        nearest = nearestNode(coords, grid.nodes);
+    while (it < 100 && nearest.min > distPrecision && grid.stepX > coordPrecision && grid.stepY > coordPrecision) {
       grid = reBoundGrid(grid, nearest.node);
       nearest = nearestNode(coords, grid.nodes);
       it++;
     }
     console.log(`itérations : ${it}`);
     return nearest.node;
+  }
+
+  invert.debug = function(coords) {
+    let distPrecision = 1e-3,
+      coordPrecision = 10e-7,
+      it = 0,
+      bounds = [360, 180],
+      grid = makeGrid(bounds, [0,0]),
+      nearest = nearestNode(coords, grid.nodes),
+      debugNodes = [];
+    console.log(grid.nodes);
+    while (it < 100 && nearest.min > distPrecision && grid.stepX > coordPrecision && grid.stepY > coordPrecision) {
+      debugNodes = debugNodes.concat(grid.nodes.map( n => project([n[0], n[1]])) );
+      grid = reBoundGrid(grid, nearest.node);
+      nearest = nearestNode(coords, grid.nodes);
+      console.log(nearest.min);
+      it++;
+    }
+    debugNodes = debugNodes.concat(grid.nodes.map( n => project([n[0], n[1]])) );
+    console.log(`itérations : ${it}`);
+    return {node: nearest.node, debugNodes};
   }
  
   return invert;

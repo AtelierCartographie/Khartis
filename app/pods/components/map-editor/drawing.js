@@ -488,6 +488,26 @@ export default Ember.Mixin.create({
                 let path2 = this.assumePathForLatLon([geoC[1], geoC[0]]);
                 if (path2) {
                     let [x2, y2] = path2.centroid({type: "Point", coordinates: geoC});
+                    // let {debugNodes} = path2.projection().invert.debug([x, y]);
+                    // this.d3l().select(".map")
+                    //     .selectAll("circle.debug")
+                    //     .data(debugNodes)
+                    //     .enterUpdate({
+                    //         enter: (sel) => {
+                    //             return sel.append("circle")
+                    //                 .classed("debug", true)
+                    //                 .attr("r", 2)
+                    //                 .attr("fill", "red");
+                    //         },
+                    //         update: (sel) => {
+                    //             return sel.attrs({
+                    //                 cx: (d) => d[0],
+                    //                 cy: (d) => d[1],
+                    //                 fill: (d, i) => `rgb(${10+2*i}, ${200-2*i}, 0)`
+                    //             });
+                    //         }
+                    //     });
+                    // console.log(d3lper.distance([x, y], [x2, y2]));
                     if (!isNaN(x2) && !isNaN(y2) && d3lper.distance([x, y], [x2, y2]) < 1) { //inside of projection area
                         return {pt: Coordinates.create({x, y, geoX: geoC[0], geoY: geoC[1]}), positioning: "geo"};
                     }
