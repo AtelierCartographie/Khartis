@@ -1,0 +1,93 @@
+[
+ {
+   "ID": 10,
+   "PRENAME": "Newfoundland and Labrador",
+   "PRFNAME": "Terre-Neuve-et-Labrador",
+   "PREABBR": "N.L.",
+   "PRFABBR": "T.-N.-L."
+ },
+ {
+   "ID": 11,
+   "PRENAME": "Prince Edward Island",
+   "PRFNAME": "Île-du-Prince-Édouard",
+   "PREABBR": "P.E.I.",
+   "PRFABBR": "Î.-P.-É."
+ },
+ {
+   "ID": 12,
+   "PRENAME": "Nova Scotia",
+   "PRFNAME": "Nouvelle-Écosse",
+   "PREABBR": "N.S.",
+   "PRFABBR": "N.-É."
+ },
+ {
+   "ID": 13,
+   "PRENAME": "New Brunswick",
+   "PRFNAME": "Nouveau-Brunswick",
+   "PREABBR": "N.B.",
+   "PRFABBR": "N.-B."
+ },
+ {
+   "ID": 24,
+   "PRENAME": "Quebec",
+   "PRFNAME": "Québec",
+   "PREABBR": "Que.",
+   "PRFABBR": "Qc"
+ },
+ {
+   "ID": 35,
+   "PRENAME": "Ontario",
+   "PRFNAME": "Ontario",
+   "PREABBR": "Ont.",
+   "PRFABBR": "Ont."
+ },
+ {
+   "ID": 46,
+   "PRENAME": "Manitoba",
+   "PRFNAME": "Manitoba",
+   "PREABBR": "Man.",
+   "PRFABBR": "Man."
+ },
+ {
+   "ID": 47,
+   "PRENAME": "Saskatchewan",
+   "PRFNAME": "Saskatchewan",
+   "PREABBR": "Sask.",
+   "PRFABBR": "Sask."
+ },
+ {
+   "ID": 48,
+   "PRENAME": "Alberta",
+   "PRFNAME": "Alberta",
+   "PREABBR": "Alta.",
+   "PRFABBR": "Alb."
+ },
+ {
+   "ID": 59,
+   "PRENAME": "British Columbia",
+   "PRFNAME": "Colombie-Britannique",
+   "PREABBR": "B.C.",
+   "PRFABBR": "C.-B."
+ },
+ {
+   "ID": 60,
+   "PRENAME": "Yukon",
+   "PRFNAME": "Yukon",
+   "PREABBR": "Y.T.",
+   "PRFABBR": "Yn"
+ },
+ {
+   "ID": 61,
+   "PRENAME": "Northwest Territories",
+   "PRFNAME": "Territoires du Nord-Ouest",
+   "PREABBR": "N.W.T.",
+   "PRFABBR": "T.N.-O."
+ },
+ {
+   "ID": 62,
+   "PRENAME": "Nunavut",
+   "PRFNAME": "Nunavut",
+   "PREABBR": "Nvt.",
+   "PRFABBR": "Nt"
+ }
+]

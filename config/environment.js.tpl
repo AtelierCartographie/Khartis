@@ -193,6 +193,23 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "canada prov 2016",
+        attribution: "basemap from Statistics Canada",
+        sources: [
+          {source: "CA-prov-2016.json", projection: "d3.geoAzimuthalEqualArea()", scale: 1, transforms:{ rotate: [91.86, -63.39], parallels: [ 49, 77 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "CA-dico-PROV-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "ca-prov-life-2015",
+                source: "ca-prov-life-2015.csv"
+            }
+        ]
+      },
+      {
         id: "eu country 2013",
         attribution: "basemap from GISCO - Eurostat (European Commission)",
         sources: [

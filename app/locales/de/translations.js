@@ -455,6 +455,7 @@ export default {
     "brazil ufe 2015": "Brasilien > Bundesländer (2015)",
     "brazil mee 2015": "Brasilien > Mesoregions (2015)",
     "brazil mie 2015": "Brasilien > Microregions (2015)",
+    "canada prov 2016": "Kanada > provinzen (2016)",
     "eu country 2013": "Europa > Staaten (2016)",
     "eu nuts-2 2013": "Europa > Regionen (NUTS-2, 2013)",
     "eu nuts-3 2013": "Europa > Gemeinden (NUTS-3, 2013)",
@@ -524,7 +525,8 @@ export default {
     "eu_country-ecommerce": "Internet-Einkäufe von Einzelpersonen innerhalb von 12 Monaten (2004-2016)",
     "eu_nuts2-travail": "Durchschnittliche Arbeitsstunden pro Woche (2015)",
     "eu_nuts2-agriculture": "Landwirtschaftliche Fläche nach Größe der landwirtschaftlichen Betriebe (2013)",
-    "eu_nuts3-pop": "Bevölkerungsdichte (2015)"
+    "eu_nuts3-pop": "Bevölkerungsdichte (2015)",
+    "ca-prov-life-2015": "Life expectancy (2013-2015)"
   },
 
   "importMap": {
