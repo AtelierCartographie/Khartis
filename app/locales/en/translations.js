@@ -459,6 +459,7 @@ export default {
     "brazil mee 2015": "Brésil > mesoregions (2015)",
     "brazil mie 2015": "Brésil > microregions (2015)",
     "canada prov 2016": "Canada > provinces (2016)",
+    "canada cd 2016": "Canada > census division (2016)",
     "eu country 2013": "Europe > States (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
     "eu nuts-3 2013": "Europe > nuts 3 (2013)",
@@ -533,7 +534,8 @@ export default {
     "eu_nuts2-travail": "Average hours worked per week (2015)",
     "eu_nuts2-agriculture": "Agricultural area by size of agricultural holdings (2013)",
     "eu_nuts3-pop": "Population density (2015)",
-    "ca-prov-life-2015": "Life expectancy (2013-2015)"
+    "ca-prov-life-2015": "Life expectancy (2013-2015)",
+    "ca-cd-pop-2017": "Population (2011-2017)"
   },
 
   "importMap": {
