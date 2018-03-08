@@ -80,7 +80,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
     return this.get('base').reduce( (index, base) => {
       let path = this.getProjectedPath(base.projection);
       base[ns][ns2].forEach(f => {
-        index[f.properties[geoKey]] = {path: path, feature: f}
+        index[`${f.properties[geoKey]}`] = {path: path, feature: f}
       });
       return index;
     }, {});
@@ -430,7 +430,6 @@ export default Ember.Component.extend(EventNotifierFeature, {
         features = this.getFeaturesFromBase("lands")
           .filter( f => this.get('_landSelSet').has(`${f.feature.properties[geoKey]}`) );
     
-    console.log(this.get('_landSelSet'), geoKey, this.getFeaturesFromBase("lands"));
     let sel = this.d3l().select("defs")
       .selectAll("path.feature")
       .data(features)
