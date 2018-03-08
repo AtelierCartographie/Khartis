@@ -1,0 +1,17 @@
+& {
+    position: absolute;
+    bottom: $gutter;
+    right: $gutter;
+
+    .export-menu {
+        @extend .with-relief;
+        position: absolute;
+        background: white;
+        width: 32rem;
+
+        .export-type-title {
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+    }
+}

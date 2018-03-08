@@ -62,6 +62,11 @@ button {
   font-size: 1.1em;
 }
 
+.button.x-large {
+  line-height: 2.3em;
+  font-size: 1.3em;
+}
+
 a.button {
   text-decoration: none;
   &:visited { color: color(text); }

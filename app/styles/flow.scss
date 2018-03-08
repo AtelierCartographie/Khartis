@@ -342,6 +342,14 @@ body {
       margin-top: -$size;
       margin-bottom: -$size;
     }
+    & > *.overflows-h {
+      margin-left: -$size;
+      margin-right: -$size;
+    }
+    & > *.overflows-v {
+      margin-top: -$size;
+      margin-bottom: -$size;
+    }
   }
 
   .padded-h, %padded-h {

@@ -92,6 +92,10 @@
                 eventNotifier=mapEditorEventNotifier
                 onDeleteFeature=(action 'onDeleteDrawingFeature')}}
             {{/if}}
+
+            {{#if isInStateExport}}
+            {{button-export export=(action 'export')}}
+            {{/if}}
             
             {{outlet "configuration-panel"}}
 

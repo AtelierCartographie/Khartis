@@ -387,7 +387,8 @@ export default {
         "xLarge": "extra large (@3x)"
       },
       "vector": "vectoriel",
-      "optimised": "optimised"
+      "optimised": "for",
+      "formatSelection": "with format"
     },
     "drawings": {
       "text": "text",
