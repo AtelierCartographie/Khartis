@@ -89,11 +89,11 @@ export default Ember.Mixin.create({
 
         if (geoData) {
           return {
-            id: geoData.value[geoKey],
+            id: `${geoData.value[geoKey]}`,
             value: cell.get('postProcessedValue'),
             cell: cell,
-            surface: landsIdx[geoData.value[geoKey]],
-            point: centroidsIdx[geoData.value[geoKey]]
+            surface: landsIdx[`${geoData.value[geoKey]}`],
+            point: centroidsIdx[`${geoData.value[geoKey]}`]
           };
         } else {
           return undefined;

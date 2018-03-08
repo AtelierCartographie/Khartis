@@ -68,9 +68,9 @@ export default Ember.Component.extend(EventNotifierFeature, {
   },
 
   getFeaturesFromBase(ns, ns2 = "features") {
-    return this.get('base').reduce( (col, base) => {
+    return this.get('base').reduce( (out, base) => {
       let path = this.getProjectedPath(base.projection);
-      return col.concat(
+      return out.concat(
         base[ns][ns2].map(f => ({path: path, feature: f}))
       );
     }, []);
@@ -419,16 +419,18 @@ export default Ember.Component.extend(EventNotifierFeature, {
 	},
   
   registerLandSel(id) {
-    this.get('_landSelSet').add(id);
+    this.get('_landSelSet').add(`${id}`);
     return `#f-path-${id}`;
   },
   
   drawLandSel() {
 
+    
     let geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         features = this.getFeaturesFromBase("lands")
-          .filter( f => this.get('_landSelSet').has(f.feature.properties[geoKey]) );
-
+          .filter( f => this.get('_landSelSet').has(`${f.feature.properties[geoKey]}`) );
+    
+    console.log(this.get('_landSelSet'), geoKey, this.getFeaturesFromBase("lands"));
     let sel = this.d3l().select("defs")
       .selectAll("path.feature")
       .data(features)
