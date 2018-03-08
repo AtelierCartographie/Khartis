@@ -1,4 +1,4 @@
-## v2.1
+## v2.1 (09/03/2018)
 -   new tools to add text and arrow above the map. Bonus: objects are georeferenced with the map
 -   many improvement of the legend for more liberty: horizontal or vertical presentation, dissociate legends, round values
 -   new download button always visible in export step
@@ -9,7 +9,7 @@
 -   fix bug when data with empty cell in ID column
 -   fix bug when no data value have special character (“..”, “-”) 
 
-## v2.0
+## v2.0 (16/11/2017)
 -   **global redesign** for a better experience and ergonomy
 -   **new projection available : Bertin 1953**. Thanks to Philippe Rivière (@Fil). More information on [Visionscarto.net](https://visionscarto.net/bertin-projection-1953)
 -   **new viz “categories > ordered symbols”**: to show a hierarchy on points (capitals of state, chief towns of regions, communes ... or a ranking in a typology). This viz is based on Jacques Bertin’s work.
@@ -23,10 +23,10 @@
 -   a lot of improvement in reactivity and performance : in the data step and with the zoom
 -   bug fix: SVG export now support opacity
 
-## v1.3
+## v1.3 (26/07/2017)
 -   add France at municipality level split by 18 regions in 2016 and 2017
 
-## v1.2 (21/07/2018)
+## v1.2 (21/07/2017)
 ### Basemaps
 -   add Europe at three levels: country, NUTS-2 and NUTS-3 + examples data
 -   add France electoral district for 2012 and 2017 with presidential data
@@ -49,7 +49,7 @@
 ### Fix
 -   and a lot of fix not listed
 
-## v1.0
+## v1.0 (3/11/2016)
 -   add brazil basemaps:
    -   3 levels: States, mesoregions and microregions
    -   add one example at States level
