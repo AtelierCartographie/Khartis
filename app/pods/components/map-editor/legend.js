@@ -486,6 +486,8 @@ export default Ember.Mixin.create({
                 update: (sel) => sel.eachWithArgs(fn, svg, d, formatter)
               });
           }
+
+          
           if (d.get('mapping.rules').length) {
             
             ruleEl = el.append("g")
