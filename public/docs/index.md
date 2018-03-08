@@ -25,6 +25,8 @@ Un projet open source de [Sciences Po - Atelier de cartographie](http://www.scie
 * [lat/long (coordonnées géographiques)](definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques)
 * [projection cartographique](definitions#projection-cartographique) (à venir)
 
+## [Historique des versions](changelog)
+
 ## Contribution
 *   [How to create a basemap for Khartis](how-to-create-a-basemap-for-Khartis)
 
