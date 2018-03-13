@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
+import d3Annotation from 'npm:d3-svg-annotation';
 
 const ENABLE_DRAG_FEATURE = false; //TODO : finish
 
@@ -67,59 +68,90 @@ export default Ember.Mixin.create({
         visualization = mapping.get('visualization'),
         converter = mapping.fn();
 
-    let bindAttr = (_) => {
+    // let bindAttr = (_) => {
 
-        _.select("text")
-          .attr("text-anchor", {
-              start: "start",
-              middle: "middle",
-              end: "end"
-            }[graphLayer.get('mapping.visualization.anchor')])
-          .styles({
-            "font-size": `${visualization.get('size')}em`,
-            "fill": visualization.get('color'),
-            "stroke": "none",
-            "stroke-width": 0
-          })
-          .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'))
-          .each( function(d) {
-            let [tx, ty] = d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry));
-            d3.select(this).attrs({
-              "dy": "0.3em",
-              "kis:kis:tx": d => tx,
-              "kis:kis:ty": d => ty,
-              "transform": d3lper.translate({tx: tx, ty: ty})
-            })
-            .call(self.drawLines, tx, ty);
-          });
-      };
+    //     _.select("text")
+    //       .attr("text-anchor", {
+    //           start: "start",
+    //           middle: "middle",
+    //           end: "end"
+    //         }[graphLayer.get('mapping.visualization.anchor')])
+    //       .styles({
+    //         "font-size": `${visualization.get('size')}em`,
+    //         "fill": visualization.get('color'),
+    //         "stroke": "none",
+    //         "stroke-width": 0
+    //       })
+    //       .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'))
+    //       .each( function(d) {
+    //         let [tx, ty] = d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry));
+    //         d3.select(this).attrs({
+    //           "dy": "0.3em",
+    //           "kis:kis:tx": d => tx,
+    //           "kis:kis:ty": d => ty,
+    //           "transform": d3lper.translate({tx: tx, ty: ty})
+    //         })
+    //         .call(self.drawLines, tx, ty);
+    //       });
+    //   };
 
-    let centroidSel = d3Layer
-			.selectAll("g.labelling")
-      .data(data.filter( d => {
-        let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-        return !isNaN(tx) && !isNaN(ty);
-      }))
-      .call(bindAttr);
+      const labels = data.filter( d => {
+          let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
+          return !isNaN(tx) && !isNaN(ty);
+        })
+        .map( d => {
+          return {
+            note: {
+              label: d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'),
+              title: "Annotations :)"
+            },
+            data: {
+              centroid: d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry))
+            },
+            dy: 0,
+            dx: 0
+          };
+        });
+
+      console.log(labels);
+
+      const annotationFn = d3Annotation
+        .annotation()
+        .accessors({
+          x: d => d.centroid[0],
+          y: d => d.centroid[1]
+        })
+        .annotations(labels);
+
+      d3Layer.call(annotationFn);
+
+
+    // let centroidSel = d3Layer
+		// 	.selectAll("g.labelling")
+    //   .data(data.filter( d => {
+    //     let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
+    //     return !isNaN(tx) && !isNaN(ty);
+    //   }))
+    //   .call(bindAttr);
       
-    let gSel = centroidSel.enter()
-      .append("g")
-      .classed("labelling", true);
+    // let gSel = centroidSel.enter()
+    //   .append("g")
+    //   .classed("labelling", true);
 
-    let textSel = gSel.append("text");
+    // let textSel = gSel.append("text");
     
-    if (ENABLE_DRAG_FEATURE) {
-        textSel.call(this.newDragFeature(visualization));
-    }
+    // if (ENABLE_DRAG_FEATURE) {
+    //     textSel.call(this.newDragFeature(visualization));
+    // }
 
-    gSel.append("line").classed("radius", true);
-    gSel.append("line").classed("end", true);
+    // gSel.append("line").classed("radius", true);
+    // gSel.append("line").classed("end", true);
       
-    gSel.call(bindAttr);
+    // gSel.call(bindAttr);
 
-    centroidSel.order().exit().remove();
+    // centroidSel.order().exit().remove();
 
-	},
+  },
 
   newDragFeature(visualization) {
 
