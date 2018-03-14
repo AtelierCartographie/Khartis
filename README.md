@@ -14,8 +14,8 @@ Un projet open source de [Sciences Po - Atelier de cartographie](http://www.scie
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Yarn](https://yarnpkg.com)
+* [Node.js](http://nodejs.org/)
+* Npm or [Yarn](https://yarnpkg.com)
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
