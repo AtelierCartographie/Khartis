@@ -2,7 +2,6 @@ import Ember from 'ember';
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import d3Annotation from 'npm:d3-svg-annotation';
-import elbowAnnotation from 'khartis/utils/elbow-annotation';
 import SymbolMaker from 'khartis/utils/symbol-maker';
 
 const ENABLE_DRAG_FEATURE = true; //TODO : finish
@@ -216,7 +215,6 @@ export default Ember.Mixin.create({
 
     if (pyt(d.xy[0]-tx, d.xy[1]-ty) < 2) {
       radius.attr("display", "none");
-      textSel.attr("dy", "0.3em");
       return;
     }
 
@@ -226,17 +224,20 @@ export default Ember.Mixin.create({
       return n * multiple;
     }
 
+    console.log(textSel.node().children.length && textSel.node().children[0].getBoundingClientRect().height);
+    
     let lineGen = d3.line().curve(d3.curveLinear),
         bbox = textSel.node().getBoundingClientRect(),
+        textDy = textSel.node().dy.baseVal.getItem(0).value,
         absoluteXY = d3lper.xyRelativeTo(textSel.node(), this.d3l().node()),
         [ox, oy] = d.xy,
         signH = Math.sign(tx - ox),
         signV = Math.sign(ty - oy),
-        anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), -(signV+1)*(bbox.height / 2)]),
+        anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), (-signV+1)*(bbox.height / 2) - 2*textDy]),
         theta = angle([ox, oy], anchor),
         hasBoxBounds = d.bounds.some( b => b.type === "box" ),
         theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
-
+    
     //intersect with bounds and keep extremums
     let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
       let x, y, rx = bounds.width/2, ry = bounds.height/2;
@@ -286,10 +287,8 @@ export default Ember.Mixin.create({
           display: null,
           d: lineGen([[offsetedOx, offsetedOy], [xm , ym], [xe, ye], terminationPt])
         });
-        textSel.attr("dy", "-0.3em");
     } else { //no line
       radius.attr("display", "none");
-      textSel.attr("dy", "0.3em");
     }
 
   }
