@@ -6,9 +6,10 @@ import GraphLayer from './graph-layer';
 import GeoDef from './geo-def';
 /* global Em */
 
-const CURRENT_VERSION = 3.1;
+const CURRENT_VERSION = 3.2;
 const VERSION_LZ_STRING= 3.0;
 const VERSION_LEGEND_2 = 3.1;
+const VERSION_LABELLING_2 = 3.2;
 
 let Project = Struct.extend({
 
@@ -132,7 +133,6 @@ Project.reopenClass({
       }
 
       if (ret.version < VERSION_LEGEND_2) {
-        console.log("here version");
         ret.graphLayout.legendLayout = {
           groups: Em.A([{
             layers: ret.graphLayers.map( gl => gl._uuid ),
@@ -143,6 +143,23 @@ Project.reopenClass({
           opacity: ret.graphLayout.legendOpacity
         }
       }
+      if (ret.version <= VERSION_LABELLING_2) {
+        ret.labellingLayers = ret.labellingLayers.map( ll => {
+          if (ll.mapping.visualization.overwrites) {
+            Object.keys(ll.mapping.visualization.overwrites).forEach( k => {
+              if (ll.mapping.visualization.overwrites[k].type) {
+                ll.mapping.visualization.overwrites[k] = {
+                  dx: 0,
+                  dy: 0,
+                  __dCoords: ll.mapping.visualization.overwrites[k].coordinates
+                };
+              }
+            });
+          }
+          return ll;
+        });
+      }
+
       return ret;
     }
     

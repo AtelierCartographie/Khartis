@@ -1,5 +1,10 @@
 import Struct from 'khartis/models/struct';
 
+const DEFAUL_OVERWRITE = {
+  dx: 0,
+  dy: 0
+};
+
 let TextVisualization = Struct.extend({
   
   type: "text",
@@ -12,12 +17,18 @@ let TextVisualization = Struct.extend({
     return this.get('type').split(".")[0];
   }.property('type'),
 
-  getGeometry(id, geom) {
-    return this.get('overwrites')[id] || geom;
+  setOverwrite(id, ov) {
+    this.get('overwrites')[id] = ov;
+    this.notifyPropertyChange('overwrites');
   },
 
-  setGeometry(id, geom) {
-    this.get('overwrites')[id] = geom;
+  getOverwrite(id) {
+    return this.get('overwrites')[id] || {...DEFAUL_OVERWRITE};
+  },
+
+  mergeOverwrite(id, ov) {
+    !this.get('overwrites')[id] && (this.get('overwrites')[id] = {});
+    Object.assign(this.get('overwrites')[id], ov);
     this.notifyPropertyChange('overwrites');
   },
 

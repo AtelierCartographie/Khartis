@@ -2,16 +2,18 @@ import Ember from 'ember';
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
 import d3Annotation from 'npm:d3-svg-annotation';
+import elbowAnnotation from 'khartis/utils/elbow-annotation';
+import SymbolMaker from 'khartis/utils/symbol-maker';
 
-const ENABLE_DRAG_FEATURE = false; //TODO : finish
+const ENABLE_DRAG_FEATURE = true; //TODO : finish
 
-const π = Math.PI,
+const {abs, sqrt, cos, sin, atan2, PI:pi} = Math,
+      pyt = (a, o) => sqrt(a*a + o*o),
       angle = function(o, p) {
-        let hyp = Math.sqrt(Math.pow(p[0] - o[0], 2) + Math.pow(p[1] - o[1], 2)),
-            a = (p[0] - o[0]) < 0 ? π/2 : 0,
-            b = hyp > 0 ? Math.asin( (p[1] - o[1])/hyp ) : 0;
-
-        return Math.sign(b) * a + b; 
+        return atan2(p[1] - o[1], p[0] - o[0]);
+      },
+      truncate = function(v) { //equals to ceil for neagtive numbers and floor for postive ones
+        return v - v%1;
       };
 
 export default Ember.Mixin.create({
@@ -65,91 +67,94 @@ export default Ember.Mixin.create({
     let self = this,
         svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
+        mappedDataLayers = this.get('displayableLayers'),
         visualization = mapping.get('visualization'),
         converter = mapping.fn();
 
-    // let bindAttr = (_) => {
+    let labels = data.filter( d => {
+      let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
+      return !isNaN(tx) && !isNaN(ty);
+    })
+    .map( d => {
 
-    //     _.select("text")
-    //       .attr("text-anchor", {
-    //           start: "start",
-    //           middle: "middle",
-    //           end: "end"
-    //         }[graphLayer.get('mapping.visualization.anchor')])
-    //       .styles({
-    //         "font-size": `${visualization.get('size')}em`,
-    //         "fill": visualization.get('color'),
-    //         "stroke": "none",
-    //         "stroke-width": 0
-    //       })
-    //       .text(d => d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'))
-    //       .each( function(d) {
-    //         let [tx, ty] = d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry));
-    //         d3.select(this).attrs({
-    //           "dy": "0.3em",
-    //           "kis:kis:tx": d => tx,
-    //           "kis:kis:ty": d => ty,
-    //           "transform": d3lper.translate({tx: tx, ty: ty})
-    //         })
-    //         .call(self.drawLines, tx, ty);
-    //       });
-    //   };
-
-      const labels = data.filter( d => {
-          let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-          return !isNaN(tx) && !isNaN(ty);
-        })
-        .map( d => {
-          return {
-            note: {
-              label: d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'),
-              title: "Annotations :)"
-            },
-            data: {
-              centroid: d.point.path.centroid(visualization.getGeometry(d.id, d.point.feature.geometry))
-            },
-            dy: 0,
-            dx: 0
-          };
+      //find subjects largest bounds
+      let associatedSymbolsBounds = d.cell.get('row.cells').reduce( (out, cell) => {
+        let layers = mappedDataLayers.filter(
+          gl => gl.get('mapping.varCol') == cell.get('column') && gl.get('mapping.visualization.type') === 'symbol'
+        );
+        layers.forEach( lyr => {
+          let mapping = lyr.get('mapping'),
+              converter = mapping.fn(),
+              symbol = SymbolMaker.symbol({
+                name: converter(cell, "shape"),
+                size: converter(cell, "size")*2,
+                sign: Math.sign(cell.get('postProcessedValue')),
+                barWidth: mapping.get('visualization.barWidth')
+              });
+          let bounds = symbol.getBounds();
+          out = [...out, bounds];
         });
+        return out;
+      }, [{type: "circle", x: 0, y: 0, width: 0, height: 0}]);
 
-      console.log(labels);
+      return {
+        id: d.id,
+        point: d.point,
+        xy: d.point.path.centroid(d.point.feature.geometry),
+        label: d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'),
+        bounds: associatedSymbolsBounds,
+        padding: 2,
+        ...visualization.getOverwrite(d.id)
+      }
+    });
 
-      const annotationFn = d3Annotation
-        .annotation()
-        .accessors({
-          x: d => d.centroid[0],
-          y: d => d.centroid[1]
-        })
-        .annotations(labels);
+    d3Layer
+			.selectAll("g.labelling")
+      .data(labels)
+      .enterUpdate({
 
-      d3Layer.call(annotationFn);
+        enter: sel => {
+          let gSel = sel.append("g")
+            .classed("labelling", true);
 
+          let textSel = gSel.append("text");
+          ENABLE_DRAG_FEATURE && textSel.call(this.newDragFeature(visualization));
 
-    // let centroidSel = d3Layer
-		// 	.selectAll("g.labelling")
-    //   .data(data.filter( d => {
-    //     let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
-    //     return !isNaN(tx) && !isNaN(ty);
-    //   }))
-    //   .call(bindAttr);
-      
-    // let gSel = centroidSel.enter()
-    //   .append("g")
-    //   .classed("labelling", true);
+          gSel.append("path")
+            .classed("radius", true)
+            .style("stroke", "black")
+            .style("fill", "none");
+          return gSel;
+        },
 
-    // let textSel = gSel.append("text");
-    
-    // if (ENABLE_DRAG_FEATURE) {
-    //     textSel.call(this.newDragFeature(visualization));
-    // }
+        update: sel => {
+          sel.select("text")
+            .attr("text-anchor", {
+                start: "start",
+                middle: "middle",
+                end: "end"
+              }[graphLayer.get('mapping.visualization.anchor')])
+            .styles({
+              "font-size": `${visualization.get('size')}em`,
+              "fill": visualization.get('color'),
+              "stroke": "none",
+              "stroke-width": 0
+            })
+            .text(d => d.label)
+            .call(d3lper.wrapText, 100)
+            .each( function(d) {
+              let [tx, ty] = d3lper.sumCoords(d.xy, [d.dx, d.dy]);
+              d3.select(this).attrs({
+                "dy": "0.3em",
+                "transform": d3lper.translate({tx, ty})
+              })
+              .call(self.drawLines.bind(self), tx, ty);
+            });
+          return sel;
+        }
 
-    // gSel.append("line").classed("radius", true);
-    // gSel.append("line").classed("end", true);
-      
-    // gSel.call(bindAttr);
-
-    // centroidSel.order().exit().remove();
+      })
+      .order();
 
   },
 
@@ -159,16 +164,16 @@ export default Ember.Mixin.create({
 
     //LEGEND DRAG
     return d3.drag()
-      .subject(function() {
+      .subject(function(d) {
         let sel = d3.select(this);
-        return {x: sel.attr('kis:kis:tx'), y: sel.attr('kis:kis:ty')};
+        return {x: d.xy[0] + d.dx, y: d.xy[1] + d.dy};
       })
       .on("start", function() {
         d3.event.sourceEvent.stopPropagation();
         d3.event.sourceEvent.preventDefault();
         d3.select(this).classed("dragging", true);
       })
-      .on("drag", function() {
+      .on("drag", function(d) {
 
         let sel = d3.select(this),
             bgBox = self.d3l().select(".bg").node().getBBox(),
@@ -177,16 +182,14 @@ export default Ember.Mixin.create({
               ty: Math.min(bgBox.height-10, Math.max(d3.event.y, 0))
             };
         
-        sel.attrs({
-         'transform': d3lper.translate(pos), 
-          "kis:kis:tx": pos.tx,
-          "kis:kis:ty": pos.ty
-        })
-        .each( function(d) {
-          let proj = d.point.path.projection();
-          visualization.setGeometry(d.id, {type: "Point", coordinates: proj.invert([pos.tx, pos.ty])});
-        })
-        .call(self.drawLines, pos.tx, pos.ty);
+        sel.attr("transform", d3lper.translate(pos));
+
+        let dx = pos.tx - d.xy[0],
+            dy = pos.ty - d.xy[1];
+
+        visualization.mergeOverwrite(d.id, {dx, dy});
+        
+        self.drawLines(sel, pos.tx, pos.ty);
 
       })
       .on("end", function() {
@@ -198,56 +201,84 @@ export default Ember.Mixin.create({
   drawLines(textSel, tx, ty) {
 
     let bbox = textSel.node().getBBox(),
-        radius = d3.select(textSel.node().parentNode).select("line.radius"),
-        end = d3.select(textSel.node().parentNode).select("line.end");
+        absoluteXY = d3lper.xyRelativeTo(textSel.node(), this.d3l().node()),
+        radius = d3.select(textSel.node().parentNode).select("path.radius");
 
     textSel.each( function(d) {
 
-        let [ox, oy] = d.point.path.centroid(d.point.feature.geometry),
-            signH = Math.sign(tx - ox),
-            signV = Math.sign(ty - oy),
-            anchor = [-signH*(bbox.width/2), 0],
-            hyp0 = Math.sqrt(Math.pow(tx - ox, 2) + Math.pow(ty - oy, 2)),
-            shift = Math.min(hyp0*0.2, 36),
-            theta = angle([ox, oy], d3lper.sumCoords([tx, ty], anchor, [-signH*shift, -signH*shift]));
+      if (pyt(d.xy[0]-tx, d.xy[1]-ty) < 2) {
+        radius.attr("display", "none");
+        d3.select(this).attr("dy", "0.3em");
+        return;
+      }
 
-        if ((signH > 0 && Math.abs(theta) > π/2) || (signH < 0 && Math.abs(theta) < π/2)) { //middle
-          if (hyp0 > 26 && Math.abs(angle([ox, oy], [tx, ty])) % (π/2) > π/3) {
-            radius
-              .attrs({
-                display: "block",
-                x1: ox,
-                y1: oy,
-                x2: tx,
-                y2: ty - signV*(bbox.height/2 + 2)
-              });
-          } else {
-            radius.attr("display", "none");
-          }
-          end.attr("display", "none");
+      const piScale = function(v, multiple) {
+        let r = v/ multiple,
+            n = Math.round(r);// + truncate(r + Math.sign(r)) % 2;
+        return n * multiple;
+      }
+
+      let lineGen = d3.line().curve(d3.curveLinear),
+          [ox, oy] = d.xy,
+          signH = Math.sign(tx - ox),
+          signV = Math.sign(ty - oy),
+          anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), -(signV+1)*(bbox.height / 2)]),
+          theta = angle([ox, oy], anchor),
+          hasBoxBounds = d.bounds.some( b => b.type === "box" ),
+          theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
+
+      //intersect with bounds and keep extremums
+      let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
+        let x, y, rx = bounds.width/2, ry = bounds.height/2;
+        if (bounds.type === "circle") {
+          x = ox + (rx + d.padding)*cos(theta2);
+          y = oy + (rx + d.padding)*sin(theta2);
         } else {
-          let hyp = Math.sqrt(Math.pow(tx + anchor[0] - ox, 2) + Math.pow(ty + anchor[1] - oy, 2));
-          if (hyp > 18) {
-            radius
-              .attrs({
-                display: "block",
-                x1: ox,
-                y1: oy,
-                x2: tx + anchor[0] - signH*shift,
-                y2: ty
-              });
-            end.attrs({
-              display: null,
-              x1: radius.attr("x2"),
-              y1: radius.attr("y2"),
-              x2: tx + anchor[0] - signH*2,
-              y2: ty
-            });
+          if (abs(cos(theta2)) > 0.5) {
+            x = ox + signH*(pyt(rx, sin(theta2)*ry) + d.padding);
+            y = oy + sin(theta2)*(ry + d.padding);
           } else {
-            radius.attr("display", "none");
-            end.attr("display", "none");
+            x = ox + cos(theta2)*(rx + d.padding);
+            y = oy + signV*(pyt(cos(theta2)*rx, ry) + d.padding);
           }
         }
+        x += bounds.x;
+        y += bounds.y;
+        return {
+          x: (signH === -1 ? Math.min : Math.max)(out.x, x),
+          y: (signV === -1 ? Math.min : Math.max)(out.y, y)
+        };
+      }, {x: ox, y: oy});
+
+      let diffX = anchor[0] - offsetedOx,
+          diffY = anchor[1] - offsetedOy;
+
+          /* calculate middle point if needed */
+          let xm = tx;
+          let ym = ty;
+          let [xe, ye] = anchor;
+          let opposite = ye < offsetedOy && xe > offsetedOx || xe < offsetedOx && ye > offsetedOy ? -1 : 1;
+        
+          if (Math.abs(diffX) < Math.abs(diffY)) {
+            xm = xe;
+            ym = offsetedOy + diffX*opposite;
+          } else {
+            ym = ye;
+            xm = offsetedOx + diffY*opposite;
+          }
+
+          /* calculate line termination (text underline) */
+          let terminationPt = [absoluteXY.x + (signH+1)*bbox.width/2, ye];
+          
+          let pathData = [[offsetedOx, offsetedOy], [xm , ym], [xe, ye], terminationPt];
+
+          radius
+            .attrs({
+              display: null,
+              d: lineGen(pathData)
+            });
+
+          d3.select(this).attr("dy", "-0.3em");
 
       } );
   }

@@ -89,35 +89,38 @@ let d3lper = {
     return d3.formatLocale(locale);
   },
   
-  wrapText: function(el, width)  {
-    d3.select(el).each(function() {
-      var text = d3.select(this),
+  wrapText: function(sel, width)  {
+    sel.each(function() {
+      let text = d3.select(this),
           words = text.text().split(/\s+/).reverse(),
           word,
           line = [],
           lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr("y"),
-          dy = parseFloat(text.attr("dy"));
-          if (isNaN(dy)) {
-            dy = 0;
-          }
-          let tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
+          lineHeight = 1.1; // ems
+  
+      if (words.length > 1) {
+        let y = text.attr("y"),
+            dy = parseFloat(text.attr("dy"));
+
+        isNaN(dy) && (dy = 0);
+        let tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+
+        while (word = words.pop()) {
+          line.push(word);
           tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
+          }
         }
       }
-    });
+    })
   },
 
   multilineText: function(textEl, text)  {
-    if (!textEl.empty()) {
+    if (!textEl.empty() && text && text.length > 1) {
       let lines = (text || "").split(/\n/g),
           lineHeight = 1.1, // ems
           y = textEl.attr("y"),

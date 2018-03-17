@@ -163,6 +163,15 @@ let symbol = function(opts = {}) {
    return `${baseUrl}#${id}`;
   };
 
+  proc.getBounds = function() {
+    let s = proc.getScale(),
+        width = conf.viewBox[2]*s,
+        height = conf.viewBox[3]*s,
+        x = width*conf.anchor[0] - width/2, //x, y are relative to center
+        y = height*conf.anchor[1] - height/2;
+    return {type: name === "circle" ? "circle" : "box", x, y, width, height};
+  };
+
   return proc.setSize(opts.size || 1);
    
 };

@@ -436,9 +436,8 @@ export default Ember.Mixin.create({
             "text-anchor": "left"
           });
         
-        label.text(d.get('legendTitleComputed'));
-
-        d3lper.wrapText(label.node(), 200);
+        label.text(d.get('legendTitleComputed'))
+          .call(d3lper.wrapText, 200);
 
         label.on("click", function() {
           if (d3.event.defaultPrevented) return;
