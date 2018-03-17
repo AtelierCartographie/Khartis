@@ -23,7 +23,7 @@ export default Ember.Mixin.create({
     this.d3l().select("#outerMap")
       .append("g")
       .classed("zoomable", true)
-      .classed("labelling", "true");
+      .classed("labelling-container", "true");
 
   },
 
@@ -45,7 +45,7 @@ export default Ember.Mixin.create({
       _.style("opacity", d => d.get('opacity'));
     };
     
-    let sel = this.d3l().select("g.labelling")
+    let sel = this.d3l().select("g.labelling-container")
       .selectAll("g.layer")
       .data(data, d => d._uuid)
       .call(bindAttr);
@@ -56,7 +56,7 @@ export default Ember.Mixin.create({
     
     sel.order().exit().remove();
 
-    this.d3l().select("g.labelling")
+    this.d3l().select("g.labelling-container")
       .selectAll("g.layer")
       .each(function(d, index) {
         self.mapData(d3.select(this), d);
