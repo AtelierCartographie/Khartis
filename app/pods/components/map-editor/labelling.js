@@ -20,7 +20,9 @@ export default Ember.Mixin.create({
 
   labellingInit(d3g) {
 
-    d3g.append("g")
+    this.d3l().select("#outerMap")
+      .append("g")
+      .classed("zoomable", true)
       .classed("labelling", "true");
 
   },
@@ -144,12 +146,13 @@ export default Ember.Mixin.create({
             .text(d => d.label)
             .call(d3lper.wrapText, 100)
             .each( function(d) {
-              let [tx, ty] = d3lper.sumCoords(d.xy, [d.dx, d.dy]);
-              d3.select(this).attrs({
+              let mapZoom = self.get('graphLayout.zoom');
+              let [tx, ty] = d3lper.sumCoords(d.xy, [d.dx*mapZoom, d.dy*mapZoom]);
+              let textSel = d3.select(this).attrs({
                 "dy": "0.3em",
                 "transform": d3lper.translate({tx, ty})
-              })
-              .call(self.drawLines.bind(self), tx, ty);
+              });
+              Ember.run.later(self, self.drawLines, textSel, tx, ty, 10); //run later because text isn't rendered
             });
           return sel;
         }
@@ -162,12 +165,12 @@ export default Ember.Mixin.create({
   newDragFeature(visualization) {
 
     var self = this;
-
+    
     //LEGEND DRAG
     return d3.drag()
       .subject(function(d) {
-        let sel = d3.select(this);
-        return {x: d.xy[0] + d.dx, y: d.xy[1] + d.dy};
+        let  mapZoom = self.get('graphLayout.zoom');
+        return {x: d.xy[0] + d.dx*mapZoom, y: d.xy[1] + d.dy*mapZoom};
       })
       .on("start", function() {
         d3.event.sourceEvent.stopPropagation();
@@ -189,16 +192,15 @@ export default Ember.Mixin.create({
       })
       .on("end", function(d) {
         let sel = d3.select(this),
+            mapZoom = self.get('graphLayout.zoom'),
             bgBox = self.d3l().select(".bg").node().getBBox(),
             pos = {
               tx: Math.min(bgBox.width-2, Math.max(d3.event.x, 0)),
               ty: Math.min(bgBox.height-10, Math.max(d3.event.y, 0))
             };
-        
-        sel.attr("transform", d3lper.translate(pos));
 
-        let dx = pos.tx - d.xy[0],
-            dy = pos.ty - d.xy[1];
+        let dx = (pos.tx - d.xy[0])/mapZoom,
+            dy = (pos.ty - d.xy[1])/mapZoom;
 
         visualization.mergeOverwrite(d.id, {dx, dy});
         

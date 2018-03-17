@@ -19,7 +19,7 @@ export default Ember.Mixin.create({
 
     drawingSelectedFeature: null,
 
-    drawingInit(defs) {
+    drawingInit() {
 
         this.d3l().select("#outerMap")
             .append("g")

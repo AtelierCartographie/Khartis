@@ -188,7 +188,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
     }
     if (this.get('hasDrawingFeature')) {
       this.reopen(DrawingFeature);
-      this.drawingInit(defs, mapG);
+      this.drawingInit(defs);
     }
     if (this.get('hasCompositionBordersFeature')) {
       this.reopen(CompositionBordersFeature);
