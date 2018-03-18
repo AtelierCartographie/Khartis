@@ -224,8 +224,6 @@ export default Ember.Mixin.create({
       return n * multiple;
     }
 
-    console.log(textSel.node().children.length && textSel.node().children[0].getBoundingClientRect().height);
-    
     let lineGen = d3.line().curve(d3.curveLinear),
         bbox = textSel.node().getBoundingClientRect(),
         textDy = textSel.node().dy.baseVal.getItem(0).value,
@@ -233,7 +231,7 @@ export default Ember.Mixin.create({
         [ox, oy] = d.xy,
         signH = Math.sign(tx - ox),
         signV = Math.sign(ty - oy),
-        anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), (-signV+1)*(bbox.height / 2) - 2*textDy]),
+        anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), (-signV+1)/2*(bbox.height-textDy) - (signV+1)*1.5*textDy]),
         theta = angle([ox, oy], anchor),
         hasBoxBounds = d.bounds.some( b => b.type === "box" ),
         theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
