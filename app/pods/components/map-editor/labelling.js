@@ -151,7 +151,7 @@ export default Ember.Mixin.create({
                 "dy": "0.3em",
                 "transform": d3lper.translate({tx, ty})
               });
-              Ember.run.later(self, self.drawLines, textSel, tx, ty, 10); //run later because text isn't rendered
+              self.drawLines(textSel, tx, ty);
             });
           return sel;
         }
@@ -213,81 +213,87 @@ export default Ember.Mixin.create({
     let radius = d3.select(textSel.node().parentNode).select("path.radius"),
         d = textSel.datum();
 
+        
     if (pyt(d.xy[0]-tx, d.xy[1]-ty) < 2) {
-      radius.attr("display", "none");
+      radius.attr("display", "none"); //hide before rendering
       return;
     }
 
-    const piScale = function(v, multiple) {
-      let r = v/ multiple,
-          n = Math.round(r);// + truncate(r + Math.sign(r)) % 2;
-      return n * multiple;
-    }
+    //deffer rendering
+    Ember.run.later(() => {
 
-    let lineGen = d3.line().curve(d3.curveLinear),
-        bbox = textSel.node().getBoundingClientRect(),
-        textDy = textSel.node().dy.baseVal.getItem(0).value,
-        absoluteXY = d3lper.xyRelativeTo(textSel.node(), this.d3l().node()),
-        [ox, oy] = d.xy,
-        signH = Math.sign(tx - ox),
-        signV = Math.sign(ty - oy),
-        anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), (-signV+1)/2*(bbox.height-textDy) - (signV+1)*1.5*textDy]),
-        theta = angle([ox, oy], anchor),
-        hasBoxBounds = d.bounds.some( b => b.type === "box" ),
-        theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
-    
-    //intersect with bounds and keep extremums
-    let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
-      let x, y, rx = bounds.width/2, ry = bounds.height/2;
-      if (bounds.type === "circle") {
-        x = ox + (rx + d.padding)*cos(theta2);
-        y = oy + (rx + d.padding)*sin(theta2);
-      } else {
-        if (abs(cos(theta2)) > 0.5) {
-          x = ox + signH*(pyt(rx, sin(theta2)*ry) + d.padding);
-          y = oy + sin(theta2)*(ry + d.padding);
-        } else {
-          x = ox + cos(theta2)*(rx + d.padding);
-          y = oy + signV*(pyt(cos(theta2)*rx, ry) + d.padding);
-        }
+      const piScale = function(v, multiple) {
+        let r = v/ multiple,
+            n = Math.round(r);// + truncate(r + Math.sign(r)) % 2;
+        return n * multiple;
       }
-      x += bounds.x;
-      y += bounds.y;
-      return {
-        x: (signH === -1 ? Math.min : Math.max)(out.x, x),
-        y: (signV === -1 ? Math.min : Math.max)(out.y, y)
-      };
-    }, {x: ox, y: oy});
-
-    let diffX = anchor[0] - offsetedOx,
-        diffY = anchor[1] - offsetedOy;
-
-    /* calculate middle point if needed */
-    let xm = tx;
-    let ym = ty;
-    let [xe, ye] = anchor;
-    let opposite = ye < offsetedOy && xe > offsetedOx || xe < offsetedOx && ye > offsetedOy ? -1 : 1;
   
-    if (Math.abs(diffX) < Math.abs(diffY)) {
-      xm = xe;
-      ym = offsetedOy + diffX*opposite;
-    } else {
-      ym = ye;
-      xm = offsetedOx + diffY*opposite;
-    }
-
-    /* calculate line termination (text underline) */
-    let terminationPt = [absoluteXY.x + (signH+1)*bbox.width/2, ye];
+      let lineGen = d3.line().curve(d3.curveLinear),
+          bbox = textSel.node().getBoundingClientRect(),
+          textDy = textSel.node().dy.baseVal.getItem(0).value,
+          absoluteXY = d3lper.xyRelativeTo(textSel.node(), this.d3l().node()),
+          [ox, oy] = d.xy,
+          signH = Math.sign(tx - ox),
+          signV = Math.sign(ty - oy),
+          anchor = d3lper.sumCoords([tx, ty], [-signH*(bbox.width / 2), (-signV+1)/2*(bbox.height-textDy) - (signV+1)*1.5*textDy]),
+          theta = angle([ox, oy], anchor),
+          hasBoxBounds = d.bounds.some( b => b.type === "box" ),
+          theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
+      
+      //intersect with bounds and keep extremums
+      let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
+        let x, y, rx = bounds.width/2, ry = bounds.height/2;
+        if (bounds.type === "circle") {
+          x = ox + (rx + d.padding)*cos(theta2);
+          y = oy + (rx + d.padding)*sin(theta2);
+        } else {
+          if (abs(cos(theta2)) > 0.5) {
+            x = ox + signH*(pyt(rx, sin(theta2)*ry) + d.padding);
+            y = oy + sin(theta2)*(ry + d.padding);
+          } else {
+            x = ox + cos(theta2)*(rx + d.padding);
+            y = oy + signV*(pyt(cos(theta2)*rx, ry) + d.padding);
+          }
+        }
+        x += bounds.x;
+        y += bounds.y;
+        return {
+          x: (signH === -1 ? Math.min : Math.max)(out.x, x),
+          y: (signV === -1 ? Math.min : Math.max)(out.y, y)
+        };
+      }, {x: ox, y: oy});
+  
+      let diffX = anchor[0] - offsetedOx,
+          diffY = anchor[1] - offsetedOy;
+  
+      /* calculate middle point if needed */
+      let xm = tx;
+      let ym = ty;
+      let [xe, ye] = anchor;
+      let opposite = ye < offsetedOy && xe > offsetedOx || xe < offsetedOx && ye > offsetedOy ? -1 : 1;
     
-    if ((xm - xe)*signH <= 0 && (ym - ye)*signV <= 0) {
-      radius
-        .attrs({
-          display: null,
-          d: lineGen([[offsetedOx, offsetedOy], [xm , ym], [xe, ye], terminationPt])
-        });
-    } else { //no line
-      radius.attr("display", "none");
-    }
+      if (Math.abs(diffX) < Math.abs(diffY)) {
+        xm = xe;
+        ym = offsetedOy + diffX*opposite;
+      } else {
+        ym = ye;
+        xm = offsetedOx + diffY*opposite;
+      }
+  
+      /* calculate line termination (text underline) */
+      let terminationPt = [absoluteXY.x + (signH+1)*bbox.width/2, ye];
+      
+      if ((xm - xe)*signH <= 0 && (ym - ye)*signV <= 0) {
+        radius
+          .attrs({
+            display: null,
+            d: lineGen([[offsetedOx, offsetedOy], [xm , ym], [xe, ye], terminationPt])
+          });
+      } else { //no line
+        radius.attr("display", "none");
+      }
+
+    });
 
   }
 
