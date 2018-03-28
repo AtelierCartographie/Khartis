@@ -10,7 +10,7 @@ let TextVisualization = Struct.extend({
   type: "text",
   color: "#404040",
   size: 1,
-  anchor: "middle",
+  anchor: "start",
   overwrites: {},
 
   mainType: function() {

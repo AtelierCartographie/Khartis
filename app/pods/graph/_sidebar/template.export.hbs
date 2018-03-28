@@ -2,9 +2,11 @@
   <div class="vertical airy flow">
 
     <div class="half-airy vertical flow">
-      {{input value=model.title placeholder=(t 'export.placeholder.mapTitle')}}
-      {{input value=model.dataSource placeholder=(t 'export.placeholder.dataSource')}}
-      {{input value=model.author placeholder=(t 'export.placeholder.author')}}
+      {{#text-style}}
+        {{textarea class="auto-expand" value=model.title placeholder=(t 'export.placeholder.mapTitle')}}
+      {{/text-style}}
+      {{textarea class="auto-expand" value=model.dataSource placeholder=(t 'export.placeholder.dataSource')}}
+      {{textarea class="auto-expand" value=model.author placeholder=(t 'export.placeholder.author')}}
       {{#if false}} {{! caché pour l'instant'}}
       {{textarea class="auto-expand" value=model.comment placeholder=(t 'export.placeholder.comment')}}
       {{/if}}

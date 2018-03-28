@@ -1,0 +1,27 @@
+
+{{yield this}}
+<div class="horizontal middle flow">
+    <div class="horizontal half-airy solid flow w3">
+        {{#x-dropdown-plus as |facet|}}
+            {{#facet.trigger class="horizontal space-between flow filled on-white"}}
+                <div class="solid">{{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}}</div>
+                <div classs="fluid padded-h">{{layer.mapping.varCol.header.value}}</div>
+                <i class="iconfont iconfont-angle-down"></i>
+            {{/facet.trigger}}
+            {{#facet.list}}
+                {{#each model.data.columns as |col|}}
+                <li {{action 'setLabellingCol' layer col}} class="horizontal middle airy flow">
+                    <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+                    <div classs="fluid padded-h">{{col.header.value}}</div>
+                </li>
+                {{/each}}
+            {{/facet.list}}
+        {{/x-dropdown-plus}}
+    </div>
+    <div class="horizontal solid flow w3">
+        <div class="button small filled {{if data.underline 'success' 'default'}}" {{action 'test'}}><i class="iconfont iconfont-text-underline"></i></div>
+        <div class="button small filled {{if data.underline 'success' 'default'}}" {{action (mut data.underline) (x-not data.underline)}}><i class="iconfont iconfont-text-underline"></i></div>
+        <div class="button small filled {{if data.bold 'success' 'default'}}" {{action (mut data.bold) (x-not data.bold)}}><i class="iconfont iconfont-text-bold"></i></div>
+        <div class="button small filled {{if data.italic 'success' 'default'}}" {{action (mut data.italic) (x-not data.italic)}}><i class="iconfont iconfont-text-italic"></i></div>
+    </div>
+</div>

@@ -88,7 +88,7 @@ export const exportAsHTML = function(d3Root, width, height, compatibility = {}) 
 
       //remove #map node
       let mapChilds = d3Node.selectAll("#map > *").remove().nodes();
-      mapChilds.forEach( node => d3Node.select("#outerMap").append( () => node) );
+      mapChilds.reverse().forEach( node => d3Node.select("#outerMap").insert(() => node, ":first-child") );
       d3Node.select("#map").remove();
 
       //wrap nodes
