@@ -111,6 +111,9 @@ export default Ember.Component.extend({
         this.get('spectrum').hide();
       }
     },
+    mouseDownInner() {
+      return false;
+    },
     selectPattern(pattern) {
       this.set('selectedPattern', pattern != PatternMaker.NONE ? pattern.fork() : null);
     },

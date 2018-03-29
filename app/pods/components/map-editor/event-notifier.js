@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 const EventNotifier = Ember.Object.extend(Ember.Evented, {
     triggerThen(...args) {
-        console.log(args);
         return new Promise( (res, rej) => {
             this.trigger.apply(this, args);
             Ember.run.scheduleOnce('afterRender', this, function() {

@@ -124,22 +124,30 @@ export default Ember.Mixin.create({
 
           gSel.append("path")
             .classed("radius", true)
-            .style("stroke", "black")
-            .style("fill", "none");
+            .attr("stroke", visualization.get('style.color'))
+            .attr("fill", "none");
           return gSel;
         },
 
         update: sel => {
+          let style = visualization.get('style');
+          
+          sel.select("path.radius").attr("stroke", style.color);
+
           sel.select("text")
-            .attr("text-anchor", "middle")
-            .styles({
-              "font-size": `${visualization.get('size')}em`,
-              "fill": visualization.get('color'),
+            .attrs({
+              "text-anchor": "middle",
+              "font-size": style.size,
+              "fill": style.color,
+              "font-weight": style.get('bold') ? "bold" : "normal",
+              "text-decoration": style.get('underline') ? "underline" : null,
+              "font-style": style.get('italic') ? "italic" : null,
+              "font-family": style.font,
               "stroke": "none",
               "stroke-width": 0
             })
             .text(d => d.label)
-            .call(d3lper.wrapText, 100)
+            .call(d3lper.wrapText, 120)
             .each( function(d) {
               let mapZoom = self.get('graphLayout.zoom');
               let [tx, ty] = d3lper.sumCoords(d.xy, [d.dx*mapZoom, d.dy*mapZoom]);
@@ -208,7 +216,6 @@ export default Ember.Mixin.create({
 
     let radius = d3.select(textSel.node().parentNode).select("path.radius"),
         d = textSel.datum();
-
         
     if (pyt(d.xy[0]-tx, d.xy[1]-ty) < 2) {
       radius.attr("display", "none"); //hide before rendering

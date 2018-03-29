@@ -39,6 +39,9 @@ export default Ember.Component.extend(EventNotifierFeature, {
   dataSource: null,
   title: null,
   author: null,
+  dataSourceStyle: null,
+  titleStyle: null,
+  authorStyle: null,
 
   labellingLayers: [],
 

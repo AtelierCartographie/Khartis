@@ -11,7 +11,7 @@
     <div class='sp-dd'><i class="iconfont iconfont-angle-down"></i></div>
 </div>
 {{#ember-wormhole to="picker-wormhole"}}
-  <div id="color-picker-{{customElementId}}" class='sp-container sp-hidden'>
+  <div id="color-picker-{{customElementId}}" class='sp-container sp-hidden' {{action 'mouseDownInner' on='mouseDown'}}>
     {{#if pickerOpened}}
     <div class="sp-content-container">
       <div class='sp-palette-container'>

@@ -31,16 +31,25 @@ export default Ember.Mixin.create({
       gl = this.get('graphLayout');
 
 		let textEl = d3l.select('text.map-title').attrs({
-      'font-size': '2em',
-			fill: this.get('titleIsSet') ? null : '#DCDCDC',
-      'kis:kis:transient': this.get('titleIsSet') ? null : 'true'
-		});
+      'kis:kis:transient': this.get('titleIsSet') ? null : 'true',
+    });
     
+    this.setTextStyle(textEl, this.get('titleStyle'));
+    //override fill if title isn't setted
+    textEl.attr("fill", this.get('titleIsSet') ? this.get('titleStyle.color') : '#DCDCDC');
+    
+    let tx;
+    switch (this.get('titleStyle.anchor')) {
+      case "start": tx = gl.hOffset(w) + gl.get('margin.l'); break;
+      case "middle": tx = w / 2; break;
+      case "end": tx = w - gl.hOffset(w) - gl.get('margin.r'); break;
+    }
+
     textEl.attr(
       "transform",
       d3lper.translate({
-        tx: gl.hOffset(w) + gl.get('margin.l'),
-        ty: gl.vOffset(h) + gl.get('margin.t')
+        tx,
+        ty: gl.vOffset(h) + gl.get('margin.t') - Math.round(this.get('titleStyle.size')/0.76)
       })
     );
 
@@ -49,14 +58,17 @@ export default Ember.Mixin.create({
 			this.get('titleIsSet') ? this.get('title') : this.get('i18n').t('export.placeholder.mapTitle').string
     );
     
-		d3l.attr('title', this.get('title'));
-
-		textEl = d3l.select('text.map-dataSource').attrs({
-			'font-size': '0.8em',
-			'text-anchor': 'end',
-			x: w - gl.hOffset(w) - gl.get('margin.r') - 1,
-			y: h - gl.vOffset(h) - gl.get('margin.b') + 11
-    });
+    d3l.attr('title', this.get('title'));
+    
+		textEl = d3l.select('text.map-dataSource').attr(
+      "transform",
+      d3lper.translate({
+        tx:  w - gl.hOffset(w) - gl.get('margin.r') - 1,
+        ty: h - gl.vOffset(h) - gl.get('margin.b')
+      })
+    );
+    
+    this.setTextStyle(textEl, this.get('dataSourceStyle'));
     
     d3lper.multilineText(
 			textEl,
@@ -66,31 +78,46 @@ export default Ember.Mixin.create({
 		textEl = d3l
 			.select('g.map-author')
 			.attr(
-				'transform',
+        'transform',
 				d3lper.translate({
-					tx: w - gl.hOffset(w) - gl.get('margin.r') + 11,
+          tx: w - gl.hOffset(w) - gl.get('margin.r'),
 					ty: h - gl.vOffset(h) - gl.get('margin.b') - 1
 				})
 			)
-			.select('text')
-			.attr('transform', 'rotate(-90)')
-			.attrs({
-				'font-size': '0.8em'
-      });
+			.select('text');
+      
+    this.setTextStyle(textEl, this.get('authorStyle'));
+  
+    textEl.attr('transform', 'rotate(-90)');
       
     d3lper.multilineText(
       textEl,
       this.get('author')
     );
-    
+
 	}.observes(
 		'title',
 		'dataSource',
-		'author',
+    'author',
+    'titleStyle._defferedChangeIndicator',
+    'dataSourceStyle._defferedChangeIndicator',
+    'authorStyle._defferedChangeIndicator',
 		'$width',
 		'$height',
 		'graphLayout.margin._defferedChangeIndicator',
 		'graphLayout.width',
 		'graphLayout.height'
-	)
+  ),
+  
+  setTextStyle(el, style) {
+    el.attrs({
+      "text-anchor": style.get('anchor'),
+      "font-size": style.get('size'),
+			"fill": style.get('color'),
+      "font-weight": style.get('bold') ? "bold" : "normal",
+      "text-decoration": style.get('underline') ? "underline" : null,
+      "font-style": style.get('italic') ? "italic" : null,
+      "font-family": style.font
+    })
+  }
 });

@@ -938,7 +938,6 @@ export default Ember.Mixin.create({
         };
       })
       .flowComputedAttrs("h-mode", function() {
-        console.log(this.parentElement.parentElement.parentElement.parentElement);
         let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
         return {
           x1: 0,

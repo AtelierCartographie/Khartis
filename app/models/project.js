@@ -4,12 +4,16 @@ import {DataStruct} from './data';
 import GraphLayout from './graph-layout';
 import GraphLayer from './graph-layer';
 import GeoDef from './geo-def';
+import StyleText from './style-text';
 /* global Em */
 
-const CURRENT_VERSION = 3.2;
+const CURRENT_VERSION = 3.3;
 const VERSION_LZ_STRING= 3.0;
 const VERSION_LEGEND_2 = 3.1;
 const VERSION_LABELLING_2 = 3.2;
+const VERSION_WITH_STYLE_TEXT = 3.3;
+
+const DEFAULT_TITLE_SIZE = 26;
 
 let Project = Struct.extend({
 
@@ -31,6 +35,10 @@ let Project = Struct.extend({
     dataSource: null,
     author: null,
     comment: null,
+    titleStyle: null,
+    dataSourceStyle: null,
+    authorStyle: null,
+    commentStyle: null,
 
     report: null,
 
@@ -48,6 +56,10 @@ let Project = Struct.extend({
       }
       this.set('graphLayers', Em.A());
       this.set('labellingLayers', Em.A());
+      !this.get('titleStyle') && this.set('titleStyle', StyleText.create({size: DEFAULT_TITLE_SIZE}));
+      !this.get('dataSourceStyle') && this.set('dataSourceStyle', StyleText.create({size: 10, anchor: "end"}));
+      !this.get('authorStyle') && this.set('authorStyle', StyleText.create({size: 10}));
+      !this.get('commentStyle') && this.set('commentStyle', StyleText.create());
     },
     
     importRawData(data) {
@@ -72,6 +84,10 @@ let Project = Struct.extend({
         title: this.get('title'),
         dataSource: this.get('dataSource'),
         author: this.get('author'),
+        titleStyle: this.get('titleStyle').export(),
+        dataSourceStyle: this.get('dataSourceStyle').export(),
+        authorStyle: this.get('authorStyle').export(),
+        commentStyle: this.get('commentStyle').export(),
         comment: this.get('comment'),
         blindnessMode: this.get('blindnessMode'),
         report: this.get('report')
@@ -98,6 +114,10 @@ Project.reopenClass({
         dataSource: json.dataSource,
         author: json.author,
         comment: json.comment,
+        titleStyle: StyleText.restore(json.titleStyle, refs),
+        dataSourceStyle: StyleText.restore(json.dataSourceStyle, refs),
+        authorStyle: StyleText.restore(json.authorStyle, refs),
+        commentStyle: StyleText.restore(json.commentStyle, refs),
         blindnessMode: json.blindnessMode,
         graphLayout: GraphLayout.restore(json.graphLayout, refs)
       });
@@ -157,6 +177,17 @@ Project.reopenClass({
             });
           }
           return ll;
+        });
+      }
+      if (ret.version < VERSION_WITH_STYLE_TEXT) {
+        ret.labellingLayers = ret.labellingLayers.map(ll => {
+          if (!ll.mapping.visualization.style) {
+            ll.mapping.visualization.style = StyleText.create({
+              color: ll.mapping.visualization.color,
+              size: ll.mapping.visualization.size
+            }).export();
+          }
+          return ll; 
         });
       }
 
