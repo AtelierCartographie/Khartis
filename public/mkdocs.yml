@@ -1,0 +1,46 @@
+# Project information
+site_name: Khartis Documentation
+site_description: Documentation de Khartis, outil de cartographie thématique
+site_author: Sciences Po - Atelier de cartographie
+site_url: 'http://www.sciencespo.fr/cartographie/khartis/docs'
+
+# Google Analytics
+google_analytics:
+  - 'UA-78393617-2'
+  - 'Khartis'
+
+# Copyright
+copyright: Creative Commons CC BY NC ND
+
+# Repository
+repo_name: 'AtelierCartographie/Khartis'
+repo_url: 'https://github.com/AtelierCartographie/Khartis'
+
+# Theme and options
+theme: material
+extra:
+  logo: 'assets/Khartis-logo.svg'
+  palette:
+    primary: ''
+    accent: 'light blue'
+extra_css:
+  - 'stylesheets/extra.css'
+    
+# Navigation
+pages:
+    - Accueil: index.md
+    - Tutoriels:
+        - Premiers pas avec Khartis (1): premiers-pas-avec-Khartis-(1).md
+        - Premiers pas avec Khartis (2): premiers-pas-avec-Khartis-(2).md
+    - Ressources:
+        - Importer des données: importer-des-donnees.md
+        - Les fonds de carte disponibles: les-fonds-de-carte-disponibles.md
+        - Les projections disponibles: les-projections-disponibles.md
+        - Les sources des exemples à disposition: les-sources-des-exemples-a-disposition.md
+        - Discrétisation: discretisation.md
+        - Le contraste: contraste.md
+        - FAQ: FAQ.md
+    - Définitions: definitions.md
+    - Historique des versions: changelog.md
+    - Contribute: 
+        - Add a basemap: how-to-create-a-basemap-for-Khartis.md

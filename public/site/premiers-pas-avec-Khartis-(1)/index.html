@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation de Khartis, outil de cartographie thématique">
+      
+      
+        <link rel="canonical" href="http://www.sciencespo.fr/cartographie/khartis/docs/premiers-pas-avec-Khartis-(1)/">
+      
+      
+        <meta name="author" content="Sciences Po - Atelier de cartographie">
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.2, mkdocs-material-1.5.0">
+    
+    
+      
+        <title>Premiers pas avec Khartis (1) - Khartis Documentation</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-d848f886dc.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-66fa0d9bba.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="" data-md-color-accent="light-blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href=".." title="Khartis Documentation" class="md-logo md-header-nav__button">
+            <img src="../assets/Khartis-logo.svg" width="24" height="24">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Tutoriels
+                </span>
+              
+            
+            Premiers pas avec Khartis (1)
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <div class="md-search__overlay"></div>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <div class="md-header-nav__source">
+          
+            
+
+
+  
+
+
+  <a href="https://github.com/AtelierCartographie/Khartis" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      AtelierCartographie/Khartis
+    </div>
+  </a>
+
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-logo md-nav__button">
+        <img src="../assets/Khartis-logo.svg">
+      </i>
+    
+    Khartis Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/AtelierCartographie/Khartis" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      AtelierCartographie/Khartis
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Accueil" class="md-nav__link">
+      Accueil
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutoriels
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutoriels
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Premiers pas avec Khartis (1)
+      </label>
+    
+    <a href="./" title="Premiers pas avec Khartis (1)" class="md-nav__link md-nav__link--active">
+      Premiers pas avec Khartis (1)
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-les-donnees" title="Récupérer les données" class="md-nav__link">
+    Récupérer les données
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-contiennent-les-donnees" title="Que contiennent les données ?" class="md-nav__link">
+    Que contiennent les données ?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choisir-le-fond-de-carte" title="Choisir le fond de carte" class="md-nav__link">
+    Choisir le fond de carte
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-les-donnees" title="Importer les données" class="md-nav__link">
+    Importer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#georeferencer-les-donnees" title="Géoréférencer les données" class="md-nav__link">
+    Géoréférencer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualiser-les-donnees" title="Visualiser les données" class="md-nav__link">
+    Visualiser les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export" title="Export" class="md-nav__link">
+    Export
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#habillage" title="Habillage" class="md-nav__link">
+    Habillage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mise-en-page" title="Mise en page" class="md-nav__link">
+    Mise en page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-dexport" title="Format d’export" class="md-nav__link">
+    Format d’export
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../premiers-pas-avec-Khartis-(2)/" title="Premiers pas avec Khartis (2)" class="md-nav__link">
+      Premiers pas avec Khartis (2)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Ressources
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Ressources
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../importer-des-donnees/" title="Importer des données" class="md-nav__link">
+      Importer des données
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-fonds-de-carte-disponibles/" title="Les fonds de carte disponibles" class="md-nav__link">
+      Les fonds de carte disponibles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-projections-disponibles/" title="Les projections disponibles" class="md-nav__link">
+      Les projections disponibles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-sources-des-exemples-a-disposition/" title="Les sources des exemples à disposition" class="md-nav__link">
+      Les sources des exemples à disposition
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../discretisation/" title="Discrétisation" class="md-nav__link">
+      Discrétisation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../contraste/" title="Le contraste" class="md-nav__link">
+      Le contraste
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FAQ/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../definitions/" title="Définitions" class="md-nav__link">
+      Définitions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../changelog/" title="Historique des versions" class="md-nav__link">
+      Historique des versions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Contribute
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Contribute
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../how-to-create-a-basemap-for-Khartis/" title="Add a basemap" class="md-nav__link">
+      Add a basemap
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-les-donnees" title="Récupérer les données" class="md-nav__link">
+    Récupérer les données
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-contiennent-les-donnees" title="Que contiennent les données ?" class="md-nav__link">
+    Que contiennent les données ?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choisir-le-fond-de-carte" title="Choisir le fond de carte" class="md-nav__link">
+    Choisir le fond de carte
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-les-donnees" title="Importer les données" class="md-nav__link">
+    Importer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#georeferencer-les-donnees" title="Géoréférencer les données" class="md-nav__link">
+    Géoréférencer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualiser-les-donnees" title="Visualiser les données" class="md-nav__link">
+    Visualiser les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export" title="Export" class="md-nav__link">
+    Export
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#habillage" title="Habillage" class="md-nav__link">
+    Habillage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mise-en-page" title="Mise en page" class="md-nav__link">
+    Mise en page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-dexport" title="Format d’export" class="md-nav__link">
+    Format d’export
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Premiers pas avec Khartis (1)</h1>
+                
+                <p>Nous allons réaliser cette carte du monde des émissions de CO2 en 2013.
+<img alt="résultat tutoriel" src="../assets/export_tuto-CO2.png" /></p>
+<h2 id="recuperer-les-donnees">Récupérer les données</h2>
+<p>Nous avons téléchargé les données au format csv depuis le site de la <a href="http://databank.worldbank.org/data/reports.aspx?source=2&amp;series=EN.ATM.CO2E.KT&amp;country=">Banque mondiale</a> et vous pouvez <a href="../assets/CO2-emissions-2013-world-bank.csv">les récupérer directement ici</a> (clic droit 'enregistrer le lien sous').</p>
+<h3 id="que-contiennent-les-donnees">Que contiennent les données ?</h3>
+<ul>
+<li>
+<p>Deux indicateurs :</p>
+</li>
+<li>
+<p>les émissions de CO2 (en milliers de tonnes)</p>
+</li>
+<li>
+<p>les émissions de CO2 (en tonnes par habitant)</p>
+</li>
+<li>
+<p>à différentes dates : 1960, 1970, 1980, 1990, 2000, 2005, et de 2010 à 2013</p>
+</li>
+</ul>
+<h2 id="choisir-le-fond-de-carte">Choisir le fond de carte</h2>
+<p>Les données sont à l’échelle des pays du monde alors nous choisissons ‘Monde &gt; pays (2016)’
+<img alt="choix du fond de carte" src="../assets/select-basemap.gif" /></p>
+<p>Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du <a href="../definitions#dictionnaire-dun-fond-de-carte">dictionnaire</a></p>
+<h2 id="importer-les-donnees">Importer les données</h2>
+<p>Dans Khartis il existe trois manières de charger des données :</p>
+<ul>
+<li>
+<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est rangé</p>
+</li>
+<li>
+<p>glisser le fichier csv depuis son dossier directement dans le cadre</p>
+</li>
+<li>
+<p>copier-coller les données directement depuis un logiciel de tableur ouvert</p>
+</li>
+</ul>
+<p>Pour cette fois nous utiliserons la deuxième option. Cliquer ensuite sur ‘suivant’</p>
+<p><img alt="import des données" src="../assets/upload-drag-drop.gif" /></p>
+<h2 id="georeferencer-les-donnees">Géoréférencer les données</h2>
+<p>Il faut maintenant s’assurer que nos données ont bien été reconnues, particulièrement la colonne du tableau qui fait le lien avec le fond de carte. Nous l’appelons ‘colonne de référence géographique’.</p>
+<p>Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Et nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge : </p>
+<p><img alt="erreur données" src="../assets/error-data.png" /></p>
+<p>Passons à l’étape suivante</p>
+<p><img alt="étape 2" src="../assets/step-2.gif" /></p>
+<h2 id="visualiser-les-donnees">Visualiser les données</h2>
+<p>Nous voulons représenter les émissions de CO2 par pays en 2013 à l’aide de symboles proportionnels aux valeurs (des points plus ou moins gros selon que les émissions sont plus ou moins fortes).</p>
+<p>Cliquez sur le ‘+’ puis sélectionnez la variable à représenter "2013 - CO2 emissions (kt)" et enfin choisissez la visualisation “valeurs &gt; symboles”.</p>
+<p><img alt="choix visualisation" src="../assets/select-variable-viz.gif" /></p>
+<p>Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert. </p>
+<p>Nous allons améliorer la lisibilité de la carte en renforçant la taille des cercles : par exemple passer de 10 à 40. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.</p>
+<p><img alt="taille 40" src="../assets/symbol-size-40.png" /></p>
+<p>Passons à la dernière étape</p>
+<p><img alt="étape 3" src="../assets/step-3.gif" /></p>
+<h2 id="export">Export</h2>
+<h3 id="habillage">Habillage</h3>
+<p>Cette nouvelle étape tout aussi fondamentale que la précédente permet d’ajouter tous les éléments textuels nécessaires à la bonne compréhension de la carte. Notamment un titre, une source, un entête de légende, et un crédit.</p>
+<p>Voici une proposition qui répond à une série de questions que l’on peut se poser devant une carte :</p>
+<ul>
+<li>
+<p>Quel est le sujet de la carte ?</p>
+<ul>
+<li>Titre : Émissions de CO2, 2013</li>
+</ul>
+</li>
+<li>
+<p>D’où proviennent les données ?</p>
+<ul>
+<li>Source : Banque mondiale d’après le Carbon Dioxide Information Analysis Center, <a href="http://data.worldbank.org">http://data.worldbank.org</a></li>
+</ul>
+</li>
+<li>
+<p>Quelle est l’unité des données ?</p>
+<ul>
+<li>l’entête de légende est modifiable en cliquant dessus <br />
+<img alt="titre légende" src="../assets/legend-edit-title.gif" /></li>
+</ul>
+</li>
+<li>
+<p>Qui à fait cette carte et peut-on la réutiliser ?</p>
+<ul>
+<li>le crédit renseigne sur l’auteur de la carte et sur ce qui est possible de faire avec celle-ci en appliquant par exemple <a href="https://creativecommons.org/choose/">une licence creative commons</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="mise-en-page">Mise en page</h3>
+<p>Maintenant que nous sommes assurés que la carte contient les éléments essentiels à sa bonne lecture, nous pouvons améliorer rapidement la mise en page.</p>
+<p>Trois moyens d’actions sont à notre disposition :</p>
+<ul>
+<li>
+<p>les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche. <br />
+<img alt="dimensions" src="../assets/export-dimensions.png" /></p>
+</li>
+<li>
+<p>les marges de la carte matérialisées par un tireté bleu</p>
+</li>
+<li>
+<p>le placement de la légende qui peut être déplacée par cliquer-glisser</p>
+</li>
+</ul>
+<p>On peut par exemple réduire la hauteur du document à 800px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges. Et enfin déplacer la légende.</p>
+<p><img alt="mise en page" src="../assets/export-layout-steps.gif" /></p>
+<h3 id="format-dexport">Format d’export</h3>
+<p>Khartis propose trois formats d’export :</p>
+<ul>
+<li>
+<p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image. Adapté si on ne souhaite pas retoucher la carte.</p>
+</li>
+<li>
+<p><a href="../definitions#fichier-svg">svg</a> : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.</p>
+</li>
+<li>
+<p>svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator</p>
+</li>
+</ul>
+<p><img alt="résultat tutoriel" src="../assets/export_tuto-CO2.png" /></p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Accueil" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Accueil
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../premiers-pas-avec-Khartis-(2)/" title="Premiers pas avec Khartis (2)" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Premiers pas avec Khartis (2)
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Creative Commons CC BY NC ND
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c6f9af8d0c.js"></script>
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+      <script>!function(e,t,a,n,o,c,i){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,c=t.createElement(a),i=t.getElementsByTagName(a)[0],c.async=1,c.src=n,i.parentNode.insertBefore(c,i)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-78393617-2","Khartis"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var t=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",t,e.href)})});var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})</script>
+      
+    
+  </body>
+</html>
