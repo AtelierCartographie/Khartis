@@ -53,6 +53,8 @@ Router.map(function() {
     //used to generate thumbnails on build
     this.route("map-thumbnails", {path: "map-thumbnails"});
 
+    //this.route("documentation", {path: "/documentation/*"});
+
 });
 
 export default Router;
