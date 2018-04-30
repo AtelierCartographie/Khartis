@@ -113,8 +113,6 @@ export function jenks(values, classes) {
         cnt--;
     }
 
-    console.log(kclass);
-
     return kclass;
 
 };

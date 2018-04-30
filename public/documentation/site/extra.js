@@ -8,7 +8,6 @@ window.onload = function() {
 }
 
 function _processLinks() {
-  console.log("mutation !");
   let links = document.querySelectorAll('a[href]');
   links = Array.prototype.slice.call(links);
   links.forEach(function(l) {

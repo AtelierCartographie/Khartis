@@ -102,7 +102,7 @@ export default Ember.Component.extend({
             o = self.get('provider').objectAt(cur);
             
         if (index !== undefined && cur !== index) {
-          self.get('provider').replace(index, 0, self.get('provider').splice(cur, 1)[0]);
+          self.get('provider').replace(index, 0, [self.get('provider').splice(cur, 1)[0]]);
         }
         
         d3.select(this).classed("dragged", false);

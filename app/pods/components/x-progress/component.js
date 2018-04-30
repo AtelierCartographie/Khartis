@@ -6,10 +6,10 @@ export default Ember.Component.extend({
   max: null,
   
   draw: function() {
-    this.layout();
+    this.doLayout();
   }.on("didInsertElement"),
   
-  layout: function() {
+  doLayout: function() {
     if (this.get('max')) {
       let ratio = this.get('value') / this.get('max');
       this.$(".bar").width(this.$().width() * ratio);
