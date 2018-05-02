@@ -10,11 +10,13 @@ module.exports = function(defaults) {
         nodeModulesToVendor: [
           'node_modules/bootstrap-sass/assets/javascripts/bootstrap'
         ],
-        "ember-cli-babel": {
-          includePolyfill: true,
+        babel: {
           plugins: [
             'transform-object-rest-spread'
           ]
+        },
+        "ember-cli-babel": {
+          includePolyfill: true
         },
         fingerprint: {
           exclude: ['assets/images/']
