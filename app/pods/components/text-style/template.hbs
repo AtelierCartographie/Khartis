@@ -1,0 +1,53 @@
+
+{{#if withEditor}}
+    {{yield this}}
+{{/if}}
+{{#if focused}}
+<div class="text-style-settings horizontal middle space-between flow">
+    <div class="horizontal half-airy solid flow">
+        {{#x-dropdown-plus as |facet|}}
+            {{#facet.trigger class="horizontal space-between flow filled on-white" onMouseDown=(action 'preventBlur')}}
+                <div classs="fluid">{{model.font}}</div>
+                <i class="iconfont iconfont-angle-down"></i>
+            {{/facet.trigger}}
+            {{#facet.list}}
+                {{#each fontList as |f|}}
+                <li {{action 'preventBlur' on="mouseDown"}} {{action (mut model.font) f}} class="horizontal middle airy flow">
+                    <div classs="fluid">{{f}}</div>
+                </li>
+                {{/each}}
+            {{/facet.list}}
+        {{/x-dropdown-plus}}
+    </div>
+    <div class="horizontal half-airy solid flow">
+        {{#x-dropdown-plus as |facet|}}
+            {{#facet.trigger class="horizontal space-between flow filled on-white" onMouseDown=(action 'preventBlur')}}
+                <div classs="fluid">{{model.size}}</div>
+                <i class="iconfont iconfont-angle-down"></i>
+            {{/facet.trigger}}
+            {{#facet.list}}
+                {{#each fontSizes as |i|}}
+                <li {{action 'preventBlur' on="mouseDown"}} {{action (mut model.size) i}} class="horizontal middle airy flow">
+                    <div classs="solid font-size-list-item">{{i}}</div>
+                </li>
+                {{/each}}
+            {{/facet.list}}
+        {{/x-dropdown-plus}}
+    </div>
+    <div class="horizontal solid flow">
+        <div class="button small filled {{if model.underline 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.underline) (x-not model.underline)}}><i class="iconfont iconfont-text-underline"></i></div>
+        <div class="button small filled {{if model.bold 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.bold) (x-not model.bold)}}><i class="iconfont iconfont-text-bold"></i></div>
+        <div class="button small filled {{if model.italic 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.italic) (x-not model.italic)}}><i class="iconfont iconfont-text-italic"></i></div>
+    </div>
+    {{#if withAnchor}}
+    <div class="horizontal solid flow">
+        <div class="button small filled {{if (x-eq model.anchor 'start') 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.anchor) 'start'}}><i class="iconfont iconfont-align-left"></i></div>
+        <div class="button small filled {{if (x-eq model.anchor 'middle') 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.anchor) 'middle'}}><i class="iconfont iconfont-align-center"></i></div>
+        <div class="button small filled {{if (x-eq model.anchor 'end') 'success' 'default'}}" {{action 'preventBlur' on="mouseDown"}} {{action (mut model.anchor) 'end'}}><i class="iconfont iconfont-align-right"></i></div>
+    </div>
+    {{/if}}
+    <div class="horizontal solid flow">
+        {{color-picker class="on-white" value=model.color mouseDown=(action 'preventBlur')}}
+    </div>
+</div>
+{{/if}}

@@ -29,6 +29,7 @@ export default Ember.Component.extend({
     this.toggle = this.toggle.bind(this)
     this.handleOuterClick = this.handleOuterClick.bind(this)
 
+    trigger.on('mousedown', (e) => this.sendAction('onMouseDown', e));
     trigger.on('click', this.toggle)
   },
 

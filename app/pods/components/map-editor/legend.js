@@ -436,9 +436,8 @@ export default Ember.Mixin.create({
             "text-anchor": "left"
           });
         
-        label.text(d.get('legendTitleComputed'));
-
-        d3lper.wrapText(label.node(), 200);
+        label.text(d.get('legendTitleComputed'))
+          .call(d3lper.wrapText, 200);
 
         label.on("click", function() {
           if (d3.event.defaultPrevented) return;
@@ -939,7 +938,6 @@ export default Ember.Mixin.create({
         };
       })
       .flowComputedAttrs("h-mode", function() {
-        console.log(this.parentElement.parentElement.parentElement.parentElement);
         let maxH = d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG"));
         return {
           x1: 0,

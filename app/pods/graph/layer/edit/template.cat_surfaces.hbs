@@ -145,29 +145,6 @@
 
         <div class="solid vertical flow">
 
-          {{#if false}} <!-- desactivé pour la démo du 13 juin, à implémenter-->
-          <div class="horizontal middle flow">
-              <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}} ?</label>
-              <div class="horizontal half-airy solid flow w7 layer-color-selector">
-                  {{#x-dropdown-plus as |facet|}}
-                      {{#facet.trigger class="filled"}}
-                          {{color-swatch class="layer-color-swatch"
-                          colors=(get brewer.availableColorSetsMap editedLayer.mapping.visualization.colors)
-                          }}
-                          <i class="iconfont iconfont-angle-down"></i>
-                      {{/facet.trigger}}
-                      {{#facet.list}}
-                          {{#each brewer.availableColorSets as |colorSet|}}
-                              <li {{action 'bind' editedLayer.mapping.visualization 'colors' colorSet.key}}>
-                                  {{color-swatch class="layer-color-swatch" colors=colorSet.colors}}
-                              </li>
-                          {{/each}}
-                      {{/facet.list}}
-                  {{/x-dropdown-plus}}
-              </div>
-          </div>
-          {{/if}}
-
           <div class="horizontal middle flow">
               <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
               <div class="horizontal half-airy solid flow w7" class="layer-pattern-selector">

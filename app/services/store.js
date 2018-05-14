@@ -138,9 +138,8 @@ var Store = Ember.Service.extend(Hookable, {
 
       if (old) {
         let json = project instanceof Project ? project.export() : project;
-        this.get('projects').splice(this.get('projects').indexOf(old), 1,
-           json);
-        this.get('projects').enumerableContentDidChange();
+        this.get('projects').replace(this.get('projects').indexOf(old), 1,
+           [json]);
         this.set('mounted', json);
         return this.processHooks(HOOK_BEFORE_SAVE_PROJECT, [project]).then( () => {
           this._save();

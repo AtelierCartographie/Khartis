@@ -1,28 +1,43 @@
 import Struct from 'khartis/models/struct';
+import StyleText from '../../style-text';
+
+const DEFAUL_OVERWRITE = {
+  dx: 0,
+  dy: 0
+};
 
 let TextVisualization = Struct.extend({
   
   type: "text",
-  color: "#404040",
-  size: 1,
-  anchor: "middle",
+  style: null,
   overwrites: {},
+
+  init() {
+    this._super();
+    !this.get('style') && this.set('style', StyleText.create({size: 12}));
+  },
 
   mainType: function() {
     return this.get('type').split(".")[0];
   }.property('type'),
 
-  getGeometry(id, geom) {
-    return this.get('overwrites')[id] || geom;
+  setOverwrite(id, ov) {
+    this.get('overwrites')[id] = ov;
+    this.notifyPropertyChange('overwrites');
   },
 
-  setGeometry(id, geom) {
-    this.get('overwrites')[id] = geom;
+  getOverwrite(id) {
+    return this.get('overwrites')[id] || {...DEFAUL_OVERWRITE};
+  },
+
+  mergeOverwrite(id, ov) {
+    !this.get('overwrites')[id] && (this.get('overwrites')[id] = {});
+    Object.assign(this.get('overwrites')[id], ov);
     this.notifyPropertyChange('overwrites');
   },
 
   deferredChange: Ember.debouncedObserver(
-    'color', 'anchor', 'size', 'overwrites',
+    'overwrites', 'style._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();
     },
@@ -31,9 +46,7 @@ let TextVisualization = Struct.extend({
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),
-      color: this.get('color'),
-      anchor: this.get('anchor'),
-      size: this.get('size'),
+      style: this.get('style').export(),
       overwrites: this.get('overwrites')
     }, props));
   }
@@ -44,9 +57,7 @@ TextVisualization.reopenClass({
   restore(json, refs = {}) {
     let o = this._super(json, refs, {
       type: json.type,
-      color: json.color,
-      anchor: json.anchor,
-      size: json.size,
+      style: StyleText.restore(json.style, refs),
       overwrites: Object.assign({}, json.overwrites)
     });
     return o;

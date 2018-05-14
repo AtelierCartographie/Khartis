@@ -348,8 +348,7 @@ export default {
     },
     "settings": {
       "labelling": {
-        "size": "Größe",
-        "color": "Farbe",
+        "text": "text",
         "filter": "Filtern nach",
         "categories": "Kategorien",
         "chooseCategories": "Bitte auswählen",

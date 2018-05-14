@@ -37,6 +37,7 @@ export default {
   },
 
   "help.wiki": "Aide - Wiki Khartis",
+  "help.documentation": "Aide - Documentation de Khartis",
 
   "updater": {
     "title": "Une mise à jour est disponible",
@@ -351,8 +352,7 @@ export default {
     },
     "settings": {
       "labelling": {
-        "size": "taille",
-        "color": "couleur",
+        "text": "texte",
         "filter": "filtrer selon",
         "categories": "catégories",
         "chooseCategories": "choisir",

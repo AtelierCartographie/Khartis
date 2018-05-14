@@ -1,7 +1,14 @@
 & {
     position: absolute;
-    bottom: $gutter;
-    right: $gutter;
+    bottom: 0px;
+    right: 3*$gutter;
+
+    & > .button {
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding-left: $gutter;
+        padding-right: $gutter;
+    }
 
     .export-menu {
         @extend .with-relief;

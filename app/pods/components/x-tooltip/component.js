@@ -73,8 +73,9 @@ export default Ember.Component.extend({
     this.triggerEl = trigger
     this.tooltipEl = tooltip
     
+    this.positions =  this.computePosition();
+    
     Ember.run.later(this, () => {
-      this.positions =  this.computePosition();
       this.computedOffset = getOffset(this.get('position'), this.get('offset'));
     });
 

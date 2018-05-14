@@ -73,7 +73,6 @@ export function solve(project, precision) {
       nearest = nearestNode(coords, grid.nodes);
       it++;
     }
-    console.log(`itérations : ${it}`);
     return nearest.node;
   }
 

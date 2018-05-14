@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import snap, {forceUpdate} from 'khartis/utils/snap';
+import snap from 'khartis/utils/snap';
 
 export default Ember.Component.extend({
 
@@ -14,6 +14,7 @@ export default Ember.Component.extend({
             });
             let snapped = snap(this.$('.export-menu')[0], 'bottom right')
                 .to(this.$('.export-button')[0],  'top right');
+            this.set('_snapped', snapped);
         });
     },
 
@@ -23,6 +24,7 @@ export default Ember.Component.extend({
         this.$('.export-menu').css({
             visibility: "hidden"
         });
+        this.get('_snapped') && this.get('_snapped').dispose();
     },
 
     handleOuterClick(e){

@@ -189,7 +189,6 @@ export default Ember.Component.extend({
     },
 
     hideSuggestions: function () {
-      console.log("hide");
       this.$('.suggestions-wrapper').fadeOut(100);
     },
 

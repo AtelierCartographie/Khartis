@@ -25,7 +25,6 @@ You will need the following things properly installed on your computer.
 * `git clone <repository-url>` this repository
 * change into the new directory
 * `yarn install` or `npm install`
-* `bower install`
 * `cp config/environment.js{.tpl,}`
 
 ## Running / Development

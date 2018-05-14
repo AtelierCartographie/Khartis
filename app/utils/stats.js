@@ -108,7 +108,7 @@ export function jenks(values, classes) {
         k = lgt-1;
 		
     while (cnt > 1) {
-        kclass[cnt - 2] = data[mLcl[k][cnt] - 2];
+        kclass[cnt - 2] = data[mLcl[k][cnt] - 1];
         k = mLcl[k][cnt] - 1;
         cnt--;
     }

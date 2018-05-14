@@ -1,0 +1,54 @@
+& {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+
+  .popover-toggle {
+    background-color: color(primary2);
+    border-top-left-radius: 16px;
+    padding: 1rem $gutter 1rem $gutter;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+
+    span {
+      display: inline-block;
+    }
+
+    & span:not(.disabled) {
+      &:hover,
+      &.active {
+        cursor: pointer;
+        color: #FFF;
+      }
+    }
+
+    .disabled {
+      color: rgba(white, 0.2);
+    }
+  }
+
+  .popover-content {
+
+    border-left: 1px solid color(primary2);
+
+    iframe {
+      height: 50vh;
+      width: 100%;
+      border: none;
+      background-color: rgba(white, 0.92);
+    }
+  }
+
+  &.expanded {
+    width: 22%;
+    min-width: 380px;
+    .popover-toggle {
+      padding: 0.2rem 2rem 0.2rem 2rem;
+      width: 100%;
+      font-size: 1.4rem;
+      background-color: color(primary2);
+    }
+  }
+}

@@ -12,8 +12,8 @@ export default Ember.Mixin.create({
   },
 
   hasActiveLayer: function() {
-    return this.get('graphLayers').some( gl => gl.get('visible') && gl.get('mapping.type') != null );
-  }.property('graphLayers.@each.visible', 'graphLayers.@each.mapping.type'),
+    return this.get('graphLayers').some( gl => gl.get('displayable') );
+  }.property('graphLayers.@each.visible', 'graphLayers.@each.displayable'),
   
   hoverCompute: function() {
     if (this.get('hoverEnabled')) {

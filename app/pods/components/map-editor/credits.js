@@ -2,71 +2,122 @@ import Ember from 'ember';
 import d3lper from 'khartis/utils/d3lper';
 
 export default Ember.Mixin.create({
+	dataSourceComputed: function() {
+		let ds = this.get('dataSource');
+		if (this.get('graphLayout.basemap.mapConfig.attribution')) {
+			return `${this.get('graphLayout.basemap.mapConfig.attribution')}${ds ? ` - ${ds}` : ''}`;
+		} else {
+			return ds;
+		}
+	}.property('graphLayout.basemap.mapConfig', 'dataSource'),
 
-  dataSourceComputed: function() {
-    let ds = this.get('dataSource');
-    if (this.get('graphLayout.basemap.mapConfig.attribution')) {
-      return `${this.get('graphLayout.basemap.mapConfig.attribution')}${ds ? ` - ${ds}`:''}`;
-    } else {
-      return ds;
+	titleIsSet: function() {
+		return this.get('title') && this.get('title').length > 0;
+	}.property('title'),
+
+	creditsInit(d3g) {
+		d3g.append('text').classed('map-title', true);
+
+		d3g.append('text').classed('map-dataSource', true);
+
+		d3g.append('g').classed('map-author', true).append('text');
+
+		this.drawCredits();
+	},
+
+	drawCredits: function() {
+		let { w, h } = this.getSize(),
+      d3l = this.d3l(),
+      gl = this.get('graphLayout');
+
+		let textEl = d3l.select('text.map-title').attrs({
+      'kis:kis:transient': this.get('titleIsSet') ? null : 'true',
+    });
+    
+    this.setTextStyle(textEl, this.get('titleStyle'));
+    //override fill if title isn't setted
+    textEl.attr("fill", this.get('titleIsSet') ? this.get('titleStyle.color') : '#DCDCDC');
+    
+    let tx;
+    switch (this.get('titleStyle.anchor')) {
+      case "start": tx = gl.hOffset(w) + gl.get('margin.l'); break;
+      case "middle": tx = w / 2; break;
+      case "end": tx = w - gl.hOffset(w) - gl.get('margin.r'); break;
     }
-  }.property('graphLayout.basemap.mapConfig', 'dataSource'),
 
-  creditsInit(d3g) {
+    textEl.attr(
+      "transform",
+      d3lper.translate({
+        tx,
+        ty: gl.vOffset(h) + gl.get('margin.t') - Math.round(this.get('titleStyle.size')/0.76)
+      })
+    );
 
-    d3g.append("text")
-      .classed("map-title", true);
-
-    d3g.append("text")
-      .classed("map-dataSource", true);
-
-    d3g.append("g")
-      .classed("map-author", true)
-      .append("text");
-
-    this.drawCredits();
-
-  },
-
-  drawCredits: function() {
+		d3lper.multilineText(
+			textEl,
+			this.get('titleIsSet') ? this.get('title') : this.get('i18n').t('export.placeholder.mapTitle').string
+    );
     
-    let {w, h} = this.getSize(),
-        d3l = this.d3l();
+    d3l.attr('title', this.get('title'));
     
-    d3l.select("text.map-title")
-      .text(this.get('title'))
-      .attrs({
-        "font-size": "2em",
-        x: this.get('graphLayout').hOffset(w) + this.get('graphLayout.margin.l'),
-        y: this.get('graphLayout').vOffset(h) + this.get('graphLayout.margin.t') - 5
-      });
+		textEl = d3l.select('text.map-dataSource').attr(
+      "transform",
+      d3lper.translate({
+        tx:  w - gl.hOffset(w) - gl.get('margin.r') - 1,
+        ty: h - gl.vOffset(h) - gl.get('margin.b')
+      })
+    );
+    
+    this.setTextStyle(textEl, this.get('dataSourceStyle'));
+    
+    d3lper.multilineText(
+			textEl,
+			this.get('dataSourceComputed')
+    );
+
+		textEl = d3l
+			.select('g.map-author')
+			.attr(
+        'transform',
+				d3lper.translate({
+          tx: w - gl.hOffset(w) - gl.get('margin.r'),
+					ty: h - gl.vOffset(h) - gl.get('margin.b') - 1
+				})
+			)
+			.select('text');
       
-   d3l.attr("title", this.get('title'));
+    this.setTextStyle(textEl, this.get('authorStyle'));
+  
+    textEl.attr('transform', 'rotate(-90)');
+      
+    d3lper.multilineText(
+      textEl,
+      this.get('author')
+    );
 
-   d3l.select("text.map-dataSource")
-      .text(this.get('dataSourceComputed'))
-      .attrs({
-        "font-size": "0.8em",
-        "text-anchor": "end",
-        x: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') - 1,
-        y: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') + 11
-      });
-
-
-    d3l.select("g.map-author")
-      .attr("transform", d3lper.translate({
-        tx: w - this.get('graphLayout').hOffset(w) - this.get('graphLayout.margin.r') + 11,
-        ty: h - this.get('graphLayout').vOffset(h) - this.get('graphLayout.margin.b') - 1
-      }))
-      .select("text")
-      .text(this.get('author'))
-      .attr("transform", "rotate(-90)")
-      .attrs({
-        "font-size": "0.8em"
-      });
-   
-  }.observes('title', 'dataSource', 'author', "$width", "$height",
-    "graphLayout.margin._defferedChangeIndicator",
-    "graphLayout.width", "graphLayout.height"),
-
+	}.observes(
+		'title',
+		'dataSource',
+    'author',
+    'titleStyle._defferedChangeIndicator',
+    'dataSourceStyle._defferedChangeIndicator',
+    'authorStyle._defferedChangeIndicator',
+		'$width',
+		'$height',
+		'graphLayout.margin._defferedChangeIndicator',
+		'graphLayout.width',
+		'graphLayout.height'
+  ),
+  
+  setTextStyle(el, style) {
+    el.attrs({
+      "text-anchor": style.get('anchor'),
+      "font-size": style.get('size'),
+			"fill": style.get('color'),
+      "font-weight": style.get('bold') ? "bold" : "normal",
+      "text-decoration": style.get('underline') ? "underline" : null,
+      "font-style": style.get('italic') ? "italic" : null,
+      "font-family": style.font
+    })
+  }
 });

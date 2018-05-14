@@ -7,11 +7,16 @@ var env = require('./config/environment');
 module.exports = function(defaults) {
   var conf = env(EmberApp.env()),
       app = new EmberApp(defaults, {
+        nodeModulesToVendor: [
+          'node_modules/bootstrap-sass/assets/javascripts/bootstrap'
+        ],
         babel: {
-          includePolyfill: true,
           plugins: [
             'transform-object-rest-spread'
           ]
+        },
+        "ember-cli-babel": {
+          includePolyfill: true
         },
         fingerprint: {
           exclude: ['assets/images/']
@@ -29,7 +34,7 @@ module.exports = function(defaults) {
       });
 
   //app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
-  app.import("bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js");
+  app.import("vendor/modal.js");
   
   //app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");

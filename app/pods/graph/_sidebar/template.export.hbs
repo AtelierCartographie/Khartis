@@ -2,9 +2,15 @@
   <div class="vertical airy flow">
 
     <div class="half-airy vertical flow">
-      {{input value=model.title placeholder=(t 'export.placeholder.mapTitle')}}
-      {{input value=model.dataSource placeholder=(t 'export.placeholder.dataSource')}}
-      {{input value=model.author placeholder=(t 'export.placeholder.author')}}
+      {{#text-style model=model.titleStyle maxSize=32 withAnchor=true}}
+        {{textarea class="auto-expand" value=model.title placeholder=(t 'export.placeholder.mapTitle')}}
+      {{/text-style}}
+      {{#text-style model=model.dataSourceStyle}}
+        {{textarea class="auto-expand" value=model.dataSource placeholder=(t 'export.placeholder.dataSource')}}
+      {{/text-style}}
+      {{#text-style model=model.authorStyle}}
+        {{textarea class="auto-expand" value=model.author placeholder=(t 'export.placeholder.author')}}
+      {{/text-style}}
       {{#if false}} {{! caché pour l'instant'}}
       {{textarea class="auto-expand" value=model.comment placeholder=(t 'export.placeholder.comment')}}
       {{/if}}
@@ -36,18 +42,6 @@
           </div>
         </div>
         <div class="horizontal middle flow">
-          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.size')}}</label>
-          <div class="horizontal solid flow w5">
-            {{x-slider class="fluid offset-slider" band=0.1 value=layer.mapping.visualization.size min=0.6 max=3.2}}
-          </div>
-        </div>
-        <div class="horizontal middle flow">
-          <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.color')}}</label>
-          <div class="horizontal solid flow w5">
-            {{color-picker class="on-white" value=layer.mapping.visualization.color}}
-          </div>
-        </div>
-        <div class="horizontal middle flow">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.filter')}}</label>
           <div class="horizontal solid flow w5">
             {{#x-dropdown-plus as |facet|}}
@@ -73,6 +67,13 @@
               {{/facet.list}}
             {{/x-dropdown-plus}}
           </div>
+        </div>
+        <div class="horizontal middle flow">
+            {{text-style class="fluid"
+              model=layer.mapping.visualization.style
+              withEditor=false
+              maxSize=22
+            }}
         </div>
 
         {{#if (x-eq layer.mapping.filter.type 'category')}}

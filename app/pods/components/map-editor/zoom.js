@@ -108,8 +108,8 @@ export default Ember.Mixin.create({
 
     this.scaleProjector(this.get('projector'));
     this.get('graphLayout').endPropertyChanges();
-    this.projectAndDraw();
     this.d3l().selectAll(".zoomable").attr("transform", null);
+    this.projectAndDraw();
   },
   
   zoomAndDragChange: function() {

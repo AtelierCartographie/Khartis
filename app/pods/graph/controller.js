@@ -107,10 +107,11 @@ export default Ember.Controller.extend(ExportMixin, {
     'model.graphLayout.tx', 'model.graphLayout.ty',
     'model.graphLayout.backgroundColor', 'model.graphLayout.backmapColor',
     'model.graphLayout.showGrid', 'model.graphLayout.showLegend', 'model.graphLayout.showBorders',
-    'model.title', 'model.author', 'model.dataSource', 'model.comment',
     'model.graphLayout.margin._defferedChangeIndicator',
     'model.graphLayout.legendLayout._defferedChangeIndicator',
-    'model.graphLayout.drawings.@each._defferedChangeIndicator'),
+    'model.graphLayout.drawings.@each._defferedChangeIndicator',
+    'model.title', 'model.author', 'model.dataSource', 'model.comment',
+    'model.titleStyle', 'model.authorStyle', 'model.dataSourceStyle', 'model.commentStyle'),
   
   layersChange: function() {
 

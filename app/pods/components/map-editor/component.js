@@ -39,6 +39,9 @@ export default Ember.Component.extend(EventNotifierFeature, {
   dataSource: null,
   title: null,
   author: null,
+  dataSourceStyle: null,
+  titleStyle: null,
+  authorStyle: null,
 
   labellingLayers: [],
 
@@ -188,7 +191,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
     }
     if (this.get('hasDrawingFeature')) {
       this.reopen(DrawingFeature);
-      this.drawingInit(defs, mapG);
+      this.drawingInit(defs);
     }
     if (this.get('hasCompositionBordersFeature')) {
       this.reopen(CompositionBordersFeature);
