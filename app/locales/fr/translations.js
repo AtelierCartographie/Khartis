@@ -37,6 +37,7 @@ export default {
   },
 
   "help.wiki": "Aide - Wiki Khartis",
+  "help.documentation": "Aide - Documentation de Khartis",
 
   "updater": {
     "title": "Une mise à jour est disponible",

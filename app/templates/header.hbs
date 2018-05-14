@@ -17,12 +17,6 @@
         {{/x-dropdown-plus}}
       </div>
 
-      <a href="http://www.sciencespo.fr/cartographie/khartis/docs/" target="_blank"
-        title="{{t 'help.wiki'}}"
-        class="clickable icon help-wiki">
-        ?
-      </a>
-
       {{#if (x-some (x-eq sidebarActiveTab 'visualizations') (x-eq sidebarActiveTab 'export'))}}
       <a class="clickable icon iconfont iconfont-save" {{action 'exportProject'}}
         title="{{t 'general.save'}}">

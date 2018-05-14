@@ -1,18 +1,20 @@
+{{#if expanded}}
 <div class="popover-toggle">
-  {{#if expanded}}
   <div class="horizontal flow space-between">
     <span class="{{unless canGoBack 'disabled'}}" {{action 'back'}}><i class="iconfont iconfont-angle-left"></i></span>
     <span><i {{action 'toggleContent'}} class="iconfont iconfont-close"></i></span>
     <span class="{{unless canGoForward 'disabled'}}" {{action 'forward'}}><i class="iconfont iconfont-angle-right"></i></span>
   </div>
-  {{else}}
-  <span {{action 'toggleContent'}}>?</span>
-  {{/if}}
 </div>
-{{#if expanded}}
 <div class="popover-content">
   <iframe title="Documentation" src="/documentation/site/index.html" width="400" height="300" onload={{action 'onIframeLoad'}}>
     <p>Your browser does not support iframes.</p>
   </iframe>
+</div>
+{{else}}
+<div class="popover-toggle">
+  {{#x-tooltip position="left" message=(t 'help.documentation')}}
+  <span {{action 'toggleContent'}}>?</span>
+  {{/x-tooltip}}
 </div>
 {{/if}}

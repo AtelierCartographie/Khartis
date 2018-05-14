@@ -5,8 +5,8 @@
 
   .popover-toggle {
     background-color: color(primary2);
-    border-top-left-radius: 20px;
-    padding: 1rem 2rem 1rem 2rem;
+    border-top-left-radius: 16px;
+    padding: 1rem $gutter 1rem $gutter;
     font-size: 2rem;
     font-weight: bold;
     text-decoration: none;
@@ -37,7 +37,7 @@
       height: 50vh;
       width: 100%;
       border: none;
-      background-color: rgba(white, 0.86);
+      background-color: rgba(white, 0.92);
     }
   }
 
