@@ -44,7 +44,7 @@ export default Ember.Mixin.create({
     
     let self = this,
         data = this.get('displayableLayers');
-          
+
     let bindAttr = (_) => {
       _.attr("stroke-width", d => d.get("mapping.visualization.stroke"))
        .style("opacity", d => d.get('opacity'));

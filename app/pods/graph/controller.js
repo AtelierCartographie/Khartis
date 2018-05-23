@@ -3,6 +3,7 @@ import ExportMixin from './export-mixin';
 import d3 from 'npm:d3';
 import GraphLayer from 'khartis/models/graph-layer';
 import Mapping from 'khartis/models/mapping/mapping';
+import MultiMapping from 'khartis/models/mapping/multi-mapping';
 import FilterFactory from 'khartis/models/mapping/filter/factory';
 import Projection from 'khartis/models/projection';
 import {HOOK_BEFORE_SAVE_PROJECT} from 'khartis/services/store';
@@ -153,8 +154,8 @@ export default Ember.Controller.extend(ExportMixin, {
       }
     },
     
-    addLayer(col) {
-      let layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
+    addLayer() {
+      let layer = GraphLayer.createDefault(null, this.get('model.geoDef'));
       this.get('model.graphLayers').unshiftObject(layer);
       this.get('model.graphLayout.legendLayout').addLayer(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
@@ -197,13 +198,20 @@ export default Ember.Controller.extend(ExportMixin, {
     },
     
     bindLayerMapping(type) {
-      this.set('editedLayer.mapping', Mapping.create({
-        type: type,
-        varCol: this.get('editedLayer.mapping.varCol'),
-        geoDef: this.get('editedLayer.mapping.geoDef')
-      }));
-      if (type === "quali.cat_surfaces" || type === "quanti.val_surfaces") {
-        this.set('editedLayer.opacity', 1);
+      if (type.split(".").indexOf("combined") !== -1) {
+        this.set('editedLayer.mapping', MultiMapping.create({
+          type,
+          geoDef: this.get('editedLayer.mapping.geoDef')
+        }));
+      } else {
+        this.set('editedLayer.mapping', Mapping.create({
+          type,
+          varCol: this.get('editedLayer.mapping.varCol'),
+          geoDef: this.get('editedLayer.mapping.geoDef')
+        }));
+        if (type === "quali.cat_surfaces" || type === "quanti.val_surfaces") {
+          this.set('editedLayer.opacity', 1);
+        }
       }
     },
 
@@ -316,10 +324,6 @@ export default Ember.Controller.extend(ExportMixin, {
 
     toggleTooltip() {
       this.toggleProperty('tooltipEnabled');
-    },
-
-    onIntervalTypeTabChange(id) {
-      this.set('editedLayer.mapping.scale.usesInterval', !(id === "linear-tab"));
     },
 
     updateValueBreak(val) {

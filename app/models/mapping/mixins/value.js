@@ -312,7 +312,7 @@ let SurfaceMixin = Ember.Mixin.create({
       d3Scale = d3.scaleLinear();
       rangeLength = intervals.length; //2
     };
-        
+
     if (this.get('visualization.pattern')) {
       
       if (type === "texture") {

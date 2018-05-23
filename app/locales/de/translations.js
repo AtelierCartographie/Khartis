@@ -217,6 +217,7 @@ export default {
       },
       "title" : "Darstellungsoptionen",
       "symbols": "Symbole",
+      "surfaces": "surfaces",
       "thresholds": "thresholds",
       "discretization": {
         "title": "Diskretisierung",

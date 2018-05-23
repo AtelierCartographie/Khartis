@@ -2,7 +2,19 @@
   <div class="vertical airy flow layers">
     <div class="solid center text-center">
       {{#if model.geoDef}}
-      <div class="button add-visualization-button" {{action "addLayer"}}><i class="iconfont iconfont-plus-thin"></i></div>
+      {{#x-dropdown-plus as |facet|}}
+        {{#facet.trigger}}
+            <div class="button add-variable-button "><i class="iconfont iconfont-plus-thin"></i></div>
+        {{/facet.trigger}}
+        {{#facet.list}}
+          {{#each model.data.columns as |col|}}
+          <li {{action 'addLayer' col}} class="horizontal middle airy flow">
+            <div class="solid">{{data-type-icon meta=col.meta inconsistency=col.inconsistency}}</div>
+            <div classs="fluid padded-h">{{col.header.value}}</div>
+          </li>
+          {{/each}}
+        {{/facet.list}}
+      {{/x-dropdown-plus}}
       {{else}}
       <div class="filled warning padded">
         Il est nécessaire de sélectionner une colonne de référence géographique pour ajouter de nouveaux calques
@@ -16,11 +28,8 @@
           <li class="clickable {{if (x-eq layer editedLayer) 'selected'}}">
             <div class="horizontal space-between flow">
               <div class="horizontal airy middle flow">
-                {{#if layer.mapping.isBoundToVar}}
-                <span class="layer-name">{{layer.mapping.titleComputed}}</span>
-                {{else}}
-                <span class="layer-name">[ variable ]</span>
-                {{/if}}
+                {{!-- {{data-type-icon meta=layer.mapping.varCol.meta inconsistency=layer.mapping.varCol.inconsistency}} --}}
+                <span class="layer-name">{{layer.mapping.varCol.header.value}}</span>
               </div>
               <div class="solid horizontal baseline half-airy right flow w4">
                 <span class="layer-visualization-icon">

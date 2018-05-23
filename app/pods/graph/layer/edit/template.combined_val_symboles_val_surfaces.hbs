@@ -1,0 +1,52 @@
+<div class="edit-layer">
+  <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
+  <div class="body">
+    <ul class="collection">
+      <li class="layer">
+        <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
+          <div class="caption">
+            <img src="{{r-url 'assets/images/viz/QUANTI-val_symboles.svg'}}">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.type.quanti.val_symboles.name"}}</span>
+              <p class="description">{{t "visualization.type.quanti.val_symboles.description"}}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="title">Choix des variables</div>
+  <div class="body">
+    <div class="settings vertical flow">
+      {{log editedLayer.mapping.mappings}}
+      {{#each editedLayer.mapping.mappings as |mapping|}}
+        {{mapping-var-selector
+          variables=model.data.columns
+          mapping=mapping
+        }}
+      {{/each}}
+    </div>
+  </div>
+
+  {{#if editedLayer.mapping.isBoundToVar}}
+    {{#each editedLayer.mapping.mappings as |mapping|}}
+      {{#if (x-eq mapping.type 'quanti.val_symboles')}}
+        {{mapping-settings/val-symbols
+          mapping=mapping
+          bindScaleIntervalType=(action 'bindScaleIntervalType')
+          bind=(action 'bind')
+          updateValueBreak=(action 'updateValueBreak')
+          toggleRuleVisibility=(action 'toggleRuleVisibility')
+        }}
+      {{else if (x-eq mapping.type 'quanti.val_surfaces')}}
+        {{mapping-settings/val-surfaces
+          mapping=mapping
+          bindScaleIntervalType=(action 'bindScaleIntervalType')
+          bind=(action 'bind')
+          updateValueBreak=(action 'updateValueBreak')
+          toggleRuleVisibility=(action 'toggleRuleVisibility')
+        }}
+      {{/if}}
+    {{/each}}
+  {{/if}} {{! boundToVar }}
+</div>

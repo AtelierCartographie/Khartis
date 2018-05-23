@@ -2,7 +2,8 @@ import Ember from 'ember';
 import Struct from './struct';
 import {ColumnStruct} from './data';
 import GraphLayout from './graph-layout';
-import Mapping from './mapping/mapping';
+import Mapping from "./mapping/mapping";
+import { MappingFactory } from './mapping/factory';
 /* global Em */
 
 let GraphLayer = Struct.extend({
@@ -20,9 +21,10 @@ let GraphLayer = Struct.extend({
   
   displayable: function() {
     return this.get('visible') && this.get('mapping')
-    && this.get('mapping.type') && this.get('mapping.varCol');
-  }.property('mapping', 'mapping.type', 'visible'),
-  
+    && this.get('mapping.type')
+    && this.get('mapping.isFinalized');
+  }.property('mapping', 'mapping.isFinalized', 'visible'),
+
   deferredChange: Ember.debouncedObserver(
     'mapping', 'mapping._defferedChangeIndicator',
     'visible', 'opacity', 'legendTitle', 'legendOrientation',
@@ -48,7 +50,7 @@ GraphLayer.reopenClass({
   restore(json, refs = {}) {
       return this._super(json, refs, {
         visible: json.visible,
-        mapping: Mapping.restore(json.mapping, refs),
+        mapping: MappingFactory(json.mapping, refs),
         opacity: json.opacity,
         legendTitle: json.legendTitle,
         legendOrientation: json.legendOrientation || "vertical"

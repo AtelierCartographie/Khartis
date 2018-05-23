@@ -12,6 +12,11 @@ export default WrapperAbstract.extend({
     let categoricalScheme = CategoryMixin.Data.detect(this.get('obj')) && !this.get('obj.ordered'),
         master = this.get('obj.scale.diverging') ? Colorbrewer.diverging : (categoricalScheme ? Colorbrewer.categorical : Colorbrewer.sequential),
         classes = this.get('obj.scale.classes');
+
+        console.log(this.get('obj.scale.diverging'),
+        this.get('obj.visualization.reverse'), 
+        this.get('obj.scale.classes'),
+        this.get('obj.scale.classesBeforeBreak'));
     
       return Object.keys(master).map( k => {
         

@@ -382,9 +382,7 @@ export default Ember.Mixin.create({
     let legendG = d3.select(this),
         containerG = legendG.selectAll("g.legend-content"),
         bgG = legendG.selectAll("rect.legend-bg"),
-        svg = self.d3l(),
         layers = group.get('layers'),
-        d3Locale = d3lper.getLocale(self.get('i18n')),
         orientation = self.get('graphLayout.legendLayout.stacking') === "vertical" ? "v-mode" : "h-mode";
     
 
@@ -398,143 +396,30 @@ export default Ember.Mixin.create({
     
     let bindLayer = (_) => {
 
-      _.flowClass("stretched vertical flow")
-        .flowStyle("margin-top: 16px")
-        .flowStyle("g-h-mode", "margin-right: 34px")
-        .flowStyle("g-v-mode", "margin-bottom: 24px");
-      
-      _.each( function(d, i) {
+      _.each( function(layer, i) {
 
-        let el = d3.select(this),
-            formatter;
-            
-        if (d.get('mapping.maxValuePrecision') != null) {
-          formatter = d3Locale.format(`0,.${d.get('mapping.maxValuePrecision')}f`);
-        } else {
-          formatter = t => t;
-        }
+        const el = d3.select(this);
+        const mapping = layer.get('mapping');
+
+        _.flowClass(`stretched ${layer.legendOrientation === "horizontal" ? "vertical" : "horizontal"} flow`)
+          .flowStyle("margin-top: 16px")
+          .flowStyle("g-h-mode", "margin-right: 34px")
+          .flowStyle("g-v-mode", "margin-bottom: 24px")
+          .flowState(
+            mapping.get('isMulti') && layer.legendOrientation === "horizontal" ? "multi-v-mode" : "multi-h-mode"
+          )
 
         self.bindDrag(el);
         el.selectAll("*").remove();
 
-        let layerBg = el.append("rect")
-          .classed("legend-layer-bg", true)
-          .attrs({
-            x: 0,
-            y: 0
-          });
-          
-        let label = el.append("g")
-          .flowClass("vertical solid")
-          .flowStyle("margin-bottom: 8px; margin-top: 1em;")
-          .classed("no-drag", true)
-          .append("text")
-          .classed("legend-title", true)
-          .styles({
-            "font-size": "14px",
-            "font-weight": "bold",
-            "text-anchor": "left"
-          });
-        
-        label.text(d.get('legendTitleComputed'))
-          .call(d3lper.wrapText, 200);
-
-        label.on("click", function() {
-          if (d3.event.defaultPrevented) return;
-          d3.event.preventDefault();
-          TextEditor.showAt("legend-title-editor", this, d.get('legendTitleComputed'), function(val) {
-            d.set('legendTitle', val);
-          });
-        });
-
-        let contentEl = el.append("g")
-          .flowClass("solid flow")
-          .flowClass("h-mode", "horizontal")
-          .flowClass("v-mode", "vertical")
-          .flowState(
-            d.legendOrientation === "horizontal" && d.get('mapping.visualization.shape') !== "bar" ? "h-mode":"v-mode"
-          );
-
-        let ruleEl = contentEl;
-
-        if (ValueMixin.Data.detect(d.get('mapping'))) {
-          
-          let intervals = d.get('mapping.intervals').slice(),
-              fn;
-          
-          if (ValueMixin.Surface.detect(d.get('mapping'))) {
-            fn = self.appendSurfaceIntervalLabel;
-            intervals = compressIntervals(intervals, d.get('mapping.extent'));
-            intervals.push(d.get('mapping.extent')[1]); //push max
-          } else {
-            if (d.get('mapping.scale.usesInterval')) {
-              fn = self.appendSymbolIntervalLabel;
-            } else {
-              fn = self.appendSymbolIntervalLinearLabel;
-            }
-            intervals = d.get('mapping').getLegendIntervals();
-          }
-          
-          if (d.get('mapping.visualization.shape') === "bar") {
-            self.appendBarIntervals(contentEl, intervals, d, formatter);
-          } else {
-            contentEl.selectAll("g.row")
-              .data(intervals)
-              .enterUpdate({
-                enter: (sel) => sel.append("g").classed("row", true),
-                update: (sel) => sel.eachWithArgs(fn, svg, d, formatter)
-              });
-          }
-
-          
-          if (d.get('mapping.rules').length) {
-            
-            ruleEl = el.append("g")
-              .flowClass("solid flow")
-              .flowClass("h-mode", "horizontal")
-              .flowClass("v-mode", "vertical")
-              .flowStyle("h-mode", "position: relative; margin-top: 20px; padding-top: 14px;")
-              .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
-
-            ruleEl.append("g")
-              .flowStyle("v-mode", "margin-top: 10px; margin-bottom: 10px")
-              .flowStyle("h-mode", "position: absolute; top: 0px; left: 0px")
-              .append("line")
-              .flowComputedAttrs("v-mode", function() {
-                let maxW = d3lper.selectionMaxWidth(contentEl.selectAll("g.symG"));
-                return {
-                  x1: 0,
-                  y1: 0,
-                  x2: Math.max(maxW, 30),
-                  y2: 0,
-                  stroke: "#BBBBBB"
-                }
-              })
-              .flowComputedAttrs("h-mode", function() {
-                return {
-                  x1: 0,
-                  y1: 0,
-                  x2: 50,
-                  y2: 0,
-                  stroke: "#BBBBBB"
-                }
-              });
-            
-          }
-          
+        if (mapping.get('isMulti')) {
+          mapping.get('mappings').forEach((m, i) => self.drawLegendInner(el, layer, m, i));
+        } else {
+          self.drawLegendInner(el, layer, mapping);
         }
-        
-        if (d.get('mapping.rules') && d.get('mapping.rules').length) {
-          ruleEl.selectAll("g.rule")
-            .data(d.get('mapping.rules').filter( r => r.get('visible') && (d.get('mapping.visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
-            .enterUpdate({
-              enter: (sel) => sel.append("g").classed("rule", true),
-              update: (sel) => sel.eachWithArgs(self.appendRuleLabel, svg, d)
-            });
-        }
-        
+
       });
-      
+
     };
     
     containerG.selectAll("g.legend-layer")
@@ -553,8 +438,141 @@ export default Ember.Mixin.create({
     
   },
 
+  drawLegendInner(el, layer, mapping, multiIdx = 0) {
 
-  appendSurfaceIntervalLabel(svg, d, formatter, val, i) {
+    const svg = this.d3l();
+    const d3Locale = d3lper.getLocale(this.get('i18n'));
+    const innerEl = el.append("g")
+      .classed("legend-inner", true)
+      .flowClass("stretched vertical flow")
+      .flowStyle("multi-v-mode", `margin-top: ${multiIdx > 0 ? 16 : 0}px`)
+      .flowStyle("multi-h-mode", `margin-left: ${multiIdx > 0 ? 16 : 0}px`);
+    
+    let formatter;
+
+    if (mapping.get('maxValuePrecision') != null) {
+      formatter = d3Locale.format(`0,.${mapping.get('maxValuePrecision')}f`);
+    } else {
+      formatter = t => t
+    }
+
+    let layerBg = innerEl.append("rect")
+      .classed("legend-layer-bg", true)
+      .attrs({
+        x: 0,
+        y: 0
+      });
+      
+    let label = innerEl.append("g")
+      .flowClass("vertical solid")
+      .flowStyle("margin-bottom: 8px; margin-top: 1em;")
+      .classed("no-drag", true)
+      .append("text")
+      .classed("legend-title", true)
+      .styles({
+        "font-size": "14px",
+        "font-weight": "bold",
+        "text-anchor": "left"
+      });
+    
+    label.text(layer.get('legendTitleComputed'))
+      .call(d3lper.wrapText, 200);
+
+    label.on("click", function() {
+      if (d3.event.defaultPrevented) return;
+      d3.event.preventDefault();
+      TextEditor.showAt("legend-title-editor", this, layer.get('legendTitleComputed'), function(val) {
+        layer.set('legendTitle', val);
+      });
+    });
+
+    let contentEl = innerEl.append("g")
+      .flowClass("solid flow")
+      .flowClass("h-mode", "horizontal")
+      .flowClass("v-mode", "vertical")
+      .flowState(
+        layer.legendOrientation === "horizontal" && mapping.get('visualization.shape') !== "bar" ? "h-mode":"v-mode"
+      );
+
+    let ruleEl = contentEl;
+
+    if (ValueMixin.Data.detect(mapping)) {
+      
+      let intervals = mapping.get('intervals').slice(),
+          fn;
+      
+      if (ValueMixin.Surface.detect(mapping)) {
+        fn = this.appendSurfaceIntervalLabel;
+        intervals = compressIntervals(intervals, mapping.get('extent'));
+        intervals.push(mapping.get('extent')[1]); //push max
+      } else {
+        if (mapping.get('scale.usesInterval')) {
+          fn = this.appendSymbolIntervalLabel;
+        } else {
+          fn = this.appendSymbolIntervalLinearLabel;
+        }
+        intervals = mapping.getLegendIntervals();
+      }
+      
+      if (mapping.get('visualization.shape') === "bar") {
+        this.appendBarIntervals(contentEl, intervals, layer, mapping, formatter);
+      } else {
+        contentEl.selectAll("g.row")
+          .data(intervals)
+          .enterUpdate({
+            enter: (sel) => sel.append("g").classed("row", true),
+            update: (sel) => sel.eachWithArgs(fn, svg, layer, mapping, formatter)
+          });
+      }
+
+      if (mapping.get('rules').length) {
+        
+        ruleEl = el.append("g")
+          .flowClass("solid flow")
+          .flowClass("h-mode", "horizontal")
+          .flowClass("v-mode", "vertical")
+          .flowStyle("h-mode", "position: relative; margin-top: 20px; padding-top: 14px;")
+          .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+
+        ruleEl.append("g")
+          .flowStyle("v-mode", "margin-top: 10px; margin-bottom: 10px")
+          .flowStyle("h-mode", "position: absolute; top: 0px; left: 0px")
+          .append("line")
+          .flowComputedAttrs("v-mode", function() {
+            let maxW = d3lper.selectionMaxWidth(contentEl.selectAll("g.symG"));
+            return {
+              x1: 0,
+              y1: 0,
+              x2: Math.max(maxW, 30),
+              y2: 0,
+              stroke: "#BBBBBB"
+            }
+          })
+          .flowComputedAttrs("h-mode", function() {
+            return {
+              x1: 0,
+              y1: 0,
+              x2: 50,
+              y2: 0,
+              stroke: "#BBBBBB"
+            }
+          });
+        
+      }
+      
+    }
+    
+    if (mapping.get('rules') && mapping.get('rules').length) {
+      ruleEl.selectAll("g.rule")
+        .data(mapping.get('rules').filter( r => r.get('visible') && (mapping.get('visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
+        .enterUpdate({
+          enter: (sel) => sel.append("g").classed("rule", true),
+          update: (sel) => sel.eachWithArgs(this.appendRuleLabel, svg, layer, mapping)
+        });
+    }
+  },
+
+  appendSurfaceIntervalLabel(svg, layer, mapping, formatter, val, i) {
           
     let r = {x: 24/2, y: 16/2};
 
@@ -599,12 +617,12 @@ export default Ember.Mixin.create({
         "width": 2*r.x,
         "height": 2*r.y,
         y: 0,
-        "opacity": d.get('opacity'),
+        "opacity": layer.get('opacity'),
         "fill": () => {
           let v = val*(1-Math.sign(val)*Number.EPSILON) - Number.EPSILON;
-          let pattern = d.get('mapping').getScaleOf("texture")(v),
-              color = d.get('mapping').getScaleOf("color")(v);
-          window.test = d.get('mapping').getScaleOf("color");
+          let pattern = mapping.getScaleOf("texture")(v),
+              color = mapping.getScaleOf("color")(v);
+          window.test = mapping.getScaleOf("color");
           if (pattern && pattern.fn != PatternMaker.NONE) {
             let fn = new pattern.fn(false, color);
             fn.init(svg);
@@ -630,13 +648,13 @@ export default Ember.Mixin.create({
         .classed("symLbl", true)
         .flowStyle("v-mode", `position: absolute; margin-left: ${MARGIN_SURFACE_TEXT}px`)
         .flowStyle("h-mode", `position: absolute; margin-top: ${2*r.y+12}px`)
-        .text( formatter(d.get('mapping.extent')[0]) )
+        .text( formatter(mapping.get('extent')[0]) )
         .attrs({
           x: 0,
           y:  0,
           dy: "0.3em",
           "font-size": "0.75em",
-          "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
+          "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
         });
         
       }
@@ -651,13 +669,13 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
       });
       
   },
 
-  appendSymbolIntervalLinearLabel(svg, d, formatter, val, i) {
-        
+  appendSymbolIntervalLinearLabel(svg, layer, mapping, formatter, val, i) {
+
     let r, dy;
 
     d3.select(this).flowComputed("h-mode", "margin-left", function() {
@@ -681,21 +699,21 @@ export default Ember.Mixin.create({
         return maxSymG + maxSymLbl + MARGIN_SYMBOL_TEXT;
       });
 
-    if (val !== d.get('mapping.scale.valueBreak')) {
+    if (val !== mapping.get('scale.valueBreak')) {
 
       let symbol = SymbolMaker.symbol({
-          name: d.get('mapping.visualization.shape'),
-          size: d.get('mapping').getScaleOf('size')(val)*2,
-          barWidth: d.get('mapping.visualization.barWidth')
+          name: mapping.get('visualization.shape'),
+          size: mapping.getScaleOf('size')(val)*2,
+          barWidth: mapping.get('visualization.barWidth')
         });
 
       r = symbol.getSize();
 
       if (!(r.x > 0 && r.y > 0)) return;
 
-      let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12);
+      let symH = Math.max(r.y + mapping.get('visualization.stroke'), 12);
         
-      dy = r.y + d.get('mapping.visualization.stroke') - symH;
+      dy = r.y + mapping.get('visualization.stroke') - symH;
 
       d3.select(this)
         .flowClass("horizontal stretched solid flow")
@@ -714,11 +732,11 @@ export default Ember.Mixin.create({
 
       symbol.insert(symG)
         .attrs({
-          "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
-          "i:i:stroke-width": d.get('mapping.visualization.stroke'),
-          "stroke": d.get('mapping.visualization.strokeColor'),
-          "fill": d.get('mapping').getScaleOf('color')(val),
-          "opacity": d.get('opacity')
+          "stroke-width": symbol.unscale(mapping.get('visualization.stroke')),
+          "i:i:stroke-width": mapping.get('visualization.stroke'),
+          "stroke": mapping.get('visualization.strokeColor'),
+          "fill": mapping.getScaleOf('color')(val),
+          "opacity": layer.get('opacity')
         });
 
     } else {
@@ -784,22 +802,22 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
       });
         
   },
 
-  appendSymbolIntervalLabel(svg, d, formatter, val, i) {
+  appendSymbolIntervalLabel(svg, layer, mapping, formatter, val, i) {
         
     let symbol = SymbolMaker.symbol({
-          name: d.get('mapping.visualization.shape'),
-          size: d.get('mapping').getScaleOf('size')(val)*2,
-          barWidth: d.get('mapping.visualization.barWidth')
+          name: mapping.get('visualization.shape'),
+          size: mapping.getScaleOf('size')(val)*2,
+          barWidth: mapping.get('visualization.barWidth')
         }),
         r = symbol.getSize();
 
-    let symH = Math.max(r.y + d.get('mapping.visualization.stroke'), 12),
-        dy = r.y + d.get('mapping.visualization.stroke') - symH;
+    let symH = Math.max(r.y + mapping.get('visualization.stroke'), 12),
+        dy = r.y + mapping.get('visualization.stroke') - symH;
 
     d3.select(this).flowClass("horizontal solid stretched flow")
       .flowStyle(`position: relative; margin-bottom: 4px`)
@@ -849,7 +867,7 @@ export default Ember.Mixin.create({
     
     let symG = g.append("g")
       .classed("symG", true)
-      .flowStyle("v-mode", `margin-top: ${r.anchorY+d.get('mapping.visualization.stroke')/2 - dy/2}px`)
+      .flowStyle("v-mode", `margin-top: ${r.anchorY+mapping.get('visualization.stroke')/2 - dy/2}px`)
       .flowStyle("h-mode", `margin-left: ${r.x}px`)
       .flowClass("h-mode", "solid")
       .flowComputed("h-mode", "margin-top", function() {
@@ -859,11 +877,11 @@ export default Ember.Mixin.create({
 
     symbol.insert(symG)
       .attrs({
-        "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
-        "i:i:stroke-width": d.get('mapping.visualization.stroke'),
-        "stroke": d.get('mapping.visualization.strokeColor'),
-        "fill": d.get('mapping').getScaleOf('color')(val),
-        "opacity": d.get('opacity')
+        "stroke-width": symbol.unscale(mapping.get('visualization.stroke')),
+        "i:i:stroke-width": mapping.get('visualization.stroke'),
+        "stroke": mapping.get('visualization.strokeColor'),
+        "fill": mapping.getScaleOf('color')(val),
+        "opacity": layer.get('opacity')
       });
       
     g = g.append("g").flowClass("outer fluid flow-no-size")
@@ -909,13 +927,13 @@ export default Ember.Mixin.create({
             d3.select(this).closestParent(".legend-layer").selectAll("g.symG")
           ) / 2 + MARGIN_SYMBOL_TEXT;
         })
-        .text( formatter(d.get('mapping.extent')[1]) )
+        .text( formatter(mapping.get('extent')[1]) )
         .attrs({
           x: 0,
           y: 0,
           dy: "0.3em",
           "font-size": "0.75em",
-          "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
+          "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
         });
       
     }
@@ -962,11 +980,11 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": d.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
       });
   },
 
-  appendBarIntervals(el, intervals, d, formatter) {
+  appendBarIntervals(el, intervals, layer, mapping, formatter) {
 
     let g = el.append("g").classed("row", true),
         barG = g.append("g").classed("bars", true),
@@ -978,9 +996,9 @@ export default Ember.Mixin.create({
 
       let sign = Math.sign(val) || 1,
           symbol = SymbolMaker.symbol({
-            name: d.get('mapping.visualization.shape'),
-            size: d.get('mapping').getScaleOf('size')(val)*2,
-            barWidth: d.get('mapping.visualization.barWidth'),
+            name: mapping.get('visualization.shape'),
+            size: mapping.getScaleOf('size')(val)*2,
+            barWidth: mapping.get('visualization.barWidth'),
             sign
           });
 
@@ -988,9 +1006,9 @@ export default Ember.Mixin.create({
 
       if (!(r.x > 0 && r.y > 0)) return;
 
-      let symH = r.y + d.get('mapping.visualization.stroke');
+      let symH = r.y + mapping.get('visualization.stroke');
         
-      let dy = r.y + d.get('mapping.visualization.stroke') - symH;
+      let dy = r.y + mapping.get('visualization.stroke') - symH;
 
       d3.select(this).flowClass("horizontal solid")
         .flowStyle(`height: ${symH}px; margin-right: 2px`);
@@ -1000,11 +1018,11 @@ export default Ember.Mixin.create({
 
       symbol.insert(symG)
         .attrs({
-          "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
-          "i:i:stroke-width": d.get('mapping.visualization.stroke'),
-          "stroke": d.get('mapping.visualization.strokeColor'),
-          "fill": d.get('mapping').getScaleOf('color')(val),
-          "opacity": d.get('opacity')
+          "stroke-width": symbol.unscale(mapping.get('visualization.stroke')),
+          "i:i:stroke-width": mapping.get('visualization.stroke'),
+          "stroke": mapping.get('visualization.strokeColor'),
+          "fill": mapping.getScaleOf('color')(val),
+          "opacity": layer.get('opacity')
         });
 
         maxHeight = Math.max(maxHeight, -sign*symH);
@@ -1013,7 +1031,7 @@ export default Ember.Mixin.create({
     };
 
     let customScale = function() {
-      let transform = d.get('mapping').getScaleOf('size'),
+      let transform = mapping.getScaleOf('size'),
           domain = d3.extent(intervals),
           range = [maxHeight, minHeight];
       function scale(x) {
@@ -1026,7 +1044,7 @@ export default Ember.Mixin.create({
         return domain;
       };
       scale.range = function() {
-        let vals = [0, ...intervals, d.get('mapping.extent')[1]];
+        let vals = [0, ...intervals, mapping.get('extent')[1]];
         return d3.extent(vals).map(scale);
       };
       scale.ticks = function(n) {
@@ -1040,11 +1058,11 @@ export default Ember.Mixin.create({
           }
           scaledInts = Array.from({length: n}, (v, i) => range[0]+i*h);
           ints = scaledInts.map( y => (y < 0 ? 1: -1) * scale.invert(y) );
-          if (d.get('mapping.scale.diverging')) {
-            ints.push(d.get('mapping.scale.valueBreak'));
+          if (mapping.get('scale.diverging')) {
+            ints.push(mapping.get('scale.valueBreak'));
           }
         } else {
-          ints = [...intervals, d.get('mapping.extent')[1]];
+          ints = [...intervals, mapping.get('extent')[1]];
           scaledInts = ints.map( x => scale(x) );
         }
 
@@ -1085,7 +1103,7 @@ export default Ember.Mixin.create({
     axisG.call(yAxis);
 
     /*//add value break axis
-    let rValueBreak = d.get('mapping').getScaleOf('size')(d.get('mapping.scale.valueBreak'))*2;
+    let rValueBreak = mapping.getScaleOf('size')(mapping.get('scale.valueBreak'))*2;
     g.append("line")
       .attrs({
         x1: 0,
@@ -1107,10 +1125,10 @@ export default Ember.Mixin.create({
       });
   },
 
-  appendRuleLabel(svg, d, rule, i) {
+  appendRuleLabel(svg, layer, mapping, rule, i) {
 
-    let converter = d.get('mapping.ruleFn').bind(d.get('mapping')),
-        isSymbol = d.get('mapping.visualization.mainType') === "symbol",
+    let converter = mapping.get('ruleFn').bind(mapping),
+        isSymbol = mapping.get('visualization.mainType') === "symbol",
         r;
 
     let g = d3.select(this).append("g")
@@ -1126,7 +1144,7 @@ export default Ember.Mixin.create({
         return d3lper.selectionMaxHeight(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2;
       });
 
-      let shape = rule.get('shape') ? rule.get('shape') : d.get('mapping.visualization.shape'),
+      let shape = rule.get('shape') ? rule.get('shape') : mapping.get('visualization.shape'),
           symbol = SymbolMaker.symbol({
             name: shape,
             size: rule.get('size')*2,
@@ -1134,7 +1152,7 @@ export default Ember.Mixin.create({
       
       r = symbol.getSize();
 
-      let symH = r.y + d.get('mapping.visualization.stroke');
+      let symH = r.y + mapping.get('visualization.stroke');
       
       d3.select(this).flowClass("horizontal stretched solid flow")
         .flowStyle("v-mode", `height: ${symH/2}px; margin-bottom: 4px; margin-top: ${symH/2}px`);
@@ -1148,11 +1166,11 @@ export default Ember.Mixin.create({
 
       symbol.insert(symG)
         .attrs({
-          "stroke-width": symbol.unscale(d.get('mapping.visualization.stroke')),
-          "i:i:stroke-width": d.get('mapping.visualization.stroke'),
+          "stroke-width": symbol.unscale(mapping.get('visualization.stroke')),
+          "i:i:stroke-width": mapping.get('visualization.stroke'),
           "stroke": rule.get('strokeColor'),
           "fill": rule.get('color'),
-          "opacity": d.get('opacity')
+          "opacity": layer.get('opacity')
         });
         
     } else {

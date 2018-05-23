@@ -220,6 +220,7 @@ export default {
       },
       "title" : "réglages",
       "symbols": "symboles",
+      "surfaces": "surfaces",
       "thresholds": "seuils",
       "discretization": {
         "title": "discrétisation",
@@ -280,7 +281,15 @@ export default {
         },
         "val_symboles": {
           "name": "valeurs > symboles",
-          "description": "les symboles sont proportionnels aux valeurs"
+          "description": "les symboles sont proportionnels aux valeurs",
+          "combined": {
+            "quanti": {
+              "val_surfaces": {
+                "name": "valeurs > symboles + surfaces",
+                "description": "les symboles sont proportionnels et le dégradé de couleurs suit les valeurs"
+              }
+            }
+          }
         }
       },
       "quali": {

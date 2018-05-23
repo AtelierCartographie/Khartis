@@ -219,6 +219,7 @@ export default {
       },
       "title" : "settings",
       "symbols": "symbols",
+      "surfaces": "surfaces",
       "thresholds": "thresholds",
       "discretization": {
         "title": "discretization",

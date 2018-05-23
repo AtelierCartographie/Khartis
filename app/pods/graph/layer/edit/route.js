@@ -15,7 +15,7 @@ export default Ember.Route.extend({
     let layer = this.modelFor('graph.layer');
     if (layer.get('mapping.type')) {
       
-      if (layer.get('mapping.rules').length > 30) {
+      if (false && layer.get('mapping.rules').length > 30) { //TODO
         return this.get('ModalManager')
           .show('confirm', Ember.String.capitalize(this.get('i18n').t('visualization.alert.bigDataSet.content').string),
             Ember.String.capitalize(this.get('i18n').t('visualization.alert.bigDataSet.title').string),

@@ -8,7 +8,8 @@ module.exports = function(defaults) {
   var conf = env(EmberApp.env()),
       app = new EmberApp(defaults, {
         nodeModulesToVendor: [
-          'node_modules/bootstrap-sass/assets/javascripts/bootstrap'
+          'node_modules/bootstrap-sass/assets/javascripts/bootstrap',
+          'node_modules/normalize-scss/sass',
         ],
         babel: {
           plugins: [
@@ -33,11 +34,10 @@ module.exports = function(defaults) {
         }
       });
 
-  //app.import("bower_components/d3-geo-projection/d3.geo.projection.min.js");
   app.import("vendor/modal.js");
   
-  //app.import("vendor/d3.geo.polyhedron.min.js");
   app.import("vendor/FileSaver.js");
+  app.import("vendor/_normalize.scss");
   app.import("vendor/codemirror-placeholder.js");
   app.import("vendor/canvas-to-blob-polyfill.js");
   app.import("vendor/lz-string.js");

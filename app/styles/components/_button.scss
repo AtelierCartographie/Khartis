@@ -79,19 +79,19 @@ a.button {
   right: 1rem;
 }
 
-.dropdown-trigger .add-variable-button {
+.add-visualization-button {
 
   border-radius: 50%;
   background-color: color(primary2);
   color: #FFF;
-  width: 45px;
-  height: 45px;
+  width: 4.5rem;
+  height: 4.5rem;
   box-shadow: 2px 2px 5px rgba(#000, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   &, .iconfont {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 
   i {
@@ -102,7 +102,7 @@ a.button {
   margin-bottom: 0.5rem;
 
   &:hover {
-    background-color: lighten(color(primary2), 30%);
+    background-color: lighten(color(primary2), 20%);
   }
 }
 

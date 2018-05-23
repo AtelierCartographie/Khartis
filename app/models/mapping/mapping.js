@@ -12,16 +12,13 @@ import {RuleFactory} from './rule';
 import FilterAbstract from './filter/abstract';
 import FilterFactory from './filter/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
+import AbstractMapping from './abstract-mapping';
 
-let Mapping = Struct.extend(LegendMixin, {
-  
-  type: null,
+let Mapping = AbstractMapping.extend(LegendMixin, {
   
   scale: null,
-  visualization: null,
   
   varCol: null,
-  geoDef: null,
   filter: null,
   
   rules: null,
@@ -32,20 +29,22 @@ let Mapping = Struct.extend(LegendMixin, {
 
   ordered: false,
   
-  canBeSurface: function() {
-    return this.get('geoDef.isGeoRef');
-  }.property('geoDef.isGeoRef'),
-  
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
   }.property('varCol._defferedChangeIndicator'),
-  
+
+  isBoundToVar: function() {
+    return this.get('varCol') != null;
+  }.property('varCol'),
+
   init() {
     this._super();
-    if (!this.get('scale')) {
-      this.set('scale', Scale.create());
-    }
+    !this.get('scale') && this.set('scale', Scale.create());
   },
+
+  titleComputed: function() {
+    return this.get('title') || this.get('varCol.header.value');
+  }.property('title', 'varCol.header.value'),
 
   filteredBody: function() {
     let geoDef = this.get('geoDef'),
@@ -91,27 +90,36 @@ let Mapping = Struct.extend(LegendMixin, {
         this.set('visualization', null);
         break;
     }
-    this.generateVisualization();
-    this.generateRules();
-    this.configureScale();
-    this.postConfigure();
+
+    //check compatibility between type and variable
+    if (ValueMixins.Data.detect(this) && !this.get('canBeMappedAsValue')) {
+      this.set('varCol', null);
+    }
+
+    this.finalize();
+
   }.observes('type').on("init"),
+
+  finalize() {
+    if (this.get('varCol')) {
+      this.configureScale();
+      this.generateVisualization();
+      this.generateRules();
+      this.postConfigure();
+    }
+  },
   
   getScaleOf(type) {
     throw new Error("not implemented. Should be overrided by mixin");
   },
   
-  generateRules() {
-  },
+  generateRules() {},
   
-  generateVisualization() {
-  },
+  generateVisualization() {},
 
-  configureScale() {
-  },
+  configureScale() {},
 
-  postConfigure() {
-  },
+  postConfigure() {},
 
   usePattern: Ember.computed('visualization.pattern', {
     get() {
@@ -136,12 +144,11 @@ let Mapping = Struct.extend(LegendMixin, {
   
   fn() {
     
-    let self = this,
-        rules = this.get('rules'),
+    let rules = this.get('rules'),
         visualization = this.get('visualization'),
         ruleForCell = new Map();
     
-    return function(cell, mode) {
+    return (cell, mode) => {
       
       if (!ruleForCell.has(cell)) {
         ruleForCell.set(cell, rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false);
@@ -150,15 +157,15 @@ let Mapping = Struct.extend(LegendMixin, {
       let rule = ruleForCell.get(cell);
 
       if (rule) {
-        return self.ruleFn(rule, mode);
+        return this.ruleFn(rule, mode);
       } else {
         switch (mode) {
           case "texture":
-            return self.getScaleOf("texture")(cell.get('postProcessedValue'));
+            return this.getScaleOf("texture")(cell.get('postProcessedValue'));
           case "fill":
-            return self.getScaleOf("color")(cell.get('postProcessedValue'));
+            return this.getScaleOf("color")(cell.get('postProcessedValue'));
           case "size":
-            return self.getScaleOf("size")(cell.get('postProcessedValue'));
+            return this.getScaleOf("size")(cell.get('postProcessedValue'));
           case "shape":
             return visualization.get('shape');
           case "strokeColor":
@@ -188,7 +195,7 @@ let Mapping = Struct.extend(LegendMixin, {
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type',
+    'type', 'titleComputed', 'varCol',
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',
@@ -200,11 +207,9 @@ let Mapping = Struct.extend(LegendMixin, {
   
   export(props) {
     return this._super(Object.assign({
-      type: this.get('type'),
       scale: this.get('scale') ? this.get('scale').export() : null,
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
-      geoDef: this.get('geoDef') ? this.get('geoDef').export() : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
       legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
       ordered: this.get('ordered'),
@@ -218,11 +223,9 @@ Mapping.reopenClass({
   
   restore(json, refs = {}, opts = {}) {
     return this._super(json, refs, {
-      type: json.type,
       scale: json.scale != null ? Scale.restore(json.scale, refs) : null,
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
-      geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
       legendMaxValuePrecision: json.legendMaxValuePrecision,
       ordered: json.ordered,
