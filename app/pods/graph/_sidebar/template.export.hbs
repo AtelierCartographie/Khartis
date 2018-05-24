@@ -151,23 +151,23 @@
           <span class="layer-title">{{x-capitalize (t 'export.settings.orientation.vertical')}}</span>
         </div>
       </div>
-      {{#o-wrap/legend-settings as |settings|}}
+      {{#o-wrap/legend-settings layers=model.graphLayers as |settings|}}
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.edit')}}</label>
         <div class="horizontal solid flow w5">
           {{#x-dropdown-plus as |facet|}}
             {{#facet.trigger class="horizontal space-between flow filled padded-l on-white"}}
               {{#if settings.obj}}
-                {{settings.obj.mapping.varCol.header.value}}
+                {{settings.obj.legendTitleComputed}}
               {{else}}
                 {{x-capitalize (t 'export.settings.legend.chooseLegend')}}
               {{/if}}
               <i class="iconfont iconfont-angle-down"></i>
             {{/facet.trigger}}
             {{#facet.list}}
-              {{#each model.graphLayers as |layer|}}
-              <li {{action 'editLayerLegend' layer target=settings}} class="horizontal middle airy flow">
-                <div classs="fluid padded-h">{{layer.mapping.varCol.header.value}}</div>
+              {{#each settings.flattenedMappings as |mapping|}}
+              <li {{action 'editMappingLegend' mapping target=settings}} class="horizontal middle airy flow">
+                <div classs="fluid padded-h">{{mapping.legendTitleComputed}}</div>
               </li>
               {{/each}}
             {{/facet.list}}

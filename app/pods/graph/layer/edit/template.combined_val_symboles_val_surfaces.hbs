@@ -18,7 +18,6 @@
   <div class="title">Choix des variables</div>
   <div class="body">
     <div class="settings vertical flow">
-      {{log editedLayer.mapping.mappings}}
       {{#each editedLayer.mapping.mappings as |mapping|}}
         {{mapping-var-selector
           variables=model.data.columns
@@ -26,25 +25,25 @@
         }}
       {{/each}}
     </div>
+    <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.title')}}</label>
+        {{input value=editedLayer.mapping.title}}
+      </div>
   </div>
 
   {{#if editedLayer.mapping.isBoundToVar}}
     {{#each editedLayer.mapping.mappings as |mapping|}}
       {{#if (x-eq mapping.type 'quanti.val_symboles')}}
         {{mapping-settings/val-symbols
+          standalone=false
           mapping=mapping
-          bindScaleIntervalType=(action 'bindScaleIntervalType')
           bind=(action 'bind')
-          updateValueBreak=(action 'updateValueBreak')
-          toggleRuleVisibility=(action 'toggleRuleVisibility')
         }}
       {{else if (x-eq mapping.type 'quanti.val_surfaces')}}
         {{mapping-settings/val-surfaces
+          standalone=false
           mapping=mapping
-          bindScaleIntervalType=(action 'bindScaleIntervalType')
           bind=(action 'bind')
-          updateValueBreak=(action 'updateValueBreak')
-          toggleRuleVisibility=(action 'toggleRuleVisibility')
         }}
       {{/if}}
     {{/each}}

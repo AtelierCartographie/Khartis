@@ -1,6 +1,10 @@
   <div class="body">
     <div class="settings vertical flow">
+      {{#if standalone}}
+      <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
+      {{else}}
       <div class="title underlined">{{x-capitalize (t 'visualization.settings.surfaces')}}</div>
+      {{/if}}
       <div class="solid vertical flow">
         <div class="horizontal middle flow">
             {{#x-tooltip message=(t 'visualization.settings.discretization.tooltip.title')}}

@@ -1,10 +1,7 @@
 <div class="body">
   <div class="settings vertical flow">
-      {{#if standalone}}
-      <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
-      {{else}}
-      <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
-      {{/if}}    <div class="solid vertical flow">
+    <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
+    <div class="solid vertical flow">
       {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
       <ul class="tabs brewer-tabs">
         <li tab-id="linear-tab">
@@ -134,7 +131,7 @@
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
         <div class="horizontal half-airy solid flow w7">
-          {{x-slider class="fluid" band=0.05 value=mapping.visualization.opacity min=0 max=1}}
+          {{x-slider class="fluid" band=0.05 value=editedLayer.opacity min=0 max=1}}
         </div>
       </div>
     </div>

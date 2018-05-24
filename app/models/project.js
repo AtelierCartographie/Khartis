@@ -7,11 +7,13 @@ import GeoDef from './geo-def';
 import StyleText from './style-text';
 /* global Em */
 
-const CURRENT_VERSION = 3.3;
+const CURRENT_VERSION = 3.4;
+
 const VERSION_LZ_STRING= 3.0;
 const VERSION_LEGEND_2 = 3.1;
 const VERSION_LABELLING_2 = 3.2;
 const VERSION_WITH_STYLE_TEXT = 3.3;
+const VERSION_WITH_MULTI_MAPPING = 3.4;
 
 const DEFAULT_TITLE_SIZE = 26;
 
@@ -188,6 +190,20 @@ Project.reopenClass({
             }).export();
           }
           return ll; 
+        });
+      }
+      if (ret.version < VERSION_WITH_MULTI_MAPPING) {
+        ret.graphLayers = ret.graphLayers.map(gl => {
+          if (gl.opacity != null && !gl.mapping.isMulti) {
+            gl.mapping.visualization.opacity = gl.opacity;
+          }
+          if (gl.legendTitle != null && !gl.mapping.isMulti) {
+            gl.mapping.legendTitle = gl.legendTitle;
+          }
+          if (gl.legendTitle != null && !gl.mapping.isMulti) {
+            gl.mapping.legendOrientation = gl.legendOrientation;
+          }
+          return gl;
         });
       }
 

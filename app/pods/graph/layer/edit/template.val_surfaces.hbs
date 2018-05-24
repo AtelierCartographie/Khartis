@@ -18,7 +18,6 @@
   <div class="title">Choix des variables</div>
   <div class="body">
     <div class="settings vertical flow">
-      hello
       {{mapping-var-selector
         variables=model.data.columns
         mapping=editedLayer.mapping
@@ -29,10 +28,7 @@
   {{#if editedLayer.mapping.isBoundToVar}}
     {{mapping-settings/val-surfaces
       mapping=editedLayer.mapping
-      bindScaleIntervalType=(action 'bindScaleIntervalType')
       bind=(action 'bind')
-      updateValueBreak=(action 'updateValueBreak')
-      toggleRuleVisibility=(action 'toggleRuleVisibility')
     }}
   {{/if}} {{! boundToVar }}
 </div>

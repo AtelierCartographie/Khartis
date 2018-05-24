@@ -16,7 +16,7 @@ let MultiMapping = AbstractMapping.extend({
 
   titleComputed: function() {
     return this.get('title') || this.get('mappings').map( m => m.get('titleComputed') ).join(" - ");
-  }.property('title', 'varCol.header.value'),
+  }.property('title', 'mappings.@each.titleComputed'),
 
   isBoundToVar: function() {
     return this.get('mappings').every( m => m.get('isBoundToVar') );

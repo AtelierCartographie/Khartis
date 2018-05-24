@@ -6,6 +6,14 @@ import {compressIntervals} from 'khartis/utils/stats';
 
 let LegendMixin = Ember.Mixin.create({
 
+  legendTitle: null,
+  legendOrientation: "vertical",
+  legendMaxValuePrecision: null,
+
+  legendTitleComputed: function() {
+    return this.get('legendTitle') ? this.get('legendTitle') : this.get('varCol.header.value');
+  }.property('legendTitle', 'varCol.header.value'),
+
   getLegendIntervals() {
 
     let intervals = this.get('intervals').slice();

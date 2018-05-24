@@ -395,19 +395,16 @@ export default Ember.Mixin.create({
       .flowStyle(`padding-left: 5px;`);
     
     let bindLayer = (_) => {
+      
+      _.flowClass(`stretched ${self.get('graphLayout.legendLayout.stacking')} flow`)
+        .flowStyle("margin-top: 16px")
+        .flowStyle("g-h-mode", "margin-right: 34px")
+        .flowStyle("g-v-mode", "margin-bottom: 24px");
 
       _.each( function(layer, i) {
 
         const el = d3.select(this);
         const mapping = layer.get('mapping');
-
-        _.flowClass(`stretched ${layer.legendOrientation === "horizontal" ? "vertical" : "horizontal"} flow`)
-          .flowStyle("margin-top: 16px")
-          .flowStyle("g-h-mode", "margin-right: 34px")
-          .flowStyle("g-v-mode", "margin-bottom: 24px")
-          .flowState(
-            mapping.get('isMulti') && layer.legendOrientation === "horizontal" ? "multi-v-mode" : "multi-h-mode"
-          )
 
         self.bindDrag(el);
         el.selectAll("*").remove();
@@ -445,8 +442,8 @@ export default Ember.Mixin.create({
     const innerEl = el.append("g")
       .classed("legend-inner", true)
       .flowClass("stretched vertical flow")
-      .flowStyle("multi-v-mode", `margin-top: ${multiIdx > 0 ? 16 : 0}px`)
-      .flowStyle("multi-h-mode", `margin-left: ${multiIdx > 0 ? 16 : 0}px`);
+      .flowStyle("g-v-mode", `margin-top: ${multiIdx > 0 ? 24 : 0}px`)
+      .flowStyle("g-h-mode", `margin-left: ${multiIdx > 0 ? 16 : 0}px`);
     
     let formatter;
 
@@ -474,15 +471,15 @@ export default Ember.Mixin.create({
         "font-weight": "bold",
         "text-anchor": "left"
       });
-    
-    label.text(layer.get('legendTitleComputed'))
+
+    label.text(mapping.get('legendTitleComputed'))
       .call(d3lper.wrapText, 200);
 
     label.on("click", function() {
       if (d3.event.defaultPrevented) return;
       d3.event.preventDefault();
-      TextEditor.showAt("legend-title-editor", this, layer.get('legendTitleComputed'), function(val) {
-        layer.set('legendTitle', val);
+      TextEditor.showAt("legend-title-editor", this, mapping.get('legendTitleComputed'), function(val) {
+        mapping.set('legendTitle', val);
       });
     });
 
@@ -491,7 +488,7 @@ export default Ember.Mixin.create({
       .flowClass("h-mode", "horizontal")
       .flowClass("v-mode", "vertical")
       .flowState(
-        layer.legendOrientation === "horizontal" && mapping.get('visualization.shape') !== "bar" ? "h-mode":"v-mode"
+        mapping.legendOrientation === "horizontal" && mapping.get('visualization.shape') !== "bar" ? "h-mode":"v-mode"
       );
 
     let ruleEl = contentEl;
@@ -532,7 +529,7 @@ export default Ember.Mixin.create({
           .flowClass("h-mode", "horizontal")
           .flowClass("v-mode", "vertical")
           .flowStyle("h-mode", "position: relative; margin-top: 20px; padding-top: 14px;")
-          .flowState(d.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+          .flowState(mapping.legendOrientation === "horizontal" ? "h-mode":"v-mode");
 
         ruleEl.append("g")
           .flowStyle("v-mode", "margin-top: 10px; margin-bottom: 10px")
@@ -617,7 +614,7 @@ export default Ember.Mixin.create({
         "width": 2*r.x,
         "height": 2*r.y,
         y: 0,
-        "opacity": layer.get('opacity'),
+        "opacity": mapping.get('visualization.opacity'),
         "fill": () => {
           let v = val*(1-Math.sign(val)*Number.EPSILON) - Number.EPSILON;
           let pattern = mapping.getScaleOf("texture")(v),
@@ -654,7 +651,7 @@ export default Ember.Mixin.create({
           y:  0,
           dy: "0.3em",
           "font-size": "0.75em",
-          "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
+          "text-anchor": mapping.legendOrientation === "horizontal" ? "middle" : null
         });
         
       }
@@ -669,7 +666,7 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": mapping.legendOrientation === "horizontal" ? "middle" : null
       });
       
   },
@@ -736,7 +733,7 @@ export default Ember.Mixin.create({
           "i:i:stroke-width": mapping.get('visualization.stroke'),
           "stroke": mapping.get('visualization.strokeColor'),
           "fill": mapping.getScaleOf('color')(val),
-          "opacity": layer.get('opacity')
+          "opacity": mapping.get('visualization.opacity')
         });
 
     } else {
@@ -802,7 +799,7 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": mapping.legendOrientation === "horizontal" ? "middle" : null
       });
         
   },
@@ -881,7 +878,7 @@ export default Ember.Mixin.create({
         "i:i:stroke-width": mapping.get('visualization.stroke'),
         "stroke": mapping.get('visualization.strokeColor'),
         "fill": mapping.getScaleOf('color')(val),
-        "opacity": layer.get('opacity')
+        "opacity": mapping.get('visualization.opacity')
       });
       
     g = g.append("g").flowClass("outer fluid flow-no-size")
@@ -933,7 +930,7 @@ export default Ember.Mixin.create({
           y: 0,
           dy: "0.3em",
           "font-size": "0.75em",
-          "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
+          "text-anchor": mapping.legendOrientation === "horizontal" ? "middle" : null
         });
       
     }
@@ -980,7 +977,7 @@ export default Ember.Mixin.create({
         y: 0,
         dy: "0.3em",
         "font-size": "0.75em",
-        "text-anchor": layer.legendOrientation === "horizontal" ? "middle" : null
+        "text-anchor": mapping.legendOrientation === "horizontal" ? "middle" : null
       });
   },
 
@@ -1022,7 +1019,7 @@ export default Ember.Mixin.create({
           "i:i:stroke-width": mapping.get('visualization.stroke'),
           "stroke": mapping.get('visualization.strokeColor'),
           "fill": mapping.getScaleOf('color')(val),
-          "opacity": layer.get('opacity')
+          "opacity": mapping.get('visualization.opacity')
         });
 
         maxHeight = Math.max(maxHeight, -sign*symH);
@@ -1170,7 +1167,7 @@ export default Ember.Mixin.create({
           "i:i:stroke-width": mapping.get('visualization.stroke'),
           "stroke": rule.get('strokeColor'),
           "fill": rule.get('color'),
-          "opacity": layer.get('opacity')
+          "opacity": mapping.get('visualization.opacity')
         });
         
     } else {

@@ -28,10 +28,7 @@
   {{#if editedLayer.mapping.isBoundToVar}}
     {{mapping-settings/val-symbols
       mapping=editedLayer.mapping
-      bindScaleIntervalType=(action 'bindScaleIntervalType')
       bind=(action 'bind')
-      updateValueBreak=(action 'updateValueBreak')
-      toggleRuleVisibility=(action 'toggleRuleVisibility')
     }}
   {{/if}} {{! boundToVar }}
 </div>

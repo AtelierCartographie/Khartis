@@ -231,10 +231,6 @@ export default Ember.Controller.extend(ExportMixin, {
       layer.set('mapping.labelCol', col);
     },
     
-    bindScaleIntervalType(scale, type) {
-      scale.set('intervalType', type);
-    },
-
     bindPattern(pattern) {
       this.set('editedLayer.mapping.visualization.pattern', pattern.fork());
     },
@@ -243,10 +239,6 @@ export default Ember.Controller.extend(ExportMixin, {
       root.set(prop, value);
     },
     
-    toggleRuleVisibility(rule) {
-      rule.toggleProperty('visible');
-    },
-
     updateShapeSetShape(shape) {
       this.set('editedLayer.mapping.visualization.shape', shape);
     },
@@ -324,15 +316,6 @@ export default Ember.Controller.extend(ExportMixin, {
 
     toggleTooltip() {
       this.toggleProperty('tooltipEnabled');
-    },
-
-    updateValueBreak(val) {
-      if (Ember.isEmpty(val)) {
-        this.set('editedLayer.mapping.scale.valueBreak', null);
-      } else {
-        this.set('editedLayer.mapping.scale.valueBreak', val);
-        this.get('editedLayer.mapping').clampValueBreak();
-      }
     },
 
     randomizeRules() {

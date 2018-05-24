@@ -4,6 +4,8 @@ import WrapperAbstract from '../-abstract/component';
 
 export default WrapperAbstract.extend({
 
+  layers: null,
+
   legendTitle: Ember.computed('obj', {
     get() {
       return this.get('obj.legendTitle') || this.get('obj.legendTitleComputed');
@@ -13,9 +15,19 @@ export default WrapperAbstract.extend({
     }
   }),
 
+  flattenedMappings: Ember.computed('layers.@each.mapping', function() {
+    return this.get('layers').reduce( (out, lyr) => {
+      if (lyr.get('mapping.isMulti')) {
+        return out.concat(lyr.get('mapping.mappings'));
+      } else {
+        return [...out, lyr.get('mapping')];
+      }
+    }, []);
+  }),
+
   orientationAvailable: function() {
-    return this.get('obj.mapping.visualization.shape') !== "bar";
-  }.property('obj.mapping.visualization.shape'),
+    return this.get('obj.visualization.shape') !== "bar";
+  }.property('obj.visualization.shape'),
 
   orientationHori: Ember.computed('obj.legendOrientation', {
     get() {
@@ -45,17 +57,17 @@ export default WrapperAbstract.extend({
     }
   }),
 
-  precisionSettable: Ember.computed('obj.mapping.maxValuePrecision', function() {
-    return this.get('obj.mapping.maxValuePrecision') != null;
+  precisionSettable: Ember.computed('obj.maxValuePrecision', function() {
+    return this.get('obj.maxValuePrecision') != null;
   }),
 
   maxValuePrecision: Ember.computed('obj.legendMaxValuePrecision', {
     get() {
-      return this.get('obj.mapping.maxValuePrecision');
+      return this.get('obj.maxValuePrecision');
     },
     set(k, v) {
-      this.set('obj.mapping.legendMaxValuePrecision', v);
-      return this.get('obj.mapping.maxValuePrecision');
+      this.set('obj.legendMaxValuePrecision', v);
+      return this.get('obj.maxValuePrecision');
     }
   }),
 
@@ -64,8 +76,8 @@ export default WrapperAbstract.extend({
   },
 
   actions: {
-    editLayerLegend(layer) {
-      this.set('obj', layer);
+    editMappingLegend(mapping) {
+      this.set('obj', mapping);
     }
   }
   

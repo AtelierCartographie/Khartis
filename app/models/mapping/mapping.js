@@ -25,8 +25,6 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
 
   colorSet: null,
 
-  legendMaxValuePrecision: null,
-
   ordered: false,
   
   canBeMappedAsValue: function() {
@@ -43,8 +41,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   },
 
   titleComputed: function() {
-    return this.get('title') || this.get('varCol.header.value');
-  }.property('title', 'varCol.header.value'),
+    return this.get('varCol.header.value');
+  }.property('varCol.header.value'),
 
   filteredBody: function() {
     let geoDef = this.get('geoDef'),
@@ -200,10 +198,11 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',
     'filter._defferedChangeIndicator', 'maxValuePrecision',
+    'opacity', 'legendTitle', 'legendOrientation',
     function() {
       this.notifyDefferedChange();
     },
-    25),
+    20),
   
   export(props) {
     return this._super(Object.assign({
@@ -212,6 +211,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
       legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
+      legendTitle: this.get('legendTitle'),
+      legendOrientation: this.get('legendOrientation'),
       ordered: this.get('ordered'),
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
@@ -228,6 +229,8 @@ Mapping.reopenClass({
       varCol: json.varCol ? refs[json.varCol] : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
       legendMaxValuePrecision: json.legendMaxValuePrecision,
+      legendTitle: json.legendTitle,
+      legendOrientation: json.legendOrientation,
       ordered: json.ordered,
       rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null
     });

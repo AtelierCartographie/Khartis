@@ -13,6 +13,7 @@ let SurfaceVisualization = Struct.extend({
   reverse: false,
   patternColor: null,
   patternColorBefore: null,
+  opacity: 1,
 
   mainType: function() {
     return this.get('type').split(".")[0];
@@ -26,7 +27,7 @@ let SurfaceVisualization = Struct.extend({
 
   deferredChange: Ember.debouncedObserver(
     'colors', 'stroke', 'pattern', 'pattern.stroke', 'patternColor',
-    'patternColorBefore', 'reverse',
+    'patternColorBefore', 'reverse', 'opacity',
     function() {
       this.notifyDefferedChange();
     },
@@ -40,7 +41,8 @@ let SurfaceVisualization = Struct.extend({
       stroke: this.get('stroke'),
       reverse: this.get('reverse'),
       patternColor: this.get('patternColor'),
-      patternColorBefore: this.get('patternColorBefore')
+      patternColorBefore: this.get('patternColorBefore'),
+      opacity: this.get('opacity')
     }, props));
   }
   
@@ -55,7 +57,8 @@ SurfaceVisualization.reopenClass({
       stroke: json.stroke,
       reverse: json.reverse,
       patternColor: json.patternColor,
-      patternColorBefore: json.patternColorBefore
+      patternColorBefore: json.patternColorBefore,
+      opacity: json.opacity
     });
   }
 });

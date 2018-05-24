@@ -21,6 +21,7 @@ let SymbolVisualization = Struct.extend({
   stroke: DEFAULT_STROKE,
   maxSize: DEFAULT_MAX_SIZE,
   barWidth: 16,
+  opacity: 1,
 
   mainType: function() {
     return this.get('type').split(".")[0];
@@ -77,7 +78,7 @@ let SymbolVisualization = Struct.extend({
   
   deferredChange: Ember.debouncedObserver(
     'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak',
-    'maxSize', 'shape', 'barWidth',
+    'maxSize', 'shape', 'barWidth', 'opacity',
     function() {
       this.notifyDefferedChange();
     },
@@ -94,7 +95,8 @@ let SymbolVisualization = Struct.extend({
       stroke: this.get('stroke'),
       maxSize: this.get('maxSize'),
       colorBeforeBreak: this.get('colorBeforeBreak'),
-      barWidth: this.get('barWidth')
+      barWidth: this.get('barWidth'),
+      opacity: this.get('opacity')
     }, props));
   }
   
@@ -112,7 +114,8 @@ SymbolVisualization.reopenClass({
       stroke: json.stroke,
       maxSize: json.maxSize,
       colorBeforeBreak: json.colorBeforeBreak,
-      barWidth: json.barWidth
+      barWidth: json.barWidth,
+      opacity: json.opacity
     });
   }
 });
