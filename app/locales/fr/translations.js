@@ -288,6 +288,12 @@ export default {
                 "name": "valeurs > symboles + surfaces",
                 "description": "les symboles sont proportionnels et le dégradé de couleurs suit les valeurs"
               }
+            },
+            "quali": {
+              "cat_surfaces": {
+                "name": "valeurs > symboles + surfaces",
+                "description": "les symboles sont proportionnels et le dégradé de couleurs suit les catégories"
+              }
             }
           }
         }

@@ -1,17 +1,17 @@
 {{#x-dropdown-plus as |facet|}}
   {{#facet.trigger}}
+  <div class="button add-variable-button">
   {{#if mapping.varCol}}
-      <div class="button add-variable-button">
-        <span>{{mapping.varCol.header.value}}</span>
-        {{#if isMappedOnSymbol}}
-        <span> &gt; symboles</span>
-        {{else if isMappedOnSurface}}
-        <span> &gt; surfaces</span>
-        {{/if}}
-      </div>
+        <i class="icon iconfont iconfont-v-circle-o icon-var"></i> <span>{{mapping.varCol.header.value}}</span>
   {{else}}
-      <div class="button add-variable-button "><i class="iconfont iconfont-plus-thin"></i> {{yield (hash variable=true)}}</div>
+      <i class="icon iconfont iconfont-plus-circle-o"></i> Choisir une variable
   {{/if}}
+  {{#if isMappedOnSymbol}}
+    <span> &gt; symboles</span>
+    {{else if isMappedOnSurface}}
+    <span> &gt; surfaces</span>
+  {{/if}}
+  </div>
   {{/facet.trigger}}
   {{#facet.list}}
     {{#each availableVariables as |v|}}

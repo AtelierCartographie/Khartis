@@ -107,6 +107,10 @@ let ColumnStruct = Struct.extend({
     compileVisitors() {
       this.set('cells', this.get('_visitors'));
     },
+
+    cellAtRow(row) {
+      return this.get('body').find( c => c.get('row') == row );
+    },
     
     header: function() {
       return this.get('cells').find( c => c.get('row.header') );

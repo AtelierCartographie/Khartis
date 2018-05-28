@@ -4,7 +4,6 @@ import ValueMixins from 'khartis/models/mapping/mixins/value';
 import CategoryMixins from 'khartis/models/mapping/mixins/category';
 
 export default Component.extend({
-  tagName: '',
   variables: null,
   mapping: null,
 

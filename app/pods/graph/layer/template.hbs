@@ -49,6 +49,13 @@
           </div>
         </div>
       </li>
+    </ul>
+  </div>
+</div>
+<div class="layers">
+  <div class="title">{{x-capitalize (t 'visualization.title.choose')}}</div>
+  <div class="body">
+    <ul class="collection">
       <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles.combined.quanti.val_surfaces'}}>
         <div class="horizontal flow">
           <div class="caption">
@@ -60,30 +67,17 @@
           </div>
         </div>
       </li>
-      {{#if false}}
-      <li class="clickable layer" {{action 'selectMapping' 'quali.ordre_symboles'}}>
+      <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles.combined.quali.cat_surfaces'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-ordre_symboles.svg'}}">
+            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quali.ordre_symboles.name"}}</span>
-              <p class="description">{{t "visualization.type.quali.ordre_symboles.description"}}</p>
-          </div>
-        </div>
-      </li>  
-      <li class="clickable layer" {{action 'selectMapping' 'quali.taille_valeur'}}>
-        <div class="horizontal flow">
-          <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-Taille_Valeur.svg'}}">
-          </div>
-          <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quali.taille_valeur.name"}}</span>
-              <p class="description">{{t "visualization.type.quali.taille_valeur.description"}}</p>
+              <span class="title">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.description"}}</p>
           </div>
         </div>
       </li>
-      {{/if}}
     </ul>
   </div>
 </div>

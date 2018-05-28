@@ -1,3 +1,12 @@
 .add-variable-button {
   font-weight: bold;
+  &:hover {
+    color: color(text, tint);
+  }
+  .icon {
+    margin-right: 0.5rem;
+    &.icon-var {
+      color: color(primary2);
+    }
+  }
 }

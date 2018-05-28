@@ -2,7 +2,10 @@ import Ember from 'ember';
 import AbstractMapping from './abstract-mapping';
 import Mapping from './mapping';
 import ValueMixins from './mixins/value';
-import { QuantiValSymQuantiValSurf } from "./mixins/multi";
+import {
+  QuantiValSymQuantiValSurf,
+  QuantiValSymQualiCatSurf
+} from "./mixins/multi";
 
 let MultiMapping = AbstractMapping.extend({
   
@@ -48,8 +51,33 @@ let MultiMapping = AbstractMapping.extend({
               geoDef: this.get('geoDef')
             })
           ]);
+        } else if (this.get('mappings').length === 1) {
+          this.get('mappings').push(Mapping.create({
+            type: "quanti.val_surfaces",
+            geoDef: this.get('geoDef')
+          }));
         }
         this.reopen(QuantiValSymQuantiValSurf);
+        break;
+      case "quanti.val_symboles.combined.quali.cat_surfaces":
+        if (!this.get('mappings').length) {
+          this.set('mappings', [
+            Mapping.create({
+              type: "quanti.val_symboles",
+              geoDef: this.get('geoDef')
+            }),
+            Mapping.create({
+              type: "quali.cat_surfaces",
+              geoDef: this.get('geoDef')
+            })
+          ]);
+        } else if (this.get('mappings').length === 1) {
+          this.get('mappings').push(Mapping.create({
+            type: "quali.cat_surfaces",
+            geoDef: this.get('geoDef')
+          }));
+        }
+        this.reopen(QuantiValSymQualiCatSurf);
         break;
       default:
         break;
@@ -62,29 +90,19 @@ let MultiMapping = AbstractMapping.extend({
   finalize() {
     this.get('mappings').forEach( m => m.finalize() );
   },
+
+  delegateRuleMode(cell, mode) {
+    throw new Error("not implemented");
+  },
   
   delegateStyleMode(cell, mode) {
     throw new Error("not implemented");
   },
 
   fn() {
-    let rules = this.get('master.rules'),
-        ruleForCell = new Map();
-    
     return (cell, mode) => {
-      
-      if (!ruleForCell.has(cell)) {
-        ruleForCell.set(cell, rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false);
-      }
-      
-      let rule = ruleForCell.get(cell);
-
-      if (rule) {
-        return this.ruleFn(rule, mode);
-      } else {
-        return this.delegateStyleMode(cell, mode);
-      }
-      
+      const row = cell.get('row');
+      return this.delegateRuleMode(row, mode) || this.delegateStyleMode(row, mode);
     }
   },
 

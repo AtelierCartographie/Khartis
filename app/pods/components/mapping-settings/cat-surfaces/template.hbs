@@ -34,8 +34,9 @@
 
   <div class="settings vertical airy flow">
 
-    {{#o-wrap/rules obj=mapping as |rulesWrap|}} {{#o-wrap/brewer obj=mapping as |brewer|}}
-
+  {{#o-wrap/rules obj=mapping as |rulesWrap|}}
+    
+    {{#o-wrap/brewer obj=mapping as |brewer|}}
 
     <div class="vertical flow">
 
@@ -58,6 +59,7 @@
       </div>
 
       {{#if mapping.ordered}}
+
       {{#drag-swap-collection class="collection categories-list fluid scrollable"
         provider=mapping.rules
         shift=(action 'shiftRuleIndex') as |rule self|
@@ -77,8 +79,10 @@
         </div>
       </li>
       {{/drag-swap-collection}}
+
       {{else}}
-      <ul class="collection categories-list fluid scrollable" style="overflow-y: scroll;">
+      
+      <ul class="collection categories-list fluid scrollable">
         {{#each mapping.rules as |rule|}}
         <li>
           <div class="categories-name categories-surface">

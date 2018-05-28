@@ -29,7 +29,8 @@ $colors: (
   ),
 
   primary2: (
-    base: #4f8ba3
+    base: #4f8ba3,
+    shade: darken(#4f8ba3, $tint-shade-multiplier)
   ),
 
   success:(

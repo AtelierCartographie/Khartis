@@ -183,6 +183,7 @@ let DataMixin = Ember.Mixin.create({
         }, new Map());
       this.set("rules", [...ruleMap.values()]);
     }
+    this._super();
   },
   
   intervals: function() {

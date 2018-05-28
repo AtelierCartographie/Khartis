@@ -228,6 +228,8 @@ export default Ember.Mixin.create({
       groups = [];
     }
 
+    console.log("draw legend");
+
     this.d3l().select("g.legend").selectAll("g.legend-group")
       .data(groups)
       .enterUpdate({
@@ -524,7 +526,7 @@ export default Ember.Mixin.create({
 
       if (mapping.get('rules').length) {
         
-        ruleEl = el.append("g")
+        ruleEl = innerEl.append("g")
           .flowClass("solid flow")
           .flowClass("h-mode", "horizontal")
           .flowClass("v-mode", "vertical")

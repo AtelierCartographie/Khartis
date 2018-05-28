@@ -131,6 +131,10 @@ input[type=text].padding-fix {
 
   &.collection.scrollable {
     overflow-y: scroll;
+    flex-basis: auto;
+    flex-shrink: 1;
+    flex-grow: 1;
+    max-height: 45vh;
   }
 
   > li {

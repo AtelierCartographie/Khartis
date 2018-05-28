@@ -8,8 +8,8 @@
             <img src="{{r-url 'assets/images/viz/QUANTI-val_symboles.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.combined.quanti.val_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.combined.quanti.val_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.name"}}</span>
+              <p class="description">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.description"}}</p>
           </div>
         </div>
       </li>
@@ -39,8 +39,8 @@
           mapping=mapping
           bind=(action 'bind')
         }}
-      {{else if (x-eq mapping.type 'quanti.val_surfaces')}}
-        {{mapping-settings/val-surfaces
+      {{else if (x-eq mapping.type 'quali.cat_surfaces')}}
+        {{mapping-settings/cat-surfaces
           standalone=false
           mapping=mapping
           bind=(action 'bind')

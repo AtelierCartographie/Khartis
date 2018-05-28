@@ -26,6 +26,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   colorSet: null,
 
   ordered: false,
+
+  rulesCache: null,
   
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
@@ -111,13 +113,21 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     throw new Error("not implemented. Should be overriden by mixin");
   },
   
-  generateRules() {},
+  generateRules() {
+    this.set('rulesCache', new Map());
+    this.get('rules').forEach( r => {
+      r.get('cells').forEach(cell => this.get('rulesCache').set(cell, r));
+    });
+  },
   
   generateVisualization() {},
 
   configureScale() {},
 
-  postConfigure() {},
+  postConfigure() {
+    this._super();
+    this.set('_finalized', true); 
+  },
 
   usePattern: Ember.computed('visualization.pattern', {
     get() {
@@ -142,17 +152,12 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   
   fn() {
     
-    let rules = this.get('rules'),
-        visualization = this.get('visualization'),
-        ruleForCell = new Map();
+    const rules = this.get('rules'),
+        visualization = this.get('visualization');
     
     return (cell, mode) => {
       
-      if (!ruleForCell.has(cell)) {
-        ruleForCell.set(cell, rules ? rules.find( r => r.get('cells').indexOf(cell) !== -1 ) : false);
-      }
-      
-      let rule = ruleForCell.get(cell);
+      const rule = this.ruleForCell(cell);
 
       if (rule) {
         return this.ruleFn(rule, mode);
@@ -172,6 +177,10 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       }
       
     }
+  },
+
+  ruleForCell(cell) {
+    return this.get('rulesCache').get(cell);
   },
 
   ruleFn(rule, mode) {

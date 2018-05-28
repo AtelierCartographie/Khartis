@@ -87,6 +87,7 @@ let SurfaceMixin = Ember.Mixin.create({
         });
       this.set("rules", rules);
     }
+    this._super();
   },
 
   swapRule(rule, targetRule) {
@@ -153,8 +154,6 @@ let SurfaceMixin = Ember.Mixin.create({
     });
   },
 
-  postConfigure() {},
-
   generateVisualization() {
     if (!this.get('visualization')) {
       let visu = VisualizationFactory.createInstance("surface");
@@ -185,7 +184,6 @@ let SurfaceMixin = Ember.Mixin.create({
 let SymbolMixin = Ember.Mixin.create({
 
   generateRules(force) {
-    
     if (force || !this.get('rules')) {
       
       let values = [...this.get('distribution').values()];
@@ -224,7 +222,7 @@ let SymbolMixin = Ember.Mixin.create({
         });
       this.set("rules", rules);
     }
-    
+    this._super();
   },
 
   swapRule(rule, targetRule) {
@@ -295,6 +293,7 @@ let SymbolMixin = Ember.Mixin.create({
 
   postConfigure() {
     this.get('visualization').recomputeAvailableShapes(this.get('ordered'), Math.min(this.get('rules').length, 8));
+    this._super();
   },
 
   orderedChange: function() {

@@ -12,6 +12,8 @@ let AbstractMapping = Struct.extend({
   
   geoDef: null,
 
+  _finalized: false,
+
   canBeSurface: function() {
     return this.get('geoDef.isGeoRef');
   }.property('geoDef.isGeoRef'),
@@ -29,10 +31,11 @@ let AbstractMapping = Struct.extend({
   }.property(),
 
   isFinalized: function() {
-    return this.get('visualization') != null
+    return this.get('_finalized')
+      && this.get('visualization') != null
       && this.get('isBoundToVar')
       && this.get('rules') != null;
-  }.property('isBoundToVar', 'visualization', 'rules'),
+  }.property('isBoundToVar', 'visualization', 'rules', '_finalized'),
 
   configure: function() {
     throw new Error("not implemented.");
@@ -43,7 +46,7 @@ let AbstractMapping = Struct.extend({
   },
 
   postConfigure() { },
-  
+
   fn() {
     throw new Error("not implemented");
   },

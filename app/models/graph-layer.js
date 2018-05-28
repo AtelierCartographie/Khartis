@@ -19,7 +19,7 @@ let GraphLayer = Struct.extend({
 
   deferredChange: Ember.debouncedObserver(
     'mapping', 'mapping._defferedChangeIndicator',
-    'visible',
+    'visible', 'displayable',
     function() {
       this.notifyDefferedChange();
     },

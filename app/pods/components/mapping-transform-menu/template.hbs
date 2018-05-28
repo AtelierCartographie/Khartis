@@ -1,0 +1,23 @@
+{{#x-dropdown-plus as |facet|}}
+  {{#facet.trigger}}
+  <div class="button transform-mapping-button horizontal middle flow">
+      <div class="solid icon"><i class="iconfont iconfont-viz-change"></i></div>
+      <div class="button-label">utiliser une autre variable pour mettre de la couleur dans les symboles ou comparer deux symboles</div>
+  </div>
+  {{/facet.trigger}}
+  {{#facet.list}}
+    {{#each availableMappings as |m|}}
+      <li class="clickable layer" {{action 'select' m}}>
+        <div class="horizontal middle flow">
+          <div class="caption">
+            <img src="{{r-url (concat 'assets/images/viz/' m.img)}}">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t (concat "visualization.type." m.id ".name")}}</span>
+              <p class="description">{{t (concat "visualization.type." m.id ".description")}}</p>
+          </div>
+        </div>
+      </li>
+    {{/each}}
+  {{/facet.list}}
+{{/x-dropdown-plus}}
