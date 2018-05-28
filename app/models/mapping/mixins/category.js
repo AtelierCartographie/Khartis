@@ -54,7 +54,7 @@ let DataMixin = Ember.Mixin.create({
 let SurfaceMixin = Ember.Mixin.create({
 
   generateRules(force) {
-    
+
     if (force || !this.get('rules')) {
 
       let values = [...this.get('distribution').values()],

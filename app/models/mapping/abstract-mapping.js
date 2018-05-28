@@ -29,8 +29,10 @@ let AbstractMapping = Struct.extend({
   }.property(),
 
   isFinalized: function() {
-    return this.get('visualization') != null && this.get('isBoundToVar');
-  }.property('isBoundToVar', 'visualization'),
+    return this.get('visualization') != null
+      && this.get('isBoundToVar')
+      && this.get('rules') != null;
+  }.property('isBoundToVar', 'visualization', 'rules'),
 
   configure: function() {
     throw new Error("not implemented.");

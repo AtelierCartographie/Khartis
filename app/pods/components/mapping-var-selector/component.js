@@ -33,8 +33,10 @@ export default Component.extend({
 
   actions: {
     select(variable) {
-      this.set('mapping.varCol', variable);
-      this.get('mapping').finalize();
+      Ember.run(() => {
+        this.set('mapping.varCol', variable);
+        this.get('mapping').finalize();
+      });
     }
   }
 });

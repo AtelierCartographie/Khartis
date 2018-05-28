@@ -243,11 +243,6 @@ export default Ember.Controller.extend(ExportMixin, {
       this.set('editedLayer.mapping.visualization.shape', shape);
     },
 
-    shiftRuleIndex(index, targetIndex) {
-      this.get('editedLayer.mapping').shiftRule(index, targetIndex);
-      this.get('editedLayer.mapping').reorderRules();
-    },
-
     toggleBordersVisibility() {
       this.toggleProperty('model.graphLayout.showBorders');
     },

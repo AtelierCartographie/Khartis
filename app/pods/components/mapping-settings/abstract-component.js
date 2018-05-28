@@ -23,6 +23,10 @@ export default Component.extend({
     },
     toggleRuleVisibility(rule) {
       rule.toggleProperty('visible');
-    }
+    },
+    shiftRuleIndex(index, targetIndex) {
+      this.get('mapping').shiftRule(index, targetIndex);
+      this.get('mapping').reorderRules();
+    },
   }
 });

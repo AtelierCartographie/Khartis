@@ -108,7 +108,7 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   },
   
   getScaleOf(type) {
-    throw new Error("not implemented. Should be overrided by mixin");
+    throw new Error("not implemented. Should be overriden by mixin");
   },
   
   generateRules() {},
