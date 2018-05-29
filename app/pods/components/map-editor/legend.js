@@ -398,13 +398,13 @@ export default Ember.Mixin.create({
     
     let bindLayer = (_) => {
       
-      _.flowClass(`stretched ${self.get('graphLayout.legendLayout.stacking')} flow`)
-        .flowStyle("margin-top: 16px")
-        .flowStyle("g-h-mode", "margin-right: 34px")
-        .flowStyle("g-v-mode", "margin-bottom: 24px");
-
       _.each( function(layer, i) {
 
+        d3.select(this).flowClass(`stretched ${self.get('graphLayout.legendLayout.stacking')} flow`)
+          .flowStyle("margin-top: 16px")
+          .flowStyle("g-h-mode", "margin-right: 34px")
+          .flowStyle("g-v-mode", "margin-bottom: 24px");
+        
         const el = d3.select(this);
         const mapping = layer.get('mapping');
 

@@ -1,0 +1,6 @@
+<div {{action 'toggle'}}>
+{{yield (hash trigger=true) collapsed}}
+</div>
+{{#unless collapsed}}
+{{yield (hash content=true) collapsed}}
+{{/unless}}

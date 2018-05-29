@@ -1,45 +1,76 @@
 import d3 from "npm:d3";
 
 const NS = "flow:flow:",
-      shift = -1000,
+      DEBUG = false,
+      SHIFT = -1000,
+      virtualDom = new WeakMap(),
       isNumeric = (val) => Number(parseFloat(val)) === val;
 
 let incId = 0;
+
+//- Virtual dom -
+const vGetEl = (element) => {
+  if (!virtualDom.has(element)) {
+    virtualDom.set(element, new Map());
+  }
+  return virtualDom.get(element);
+};
+
+const vSetAttr = (element, attr, value, mode = "") => {
+  DEBUG && element.attr(`${NS}${attr}${mode}`, value);
+  vGetEl(element).set(`${attr}${mode}`, value);
+}
+
+const vGetAttr = (element, attr, mode = "") => {
+  return vGetEl(element).get(`${attr}${mode}`);
+}
+
+const vHasAttr = (element, attr, mode = "") => {
+  return virtualDom.has(element) && vGetEl(element).has(`${attr}${mode}`);
+}
 
 //- d3 extension -
 
 d3.selection.prototype.flowStyle = function() {
   let [mode, style] = arguments.length == 2 ? ["_"+arguments[0], arguments[1]] : ["", arguments[0]];
-  return this.attr(`${NS}style${mode}`, style);
+  vSetAttr(this.node(), `style`, style, mode);
+  return this;
 };
 
 d3.selection.prototype.flowClass = function() {
   let [mode, classNames] = arguments.length == 2 ? ["_"+arguments[0], arguments[1]] : ["", arguments[0]];
-  return this.attr(`${NS}class${mode}`, classNames);
+  vSetAttr(this.node(), `class`, classNames, mode);
+  return this;
 };
 
 d3.selection.prototype.flowInclude = function(mode) {
   mode = (mode && "_"+mode) || "";
-  return this.attr(`${NS}include${mode}`, "1");
+  vSetAttr(this.node(), `include`, 1, mode);
+  return this;
 };
 
 d3.selection.prototype.flowComputed = function() {
   let [mode, prop, fn] = arguments.length == 3 ? ["_"+arguments[0], arguments[1], arguments[2]] : ["", arguments[0], arguments[1]];
-  !this.node()["__flow_fn"+mode] && (this.node()["__flow_fn"+mode] = {});
+  !vGetAttr(this.node(), "flow_fn", mode) && (vSetAttr(this.node(), "flow_fn", {}, mode));
   prop = prop instanceof Array ? prop : [prop];
-  prop.forEach( p => this.node()["__flow_fn"+mode][p] = fn );
+  let ext = prop.reduce((out, p) => {
+    out[p] = fn;
+    return out;
+  }, vGetAttr(this.node(), "flow_fn", mode));
+  vSetAttr(this.node(), "flow_fn", ext, mode);
   return this;
 };
 
 d3.selection.prototype.flowComputedAttrs = function() {
   let [mode, fn] = arguments.length == 2 ? ["_"+arguments[0], arguments[1]] : ["", arguments[0]];
-  !this.node()["__flow_fn_attr"+mode] && (this.node()["__flow_fn_attr"+mode] = []);
-  this.node()["__flow_fn_attr"+mode].push(fn);
+  !this.node()["flow_fn_attr"+mode] && (this.node()["flow_fn_attr"+mode] = []);
+  !vGetAttr(this.node(), "flow_fn_attr", mode) && (vSetAttr(this.node(), "flow_fn_attr", [], mode));
+  vGetAttr(this.node(), "flow_fn_attr", mode).push(fn);
   return this;
 };
 
 d3.selection.prototype.flowState = function(state) {
-  this.node().__flow_state = state;
+  vSetAttr(this.node(), "flow_state", state);
   return this;
 };
 
@@ -67,7 +98,7 @@ FlowLayout.get = function(node) {
 FlowLayout.prototype.createRoot = function() {
   this.ROOT_EL = document.createElement("div");
   this.ROOT_EL.setAttribute("id", `flow-root-el-${++incId}`);
-  this.ROOT_EL.setAttribute("style", `position: absolute; top: ${shift}px; left: ${shift}px; visibility: hidden`);
+  this.ROOT_EL.setAttribute("style", `position: absolute; top: ${SHIFT}px; left: ${SHIFT}px; visibility: hidden`);
   document.body.appendChild(this.ROOT_EL);
 };
 
@@ -78,10 +109,12 @@ FlowLayout.prototype.clearRoot = function() {
 FlowLayout.prototype.isFlowDomManaged = function(node) {
   let modes = this.getStates(node);
   return node.getAttribute
-    && modes.some( m => (d3.select(node).attr(`${NS}include${m}`) === "1"
-      || d3.select(node).attr(`${NS}class${m}`)
-      || d3.select(node).attr(`${NS}style${m}`)
-      || node["__flow_fn"+m]) );
+    && modes.some(
+      m => vGetAttr(node, `include`, m) === 1
+      || vGetAttr(node, `class`, m)
+      || vGetAttr(node, `style`, m)
+      || vGetAttr(node, "flow_fn", m)
+    );
 };
 
 FlowLayout.prototype.buildDom = function(root, node) {
@@ -100,7 +133,9 @@ FlowLayout.prototype.buildDom = function(root, node) {
 FlowLayout.prototype.getStates = function(svgNode) {
   let states = [];
   for (let n = svgNode; n.parentElement; n = n.parentElement) {
-    n.__flow_state && (states = states.concat(n.__flow_state.split(",").map(s => "_"+s.trim())));
+    if (vHasAttr(n, "flow_state")) {
+      states = states.concat(vGetAttr(n, "flow_state").split(",").map(s => "_"+s.trim()));
+    }
     if (n == this.sel.node()) {
       break;
     }
@@ -113,15 +148,14 @@ FlowLayout.prototype.flowAttributes = function(svgNode) {
       modes = this.getStates(svgNode);
 
   modes.forEach( mode => {
-    if (svgNode["__flow_fn_attr"+mode]) {
-      svgNode["__flow_fn_attr"+mode].forEach(fn => d3l.attrs(fn.apply(svgNode)));
+    if (vGetAttr(svgNode, "flow_fn_attr", mode)) {
+      vGetAttr(svgNode, "flow_fn_attr", mode).forEach(fn => d3l.attrs(fn.apply(svgNode)));
     }
   } );
 };
 
 FlowLayout.prototype.flowToCss = function(svgNode, domEl) {
-  let d3l = d3.select(svgNode),
-      styles = [],
+  let styles = [],
       stylesComputed = [],
       classNames = [],
       flowClasses = [],
@@ -129,18 +163,18 @@ FlowLayout.prototype.flowToCss = function(svgNode, domEl) {
 
   modes.forEach( mode => {
 
-    flowClasses = flowClasses.concat((d3l.attr(`${NS}class${mode}`) || "").split(" "));
+    flowClasses = flowClasses.concat((vGetAttr(svgNode, `class`, mode) || "").split(" "));
 
-    if (svgNode["__flow_fn"+mode]) {
-      Object.keys(svgNode["__flow_fn"+mode]).forEach( k => {
-        let v = svgNode["__flow_fn"+mode][k].apply(svgNode);
+    if (vGetAttr(svgNode, "flow_fn", mode)) {
+      Object.entries(vGetAttr(svgNode, "flow_fn", mode)).forEach( t => {
+        let v = t[1].apply(svgNode);
         v = isNumeric(v) ? v + "px" : v;
-        stylesComputed.push(`${k}:${v}`);
+        stylesComputed.push(`${t[0]}:${v}`);
       } );
     }
 
-    styles = styles.concat([(d3l.attr(`${NS}style${mode}`) || "")]);
-    classNames = classNames.concat([(d3l.attr(`${NS}class${mode}`) || "")]);
+    styles = styles.concat([(vGetAttr(svgNode, `style`, mode) || "")]);
+    classNames = classNames.concat([(vGetAttr(svgNode, `class`, mode) || "")]);
   });
 
   if (flowClasses.indexOf("flow") === -1 && flowClasses.indexOf("flow-no-size") === -1) {
@@ -149,7 +183,9 @@ FlowLayout.prototype.flowToCss = function(svgNode, domEl) {
     stylesComputed.unshift(`height: ${bbox.height}px`);
   }
 
-  styles.push(`background-color: ${'#'+Math.floor(Math.random()*16777215).toString(16)}`);
+  if (DEBUG) {
+    styles.push(`background-color: ${'#'+Math.floor(Math.random()*16777215).toString(16)}`);
+  }
   
   domEl.setAttribute("class", classNames.join(" "));
   domEl.setAttribute("style", [...stylesComputed, ...styles].join(";"));

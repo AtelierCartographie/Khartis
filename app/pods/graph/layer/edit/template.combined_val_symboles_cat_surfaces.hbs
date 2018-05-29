@@ -37,12 +37,15 @@
         {{mapping-settings/val-symbols
           standalone=false
           mapping=mapping
+          withFillSettings=false
+          diagramCollapsedDefault=true
           bind=(action 'bind')
         }}
       {{else if (x-eq mapping.type 'quali.cat_surfaces')}}
         {{mapping-settings/cat-surfaces
           standalone=false
           mapping=mapping
+          withPatternSettings=false
           bind=(action 'bind')
         }}
       {{/if}}

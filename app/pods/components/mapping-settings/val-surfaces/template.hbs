@@ -117,6 +117,8 @@
             </div>
           </div>
 
+          {{#if withPatternSettings}}
+
           <div class="horizontal middle flow">
             <label class="solid w5">{{x-capitalize (t 'visualization.settings.pattern' count=2)}} ?</label>
             <div class="horizontal half-airy solid flow w7" class="layer-pattern-selector">
@@ -137,6 +139,8 @@
               {{/if}}
             </div>
           </div>
+
+          {{/if}}
           {{/o-wrap/brewer}}
 
           {{#if mapping.usePattern}}
@@ -162,7 +166,7 @@
             <ul class="collection categories-list">
             {{#each mapping.rules as |rule|}}
             <li>
-              <div class="horizontal space-between flow layer-header">
+              <div class="horizontal space-between flow padded-h layer-header">
                 <div class="horizontal airy flow">
                   {{#if rule.emptyValue}}
                     <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span><span>({{rule.qty}})</span>
@@ -172,7 +176,7 @@
                 </div>
                 <div class="solid horizontal right flow w4 no-drag">
                   <a {{action 'toggleRuleVisibility' rule}}><i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
-                  {{color-picker value=rule.color selectedPattern=rule.pattern patternChooserEnabled=true}}
+                  {{color-picker value=rule.color selectedPattern=rule.pattern patternChooserEnabled=withPatternSettings}}
                 </div>
               </div>
             </li>
@@ -182,15 +186,24 @@
       </div>
     </div>
   </div>
-  {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
-    <div class="title underlined"><span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.diagram.title')}}</span></div>
-  {{/x-tooltip}}
-  {{#o-wrap/diagram as |wrap|}}
-    <div class="horizontal flow diagram">
-      {{distribution-graph mapping=mapping
-        method=wrap.selectedDiagramMethod
-        xLabel=(t 'visualization.settings.diagram.values')
-        yLabel=(t 'visualization.settings.diagram.frequencies')
-      }}
+  {{#x-collapsable collapsed=diagramCollapsedDefault as |facet collapsed|}}
+  {{#if facet.trigger}}
+    {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
+    <div class="title {{unless collapsed 'underlined'}}">
+      <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.diagram.title')}}</span>
+      <i class="iconfont iconfont-{{if collapsed 'angle-right' 'angle-down'}}"/>
     </div>
-  {{/o-wrap/diagram}}
+    {{/x-tooltip}}
+  {{/if}}
+  {{#if facet.content}}
+    {{#o-wrap/diagram as |wrap|}}
+      <div class="horizontal flow">
+        {{distribution-graph mapping=mapping
+          method=wrap.selectedDiagramMethod
+          xLabel=(t 'visualization.settings.diagram.values')
+          yLabel=(t 'visualization.settings.diagram.frequencies')
+        }}
+      </div>
+    {{/o-wrap/diagram}}
+  {{/if}}
+{{/x-collapsable}}

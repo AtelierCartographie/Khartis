@@ -193,7 +193,7 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     } else if (mode === "texture" && !rule.get('pattern') && this.get('usePattern')) {
       return rule.get('visible') ? PatternMaker.Composer.build(visualization.get('pattern')) : {fn: PatternMaker.NONE};
     } else if (mode === "size") {
-      return rule.get('size');
+      return rule.get('visible') ? rule.get('size') : 0;
     } else if (mode === "shape") {
       return rule.get('visible') ? rule.get('shape') : null;
     } else if (mode === "strokeColor") {

@@ -118,6 +118,7 @@
           {{/unless}} {{/if}} {{/if}}
         </div>
       </div>
+      {{#if withFillSettings}}
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=(x-ternary mapping.scale.diverging 2 1))}}</label>
         <div class="horizontal half-airy solid flow w7">
@@ -125,6 +126,7 @@
           {{color-picker value=mapping.visualization.color}}
         </div>
       </div>
+      {{/if}}
       <div class="horizontal middle flow">
         <label class="solid w5">{{x-capitalize (t 'visualization.settings.stroke')}}</label>
         <div class="horizontal half-airy solid flow w7">
@@ -147,7 +149,7 @@
   <ul class="collection categories-list">
     {{#each mapping.rules as |rule|}}
     <li>
-      <div class="horizontal space-between flow layer-header">
+      <div class="horizontal space-between flow padded-h layer-header">
         <div class="horizontal airy flow">
           {{#if rule.emptyValue}}
           <span class="varname">{{t (concat 'visualization.rule.' rule.label)}}</span>
@@ -161,7 +163,9 @@
           <a {{action 'toggleRuleVisibility' rule}}>
             <i class="iconfont {{if rule.visible 'iconfont-eye' 'iconfont-eye-slash'}}"></i>
           </a>
+          {{#if withFillSettings}}
           {{color-picker value=rule.color}}
+          {{/if}}
         </div>
       </div>
     </li>
@@ -169,14 +173,21 @@
   </ul>
   {{/if}}
 </div>
-{{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
-<div class="title underlined">
-  <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.diagram.title')}}</span>
-</div>
-{{/x-tooltip}}
-{{#o-wrap/diagram as |wrap|}}
-  <div class="horizontal flow">
-    {{distribution-graph mapping=mapping displayColors=false method=wrap.selectedDiagramMethod xLabel=(t 'visualization.settings.diagram.values')
-    yLabel=(t 'visualization.settings.diagram.frequencies') }}
-  </div>
-{{/o-wrap/diagram}}
+{{#x-collapsable collapsed=diagramCollapsedDefault as |facet collapsed|}}
+  {{#if facet.trigger}}
+    {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
+    <div class="title {{unless collapsed 'underlined'}}">
+      <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.diagram.title')}}</span>
+      <i class="iconfont iconfont-{{if collapsed 'angle-right' 'angle-down'}}"/>
+    </div>
+    {{/x-tooltip}}
+  {{/if}}
+  {{#if facet.content}}
+    {{#o-wrap/diagram as |wrap|}}
+      <div class="horizontal flow">
+        {{distribution-graph mapping=mapping displayColors=false method=wrap.selectedDiagramMethod xLabel=(t 'visualization.settings.diagram.values')
+        yLabel=(t 'visualization.settings.diagram.frequencies') }}
+      </div>
+    {{/o-wrap/diagram}}
+  {{/if}}
+{{/x-collapsable}}

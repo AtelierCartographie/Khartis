@@ -3,6 +3,9 @@ import Component from '@ember/component';
 export default Component.extend({
   mapping: null,
   standalone: true,
+
+  diagramCollapsedDefault: false,
+
   actions: {
     onIntervalTypeTabChange(id) {
       this.set('mapping.scale.usesInterval', !(id === "linear-tab"));
@@ -28,5 +31,14 @@ export default Component.extend({
       this.get('mapping').shiftRule(index, targetIndex);
       this.get('mapping').reorderRules();
     },
+    randomizeRules() {
+      this.get('mapping').generateRules(true);
+    },
+    updateShapeSetShape(shape) {
+      this.set('mapping.visualization.shape', shape);
+    },
+    updateRulesShapeSet(shapeSet) {
+      this.get('mapping').updateRulesShapeSet(shapeSet);
+    }
   }
 });

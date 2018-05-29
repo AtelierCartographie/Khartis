@@ -203,7 +203,10 @@ export default {
 
   "visualization": {
     "title": {
-      "choose": "choix d'une visualisation",
+      "choose": {
+        "simple": "choix d'une visualisation simple",
+        "combined": "choix d'une visualisation combinée",
+      },
       "categories": "catégories",
       "nodata": "absence de données"
     },

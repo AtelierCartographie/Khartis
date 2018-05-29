@@ -37,12 +37,16 @@
         {{mapping-settings/val-symbols
           standalone=false
           mapping=mapping
+          withFillSettings=false
+          diagramCollapsedDefault=true
           bind=(action 'bind')
         }}
       {{else if (x-eq mapping.type 'quanti.val_surfaces')}}
         {{mapping-settings/val-surfaces
           standalone=false
           mapping=mapping
+          withPatternSettings=false
+          diagramCollapsedDefault=true
           bind=(action 'bind')
         }}
       {{/if}}

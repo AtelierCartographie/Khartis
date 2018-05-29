@@ -239,10 +239,6 @@ export default Ember.Controller.extend(ExportMixin, {
       root.set(prop, value);
     },
     
-    updateShapeSetShape(shape) {
-      this.set('editedLayer.mapping.visualization.shape', shape);
-    },
-
     toggleBordersVisibility() {
       this.toggleProperty('model.graphLayout.showBorders');
     },
@@ -313,14 +309,6 @@ export default Ember.Controller.extend(ExportMixin, {
       this.toggleProperty('tooltipEnabled');
     },
 
-    randomizeRules() {
-      this.get('editedLayer.mapping').generateRules(true);
-    },
-
-    updateRulesShapeSet(shapeSet) {
-      this.get('editedLayer.mapping').updateRulesShapeSet(shapeSet);
-    },
-    
     export(format, opts = undefined) {
       if (format === "svg") {
         this.exportSVG(opts === "illustrator");

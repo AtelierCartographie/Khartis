@@ -81,7 +81,7 @@
       {{/drag-swap-collection}}
 
       {{else}}
-      
+
       <ul class="collection categories-list fluid scrollable">
         {{#each mapping.rules as |rule|}}
         <li>
@@ -103,7 +103,7 @@
           </div>
           <div class="categories-controls">
             <div class="categories-control categories-fill-color-control">
-              {{color-picker value=rule.color selectedPattern=rule.pattern patternChooserEnabled=true}}
+              {{color-picker value=rule.color selectedPattern=rule.pattern patternChooserEnabled=withPatternSettings}}
             </div>
           </div>
 
@@ -115,6 +115,7 @@
 
     </div>
 
+    {{#if withPatternSettings}}
     <div class="vertical solid flow">
 
       <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
@@ -144,6 +145,7 @@
       </div>
 
     </div>
+    {{/if}}
 
     {{/o-wrap/brewer}}
     {{/o-wrap/rules}}
