@@ -4,7 +4,8 @@ import Mapping from './mapping';
 import ValueMixins from './mixins/value';
 import {
   QuantiValSymQuantiValSurf,
-  QuantiValSymQualiCatSurf
+  QuantiValSymQualiCatSurf,
+  QuantiValSymProportional
 } from "./mixins/multi";
 
 let MultiMapping = AbstractMapping.extend({
@@ -78,6 +79,19 @@ let MultiMapping = AbstractMapping.extend({
           }));
         }
         this.reopen(QuantiValSymQualiCatSurf);
+        break;
+      case "quanti.val_symboles.combined.proportional":
+        this.set('mappings', [
+          Mapping.create({
+            type: "quanti.val_symboles",
+            geoDef: this.get('geoDef')
+          }),
+          Mapping.create({
+            type: "quanti.val_symboles",
+            geoDef: this.get('geoDef')
+          })
+        ]);
+        this.reopen(QuantiValSymProportional);
         break;
       default:
         break;

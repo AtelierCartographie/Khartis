@@ -39,9 +39,26 @@ export const QuantiValSymQuantiValSurf = Ember.Mixin.create({
         return master.get('visualization.shape');
       case "strokeColor":
         return master.get('visualization.strokeColor');
+      case "stroke":
+        return master.get('visualization.stroke');
     }
   }
 
 });
 
 export const QuantiValSymQualiCatSurf = Ember.Mixin.create(QuantiValSymQuantiValSurf);
+
+
+export const QuantiValSymProportional = Ember.Mixin.create({
+
+  visualization: Ember.computed('master.visualization', function() {
+    return this.get('master.visualization');
+  }),
+
+  fn() {
+    return this.get('mappings').map( m => {
+      return m.fn();
+    });
+  }
+
+});

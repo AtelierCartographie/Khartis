@@ -197,71 +197,69 @@ export default Ember.Mixin.create({
   
   mapSymbol: function(d3Layer, data, graphLayer) {
 
-    let svg = this.d3l(),
-        mapping = graphLayer.get('mapping'),
-        converter = mapping.fn(),
-        sortedData = data
-          .map( d => ({
-            size: converter(d.cell, "size"),
-            centroid: d.point.path.centroid(d.point.feature.geometry),
-            data: d
-          }))
-          .filter( d => !isNaN(d.centroid[0]) && !isNaN(d.centroid[1]))
-          .sort((a, b) => d3.descending(a.size, b.size));
+    const mapping = graphLayer.get('mapping'),
+          converters = (v => v instanceof Array ? v : [v])(mapping.fn()),
+          sortedData = data
+            .map( d => ({
+              maxSize: Math.max.apply(null, converters.map(c => c(d.cell, "size"))),
+              centroid: d.point.path.centroid(d.point.feature.geometry),
+              data: d
+            }))
+            .filter( d => !isNaN(d.centroid[0]) && !isNaN(d.centroid[1]))
+            .sort((a, b) => d3.descending(a.maxSize, b.maxSize));
 		
     let shapeFn = function(d) {
-      
-      let _ = d3.select(this),
-          shape = converter(d.data.cell, "shape"),
-          r = d.size,
-          sign = Math.sign(d.data.cell.get('postProcessedValue')),
-          fill = converter(d.data.cell, "fill"),
-          strokeColor = converter(d.data.cell, "strokeColor");
-      
-      if (shape && r > 0) {
-        
-        let symbol = SymbolMaker.symbol({
-          name: shape,
-          size: r*2,
-          sign: sign,
-          barWidth: mapping.get('visualization.barWidth')
-        });
-      
-        let el = symbol.insert(_);
-        
-        _.select("*").attrs({
-          "stroke-width": symbol.unscale(mapping.get('visualization.stroke'))
-        })
-        .attr("i:i:stroke-width", mapping.get('visualization.stroke'));
 
-        if (shape === "line") {
-          strokeColor = fill;
-        }
-        
-        el.attrs({
-          "fill": fill,
-          "stroke": strokeColor
-        })
-        .classed("shape", true);
-          
-      }
+      const _ = d3.select(this);
+      const clipped = converters.length > 1;
       
+      converters
+        .slice()
+        .sort((a, b) => d3.descending(a(d.data.cell, "size"), b(d.data.cell, "size")))
+        .forEach((conv, i) => {
+
+          let shape = conv(d.data.cell, "shape"),
+            r = conv(d.data.cell, "size"),
+            sign = Math.sign(d.data.cell.get('postProcessedValue')),
+            fill = conv(d.data.cell, "fill"),
+            strokeColor = conv(d.data.cell, "strokeColor");
+      
+          if (shape && r > 0) {
+            
+            let symbol = SymbolMaker.symbol({
+              name: shape,
+              size: r*2,
+              sign,
+              clipped,
+              clipRegion: i > 0 ? "right" : "left",
+              barWidth: mapping.get('visualization.barWidth'),
+            });
+          
+            const el = symbol.insert(_);
+            
+            _.select("*").attr("stroke-width", symbol.unscale(conv('stroke')))
+              .attr("i:i:stroke-width", conv('stroke'));
+      
+            el.attrs({
+              "fill": fill,
+              "stroke": shape === "line" ? fill : strokeColor
+            })
+            .classed("shape", true);
+              
+          }
+
+        });
     };
     
-   let bindAttr = (_) => {
-
-      _.attr("transform", d => { 
+   let bindAttr = sel => {
+      sel.attr("transform", d => { 
         let [tx, ty] = d.centroid;
-        return d3lper.translate({
-          tx: tx,
-          ty: ty
-        });
+        return d3lper.translate({tx, ty});
       });
       
-      _.selectAll(".shape").remove();
+      sel.selectAll(".shape").remove();
       
-      _.each(shapeFn);
-      
+      sel.each(shapeFn);
     };
 
     d3Layer.classed("surface", false);

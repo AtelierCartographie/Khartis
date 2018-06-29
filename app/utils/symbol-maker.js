@@ -81,18 +81,35 @@ let symbol = function(opts = {}) {
               }],
               viewBox: [0, 0, 262, 262]
             });
+          // case "circle":
+          //   
           case "circle":
-            return Object.assign({}, baseConf, {
-              els: [{
-                tag: "circle",
-                attrs: {
-                  r: 10,
-                  cx: 10,
-                  cy: 10
-                },
-              }],
-              viewBox: [0, 0, 20, 20]
-            });
+            if (opts.clipped) {
+              const sweepFlag = opts.clipRegion === "left" ? 1 : 0;
+              return Object.assign({}, baseConf, {
+                els: [
+                  {
+                    tag: "path",
+                    attrsFn: (size) => ({
+                      d: `M 10, 10 m 0, -10 a 10 10, 0, 0, ${sweepFlag}, 0 20 L 10 0`
+                    }),
+                  }
+                ],
+                viewBox: [0, 0, 20, 20]
+              });
+            } else {
+              return Object.assign({}, baseConf, {
+                els: [{
+                  tag: "circle",
+                  attrs: {
+                    r: 10,
+                    cx: 10,
+                    cy: 10
+                  },
+                }],
+                viewBox: [0, 0, 20, 20]
+              });
+            }
           case "triangle":
             return Object.assign({}, baseConf, {
               els: [{
