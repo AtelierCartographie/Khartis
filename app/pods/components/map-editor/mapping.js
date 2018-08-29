@@ -82,16 +82,15 @@ export default Ember.Mixin.create({
       let landsIdx = this.getFeaturesIndexFromBase(geoKey, "lands"),
           centroidsIdx = this.getFeaturesIndexFromBase(geoKey, "centroids");
           
-      data = mapping.get('filteredBody').map( (cell) => {
+      data = mapping.get('filteredRows').map( row => {
         
-        let geoData = geoDef.get('geo.cells').objectAt(cell.colIndex())
+        let geoData = geoDef.get('geo.cells').objectAt(row.get('idx'))
           .get('postProcessedValue');
 
         if (geoData) {
           return {
             id: `${geoData.value[geoKey]}`,
-            value: cell.get('postProcessedValue'),
-            cell: cell,
+            row,
             surface: landsIdx[`${geoData.value[geoKey]}`],
             point: centroidsIdx[`${geoData.value[geoKey]}`]
           };
@@ -111,19 +110,17 @@ export default Ember.Mixin.create({
       
     } else if (geoDef.get('isLatLon')) {
 
-      data = mapping.get('filteredBody').map( (cell, index) => {
+      data = mapping.get('filteredRows').map( (row, index) => {
         
-        let val = cell.get('postProcessedValue'),
-            lon = cell.get('row.cells').find( c => c.get('column') == geoDef.get('lon') ).get('postProcessedValue'),
-            lat = cell.get('row.cells').find( c => c.get('column') == geoDef.get('lat') ).get('postProcessedValue');
+        let lon = row.get('cells').find( c => c.get('column') == geoDef.get('lon') ).get('postProcessedValue'),
+            lat = row.get('cells').find( c => c.get('column') == geoDef.get('lat') ).get('postProcessedValue');
 
         if (!Ember.isEmpty(lat) && !Ember.isEmpty(lon)) {
           let latLonPath = this.assumePathForLatLon([lat, lon]);
           if (latLonPath) {
             return {
               id: `coord-${index}`,
-              value: val,
-              cell: cell,
+              row,
               point: {
                 path: latLonPath,
                 feature: {
@@ -165,13 +162,13 @@ export default Ember.Mixin.create({
       _.attrs({
           "xlink:href": d => this.registerLandSel(d.id),
           "fill": d => {
-            let pattern = converter(d.cell, "texture");
+            let pattern = converter(d.row, "texture");
             if (pattern && pattern.fn != PatternMaker.NONE) {
               let fn = new pattern.fn(false, converter(d.cell, "fill"));
               fn.init(svg);
               return `url(${fn.url()})`;
             } else {
-              return converter(d.cell, "fill");
+              return converter(d.row, "fill");
             }
           }
         });
@@ -198,10 +195,10 @@ export default Ember.Mixin.create({
   mapSymbol: function(d3Layer, data, graphLayer) {
 
     const mapping = graphLayer.get('mapping'),
-          converters = (v => v instanceof Array ? v : [v])(mapping.fn()),
+          converters = (v => v instanceof Array ? v : [v])(mapping.fn()).slice(),
           sortedData = data
             .map( d => ({
-              maxSize: Math.max.apply(null, converters.map(c => c(d.cell, "size"))),
+              maxSize: Math.max.apply(null, converters.map(c => c(d.row, "size"))),
               centroid: d.point.path.centroid(d.point.feature.geometry),
               data: d
             }))
@@ -211,18 +208,21 @@ export default Ember.Mixin.create({
     let shapeFn = function(d) {
 
       const _ = d3.select(this);
-      const clipped = converters.length > 1;
+      const clipped = converters.length > 1 && mapping.get('renderMode') === "sideclipped";
+      const superposed = mapping.get('renderMode') === "superposed";
+      const sideBySide = mapping.get('renderMode') === "sidebyside";
       
-      converters
-        .slice()
-        .sort((a, b) => d3.descending(a(d.data.cell, "size"), b(d.data.cell, "size")))
-        .forEach((conv, i) => {
+      if (superposed) {
+        converters.sort((a, b) => d3.descending(a(d.data.row, "size"), b(d.data.row, "size")));
+      }
 
-          let shape = conv(d.data.cell, "shape"),
-            r = conv(d.data.cell, "size"),
-            sign = Math.sign(d.data.cell.get('postProcessedValue')),
-            fill = conv(d.data.cell, "fill"),
-            strokeColor = conv(d.data.cell, "strokeColor");
+      converters.forEach((conv, i) => {
+
+          let shape = conv(d.data.row, "shape"),
+            r = conv(d.data.row, "size"),
+            sign = Math.sign(d.data.row.get('postProcessedValue')),
+            fill = conv(d.data.row, "fill"),
+            strokeColor = conv(d.data.row, "strokeColor");
       
           if (shape && r > 0) {
             
@@ -231,21 +231,21 @@ export default Ember.Mixin.create({
               size: r*2,
               sign,
               clipped,
-              clipRegion: i > 0 ? "right" : "left",
+              clipRegion: i > 0 ? "left" : "right",
               barWidth: mapping.get('visualization.barWidth'),
             });
           
-            const el = symbol.insert(_);
+            const el = symbol.insert(_, sideBySide ? [i > 0 ? r : -r, 0] : undefined);
             
-            _.select("*").attr("stroke-width", symbol.unscale(conv('stroke')))
-              .attr("i:i:stroke-width", conv('stroke'));
+            _.select("*").attr("stroke-width", symbol.unscale(conv(d.data.row, 'stroke')))
+              .attr("i:i:stroke-width", conv(d.data.row, 'stroke'));
       
             el.attrs({
               "fill": fill,
               "stroke": shape === "line" ? fill : strokeColor
             })
             .classed("shape", true);
-              
+
           }
 
         });

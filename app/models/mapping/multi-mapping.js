@@ -34,13 +34,22 @@ let MultiMapping = AbstractMapping.extend({
     return (this.get('mappings.length') && this.get('mappings')[0]) || null;
   }.property('mappings.[]'),
 
+  slave: function() {
+    return (this.get('mappings.length') > 1 && this.get('mappings')[1]) || null;
+  }.property('mappings.[]'),
+
   filteredBody: function() {
     return this.get('master.filteredBody');
   }.property('master.filteredBody'),
+
+  filteredRows: function() {
+    return this.get('filteredBody').map(c => c.get('row'));
+  }.property('filteredBody'),
   
   configure: function() {
     switch (this.get('type')) {
       case "quanti.val_symboles.combined.quanti.val_surfaces":
+        this.set('renderMode', 'superposed');
         if (!this.get('mappings').length) {
           this.set('mappings', [
             Mapping.create({
@@ -61,6 +70,7 @@ let MultiMapping = AbstractMapping.extend({
         this.reopen(QuantiValSymQuantiValSurf);
         break;
       case "quanti.val_symboles.combined.quali.cat_surfaces":
+        this.set('renderMode', 'superposed');
         if (!this.get('mappings').length) {
           this.set('mappings', [
             Mapping.create({
@@ -81,6 +91,9 @@ let MultiMapping = AbstractMapping.extend({
         this.reopen(QuantiValSymQualiCatSurf);
         break;
       case "quanti.val_symboles.combined.proportional":
+        if (["sideclipped", "superposed", "sidebyside"].indexOf(this.get('renderMode')) === -1) {
+          this.set('renderMode', 'sideclipped');
+        }
         this.set('mappings', [
           Mapping.create({
             type: "quanti.val_symboles",
@@ -114,14 +127,13 @@ let MultiMapping = AbstractMapping.extend({
   },
 
   fn() {
-    return (cell, mode) => {
-      const row = cell.get('row');
+    return (row, mode) => {
       return this.delegateRuleMode(row, mode) || this.delegateStyleMode(row, mode);
     }
   },
 
   deferredChange: Ember.debouncedObserver(
-    'type', 'titleComputed',
+    'type', 'titleComputed', 'renderMode',
     'geoDef._defferedChangeIndicator',
     'mappings.@each._defferedChangeIndicator',
     function() {

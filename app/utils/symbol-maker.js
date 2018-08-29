@@ -14,6 +14,18 @@ let symbol = function(opts = {}) {
       factory = function() {
         switch (name) {
           case "rect":
+          if (opts.clipped) {
+            const sweepFlag = opts.clipRegion === "left" ? 1 : 0;
+            return Object.assign({}, baseConf, {
+              els: [{
+                tag: "path",
+                attrs: {
+                  d: sweepFlag ? "M50,0 100,0 100,100 50,100 50,0Z" : "M0,0 50,0 50,100 0,100 0,0Z"
+                }
+              }],
+              viewBox: [0, 0, 100, 100]
+            });
+          } else {
             return Object.assign({}, baseConf, {
               els: [{
                 tag: "path",
@@ -23,6 +35,7 @@ let symbol = function(opts = {}) {
               }],
               viewBox: [0, 0, 100, 100]
             });
+          }
           case "bar":
             let w = opts.barWidth || 16;
             let orientation = opts.sign || 1;
@@ -138,7 +151,7 @@ let symbol = function(opts = {}) {
     return proc;
   };
 
-  proc.insert = function(root) {
+  proc.insert = function(root, [tx, ty] = [0, 0]) {
 
     //init
     let max = Math.max.apply(this, conf.viewBox),
@@ -146,7 +159,7 @@ let symbol = function(opts = {}) {
 
     let g = root
       .append("g")
-      .attr("transform", `scale(${s})`);
+      .attr("transform", `scale(${s}) translate(${tx/s} ${ty/s})`);
 
     conf.els.forEach(el => {
       let attrs = Object.assign({}, el.attrsFn ? el.attrsFn(conf.size) : el.attrs);
@@ -161,7 +174,7 @@ let symbol = function(opts = {}) {
     return conf.anchor;
   };
 
-  proc.getSize = function(size) {
+  proc.getSize = function() {
     let anchor = proc.getAnchor();
     return Object.assign({}, conf.size, {anchorX: conf.size.x*anchor[0], anchorY: conf.size.y*(1-anchor[1])});
   };

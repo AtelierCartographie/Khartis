@@ -32,21 +32,9 @@
   </div>
 
   {{#if editedLayer.mapping.isBoundToVar}}
-    {{#each editedLayer.mapping.mappings as |mapping|}}
-      {{#if (x-eq mapping.type 'quanti.val_symboles')}}
-        {{mapping-settings/val-symbols
-          standalone=false
-          mapping=mapping
-          diagramCollapsedDefault=true
-          bind=(action 'bind')
-        }}
-      {{else if (x-eq mapping.type 'quanti.val_symboles')}}
-        {{mapping-settings/val-symbols
-          standalone=false
-          mapping=mapping
-          bind=(action 'bind')
-        }}
-      {{/if}}
-    {{/each}}
+    {{mapping-settings/val-proportional
+      mapping=editedLayer.mapping
+      bind=(action 'bind')
+    }}
   {{/if}} {{! boundToVar }}
 </div>

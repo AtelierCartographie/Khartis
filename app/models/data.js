@@ -17,6 +17,11 @@ let RowStruct = Struct.extend({
             }
         });
     },
+    
+    idx: function() {
+      return this.get('cells')[0].get('column.cells').map( c => c.get('row')).indexOf(this);
+    }.property('cells', 'cells.[]'),
+
     export(opts) {
         return this._super({
             header: this.get('header'),
@@ -118,6 +123,10 @@ let ColumnStruct = Struct.extend({
     
     body: function() {
       return this.get('cells').filter( c => !c.get('row.header') );
+    }.property('cells', 'cells.[]'),
+
+    idx: function() {
+      return this.get('cells')[0].get('row.cells').map( c => c.get('column')).indexOf(this);
     }.property('cells', 'cells.[]'),
     
     deferredChange: Ember.debouncedObserver(

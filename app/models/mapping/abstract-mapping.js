@@ -9,6 +9,8 @@ let AbstractMapping = Struct.extend({
   visualization: null,
 
   title: null,
+
+  renderMode: "single",
   
   geoDef: null,
 
@@ -58,6 +60,7 @@ let AbstractMapping = Struct.extend({
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),
+      renderMode: this.get('renderMode'),
       title: this.get('title'),
       geoDef: this.get('geoDef') ? this.get('geoDef').export() : null
     }, props));
@@ -70,6 +73,7 @@ AbstractMapping.reopenClass({
   restore(json, refs = {}, opts = {}) {
     return this._super(json, refs, {
       ...opts,
+      renderMode: json.renderMode || "single",
       type: json.type,
       title: json.title,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null

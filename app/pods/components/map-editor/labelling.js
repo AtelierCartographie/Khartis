@@ -67,11 +67,9 @@ export default Ember.Mixin.create({
   mapText(d3Layer, data, graphLayer) {
 
     let self = this,
-        svg = this.d3l(),
         mapping = graphLayer.get('mapping'),
         mappedDataLayers = this.get('displayableLayers'),
-        visualization = mapping.get('visualization'),
-        converter = mapping.fn();
+        visualization = mapping.get('visualization');
 
     let labels = data.filter( d => {
       let [tx, ty] = d.point.path.centroid(d.point.feature.geometry);
@@ -88,8 +86,8 @@ export default Ember.Mixin.create({
           let mapping = lyr.get('mapping'),
               converter = mapping.fn(),
               symbol = SymbolMaker.symbol({
-                name: converter(cell, "shape"),
-                size: converter(cell, "size")*2,
+                name: converter(cell.get('row'), "shape"),
+                size: converter(cell.get('row'), "size")*2,
                 sign: Math.sign(cell.get('postProcessedValue')),
                 barWidth: mapping.get('visualization.barWidth')
               });

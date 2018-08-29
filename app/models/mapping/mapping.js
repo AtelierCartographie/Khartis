@@ -60,6 +60,10 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       return this.get('varCol.body').filter( cell => geoMapped.run(cell) );
     }
   }.property('filter._defferedChangeIndicator', 'geoDef', 'varCol.body'),
+
+  filteredRows: function() {
+    return this.get('filteredBody').map(c => c.get('row'));
+  }.property('filteredBody'),
   
   configure: function() {
     switch (this.get('type')) {
@@ -152,11 +156,11 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   
   fn() {
     
-    const rules = this.get('rules'),
-        visualization = this.get('visualization');
+    const visualization = this.get('visualization');
     
-    return (cell, mode) => {
+    return (row, mode) => {
       
+      const cell = row.get('cells')[this.get('varCol.idx')];
       const rule = this.ruleForCell(cell);
 
       if (rule) {
@@ -204,7 +208,7 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'titleComputed', 'varCol',
+    'type', 'renderMode', 'titleComputed', 'varCol',
     'varCol._defferedChangeIndicator', 'geoDef._defferedChangeIndicator',
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',

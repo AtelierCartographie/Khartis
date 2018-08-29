@@ -93,7 +93,8 @@
           numericValue=mapping.visualization.barWidth class="solid w3" min=1 update=(action (mut mapping.visualization.barWidth))}}
         </div>
       </div>
-      {{/if}} {{#unless mapping.scale.usesInterval}}
+      {{/if}}
+      {{#unless mapping.scale.usesInterval}}
       <div class="horizontal middle flow">
         {{#x-tooltip message=(t 'visualization.settings.contrast.tooltip')}}
         <label class="solid w5">

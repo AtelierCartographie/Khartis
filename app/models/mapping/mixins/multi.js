@@ -55,6 +55,42 @@ export const QuantiValSymProportional = Ember.Mixin.create({
     return this.get('master.visualization');
   }),
 
+  maxSize: Ember.computed('visualization.maxSize', {
+    get() {
+      return this.get('visualization.maxSize');
+    },
+    set(k, v) {
+      let [master, slave] = this.get('mappings');
+      master.set('visualization.maxSize', v);
+      slave.set('visualization.maxSize', v);
+      return v;
+    }
+  }),
+
+  contrast: Ember.computed('master.scale.contrast', {
+    get() {
+      return this.get('master.scale.contrast');
+    },
+    set(k, v) {
+      let [master, slave] = this.get('mappings');
+      master.set('scale.contrast', v);
+      slave.set('scale.contrast', v);
+      return v;
+    }
+  }),
+
+  shape: Ember.computed('master.visualization.shape', {
+    get() {
+      return this.get('master.visualization.shape');
+    },
+    set(k, v) {
+      let [master, slave] = this.get('mappings');
+      master.set('visualization.shape', v);
+      slave.set('visualization.shape', v);
+      return v;
+    }
+  }),
+
   fn() {
     return this.get('mappings').map( m => {
       return m.fn();
