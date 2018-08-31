@@ -154,9 +154,13 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     }
   }),
   
-  fn() {
+  fn(domainDelegate = this) {
     
     const visualization = this.get('visualization');
+
+    let sizeScale;
+    let colorScale;
+    let textureScale;
     
     return (row, mode) => {
       
@@ -168,11 +172,11 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       } else {
         switch (mode) {
           case "texture":
-            return this.getScaleOf("texture")(cell.get('postProcessedValue'));
+            return (textureScale || (textureScale = this.getScaleOf("texture", domainDelegate)))(cell.get('postProcessedValue'));
           case "fill":
-            return this.getScaleOf("color")(cell.get('postProcessedValue'));
+            return (colorScale || (colorScale = this.getScaleOf("color", domainDelegate)))(cell.get('postProcessedValue'));
           case "size":
-            return this.getScaleOf("size")(cell.get('postProcessedValue'));
+            return (sizeScale || (sizeScale = this.getScaleOf("size", domainDelegate)))(cell.get('postProcessedValue'));
           case "shape":
             return visualization.get('shape');
           case "strokeColor":

@@ -12,6 +12,9 @@ let MultiMapping = AbstractMapping.extend({
   
   mappings: null,
   isMulti: true,
+  sharedDomain: false,
+  sideBySideAlign: "middle", //top, bottom
+  sideBySideMargin: "middle", //low, high
   
   init() {
     this._super();
@@ -134,6 +137,7 @@ let MultiMapping = AbstractMapping.extend({
 
   deferredChange: Ember.debouncedObserver(
     'type', 'titleComputed', 'renderMode',
+    'sharedDomain', 'sideBySideAlign', 'sideBySideMargin',
     'geoDef._defferedChangeIndicator',
     'mappings.@each._defferedChangeIndicator',
     function() {
@@ -144,6 +148,9 @@ let MultiMapping = AbstractMapping.extend({
   export(props) {
     return this._super(Object.assign({
       isMulti: true,
+      sharedDomain: this.get('sharedDomain'),
+      sideBySideAlign: this.get('sideBySideAlign'),
+      sideBySideMargin: this.get('sideBySideMargin'),
       mappings: this.get('mappings').map( m => m.export() )
     }, props));
   }
@@ -155,6 +162,9 @@ MultiMapping.reopenClass({
   restore(json, refs = {}, opts = {}) {
     return this._super(json, refs, {
       isMulti: json.isMulti,
+      sharedDomain: json.sharedDomain || false,
+      sideBySideAlign: json.sideBySideAlign || "middle",
+      sideBySideMargin: json.sideBySideMargin || "middle",
       mappings: json.mappings ? json.mappings.map( m => Mapping.restore(m, refs) ) : null
     });
   }

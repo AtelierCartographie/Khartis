@@ -371,10 +371,10 @@ let SymbolMixin = Ember.Mixin.create({
     this.get('scale.contrast') > this.get('maxContrastIndex') && this.set('scale.contrast', this.get('maxContrastIndex'));
   }.observes('minContrastIndex', 'maxContrastIndex'),
   
-  getScaleOf(type) {
-    
-    let ext = d3.extent(this.get('absValues')),
-        intervals = this.get('intervals'),
+  getScaleOf(type, domainDelegate = this) {
+
+    let ext = d3.extent(domainDelegate.get('absValues')),
+        intervals = domainDelegate.get('intervals'),
         contrastScale = this.get('scale.contrastScale'),
         visualization = this.get('visualization'),
         d3Scale,
@@ -426,7 +426,7 @@ let SymbolMixin = Ember.Mixin.create({
         range = [0, visualization.get('maxSize')];
         transform = _ => d3Scale(Math.abs(_));
 
-        transform.invert = (_) => d3Scale.invert(Math.abs(_));
+        transform.invert = _ => d3Scale.invert(Math.abs(_));
 
       };
 

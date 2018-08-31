@@ -231,10 +231,6 @@ export default Ember.Controller.extend(ExportMixin, {
       layer.set('mapping.labelCol', col);
     },
     
-    bindPattern(pattern) {
-      this.set('editedLayer.mapping.visualization.pattern', pattern.fork());
-    },
-    
     bind(root, prop, value) {
       root.set(prop, value);
     },

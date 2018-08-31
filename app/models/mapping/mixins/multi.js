@@ -1,5 +1,5 @@
 import Ember from 'ember';
-
+import Scale from "../scale/scale";
 
 export const QuantiValSymQuantiValSurf = Ember.Mixin.create({
 
@@ -91,9 +91,32 @@ export const QuantiValSymProportional = Ember.Mixin.create({
     }
   }),
 
+  values: function() {
+    return [
+      ...this.get('master.values'),
+      ...this.get('slave.values')
+    ];
+  }.property('master.values[]', 'slave.values[]'),
+  
+  absValues: function() {
+    return this.get('values').map( v => Math.abs(v) );
+  }.property('values'),
+
+  shouldDiverge: function() {
+    return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
+  }.property('values'),
+
+  intervals: function() {
+    let scale = Scale.create();
+    if (this.get('shouldDiverge')) {
+      scale.set('valueBreak', 0);
+    }
+    return scale.getIntervals(this.get('values'));
+  }.property('values.[]'),
+
   fn() {
     return this.get('mappings').map( m => {
-      return m.fn();
+      return m.fn(this.get('sharedDomain') ? this : undefined);
     });
   }
 

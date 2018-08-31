@@ -1,49 +1,112 @@
-
-      <div class="horizontal middle flow">
-        <label class="solid w5">
-          <span class="tooltip-trigger">Position</span>
-        </label>
-        <div class="solid w7">
-          <div class="proportional-type-sideclipped" {{action 'bind' mapping 'renderMode' 'sideclipped'}}>1</div>
-          <div class="proportional-type-superposed" {{action 'bind' mapping 'renderMode' 'superposed'}}>2</div>
-          <div class="proportional-type-sidebyside" {{action 'bind' mapping 'renderMode' 'sidebyside'}}>3</div>
-        </div>
-      </div>
-      <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
-        <div class="horizontal half-airy solid flow w7 btn-switch-group">
-          <div class="small button filled primary {{if (x-eq mapping.shape 'circle') 'selected'}}" 
-            {{action 'bind' mapping 'shape' 'circle'}}>
-            {{x-capitalize (t 'visualization.settings.shape.circle')}}
-          </div>
-          <div class="small button filled primary {{if (x-eq mapping.shape 'rect') 'selected'}}" 
-            {{action 'bind' mapping 'shape' 'rect'}}>
-            {{x-capitalize (t 'visualization.settings.shape.rect')}}
-          </div>
-        </div>
-      </div>
-      <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
-        <div class="horizontal half-airy solid flow w7">
-          {{x-slider class="fluid offset-slider" band=1 value=mapping.maxSize min=mapping.visualization.absoluteMinSize
-          max=mapping.visualization.absoluteMaxSize}} {{input-numeric/one-way numericValue=mapping.visualization.maxSize
-          class="solid w3" min=mapping.visualization.absoluteMinSize update=(action (mut mapping.maxSize))}}
-        </div>
-      </div>
-      <div class="horizontal middle flow">
-        {{#x-tooltip message=(t 'visualization.settings.contrast.tooltip')}}
-        <label class="solid w5">
-          <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.contrast.title')}}</span>
-        </label>
-        {{/x-tooltip}}
-        <div class="horizontal half-airy solid flow w7">
-          {{x-slider class="fluid" band=1 value=mapping.contrast min=mapping.master.minContrastIndex max=mapping.master.maxContrastIndex}}
-        </div>
-      </div>
-      <div class="horizontal middle flow">
-        <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}}</label>
-        <div class="horizontal half-airy solid flow w7">
-          {{color-picker value=mapping.master.visualization.color}}
-          {{color-picker value=mapping.slave.visualization.color}}
-        </div>
-      </div>
+  {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
+    <ul class="tabs brewer-tabs">
+      <li tab-id="self-domain-tab">
+        <span class="tooltip-trigger">échelle propre</span>
+      </li>
+      <li tab-id="shared-domain-tab">
+        <span class="tooltip-trigger">échelle commune</span>
+      </li>
+    </ul>
+    <div class="panes">
+      <div id="self-domain-tab" class="tab-pane {{unless mapping.sharedDomain 'active'}}"></div>
+      <div id="shared-domain-tab" class="tab-pane {{if mapping.sharedDomain 'active'}}"></div>
+    </div>
+{{/x-tabs}}
+<div class="horizontal middle flow">
+  <label class="solid w5">
+    <span class="tooltip-trigger">Position</span>
+  </label>
+  <div class="solid w7">
+    <div class="proportional-type-sideclipped" {{action 'bind' mapping 'renderMode' 'sideclipped'}}>1</div>
+    <div class="proportional-type-superposed" {{action 'bind' mapping 'renderMode' 'superposed'}}>2</div>
+    <div class="proportional-type-sidebyside" {{action 'bind' mapping 'renderMode' 'sidebyside'}}>3</div>
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.shape.title')}}</label>
+  <div class="horizontal half-airy solid flow w7 btn-switch-group">
+    <div class="small button filled primary {{if (x-eq mapping.shape 'circle') 'selected'}}" 
+      {{action 'bind' mapping 'shape' 'circle'}}>
+      {{x-capitalize (t 'visualization.settings.shape.circle')}}
+    </div>
+    <div class="small button filled primary {{if (x-eq mapping.shape 'rect') 'selected'}}" 
+      {{action 'bind' mapping 'shape' 'rect'}}>
+      {{x-capitalize (t 'visualization.settings.shape.rect')}}
+    </div>
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.size')}}</label>
+  <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid offset-slider" band=1 value=mapping.maxSize min=mapping.visualization.absoluteMinSize
+    max=mapping.visualization.absoluteMaxSize}} {{input-numeric/one-way numericValue=mapping.visualization.maxSize
+    class="solid w3" min=mapping.visualization.absoluteMinSize update=(action (mut mapping.maxSize))}}
+  </div>
+</div>
+<div class="horizontal middle flow">
+  {{#x-tooltip message=(t 'visualization.settings.contrast.tooltip')}}
+  <label class="solid w5">
+    <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.contrast.title')}}</span>
+  </label>
+  {{/x-tooltip}}
+  <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid" band=1 value=mapping.contrast min=mapping.master.minContrastIndex max=mapping.master.maxContrastIndex}}
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}}</label>
+  <div class="horizontal half-airy solid flow w7">
+    {{color-picker value=mapping.master.visualization.color}}
+    {{color-picker value=mapping.slave.visualization.color}}
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.stroke')}}</label>
+  <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid" band=0.5 value=mapping.master.visualization.stroke min=0 max=5}}
+    {{x-slider class="fluid" band=0.5 value=mapping.slave.visualization.stroke min=0 max=5}}
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
+  <div class="horizontal half-airy solid flow w7">
+    {{x-slider class="fluid" band=0.05 value=mapping.master.visualization.opacity min=0 max=1}}
+    {{x-slider class="fluid" band=0.05 value=mapping.slave.visualization.opacity min=0 max=1}}
+  </div>
+</div>
+{{#if (x-eq mapping.renderMode 'sidebyside')}}
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
+  <div class="horizontal half-airy solid flow w7 btn-switch-group">
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideAlign 'bottom') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideAlign' 'bottom'}}>
+      bas
+    </div>
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideAlign 'middle') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideAlign' 'middle'}}>
+      milieu
+    </div>
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideAlign 'top') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideAlign' 'top'}}>
+      haut
+    </div>
+  </div>
+</div>
+<div class="horizontal middle flow">
+  <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
+  <div class="horizontal half-airy solid flow w7 btn-switch-group">
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideMargin 'low') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideMargin' 'low'}}>
+      petit
+    </div>
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideMargin 'middle') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideMargin' 'middle'}}>
+      moyen
+    </div>
+    <div class="small button filled primary {{if (x-eq mapping.sideBySideMargin 'high') 'selected'}}" 
+      {{action 'bind' mapping 'sideBySideMargin' 'high'}}>
+      grand
+    </div>
+  </div>
+</div>
+{{/if}}

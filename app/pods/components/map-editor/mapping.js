@@ -164,7 +164,7 @@ export default Ember.Mixin.create({
           "fill": d => {
             let pattern = converter(d.row, "texture");
             if (pattern && pattern.fn != PatternMaker.NONE) {
-              let fn = new pattern.fn(false, converter(d.cell, "fill"));
+              let fn = new pattern.fn(false, converter(d.row, "fill"));
               fn.init(svg);
               return `url(${fn.url()})`;
             } else {
@@ -195,7 +195,7 @@ export default Ember.Mixin.create({
   mapSymbol: function(d3Layer, data, graphLayer) {
 
     const mapping = graphLayer.get('mapping'),
-          converters = (v => v instanceof Array ? v : [v])(mapping.fn()).slice(),
+          converters = (v => v instanceof Array ? v : [v])(mapping.fn()),
           sortedData = data
             .map( d => ({
               maxSize: Math.max.apply(null, converters.map(c => c(d.row, "size"))),
@@ -211,12 +211,20 @@ export default Ember.Mixin.create({
       const clipped = converters.length > 1 && mapping.get('renderMode') === "sideclipped";
       const superposed = mapping.get('renderMode') === "superposed";
       const sideBySide = mapping.get('renderMode') === "sidebyside";
+
+      let convertersOrdered = converters.slice();
       
       if (superposed) {
-        converters.sort((a, b) => d3.descending(a(d.data.row, "size"), b(d.data.row, "size")));
+        convertersOrdered.sort((a, b) => {
+         let s1 = a(d.data.row, "size"),
+            s2 = b(d.data.row, "size");
+          if (s1 < s2) return 1;
+          if (s1 > s2) return -1;
+          if (s1 === s2) return converters.indexOf(a) < converters.indexOf(b) ? -1 : 1;
+        });
       }
 
-      converters.forEach((conv, i) => {
+      convertersOrdered.forEach((conv, i) => {
 
           let shape = conv(d.data.row, "shape"),
             r = conv(d.data.row, "size"),
@@ -232,17 +240,38 @@ export default Ember.Mixin.create({
               sign,
               clipped,
               clipRegion: i > 0 ? "left" : "right",
-              barWidth: mapping.get('visualization.barWidth'),
+              barWidth: mapping.get('visualization.barWidth')
             });
+
+            let anchorTxTy = undefined;
+            if (sideBySide) {
+              let margin = {low: 1, middle: 4, high: 8}[mapping.get('sideBySideMargin')];
+              let align = mapping.get('sideBySideAlign');
+              let ty = 0;
+              switch (align) {
+                case "bottom":
+                  ty = d.maxSize - r;
+                  break;
+                case "top":
+                  ty = r - d.maxSize;
+                  break;
+                default:
+                  ty = 0;
+              }
+              anchorTxTy = [
+                i > 0 ? r + margin : -r - margin,
+                ty
+              ];
+            }
           
-            const el = symbol.insert(_, sideBySide ? [i > 0 ? r : -r, 0] : undefined);
+            const el = symbol.insert(_, anchorTxTy);
             
-            _.select("*").attr("stroke-width", symbol.unscale(conv(d.data.row, 'stroke')))
-              .attr("i:i:stroke-width", conv(d.data.row, 'stroke'));
-      
             el.attrs({
               "fill": fill,
-              "stroke": shape === "line" ? fill : strokeColor
+              "stroke": shape === "line" ? fill : strokeColor,
+              "stroke-width": symbol.unscale(conv(d.data.row, 'stroke')),
+              "i:i:stroke-width": conv(d.data.row, 'stroke'),
+              "i:size": conv(d.data.row, "size")
             })
             .classed("shape", true);
 
