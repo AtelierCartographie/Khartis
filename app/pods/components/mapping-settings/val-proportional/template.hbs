@@ -16,10 +16,19 @@
   <label class="solid w5">
     <span class="tooltip-trigger">Position</span>
   </label>
-  <div class="solid w7">
-    <div class="proportional-type-sideclipped" {{action 'bind' mapping 'renderMode' 'sideclipped'}}>1</div>
-    <div class="proportional-type-superposed" {{action 'bind' mapping 'renderMode' 'superposed'}}>2</div>
-    <div class="proportional-type-sidebyside" {{action 'bind' mapping 'renderMode' 'sidebyside'}}>3</div>
+  <div class="solid horizontal airy flow w7">
+    <div class="proportional-sym-layout-icon proportional-type-sideclipped clickable {{if (x-eq mapping.renderMode 'sideclipped') 'active'}}"
+      {{action 'bind' mapping 'renderMode' 'sideclipped'}}>
+      <img src="{{r-url 'assets/images/settings-icons/val-prop-clip.svg'}}" width="41">
+    </div>
+    <div class="proportional-sym-layout-icon proportional-type-superposed clickable {{if (x-eq mapping.renderMode 'superposed') 'active'}}"
+      {{action 'bind' mapping 'renderMode' 'superposed'}}>
+      <img src="{{r-url 'assets/images/settings-icons/val-prop-over.svg'}}" width="41">
+    </div>
+    <div class="proportional-sym-layout-icon proportional-type-sidebyside clickable {{if (x-eq mapping.renderMode 'sidebyside') 'active'}}"
+      {{action 'bind' mapping 'renderMode' 'sidebyside'}}>
+      <img src="{{r-url 'assets/images/settings-icons/val-prop-sbs.svg'}}" width="41">
+    </div>
   </div>
 </div>
 <div class="horizontal middle flow">
@@ -70,8 +79,7 @@
 <div class="horizontal middle flow">
   <label class="solid w5">{{x-capitalize (t 'visualization.settings.opacity')}}</label>
   <div class="horizontal half-airy solid flow w7">
-    {{x-slider class="fluid" band=0.05 value=mapping.master.visualization.opacity min=0 max=1}}
-    {{x-slider class="fluid" band=0.05 value=mapping.slave.visualization.opacity min=0 max=1}}
+    {{x-slider class="fluid" band=0.05 value=mapping.opacity min=0 max=1}}
   </div>
 </div>
 {{#if (x-eq mapping.renderMode 'sidebyside')}}

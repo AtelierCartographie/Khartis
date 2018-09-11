@@ -229,9 +229,6 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
-      legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
-      legendTitle: this.get('legendTitle'),
-      legendOrientation: this.get('legendOrientation'),
       ordered: this.get('ordered'),
       rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
     }, props));
@@ -247,9 +244,6 @@ Mapping.reopenClass({
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
-      legendMaxValuePrecision: json.legendMaxValuePrecision,
-      legendTitle: json.legendTitle,
-      legendOrientation: json.legendOrientation,
       ordered: json.ordered,
       rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null
     });

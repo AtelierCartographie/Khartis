@@ -62,6 +62,9 @@ let AbstractMapping = Struct.extend({
       type: this.get('type'),
       renderMode: this.get('renderMode'),
       title: this.get('title'),
+      legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
+      legendTitle: this.get('legendTitle'),
+      legendOrientation: this.get('legendOrientation'),
       geoDef: this.get('geoDef') ? this.get('geoDef').export() : null
     }, props));
   }
@@ -76,6 +79,9 @@ AbstractMapping.reopenClass({
       renderMode: json.renderMode || "single",
       type: json.type,
       title: json.title,
+      legendMaxValuePrecision: json.legendMaxValuePrecision,
+      legendTitle: json.legendTitle,
+      legendOrientation: json.legendOrientation,
       geoDef: json.geoDef ? GeoDef.restore(json.geoDef, refs) : null
     });
   }

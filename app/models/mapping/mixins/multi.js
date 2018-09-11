@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import Scale from "../scale/scale";
+import ValueMixin from "./value";
+import LegendMixin from "./legend";
 
 export const QuantiValSymQuantiValSurf = Ember.Mixin.create({
 
@@ -49,7 +51,7 @@ export const QuantiValSymQuantiValSurf = Ember.Mixin.create({
 export const QuantiValSymQualiCatSurf = Ember.Mixin.create(QuantiValSymQuantiValSurf);
 
 
-export const QuantiValSymProportional = Ember.Mixin.create({
+export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, LegendMixin, {
 
   visualization: Ember.computed('master.visualization', function() {
     return this.get('master.visualization');
@@ -91,6 +93,34 @@ export const QuantiValSymProportional = Ember.Mixin.create({
     }
   }),
 
+  opacity: Ember.computed('master.visualization.opacity', {
+    get() {
+      return this.get('master.visualization.opacity');
+    },
+    set(k, v) {
+      let [master, slave] = this.get('mappings');
+      master.set('visualization.opacity', v);
+      slave.set('visualization.opacity', v);
+      return v;
+    }
+  }),
+
+  legendStroke: 1,
+
+  legendTitleComputed: function() {
+    return this.get('legendTitle') ?
+      this.get('legendTitle')
+      : `${this.get('master.varCol.header.value')} + ${this.get('slave.varCol.header.value')}`;
+  }.property('legendTitle', 'master.varCol.header.value', 'slave.varCol.header.value'),
+
+  maxValuePrecision: function() {
+    if (this.get('legendMaxValuePrecision') != null) {
+      return this.get('legendMaxValuePrecision');
+    } else {
+      return Math.max(this.get('master').computeMaxValuePrecision(), this.get('slave').computeMaxValuePrecision());
+    }
+  }.property('legendMaxValuePrecision'),
+
   values: function() {
     return [
       ...this.get('master.values'),
@@ -106,13 +136,32 @@ export const QuantiValSymProportional = Ember.Mixin.create({
     return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
   }.property('values'),
 
+  scale: function() {
+    return Scale.create();
+  }.property(),
+
   intervals: function() {
-    let scale = Scale.create();
     if (this.get('shouldDiverge')) {
-      scale.set('valueBreak', 0);
+      this.set('scale.valueBreak', 0);
     }
-    return scale.getIntervals(this.get('values'));
+    return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]'),
+
+  rules: function() {
+    return [
+      ...this.get('master.rules'),
+      ...this.get('slave.rules')
+    ];
+  }.property('master.rules.[]', 'slave.rules.[]'),
+
+  getScaleOf(type) {
+    switch (type) {
+      case "color":
+        return () => "rgba(255, 255, 255, 0)";
+      default:
+        return this.get('master').getScaleOf(type, this);
+    }
+  },
 
   fn() {
     return this.get('mappings').map( m => {

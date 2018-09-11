@@ -10,7 +10,8 @@ import {compressIntervals} from 'khartis/utils/stats';
 
 const RULES_LIMIT = 8,
       MARGIN_SYMBOL_TEXT = 6,
-      MARGIN_SURFACE_TEXT = 6;
+      MARGIN_SURFACE_TEXT = 6,
+      SURFACE_SWATCH_SIZE = {x: 24/2, y: 16/2};
 
 export default Ember.Mixin.create({
   
@@ -228,8 +229,6 @@ export default Ember.Mixin.create({
       groups = [];
     }
 
-    console.log("draw legend");
-
     this.d3l().select("g.legend").selectAll("g.legend-group")
       .data(groups)
       .enterUpdate({
@@ -411,7 +410,7 @@ export default Ember.Mixin.create({
         self.bindDrag(el);
         el.selectAll("*").remove();
 
-        if (mapping.get('isMulti')) {
+        if (mapping.get('isMulti') && !mapping.get('sharedDomain')) {
           mapping.get('mappings').forEach((m, i) => self.drawLegendInner(el, layer, m, i));
         } else {
           self.drawLegendInner(el, layer, mapping);
@@ -455,7 +454,7 @@ export default Ember.Mixin.create({
       formatter = t => t
     }
 
-    let layerBg = innerEl.append("rect")
+    innerEl.append("rect")
       .classed("legend-layer-bg", true)
       .attrs({
         x: 0,
@@ -485,15 +484,27 @@ export default Ember.Mixin.create({
       });
     });
 
-    let contentEl = innerEl.append("g")
+    let wrapperEl;
+
+    if (mapping.get('isMulti') && mapping.get('sharedDomain')) {
+      wrapperEl = innerEl.append("g")
+        .flowClass("solid flow")
+        .flowClass("h-mode", "vertical")
+        .flowClass("v-mode", "horizontal")
+        .flowState(
+          mapping.legendOrientation === "horizontal" ? "h-mode":"v-mode"
+        );
+    } else {
+      wrapperEl = innerEl;
+    }
+
+    let contentEl = wrapperEl.append("g")
       .flowClass("solid flow")
       .flowClass("h-mode", "horizontal")
       .flowClass("v-mode", "vertical")
       .flowState(
         mapping.legendOrientation === "horizontal" && mapping.get('visualization.shape') !== "bar" ? "h-mode":"v-mode"
       );
-
-    let ruleEl = contentEl;
 
     if (ValueMixin.Data.detect(mapping)) {
       
@@ -523,6 +534,8 @@ export default Ember.Mixin.create({
             update: (sel) => sel.eachWithArgs(fn, svg, layer, mapping, formatter)
           });
       }
+
+      let ruleEl = contentEl;
 
       if (mapping.get('rules').length) {
         
@@ -556,6 +569,22 @@ export default Ember.Mixin.create({
               stroke: "#BBBBBB"
             }
           });
+      }
+
+      if (mapping.get('isMulti') && mapping.get('sharedDomain')) {
+        let swatchesEl = wrapperEl.append("g")
+          .flowClass("solid flow")
+          .flowClass("h-mode", "horizontal")
+          .flowClass("v-mode", "vertical")
+          .flowStyle("h-mode", "position: relative; margin-top: 20px; padding-top: 14px;")
+          .flowState(mapping.legendOrientation === "horizontal" ? "h-mode":"v-mode");
+        
+          swatchesEl.selectAll("g.swatch")
+            .data(mapping.get('mappings'))
+            .enterUpdate({
+              enter: sel => sel.append("g").classed("swatch", true),
+              update: sel => sel.eachWithArgs(this.appendSharedDomainSwatches, mapping)
+            });
         
       }
       
@@ -573,7 +602,7 @@ export default Ember.Mixin.create({
 
   appendSurfaceIntervalLabel(svg, layer, mapping, formatter, val, i) {
           
-    let r = {x: 24/2, y: 16/2};
+    const r = SURFACE_SWATCH_SIZE;
 
     d3.select(this).flowClass("horizontal solid flow")
       .flowClass("v-mode", "stretched")
@@ -621,7 +650,6 @@ export default Ember.Mixin.create({
           let v = val*(1-Math.sign(val)*Number.EPSILON) - Number.EPSILON;
           let pattern = mapping.getScaleOf("texture")(v),
               color = mapping.getScaleOf("color")(v);
-          window.test = mapping.getScaleOf("color");
           if (pattern && pattern.fn != PatternMaker.NONE) {
             let fn = new pattern.fn(false, color);
             fn.init(svg);
@@ -675,6 +703,8 @@ export default Ember.Mixin.create({
 
   appendSymbolIntervalLinearLabel(svg, layer, mapping, formatter, val, i) {
 
+    const stroke = mapping.get('legendStroke') || mapping.get('visualization.stroke');
+
     let r, dy;
 
     d3.select(this).flowComputed("h-mode", "margin-left", function() {
@@ -710,9 +740,9 @@ export default Ember.Mixin.create({
 
       if (!(r.x > 0 && r.y > 0)) return;
 
-      let symH = Math.max(r.y + mapping.get('visualization.stroke'), 12);
+      let symH = Math.max(r.y + stroke, 12);
         
-      dy = r.y + mapping.get('visualization.stroke') - symH;
+      dy = r.y + stroke - symH;
 
       d3.select(this)
         .flowClass("horizontal stretched solid flow")
@@ -731,8 +761,8 @@ export default Ember.Mixin.create({
 
       symbol.insert(symG)
         .attrs({
-          "stroke-width": symbol.unscale(mapping.get('visualization.stroke')),
-          "i:i:stroke-width": mapping.get('visualization.stroke'),
+          "stroke-width": symbol.unscale(stroke),
+          "i:i:stroke-width": stroke,
           "stroke": mapping.get('visualization.strokeColor'),
           "fill": mapping.getScaleOf('color')(val),
           "opacity": mapping.get('visualization.opacity')
@@ -1124,6 +1154,55 @@ export default Ember.Mixin.create({
       });
   },
 
+  appendSharedDomainSwatches(multiMapping, mapping) {
+
+    const r = SURFACE_SWATCH_SIZE;
+
+    let g = d3.select(this).append("g")
+      .flowClass("horizontal flow")
+      .flowStyle("v-mode", `margin-right: 3px;`)
+      .flowComputed("v-mode", "margin-left", function() {
+        return d3lper.selectionMaxWidth(d3.select(this).closestParent(".legend-layer").selectAll("g.symG")) / 2 + 10;
+      });
+    
+
+    d3.select(this).flowClass("horizontal stretched solid flow")
+      .flowStyle("v-mode", `height: ${r.y}px; margin-bottom: 10px; margin-top: ${r.y}px`);
+    
+    let swatchG = g.append("g")
+      .flowStyle(`margin-top: ${-r.y}px`)
+      .flowStyle("v-mode", `width: ${2*r.x}px; margin-right: 2px`);
+    
+    swatchG.append("rect")
+      .attrs({
+        "width": 2*r.x,
+        "height": 2*r.y,
+        "stroke": "#CCCCCC",
+        "fill": "none"
+      });
+    
+    swatchG.append("rect")
+      .attrs({
+        "width": 2*r.x,
+        "height": 2*r.y,
+        "opacity": mapping.get('visualization.opacity'),
+        "fill": () => mapping.getScaleOf("color")(0)
+      });
+      
+    g.append("g")
+      .flowStyle(`margin-left: ${MARGIN_SURFACE_TEXT}px`)
+      .flowStyle("h-mode", "margin-right: 20px")
+      .append("text")
+      .text( mapping.get('varCol.header.value') )
+      .attrs({
+        x: 0,
+        y: 0,
+        dy: "0.3em",
+        "font-size": "0.75em",
+        "font-weight": "bold"
+      });
+  },
+
   appendRuleLabel(svg, layer, mapping, rule, i) {
 
     let converter = mapping.get('ruleFn').bind(mapping),
@@ -1174,7 +1253,7 @@ export default Ember.Mixin.create({
         
     } else {
       
-      r = {x: 24, y: 16};
+      r = SURFACE_SWATCH_SIZE;
 
       d3.select(this).flowClass("horizontal stretched solid flow")
         .flowStyle("v-mode", `height: ${r.y/2}px; margin-bottom: 5px; margin-top: ${r.y/2}px`);

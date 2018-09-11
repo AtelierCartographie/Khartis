@@ -3,6 +3,9 @@ import config from 'khartis/config/environment';
 import SymbolBrewer from 'khartis/utils/symbolbrewer';
 import ColorBrewer from 'khartis/utils/colorbrewer';
 
+export const DEFAULT_FILL = "red";
+export const DEFAULT_FILL_ALT = "rgb(62, 107, 158)";
+export const DEFAULT_FILL_BEFORE_BREAK = "blue";
 const DEFAULT_UNORDERED_SHAPES = ["circle", "rect", "line", "star", "times"];
 const DEFAULT_STROKE_COLOR = "#404040";
 const DEFAULT_STROKE = 0;
@@ -12,8 +15,8 @@ const DEFAULT_COLOR_SET = "schemeAccent";
 let SymbolVisualization = Struct.extend({
   
   type: "symbol",
-  color: "red",
-  colorBeforeBreak: "blue",
+  color: DEFAULT_FILL,
+  colorBeforeBreak: DEFAULT_FILL_BEFORE_BREAK,
   shape: "circle",
   shapeSet: null,
   colorSet: DEFAULT_COLOR_SET,

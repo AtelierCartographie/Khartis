@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import AbstractMapping from './abstract-mapping';
 import Mapping from './mapping';
-import ValueMixins from './mixins/value';
+import { DEFAULT_FILL_ALT } from "./visualization/symbol";
 import {
   QuantiValSymQuantiValSurf,
   QuantiValSymQualiCatSurf,
@@ -97,16 +97,19 @@ let MultiMapping = AbstractMapping.extend({
         if (["sideclipped", "superposed", "sidebyside"].indexOf(this.get('renderMode')) === -1) {
           this.set('renderMode', 'sideclipped');
         }
-        this.set('mappings', [
-          Mapping.create({
-            type: "quanti.val_symboles",
-            geoDef: this.get('geoDef')
-          }),
-          Mapping.create({
-            type: "quanti.val_symboles",
-            geoDef: this.get('geoDef')
-          })
-        ]);
+        if (!this.get('mappings.length')) {
+          this.set('mappings', [
+            Mapping.create({
+              type: "quanti.val_symboles",
+              geoDef: this.get('geoDef')
+            }),
+            Mapping.create({
+              type: "quanti.val_symboles",
+              geoDef: this.get('geoDef'),
+              useAltColor: true
+            })
+          ]);
+        }
         this.reopen(QuantiValSymProportional);
         break;
       default:
@@ -137,8 +140,8 @@ let MultiMapping = AbstractMapping.extend({
 
   deferredChange: Ember.debouncedObserver(
     'type', 'titleComputed', 'renderMode',
-    'sharedDomain', 'sideBySideAlign', 'sideBySideMargin',
-    'geoDef._defferedChangeIndicator',
+    'sharedDomain', 'sideBySideAlign', 'sideBySideMargin', 'maxValuePrecision',
+    'geoDef._defferedChangeIndicator', 'legendTitle', 'legendOrientation',
     'mappings.@each._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();

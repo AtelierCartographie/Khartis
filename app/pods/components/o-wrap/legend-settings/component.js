@@ -6,7 +6,7 @@ export default WrapperAbstract.extend({
 
   layers: null,
 
-  legendTitle: Ember.computed('obj', {
+  legendTitle: Ember.computed('obj.legendTitle', {
     get() {
       return this.get('obj.legendTitle') || this.get('obj.legendTitleComputed');
     },
@@ -17,10 +17,14 @@ export default WrapperAbstract.extend({
 
   flattenedMappings: Ember.computed('layers.@each.mapping', function() {
     return this.get('layers').reduce( (out, lyr) => {
-      if (lyr.get('mapping.isMulti')) {
-        return out.concat(lyr.get('mapping.mappings'));
+      if (lyr.get('mapping.isFinalized')) {
+        if (lyr.get('mapping.isMulti') && !lyr.get('mapping.sharedDomain')) {
+          return out.concat(lyr.get('mapping.mappings'));
+        } else {
+          return [...out, lyr.get('mapping')];  
+        }
       } else {
-        return [...out, lyr.get('mapping')];
+        return out;
       }
     }, []);
   }),
@@ -78,7 +82,16 @@ export default WrapperAbstract.extend({
   actions: {
     editMappingLegend(mapping) {
       this.set('obj', mapping);
-    }
+    },
+    resetLegendSettings() {
+      this.get('flattenedMappings').forEach( m => {
+          m.setProperties({
+            legendTitle: null,
+            legendOrientation: "vertical",
+            legendMaxValuePrecision: 5
+          });
+      });
+    },
   }
   
 });

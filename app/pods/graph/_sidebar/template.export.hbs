@@ -130,6 +130,7 @@
   {{#if model.graphLayers.length}}
     <div class="title underlined">{{x-capitalize (t 'export.title.legend')}}</div>
     <div class="settings vertical flow">
+      {{#o-wrap/legend-settings layers=model.graphLayers as |settings|}}
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
         <div class="horizontal solid half-airy flow w3">
@@ -137,7 +138,7 @@
         </div>
         <label class="solid w4">{{x-capitalize (t 'export.settings.reset')}}</label>
         <div class="horizontal solid half-airy flow w1">
-          <a {{action 'resetLegendSettings'}}><i class="iconfont iconfont-undo"></i></a>
+          <a {{action 'resetLegendSettings' target=settings}}><i class="iconfont iconfont-undo"></i></a>
         </div>
       </div>
       <div class="horizontal middle flow">
@@ -151,7 +152,6 @@
           <span class="layer-title">{{x-capitalize (t 'export.settings.orientation.vertical')}}</span>
         </div>
       </div>
-      {{#o-wrap/legend-settings layers=model.graphLayers as |settings|}}
       <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.edit')}}</label>
         <div class="horizontal solid flow w5">

@@ -5,6 +5,7 @@ import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
 import Colorbrewer from 'khartis/utils/colorbrewer';
 import config from 'khartis/config/environment';
+import { DEFAULT_FILL_ALT } from "../visualization/symbol";
 /* global d3 */
 
 let DataMixin = Ember.Mixin.create({
@@ -67,11 +68,13 @@ let DataMixin = Ember.Mixin.create({
   },
   
   maxValuePrecision: function() {
-
     if (this.get('legendMaxValuePrecision') != null) {
       return this.get('legendMaxValuePrecision');
     }
+    return this.computeMaxValuePrecision();
+  }.property('values', 'intervals', 'legendMaxValuePrecision'),
 
+  computeMaxValuePrecision() {
     let max = 5;
 
     let pre = this.get('values').reduce( (p, v) => {
@@ -106,8 +109,7 @@ let DataMixin = Ember.Mixin.create({
     }, pre);
     
     return Math.round(pre);
-    
-  }.property('values', 'intervals', 'legendMaxValuePrecision'),
+  },
 
   valueBreakChange: function() {
     
@@ -347,6 +349,9 @@ let SymbolMixin = Ember.Mixin.create({
   generateVisualization() {
     if (!this.get('visualization')) {
       this.set('visualization', VisualizationFactory.createInstance("symbol"));
+      if (this.get('useAltColor')) {
+        this.set('visualization.color', DEFAULT_FILL_ALT);
+      }
     }
   },
 
