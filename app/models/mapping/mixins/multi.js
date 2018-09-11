@@ -126,24 +126,22 @@ export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, Lege
       ...this.get('master.values'),
       ...this.get('slave.values')
     ];
-  }.property('master.values[]', 'slave.values[]'),
+  }.property('master.values.[]', 'slave.values.[]'),
   
   absValues: function() {
     return this.get('values').map( v => Math.abs(v) );
-  }.property('values'),
+  }.property('values.[]'),
 
   shouldDiverge: function() {
     return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
-  }.property('values'),
+  }.property('values.[]'),
 
   scale: function() {
     return Scale.create();
   }.property(),
 
   intervals: function() {
-    if (this.get('shouldDiverge')) {
-      this.set('scale.valueBreak', 0);
-    }
+    this.set('scale.valueBreak', this.get('shouldDiverge') ? 0 : null);
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]'),
 
