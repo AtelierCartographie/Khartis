@@ -83,7 +83,7 @@
   <label class="solid w5">{{x-capitalize (t 'visualization.settings.color' count=2)}}</label>
   <div class="horizontal half-airy solid flow w7">
     {{#each mapping.mappings as |m|}}
-      {{#if (x-some m.scale.diverging sharedDomainDiverging)}}
+      {{#if (x-some (x-every (x-not mapping.sharedDomain) m.scale.diverging) sharedDomainDiverging)}}
         {{#o-wrap/brewer obj=m classes=2 classesBeforeBreak=1 diverging=true withTransparent=true as |brewer|}}
           <div class="horizontal half-airy solid flow w5 layer-color-selector">
           {{#x-dropdown-plus as |facet|}}
