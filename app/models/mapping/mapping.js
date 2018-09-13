@@ -183,6 +183,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
             return visualization.get('strokeColor');
           case "stroke":
             return visualization.get('stroke');
+          case "text":
+            return cell.get('corrected') ? cell.get('correctedValue') : cell.get('value')
         }
       }
       

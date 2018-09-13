@@ -591,7 +591,7 @@ export default Ember.Mixin.create({
     }
     
     if (mapping.get('rules') && mapping.get('rules').length) {
-      ruleEl.selectAll("g.rule")
+      contentEl.selectAll("g.rule")
         .data(mapping.get('rules').filter( r => r.get('visible') && (mapping.get('visualization.mainType') === "surface" || r.get('shape'))).slice(0, RULES_LIMIT))
         .enterUpdate({
           enter: (sel) => sel.append("g").classed("rule", true),

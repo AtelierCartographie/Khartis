@@ -68,6 +68,7 @@ export default Ember.Mixin.create({
 
     let self = this,
         mapping = graphLayer.get('mapping'),
+        converter = mapping.fn(),
         mappedDataLayers = this.get('displayableLayers'),
         visualization = mapping.get('visualization');
 
@@ -78,16 +79,16 @@ export default Ember.Mixin.create({
     .map( d => {
 
       //find subjects largest bounds
-      let associatedSymbolsBounds = d.cell.get('row.cells').reduce( (out, cell) => {
+      let associatedSymbolsBounds = d.row.get('cells').reduce( (out, cell) => {
         let layers = mappedDataLayers.filter(
           gl => gl.get('mapping.varCol') == cell.get('column') && gl.get('mapping.visualization.type') === 'symbol'
         );
         layers.forEach( lyr => {
           let mapping = lyr.get('mapping'),
-              converter = mapping.fn(),
+              lyrConverter = mapping.fn(),
               symbol = SymbolMaker.symbol({
-                name: converter(cell.get('row'), "shape"),
-                size: converter(cell.get('row'), "size")*2,
+                name: lyrConverter(cell.get('row'), "shape"),
+                size: lyrConverter(cell.get('row'), "size")*2,
                 sign: Math.sign(cell.get('postProcessedValue')),
                 barWidth: mapping.get('visualization.barWidth')
               });
@@ -101,7 +102,7 @@ export default Ember.Mixin.create({
         id: d.id,
         point: d.point,
         xy: d.point.path.centroid(d.point.feature.geometry),
-        label: d.cell.get('corrected') ? d.cell.get('correctedValue') : d.cell.get('value'),
+        label: converter(d.row, "text"),
         bounds: associatedSymbolsBounds,
         padding: 2,
         ...visualization.getOverwrite(d.id)

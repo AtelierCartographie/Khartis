@@ -68,13 +68,6 @@
             {{/x-dropdown-plus}}
           </div>
         </div>
-        <div class="horizontal middle flow">
-            {{text-style class="fluid"
-              model=layer.mapping.visualization.style
-              withEditor=false
-              maxSize=22
-            }}
-        </div>
 
         {{#if (x-eq layer.mapping.filter.type 'category')}}
 
@@ -105,7 +98,7 @@
 
         {{else if (x-eq layer.mapping.filter.type 'range')}}
 
-        <div class="horizontal flow padded-t">
+        <div class="horizontal flow padded-v">
           <label class="solid w4">{{x-capitalize (t 'export.settings.labelling.threshold')}}</label>
           <div class="horizontal solid flow w8">
             {{x-slider-range-editable bandAuto=true class="fluid offset-slider" value=layer.mapping.filter.range min=layer.mapping.filter.min max=layer.mapping.filter.max}}
@@ -113,6 +106,13 @@
         </div>
 
         {{/if}}
+        <div class="horizontal middle flow">
+            {{text-style class="fluid"
+              model=layer.mapping.visualization.style
+              withEditor=false
+              maxSize=22
+            }}
+        </div>
       {{/each}}
 
       {{else}}
