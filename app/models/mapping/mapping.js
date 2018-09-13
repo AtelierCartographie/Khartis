@@ -1,6 +1,4 @@
 import Ember from 'ember';
-import Struct from '../struct';
-import GeoDef from '../geo-def';
 import VisualizationFactory from './visualization/factory';
 import Scale from './scale/scale';
 import ValueMixins from './mixins/value';
@@ -15,8 +13,6 @@ import PatternMaker from 'khartis/utils/pattern-maker';
 import AbstractMapping from './abstract-mapping';
 
 let Mapping = AbstractMapping.extend(LegendMixin, {
-  
-  scale: null,
   
   varCol: null,
   filter: null,
@@ -86,6 +82,10 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       case "quanti.val_symboles":
         this.reopen(ValueMixins.Data);
         this.reopen(ValueMixins.Symbol);
+        break;
+      case "quanti.val_symboles.combined":
+        this.reopen(ValueMixins.Data);
+        this.reopen(ValueMixins.SymbolCombined);
         break;
       case "labelling":
         this.reopen(LabellingMixins.Visualization);
@@ -225,7 +225,6 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   
   export(props) {
     return this._super(Object.assign({
-      scale: this.get('scale') ? this.get('scale').export() : null,
       visualization: this.get('visualization') ? this.get('visualization').export() : null,
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
@@ -240,7 +239,6 @@ Mapping.reopenClass({
   
   restore(json, refs = {}, opts = {}) {
     return this._super(json, refs, {
-      scale: json.scale != null ? Scale.restore(json.scale, refs) : null,
       visualization: json.visualization != null ? VisualizationFactory.restoreInstance(json.visualization, refs) : null,
       varCol: json.varCol ? refs[json.varCol] : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,

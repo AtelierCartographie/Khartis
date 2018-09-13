@@ -1,3 +1,7 @@
-{{#each colors as |color|}}
-   <div class="swatch fluid" style="background-color: {{color}}"></div>
-{{/each}}
+{{#if transparent}}
+  <div class="swatch fluid transparent"></div>
+{{else}}
+  {{#each colors as |color|}}
+    <div class="swatch fluid" style="background-color: {{color}}"></div>
+  {{/each}}
+{{/if}}

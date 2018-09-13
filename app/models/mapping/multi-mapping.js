@@ -7,6 +7,7 @@ import {
   QuantiValSymQualiCatSurf,
   QuantiValSymProportional
 } from "./mixins/multi";
+import Scale from './scale/scale';
 
 let MultiMapping = AbstractMapping.extend({
   
@@ -94,19 +95,21 @@ let MultiMapping = AbstractMapping.extend({
         this.reopen(QuantiValSymQualiCatSurf);
         break;
       case "quanti.val_symboles.combined.proportional":
+        if (!this.get('scale')) {
+          this.set('scale', Scale.create());
+        }
         if (["sideclipped", "superposed", "sidebyside"].indexOf(this.get('renderMode')) === -1) {
           this.set('renderMode', 'sideclipped');
         }
         if (!this.get('mappings.length')) {
           this.set('mappings', [
             Mapping.create({
-              type: "quanti.val_symboles",
+              type: "quanti.val_symboles.combined",
               geoDef: this.get('geoDef')
             }),
             Mapping.create({
-              type: "quanti.val_symboles",
-              geoDef: this.get('geoDef'),
-              useAltColor: true
+              type: "quanti.val_symboles.combined",
+              geoDef: this.get('geoDef')
             })
           ]);
         }
@@ -142,6 +145,7 @@ let MultiMapping = AbstractMapping.extend({
     'type', 'titleComputed', 'renderMode',
     'sharedDomain', 'sideBySideAlign', 'sideBySideMargin', 'maxValuePrecision',
     'geoDef._defferedChangeIndicator', 'legendTitle', 'legendOrientation',
+    'scale._defferedChangeIndicator',
     'mappings.@each._defferedChangeIndicator',
     function() {
       this.notifyDefferedChange();

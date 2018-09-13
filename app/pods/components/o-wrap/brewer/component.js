@@ -7,43 +7,53 @@ import CategoryMixin from 'khartis/models/mapping/mixins/category';
 const ANGLES = [0, 45, 90, 135];
 
 export default WrapperAbstract.extend({
+
+  classes: null,
+  classesBeforeBreak: null,
+  diverging: null,
+  withTransparent: false,
   
   availableColorSets: function() {
-    let categoricalScheme = CategoryMixin.Data.detect(this.get('obj')) && !this.get('obj.ordered'),
-        master = this.get('obj.scale.diverging') ? Colorbrewer.diverging : (categoricalScheme ? Colorbrewer.categorical : Colorbrewer.sequential),
-        classes = this.get('obj.scale.classes');
 
-      return Object.keys(master).map( k => {
+    let categoricalScheme = CategoryMixin.Data.detect(this.get('obj')) && !this.get('obj.ordered'),
+        diverging = this.get('diverging') != null ? this.get('diverging') : this.get('obj.scale.diverging'),
+        classes = this.get('classes') || this.get('obj.scale.classes'),
+        classesBeforeBreak = this.get('classesBeforeBreak') || this.get('obj.scale.classesBeforeBreak'),
+        master = diverging ? Colorbrewer.diverging : (categoricalScheme ? Colorbrewer.categorical : Colorbrewer.sequential);
+
+      return Object.keys(master)
+        .filter( k => this.get('withTransparent') || k !== "transparent" )
+        .map( k => {
         
-        let colors;
+          let colors;
+          
+          if (CategoryMixin.Data.detect(this.get('obj'))) {
+            colors = Colorbrewer.Composer.compose(
+              k, 
+              false,
+              false, 
+              Math.min(this.get('obj.rules').length, 8),
+              0,
+              categoricalScheme
+            );
+          } else {
+            colors = Colorbrewer.Composer.compose(
+              k, 
+              diverging,
+              this.get('obj.visualization.reverse'), 
+              classes,
+              classesBeforeBreak
+            );
+          }
+          
+          return {
+            colors,
+            key: k
+          };
         
-        if (CategoryMixin.Data.detect(this.get('obj'))) {
-          colors = Colorbrewer.Composer.compose(
-            k, 
-            false,
-            false, 
-            Math.min(this.get('obj.rules').length, 8),
-            0,
-            categoricalScheme
-          );
-        } else {
-          colors = Colorbrewer.Composer.compose(
-            k, 
-            this.get('obj.scale.diverging'),
-            this.get('obj.visualization.reverse'), 
-            this.get('obj.scale.classes'),
-            this.get('obj.scale.classesBeforeBreak')
-          );
-        }
-        
-        return {
-          colors: colors,
-          key: k
-        };
-        
-      }).filter( x => x.colors != null );
+        }).filter( x => x.colors != null );
     
-  }.property('obj.ordered', 'obj.visualization._defferedChangeIndicator', 'obj.scale._defferedChangeIndicator'),
+  }.property('classes', 'classesBeforeBreak', 'diverging', 'obj.ordered', 'obj.visualization._defferedChangeIndicator', 'obj.scale._defferedChangeIndicator'),
 
   categoricalColorSet: function() {
 

@@ -60,13 +60,13 @@ let SymbolVisualization = Struct.extend({
     }
   },
 
-  composeColorSet(length = 8) {
+  composeColorSet(length = 8, diverging = false, before = 0) {
     return ColorBrewer.Composer.compose(
       this.get('colorSet'),
-      false,
+      diverging,
       false,
       length,
-      0,
+      before,
       true
     );
   },
@@ -80,7 +80,8 @@ let SymbolVisualization = Struct.extend({
   },
   
   deferredChange: Ember.debouncedObserver(
-    'type', 'color', 'strokeColor', 'stroke', 'colorBeforeBreak',
+    'type', 'color', 'colorSet',
+    'strokeColor', 'stroke', 'colorBeforeBreak',
     'maxSize', 'shape', 'barWidth', 'opacity',
     function() {
       this.notifyDefferedChange();
@@ -133,5 +134,20 @@ const SymbolVisualizationCategorical = SymbolVisualization.extend({
   }.property()
 });
 
+const SymbolVisualizationCombined = SymbolVisualization.extend({
+  type: "symbol.combined",
+  color: null,
+  colorSet: null,
+  colorStops(diverging) {
+    if (diverging && this.get('colorSet')) {
+      return this.composeColorSet(2, true, 1);
+    } else if (this.get('color') != null) {
+      return [this.get('color')];
+    } else {
+      return ["black"];
+    }
+  }
+});
+
 export default SymbolVisualization;
-export {SymbolVisualizationCategorical};
+export {SymbolVisualizationCategorical, SymbolVisualizationCombined};

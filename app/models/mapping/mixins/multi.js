@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Scale from "../scale/scale";
 import ValueMixin from "./value";
 import LegendMixin from "./legend";
+import d3 from 'npm:d3';
 
 export const QuantiValSymQuantiValSurf = Ember.Mixin.create({
 
@@ -52,6 +53,20 @@ export const QuantiValSymQualiCatSurf = Ember.Mixin.create(QuantiValSymQuantiVal
 
 
 export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, LegendMixin, {
+
+  onFinalizedChange: function() {
+    if (this.get('isFinalized')) {
+      let [master, slave] = this.get('mappings');
+      if (!master.get('visualization.color')) {
+        master.set('visualization.color', 'red');
+        master.set('visualization.colorSet', 'PRGn');
+      }
+      if (!slave.get('visualization.color')) {
+        slave.set('visualization.color', 'blue');
+        slave.set('visualization.colorSet', 'BlRd');
+      }
+    }
+  }.observes('isFinalized'),
 
   visualization: Ember.computed('master.visualization', function() {
     return this.get('master.visualization');
@@ -136,14 +151,21 @@ export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, Lege
     return this.get('values').some( v => v < 0 ) && this.get('values').some( v => v >= 0 );
   }.property('values.[]'),
 
-  scale: function() {
-    return Scale.create();
-  }.property(),
-
   intervals: function() {
-    this.set('scale.valueBreak', this.get('shouldDiverge') ? 0 : null);
     return this.get('scale').getIntervals(this.get('values'));
   }.property('values.[]'),
+
+  extent: function() {
+    return d3.extent(this.get('values'));
+  }.property('values.[]'),
+
+  extentMin: function() {
+    return this.get('extent')[0];
+  }.property('extent'),
+  
+  extentMax: function() {
+    return this.get('extent')[1];
+  }.property('extent'),
 
   rules: function() {
     return [
@@ -151,6 +173,14 @@ export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, Lege
       ...this.get('slave.rules')
     ];
   }.property('master.rules.[]', 'slave.rules.[]'),
+
+  onSharedDomainChange: function() {
+    if (this.get('sharedDomain')) {
+      if (this.get('shouldDiverge')) {
+        this.set('scale.valueBreak', 0);
+      }
+    }
+  }.observes('sharedDomain'),
 
   getScaleOf(type) {
     switch (type) {

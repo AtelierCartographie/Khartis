@@ -293,6 +293,11 @@ let brewer = {
   }*/
 
   diverging: {
+    transparent: {
+      2: {
+          1: ["rgba(255, 255, 255, 0)","rgba(255, 255, 255, 0)"],
+      },
+    },
     PRGn: {
         2: {
             1: ["#a068b0","#60ab69"],
@@ -429,23 +434,24 @@ let brewer = {
 };
 
 // Reverse-duplicate each diverging palette
-Object.keys(brewer.diverging).forEach(function(pid){
-  var rev_pid = pid.replace(/^(..)(.*)$/, '$2$1');
-  brewer.diverging[rev_pid] = {};
-  Object.keys(brewer.diverging[pid]).forEach(function(n){
-    brewer.diverging[rev_pid][n] = {};
-    Object.keys(brewer.diverging[pid][n]).forEach(function(m){
-      brewer.diverging[rev_pid][n][n-m] = brewer.diverging[pid][n][m].slice(0).reverse();
-    });
+Object.keys(brewer.diverging)
+  .filter(k => k !== "transparent")
+  .forEach(function(pid){
+    var rev_pid = pid.replace(/^(..)(.*)$/, '$2$1');
+    brewer.diverging[rev_pid] = {};
+    Object.keys(brewer.diverging[pid])
+      .forEach(function(n){
+        brewer.diverging[rev_pid][n] = {};
+        Object.keys(brewer.diverging[pid][n]).forEach(function(m){
+          brewer.diverging[rev_pid][n][n-m] = brewer.diverging[pid][n][m].slice(0).reverse();
+        });
+      });
   });
-});
 
 brewer.Composer = {
 
   compose(palette, diverging, reverse, classes, before, categorical=false) {
-
     let res = null;
-
     if (diverging) {
       res = brewer.diverging[palette][classes][before].slice(0);
       if (reverse) {

@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   
   tagName: "div",
   
-  colors: null
+  colors: null,
+  transparent: false
   
 });

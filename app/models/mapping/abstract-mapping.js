@@ -1,12 +1,14 @@
 import Ember from 'ember';
 import GeoDef from '../geo-def';
 import Struct from '../struct';
+import Scale from './scale/scale';
 
 let AbstractMapping = Struct.extend({
   
   type: null,
 
   visualization: null,
+  scale: null,
 
   title: null,
 
@@ -60,6 +62,7 @@ let AbstractMapping = Struct.extend({
   export(props) {
     return this._super(Object.assign({
       type: this.get('type'),
+      scale: this.get('scale') ? this.get('scale').export() : null,
       renderMode: this.get('renderMode'),
       title: this.get('title'),
       legendMaxValuePrecision : this.get('legendMaxValuePrecision'),
@@ -76,6 +79,7 @@ AbstractMapping.reopenClass({
   restore(json, refs = {}, opts = {}) {
     return this._super(json, refs, {
       ...opts,
+      scale: json.scale != null ? Scale.restore(json.scale, refs) : null,
       renderMode: json.renderMode || "single",
       type: json.type,
       title: json.title,

@@ -111,12 +111,20 @@
         <div class="horizontal solid half-airy flow w7">
           {{input-numeric/one-way readonly=(x-true-or-undef mapping.shouldDiverge) numericValue=mapping.scale.valueBreak
           class="value-break-input solid w5 padding-fix" nullable=true min=mapping.extentMin max=mapping.extentMax
-          update=(action 'updateValueBreak') placeholder=(t 'general.none')}} {{#if mapping.scale.diverging}}
-          {{#if mapping.scale.usesInterval}} {{#unless (x-eq mapping.scale.intervalType 'manual')}}
-          {{#o-wrap/classes-before-break classes=mapping.scale.classesBeforeBreak totalClasses=mapping.scale.classes
-          possibilities=mapping.possibleClassesBeforeBreak as |wrap|}} {{#if wrap.editable}} {{x-slider class="fluid
-          offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}} {{/if}} {{/o-wrap/classes-before-break}}
-          {{/unless}} {{/if}} {{/if}}
+          update=(action 'updateValueBreak') placeholder=(t 'general.none')}}
+          {{#if mapping.scale.diverging}}
+            {{#if mapping.scale.usesInterval}}
+              {{#unless (x-eq mapping.scale.intervalType 'manual')}}
+                {{#o-wrap/classes-before-break classes=mapping.scale.classesBeforeBreak totalClasses=mapping.scale.classes
+                  possibilities=mapping.possibleClassesBeforeBreak as |wrap|}}
+                    {{#if wrap.editable}}
+                      {{x-slider class="fluid
+                          offset-slider" displayTick=false tickFormat="d" band=1 value=wrap.cursor min=wrap.min max=wrap.max}}
+                    {{/if}}
+                {{/o-wrap/classes-before-break}}
+              {{/unless}}
+            {{/if}}
+          {{/if}}
         </div>
       </div>
       {{#if withFillSettings}}

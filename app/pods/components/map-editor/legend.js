@@ -1180,14 +1180,33 @@ export default Ember.Mixin.create({
         "stroke": "#CCCCCC",
         "fill": "none"
       });
-    
-    swatchG.append("rect")
-      .attrs({
-        "width": 2*r.x,
-        "height": 2*r.y,
-        "opacity": mapping.get('visualization.opacity'),
-        "fill": () => mapping.getScaleOf("color")(0)
-      });
+
+    if (multiMapping.get('scale.diverging')) {
+      let colors = mapping.get('visualization').colorStops(true);
+      swatchG.append("rect")
+        .attrs({
+          "width": r.x,
+          "height": 2*r.y,
+          "opacity": mapping.get('visualization.opacity'),
+          "fill": () => colors[0]
+        });
+      swatchG.append("rect")
+        .attrs({
+          "x": r.x,
+          "width": r.x,
+          "height": 2*r.y,
+          "opacity": mapping.get('visualization.opacity'),
+          "fill": () => colors[1]
+        });
+    } else {
+      swatchG.append("rect")
+        .attrs({
+          "width": 2*r.x,
+          "height": 2*r.y,
+          "opacity": mapping.get('visualization.opacity'),
+          "fill": () => mapping.getScaleOf("color")(0)
+        });
+    }
       
     g.append("g")
       .flowStyle(`margin-left: ${MARGIN_SURFACE_TEXT}px`)

@@ -5,8 +5,6 @@ import VisualizationFactory from '../visualization/factory';
 import PatternMaker from 'khartis/utils/pattern-maker';
 import Colorbrewer from 'khartis/utils/colorbrewer';
 import config from 'khartis/config/environment';
-import { DEFAULT_FILL_ALT } from "../visualization/symbol";
-/* global d3 */
 
 let DataMixin = Ember.Mixin.create({
   
@@ -349,9 +347,6 @@ let SymbolMixin = Ember.Mixin.create({
   generateVisualization() {
     if (!this.get('visualization')) {
       this.set('visualization', VisualizationFactory.createInstance("symbol"));
-      if (this.get('useAltColor')) {
-        this.set('visualization.color', DEFAULT_FILL_ALT);
-      }
     }
   },
 
@@ -439,9 +434,9 @@ let SymbolMixin = Ember.Mixin.create({
       
       d3Scale = d3.scaleThreshold()
 
-      if (this.get('scale.diverging')) {
-        range = this.get('visualization').colorStops(this.get('scale.diverging'));
-        domain = [this.get('scale.valueBreak')];
+      if (domainDelegate.get('scale.diverging')) {
+        range = this.get('visualization').colorStops(domainDelegate.get('scale.diverging'));
+        domain = [domainDelegate.get('scale.valueBreak')];
       } else {
         range = this.get('visualization').colorStops();
         domain = [];
@@ -457,5 +452,18 @@ let SymbolMixin = Ember.Mixin.create({
   
 });
 
+let SymbolCombinedMixin = Ember.Mixin.create(SymbolMixin, {
+  generateVisualization() {
+    if (!this.get('visualization')) {
+      this.set('visualization', VisualizationFactory.createInstance("symbol.combined"));
+    }
+  }
+});
 
-export default {Data: DataMixin, Surface: SurfaceMixin, Symbol: SymbolMixin};
+
+export default {
+  Data: DataMixin,
+  Surface: SurfaceMixin,
+  Symbol: SymbolMixin,
+  SymbolCombined: SymbolCombinedMixin
+};

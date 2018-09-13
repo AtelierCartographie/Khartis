@@ -1,6 +1,10 @@
 import Ember from 'ember';
 import SurfaceVisualization from './surface';
-import {default as SymbolVisualization, SymbolVisualizationCategorical} from './symbol';
+import {
+  default as SymbolVisualization,
+  SymbolVisualizationCategorical,
+  SymbolVisualizationCombined
+} from './symbol';
 import TextVisualization from './text';
 
 let VisualizationFactory = Ember.Object.extend({});
@@ -14,6 +18,8 @@ VisualizationFactory.reopenClass({
         return SymbolVisualization;
       case "symbol.categorical":
         return SymbolVisualizationCategorical;
+      case "symbol.combined":
+        return SymbolVisualizationCombined;
       case "text":
         return TextVisualization;
     }
