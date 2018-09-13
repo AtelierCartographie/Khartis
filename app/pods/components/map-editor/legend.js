@@ -1204,7 +1204,7 @@ export default Ember.Mixin.create({
           "width": 2*r.x,
           "height": 2*r.y,
           "opacity": mapping.get('visualization.opacity'),
-          "fill": () => mapping.getScaleOf("color")(0)
+          "fill": () => mapping.get('visualization').colorStops(false)[0]
         });
     }
       
