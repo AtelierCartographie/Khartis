@@ -7,7 +7,7 @@
 Le dictionnaire est un tableau répertoriant les entités géographiques qui sont associées à un fond de carte. Par exemple pour un fond de carte de la France par département, le dictionnaire contient la liste des 101 départements.
 
 Ce fichier est le pivot indispensable au géoréférencement de données fournies par l’utilisateur de Khartis. C’est à dire relier les données de l’utilisateur au dictionnaire et donc au fond de carte.
-![schéma dictionnaire](/assets/dictionnaire.png)
+![schéma dictionnaire](./assets/dictionnaire.png)
 
 Pour que ce lien soit le plus transparent possible aux yeux de l’utilisateur, des variantes d’une même entité géographique sont inscrites dans le dictionnaire. Ses variantes proviennent de codes officiels internationaux et nationaux (ISO, NUTS, INSEE…) et de traductions.
 
@@ -57,17 +57,17 @@ Un fichier d’extension .svg, pour *Scalable Vector Graphic*, est un fichier di
 On l’oppose généralement au format matriciel ou raster qui ne peut être agrandi sans subir une perte de qualité d’image.
 
 **Format matriciel ou raster :**   
-![raster](/assets/svg-raster.png)
+![raster](./assets/svg-raster.png)
 
 **Format vectoriel :**   
-![vector](/assets/svg-vector.png)
+![vector](./assets/svg-vector.png)
 
 ***
 
 ## lat/long (coordonnées géographiques)
 Les coordonnées géographiques permettent de localiser précisément un lieu sur la Terre à l’aide de deux valeurs d’angles appelées latitude et longitude. La valeur de chaque angle est défini par rapport à une référence appelé parallèle d’origine (l’équateur) pour la latitude et méridien d’origine (Greenwich) pour la longitude.
 
-![vector](/assets/lat-long.png)
+![vector](./assets/lat-long.png)
 
 La latitude indique le positionnement Nord-Sud d’un point sur Terre. Sa valeur est l’angle formé entre le plan de référence, l’équateur, et un point sur Terre. Elle s’étend de -90° au pôle Sud à 90° au pôle Nord. Le cercle qui relie tous les points de même latitude est parallèle au plan de l’équateur.
 
@@ -79,7 +79,7 @@ Prenons l’exemple de Johannesburg en Afrique du Sud dont la position est :
 +   26° 12′ 16″ Sud, 28° 2′ 44″ Est en degrés sexagésimaux
 +   -26.204444°, 28.045556° ou 26.204444° Sud, 28.045556° Est en degrés décimaux
 
-![vector](/assets/lat-long-exemple.png)
+![vector](./assets/lat-long-exemple.png)
 
 ***
 

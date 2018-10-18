@@ -19,21 +19,37 @@ repo_name: 'AtelierCartographie/Khartis'
 repo_url: 'https://github.com/AtelierCartographie/Khartis'
 
 # Theme and options
-theme: material
-extra:
-  logo: 'assets/Khartis-logo.svg'
+theme:
+  name: 'material'
+  language: 'fr'
+  logo: './assets/Khartis-logo.svg'
   palette:
     primary: ''
     accent: 'light blue'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  feature:
+    tabs: true
 extra_css:
   - 'stylesheets/extra.css'
-    
+
 # Navigation
-pages:
+nav:
     - Accueil: index.md
     - Tutoriels:
         - Premiers pas avec Khartis (1): premiers-pas-avec-Khartis-(1).md
         - Premiers pas avec Khartis (2): premiers-pas-avec-Khartis-(2).md
+    - Visualisations:
+        - Liste des visualisations: liste-des-visualisations.md
+        - Symboles proportionnels: symboles-proportionnels.md
+        - Couleurs ordonnées: couleurs-ordonnees.md
+        - Symboles ordonnées: symboles-ordonnes.md
+        - Symboles différents: symboles-differents.md
+        - Couleurs différentes: couleurs-differentes.md
+        - Symboles proportionnels colorés (ordre): symboles-proportionnels-colores-ordre.md
+        - Symboles proportionnels colorés (différence): symboles-proportionnels-colores-difference.md
+        - Double symboles proportionnels: double-symboles-proportionnels.md
     - Ressources:
         - Importer des données: importer-des-donnees.md
         - Les fonds de carte disponibles: les-fonds-de-carte-disponibles.md
@@ -44,5 +60,5 @@ pages:
         - FAQ: FAQ.md
     - Définitions: definitions.md
     - Historique des versions: changelog.md
-    - Contribute: 
+    - Contribute:
         - Add a basemap: how-to-create-a-basemap-for-Khartis.md

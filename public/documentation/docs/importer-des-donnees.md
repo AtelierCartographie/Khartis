@@ -6,11 +6,11 @@ Dans Khartis il existe trois manières de charger des données :
 
 2 glisser le [fichier csv](definitions#fichier-csv) depuis son dossier directement dans le cadre
 
-![upload drag-drop](/assets/upload-drag-drop.gif)
+![upload drag-drop](./assets/upload-drag-drop.gif)
 
 3 copier-coller les données directement depuis un logiciel de tableur ouvert
 
-![upload paste](/assets/02_02-paste-data.gif)
+![upload paste](./assets/02_02-paste-data.gif)
 
 ## Types de données reconnus
 
@@ -31,5 +31,3 @@ La reconnaissance des données nécessite à minima deux colonnes dans votre tab
 | latitude    | longitude  |
 |-------------|------------|
 | -26.204444° | 28.045556° |
-
-
