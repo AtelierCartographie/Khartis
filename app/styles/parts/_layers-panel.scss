@@ -60,6 +60,10 @@
   .description {
     text-align: justify;
     font-size: 0.9em;
+    .know-more {
+      display: block;
+      color: color(primary, shade);
+    }
   }
   .caption {
     padding: 0 1em;

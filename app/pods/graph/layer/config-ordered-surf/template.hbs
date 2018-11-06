@@ -19,14 +19,14 @@
     <div class="sub-viz-row">
       <div class="button select-viz-button" {{action 'selectMapping' 'quanti.val_surfaces'}}>...{{t 'visualization.title.chooseOrderedSurf.classes.title'}}</div>
       <div class="horizontal flow">
-        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.classes.description'}}</div>
+        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.classes.description'}}<a class="know-more" href="#">&gt; {{x-capitalize (t 'help.knowMore')}}</a></div>
         <div class="fluid caption caption-classes"><img src="{{r-url 'assets/images/viz/ordered-surf-classes.svg'}}"></div>
       </div>
     </div>
     <div class="sub-viz-row">
       <div class="button select-viz-button" {{action 'selectMapping' 'quali.cat_surfaces' true}}>...{{t 'visualization.title.chooseOrderedSurf.cat.title'}}</div>
       <div class="horizontal flow">
-        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.cat.description'}}</div>
+        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.cat.description'}}<a class="know-more" href="#">&gt; {{x-capitalize (t 'help.knowMore')}}</a></div>
         <div class="fluid caption"><img src="{{r-url 'assets/images/viz/ordered-surf-cat.svg'}}"></div>
       </div>
     </div>
