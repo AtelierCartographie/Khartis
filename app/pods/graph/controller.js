@@ -55,7 +55,6 @@ export default Ember.Controller.extend(ExportMixin, {
       } else {
         project.thumbnail = data;
       }
-
     });
   },
 
@@ -253,9 +252,13 @@ export default Ember.Controller.extend(ExportMixin, {
         this.get('model.labellingLayers').forEach( ll => ll.toggleProperty('visible') );
       } else {
         let col = this.get('model.data.columns')[0],
-            layer = GraphLayer.createDefault(col, this.get('model.geoDef'));
+            layer = GraphLayer.create();
+        layer.set('mapping', Mapping.create({
+          type: "labelling",
+          varCol: col,
+          geoDef: this.get('model.geoDef')
+        }));
         this.get('model.labellingLayers').unshiftObject(layer);
-        layer.set('mapping.type', "labelling");
       }
     },
 
