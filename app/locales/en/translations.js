@@ -202,9 +202,23 @@ export default {
 
   "visualization": {
     "title": {
-      "choose": "choose a visualization",
+      "choose": {
+        "title": "choose a visualization",
+        "ordered": "showing order",
+        "difference": "showing differences",
+        "combined": "combining variables",
+      },
+      "chooseOrderedSurf": {
+        "title": "your datas are",
+        "classes": "to group into classes",
+        "cat": "existing categories"
+      },
       "categories": "categories",
       "nodata": "missing data"
+    },
+    "variables": {
+      "choose": "choose a variable",
+      "transform": "use another variable to put color into symbols or compare two symbols"
     },
     "settings": {
       "diagram": {
@@ -273,6 +287,26 @@ export default {
       "opacity": "opacity"
     },
     "type": {
+      "ordered": {
+        "sym": {
+          "proportional": "symboles proportionnels",
+          "ordered": "symboles ordonnés"
+        },
+        "surf": {
+          "ordered": "couleurs ordonnées"
+        }
+      },
+      "different": {
+        "sym": "symboles différents",
+        "surf": "couleurs différentes"
+      },
+      "combined": {
+        "sym": {
+          "ordered": "symboles proportionnels colorés (ordre)",
+          "different": "symboles proportionnels colorés (différence)",
+          "double": "doubles symboles proportionnels",
+        }
+      },
       "quanti": {
         "val_surfaces": {
           "name": "values > areas",

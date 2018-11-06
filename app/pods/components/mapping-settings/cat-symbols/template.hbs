@@ -41,7 +41,6 @@
           <div class="title underlined" style="margin-top:20px;">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
           <div class="horizontal space-between solid middle flow padded-t">
-            <span>Ordonnées ? {{input type="checkbox" checked=mapping.ordered}}<div class="-h"></div></span>
             {{#unless mapping.ordered}}
             <a class="solid button filled" {{action 'randomizeRules'}}><i class="iconfont iconfont-redo"></i></a>
             <div class="horizontal solid flow layer-color-selector">

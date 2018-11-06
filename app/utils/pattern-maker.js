@@ -4,78 +4,63 @@ import PatternStruct from 'khartis/models/mapping/pattern';
 
 let _buildPatternFn = function(id, size, drawer) {
   
-  let Fn = function(useMask = true, fill) {
-
-    this.baseUrl = isFirefox() ? window.location : "";
-    this.useMask = useMask;
-    this.fill = d3.rgb(fill).toString();
-
-  };
-
-  Fn.prototype.init = function(sel) {
+  class Fn {
     
-    this.patternId = btoa(`pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill}` : ""}`).replace(/\=/g, "");
-
-    let defs = sel.selectAll("defs");
-  
-    if (defs.empty()) {
-      defs = sel.append("defs");
+    constructor(useMask = true, fill) {
+      this.baseUrl = isFirefox() ? window.location : "";
+      this.useMask = useMask;
+      this.fill = d3.rgb(fill).toString();
     }
-    
-    let pattern = defs.selectAll(`#${this.patternId}`);
-    
-    if (pattern.empty()) {
-      
-      pattern = defs.append("pattern")
-        .attrs({
-          id: `${this.patternId}`,
-          patternUnits: "userSpaceOnUse",
-          width: size,
-          height: size
-        });
-      
-      drawer(pattern, this.fill);
-      
-    };
 
-    if (this.useMask) {
-
-      this.maskId = `${this.patternId}-mask`;
-
-      let mask = defs.selectAll(`#${this.maskId}`);
-
-      if (mask.empty() && useMask) {
-      
-        let size = 4096;
-        
-        mask = defs.append("mask")
+    init(sel) {
+      this.patternId = btoa(`pt-${sel.attr('id')}-${id}${!this.useMask ? `-${this.fill}` : ""}`).replace(/\=/g, "");
+      let defs = sel.selectAll("defs");
+      if (defs.empty()) {
+        defs = sel.append("defs");
+      }
+      let pattern = defs.selectAll(`#${this.patternId}`);
+      if (pattern.empty()) {
+        pattern = defs.append("pattern")
           .attrs({
-            id: this.maskId,
-            width: 4096,
-            height: 4096
+            id: `${this.patternId}`,
+            patternUnits: "userSpaceOnUse",
+            width: size,
+            height: size
           });
-        
-        mask.append("rect").attrs({
-            x: -(4096/2),
-            y: -(4096/2),
-            width: 4096,
-            height: 4096
+        drawer(pattern, this.fill);
+      }
+      ;
+      if (this.useMask) {
+        this.maskId = `${this.patternId}-mask`;
+        let mask = defs.selectAll(`#${this.maskId}`);
+        if (mask.empty() && useMask) {
+          const size = 4096;
+          mask = defs.append("mask")
+            .attrs({
+              id: this.maskId,
+              width: size,
+              height: size
+            });
+          mask.append("rect").attrs({
+            x: -(size / 2),
+            y: -(size / 2),
+            width: size,
+            height: size
           })
           .attr("fill", `url(#${this.patternId})`);
-          
+        }
       }
-
     }
-    
+    url() {
+      return `${this.baseUrl}#${this.maskId ? this.maskId : this.patternId}`;
+    }
+    static id() {
+      return id;
+    }
   }
-  
-  Fn.prototype.url = function() {
-    return `${this.baseUrl}#${this.maskId ? this.maskId : this.patternId}`;
-  };
 
-  Fn.id = function() {
-    return id;
-  };
+  
+
   
   return Fn;
   

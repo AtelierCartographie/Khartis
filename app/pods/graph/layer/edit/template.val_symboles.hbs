@@ -5,11 +5,10 @@
       <li class="layer">
         <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUANTI-val_symboles.svg'}}">
+            {{visualization-icon mapping=editedLayer.mapping small=false}}
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.description"}}</p>
+            {{visualization-title class="title" mapping=editedLayer.mapping}}
           </div>
         </div>
       </li>

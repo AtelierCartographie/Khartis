@@ -24,19 +24,23 @@ export default Ember.Route.extend({
     controller.set('sidebarSubExpanded', true);
   },
   
-
   deactivate() {
     this.set('controller.editedLayer', null);
     this.set('controller.sidebarSubExpanded', false);
   },
   
   actions: {
-    selectMapping(type) {
-      console.log(type);
-      this.get('controller').send('bindLayerMapping', type);
-      Ember.run.later(this, () => {
-        this.transitionTo('graph.layer.edit');
-      });
+    selectMapping(type, ordered = false) {
+      switch (type) {
+        case "ordered.surf.ordered":
+          this.transitionTo('graph.layer.configOrderedSurf');
+          break;
+        default:
+          this.get('controller').send('bindLayerMapping', type, ordered);
+          Ember.run.later(this, () => {
+            this.transitionTo('graph.layer.edit');
+          });
+      }
     }
   }
   

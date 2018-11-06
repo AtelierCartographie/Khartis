@@ -47,6 +47,7 @@ Router.map(function() {
         this.route("projection");
         this.route("layer", {path: "layer/:layerId"}, function() {
           this.route("edit");
+          this.route("configOrderedSurf", {path: "config-ordered-surf"});
         });
     });
 

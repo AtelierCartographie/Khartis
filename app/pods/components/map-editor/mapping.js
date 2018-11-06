@@ -163,7 +163,7 @@ export default Ember.Mixin.create({
           "xlink:href": d => this.registerLandSel(d.id),
           "fill": d => {
             let pattern = converter(d.row, "texture");
-            if (pattern && pattern.fn != PatternMaker.NONE) {
+            if (pattern && pattern.fn && pattern.fn != PatternMaker.NONE) {
               let fn = new pattern.fn(false, converter(d.row, "fill"));
               fn.init(svg);
               return `url(${fn.url()})`;

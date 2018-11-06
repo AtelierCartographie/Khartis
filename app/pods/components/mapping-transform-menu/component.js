@@ -7,15 +7,15 @@ export default Component.extend({
 
   availableMappings: function() {
     return [
-      {id: "quanti.val_symboles.combined.quanti.val_surfaces", img: "QUALI-cat_surfaces.svg"},
-      {id: "quanti.val_symboles.combined.quali.cat_surfaces", img: "QUALI-cat_surfaces.svg"}
+      {type: "quanti.val_symboles.combined.quanti.val_surfaces", img: "combined-sym-ordered.svg"},
+      {type: "quanti.val_symboles.combined.quali.cat_surfaces", img: "combined-sym-different.svg"}
     ]
   }.property('layer.mapping'),
 
   actions: {
-    select({id}) {
+    select({type}) {
       this.get('layer').set('mapping', MultiMapping.create({
-        type: id,
+        type,
         mappings: [this.get('layer.mapping')],
         geoDef: this.get('layer.mapping.geoDef')
       }));

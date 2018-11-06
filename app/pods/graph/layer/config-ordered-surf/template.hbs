@@ -1,0 +1,35 @@
+<div class="sidebar-scroll-wrapper edit-layer config-order-surf">
+
+  <div class="body">
+    <ul class="collection">
+      <li class="layer">
+        <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
+          <div class="caption">
+            {{visualization-icon mapping=(hash type="ordered.surf.ordered" ordered=true) small=false}}
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+            {{visualization-title class="title" mapping=(hash type="ordered.surf.ordered" ordered=true)}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="title">{{x-capitalize (t 'visualization.title.chooseOrderedSurf.title')}}...</div>
+  <div class="body">
+    <div class="sub-viz-row">
+      <div class="button select-viz-button" {{action 'selectMapping' 'quanti.val_surfaces'}}>...{{t 'visualization.title.chooseOrderedSurf.classes.title'}}</div>
+      <div class="horizontal flow">
+        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.classes.description'}}</div>
+        <div class="fluid caption caption-classes"><img src="{{r-url 'assets/images/viz/ordered-surf-classes.svg'}}"></div>
+      </div>
+    </div>
+    <div class="sub-viz-row">
+      <div class="button select-viz-button" {{action 'selectMapping' 'quali.cat_surfaces' true}}>...{{t 'visualization.title.chooseOrderedSurf.cat.title'}}</div>
+      <div class="horizontal flow">
+        <div class="solid w5 description">{{t 'visualization.title.chooseOrderedSurf.cat.description'}}</div>
+        <div class="fluid caption"><img src="{{r-url 'assets/images/viz/ordered-surf-cat.svg'}}"></div>
+      </div>
+    </div>
+  </div>
+
+</div>

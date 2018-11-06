@@ -204,11 +204,28 @@ export default {
   "visualization": {
     "title": {
       "choose": {
-        "simple": "choix d'une visualisation simple",
-        "combined": "choix d'une visualisation combinée",
+        "title": "choix d'une visualisation",
+        "ordered": "représentant l'ordre",
+        "different": "représentant des différences",
+        "combined": "combinant des variables",
+      },
+      "chooseOrderedSurf": {
+        "title": "vos données sont-elles",
+        "classes": {
+          "title": "à regouper en classes",
+          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+        },
+        "cat": {
+          "title": "des catégories préexistantes",
+          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+        }
       },
       "categories": "catégories",
       "nodata": "absence de données"
+    },
+    "variable": {
+      "choose": "choisir une variable",
+      "transform": "utiliser une autre variable pour mettre de la couleur dans les symboles ou comparer deux symboles"
     },
     "settings": {
       "diagram": {
@@ -277,6 +294,26 @@ export default {
       "opacity": "opacité"
     },
     "type": {
+      "ordered": {
+        "sym": {
+          "proportional": "symboles proportionnels",
+          "ordered": "symboles ordonnés"
+        },
+        "surf": {
+          "ordered": "couleurs ordonnées"
+        }
+      },
+      "different": {
+        "sym": "symboles différents",
+        "surf": "couleurs différentes"
+      },
+      "combined": {
+        "sym": {
+          "ordered": "symboles proportionnels colorés (ordre)",
+          "different": "symboles proportionnels colorés (différence)",
+          "double": "doubles symboles proportionnels",
+        }
+      },
       "quanti": {
         "val_surfaces": {
           "name": "valeurs > surfaces",

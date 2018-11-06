@@ -1,22 +1,16 @@
 .layers, .edit-layer {
 
   .layer {
-    border: none;
-    margin-bottom:0.3rem;
-
-    .content {
-      border-top: 1px solid greys(20%);
-    }
-
-    &:first-child {
-      .content {
-        border-top: 1px solid color(primary);
-      }
-    }
+    
+    margin-bottom:0.6rem;
 
     .caption {
       height: 5.4rem;
       img { height: 5.4rem; }
+    }
+
+    &, &:last-child {
+      border: 1px solid #FCFCFC;
     }
 
     .title {
@@ -46,6 +40,36 @@
 
 .edit-layer .layer {
   background-color: color(variable);
+}
+
+.edit-layer.config-order-surf .sub-viz-row {
+  margin-top: 1em;
+  &:last-child {
+    margin-top: 2em;
+  }
+  .button.select-viz-button {
+    display: block;
+    text-align: left;
+    background-color: color(primary2);
+    color: white;
+    padding: 0.25rem 0.5em;
+    border-radius: 1rem;
+    margin-bottom: 1em;
+    line-height: 1.5em;
+  }
+  .description {
+    text-align: justify;
+    font-size: 0.9em;
+  }
+  .caption {
+    padding: 0 1em;
+    img {
+      width: 100%;
+    }
+    &.caption-classes {
+      padding: 0 2.2em 0 1em;
+    }
+  }
 }
 
 

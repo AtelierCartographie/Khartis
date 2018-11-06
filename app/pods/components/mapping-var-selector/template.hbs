@@ -2,9 +2,9 @@
   {{#facet.trigger}}
   <div class="button add-variable-button">
   {{#if mapping.varCol}}
-        <i class="icon iconfont iconfont-v-circle-o icon-var"></i> <span>{{mapping.varCol.header.value}}</span>
+    <i class="icon iconfont iconfont-v-circle-o icon-var"></i> <span>{{mapping.varCol.header.value}}</span>
   {{else}}
-      <i class="icon iconfont iconfont-plus-circle-o"></i> Choisir une variable
+    <i class="icon iconfont iconfont-plus-circle-o"></i> {{x-capitalize (t 'visualization.variable.choose')}}
   {{/if}}
   {{#if isMappedOnSymbol}}
     <span> &gt; symboles</span>

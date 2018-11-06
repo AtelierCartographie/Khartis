@@ -1,51 +1,65 @@
 <div class="sidebar-scroll-wrapper">
 
 
+<div class="title">{{x-capitalize (t 'visualization.title.choose.title')}}...</div>
 <div class="layers">
-  <div class="title">{{x-capitalize (t 'visualization.title.choose.simple')}}</div>
+  <div class="title">...{{t 'visualization.title.choose.ordered'}}</div>
   <div class="body">
     <ul class="collection">
       <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUANTI-val_symboles.svg'}}">
+            <img src="{{r-url 'assets/images/viz/ordered-sym-prop.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.description"}}</p>
+              <span class="title">{{t "visualization.type.ordered.sym.proportional"}}</span>
           </div>
         </div>
       </li>
-      <li class="clickable layer" {{action 'selectMapping' 'quanti.val_surfaces'}}>
+      <li class="clickable layer" {{action 'selectMapping' 'ordered.surf.ordered'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUANTI-val_surfaces.svg'}}">
+            <img src="{{r-url 'assets/images/viz/ordered-surf-ordered.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.ordered.surf.ordered"}}</span>
           </div>
         </div>
       </li>
+      <li class="clickable layer" {{action 'selectMapping' 'quali.cat_symboles' true}}>
+        <div class="horizontal flow">
+          <div class="caption">
+            <img src="{{r-url 'assets/images/viz/ordered-sym-ordered.svg'}}">
+          </div>
+          <div class="vertical stretched middle flow padded-h content">
+              <span class="title">{{t "visualization.type.ordered.sym.ordered"}}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="layers">
+  <div class="title">...{{t 'visualization.title.choose.different'}}</div>
+  <div class="body">
+    <ul class="collection">
       <li class="clickable layer" {{action 'selectMapping' 'quali.cat_symboles'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_symboles.svg'}}">
+            <img src="{{r-url 'assets/images/viz/different-sym.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quali.cat_symboles.name"}}</span>
-              <p class="description">{{t "visualization.type.quali.cat_symboles.description"}}</p>
+              <span class="title">{{t "visualization.type.different.sym"}}</span>
           </div>
         </div>
       </li>
       <li class="clickable layer" {{action 'selectMapping' 'quali.cat_surfaces'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
+            <img src="{{r-url 'assets/images/viz/different-surf.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.type.quali.cat_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.different.surf"}}</span>
           </div>
         </div>
       </li>
@@ -53,46 +67,36 @@
   </div>
 </div>
 <div class="layers">
-  <div class="title">{{x-capitalize (t 'visualization.title.choose.combined')}}</div>
+  <div class="title">...{{t 'visualization.title.choose.combined'}}...</div>
   <div class="body">
     <ul class="collection">
       <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles.combined.quanti.val_surfaces'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
+            <img src="{{r-url 'assets/images/viz/combined-sym-ordered.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.combined.quanti.val_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.combined.quanti.val_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.combined.sym.ordered"}}</span>
           </div>
         </div>
       </li>
       <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles.combined.quali.cat_surfaces'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
+            <img src="{{r-url 'assets/images/viz/combined-sym-different.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.combined.quali.cat_surfaces.description"}}</p>
+              <span class="title">{{t "visualization.type.combined.sym.different"}}</span>
           </div>
         </div>
       </li>
-    </ul>
-  </div>
-</div>
-<div class="layers">
-  <div class="title">{{x-capitalize (t 'visualization.title.choose.proportional')}}</div>
-  <div class="body">
-    <ul class="collection">
       <li class="clickable layer" {{action 'selectMapping' 'quanti.val_symboles.combined.proportional'}}>
         <div class="horizontal flow">
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
+            <img src="{{r-url 'assets/images/viz/combined-sym-double.svg'}}">
           </div>
           <div class="vertical stretched middle flow padded-h content">
-              <span class="title">{{t "visualization.type.quanti.val_symboles.proportional.name"}}</span>
-              <p class="description">{{t "visualization.type.quanti.val_symboles.proportional.description"}}</p>
+              <span class="title">{{t "visualization.type.combined.sym.double"}}</span>
           </div>
         </div>
       </li>

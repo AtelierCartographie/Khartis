@@ -197,7 +197,7 @@ export default Ember.Controller.extend(ExportMixin, {
       layer.toggleProperty('visible');
     },
     
-    bindLayerMapping(type) {
+    bindLayerMapping(type, ordered) {
       if (type.split(".").indexOf("combined") !== -1) {
         this.set('editedLayer.mapping', MultiMapping.create({
           type,
@@ -206,6 +206,7 @@ export default Ember.Controller.extend(ExportMixin, {
       } else {
         this.set('editedLayer.mapping', Mapping.create({
           type,
+          ordered,
           varCol: this.get('editedLayer.mapping.varCol'),
           geoDef: this.get('editedLayer.mapping.geoDef')
         }));

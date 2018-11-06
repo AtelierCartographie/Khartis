@@ -43,9 +43,6 @@
       <div class="title underlined">{{x-capitalize (t 'visualization.title.categories')}}</div>
 
       <div class="horizontal space-between solid middle flow padded-t">
-        <span>Ordonnées ? {{input type="checkbox" checked=mapping.ordered}}
-          <div class="-h"></div>
-        </span>
         <div class="horizontal solid flow layer-color-selector">
           {{#x-dropdown-plus as |facet|}} {{#facet.trigger class="filled"}} {{color-swatch class="layer-color-swatch" colors=(get brewer.availableColorSetsMap
           mapping.visualization.colors) }}

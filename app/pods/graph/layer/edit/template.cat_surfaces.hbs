@@ -7,11 +7,10 @@
       <li class="layer">
         <div class="horizontal flow clickable" {{action 'navigateTo' 'graph.layer'}}>
           <div class="caption">
-            <img src="{{r-url 'assets/images/viz/QUALI-cat_surfaces.svg'}}">
+            {{visualization-icon mapping=editedLayer.mapping small=false}}
           </div>
           <div class="vertical stretched middle flow padded-h content">
-            <span class="title">{{t "visualization.type.quali.cat_surfaces.name"}}</span>
-            <p class="description">{{t "visualization.type.quali.cat_surfaces.description"}}</p>
+            {{visualization-title class="title" mapping=editedLayer.mapping}}
           </div>
         </div>
       </li>
