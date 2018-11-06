@@ -1,4 +1,4 @@
-![Logo khartis](/assets/Khartis-logo-color.png)
+![Logo khartis](./assets/Khartis-logo-color.png)
 
 Bienvenue sur la documentation de **[Khartis](http://www.sciencespo.fr/cartographie/khartis)**, outil simple de créations de cartes thématiques.   
 Un projet open source de [Sciences Po - Atelier de cartographie](http://www.sciencespo.fr/cartographie/)   
@@ -6,6 +6,17 @@ Un projet open source de [Sciences Po - Atelier de cartographie](http://www.scie
 ## Tutoriels
 * [Premiers pas avec Khartis (1)](premiers-pas-avec-Khartis-(1)) - symboles proportionnels
 * [Premiers pas avec Khartis (2)](premiers-pas-avec-Khartis-(2)) - choroplèthe + coordonnées lat/long
+
+## Visualisations
+* [Liste des visualisations](liste-des-visualisations)
+* [Symboles proportionnels](symboles-proportionnels)
+* [Couleurs ordonnées](couleurs-ordonnees)
+* [Symboles ordonnées](symboles-ordonnes)
+* [Symboles différents](symboles-differents)
+* [Couleurs différentes](couleurs-differentes)
+* [Symboles proportionnels colorés (ordre)](symboles-proportionnels-colores-ordre)
+* [Symboles proportionnels colorés (différence)](symboles-proportionnels-colores-difference)
+* [Double symboles proportionnels](double-symboles-proportionnels)
 
 ## Ressources
 * [Importer des données](importer-des-donnees)

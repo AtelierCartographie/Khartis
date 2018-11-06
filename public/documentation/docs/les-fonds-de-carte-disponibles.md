@@ -29,7 +29,7 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
     * révision des frontières selon [une carte](http://www.un.org/Depts/Cartographic/map/profile/world.pdf) de la section *Geospatial Information* des Nations Unies
 
     * ajouts de polygones carrés afin de compléter les petits États et territoires qui n’étaient pas représentés (notamment aux Caraïbes et dans le Pacifique).
-![petits États](/assest/small-states.png)
+![petits États](./assets/small-states.png)
 
 * Le dictionnaire est principalement une extraction de Natural Earth avec des compléments provenant de différentes sources (dans le but d’optimiser la reconnaissance automatique à l’import de données par l’utilisateur) :
 
@@ -41,20 +41,20 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
 ### Europe
 
-* Fonds de carte et dictionnaires : [Eurostat - GISCO](http://ec.europa.eu/eurostat/fr/web/gisco) 
+* Fonds de carte et dictionnaires : [Eurostat - GISCO](http://ec.europa.eu/eurostat/fr/web/gisco)
 
 ### Brésil
 
-* Fonds de carte et dictionnaires : [serveur FTP de l’Instituto Brasileiro de Geografia e Estatística (IBGE)](ftp://geoftp.ibge.gov.br/) 
+* Fonds de carte et dictionnaires : [serveur FTP de l’Instituto Brasileiro de Geografia e Estatística (IBGE)](ftp://geoftp.ibge.gov.br/)
 
 ### France
 
 * Fonds de carte : Open Street Map depuis data.gouv.fr
 
-    * [Communes 2016](http://professionnels.ign.fr/geofla) - Geofla 2016 IGN 
+    * [Communes 2016](http://professionnels.ign.fr/geofla) - Geofla 2016 IGN
 
-    * [Communes 2017](http://professionnels.ign.fr/adminexpress) - Admin Express 207 IGN 
-    
+    * [Communes 2017](http://professionnels.ign.fr/adminexpress) - Admin Express 207 IGN
+
     * [Circonscriptions legislatives 2017](https://www.data.gouv.fr/fr/datasets/carte-des-circonscriptions-legislatives-2012-et-2017/) - Toxicode et Atelier de cartographie via data.gouv.fr
 
     * [Département 2016](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/) - Open Street Map depuis data.gouv.fr
@@ -69,7 +69,7 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
 * Fonds de carte : [Centro National de Informacion Geografica](http://www.ign.es/ign/main/index.do)
 
-* Dictionnaire : 
+* Dictionnaire :
 
     * Code CNIG + nom officiel : [Instituto Nacional de Estadística (INE)](http://www.ine.es/daco/daco42/codmun/cod_provincia.htm)
 

@@ -1,9 +1,9 @@
 Nous allons réaliser cette carte du monde des émissions de CO2 en 2013.
-![résultat tutoriel](/assets/export_tuto-CO2.png)
+![résultat tutoriel](./assets/export_tuto-CO2.png)
 
 ## Récupérer les données
 
-Nous avons téléchargé les données au format csv depuis le site de la [Banque mondiale](http://databank.worldbank.org/data/reports.aspx?source=2&series=EN.ATM.CO2E.KT&country=) et vous pouvez [les récupérer directement ici](/assets/CO2-emissions-2013-world-bank.csv) (clic droit 'enregistrer le lien sous').
+Nous avons téléchargé les données au format csv depuis le site de la [Banque mondiale](http://databank.worldbank.org/data/reports.aspx?source=2&series=EN.ATM.CO2E.KT&country=) et vous pouvez [les récupérer directement ici](./assets/CO2-emissions-2013-world-bank.csv) (clic droit 'enregistrer le lien sous').
 
 ### Que contiennent les données ?
 
@@ -18,7 +18,7 @@ Nous avons téléchargé les données au format csv depuis le site de la [Banque
 ## Choisir le fond de carte
 
 Les données sont à l’échelle des pays du monde alors nous choisissons ‘Monde > pays (2016)’
-![choix du fond de carte](/assets/select-basemap.gif)
+![choix du fond de carte](./assets/select-basemap.gif)
 
 Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](definitions#dictionnaire-dun-fond-de-carte)
 
@@ -34,21 +34,21 @@ Dans Khartis il existe trois manières de charger des données :
 
 Pour cette fois nous utiliserons la deuxième option. Cliquer ensuite sur ‘suivant’
 
-![import des données](/assets/upload-drag-drop.gif)
+![import des données](./assets/upload-drag-drop.gif)
 
 
 ## Géoréférencer les données
 
 Il faut maintenant s’assurer que nos données ont bien été reconnues, particulièrement la colonne du tableau qui fait le lien avec le fond de carte. Nous l’appelons ‘colonne de référence géographique’.
 
-Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Et nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge : 
+Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Et nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge :
 
- ![erreur données](/assets/error-data.png)
+ ![erreur données](./assets/error-data.png)
 
 
 Passons à l’étape suivante
 
-![étape 2](/assets/step-2.gif)
+![étape 2](./assets/step-2.gif)
 
 ## Visualiser les données
 
@@ -56,17 +56,17 @@ Nous voulons représenter les émissions de CO2 par pays en 2013 à l’aide de 
 
 Cliquez sur le ‘+’ puis sélectionnez la variable à représenter "2013 - CO2 emissions (kt)" et enfin choisissez la visualisation “valeurs > symboles”.
 
-![choix visualisation](/assets/select-variable-viz.gif)
+![choix visualisation](./assets/select-variable-viz.gif)
 
-Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert. 
+Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert.
 
 Nous allons améliorer la lisibilité de la carte en renforçant la taille des cercles : par exemple passer de 10 à 40. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.
 
-![taille 40](/assets/symbol-size-40.png)
+![taille 40](./assets/symbol-size-40.png)
 
 Passons à la dernière étape
 
-![étape 3](/assets/step-3.gif)
+![étape 3](./assets/step-3.gif)
 
 ## Export
 
@@ -87,7 +87,7 @@ Voici une proposition qui répond à une série de questions que l’on peut se 
 * Quelle est l’unité des données ?
 
     * l’entête de légende est modifiable en cliquant dessus   
-![titre légende](/assets/legend-edit-title.gif)
+![titre légende](./assets/legend-edit-title.gif)
 
 * Qui à fait cette carte et peut-on la réutiliser ?
 
@@ -100,7 +100,7 @@ Maintenant que nous sommes assurés que la carte contient les éléments essenti
 Trois moyens d’actions sont à notre disposition :
 
 * les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche.   
-![dimensions](/assets/export-dimensions.png)
+![dimensions](./assets/export-dimensions.png)
 
 * les marges de la carte matérialisées par un tireté bleu
 
@@ -108,7 +108,7 @@ Trois moyens d’actions sont à notre disposition :
 
 On peut par exemple réduire la hauteur du document à 800px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges. Et enfin déplacer la légende.
 
-![mise en page](/assets/export-layout-steps.gif)
+![mise en page](./assets/export-layout-steps.gif)
 
 ### Format d’export
 
@@ -120,4 +120,4 @@ Khartis propose trois formats d’export :
 
 * svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator
 
-![résultat tutoriel](/assets/export_tuto-CO2.png)
+![résultat tutoriel](./assets/export_tuto-CO2.png)
