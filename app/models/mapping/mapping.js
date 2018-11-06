@@ -113,15 +113,17 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     }
   },
   
-  getScaleOf(type) {
+  getScaleOf(_type) {
     throw new Error("not implemented. Should be overriden by mixin");
   },
   
   generateRules() {
     this.set('rulesCache', new Map());
-    this.get('rules').forEach( r => {
-      r.get('cells').forEach(cell => this.get('rulesCache').set(cell, r));
-    });
+    if (this.get('rules')) {
+      this.get('rules').forEach( r => {
+        r.get('cells').forEach(cell => this.get('rulesCache').set(cell, r));
+      });
+    }
   },
   
   generateVisualization() {},
