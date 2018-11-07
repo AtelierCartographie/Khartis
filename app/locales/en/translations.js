@@ -199,6 +199,10 @@ export default {
     "mercator": {
       "name": "Mercator",
       "description": "Ceci est une description"
+    },
+    "armadillo": {
+      "name": "Armadillo",
+      "description": "Ceci est une description"
     }
   },
 
