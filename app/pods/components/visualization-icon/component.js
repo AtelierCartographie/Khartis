@@ -20,13 +20,17 @@ export default Ember.Component.extend({
         break;
       case "quali.cat_symboles":
         if (this.get('mapping.ordered')) {
-          file = "ordered-sym-ordered"
+          file = "ordered-sym-ordered";
         } else {
           file = "different-sym"; 
         }
         break;
       case "quali.cat_surfaces":
-        file = "different-surf";
+        if (this.get('mapping.ordered')) {
+          file = "ordered-surf-ordered";
+        } else {
+          file = "different-surf";
+        }
         break;
       case "quanti.val_symboles.combined.quanti.val_surfaces":
         file = "combined-sym-ordered";

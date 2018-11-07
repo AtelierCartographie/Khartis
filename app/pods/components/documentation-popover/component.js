@@ -4,15 +4,19 @@ export default Ember.Component.extend({
 
   classNameBindings: ['expanded'],
 
+  documentationService: Ember.inject.service('documentation'),
+
   expanded: false,
   history: null,
   historyCursor: -1,
   iframe: null,
   pushToHistory: true,
+  sourceUrl: "/documentation/site/index.html",
 
   init() {
     this._super();
     this.set('history', Em.A([]));
+    this.get('documentationService').on("openAtUrl", url => this.openAtUrl(url));
   },
 
   canGoBack: function() {
@@ -22,6 +26,11 @@ export default Ember.Component.extend({
   canGoForward: function() {
     return this.get('historyCursor') < this.get('history').length - 1;
   }.property('history.[]', 'historyCursor'),
+
+  openAtUrl(url) {
+    this.set('expanded', true);
+    this.set('sourceUrl', `/documentation/site/${url}`);
+  },
 
   actions: {
     toggleContent() {

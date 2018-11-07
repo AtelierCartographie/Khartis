@@ -20,7 +20,11 @@ export default Ember.Component.extend({
           return "visualization.type.different.sym";
         }
       case "quali.cat_surfaces":
-        return "visualization.type.different.surf";
+        if (this.get('mapping.ordered')) {
+          return "visualization.type.ordered.surf.ordered";
+        } else {
+          return "visualization.type.different.surf";
+        }
       case "quanti.val_symboles.combined.quanti.val_surfaces":
         return "visualization.type.combined.sym.ordered";
       case "quanti.val_symboles.combined.quali.cat_surfaces":

@@ -4,6 +4,8 @@ import Project from 'khartis/models/project';
 export default Ember.Route.extend({
   
   controllerName: "graph",
+
+  documentationService: Ember.inject.service('documentation'),
   
   renderTemplate: function() {
     this.render("sidebar-sub", {into: "graph", outlet: "sidebar-sub"});
@@ -21,6 +23,12 @@ export default Ember.Route.extend({
   
   setupController(controller, model) {
     //nothing
+  },
+  
+  actions: {
+    openDocumentation() {
+      this.get('documentationService').trigger("openAtUrl", "couleurs-ordonnees/index.html");
+    }
   }
 
 });
