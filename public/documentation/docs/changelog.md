@@ -4,6 +4,7 @@
 -   Documentation is now directly accessible in Khartis
 -   Map title and labels can be styled: font, size, bold, italic, underline, align, color
 -   Labels can now be moved and connectors appears automatically. Thanks to d3-annotation by @susielu
+-   New projection available: Armadillo by Erwin Raisz
 -   Fix Jenks discretization thresholds
 -   Dependancies: upgrade to ember 3.1
 

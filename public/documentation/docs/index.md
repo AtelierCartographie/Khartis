@@ -28,12 +28,12 @@ Un projet open source de [Sciences Po - Atelier de cartographie](http://www.scie
 * [FAQ](FAQ)
 
 ## [Définitions](definitions)
-* [diagramme de fréquence](definitions#diagramme-de-fr%C3%A9quence) (à venir)
+* [diagramme de fréquence](definitions#diagramme-de-frequence) (à venir)
 * [dictionnaire d'un fond de carte](definitions#dictionnaire-dun-fond-de-carte)
-* [discrétisation](definitions#discr%C3%A9tisation) (à venir)
+* [discrétisation](definitions#discretisation) (à venir)
 * [fichier .csv](definitions#fichier-csv)
 * [fichier .svg](definitions#fichier-svg)
-* [lat/long (coordonnées géographiques)](definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques)
+* [lat/long (coordonnées géographiques)](definitions#latlong-coordonnees-geographiques)
 * [projection cartographique](definitions#projection-cartographique) (à venir)
 
 ## [Historique des versions](changelog)

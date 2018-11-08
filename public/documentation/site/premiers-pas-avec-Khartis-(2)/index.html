@@ -552,7 +552,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../symboles-proportionnels.md" title="Symboles proportionnels" class="md-nav__link">
+    <a href="../symboles-proportionnels/" title="Symboles proportionnels" class="md-nav__link">
       Symboles proportionnels
     </a>
   </li>
@@ -564,7 +564,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../couleurs-ordonnees.md" title="Couleurs ordonnées" class="md-nav__link">
+    <a href="../couleurs-ordonnees/" title="Couleurs ordonnées" class="md-nav__link">
       Couleurs ordonnées
     </a>
   </li>
@@ -576,7 +576,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../symboles-ordonnes.md" title="Symboles ordonnées" class="md-nav__link">
+    <a href="../symboles-ordonnes/" title="Symboles ordonnées" class="md-nav__link">
       Symboles ordonnées
     </a>
   </li>
@@ -588,7 +588,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../symboles-differents.md" title="Symboles différents" class="md-nav__link">
+    <a href="../symboles-differents/" title="Symboles différents" class="md-nav__link">
       Symboles différents
     </a>
   </li>
@@ -600,7 +600,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../couleurs-differentes.md" title="Couleurs différentes" class="md-nav__link">
+    <a href="../couleurs-differentes/" title="Couleurs différentes" class="md-nav__link">
       Couleurs différentes
     </a>
   </li>
@@ -612,7 +612,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../symboles-proportionnels-colores-ordre.md" title="Symboles proportionnels colorés (ordre)" class="md-nav__link">
+    <a href="../symboles-proportionnels-colores-ordre/" title="Symboles proportionnels colorés (ordre)" class="md-nav__link">
       Symboles proportionnels colorés (ordre)
     </a>
   </li>
@@ -624,7 +624,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../symboles-proportionnels-colores-difference.md" title="Symboles proportionnels colorés (différence)" class="md-nav__link">
+    <a href="../symboles-proportionnels-colores-difference/" title="Symboles proportionnels colorés (différence)" class="md-nav__link">
       Symboles proportionnels colorés (différence)
     </a>
   </li>
@@ -636,7 +636,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../double-symboles-proportionnels.md" title="Double symboles proportionnels" class="md-nav__link">
+    <a href="../double-symboles-proportionnels/" title="Double symboles proportionnels" class="md-nav__link">
       Double symboles proportionnels
     </a>
   </li>
@@ -963,7 +963,7 @@
                 
                   <h1>Premiers pas avec Khartis (2)</h1>
                 
-                <p>Nous allons réaliser cette carte sur l’urbanisation dans le monde. Cette carte a pour particularité de superposer deux variables et d’utiliser des <a href="definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques">coordonnées géographiques</a> pour la représentation d’un nombre d’habitants par ville, en symboles proportionnels.</p>
+                <p>Nous allons réaliser cette carte sur l’urbanisation dans le monde. Cette carte a pour particularité de superposer deux variables et d’utiliser des <a href="../definitions#latlong-coordonnees-geographiques">coordonnées géographiques</a> pour la représentation d’un nombre d’habitants par ville, en symboles proportionnels.</p>
 <p><img alt="résultat tutoriel" src="../assets/02_13-export_urbanisation2015.png" /></p>
 <h2 id="recuperer-et-assembler-les-donnees">Récupérer et assembler les données</h2>
 <p>Nous allons tout d’abord télécharger les données relatives à la part des urbains. Celles-ci sont disponibles au format csv depuis le site de la <a href="http://donnees.banquemondiale.org/indicateur/SP.URB.TOTL.IN.ZS">Banque mondiale</a>.</p>
@@ -988,12 +988,12 @@
 <h2 id="choisir-le-fond-de-carte">Choisir le fond de carte</h2>
 <p>Revenons sur Khartis et choisissons le fond de carte sur lequel nous allons travailler. Les données sont à l’échelle mondiale alors nous choisissons ‘Monde &gt; pays (2016)’.</p>
 <p><img alt="Choix du fond de carte" src="../assets/02_01-select-basemap.gif" /></p>
-<p>Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du <a href="definitions#dictionnaire-dun-fond-de-carte">dictionnaire</a>.</p>
+<p>Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du <a href="../definitions#dictionnaire-dun-fond-de-carte">dictionnaire</a>.</p>
 <h2 id="importer-les-donnees">Importer les données</h2>
 <p>Vous pouvez charger des données de trois manières différentes :</p>
 <ul>
 <li>
-<p>cliquer sur ‘Importer’ et sélectionner le <a href="definitions#fichier-csv">fichier csv</a> là où il est rangé</p>
+<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est rangé</p>
 </li>
 <li>
 <p>glisser le fichier csv depuis son dossier directement dans le cadre</p>
@@ -1006,7 +1006,7 @@
 <p><img alt="import des données" src="../assets/02_02-paste-data.gif" /></p>
 <h2 id="georeferencer-les-donnees">Géoréférencer les données</h2>
 <p>Pour rappel, nous allons représenter deux variables. Celles-ci ne seront pas identifiées de la même manière par Khartis pour qu’elles puissent être représentées sur la carte.</p>
-<p>Pour la part des urbains, les pays seront reconnus grâce au code ISO ou bien aux noms des pays. Pour les agglomérations, Khartis utilisera <a href="definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques">la latitude et la longitude</a> de chaque ville pour les représenter sur la carte.</p>
+<p>Pour la part des urbains, les pays seront reconnus grâce au code ISO ou bien aux noms des pays. Pour les agglomérations, Khartis utilisera <a href="../definitions#latlong-coordonnees-geographiques">la latitude et la longitude</a> de chaque ville pour les représenter sur la carte.</p>
 <p>Nous allons tout d’abord ‘géoréférencer’ les données sur la part des urbain en sélectionnant comme référence géographique, la colonne ‘Country Code’, si Khartis ne l’a pas déjà fait pour vous.</p>
 <p><img alt="géoréférencement" src="../assets/02_03-georef.png" /></p>
 <p>Nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge. Pour ce cas, les codes non reconnus concernent des régions définies par l’ONU.</p>
@@ -1018,10 +1018,10 @@
 <p>Maintenant les pays sont colorés selon la part d’urbains présente dans le pays et un volet de réglage de la visualisation est ouvert.</p>
 <p>Nous pouvons choisir le mode de discrétisation (découpage en classes) ainsi que le gradient de couleur pour cette variable.</p>
 <p><img alt="choix discrétisation" src="../assets/02_05-choose-discretization.gif" /></p>
-<p><em>Pour en savoir plus sur les discrétisations, <a href="discretisation">cliquez ici</a>.</em></p>
+<p><em>Pour en savoir plus sur les discrétisations, <a href="../discretisation">cliquez ici</a>.</em></p>
 <p>Cette première variable représentée, nous pouvons ensuite passer à la seconde, à savoir les agglomérations de plus de 10 millions habitants.</p>
 <p>Géoréférencer les données</p>
-<p>Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de <a href="definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques">coordonnées géographique</a>. Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.</p>
+<p>Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de <a href="../definitions#latlong-coordonnees-geographiques">coordonnées géographique</a>. Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.</p>
 <p><img alt="retour au géoréférencement" src="../assets/02_06-back-data.gif" /></p>
 <p>Si cela n’a pas été fait automatiquement par Khartis, nous devons identifier les colonnes latitude et longitude comme telles et ensuite choisir comme ‘colonne de référence géographique’, ‘Latitude/Longitude’.</p>
 <p><img alt="typer les coordonnées" src="../assets/02_07-georef.gif" /></p>
@@ -1033,7 +1033,7 @@
 <h3 id="projections">Projections</h3>
 <p>Khartis vous propose différentes manières de voir le monde au travers de plusieurs projections cartographiques. Vous pouvez la choisir à tout moment dans l’élaboration de votre carte, sans perturber les paramètres de celle-ci. Nous allons ici changer de projection en choisissant la ‘Briesemeister’.</p>
 <p><img alt="choix de la projection" src="../assets/02_09-choose-projection.gif" /></p>
-<p><em>Pour en savoir plus sur les projections disponibles, <a href="les-projections-disponibles">cliquez ici</a>.</em></p>
+<p><em>Pour en savoir plus sur les projections disponibles, <a href="../les-projections-disponibles">cliquez ici</a>.</em></p>
 <h2 id="export">Export</h2>
 <p>Les deux variables représentées, nous pouvons maintenant passer à l’étape suivante en cliquant sur l’onglet ‘export’.</p>
 <h3 id="habillage">Habillage</h3>
@@ -1064,7 +1064,7 @@
 <p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image. Adapté si on ne souhaite pas retoucher la carte.</p>
 </li>
 <li>
-<p><a href="D%C3%A9finitions#fichier-svg">svg</a> : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.</p>
+<p><a href="../definitions#fichier-svg">svg</a> : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.</p>
 </li>
 <li>
 <p>svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator.</p>

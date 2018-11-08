@@ -1,4 +1,4 @@
-Nous allons réaliser cette carte sur l’urbanisation dans le monde. Cette carte a pour particularité de superposer deux variables et d’utiliser des [coordonnées géographiques](definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques) pour la représentation d’un nombre d’habitants par ville, en symboles proportionnels.
+Nous allons réaliser cette carte sur l’urbanisation dans le monde. Cette carte a pour particularité de superposer deux variables et d’utiliser des [coordonnées géographiques](../definitions#latlong-coordonnees-geographiques) pour la représentation d’un nombre d’habitants par ville, en symboles proportionnels.
 
 ![résultat tutoriel](./assets/02_13-export_urbanisation2015.png)
 
@@ -32,13 +32,13 @@ Revenons sur Khartis et choisissons le fond de carte sur lequel nous allons trav
 
 ![Choix du fond de carte](./assets/02_01-select-basemap.gif)
 
-Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](definitions#dictionnaire-dun-fond-de-carte).
+Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](../definitions#dictionnaire-dun-fond-de-carte).
 
 ## Importer les données
 
 Vous pouvez charger des données de trois manières différentes :
 
-* cliquer sur ‘Importer’ et sélectionner le [fichier csv](definitions#fichier-csv) là où il est rangé
+* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est rangé
 
 * glisser le fichier csv depuis son dossier directement dans le cadre
 
@@ -52,7 +52,7 @@ Pour cette fois nous utiliserons la troisième option, un simple copier-coller �
 
 Pour rappel, nous allons représenter deux variables. Celles-ci ne seront pas identifiées de la même manière par Khartis pour qu’elles puissent être représentées sur la carte.
 
-Pour la part des urbains, les pays seront reconnus grâce au code ISO ou bien aux noms des pays. Pour les agglomérations, Khartis utilisera [la latitude et la longitude](definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques) de chaque ville pour les représenter sur la carte.
+Pour la part des urbains, les pays seront reconnus grâce au code ISO ou bien aux noms des pays. Pour les agglomérations, Khartis utilisera [la latitude et la longitude](../definitions#latlong-coordonnees-geographiques) de chaque ville pour les représenter sur la carte.
 
 Nous allons tout d’abord ‘géoréférencer’ les données sur la part des urbain en sélectionnant comme référence géographique, la colonne ‘Country Code’, si Khartis ne l’a pas déjà fait pour vous.
 
@@ -76,13 +76,13 @@ Nous pouvons choisir le mode de discrétisation (découpage en classes) ainsi qu
 
 ![choix discrétisation](./assets/02_05-choose-discretization.gif)
 
-_Pour en savoir plus sur les discrétisations, [cliquez ici](discretisation)._
+_Pour en savoir plus sur les discrétisations, [cliquez ici](../discretisation)._
 
 Cette première variable représentée, nous pouvons ensuite passer à la seconde, à savoir les agglomérations de plus de 10 millions habitants.
 
 Géoréférencer les données
 
-Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de [coordonnées géographique](definitions#latlong-coordonn%C3%A9es-g%C3%A9ographiques). Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.
+Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de [coordonnées géographique](../definitions#latlong-coordonnees-geographiques). Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.
 
 ![retour au géoréférencement](./assets/02_06-back-data.gif)
 
@@ -106,7 +106,7 @@ Khartis vous propose différentes manières de voir le monde au travers de plusi
 
 ![choix de la projection](./assets/02_09-choose-projection.gif)
 
-_Pour en savoir plus sur les projections disponibles, [cliquez ici](les-projections-disponibles)._
+_Pour en savoir plus sur les projections disponibles, [cliquez ici](../les-projections-disponibles)._
 
 ## Export
 
@@ -143,7 +143,7 @@ Khartis propose trois formats d’export :
 
 * [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image. Adapté si on ne souhaite pas retoucher la carte.
 
-* [svg](D%C3%A9finitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
+* [svg](../definitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
 
 * svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator.
 
