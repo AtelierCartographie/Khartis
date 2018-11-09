@@ -1,5 +1,5 @@
 export default {
-  
+
   "general": {
     "next": "Weiter",
     "back": "Zurück",
@@ -26,7 +26,7 @@ export default {
     "add": "ajouter",
     "error": {
      "one": "Fehler",
-     "other": "Fehler" 
+     "other": "Fehler"
     }
   },
 
@@ -43,11 +43,11 @@ export default {
     "releaseNotes": "release notes",
     "installation": "Install..."
   },
-  
+
   "project": {
-   
+
     "resume": "Projekt wiederherstellen",
-    
+
     "step1": {
       "title": {
         "import": "Importieren",
@@ -68,7 +68,7 @@ export default {
         "projectExists": "Project already exists"
       }
     },
-    
+
     "step2": {
       "title": {
         "preview": "Vorschau der Daten"
@@ -114,9 +114,9 @@ export default {
       },
       "back": "Von vorne: Neue CSV-Datei importieren"
     }
-    
+
   },
-  
+
   "navigation": {
 
     "editColumn": "Spalte bearbeiten",
@@ -126,7 +126,7 @@ export default {
       "visualisations" : "Visualisierung",
       "export": "Export"
     }
-    
+
   },
 
   "variable.meta": {
@@ -139,7 +139,7 @@ export default {
       "auto": "Automatisch"
     }
   },
-  
+
   "projection": {
     "title": "Projektion",
     "settings": {
@@ -195,9 +195,13 @@ export default {
     "mercator": {
       "name": "Mercator",
       "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
+    },
+    "armadillo": {
+      "name": "Armadillo",
+      "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
     }
   },
-  
+
   "visualization": {
     "title": {
       "choose": "Wählen Sie eine Visualisierung",
@@ -545,5 +549,5 @@ export default {
       "layersOnError": "some layers have errors"
     }
   }
-  
+
 };

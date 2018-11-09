@@ -19,3 +19,6 @@ Dans **Khartis**, 5 méthodes de discrétisations sont disponibles. Chacune perm
 #### Jenks
 >Méthode proche des seuils observés permettant de limiter les écarts à l'intérieur des classes et d'augmenter les écarts entres les classes.   
 >La carte suivra la distribution de la série statistique.
+
+#### Seuils manuel
+>L'utilisateur détermine lui-même les seuils.   

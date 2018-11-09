@@ -20,13 +20,13 @@ Nous avons téléchargé les données au format csv depuis le site de la [Banque
 Les données sont à l’échelle des pays du monde alors nous choisissons ‘Monde > pays (2016)’
 ![choix du fond de carte](./assets/select-basemap.gif)
 
-Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](definitions#dictionnaire-dun-fond-de-carte)
+Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](../definitions#dictionnaire-dun-fond-de-carte)
 
 ## Importer les données
 
 Dans Khartis il existe trois manières de charger des données :
 
-* cliquer sur ‘Importer’ et sélectionner le [fichier csv](definitions#fichier-csv) là où il est rangé
+* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est rangé
 
 * glisser le fichier csv depuis son dossier directement dans le cadre
 
@@ -116,7 +116,7 @@ Khartis propose trois formats d’export :
 
 * [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image. Adapté si on ne souhaite pas retoucher la carte.
 
-* [svg](definitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
+* [svg](../definitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
 
 * svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator
 

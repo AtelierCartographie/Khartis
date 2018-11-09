@@ -1,4 +1,4 @@
-Khartis propose une série de fonds de carte à différentes échelles. Ils sont listés dans le tableau ci-dessous et téléchargeable au format topojson. Le [dictionnaire](definitions#dictionnaire-dun-fond-de-carte) qui fait le lien avec le fonds de carte est lui aussi accessible et permet de vérifier les noms ou codes qui sont automatiquement reconnus par Khartis.
+Khartis propose une série de fonds de carte à différentes échelles. Ils sont listés dans le tableau ci-dessous et téléchargeable au format topojson. Le [dictionnaire](../definitions#dictionnaire-dun-fond-de-carte) qui fait le lien avec le fonds de carte est lui aussi accessible et permet de vérifier les noms ou codes qui sont automatiquement reconnus par Khartis.
 
 | Échelle    | Niveaux      | date | lien fond | lien dictionnaire |
 |:------------|:--------------|:------|:-----------|:-------------------|
@@ -9,6 +9,8 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 | Brésil     | États        | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-ufe-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-UFE-2015.csv)               |
 | Brésil     | microrégions | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-mie-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-MIE-2015.csv)               |
 | Brésil     | mésorégions  | 2015 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/BR-mee-2015.json)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/BR-dico-MEE-2015.csv)               |
+| Canada     | provinces  | 2016 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/CA-prov-2016.json)  | [csv](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/dictionary/csv/CA-dico-PROV-2016.csv)               |
+| Canada     | divisions de recensement  | 2016 | [topojson](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/map/CA-cd-2016.json)  | [csv](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/dictionary/csv/CA-dico-CD-2016.csv)               |
 | France     | communes  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2016)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2016)               |
 | France     | communes  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2017)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2017)               |
 | France     | circonscriptions législatives  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-circ-2017)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-circ-2017.csv)               |
@@ -47,6 +49,10 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
 * Fonds de carte et dictionnaires : [serveur FTP de l’Instituto Brasileiro de Geografia e Estatística (IBGE)](ftp://geoftp.ibge.gov.br/)
 
+### Canada
+
+* Fonds de carte et dictionnaires : [Statistique Canada](http://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-fra.cfm)
+
 ### France
 
 * Fonds de carte : Open Street Map depuis data.gouv.fr
@@ -63,7 +69,7 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 
     * [Régions 2014](https://www.data.gouv.fr/fr/datasets/contours-des-regions-francaises-sur-openstreetmap/) - Open Street Map depuis data.gouv.fr
 
-* Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_g%C3%A9ographiques_de_la_France) et [Insee - Code officiel géographique](https://www.insee.fr/fr/information/2016807)
+* Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_geographiques_de_la_France) et [Insee - Code officiel géographique](https://www.insee.fr/fr/information/2016807)
 
 ### Espagne
 

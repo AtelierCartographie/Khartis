@@ -201,6 +201,10 @@ export default {
     "mercator": {
       "name": "Mercator",
       "description": "Ceci est une description"
+    },
+    "armadillo": {
+      "name": "Armadillo",
+      "description": "Ceci est une description"
     }
   },
 
@@ -521,12 +525,12 @@ export default {
     "brazil mee 2015": "Brésil > mésorégions (2015)",
     "brazil mie 2015": "Brésil > microrégions (2015)",
     "canada prov 2016": "Canada > provinces (2016)",
-    "canada cd 2016": "Canada > divisions de recensement (2016)", 
+    "canada cd 2016": "Canada > divisions de recensement (2016)",
     "eu country 2013": "Europe > pays (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
     "eu nuts-3 2013": "Europe > nuts 3 (2013)",
     "spain prov 2015": "Espagne > provinces (2015)",
-    "spain auto 2015": "Espagne > communautés (2015)",    
+    "spain auto 2015": "Espagne > communautés (2015)",
     "us state 2015": "États-Unis > États (2015)",
     "france dept": "France > départements (2016)",
     "france reg 2015": "France > régions (2015)",

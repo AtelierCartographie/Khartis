@@ -1,4 +1,14 @@
 ## v2.1 (09/03/2018)
+-   Redesign of visualizations panel: new classifying more clear and readable
+-   3 new viz than combine two variables
+-   Documentation is now directly accessible in Khartis
+-   Map title and labels can be styled: font, size, bold, italic, underline, align, color
+-   Labels can now be moved and connectors appears automatically. Thanks to d3-annotation by @susielu
+-   New projection available: Armadillo by Erwin Raisz
+-   Fix Jenks discretization thresholds
+-   Dependancies: upgrade to ember 3.1
+
+## v2.1 (09/03/2018)
 -   new tools to add text and arrow above the map. Bonus: objects are georeferenced with the map
 -   many improvement of the legend for more liberty: horizontal or vertical presentation, dissociate legends, round values
 -   new download button always visible in export step
@@ -7,13 +17,13 @@
 -   add tooltip to all button of the floating map menu
 -   add automatic suggestion when editing a column in the data step
 -   fix bug when data with empty cell in ID column
--   fix bug when no data value have special character (“..”, “-”) 
+-   fix bug when no data value have special character (“..”, “-”)
 
 ## v2.0 (16/11/2017)
 -   **global redesign** for a better experience and ergonomy
 -   **new projection available : Bertin 1953**. Thanks to Philippe Rivière (@Fil). More information on [Visionscarto.net](https://visionscarto.net/bertin-projection-1953)
 -   **new viz “categories > ordered symbols”**: to show a hierarchy on points (capitals of state, chief towns of regions, communes ... or a ranking in a typology). This viz is based on Jacques Bertin’s work.
--   **new viz “categories > ordered surface”**: to show a hierarchy (ranking) on surface. Reverse order of ranking is possible. 
+-   **new viz “categories > ordered surface”**: to show a hierarchy (ranking) on surface. Reverse order of ranking is possible.
 -   **new discretization available “manual thresholds”**: if you’re not satisfied with automatic discretization make your own one.
 -   new option to check your data on the fly: a **tooltip** is available on the map
 -   **auto-update** on offline app: don’t miss new version
@@ -32,7 +42,7 @@
 -   add France electoral district for 2012 and 2017 with presidential data
 -   add Germany at two levels: *Lander* and *Lankreise* + examples data. Thanks to @mukil ! (#9)
 -   all basemaps now have a copyright cited according to sources and visible in UI
--   support of two optional layers: a second line geometry draw at the top and a second polygon geometry draw at the bottom (see Europe basemap for example) 
+-   support of two optional layers: a second line geometry draw at the top and a second polygon geometry draw at the bottom (see Europe basemap for example)
 
 ### Viz and UI
 -   add german translation thnaks to @mukil ! (#9)
@@ -55,4 +65,3 @@
    -   add one example at States level
    -   fix brazil dictionary: ID as text
 -   fix year on world basemap
-
