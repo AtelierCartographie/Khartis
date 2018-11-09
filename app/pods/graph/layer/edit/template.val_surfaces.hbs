@@ -14,9 +14,9 @@
       </li>
     </ul>
   </div>
-  <div class="title">Choix des variables</div>
+  <div class="title choose-var-setting">{{x-capitalize (t 'visualization.title.chooseVar')}}</div>
   <div class="body">
-    <div class="settings vertical flow">
+    <div class="settings vertical flow choose-var-setting">
       {{mapping-var-selector
         variables=model.data.columns
         mapping=editedLayer.mapping

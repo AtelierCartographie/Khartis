@@ -2,7 +2,14 @@
   <div class="vertical airy flow layers">
     <div class="solid center text-center">
       {{#if model.geoDef}}
-      <div class="button add-visualization-button" {{action "addLayer"}}><i class="iconfont iconfont-plus-thin"></i></div>
+      <div class="horizontal middle flow airy add-visualization-button-wrapper" {{action "addLayer"}}>
+        <div class="button add-visualization-button">
+          <i class="iconfont iconfont-plus-thin"></i>
+        </div>
+        <div>
+          {{x-capitalize (t 'visualization.new')}}
+        </div>
+      </div>
       {{else}}
       <div class="filled warning padded">
         Il est nécessaire de sélectionner une colonne de référence géographique pour ajouter de nouveaux calques

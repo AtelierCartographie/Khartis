@@ -76,6 +76,26 @@
   }
 }
 
+.edit-layer .title.choose-var-setting,
+.edit-layer .title.multi-mapping {
+  font-size: 1.7rem;
+}
+
+.edit-layer .settings.choose-var-setting {
+  color: color(titles);
+}
+
+.edit-layer .title.multi-mapping {
+  text-transform: uppercase;
+  color: #404040;
+}
+
+.edit-layer .title.secondary {
+  color: #404040;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
 
 // Controls adjustements
 

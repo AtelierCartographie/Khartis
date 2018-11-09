@@ -112,6 +112,11 @@ let MultiMapping = AbstractMapping.extend({
               geoDef: this.get('geoDef')
             })
           ]);
+        } else if (this.get('mappings').length === 1) {
+          this.get('mappings').push(Mapping.create({
+            type: "quanti.val_symboles.combined",
+            geoDef: this.get('geoDef')
+          }));
         }
         this.reopen(QuantiValSymProportional);
         break;

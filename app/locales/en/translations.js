@@ -39,6 +39,8 @@ export default {
   "help.wiki": "Help - Wiki Khartis",
   "help.documentation": "Help - Khartis documentation",
   "help.knowMore": "Know more",
+  "help.createViz": "Pour en savoir plus sur les visualisations disponibles et sur la manière de les réaliser :",
+  "help.createViz.link": "consultez l'aide",
 
   "updater": {
     "title": "An update is available",
@@ -203,6 +205,7 @@ export default {
   },
 
   "visualization": {
+    "new": "Add a visualization",
     "title": {
       "choose": {
         "title": "choose a visualization",
@@ -210,6 +213,7 @@ export default {
         "difference": "showing differences",
         "combined": "combining variables",
       },
+      "chooseVar": "Variable selection",
       "chooseOrderedSurf": {
         "title": "your datas are",
         "classes": "to group into classes",

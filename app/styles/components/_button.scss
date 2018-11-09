@@ -79,6 +79,15 @@ a.button {
   right: 1rem;
 }
 
+.add-visualization-button-wrapper {
+  font-size: 1.1em;
+  color: color(primary2);
+  &:hover {
+    color: lighten(color(primary2), 20%);
+  }
+  cursor: pointer;
+}
+
 .add-visualization-button {
 
   border-radius: 50%;
@@ -101,9 +110,10 @@ a.button {
 
   margin-bottom: 0.5rem;
 
-  &:hover {
-    background-color: lighten(color(primary2), 20%);
-  }
+}
+
+.add-visualization-button-wrapper:hover .add-visualization-button {
+  background-color: lighten(color(primary2), 20%);
 }
 
 

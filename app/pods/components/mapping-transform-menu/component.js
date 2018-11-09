@@ -8,7 +8,8 @@ export default Component.extend({
   availableMappings: function() {
     return [
       {type: "quanti.val_symboles.combined.quanti.val_surfaces", img: "combined-sym-ordered.svg"},
-      {type: "quanti.val_symboles.combined.quali.cat_surfaces", img: "combined-sym-different.svg"}
+      {type: "quanti.val_symboles.combined.quali.cat_surfaces", img: "combined-sym-different.svg"},
+      {type: "quanti.val_symboles.combined.proportional", img: "combined-sym-double.svg"}
     ]
   }.property('layer.mapping'),
 

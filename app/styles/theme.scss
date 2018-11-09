@@ -131,6 +131,10 @@ small {
   color: color(primary);
 }
 
+.text-primary2 {
+  color: color(primary2);
+}
+
 .text-success {
   color: color(success);
 }
@@ -141,6 +145,10 @@ small {
 
 .text-danger {
   color: color(danger);
+}
+
+.is-underlined {
+  text-decoration: underline;
 }
 
 .title {

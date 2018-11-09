@@ -3,7 +3,7 @@
       {{#if standalone}}
       <div class="title underlined">{{x-capitalize (t 'visualization.settings.title')}}</div>
       {{else}}
-      <div class="title underlined">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
+      <div class="title underlined multi-mapping">{{x-capitalize (t 'visualization.settings.symbols')}}</div>
       {{/if}}    <div class="solid vertical flow">
       {{#x-tabs onActiveItemChange=(action 'onIntervalTypeTabChange')}}
       <ul class="tabs brewer-tabs">
@@ -152,7 +152,7 @@
   </div>
 
   {{#if mapping.rules.length}}
-  <div class="title underlined" style="margin-top:20px;">
+  <div class="title underlined secondary" style="margin-top:20px;">
     {{x-capitalize (t 'visualization.title.nodata')}}
   </div>
   <ul class="collection categories-list">
@@ -185,7 +185,7 @@
 {{#x-collapsable collapsed=diagramCollapsedDefault as |facet collapsed|}}
   {{#if facet.trigger}}
     {{#x-tooltip message=(t 'visualization.settings.diagram.tooltip.title')}}
-    <div class="title {{unless collapsed 'underlined'}}">
+    <div class="title {{unless collapsed 'underlined'}} secondary">
       <span class="tooltip-trigger">{{x-capitalize (t 'visualization.settings.diagram.title')}}</span>
       <i class="iconfont iconfont-{{if collapsed 'angle-right' 'angle-down'}}"/>
     </div>

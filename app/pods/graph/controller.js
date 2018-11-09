@@ -18,6 +18,7 @@ export default Ember.Controller.extend(ExportMixin, {
   currentTab: "visualizations",
 
   dictionary: Ember.inject.service(),
+  documentationService: Ember.inject.service('documentation'),
 
   states: [
     "visualizations",
@@ -385,6 +386,10 @@ export default Ember.Controller.extend(ExportMixin, {
     onDeleteDrawingFeature(feature) {
       this.get('model.graphLayout.drawings').removeObject(feature);
       this.set('selectedDrawingFeature', null);
+    },
+
+    openHelpCreateViz() {
+      this.get('documentationService').trigger("openAtUrl", "index.html");
     },
     
     onAskVersioning(type) {
