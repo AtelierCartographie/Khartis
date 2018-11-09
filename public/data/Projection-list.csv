@@ -11,3 +11,4 @@ armadillo,Armadillo,World,d3.geoArmadillo(),"[-10,0]",150,,,https://github.com/d
 plate_carree,Plate carrée,World,d3.geoEquirectangular(),,150,,,http://bl.ocks.org/mbostock/3757119,longitude,,2,2,4,0,0,1,0,0
 orthographic,Orthographic,Region,d3.geoOrthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,0,0,1,1,1
 mercator,Mercator,Region,d3.geoMercator(),,(width + 1) / 2 / Math.PI,,,http://bl.ocks.org/mbostock/3757132,longitude and latitude,,1,4,1,Gérard Mercator,1569,1,0,0
+airocean,Air Ocean,World,d3.geoAirocean(),"[30, -45, 90]",150,,,https://beta.observablehq.com/@fil/airocean-projection,,,4,1,2,John Bartholomew,1948,1,1,1

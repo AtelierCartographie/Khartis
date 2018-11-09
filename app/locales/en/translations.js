@@ -205,6 +205,10 @@ export default {
     "armadillo": {
       "name": "Armadillo",
       "description": "Ceci est une description"
+    },
+    "airocean": {
+      "name": "Air Ocean",
+      "description": "Ceci est une description"
     }
   },
 

@@ -4,6 +4,7 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import d3 from "npm:d3";
 import geoProjections from "npm:d3-geo-projection";
+import geoPolygon from "npm:d3-geo-polygon";
 import "./utils/d3-selection-multi";
 import {isEverGreen} from 'khartis/utils/browser-check'
 import './utils/composite-projection';
@@ -12,6 +13,7 @@ import './utils/d3proto';
 
 /* attach d3 geo projection */
 Object.assign(d3, geoProjections);
+Object.assign(d3, geoPolygon);
 
 let App;
 
