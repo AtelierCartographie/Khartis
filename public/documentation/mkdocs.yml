@@ -23,6 +23,7 @@ theme:
   name: 'material'
   language: 'fr'
   logo: './assets/Khartis-logo.svg'
+  favicon: './assets/favicon.ico'
   palette:
     primary: ''
     accent: 'light blue'
@@ -30,7 +31,7 @@ theme:
     text: 'Roboto'
     code: 'Roboto Mono'
   feature:
-    tabs: true
+    tabs: false
 extra_css:
   - 'stylesheets/extra.css'
 
