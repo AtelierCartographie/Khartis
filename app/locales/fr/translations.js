@@ -304,7 +304,23 @@ export default {
       "reverse": "inverser",
       "stroke": "contour",
       "strokeSize": "épaisseur du trait",
-      "opacity": "opacité"
+      "opacity": "opacité",
+      "alignment": "alignement",
+      "spacing": "espacement",
+      "bottom": "bas",
+      "middle": "milieu",
+      "top": "haut",
+      "small": "petit",
+      "medium": "moyen",
+      "high": "grand",
+      "ownScale": {
+        "title": "échelle propre",
+        "tooltip": "Chaque variable est traitée indépendamment l'une de l'autre. Deux légendes en résultent. Note : les tailles des symboles MAX sont identiques"
+      },
+      "commonScale": {
+        "title": "échelle commune",
+        "tooltip": "Les deux variables sont traitées ensemble. Il en résulte une légende. Les tailles des symboles sont strictement comparables"
+      }
     },
     "type": {
       "ordered": {

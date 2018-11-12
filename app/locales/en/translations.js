@@ -304,7 +304,23 @@ export default {
       "reverse": "reverse",
       "stroke": "stroke",
       "strokeSize": "stroke size",
-      "opacity": "opacity"
+      "opacity": "opacity",
+      "alignment": "alignment",
+      "spacing": "spacing",
+      "bottom": "bas",
+      "middle": "milieu",
+      "top": "haut",
+      "small": "petit",
+      "medium": "moyen",
+      "high": "grand",
+      "ownScale": {
+        "title": "échelle propre",
+        "tooltip": "les minimum et maximum de chaque variable sont respectés"
+      },
+      "commonScale": {
+        "title": "échelle commune",
+        "tooltip": "les deux symboles sont directement comparables et partagent une même échelle"
+      }
     },
     "type": {
       "ordered": {
