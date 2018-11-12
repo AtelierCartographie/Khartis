@@ -30,7 +30,7 @@ export default Ember.Component.extend({
 
   openAtUrl(url) {
     this.set('expanded', true);
-    this.set('sourceUrl', `/documentation/site/${url}`);
+    this.set('sourceUrl', `${config.rootURL}documentation/site/${url}`);
   },
 
   actions: {
