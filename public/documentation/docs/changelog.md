@@ -1,5 +1,5 @@
 ## v2.2 (13/11/2018)
--   Redesign of visualizations panel: new classifying more clear and readable
+-   Redesign of visualizations panel: new classification more clear and readable
 -   3 new viz than combine two variables
 -   Documentation is now directly accessible in Khartis
 -   Map title and labels can be styled: font, size, bold, italic, underline, align, color

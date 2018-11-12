@@ -315,11 +315,11 @@ export default {
       "high": "grand",
       "ownScale": {
         "title": "échelle propre",
-        "tooltip": "les minimum et maximum de chaque variable sont respectés"
+        "tooltip": "Each variable is treated independently of each other. Two legends result. Note: MAX symbol sizes are the same"
       },
       "commonScale": {
         "title": "échelle commune",
-        "tooltip": "les deux symboles sont directement comparables et partagent une même échelle"
+        "tooltip": "Both variables are treated together. There is only one legend. Symbol sizes are strictly comparable"
       }
     },
     "type": {
