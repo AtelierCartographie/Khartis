@@ -1,10 +1,10 @@
-## v2.1 (09/03/2018)
+## v2.2 (13/11/2018)
 -   Redesign of visualizations panel: new classifying more clear and readable
 -   3 new viz than combine two variables
 -   Documentation is now directly accessible in Khartis
 -   Map title and labels can be styled: font, size, bold, italic, underline, align, color
 -   Labels can now be moved and connectors appears automatically. Thanks to d3-annotation by @susielu
--   New projection available: Armadillo by Erwin Raisz
+-   New projection available: Armadillo by Erwin Raisz and Airocean by Buckminster Fuller
 -   Fix Jenks discretization thresholds
 -   Dependancies: upgrade to ember 3.1
 

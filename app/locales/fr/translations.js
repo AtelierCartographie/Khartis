@@ -223,14 +223,14 @@ export default {
       },
       "chooseVar": "Choix des variables",
       "chooseOrderedSurf": {
-        "title": "vos données sont-elles",
+        "title": "Vous souhaitez",
         "classes": {
-          "title": "à regouper en classes",
-          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+          "title": "regrouper les données en classes ?",
+          "description": "Les valeurs qui sont semblables/homogènes sont regroupées dans des classes pour simplifier le message. Elles doivent être des nombres (stocks, dates)."
         },
         "cat": {
-          "title": "des catégories préexistantes",
-          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+          "title": "figurer des catégories pré-existantes ?",
+          "description": "Chaque couleur est une catégorie parmis celles de la série. Les données peuvent êtres des nombres (dates) ou du texte (ex : élevé, moyen, faible)."
         }
       },
       "categories": "catégories",
