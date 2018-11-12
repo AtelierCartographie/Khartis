@@ -6,14 +6,17 @@ Le tableau ci-dessous liste les projections avec leurs notes.
 
 | Name             | Note surface | Note distance | Note angle | Auteur                            | Année de création |
 |:-----------------|:-------------|:--------------|:-----------|:----------------------------------|:------------------|
-| Atlantis         | 3            | 1             | 0          | John Bartholomew                  | 1948              |
 | Bertin (1953)*   | 2            | 1             | 0          | Jacques Bertin / Philippe Rivière | 1953/2017         |
+| Atlantis         | 3            | 1             | 0          | John Bartholomew                  | 1948              |
 | Briesemeister    | 3            | 1             | 0          | William A. Briesemeister          | 1953              |
 | Goode Homolosine | 3            | 1             | 0          | J. Paul Goode                     | 1923              |
 | Lambert Azimuthal Equal-Area | 3            | 1             | 0          | Johann Lambert            | 1772              |
 | Mollweide        | 3            | 1             | 0          | Karl Mollweide                    | 1805              |
 | Natural Earth    | 2            | 3             | 2          | Tom Patterson                     | 2007              |
+| Fuller (Airocean)| 2            | 2             | 2          | Buckminster Fuller                | 1954              |
 | Waterman         | 2            | 2             | 2          | Steve Waterman                    | 1996              |
+| Plate carrée     | 1            | 3             | 1          | -                                 | -                 |
+| Armadillo        | 1            | 0             | 1          | Erwin Raisz                       | 1943              |
 | Orthographic     | 1            | 1             | 1          | -                                 | -                 |
 | Plate carrée     | 1            | 3             | 1          | -                                 | -                 |
 | Mercator         | 0            | 0             | 3          | Gérard Mercator                   | 1569              |
