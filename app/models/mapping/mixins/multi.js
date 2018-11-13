@@ -100,7 +100,7 @@ export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, Lege
     get() {
       return this.get('master.visualization.shape');
     },
-    set(k, v) {
+    set(_, v) {
       let [master, slave] = this.get('mappings');
       master.set('visualization.shape', v);
       slave.set('visualization.shape', v);
@@ -112,15 +112,13 @@ export const QuantiValSymProportional = Ember.Mixin.create(ValueMixin.Data, Lege
     get() {
       return this.get('master.visualization.opacity');
     },
-    set(k, v) {
+    set(_, v) {
       let [master, slave] = this.get('mappings');
       master.set('visualization.opacity', v);
       slave.set('visualization.opacity', v);
       return v;
     }
   }),
-
-  legendStroke: 1,
 
   legendTitleComputed: function() {
     return this.get('legendTitle') ?

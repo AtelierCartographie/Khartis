@@ -124,6 +124,7 @@ let MultiMapping = AbstractMapping.extend({
         break;
     }
 
+    this.get('mappings').forEach( m => m.set('standalone', false) );
     this.finalize();
 
   }.observes('type').on("init"),

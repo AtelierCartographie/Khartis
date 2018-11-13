@@ -610,7 +610,6 @@ export default Ember.Mixin.create({
       .flowStyle("h-mode", "margin-bottom: 2px; position: relative");
 
     let hModeWidth = function(sel) {
-      const margin = 10;
       let textEls = sel.selectAll("text.symLbl").nodes(),
       widths = [];
       for (let i = 1; i < textEls.length; i++) {
@@ -1037,7 +1036,7 @@ export default Ember.Mixin.create({
 
       let symH = r.y + mapping.get('visualization.stroke');
         
-      let dy = r.y + mapping.get('visualization.stroke') - symH;
+      //let dy = r.y + mapping.get('visualization.stroke') - symH;
 
       d3.select(this).flowClass("horizontal solid")
         .flowStyle(`height: ${symH}px; margin-right: 2px`);

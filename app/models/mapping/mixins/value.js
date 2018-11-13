@@ -431,14 +431,19 @@ let SymbolMixin = Ember.Mixin.create({
       };
 
     } else if (type === "color") {
-      
-      d3Scale = d3.scaleThreshold()
 
-      if (domainDelegate.get('scale.diverging')) {
-        range = this.get('visualization').colorStops(domainDelegate.get('scale.diverging'));
-        domain = [domainDelegate.get('scale.valueBreak')];
+      d3Scale = d3.scaleThreshold();
+      if (this.get('standalone') || domainDelegate != this) {
+  
+        if (domainDelegate.get('scale.diverging')) {
+          range = this.get('visualization').colorStops(domainDelegate.get('scale.diverging'));
+          domain = [domainDelegate.get('scale.valueBreak')];
+        } else {
+          range = this.get('visualization').colorStops();
+          domain = [];
+        }
       } else {
-        range = this.get('visualization').colorStops();
+        range = ['rgba(0, 0, 0, 0)'];
         domain = [];
       }
       

@@ -24,6 +24,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
   ordered: false,
 
   rulesCache: null,
+
+  standalone: true,
   
   canBeMappedAsValue: function() {
     return this.get('varCol.meta.type') === "numeric";
@@ -221,7 +223,7 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
     'scale._defferedChangeIndicator', 'visualization._defferedChangeIndicator',
     'rules.@each._defferedChangeIndicator', 'colorSet', 'ordered',
     'filter._defferedChangeIndicator', 'maxValuePrecision',
-    'opacity', 'legendTitle', 'legendOrientation',
+    'opacity', 'legendTitle', 'legendOrientation', 'standalone',
     function() {
       this.notifyDefferedChange();
     },
@@ -233,7 +235,8 @@ let Mapping = AbstractMapping.extend(LegendMixin, {
       varCol: this.get('varCol') ? this.get('varCol._uuid') : null,
       filter: this.get('filter') ? this.get('filter').export() : null,
       ordered: this.get('ordered'),
-      rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null
+      rules: this.get('rules') ? this.get('rules').map( r => r.export() ) : null,
+      standalone: this.get('standalone')
     }, props));
   }
   
@@ -247,7 +250,8 @@ Mapping.reopenClass({
       varCol: json.varCol ? refs[json.varCol] : null,
       filter: json.filter ? FilterFactory.restoreInstance(json.filter, refs) : null,
       ordered: json.ordered,
-      rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null
+      rules: json.rules ? json.rules.map( r => RuleFactory(r, refs) ) : null,
+      standalone: json.standalone
     });
   }
   

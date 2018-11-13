@@ -74,7 +74,15 @@ let LegendMixin = Ember.Mixin.create({
     } else {
       return this.get('extent');
     }
-  }
+  },
+
+  legendStroke: function() {
+    if ((ValueMixins.Symbol.detect(this) && !this.get('standalone'))
+      || (ValueMixins.SymbolCombined.detect(this))) {
+      return 1;
+    }
+    return null;
+  }.property('type')
 
 });
 
