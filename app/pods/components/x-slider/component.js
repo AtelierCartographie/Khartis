@@ -222,7 +222,7 @@ export default Ember.Component.extend({
     let translate = this.get('scale')(this.get('transform').invert(val)) + DRAGGER_SIZE / 2;
     
     this.get('displayTick') && this.displayValue();
-    
+
     this.d3l().selectAll(".slider .dragger")
       .transition(d3.transition().duration(100).ease(d3.easeCubicOut))
       .attr("transform", `translate(${translate}, 0)`);
