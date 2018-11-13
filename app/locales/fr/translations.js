@@ -223,14 +223,14 @@ export default {
       },
       "chooseVar": "Choix des variables",
       "chooseOrderedSurf": {
-        "title": "vos données sont-elles",
+        "title": "Vous souhaitez",
         "classes": {
-          "title": "à regouper en classes",
-          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+          "title": "regrouper les données en classes ?",
+          "description": "Les valeurs qui sont semblables/homogènes sont regroupées dans des classes pour simplifier le message. Elles doivent être des nombres (stocks, dates)."
         },
         "cat": {
-          "title": "des catégories préexistantes",
-          "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad"
+          "title": "figurer des catégories pré-existantes ?",
+          "description": "Chaque couleur est une catégorie parmis celles de la série. Les données peuvent êtres des nombres (dates) ou du texte (ex : élevé, moyen, faible)."
         }
       },
       "categories": "catégories",
@@ -304,7 +304,23 @@ export default {
       "reverse": "inverser",
       "stroke": "contour",
       "strokeSize": "épaisseur du trait",
-      "opacity": "opacité"
+      "opacity": "opacité",
+      "alignment": "alignement",
+      "spacing": "espacement",
+      "bottom": "bas",
+      "middle": "milieu",
+      "top": "haut",
+      "small": "petit",
+      "medium": "moyen",
+      "high": "grand",
+      "ownScale": {
+        "title": "échelle propre",
+        "tooltip": "Chaque variable est traitée indépendamment l'une de l'autre. Deux légendes en résultent. Note : les tailles des symboles MAX sont identiques"
+      },
+      "commonScale": {
+        "title": "échelle commune",
+        "tooltip": "Les deux variables sont traitées ensemble. Il en résulte une légende. Les tailles des symboles sont strictement comparables"
+      }
     },
     "type": {
       "ordered": {

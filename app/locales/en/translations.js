@@ -39,8 +39,8 @@ export default {
   "help.wiki": "Help - Wiki Khartis",
   "help.documentation": "Help - Khartis documentation",
   "help.knowMore": "Know more",
-  "help.createViz": "Pour en savoir plus sur les visualisations disponibles et sur la manière de les réaliser :",
-  "help.createViz.link": "consultez l'aide",
+  "help.createViz": "To learn more about the available visualizations and how to do them:",
+  "help.createViz.link": "see the help",
 
   "updater": {
     "title": "An update is available",
@@ -218,14 +218,20 @@ export default {
       "choose": {
         "title": "choose a visualization",
         "ordered": "showing order",
-        "difference": "showing differences",
-        "combined": "combining variables",
+        "different": "showing differences",
+        "combined": "combining series",
       },
-      "chooseVar": "Variable selection",
+      "chooseVar": "Choix des variables",
       "chooseOrderedSurf": {
-        "title": "your datas are",
-        "classes": "to group into classes",
-        "cat": "existing categories"
+        "title": "You would like",
+        "classes": {
+          "title": "make classes with your data?",
+          "description": "Similar or homogeneous values are grouped into classes to simplify the message. They must be numbers (stocks, dates)."
+        },
+        "cat": {
+          "title": "show pre-existing categories?",
+          "description": "Each color is a category in the series. The data can be numbers (dates) or text (e.g. high, medium, low)."
+        }
       },
       "categories": "categories",
       "nodata": "missing data"
@@ -298,27 +304,43 @@ export default {
       "reverse": "reverse",
       "stroke": "stroke",
       "strokeSize": "stroke size",
-      "opacity": "opacity"
+      "opacity": "opacity",
+      "alignment": "alignment",
+      "spacing": "spacing",
+      "bottom": "bas",
+      "middle": "milieu",
+      "top": "haut",
+      "small": "petit",
+      "medium": "moyen",
+      "high": "grand",
+      "ownScale": {
+        "title": "échelle propre",
+        "tooltip": "Each variable is treated independently of each other. Two legends result. Note: MAX symbol sizes are the same"
+      },
+      "commonScale": {
+        "title": "échelle commune",
+        "tooltip": "Both variables are treated together. There is only one legend. Symbol sizes are strictly comparable"
+      }
     },
     "type": {
       "ordered": {
         "sym": {
-          "proportional": "symboles proportionnels",
-          "ordered": "symboles ordonnés"
+          "proportional": "proportional symbols",
+          "ordered": "ordered symbols"
         },
         "surf": {
-          "ordered": "couleurs ordonnées"
+          "ordered": "ordered colors"
         }
       },
       "different": {
-        "sym": "symboles différents",
-        "surf": "couleurs différentes"
+        "sym": "different symbols",
+        "surf": "different colors"
       },
       "combined": {
         "sym": {
-          "ordered": "symboles proportionnels colorés (ordre)",
-          "different": "symboles proportionnels colorés (différence)",
-          "double": "doubles symboles proportionnels",
+          "ordered": "colored (ordered) proportional symbols",
+          "different": "colored (different) proportional symbols",
+          "double": "combined proportional symbols",
         }
       },
       "quanti": {

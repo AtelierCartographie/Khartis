@@ -12,9 +12,9 @@
   </iframe>
 </div>
 {{else}}
-<div class="popover-toggle">
+<div class="popover-toggle" {{action 'toggleContent'}}>
   {{#x-tooltip position="left" message=(t 'help.documentation')}}
-  <span {{action 'toggleContent'}}>?</span>
+  <span>?</span>
   {{/x-tooltip}}
 </div>
 {{/if}}

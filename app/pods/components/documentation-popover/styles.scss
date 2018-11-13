@@ -12,6 +12,11 @@
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
 
+    &:hover,
+    &.active {
+      cursor: pointer;
+    }
+
     span {
       display: inline-block;
     }
@@ -19,7 +24,6 @@
     & span:not(.disabled) {
       &:hover,
       &.active {
-        cursor: pointer;
         color: #FFF;
       }
     }

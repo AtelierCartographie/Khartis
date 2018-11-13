@@ -55,6 +55,6 @@ Figurer l’état à un instant T de phénomènes différents (couleurs) mais co
 ***
 
 ### [Double symboles proportionnels](../double-symboles-proportionnels)
-[![image viz](./assets/large-7.svg)](../double-symboles-proportionnels)
+[![image viz](./assets/large-8.svg)](../double-symboles-proportionnels)
 
 Comparer 2 informations

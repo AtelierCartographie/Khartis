@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'khartis/config/environment';
 
 export default Ember.Component.extend({
 
@@ -11,7 +12,7 @@ export default Ember.Component.extend({
   historyCursor: -1,
   iframe: null,
   pushToHistory: true,
-  sourceUrl: "/documentation/site/index.html",
+  sourceUrl: `${config.rootURL}documentation/site/index.html`,
 
   init() {
     this._super();
@@ -29,7 +30,7 @@ export default Ember.Component.extend({
 
   openAtUrl(url) {
     this.set('expanded', true);
-    this.set('sourceUrl', `/documentation/site/${url}`);
+    this.set('sourceUrl', `${config.rootURL}documentation/site/${url}`);
   },
 
   actions: {
