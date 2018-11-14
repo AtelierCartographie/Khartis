@@ -239,7 +239,7 @@ let SurfaceMixin = Ember.Mixin.create({
 
     let master = this.get('scale.diverging') ? Colorbrewer.diverging : Colorbrewer.sequential;
     if (!master[this.get('visualization.colors')]) {
-      this.set('visualization.colors', Object.keys(master)[0]);
+      this.set('visualization.colors', Object.keys(master).filter(k => k !== "transparent")[0]);
     }
 
     return Colorbrewer.Composer.compose(
@@ -300,8 +300,7 @@ let SurfaceMixin = Ember.Mixin.create({
 
   getScaleOf(type) {
     
-    let ext = d3.extent(this.get('values')),
-        intervals = this.get('intervals'),
+    let intervals = this.get('intervals'),
         d3Scale,
         range,
         rangeLength;
