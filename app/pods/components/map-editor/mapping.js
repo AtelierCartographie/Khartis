@@ -232,8 +232,6 @@ export default Ember.Mixin.create({
             fill = conv(d.data.row, "fill"),
             strokeColor = conv(d.data.row, "strokeColor");
 
-          console.log(fill);
-      
           if (shape && r > 0) {
             
             let symbol = SymbolMaker.symbol({
