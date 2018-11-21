@@ -72,6 +72,7 @@ let MultiMapping = AbstractMapping.extend({
           }));
         }
         this.reopen(QuantiValSymQuantiValSurf);
+        this.get('mappings').forEach( m => m.set('standalone', false) );
         break;
       case "quanti.val_symboles.combined.quali.cat_surfaces":
         this.set('renderMode', 'superposed');
@@ -93,6 +94,7 @@ let MultiMapping = AbstractMapping.extend({
           }));
         }
         this.reopen(QuantiValSymQualiCatSurf);
+        this.get('mappings').forEach( m => m.set('standalone', false) );
         break;
       case "quanti.val_symboles.combined.proportional":
         if (!this.get('scale')) {
@@ -124,7 +126,6 @@ let MultiMapping = AbstractMapping.extend({
         break;
     }
 
-    this.get('mappings').forEach( m => m.set('standalone', false) );
     this.finalize();
 
   }.observes('type').on("init"),
@@ -156,7 +157,8 @@ let MultiMapping = AbstractMapping.extend({
     function() {
       this.notifyDefferedChange();
     },
-    25),
+    25
+  ),
   
   export(props) {
     return this._super(Object.assign({
