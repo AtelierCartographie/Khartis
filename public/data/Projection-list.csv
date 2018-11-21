@@ -11,4 +11,3 @@ armadillo,Armadillo,World,d3.geoArmadillo(),"[-10,0]",150,,,https://github.com/d
 plate_carree,Plate carrée,World,d3.geoEquirectangular(),,150,,,http://bl.ocks.org/mbostock/3757119,longitude,,2,2,4,-,-,1,0,0
 orthographic,Orthographic,Region,d3.geoOrthographic(),,275,90,,http://bl.ocks.org/mbostock/3757125,longitude and latitude,,2,2,2,-,-,1,1,1
 mercator,Mercator,Region,d3.geoMercator(),,(width + 1) / 2 / Math.PI,,,http://bl.ocks.org/mbostock/3757132,longitude and latitude,,1,4,1,Gérard Mercator,1569,1,0,0
-waterman_butterfly,Waterman b.,World,d3.geoPolyhedralWaterman(),"[20, 0]",118,,,http://bl.ocks.org/mbostock/4458497,,"[-160, 0]",3,3,3,Steve Waterman,1996,1,1,1
