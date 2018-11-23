@@ -280,7 +280,7 @@ let SymbolMixin = Ember.Mixin.create({
     let colorSet = this.get('visualization').composeColorSet(this.get('rules').length);
     this.get('rules').forEach( (r, i) => {
       r.setProperties({
-        color: i < colorSet.length ? colorSet[i] : null
+        color: i < colorSet.length ? colorSet[i] : "#dddddd"
       });
     });
   },

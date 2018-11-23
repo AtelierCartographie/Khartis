@@ -24,7 +24,7 @@
             <div class="horizontal space-between flow">
               <div class="horizontal airy middle flow">
                 {{#if layer.mapping.isBoundToVar}}
-                <span class="layer-name">{{layer.mapping.titleComputed}}</span>
+                <span class="layer-name">{{x-ellipsis layer.mapping.titleComputed 22}}</span>
                 {{else}}
                 <span class="layer-name">[ variable ]</span>
                 {{/if}}

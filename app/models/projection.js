@@ -21,60 +21,48 @@ let Projection = Struct.extend({
   
   rotateX: Ember.computed('rotate', {
     get() {
-      let parts = this.get('rotate')
-        .split(',');
-      if (parts.length >= 1 && parts[0].length) {
-        return parseInt(parts[0]
-         .replace(/[\[\]]/g, "")
-          .trim());
+      if (this.get('rotate') instanceof Array && this.get('rotate')[0]) {
+        return this.get('rotate')[0];
       }
       return 0;
     },
-    set(key, value) {
+    set(_, value) {
       if (isNaN(value = parseFloat(value))) {
         value = 0;
       }
-      this.set('rotate', `[${value},${this.get('rotateY')},${this.get('rotateZ')}]`);
+      this.set('rotate', [value, this.get('rotateY'), this.get('rotateZ')]);
       return value;
     }
   }),
   
   rotateY: Ember.computed('rotate', {
     get() {
-      let parts = this.get('rotate')
-        .split(',');
-      if (parts.length >= 2) {
-        return parseInt(parts[1]
-         .replace(/[\[\]]/g, "")
-          .trim());
+      if (this.get('rotate') instanceof Array && this.get('rotate')[1]) {
+        return this.get('rotate')[1];
       }
       return 0;
     },
-    set(key, value) {
+    set(_, value) {
       if (isNaN(value = parseFloat(value))) {
         value = 0;
       }
-      this.set('rotate', `[${this.get('rotateX')},${value},${this.get('rotateZ')}]`);
+      this.set('rotate', [this.get('rotateX'), value, this.get('rotateZ')]);
       return value;
     }
   }),
   
   rotateZ: Ember.computed('rotate', {
     get() {
-      let parts = this.get('rotate')
-        .split(',');
-      if (parts.length === 3) {
-        return parseInt(parts[2]
-         .replace(/[\[\]]/g, "")
-          .trim());
+      if (this.get('rotate') instanceof Array && this.get('rotate')[2]) {
+        return this.get('rotate')[2];
       }
       return 0;
     },
-    set(key, value) {
+    set(_, value) {
       if (isNaN(value = parseFloat(value))) {
         value = 0;
       }
-      this.set('rotate', `[${this.get('rotateX')},${this.get('rotateY')},${value}]`);
+      this.set('rotate', [this.get('rotateX'), this.get('rotateY'), value]);
       return value;
     }
   }),

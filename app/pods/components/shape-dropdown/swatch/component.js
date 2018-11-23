@@ -38,11 +38,11 @@ export default Ember.Component.extend({
   }.property('shape'),
   
   drawSymbol: function() {
-    
+    let bcr = this.element.getBoundingClientRect();
     let svg = this.d3l(),
         margin = this.get('margin'),
-        w = this.element.clientWidth,
-        h = this.element.clientHeight,
+        w = bcr.width,
+        h = bcr.height,
         data = this.get('isMultiple') ? this.get('shape') : [this.get('shape')],
         r = Math.min(w/data.length/2, h/2);
     

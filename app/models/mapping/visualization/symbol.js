@@ -8,7 +8,7 @@ export const DEFAULT_FILL_ALT = "rgb(62, 107, 158)";
 export const DEFAULT_FILL_BEFORE_BREAK = "blue";
 const DEFAULT_UNORDERED_SHAPES = ["circle", "rect", "line", "star", "times"];
 const DEFAULT_STROKE_COLOR = "#404040";
-const DEFAULT_STROKE = 1;
+const DEFAULT_STROKE = 0;
 const DEFAULT_MAX_SIZE = 10;
 const DEFAULT_COLOR_SET = "schemeAccent";
 

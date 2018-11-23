@@ -130,8 +130,8 @@ export default Ember.Component.extend(EventNotifierFeature, {
       
       if ($width != this.get('$width') || $height != this.get('$height')) {
         this.setProperties({
-          '$width': this.element.parentElement.clientWidth,
-          '$height': this.element.parentElement.clientHeight
+          '$width': $width,
+          '$height': $height
         });
       }
     };

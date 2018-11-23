@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   doLayout: function() {
     if (this.get('max')) {
       let ratio = this.get('value') / this.get('max');
-      this.$(".bar").width(this.$().width() * ratio);
+      this.$(".bar").css({width: `${ratio*100}%`});
     } else {
       this.$(".bar").width(0);
     }

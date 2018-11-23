@@ -155,39 +155,14 @@ var Basemap = Struct.extend({
 
   loadProjections: function() {
 		
-    return new Promise( (res, rej) => {
+    return new Promise( res => {
       
       if (!this.get('availableProjections')) {
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', `${config.rootURL}data/Projection-list.csv`, true);
-        xhr.responseType = 'arraybuffer';
-
-        xhr.onload = (e) => {
-          
-        if (e.target.status == 200) {
-          
-          let data = CSV.parse(ab2string(e.target.response));
-          data = data.map( r => {
-            return r.map( c => c.trim() );
-          });
-          
-          let headers = data[0],
-              body = data.slice(1),
-              projs = body.map( r => {
-                let o = {};
-                headers.forEach( (h,i) => o[csvHeaderToJs(h)] = r[i] );
-                return Projection.create(o);
-              });
-          
-          res(this.set('availableProjections', projs));
-          
+        if (!config.projections) {
+          throw new Error("Missing parameter 'projections' in environment.js");
         }
-        
-      };
-
-      xhr.send();
-
+        let projs = config.projections.map(pl => Projection.create(pl));
+        res(this.set('availableProjections', projs));
       } else {
         res(this.get('availableProjections'));
       }

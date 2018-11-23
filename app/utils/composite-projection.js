@@ -1,6 +1,6 @@
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
-import {solve} from './d3-solve-invert-2';
+import {solve} from './d3-solve-invert';
 import proj4 from 'npm:proj4';
 
 const pi = Math.PI;
@@ -52,6 +52,7 @@ let proj = function() {
           transforms: projConfig.transforms || {},
           scale: projConfig.scale != null ? projConfig.scale : 1,
           zoning: projConfig.zoning || [[0, 0], [1, 1]],
+          solveInvert: projConfig.solve_invert,
           bounds: projConfig.bounds,
           borders: projConfig.borders || [],
           instance: null
@@ -237,9 +238,14 @@ let proj = function() {
 
     _instantiate(projConfig) {
       
-      let d3Proj = typeof projConfig.fn === "function" ? projConfig.fn : Function("d3", `return ${projConfig.fn}`)(d3);
+      const d3Proj = typeof projConfig.fn === "function" ? projConfig.fn : Function("d3", `return ${projConfig.fn}`)(d3);
 
-      !d3Proj.invert && (d3Proj.invert = solve(d3Proj));
+
+      const nativeSolver = d3Proj.invert;
+      const compSolver = solve(d3Proj);
+      d3Proj.invert = coords => {
+        return (nativeSolver && nativeSolver(coords)) || compSolver(coords);
+      }
       
       //apply projConfig initial transforms
       d3Proj.parallels && projConfig.transforms.parallels && d3Proj.parallels(projConfig.transforms.parallels);
@@ -252,7 +258,6 @@ let proj = function() {
     },
 
     _configureProjection(projConfig, features, width, height, fWidth, fHeight, margin) {
-
       let zone = projConfig.zoning,
           fProjection = this._instantiate(projConfig).scale(1/projConfig.scale).precision(0.1).translate([0, 0]),
           d3Path = d3.geoPath().projection(fProjection),
@@ -271,7 +276,6 @@ let proj = function() {
           r = Math.min(widthResolution, heightResolution),
           hOffset = (width - fWidth) /2,
           vOffset = (height - fHeight) /2;
-
 
       let projection = fProjection
         .center(d3.geoRotation(fProjection.rotate())(center))

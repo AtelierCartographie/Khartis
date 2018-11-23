@@ -56,13 +56,13 @@ export default Ember.Component.extend({
     
     // HANDLE RESIZE
     let $size = () => {
-      let $width = this.$().parent().width(),
-          $height = this.$().parent().height();
+      let $width = this.element.parentElement.clientWidth,
+          $height = this.element.parentElement.clientHeight;
       
       if ($width != this.get('$width') || $height != this.get('$height')) {
         this.setProperties({
-          '$width': this.$().parent().width(),
-          '$height': this.$().parent().height()
+          '$width': $width,
+          '$height': $height
         });
       }
     };
