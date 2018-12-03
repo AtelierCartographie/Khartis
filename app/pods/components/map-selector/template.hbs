@@ -1,8 +1,7 @@
 {{input type="text" value=filterText class="map-selector-search" placeholder=(x-capitalize (t 'project.step1.search'))}}
 
 <div class="map-selector-results">
-
-  <h4>Monde et régions du monde</h4>
+  
   <ul>
     {{#each queryMaps as |map|}}
       <li {{action 'select' map}}>
