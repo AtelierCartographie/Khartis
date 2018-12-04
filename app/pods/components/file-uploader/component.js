@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 
     var self = this;
     this.$().on("change", function() {
-      self.sendAction('onchange', this.files, self.cancel.bind(self));
+      self.sendAction('onchange', this.files, self.reset.bind(self));
     });
 
     this.$().on("click", (e) => e.stopImmediatePropagation() );
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
 
   },
 
-  cancel() {
+  reset() {
     this.$().val("");
   },
 

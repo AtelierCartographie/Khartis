@@ -132,17 +132,18 @@ export default Ember.Controller.extend({
       };
     },
 
-    importBasemap(files, cancel) {
+    importBasemap(files, reset) {
       this.get('ModalManager')
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
           if (mapConfigs.length) {
             this.send('selectBasemap', mapConfigs[0]);
             this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
+            reset();
           }
         })
         .catch(_ => {
-          cancel();
+          reset();
         });
     },
 

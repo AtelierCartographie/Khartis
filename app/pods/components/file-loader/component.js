@@ -22,9 +22,8 @@ export default Ember.Component.extend({
         this.sendAction('onContentLoaded', text);
       },
 
-      onchange: function(files, cancelFn) {
-        console.log(cancelFn);
-        this.sendAction('onFileSelected', files, cancelFn);
+      onchange: function(files, resetFn) {
+        this.sendAction('onFileSelected', files, resetFn);
       }
         
     }
