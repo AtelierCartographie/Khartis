@@ -48,6 +48,7 @@ export default Ember.Route.extend({
     },
 
     loadExternalProject(data) {
+      console.log(data);
       this.get('store').loadFromFile(data)
         .then( res => {
           this.transitionTo('graph', res);

@@ -14,13 +14,17 @@ export default Ember.Component.extend({
 
     var self = this;
     this.$().on("change", function() {
-      self.sendAction('onchange', this.files);
+      self.sendAction('onchange', this.files, self.cancel.bind(self));
     });
 
     this.$().on("click", (e) => e.stopImmediatePropagation() );
 
     this.sendAction('onready', this);
 
+  },
+
+  cancel() {
+    this.$().val("");
   },
 
   actions: {

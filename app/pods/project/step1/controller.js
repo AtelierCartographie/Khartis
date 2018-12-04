@@ -132,7 +132,7 @@ export default Ember.Controller.extend({
       };
     },
 
-    importBasemap(files) {
+    importBasemap(files, cancel) {
       this.get('ModalManager')
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
@@ -140,6 +140,9 @@ export default Ember.Controller.extend({
             this.send('selectBasemap', mapConfigs[0]);
             this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
           }
+        })
+        .catch(_ => {
+          cancel();
         });
     },
 
