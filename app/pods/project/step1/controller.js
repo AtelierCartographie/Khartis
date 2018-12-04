@@ -111,7 +111,7 @@ export default Ember.Controller.extend({
       if (map.custom) {
         this.get('model.project.graphLayout').setBasemap(ImportedBasemap.create({mapConfig: map}));
       } else {
-        this.get('model.project.graphLayout').setBasemap(Basemap.create({id: map.id}));
+        this.get('model.project.graphLayout').setBasemap(Basemap.create({id: map.id, mapConfig: map}));
       }
     },
 
@@ -136,7 +136,10 @@ export default Ember.Controller.extend({
       this.get('ModalManager')
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
-          this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
+          if (mapConfigs.length) {
+            this.send('selectBasemap', mapConfigs[0]);
+            this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
+          }
         });
     },
 

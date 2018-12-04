@@ -12,7 +12,7 @@ export default Ember.Component.extend({
 
       var levenshteined = this.get('maps').map( basemap => {
 
-        let name = this.get('i18n').t(`basemap.${basemap.id}`).string,
+        let name = this.get('i18n').t(`basemap.${basemap.id}`).string || basemap.id,
             lv = name.split(/[\s']/).reduce( (m, part) => {
               return Math.min(m, TolerentLevenshtein(part, this.get('filterText')));
             }, 100);

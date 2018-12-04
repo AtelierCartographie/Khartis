@@ -7,9 +7,9 @@
     <div class="vertical airy flow select-a-map">
 
       {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
-      {{!#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
+      {{#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
         <!--Charger un fond de carte-->
-      {{!/file-loader}}
+      {{/file-loader}}
 
     </div>
 

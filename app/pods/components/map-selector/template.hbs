@@ -5,7 +5,7 @@
   <h4>Monde et régions du monde</h4>
   <ul>
     {{#each queryMaps as |map|}}
-      <li {{action 'select' map}}>
+      <li {{action 'select' map}} class="{{if (x-eq selection.mapConfig.id map.id) 'selected'}}">
         {{#if map.custom}}
         <span>{{map.id}} [Importé]</span>
         {{else}}
