@@ -89,6 +89,7 @@ var MapShaperModal = XModal.extend({
   },
 
   show: function (opts) {
+    this.set('state', "layers");
     this._super(opts);
     let files = opts && opts.model;
     this.get('worker').open("mapshaper")
