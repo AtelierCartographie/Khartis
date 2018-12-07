@@ -72,7 +72,8 @@ export default {
         "loadError": "Imopssible de charger le fichier sélectionné",
         "projectExists": "Ce projet existe déjà dans votre historique"
       },
-      "search" : "Rechercher un pays, une région, un département..."
+      "search" : "Rechercher un pays, une région, un département...",
+      "useImportedData": "Utiliser les données du fond ce carte"
     },
 
     "step2": {

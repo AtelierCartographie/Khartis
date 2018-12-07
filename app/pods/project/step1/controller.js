@@ -168,6 +168,13 @@ export default Ember.Controller.extend({
       this.loadFile(set.source);
     },
 
+    useImportedData() {
+      let project = this.get('model.project');
+      project.importStructuredData(project.get('graphLayout.basemap.dictionaryData'));
+      project.set('csv', null);
+      this.transitionToRoute('project.step2', "new");
+    },
+
     downloadTemplate() {
       this.downloadTemplate();
     }

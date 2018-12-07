@@ -58,6 +58,7 @@ var MapShaperModal = XModal.extend({
       this.set('layers', data.layers);
       this.set('state', "layers");
     } else if (data.action === "exported") {
+      console.log(data.tuples);
       let mapConfigs = ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds'));
       Promise.all(mapConfigs.map( mc => ImportedBasemap.checkValidity(mc) ) )
         .then( errorsArr => {
@@ -89,7 +90,7 @@ var MapShaperModal = XModal.extend({
   },
 
   show: function (opts) {
-    this.set('state', "layers");
+    this.set('state', "processing");
     this._super(opts);
     let files = opts && opts.model;
     this.get('worker').open("mapshaper")

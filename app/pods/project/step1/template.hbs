@@ -98,25 +98,33 @@
       </ul>
     {{/if}}
 
-    <div class="horizontal flow middle import-samples">
-
-      {{#x-dropdown-plus stretch=true as |dropdown|}}
-
-        {{#dropdown.trigger dropdownPivot="bottom left" triggerPivot="top left"}}
-          {{x-capitalize (t 'project.step1.title.testData')}}
-          <i class="iconfont iconfont-angle-down"></i>
-        {{/dropdown.trigger}}
-
-        {{#dropdown.list}}
-           {{#each examples as |set|}}
-                <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
-            {{/each}}
-        {{/dropdown.list}}
-      {{/x-dropdown-plus}}
+    <div class="horizontal airy flow middle import-samples">
 
       {{#x-button class="solid filled primary2" disabled=(x-not parsable) action=(action 'parseCsvContent')}}
-        {{x-capitalize (t "general.next")}}
+        {{x-capitalize (t "general.import")}}
       {{/x-button}}
+
+      <div class="horizontal center solid flow">{{t "general.or"}}</div>
+
+      {{#if examples.length}}
+        {{#x-dropdown-plus stretch=true as |dropdown|}}
+
+          {{#dropdown.trigger dropdownPivot="bottom left" triggerPivot="top left"}}
+            {{x-capitalize (t 'project.step1.title.testData')}}
+            <i class="iconfont iconfont-angle-down"></i>
+          {{/dropdown.trigger}}
+
+          {{#dropdown.list}}
+            {{#each examples as |set|}}
+                  <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
+              {{/each}}
+          {{/dropdown.list}}
+        {{/x-dropdown-plus}}
+      {{else if model.project.graphLayout.basemap.dictionaryData}}
+        {{#x-button class="horizontal center flow filled primary2" action=(action 'useImportedData')}}
+          {{x-capitalize (t "project.step1.useImportedData")}}
+        {{/x-button}}
+      {{/if}}
 
     </div>
 

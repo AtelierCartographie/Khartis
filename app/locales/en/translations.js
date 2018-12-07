@@ -72,7 +72,8 @@ export default {
         "loadError": "Unable to load selected file",
         "projectExists": "Project already exists"
       },
-      "search" : "Search by country, region or department"
+      "search" : "Search by country, region or department",
+      "useImportedData": "Use data from base map"
     },
 
     "step2": {

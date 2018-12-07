@@ -12,12 +12,8 @@ internal.writeFiles = function(files, opts, done) {
   if (!utils.isArray(files) || files.length === 0) {
     done("Nothing to export");
   } else if (files.length == 1) {
-    console.log(JSON.parse(files[0].content));
     saveBlob(files[0].filename, new Blob([files[0].content]), done);
   } else {
-    files.forEach(function(f) {
-      console.log(JSON.parse(f.content));
-    });
     filename = utils.getCommonFileBase(utils.pluck(files, 'filename')) || "output";
     saveZipFile(filename + ".zip", files, done);
   }

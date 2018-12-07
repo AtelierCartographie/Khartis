@@ -29,7 +29,14 @@ export default Ember.Controller.extend({
 
   setupGeoDef: function() {
     if (!this.get('model.project.geoDef') && this.get('model.project.data.availableGeoDefs').length) {
-      this.set('model.project.geoDef', this.get('model.project.data.availableGeoDefs').objectAt(0));
+      const dict_id = this.get('model.project.graphLayout.basemap.mapConfig.dictionary.identifier');
+      const col = this.get('model.project.data.availableGeoDefs')
+        .find(g => g.get('label') === dict_id);
+      if (col && col.get('inconsistency') <= this.get('model.project.data.availableGeoDefs').objectAt(0).get('inconsistency')) {
+        this.set('model.project.geoDef', col);
+      } else {
+        this.set('model.project.geoDef', this.get('model.project.data.availableGeoDefs').objectAt(0));
+      }
     }
   }.observes('model.project.data.availableGeoDefs.[]'),
 

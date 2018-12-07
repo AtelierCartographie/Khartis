@@ -526,7 +526,7 @@ DataStruct.reopenClass({
                     return CellStruct.create({
                         value: c,
                         column: columns[j] || (columns[j] = ColumnStruct.create()),
-                        row: row
+                        row
                     });
                   })
               });
@@ -535,6 +535,44 @@ DataStruct.reopenClass({
       columns.forEach( c => c.compileVisitors() );
       return this.create({
           rows: rows,
+          columns: columns
+      });
+        
+    },
+    createFromStructuredData(data) {
+
+      const columns = [];
+      
+      const headerKeys = Object.keys(data[0]);
+      const headerRow = RowStruct.create();
+      headerRow.setProperties({
+        header: true,
+        cells: headerKeys.map((k, i) => {
+          return CellStruct.create({
+            value: k,
+            column: columns[i] = ColumnStruct.create(),
+            row: headerRow
+          });
+        })
+      });
+
+      const dataRows = data.map(r => {
+        const row = RowStruct.create();
+        row.setProperties({
+            header: false,
+            cells: headerKeys.map((k, j) => {
+              return CellStruct.create({
+                  value: (r[k] || "")+"",
+                  column: columns[j],
+                  row
+              });
+            })
+        });
+        return row;
+      });
+      columns.forEach( c => c.compileVisitors() );
+      return this.create({
+          rows: [headerRow, ...dataRows],
           columns: columns
       });
         

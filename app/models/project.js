@@ -71,6 +71,14 @@ let Project = Struct.extend({
       this.set('data', DataStruct.createFromRawData(data));
       this.set('report', this.get('data').analyse());
     },
+
+    importStructuredData(data) {
+      this.set('graphLayers', Em.A());
+      this.set('labellingLayers', Em.A());
+      this.set('geoDef', null);
+      this.set('data', DataStruct.createFromStructuredData(data));
+      this.set('report', this.get('data').analyse());
+    },
     
     export() {
       if (this.get('version') < 3) this.set('version', CURRENT_VERSION);

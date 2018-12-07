@@ -66,7 +66,9 @@ export default {
         "title": "Khartis Projekt importieren",
         "loadError": "Fehler beim laden der Datei",
         "projectExists": "Project already exists"
-      }
+      },
+      "search" : "Search by country, region or department",
+      "useImportedData": "Use data from base map"
     },
 
     "step2": {
