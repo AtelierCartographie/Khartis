@@ -96,7 +96,7 @@ var Basemap = Struct.extend({
   computeMapSources(sources) {
     let parts = sources.map( (source, idx) => {
           let j = JSON.parse(source.topojson);
-          j.projection = idx+1;
+          j.projection = idx + 1;
           return j;
         });
       return parts.map(function(j) {

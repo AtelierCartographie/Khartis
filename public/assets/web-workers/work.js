@@ -70,8 +70,8 @@ self.addEventListener('message', function(e) {
   if (data.action === "init") {
     model = new Model();
     importControl = new ImportControl(model, importedCb, noFilesCb, generalErrorCb);
-    exportControl = new ExportControl(model, listLayerCb, exportCb, exportErrorCb);
-    importControl.receiveFiles(data.files);
+    exportControl = new ExportControl(model, data.opts, listLayerCb, exportCb, exportErrorCb);
+    importControl.receiveFiles(data.opts.files);
   } else if (data.action === "processLayers") {
     exportControl.export(data.layers);
   }

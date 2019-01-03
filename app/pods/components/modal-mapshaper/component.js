@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from '../../../config/environment';
 import XModal from '../x-modal/component';
 import ImportedBasemap from 'khartis/models/imported-basemap';
 
@@ -58,7 +59,6 @@ var MapShaperModal = XModal.extend({
       this.set('layers', data.layers);
       this.set('state', "layers");
     } else if (data.action === "exported") {
-      console.log(data.tuples);
       let mapConfigs = ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds'));
       Promise.all(mapConfigs.map( mc => ImportedBasemap.checkValidity(mc) ) )
         .then( errorsArr => {
@@ -93,7 +93,7 @@ var MapShaperModal = XModal.extend({
     this.set('state', "processing");
     this._super(opts);
     let files = opts && opts.model;
-    this.get('worker').open("mapshaper")
+    this.get('worker').open("work")
       .then(stream => {
         this.set('workerStream', stream);
         this.processFiles(files);
@@ -109,7 +109,7 @@ var MapShaperModal = XModal.extend({
 
   processFiles(files) {
     this.set('state', 'processing');
-    this.get('workerStream').postMessage({action: "init", files});
+    this.get('workerStream').postMessage({action: "init", opts: {files, arcsLimit: config.mapshaper.arcsLimit || 15000}});
   },
 
   processLayers() {

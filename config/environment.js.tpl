@@ -52,6 +52,10 @@ module.exports = function(environment) {
       color: "#90ABBD"
     },
 
+    mapshaper: {
+      arcsLimit: 15000
+    },
+
     projections: [
       {
         "id": "bertin",

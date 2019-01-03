@@ -218,11 +218,10 @@ function Model() {
 
   self.updated = function(flags, lyr, dataset) {
     var targ, active;
-    // if (lyr && dataset && (!active || active.layer != lyr)) {
     if (lyr && dataset) {
       self.setDefaultTarget([lyr], dataset);
     }
-    targ = self.getDefaultTarget();
+    targ = self.getDefaultTargets()[0];
     if (lyr && targ.layers[0] != lyr) {
       flags.select = true;
     }
@@ -252,7 +251,7 @@ function Model() {
     if (pattern && pattern != "default") {
       return internal.findCommandTargets(this, pattern, type);
     }
-    targ = this.getDefaultTarget();
+    targ = this.getDefaultTargets()[0];
     return targ ? [targ] : [];
   };
 
@@ -268,7 +267,6 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
     files = handleZipFiles(utils.toArray(files));
     addFilesToQueue(files);
     if (queuedFiles.length === 0) {
-      //noFilesCb();
       return;
     }
     submitFiles();
@@ -316,7 +314,8 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   function readFile(file) {
     var name = file.name,
         reader = new FileReader(),
-        useBinary = internal.isBinaryFile(name) ||
+        useBinary = internal.isSupportedBinaryInputType(name) ||
+          internal.isZipFile(name) ||
           internal.guessInputFileType(name) == 'json' ||
           internal.guessInputFileType(name) == 'text';
 
@@ -366,6 +365,14 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
       }
     }
 
+    if (type == 'shx') {
+      // save .shx for use when importing .shp
+      // (queue should be sorted so that .shx is processed before .shp)
+      //cachedFiles[fileName.toLowerCase()] = {filename: fileName, content: content};
+      readNext();
+      return;
+    }
+
     if (type == 'prj') {
       // assumes that .shp has been imported first
       matches.forEach(function(d) {
@@ -381,8 +388,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   }
 
   function importFileContent(type, path, content, importOpts) {
-    var size = content.byteLength || content.length, // ArrayBuffer or string
-        delay = 35;
+    var delay = 35;
 
     importOpts.files = [path];
 
@@ -394,6 +400,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
         model.addDataset(dataset);
         readNext();
       } catch(e) {
+        console.log(e);
         handleImportError(e, path);
       }
     }, delay);
@@ -443,7 +450,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
 
 /* EXPORT */
 
-var ExportControl = function(model, layerListCb, exportCb, errorCb) {
+var ExportControl = function(model, opts, layerListCb, exportCb, errorCb) {
 
   var targetLayers = null;
 
@@ -492,9 +499,9 @@ var ExportControl = function(model, layerListCb, exportCb, errorCb) {
       return new Deffered(function(res, rej) {
         applyCommands(target, commands, function(out) {
           let stats = internal.calcSimplifyStats(out.dataset.arcs);
-          if (stats.retained > 15000) {
-            if (pct > Math.round(15000 / stats.uniqueCount * 100) + 1) {
-              pct = Math.round(15000 / stats.uniqueCount * 100 + 1);
+          if (stats.retained > opts.arcsLimit) {
+            if (pct > Math.round(opts.arcsLimit / stats.uniqueCount * 100) + 1) {
+              pct = Math.round(opts.arcsLimit / stats.uniqueCount * 100 + 1);
             }
             simplify(pct - 1)
               .then(function() {
@@ -522,19 +529,20 @@ var ExportControl = function(model, layerListCb, exportCb, errorCb) {
           return new Deffered(function(resSub, rej) {
             command.cmds.forEach(function(c) { c.options.target = target.layers[0]._uuid; });
             var copiedDs = internal.copyDataset(target.dataset);
-            var copiedTgt = {
-              layers: copiedDs.layers.reduce(function(out, lyr, i) {
-                var oriLyr = target.layers.find(function(lyr2) {return lyr2.match_id === idx+i});
-                if (oriLyr) {
-                  lyr.name = oriLyr.name+"::"+command.name;
-                  out.push(lyr);
-                }
-                return out;
-              }, []),
-              dataset: copiedDs
-            };
+            // var copiedTgt = {
+            //   layers: copiedDs.layers.reduce(function(out, lyr, i) {
+            //     var oriLyr = target.layers.find(function(lyr2) {return lyr2.match_id === idx+i});
+            //     if (oriLyr) {
+            //       lyr.name = oriLyr.name+"::"+command.name;
+            //       out.push(lyr);
+            //     }
+            //     return out;
+            //   }, []),
+            //   dataset: copiedDs
+            // };
             model.addDataset(copiedDs);
             applyCommands(target, command.cmds, function(outputTarget) {
+              outputTarget.layer.name += "::"+command.name;
               !outputTarget.layers && (outputTarget.layers = [outputTarget.layer]);
               resSub(outputTarget);
             });
@@ -557,6 +565,7 @@ var ExportControl = function(model, layerListCb, exportCb, errorCb) {
     var active = layer,
         prevArcs = active.dataset.arcs,
         prevArcCount = prevArcs ? prevArcs.size() : 0;
+
 
     internal.runParsedCommands(commands, model, function(err) {
       var flags = getCommandFlags(commands),
@@ -583,8 +592,7 @@ var ExportControl = function(model, layerListCb, exportCb, errorCb) {
     try {
       tuples = targets.reduce(function(out, subTargets) {
         var tuple = {};
-        opts = {};
-        if (!opts.format) opts.format = getSelectedFormat();
+        opts = {format: getSelectedFormat()};
         tuple.files = internal.exportTargetLayers(subTargets, opts);
         tuple.dict = internal.exportProperties(subTargets[0].layers[0].data, {});
         out.push(tuple);
