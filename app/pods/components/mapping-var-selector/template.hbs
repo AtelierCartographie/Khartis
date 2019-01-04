@@ -8,17 +8,26 @@
   {{/if}}
   {{#if isMappedOnSymbol}}
     <span> &gt; symboles</span>
-    {{else if isMappedOnSurface}}
+  {{else if isMappedOnSurface}}
     <span> &gt; surfaces</span>
   {{/if}}
   </div>
   {{/facet.trigger}}
   {{#facet.list}}
+    {{#if availableVariables.length}}
     {{#each availableVariables as |v|}}
     <li {{action 'select' v}} class="horizontal middle airy flow">
       <div class="solid">{{data-type-icon meta=v.meta inconsistency=v.inconsistency}}</div>
       <div classs="fluid padded-h">{{v.header.value}}</div>
     </li>
     {{/each}}
+    {{else}}
+      <div class="padded-t padded-h">
+        {{x-capitalize (t 'visualization.variable.noneAvailable')}}
+      </div>
+      <div class="padded-b padded-h">
+        <i>{{x-capitalize (t 'visualization.variable.checkTheTypes')}}</i>
+      </div>
+    {{/if}}
   {{/facet.list}}
 {{/x-dropdown-plus}}

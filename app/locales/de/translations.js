@@ -53,7 +53,8 @@ export default {
         "import": "Importieren",
         "fileCsv": "Eine CSV-Datei",
         "testData": "Nutzen Sie einen Beispiel-Datensatz",
-        "selectAMap": "Wählen Sie eine Karte"
+        "selectAMap": "Wählen Sie eine Karte",
+        "orImportMap": "or import yours"
       },
       "tooltip": {
         "csv": "Komma separierte CSV-Datei",
@@ -205,10 +206,29 @@ export default {
   },
 
   "visualization": {
+    "new": "Add a visualization",
     "title": {
       "choose": "Wählen Sie eine Visualisierung",
       "categories": "Kategorien",
-      "nodata": "fehlende Daten"
+      "nodata": "fehlende Daten",
+      "chooseVar": "Choix des variables",
+      "chooseOrderedSurf": {
+        "title": "You would like",
+        "classes": {
+          "title": "make classes with your data?",
+          "description": "Similar or homogeneous values are grouped into classes to simplify the message. They must be numbers (stocks, dates)."
+        },
+        "cat": {
+          "title": "show pre-existing categories?",
+          "description": "Each color is a category in the series. The data can be numbers (dates) or text (e.g. high, medium, low)."
+        }
+      }
+    },
+    "variables": {
+      "choose": "choose a variable",
+      "noneAvailable": "no compatible variable is available",
+      "checkTheTypes": "check types at data step.",
+      "transform": "use another variable to put color into symbols or compare two symbols"
     },
     "settings": {
       "diagram": {

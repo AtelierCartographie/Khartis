@@ -1,16 +1,24 @@
 <div class="importer">
 
-    <h2 class="title">
-      {{x-capitalize (t 'project.step1.title.selectAMap')}}
+    <h2 class="title title-select-map">
+      <div class="horizontal space-between flow">
+        <span class="{{unless (x-eq selectMapMethod 'select') 'clickable'}}" {{action 'switchSelectMapMethod' 'select'}}>
+          {{x-capitalize (t 'project.step1.title.selectAMap')}}
+        </span>
+        {{#x-button class="small solid filled primary" action=(action 'switchSelectMapMethod' 'import')}}
+          <i class="iconfont iconfont-download"></i> {{t 'project.step1.title.orImportMap'}}
+        {{/x-button}}
+      </div>
     </h2>
 
     <div class="vertical airy flow select-a-map">
-
-      {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
-      {{#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
-        <!--Charger un fond de carte-->
-      {{/file-loader}}
-
+      {{#if (x-eq selectMapMethod "select")}}
+        {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
+      {{else}}
+        {{#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
+          <!--Charger un fond de carte-->
+        {{/file-loader}}
+      {{/if}}
     </div>
 
   {{#if model.project.graphLayout.basemap}}
@@ -116,8 +124,8 @@
 
           {{#dropdown.list}}
             {{#each examples as |set|}}
-                  <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
-              {{/each}}
+              <li class="text-center" {{action 'selectDataSet' set}}>{{x-capitalize (t (concat 'examples.' set.id))}}</li>
+            {{/each}}
           {{/dropdown.list}}
         {{/x-dropdown-plus}}
       {{else if model.project.graphLayout.basemap.dictionaryData}}

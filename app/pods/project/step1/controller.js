@@ -17,6 +17,8 @@ export default Ember.Controller.extend({
 
   importReport: null,
 
+  selectMapMethod: "select",
+
   canResumeProject: function() {
     return this.get('store').has();
   }.property('store'),
@@ -177,6 +179,10 @@ export default Ember.Controller.extend({
 
     downloadTemplate() {
       this.downloadTemplate();
+    },
+
+    switchSelectMapMethod(method) {
+      this.set('selectMapMethod', method);
     }
 
   }

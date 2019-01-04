@@ -134,15 +134,17 @@ let SurfaceMixin = Ember.Mixin.create({
   },
 
   getColorSet(length) {
-    length = Math.min(length || this.get('rules').length, 8);
-    return ColorBrewer.Composer.compose(
-      this.get('visualization.colors'),
-      false,
-      false,
-      length,
-      0,
-      !this.get('ordered')
-    );
+    length = Math.max(2, Math.min(length || this.get('rules').length, 8));
+    if (length > 1) {
+      return ColorBrewer.Composer.compose(
+        this.get('visualization.colors'),
+        false,
+        false,
+        length,
+        0,
+        !this.get('ordered')
+      );
+    }
   },
 
   updateRulesColorSet() {

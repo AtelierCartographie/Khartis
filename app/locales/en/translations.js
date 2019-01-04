@@ -58,7 +58,8 @@ export default {
         "import": "import data by copy-pasted from a spreadsheet or drag & drop a",
         "fileCsv": "csv file",
         "testData": "Try our sample datasets",
-        "selectAMap": "Select a map"
+        "selectAMap": "Select a map",
+        "orImportMap": "or import yours"
       },
       "tooltip": {
         "csv": "Filename extension .csv use comma as column separator",
@@ -239,6 +240,8 @@ export default {
     },
     "variables": {
       "choose": "choose a variable",
+      "noneAvailable": "no compatible variable is available.",
+      "checkTheTypes": "check types at data step.",
       "transform": "use another variable to put color into symbols or compare two symbols"
     },
     "settings": {

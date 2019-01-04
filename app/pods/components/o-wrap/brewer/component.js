@@ -28,14 +28,18 @@ export default WrapperAbstract.extend({
           let colors;
           
           if (CategoryMixin.Data.detect(this.get('obj'))) {
-            colors = Colorbrewer.Composer.compose(
-              k, 
-              false,
-              false, 
-              Math.min(this.get('obj.rules').length, 8),
-              0,
-              categoricalScheme
-            );
+            if (this.get('obj.rules')) {
+              colors = Colorbrewer.Composer.compose(
+                k, 
+                false,
+                false, 
+                Math.max(2, Math.min(this.get('obj.rules').length, 8)),
+                0,
+                categoricalScheme
+              );
+            } else {
+              colors = [];
+            }
           } else {
             colors = Colorbrewer.Composer.compose(
               k, 

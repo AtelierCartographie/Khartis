@@ -58,7 +58,8 @@ export default {
         "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer",
         "fileCsv": "un fichier csv",
         "testData": "Essayer nos données test",
-        "selectAMap": "Sélectionner un fond de carte"
+        "selectAMap": "Sélectionner un fond de carte",
+        "orImportMap": "ou importer le vôtre"
       },
       "tooltip": {
         "csv": "Fichier d'extension .csv avec des virgules en séparateur de colonnes",
@@ -239,6 +240,8 @@ export default {
     },
     "variable": {
       "choose": "choisir une variable",
+      "noneAvailable": "aucune variable n'est compatible",
+      "checkTheTypes": "vérifiez le typage à l'étape données",
       "transform": "utiliser une autre variable pour mettre de la couleur dans les symboles ou comparer deux symboles"
     },
     "settings": {
