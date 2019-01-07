@@ -35,7 +35,7 @@ Sur la carte de gauche de l’image ci-dessous, des symboles identiques en forme
 Accès au [dataset pour refaire la carte](./assets/data/5-Symboles-ordonnes-aires-urbaines-france-INSEE-2013.csv)  
 
 **2 : Comment refaire (partiellement) la carte administrative de l’IGN français ?**
-Pour refaire -seulement- la cartographie des types de chefs-lieux, partons du Code officiel géographique (COG) de l’INSEE. Les données sont disponibles à cette url : https://www.insee.fr/fr/information/2114819  
+Pour refaire -seulement- la cartographie des types de chefs-lieux, partons du Code officiel géographique (COG) de l’INSEE. Les données sont disponibles à cette url : [https://www.insee.fr/fr/information/2114819](https://www.insee.fr/fr/information/2114819)  
 * Dans notre cas précis (la région comprise entre le Vaucluse, le Nord des Bouches-du-Rhône et une partie des Alpes-de-Haute-Provence) nous avons sélectionné les communes de ces 3 départements dans la base la plus à jour (communes existantes au 1er janvier 2016).
 Le résultat donne des codes et des noms de communes mais pas d’informations pour les localiser précisément (latitude/longitude)
 * Les superficies des communes étant très variables, les symboles ne seront pas localisés précisément où se trouve la commune, mais au centre du polygone figurant le territoire communal.

@@ -21,7 +21,7 @@ Note : Khartis ne permet pas encore des calculs. Il faut préalablement prépare
 L’Europe s’en sépare, même si les tonnages restent encore élevés pour l’Allemagne ou la Pologne alors que l’Asie est très consommatrice, Chine et Inde en tête. Les Etats-Unis occupent une position particulière : en dépit d’une évolution à la baisse, le volume reste encore l’un des 3 premier au monde en 2016.
 La carte montre le tonnage consommé (symboles proportionnels) à la dernière date de la période (2016) et l’évolution sur la période 2000-2016 (couleurs ordonnées à l’intérieur des symboles).
 Carte extraite de « Énergies fossiles » Espace mondial l'Atlas, 2018, [en ligne], consulté le 23/11/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-ressources/article-5A06-energies-fossiles.html
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-ressources/article-5A06-energies-fossiles.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-ressources/article-5A06-energies-fossiles.html)
 
 ![carte-consommation-charbon-2000-2016](./assets/viz-06-03-carte-consommation-charbon-2000-2016-medium-full-3x.jpeg)
 

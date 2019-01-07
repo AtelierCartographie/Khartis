@@ -33,7 +33,7 @@ Si l’utilisateur choisit l’option 3 (symboles placés côte-à-côte), il au
 **1 : Comment montrer, en même temps, les exportations et les importations d’armes légères** et ainsi voir si certains Etats sont plutôt exportateurs ou plutôt importateurs ?  
 Sans calculer un solde commercial, pour apprécier les volumes échangés.  
 Carte extraite de « Proliférations » Espace mondial l'Atlas, 2018, [en ligne], consulté le 07/12/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html)
 
 ![carte-commerce-armes-legeres-2012-2016](./assets/viz-08-07-carte-commerce-armes-legeres-2012-2016-medium-full-3x.jpeg)
 

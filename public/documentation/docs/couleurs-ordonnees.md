@@ -30,7 +30,7 @@ exemple : ![gamme-divergente](./assets/viz-02-04-gamme-ordonnee-2sens.jpg)
 ## Cas pratiques
 **1 : Où sont plutôt les très jeunes dans le Monde ?**  
 Réponse : en Afrique et dans certains pays du Moyen-Orient, d’Asie ou du continent américain, avec cette carte des moins de 15 ans par pays en 2015 (extrait de « Vieux et jeunes, la dynamique des populations » Espace mondial l'Atlas, 2018, [en ligne], consulté le 22/11/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-contrastes-et-inegalites/article-1A04-vieux-et-jeunes-la-dynamique-des-populations.html)
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-contrastes-et-inegalites/article-1A04-vieux-et-jeunes-la-dynamique-des-populations.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-contrastes-et-inegalites/article-1A04-vieux-et-jeunes-la-dynamique-des-populations.html))
 
 ![carte-jeunes-et-vieux-2015](./assets/viz-02-06-jeunes-et-vieux-2015.jpg)
 
@@ -42,7 +42,7 @@ https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-contrastes-et-inegalites/
 Soit le cas des admissions des Etats à l’Organisation des Nations unies.  
 Les dates sont bien ici des nombres (et pas du texte). On peut fixer des bornes pertinentes par le biais de la discrétisation manuelle.
 Carte extraite de « Organisations internationales » Espace mondial l'Atlas, 2018, [en ligne], consulté le 23/11/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A01-organisations-internationales.html
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A01-organisations-internationales.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A01-organisations-internationales.html)
 
 ![carte-admissions-ONU-1945-2018](./assets/viz-02-08-carte-admissions-ONU-1945-2018.jpeg)
 

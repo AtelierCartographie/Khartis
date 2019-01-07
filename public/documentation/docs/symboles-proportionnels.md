@@ -20,11 +20,11 @@ L’utilisateur pourra personnaliser ses symboles grâce à une **palette de cou
 ## Cas pratiques
 **1 : Comment dessiner des cercles vides ou quasi-vides** (et non pas des disques pleins) pour ne pas masquer le reste de la carte/le fond de carte ?  
 Exemple : les personnes déplacées à cause des catastrophes naturelles, 2008-2017 (carte extraite de « Migrations environnementales » Espace mondial l'Atlas, 2018, [en ligne], consulté le 18/10/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-mobilites/article-2A05-migrations-environnementales.html)
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-mobilites/article-2A05-FR-migrations-environnementales.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-mobilites/article-2A05-FR-migrations-environnementales.html))
 
 ![carte-pesonnes-deplacees-2008-2017](./assets/viz-01-04-map-2C07-medium-full-3x.jpeg)
 Accès au [dataset pour refaire la carte](./assets/data/1-Symboles-proportionnels-DEPLACES-CAUSE-CATASTROPHES-NATURELLES-2008-2017.csv)  
-Accès au [projet Khartis](./assets/data/1-deplaces-cause-catastrophes-naturelles-2007-2013.kh) de la carte des déplacés liés aux catastrophes naturelles
+Accès au [projet Khartis](./assets/data/1-deplaces-cause-catastrophes-naturelles-2007-2013.kh.zip) de la carte des déplacés liés aux catastrophes naturelles
 
 **Trucs et astuces** :
 * Manipuler le curseur de la **transparence** (panneau Couleur) pour réduire ou ôter le contenu du disque.
@@ -37,7 +37,7 @@ Le tour est joué !
 **2 : Comment faire des points proportionnels avec une valeur de rupture ?**  
 Vous souhaitez montrer des valeurs négatives/positives, comme dans le cas d’un solde naturel, d’une balance commerciale…).  
 Exemple : Aide publique au développement (APD), 2012-2016 (carte extraite de « L’Europe acteur global » Espace mondial l'Atlas, 2018, [en ligne], consulté le 19/10/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A05-l-europe-acteur-global.html)
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A05-l-europe-acteur-global.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A05-l-europe-acteur-global.html))
 
 ![carte-apd-japon-2012-2016](./assets/viz-01-07-map-3C20-aide-developpement-JAPON.jpg)
 

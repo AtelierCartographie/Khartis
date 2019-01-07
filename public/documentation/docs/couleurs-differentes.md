@@ -20,7 +20,7 @@ Seules les **données liées à des surfaces** (pays, régions, wards…) sont p
 ## Cas pratiques
 **1 : Quel est l’encadrement du commerce mondial des armes ?**  
 Carte extraite de « Proliférations » Espace mondial l'Atlas, 2018, [en ligne], consulté le 06/12/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A04-proliferations.html)
 Cette carte essaie de montrer 2 choses : d’une part le vote des Etats au moment de l’adoption du Traité (en avril 2013) et d’autre part leur engagement depuis. Les “bons élèves” sont les Etats qui cumulent du bleu (vote POUR) et des hachures.
 
 ![carte-commerce-armes-legeres-2018](./assets/viz-04-05-carte-traite-commerce-armes-2018-medium-full-3x.jpeg)

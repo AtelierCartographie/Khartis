@@ -22,7 +22,7 @@ Attention ! Dans un souci de visibilité, Khartis ne traitera automatiquement qu
 ## Cas pratiques
 **1 : Distinguer les opérations de paix en cours/terminées des Nations unies depuis 1948**  
 Carte extraite de « Maintenir la paix » Espace mondial l'Atlas, 2018, [en ligne], consulté le 29/11/2018, URL:
-https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A07-maintenir-la-paix.html  
+[https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A07-maintenir-la-paix.html](https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-(in)securites/article-4A07-maintenir-la-paix.html)  
 Dans cette carte, toutes les missions passées et en cours sont représentées. Une variable (“en cours” / ”achevée”) permet de distinguer par la couleur les 2 types.
 Conseil de cartographe : plusieurs missions peuvent se succéder en un même endroit. Pour rendre visible cette multitude, le cartographe prendra soin de décaler (dans un outil de dessin vectoriel) des points qui, sinon, sont strictement superposés dans l’outil.
 
@@ -35,7 +35,7 @@ Accès au [dataset pour refaire la carte](./assets/data/3-Symboles-differents-OP
 ![etiquettes](./assets/viz-03-07-fenetre-etiquettes.jpg)
 
 **2 : Comment faire une carte d’inventaire ?**  
-Khartis ne permet malheureusement pas de laisser s’exprimer toute sa créativité. Il est cependant possible de retravailler son export-résultat dans un logiciel de dessin vectoriel et d’en changer les symboles. De nombreuses bibliothèques libres et en ligne existent, parmi lesquelles The Noun Project (https://thenounproject.com).
+Khartis ne permet malheureusement pas de laisser s’exprimer toute sa créativité. Il est cependant possible de retravailler son export-résultat dans un logiciel de dessin vectoriel et d’en changer les symboles. De nombreuses bibliothèques libres et en ligne existent, parmi lesquelles [The Noun Project](https://thenounproject.com).
 
 ![carte-kenya](./assets/viz-03-08-carte-inventaire-kenya.jpg)
 
