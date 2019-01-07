@@ -102,6 +102,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="../#symboles-proportionnels" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -339,10 +343,69 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Symboles proportionnels
+      </label>
     
     <a href="./" title="Symboles proportionnels" class="md-nav__link md-nav__link--active">
       Symboles proportionnels
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dans-quels-cas-utiliser-cette-viz" title="Dans quel(s) cas utiliser cette viz ?" class="md-nav__link">
+    Dans quel(s) cas utiliser cette viz ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quels-types-de-donnees-sont-reconnus" title="Quels types de données sont reconnus ?" class="md-nav__link">
+    Quels types de données sont reconnus ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametres-de-la-viz" title="Paramètres de la viz" class="md-nav__link">
+    Paramètres de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habillage-de-la-viz" title="Habillage de la viz" class="md-nav__link">
+    Habillage de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cas-pratiques" title="Cas pratiques" class="md-nav__link">
+    Cas pratiques
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -611,6 +674,65 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dans-quels-cas-utiliser-cette-viz" title="Dans quel(s) cas utiliser cette viz ?" class="md-nav__link">
+    Dans quel(s) cas utiliser cette viz ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quels-types-de-donnees-sont-reconnus" title="Quels types de données sont reconnus ?" class="md-nav__link">
+    Quels types de données sont reconnus ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametres-de-la-viz" title="Paramètres de la viz" class="md-nav__link">
+    Paramètres de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habillage-de-la-viz" title="Habillage de la viz" class="md-nav__link">
+    Habillage de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cas-pratiques" title="Cas pratiques" class="md-nav__link">
+    Cas pratiques
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -619,9 +741,46 @@
                   <a href="https://github.com/AtelierCartographie/Khartis/edit/master/docs/symboles-proportionnels.md" title="Editer cette page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Symboles proportionnels</h1>
-                
-                <p><em>à venir</em></p>
+                <h1 id="symboles-proportionnels">Symboles proportionnels</h1>
+<h2 id="dans-quels-cas-utiliser-cette-viz">Dans quel(s) cas utiliser cette viz ?</h2>
+<p>Pour <strong>figurer des quantités</strong> (nombres, stocks, volumes…). Les <strong>tailles</strong> des objets seront comparables entre elles ; strictement -par défaut- selon le rapport surface du point=quantité ou encore selon un facteur qui permettra alors de mettre plus ou moins en avant les informations faibles et les plus fortes (voir aussi <a href="../contraste">le contraste</a>).</p>
+<h2 id="quels-types-de-donnees-sont-reconnus">Quels <a href="../importer-des-donnees#types-de-donnees-reconnus">types de données</a> sont reconnus ?</h2>
+<p>D’abord des <strong>nombres</strong> sont indispensables en entrée pour créer des symboles proportionnels.<br />
+Ensuite 2 possibilités : des <strong>données géographiques liées à des surfaces</strong> (pays, régions, wards…) ou <strong>seulement identifiées par un <a href="../definitions#latlong-coordonnees-geographiques">couple de coordonnées</a></strong>. Dans ce dernier cas, Khartis prendra comme référence géographique les informations dans 2 colonnes du tableau de données (les latitudes et les longitudes), créera les points (la géométrie) dont la taille variera.</p>
+<h2 id="parametres-de-la-viz">Paramètres de la viz</h2>
+<p><strong>Forme</strong> : Au <strong>choix 3 formes</strong> sont proposées : des disques (par défaut), des carrés et des barres verticales. Khartis propose volontairement un nombre limité de formes et non pas une large bibliothèque de pictogrammes qui ne permettraient pas de voir les rapports de proportion aussi bien qu’avec des éléments géométriques, simples.</p>
+<p><strong>Taille</strong> : Un curseur permet d’agrandir/réduire homothétiquement <strong>la taille</strong> de tous les symboles sur la carte. Par défaut sur 10 (taille relative de la valeur MAX de la variable statistique représentée), cette règle manipulée via le curseur varie de 5 à 56. Possibilité de saisir sa propre valeur MAX.</p>
+<p><strong>Contraste</strong> : Il comprime ou dilate la taille des symboles pour en changer la "lecture" normale et l'optimiser. Par défaut, le curseur est sur un rapport surface du point=quantité (donc strictement proportionnel).<br />
+Les auteurs de Khartis reprennent le principe dit des "échelles extensives" énoncé par <a href="http://www.hypergeo.eu/spip.php?article630">Jacques Bertin</a> dans son ouvrage <em>La graphique et le traitement graphique de l'information</em> (Flammarion, 1977).<br />
+Voir aussi <a href="../contraste">le contraste</a>.</p>
+<h2 id="habillage-de-la-viz">Habillage de la viz</h2>
+<p>L’utilisateur pourra personnaliser ses symboles grâce à une <strong>palette de couleurs</strong>. Laquelle permet aussi de jouer sur la <strong>transparence</strong> (par défaut opacité 100%). Il peut aussi ajouter un <strong>contour</strong> aux symboles, et pourquoi pas, faire des cercles et non plus des disques (cf exemples plus bas).
+<img alt="picker-couleurs" src="../assets/viz-01-03-picker-couleurs.jpg" /></p>
+<h2 id="cas-pratiques">Cas pratiques</h2>
+<p><strong>1 : Comment dessiner des cercles vides ou quasi-vides</strong> (et non pas des disques pleins) pour ne pas masquer le reste de la carte/le fond de carte ?<br />
+Exemple : les personnes déplacées à cause des catastrophes naturelles, 2008-2017 (carte extraite de « Migrations environnementales » Espace mondial l'Atlas, 2018, [en ligne], consulté le 18/10/2018, URL:
+https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-mobilites/article-2A05-migrations-environnementales.html)</p>
+<p><img alt="carte-pesonnes-deplacees-2008-2017" src="../assets/viz-01-04-map-2C07-medium-full-3x.jpeg" />
+Accès au <a href="../assets/data/1-Symboles-proportionnels-DEPLACES-CAUSE-CATASTROPHES-NATURELLES-2008-2017.csv">dataset pour refaire la carte</a><br />
+Accès au <a href="../assets/data/1-deplaces-cause-catastrophes-naturelles-2007-2013.kh">projet Khartis</a> de la carte des déplacés liés aux catastrophes naturelles</p>
+<p><strong>Trucs et astuces</strong> :
+<em> Manipuler le curseur de la <strong>transparence</strong> (panneau Couleur) pour réduire ou ôter le contenu du disque.
+<img alt="curseur-transparence" src="../assets/viz-01-05-curseur-transparence.jpg" />
+</em> Ajouter un <strong>contour</strong> aux symboles (par défaut aucun, curseur à gauche).
+<img alt="curseur-contour" src="../assets/viz-01-06-curseur-contour.jpg" /></p>
+<p>Le tour est joué !</p>
+<p><strong>2 : Comment faire des points proportionnels avec une valeur de rupture ?</strong><br />
+Vous souhaitez montrer des valeurs négatives/positives, comme dans le cas d’un solde naturel, d’une balance commerciale…).<br />
+Exemple : Aide publique au développement (APD), 2012-2016 (carte extraite de « L’Europe acteur global » Espace mondial l'Atlas, 2018, [en ligne], consulté le 19/10/2018, URL:
+https://espace-mondial-atlas.sciencespo.fr/fr/rubrique-strategies-des-acteurs-internationaux/article-3A05-l-europe-acteur-global.html)</p>
+<p><img alt="carte-apd-japon-2012-2016" src="../assets/viz-01-07-map-3C20-aide-developpement-JAPON.jpg" /></p>
+<p>Khartis détecte automatiquement la présence du signe négatif, comme dans l’exemple ici. L’outil traite les valeurs absolues ave  c des symboles proportionnels et attribue des couleurs (modifiables) aux points pour différencier les signes - et +. La Valeur de rupture 0 ne peut pas être changée, dans ce cas et seulement celui-ci.</p>
+<p>Accès au <a href="../assets/data/1-Symboles-proportionnels-APD-Japon-2012-2016.csv">dataset pour refaire la carte</a><br />
+Accès au <a href="../assets/data/1-APD-Japon-2012-2016-Projet-Khartis.kh.zip">projet Khartis</a> de la carte de l’aide publique au développement du Japon</p>
+<p><strong>Trucs et astuces</strong> :
+* Si toutes les données de la série ont un même signe, l’utilisateur peut décider de séparer, par deux couleurs, des données faibles/fortes selon une borne de son choix.
+La <strong>valeur de rupture</strong> permet de distinguer les symboles proportionnels dont les valeurs lui sont inférieures et supérieures. Dans l’exemple ci-dessous, la valeur arbitraire 1 million a été choisie.  </p>
+<p><img alt="carte-apd-japon-2012-2016" src="../assets/viz-01-08-seuil-rupture-points.jpg" /></p>
                 
                   
                 

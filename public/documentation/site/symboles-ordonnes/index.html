@@ -102,6 +102,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="../#symboles-ordonnes" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -363,10 +367,69 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Symboles ordonnées
+      </label>
     
     <a href="./" title="Symboles ordonnées" class="md-nav__link md-nav__link--active">
       Symboles ordonnées
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dans-quels-cas-utiliser-cette-viz" title="Dans quel(s) cas utiliser cette viz ?" class="md-nav__link">
+    Dans quel(s) cas utiliser cette viz ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quels-types-de-donnees-sont-reconnus" title="Quels types de données sont reconnus ?" class="md-nav__link">
+    Quels types de données sont reconnus ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametres-de-la-viz" title="Paramètres de la viz" class="md-nav__link">
+    Paramètres de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habillage-de-la-viz" title="Habillage de la viz" class="md-nav__link">
+    Habillage de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cas-pratiques" title="Cas pratiques" class="md-nav__link">
+    Cas pratiques
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -611,6 +674,65 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dans-quels-cas-utiliser-cette-viz" title="Dans quel(s) cas utiliser cette viz ?" class="md-nav__link">
+    Dans quel(s) cas utiliser cette viz ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quels-types-de-donnees-sont-reconnus" title="Quels types de données sont reconnus ?" class="md-nav__link">
+    Quels types de données sont reconnus ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametres-de-la-viz" title="Paramètres de la viz" class="md-nav__link">
+    Paramètres de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#habillage-de-la-viz" title="Habillage de la viz" class="md-nav__link">
+    Habillage de la viz
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cas-pratiques" title="Cas pratiques" class="md-nav__link">
+    Cas pratiques
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -619,9 +741,38 @@
                   <a href="https://github.com/AtelierCartographie/Khartis/edit/master/docs/symboles-ordonnes.md" title="Editer cette page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Symboles ordonnées</h1>
-                
-                <p><em>à venir</em></p>
+                <h1 id="symboles-ordonnes">Symboles ordonnés</h1>
+<h2 id="dans-quels-cas-utiliser-cette-viz">Dans quel(s) cas utiliser cette viz ?</h2>
+<p>Pour <strong>figurer une hiérarchie (un ordre)</strong>. C’est par exemple typiquement le cas des cartes administratives avec les chefs-lieux de régions, de départements, de communes… A la différence des <a href="../couleurs-ordonnees/">couleurs ordonnées</a>, cette visualisation ne réduit pas l’information.</p>
+<h2 id="quels-types-de-donnees-sont-reconnus">Quels <a href="../importer-des-donnees#types-de-donnees-reconnus">types de données</a> sont reconnus ?</h2>
+<p>L’utilisateur doit préparer son jeu de données en “typant” ces classes selon une codification : ex. 1,2,3,4 ou alors fort, moyen, faible. Par souci de visibilité, Khartis ne distingue pas plus de 8 catégories ordonnées.</p>
+<p>Attention : Khartis est malin mais il a ses limites. L’ordre affiché est fonction du tri des informations dans le tableau de données initial. La première occurrence rencontrée sera le type 1 (point le plus fort, en bas), la seconde le type 2, etc. Assurez vous qu’il y a concordance entre l’ordre de vos données et l’ordre des points. Si ce n’est pas le cas, vous pouvez permuter les onglets des catégories : les symboles restent en place.  </p>
+<p><img alt="categories-ordonnees" src="../assets/viz-05-03-categories-ordonnees.jpg" /></p>
+<p>FOND DE CARTE : Cette viz fonctionne avec des <strong>données liées à des surfaces</strong> (pays, régions, wards…) ou seulement cartographiables par un <a href="../definitions#latlong-coordonnees-geographiques"><strong>couple de coordonnées</strong></a>. Dans le premier cas, le point sera placé au centre du polygone. Dans le second cas, Khartis prendra comme référence géographique les informations dans 2 colonnes du tableau de données (les latitudes et les longitudes) et créera les points utiles (la géométrie).</p>
+<h2 id="parametres-de-la-viz">Paramètres de la viz</h2>
+<p><strong>Symboles</strong> : Selon le nombre de catégories qu’il trouve, Khartis propose entre 1 gamme de points ordonnés (si 8 catégories) et jusqu’à 7 gammes (si, comme ici, 4 catégories). Ces gammes de points autorisent une bonne association des points identiques et en même temps permettent de distinguer les différentes catégories.
+Leur dessin s’appuie sur les travaux de <a href="http://www.hypergeo.eu/spip.php?article630">Jacques Bertin</a> et du Laboratoire de la graphique, publiés notamment dans <a href="http://editions.ehess.fr/ouvrages/ouvrage/semiologie-graphique-1/">Sémiologie graphique</a>, dont la couverture de la dernière édition (2013, aux Editions EHESS) reprend ces symboles.<br />
+<img alt="choix-categories-ordonnees" src="../assets/viz-05-04-choix-categories-ordonnees.jpg" /> <img alt="choix-categories-ordonnees" src="../assets/viz-05-05-couverture-semiologie-graphique-bertin.jpg" />  </p>
+<p><strong>Forme</strong> : <strong>3 formes</strong> sont proposées, circulaires (par défaut), carrées et triangulaires. Khartis propose volontairement un nombre limité de formes.</p>
+<p><strong>Taille</strong> : en fonction de l’échelle (niveau de zoom), il est possible de varier la taille des symboles</p>
+<h2 id="habillage-de-la-viz">Habillage de la viz</h2>
+<p>L’utilisateur peut personnaliser la <strong>couleur</strong> des symboles et leur <strong>opacité</strong> (couche alpha).</p>
+<h2 id="cas-pratiques">Cas pratiques</h2>
+<p><strong>1 : Comment établir une typologie des aires urbaines en France ?</strong>
+A la lecture de l’article <a href="https://www.insee.fr/fr/statistiques/2569312?sommaire=2587886#consulter">“Villes et communes de France”</a> des Tableaux de l’économie française (édition 2017) de l’INSEE, et notamment du dernier tableau sur les principales aires urbaines, on peut se demander comment figurer au mieux ces “objets”.</p>
+<p>Après une lecture de la documentation et une définition de l’aire urbaine, on peut travailler au choix sur 1/ la population municipale (le nombre de personnes en 2013) ou 2/ le nombre de communes dans chacune des aires ou encore 3/ un classement qui réduit en 4 types la population.</p>
+<p>Sur la carte de gauche de l’image ci-dessous, des symboles identiques en forme (un disque) et seulement déclinés selon la couleur du fond ne suffisent pas à voir une hiérarchie/un ordre. La carte de droite, en utilisant la même forme de base, joue sur tout un ensemble de paramètres qui mettent bien en vue le classement des éléments. <br />
+<img alt="cartes-france-symboles-ordonnes" src="../assets/viz-05-06-2cartes-france-symboles ordonnes ETROIT.jpg" />  </p>
+<p>Accès au <a href="../assets/data/5-Symboles-ordonnes-aires-urbaines-france-INSEE-2013.csv">dataset pour refaire la carte</a>  </p>
+<p><strong>2 : Comment refaire (partiellement) la carte administrative de l’IGN français ?</strong>
+Pour refaire -seulement- la cartographie des types de chefs-lieux, partons du Code officiel géographique (COG) de l’INSEE. Les données sont disponibles à cette url : https://www.insee.fr/fr/information/2114819<br />
+<em> Dans notre cas précis (la région comprise entre le Vaucluse, le Nord des Bouches-du-Rhône et une partie des Alpes-de-Haute-Provence) nous avons sélectionné les communes de ces 3 départements dans la base la plus à jour (communes existantes au 1er janvier 2016).
+Le résultat donne des codes et des noms de communes mais pas d’informations pour les localiser précisément (latitude/longitude)
+</em> Les superficies des communes étant très variables, les symboles ne seront pas localisés précisément où se trouve la commune, mais au centre du polygone figurant le territoire communal.
+* A suivre (bientôt) : les données pour localiser précisément ces lieux (latitudes/longitudes)</p>
+<p><img alt="cartes-france-symboles-ordonnes" src="../assets/viz-05-07-carte-IGN.jpg" />  </p>
+<p>Accès au <a href="../assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-2016.csv">dataset pour refaire la carte</a><br />
+Accès au <a href="../assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-Projet-Khartis.kh.zip">projet Khartis de la carte</a> de la typologie des communes de la région PACA, 2016</p>
                 
                   
                 
