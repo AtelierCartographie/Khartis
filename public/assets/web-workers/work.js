@@ -39,6 +39,7 @@ Deffered.prototype.promise = function() {
 var model;
 var exportControl;
 var importControl;
+var asyncSimplifyConfirm;
 
 var importedCb = function() {
   exportControl.export();
@@ -56,6 +57,11 @@ var listLayerCb = function(layers) {
   postMessage({action: "list-layers", layers});
 };
 
+var confirmSimplifyCb = function(layer, cb) {
+  postMessage({action: "confirm-simplify", layer});
+  asyncSimplifyConfirm = cb;
+};
+
 var exportCb = function(tuples) {
   postMessage({action: "exported", tuples});
 };
@@ -70,10 +76,22 @@ self.addEventListener('message', function(e) {
   if (data.action === "init") {
     model = new Model();
     importControl = new ImportControl(model, importedCb, noFilesCb, generalErrorCb);
-    exportControl = new ExportControl(model, data.opts, listLayerCb, exportCb, exportErrorCb);
+    exportControl = new ExportControl(
+      model,
+      data.opts,
+      listLayerCb,
+      confirmSimplifyCb,
+      exportCb,
+      exportErrorCb
+    );
     importControl.receiveFiles(data.opts.files);
+    asyncSimplifyConfirm = null;
   } else if (data.action === "processLayers") {
     exportControl.export(data.layers);
+  } else if (data.action === "confirmSimplify") {
+    console.log("here", data);
+    asyncSimplifyConfirm(data);
+    asyncSimplifyConfirm = null;
   }
 
 }, false);

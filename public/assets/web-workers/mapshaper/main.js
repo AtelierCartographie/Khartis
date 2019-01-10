@@ -450,9 +450,10 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
 
 /* EXPORT */
 
-var ExportControl = function(model, opts, layerListCb, exportCb, errorCb) {
+var ExportControl = function(model, opts, listLayerCb, confirmSimplifyCb, exportCb, errorCb) {
 
   var targetLayers = null;
+  var simplifyConfirmed = 0;
 
   this.export = function(layers) {
     if (layers) {
@@ -478,13 +479,12 @@ var ExportControl = function(model, opts, layerListCb, exportCb, errorCb) {
         })
       }).catch(console.log);
     } else {
-      layerListCb(initLayerMenu());
+      listLayerCb(initLayerMenu());
     }
   }
 
   function handleExportError(e) {
     console.log(e, e.stack);
-    console.log(Array.prototype.slice.apply(arguments).join(" "));
     errorCb("unknow");
   }
 
@@ -498,15 +498,28 @@ var ExportControl = function(model, opts, layerListCb, exportCb, errorCb) {
     return Sequence(getTargetLayers().map(function(target) {
       return new Deffered(function(res, rej) {
         applyCommands(target, commands, function(out) {
-          let stats = internal.calcSimplifyStats(out.dataset.arcs);
-          if (stats.retained > opts.arcsLimit) {
+          var stats = internal.calcSimplifyStats(out.dataset.arcs);
+          var doSimplify = function() {
             if (pct > Math.round(opts.arcsLimit / stats.uniqueCount * 100) + 1) {
               pct = Math.round(opts.arcsLimit / stats.uniqueCount * 100 + 1);
             }
             simplify(pct - 1)
-              .then(function() {
-                res(pct - 1);
+              .then(function(v) {
+                res(v);
               });
+          };
+          if (!simplifyConfirmed && pct === 100 && stats.retained > opts.arcsLimit) { //ask confirm
+            confirmSimplifyCb(null, function(confirmData) {
+              if (confirmData.simplify) {
+                doSimplify();
+                simplifyConfirmed = 1;
+              } else {
+                simplifyConfirmed = 2;
+                res(pct);
+              }
+            });
+          } else if (simplifyConfirmed == 1 && stats.retained > opts.arcsLimit) {
+            doSimplify();
           } else {
             res(pct);
           }

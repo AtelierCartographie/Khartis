@@ -47,6 +47,14 @@
           </ul>
           {{/if}}
 
+          {{#if isAskingForSimplifyConfirm}}
+            <p>La taille du fond risque de ralentir Khartis. <b>Voulez-vous le généraliser ? (simplification des tracés)</b></p>
+            <div class="horizontal center airy flow">
+              <div class="solid button filled primary" {{action 'confirmSimplify' true}}>Oui</div>
+              <div class="solid button filled default" {{action 'confirmSimplify' false}}>Non</div>
+            </div>
+          {{/if}}
+
           {{#if (x-eq state 'error')}}
             {{x-capitalize (t 'importMap.error.title')}} : {{x-capitalize (t (concat 'importMap.error.' errorMessage))}}
           {{/if}}

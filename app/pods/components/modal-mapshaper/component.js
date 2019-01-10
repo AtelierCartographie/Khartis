@@ -36,11 +36,17 @@ var MapShaperModal = XModal.extend({
     return this.get('state') === "layers";
   }.property('state'),
 
+  isAskingForSimplifyConfirm: function() {
+    return this.get('state') === "confirm-simplify";
+  }.property('state'),
+
   isStateValid: function() {
     if (this.get('isProcessing')) {
       return false;
     } else if (this.get('isAskingForLayers')) {
       return this.get('layersCbx').find( cbx => cbx.get('checked') );
+    } else if (this.get('isAskingForSimplifyConfirm')) {
+      return false;
     } else if (this.get('state') === "finish") {
       return this.get('mapConfigs.length');
     }
@@ -58,6 +64,8 @@ var MapShaperModal = XModal.extend({
     if (data.action === "list-layers") {
       this.set('layers', data.layers);
       this.set('state', "layers");
+    } else if (data.action === "confirm-simplify") {
+      this.set('state', "confirm-simplify");
     } else if (data.action === "exported") {
       let mapConfigs = ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds'));
       Promise.all(mapConfigs.map( mc => ImportedBasemap.checkValidity(mc) ) )
@@ -128,6 +136,12 @@ var MapShaperModal = XModal.extend({
   actions: {
     selectPropKey(cbx, key) {
       cbx.set('selectedPropKey', key);
+    },
+    confirmSimplify(confirm) {
+      this.get('workerStream').postMessage({
+        action: "confirmSimplify",
+        simplify: confirm
+      });
     },
     reject() {
       this.hide();
