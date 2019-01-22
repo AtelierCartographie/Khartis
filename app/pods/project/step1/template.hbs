@@ -15,9 +15,12 @@
       {{#if (x-eq selectMapMethod "select")}}
         {{map-selector maps=dictionary.data.maps selection=model.project.graphLayout.basemap onSelect=(action 'selectBasemap')}}
       {{else}}
-        {{#file-loader accept="application/zip" class="button filled primary" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
-          <!--Charger un fond de carte-->
-        {{/file-loader}}
+        <div class="vertical flow import-a-basemap">
+          {{localized-tpl tpl="help/{locale}/import-basemap"}}
+          {{#file-loader accept="application/zip" class="import-basemap-uploader" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
+            <b>importer ou glisser votre fond</b>
+          {{/file-loader}}
+        </div>
       {{/if}}
     </div>
 

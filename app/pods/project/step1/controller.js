@@ -141,6 +141,7 @@ export default Ember.Controller.extend({
           if (mapConfigs.length) {
             this.send('selectBasemap', mapConfigs[0]);
             this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
+            this.set('selectMapMethod', "select");
             reset();
           }
         })
@@ -182,6 +183,9 @@ export default Ember.Controller.extend({
     },
 
     switchSelectMapMethod(method) {
+      if (method === "import") {
+        this.set('model.project.graphLayout.basemap', null);
+      }
       this.set('selectMapMethod', method);
     }
 

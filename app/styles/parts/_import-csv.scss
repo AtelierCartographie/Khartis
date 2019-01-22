@@ -25,6 +25,29 @@
     margin: auto;
   }
 
+  .import-a-basemap {
+    padding: 1em;
+    background-color: white;
+    font-size: 0.95em;
+    margin-bottom: 2em;
+    .import-basemap-uploader {
+      @extend .clickable;
+      color: color(primary);
+      border: 2px dashed color(primary);
+      border-radius: 5px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      &.dragging {
+        color: color(primary2);
+        border: 2px dashed color(primary2);
+      }
+    }
+  }
+
+
   .map-dictionary-preview {
     overflow-x: auto;
     font-size: 0.9em;
