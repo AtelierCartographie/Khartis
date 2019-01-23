@@ -18,7 +18,7 @@
         <div class="vertical flow import-a-basemap">
           {{localized-tpl tpl="help/{locale}/import-basemap"}}
           {{#file-loader accept="application/zip" class="import-basemap-uploader" handler="uploader" label="" onFileSelected=(action 'importBasemap')}}
-            <b>importer ou glisser votre fond</b>
+            <b style="text-decoration: underline">importer ou glisser votre fond</b>
           {{/file-loader}}
         </div>
       {{/if}}

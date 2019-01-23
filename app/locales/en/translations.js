@@ -617,6 +617,14 @@ export default {
     "title": "Import a map",
     "success": "Files have been successfuly processed. Do you want to import ?",
     "selectLayer": "Select layers to import",
+    "nonUniqueKey": "Warning : different objects will share the same id",
+    "tooBig": "Map's size may slow down Khartis",
+    "askSimplify": "Do you want to generalise ? (simplify shape)",
+    "askKeepVars": {
+      "title": "Keep the other variables ?",
+      "true": "Other variables will be keeped and usables for visualisation",
+      "false": "Other variables than identifier will be dropped"
+    },
     "withId": "with identifier",
     "error": {
       "title": "error",

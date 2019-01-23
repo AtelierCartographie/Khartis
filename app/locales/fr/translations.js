@@ -632,6 +632,14 @@ export default {
     "title": "Importer une carte",
     "success": "Les fichiers ont bien été traités, voulez-vous les importer ?",
     "selectLayer": "Choisissez les couches à importer.",
+    "nonUniqueKey": "Attention : plusieurs objets de la carte auront le même identifiant",
+    "tooBig": "La taille du fond risque de ralentir Khartis",
+    "askSimplify": "Voulez-vous le généraliser ? (simplification des tracés)",
+    "askKeepVars": {
+      "title": "Conserver les autres variables ?",
+      "true": "Les autres variables seront gardées et mobilisables pour des visualisations",
+      "false": "Les variables autres que l'identifiant ne seront pas conservées"
+    },
     "withId": "avec l'identifiant",
     "error": {
       "title": "erreur",

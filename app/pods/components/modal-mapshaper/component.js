@@ -21,6 +21,9 @@ var MapShaperModal = XModal.extend({
   state: null,
   errorMessage: null,
 
+  doSimplify: true,
+  keepVars: true,
+
   didInsertElement: function() {
     this.get('ModalManager').connect(this);
     this.$().on('hidden.bs.modal', e => {
@@ -36,6 +39,10 @@ var MapShaperModal = XModal.extend({
     return this.get('state') === "layers";
   }.property('state'),
 
+  isAskingForOtherVars: function() {
+    return this.get('state') === "other-vars";
+  }.property('state'),
+
   isAskingForSimplifyConfirm: function() {
     return this.get('state') === "confirm-simplify";
   }.property('state'),
@@ -45,8 +52,8 @@ var MapShaperModal = XModal.extend({
       return false;
     } else if (this.get('isAskingForLayers')) {
       return this.get('layersCbx').find( cbx => cbx.get('checked') );
-    } else if (this.get('isAskingForSimplifyConfirm')) {
-      return false;
+    } else if (this.get('isAskingForOtherVars') || this.get('isAskingForSimplifyConfirm')) {
+      return true;
     } else if (this.get('state') === "finish") {
       return this.get('mapConfigs.length');
     }
@@ -60,6 +67,10 @@ var MapShaperModal = XModal.extend({
     }) )
   }.property('layers.[]'),
 
+  hasNonUniquePropKey: function() {
+    return this.get('layersCbx').some(cbx => !cbx.layer.propKeys.find(pk => pk.field === cbx.get('selectedPropKey')).unique);
+  }.property('layersCbx.@each.selectedPropKey'),
+
   onImportWorkerMessage(data) {
     if (data.action === "list-layers") {
       this.set('layers', data.layers);
@@ -67,6 +78,12 @@ var MapShaperModal = XModal.extend({
     } else if (data.action === "confirm-simplify") {
       this.set('state', "confirm-simplify");
     } else if (data.action === "exported") {
+      if (!this.keepVars) {
+        data.tuples.forEach((t, i) => {
+          let dictId = this.get('dictIds')[i];
+          t.dict = t.dict.map(d => ({[dictId]: d[dictId]}));
+        });
+      }
       let mapConfigs = ImportedBasemap.buildMapConfigs(data.tuples, this.get('dictIds'));
       Promise.all(mapConfigs.map( mc => ImportedBasemap.checkValidity(mc) ) )
         .then( errorsArr => {
@@ -98,6 +115,8 @@ var MapShaperModal = XModal.extend({
   },
 
   show: function (opts) {
+    this.set('keepVars', true);
+    this.set('doSimplify', true);
     this.set('state', "processing");
     this._super(opts);
     let files = opts && opts.model;
@@ -133,15 +152,16 @@ var MapShaperModal = XModal.extend({
     });
   },
 
+  confirmSimplify() {
+    this.get('workerStream').postMessage({
+      action: "confirmSimplify",
+      simplify: this.get('doSimplify')
+    });
+  },
+
   actions: {
     selectPropKey(cbx, key) {
       cbx.set('selectedPropKey', key);
-    },
-    confirmSimplify(confirm) {
-      this.get('workerStream').postMessage({
-        action: "confirmSimplify",
-        simplify: confirm
-      });
     },
     reject() {
       this.hide();
@@ -150,8 +170,16 @@ var MapShaperModal = XModal.extend({
     },
     next() {
       if (this.get('state') === "layers") {
+        if (this.get('layers').some(lyr => lyr.propKeys.length > 1)) {
+          this.set('state', "other-vars");
+        } else {
+          this.processLayers();
+        }
+      } else if (this.get('isAskingForOtherVars')) {
         this.processLayers();
-      } if (this.get('state') === "finish") {
+      } else if (this.get('isAskingForSimplifyConfirm')) {
+          this.confirmSimplify();
+      } else if (this.get('state') === "finish") {
         this.get('_promise').resolve(this.get('mapConfigs'));
         this.hide();
       }

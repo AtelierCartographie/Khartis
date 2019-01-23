@@ -138,14 +138,23 @@ export default Ember.Controller.extend({
       this.get('ModalManager')
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
+          console.log(mapConfigs);
           if (mapConfigs.length) {
+            //avoid duplicate id
+            mapConfigs.forEach(mc => {
+              let mapsWithSameId = this.get('dictionary.data.maps').filter(m => m.id === mc.id);
+              if (mapsWithSameId.length) {
+                Ember.set(mc, 'id', `${mc.id} ${mapsWithSameId.length + 1}`);
+              }
+            });
             this.send('selectBasemap', mapConfigs[0]);
             this.get('dictionary.data.maps').unshiftObjects(mapConfigs);
             this.set('selectMapMethod', "select");
             reset();
           }
         })
-        .catch(_ => {
+        .catch(e => {
+          console.log(e);
           reset();
         });
     },

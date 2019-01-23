@@ -319,7 +319,7 @@ let SurfaceMixin = Ember.Mixin.create({
         range = this.get('patternModifiers');
       } else if (type === "color") {
         if (this.get('scale.diverging')) {
-          range = Array.from({length: rangeLength}, (v, i) => {
+          range = Array.from({length: rangeLength}, (_, i) => {
             return (i < this.get('scale.classesBeforeBreak')) ? this.get('patternColorBeforeBreak') : this.get('patternColor');
           });
         } else {
@@ -414,8 +414,8 @@ let SymbolMixin = Ember.Mixin.create({
         domain = [0, d3.max(range)];
         range = [0, visualization.get('maxSize')];
 
-        transform = _ => {
-          return d3Scale(contrastScale(_*(1+Math.sign(_)*Number.EPSILON)));
+        transform = d => {
+          return d3Scale(contrastScale(d*(1+Math.sign(d)*Number.EPSILON)));
         };
 
       } else {
@@ -423,9 +423,9 @@ let SymbolMixin = Ember.Mixin.create({
         d3Scale = contrastScale.clamp(true);
         domain = [0, ext[1]];
         range = [0, visualization.get('maxSize')];
-        transform = _ => d3Scale(Math.abs(_));
+        transform = d => d3Scale(Math.abs(d));
 
-        transform.invert = _ => d3Scale.invert(Math.abs(_));
+        transform.invert = d => d3Scale.invert(Math.abs(d));
 
       };
 

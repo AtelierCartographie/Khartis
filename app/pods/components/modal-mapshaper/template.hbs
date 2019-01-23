@@ -13,7 +13,7 @@
           {{/if}}
 
           {{#if isAskingForLayers}}
-          {{x-capitalize (t 'importMap.selectLayer')}}
+          <h4>{{x-capitalize (t 'importMap.selectLayer')}}</h4>
           <ul class="collection">
             {{#each layersCbx as |cbx|}}
             <li class="padded">
@@ -45,13 +45,38 @@
             </li>
             {{/each}}
           </ul>
+          {{#if hasNonUniquePropKey}}
+          <div class="text-warning">
+            {{x-capitalize (t 'importMap.nonUniqueKey')}}
+          </div>
+          {{/if}}
+          {{/if}}
+
+          {{#if isAskingForOtherVars}}
+            <h4>{{x-capitalize (t 'importMap.askKeepVars.title')}}</h4>
+            <div class="vertical airy flow">
+              <div class="clickable" onclick={{action (mut keepVars) true}} >
+                <input type="radio" name="keepVars" checked={{keepVars}} /><div class="-h"></div>
+                <span>{{x-capitalize (t 'importMap.askKeepVars.true')}}</span>
+              </div>
+              <div class="clickable" onclick={{action (mut keepVars) false}}>
+                <input type="radio" name="keepVars" checked={{x-not keepVars}}/><div class="-h"></div>
+                <span>{{x-capitalize (t 'importMap.askKeepVars.false')}}</span>
+              </div>
+            </div>
           {{/if}}
 
           {{#if isAskingForSimplifyConfirm}}
-            <p>La taille du fond risque de ralentir Khartis. <b>Voulez-vous le généraliser ? (simplification des tracés)</b></p>
+            <h4>{{x-capitalize (t 'importMap.tooBig')}}. <b>{{x-capitalize (t 'importMap.askSimplify')}}</b></h4>
             <div class="horizontal center airy flow">
-              <div class="solid button filled primary" {{action 'confirmSimplify' true}}>Oui</div>
-              <div class="solid button filled default" {{action 'confirmSimplify' false}}>Non</div>
+              <div class="clickable" onclick={{action (mut doSimplify) true}} >
+                <input type="radio" name="doSimplify" checked={{doSimplify}} /><div class="-h"></div>
+                <span>{{x-capitalize (t 'general.yes')}}</span>
+              </div>
+              <div class="clickable" onclick={{action (mut doSimplify) false}}>
+                <input type="radio" name="doSimplify" checked={{x-not doSimplify}}/><div class="-h"></div>
+                <span>{{x-capitalize (t 'general.no')}}</span>
+              </div>
             </div>
           {{/if}}
 
@@ -61,7 +86,7 @@
 
           {{#if (x-eq state 'finish')}}
             {{#if mapConfigs.length}}
-            {{x-capitalize (t 'importMap.success')}}
+            <h4>{{x-capitalize (t 'importMap.success')}}</h4>
             {{/if}}
             {{#if mapConfigsOnError.length}}
               <b>{{x-capitalize (t 'importMap.error.layersOnError')}}</b><br/>
@@ -73,13 +98,13 @@
                 <br/>
               {{/each}}
             {{/if}}
-            <br/><br/><b>DEBUG</b><br/>
+            {{!-- <br/><br/><b>DEBUG</b><br/>
             {{#each mapConfigs as |mc|}}
               <a style="text-decoration: underline" {{action 'downloadDebug' mc}}>Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
             {{/each}}
             {{#each mapConfigsOnError as |mc|}}
               <a style="text-decoration: underline; color: red;" {{action 'downloadDebug' mc}}>[Erreur] Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
-            {{/each}}
+            {{/each}} --}}
           {{/if}}
             
         </div>

@@ -89,7 +89,6 @@ self.addEventListener('message', function(e) {
   } else if (data.action === "processLayers") {
     exportControl.export(data.layers);
   } else if (data.action === "confirmSimplify") {
-    console.log("here", data);
     asyncSimplifyConfirm(data);
     asyncSimplifyConfirm = null;
   }
