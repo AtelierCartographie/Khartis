@@ -74,7 +74,7 @@ export default {
         "projectExists": "Ce projet existe déjà dans votre historique"
       },
       "search" : "Rechercher un pays, une région, un département...",
-      "useImportedData": "Utiliser les données du fond ce carte"
+      "useImportedData": "Utiliser les données du fond de carte"
     },
 
     "step2": {
