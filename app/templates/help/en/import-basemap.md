@@ -1,7 +1,6 @@
-### Ajouter votre fond de carte dans Khartis
+### Add your own base map in Khartis
 
-Conditions :
-- un fichier au format geojson, topojson ou shapefile (.shp + .dbf + .prj)
-- contenant seulement des polygones
-- auquels sont associés un identifiant unique
-- un poids de fichier inférieur à 2 Mo (sinon une simplificiation sera proposée)
+The basemap must fulfill three conditions:
+- be one of these formats: geojson, topojson or shapefile (.shp + .dbf + .prj),
+- contain only polygons (with a unique ID),
+- not to be too large, otherwise the proper functioning is not guaranteed.
