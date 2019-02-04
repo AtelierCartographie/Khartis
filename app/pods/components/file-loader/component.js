@@ -5,6 +5,7 @@ export default Ember.Component.extend({
     label: "Choisir un fichier",
     handler: "reader", //ou uploader
     accept: "*",
+    multiple: undefined,
     
     fileReaderComponent: null,
     
@@ -29,7 +30,8 @@ export default Ember.Component.extend({
         e.preventDefault();
         e.stopImmediatePropagation();
         this.$().removeClass('dragging');
-        this.send("onchange", [e.dataTransfer.items[0].getAsFile()], () => void 0);
+        console.log(e.dataTransfer.items);
+        this.send("onchange", Array.prototype.slice.apply(e.dataTransfer.items).map(i => i.getAsFile()), () => void 0);
       });
     },
     

@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 	attributeBindings: ['multiple', 'type', 'accept'],
 	classNames: ["file-uploader"],
 
-	multiple: false,
+	multiple: undefined,
 	type: 'file',
 
   didInsertElement() {

@@ -264,7 +264,8 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   var _importOpts = utils.defaults({no_topology: false, auto_snap: true}, opts);
 
   var receiveFiles = this.receiveFiles = function(files) {
-    files = handleZipFiles(utils.toArray(files));
+    files = utils.toArray(files);
+    handleZipFiles(files);
     addFilesToQueue(files);
     if (queuedFiles.length === 0) {
       return;
