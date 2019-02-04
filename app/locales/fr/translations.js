@@ -58,8 +58,8 @@ export default {
         "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer",
         "fileCsv": "un fichier csv",
         "testData": "Essayer nos données test",
-        "selectAMap": "Sélectionner un fond de carte",
-        "orImportMap": "ou importer le vôtre"
+        "selectAMap": "Choix du fond de carte",
+        "orImportMap": "importer son propre fond"
       },
       "tooltip": {
         "csv": "Fichier d'extension .csv avec des virgules en séparateur de colonnes",
@@ -74,7 +74,7 @@ export default {
         "projectExists": "Ce projet existe déjà dans votre historique"
       },
       "search" : "Rechercher un pays, une région, un département...",
-      "useImportedData": "Utiliser les données du fond ce carte"
+      "useImportedData": "Utiliser les données du fond de carte"
     },
 
     "step2": {
@@ -629,24 +629,24 @@ export default {
   },
 
   "importMap": {
-    "title": "Importer une carte",
+    "title": "Importer son propre fond",
     "success": "Les fichiers ont bien été traités, voulez-vous les importer ?",
     "selectLayer": "Choisissez les couches à importer.",
     "nonUniqueKey": "Attention : plusieurs objets de la carte auront le même identifiant",
-    "tooBig": "La taille du fond risque de ralentir Khartis",
-    "askSimplify": "Voulez-vous le généraliser ? (simplification des tracés)",
+    "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empécher le bon fonctionnement de Khartis.",
+    "askSimplify": "Voulez-vous simplifier automatiquement le tracé des polygones ?",
     "askKeepVars": {
       "title": "Conserver les autres variables ?",
-      "true": "Les autres variables seront gardées et mobilisables pour des visualisations",
-      "false": "Les variables autres que l'identifiant ne seront pas conservées"
+      "true": "oui (pour les visualiser ultérieurement)",
+      "false": "non (seul l'identifiant sera conservé)"
     },
     "withId": "avec l'identifiant",
     "error": {
       "title": "erreur",
       "noFile": "Aucun fichier valide trouvé",
       "unknow": "Impossible de traiter les fichiers sélectionnés",
-      "unknownProjection": "projection non reconnue",
-      "layersOnError": "des couches contiennent des erreurs"
+      "unknownProjection": "Projection non reconnue",
+      "layersOnError": "Des couches contiennent des erreurs"
     }
   }
 

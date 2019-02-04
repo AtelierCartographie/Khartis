@@ -59,7 +59,7 @@ export default {
         "fileCsv": "csv file",
         "testData": "Try our sample datasets",
         "selectAMap": "Select a map",
-        "orImportMap": "or import yours"
+        "orImportMap": "import your own map"
       },
       "tooltip": {
         "csv": "Filename extension .csv use comma as column separator",
@@ -614,24 +614,24 @@ export default {
   },
 
   "importMap": {
-    "title": "Import a map",
+    "title": "Import your own map",
     "success": "Files have been successfuly processed. Do you want to import ?",
     "selectLayer": "Select layers to import",
     "nonUniqueKey": "Warning : different objects will share the same id",
-    "tooBig": "Map's size may slow down Khartis",
-    "askSimplify": "Do you want to generalise ? (simplify shape)",
+    "tooBig": "Basemap file seems very large! This could slow down Khartis.",
+    "askSimplify": "Do you want to simplify the polygon layout automatically?",
     "askKeepVars": {
       "title": "Keep the other variables ?",
-      "true": "Other variables will be keeped and usables for visualisation",
-      "false": "Other variables than identifier will be dropped"
+      "true": "yes (to visualize them later)",
+      "false": "no (only the ID will be kept)"
     },
     "withId": "with identifier",
     "error": {
       "title": "error",
       "noFile": "No valid file found",
       "unknow": "Unable to process selected files",
-      "unknownProjection": "unknow projection",
-      "layersOnError": "some layers have errors"
+      "unknownProjection": "Unknow projection",
+      "layersOnError": "Some layers have errors"
     }
   }
 
