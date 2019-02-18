@@ -13,13 +13,13 @@
           {{/if}}
 
           {{#if isAskingForLayers}}
-          <h4>{{x-capitalize (t 'importMap.selectLayer')}}</h4>
+          <h4>{{x-capitalize (t 'importMap.selectId')}}</h4>
+          <i>{{x-capitalize (t 'importMap.selectIdDescription')}}</i>
           <ul class="collection">
             {{#each layersCbx as |cbx|}}
             <li class="padded">
               <div class="horizontal airy middle flow">
                 <div class="solid horizontal airy middle flow w7">
-                  <span>{{input type="checkbox" class="no-close clickable" checked=cbx.checked}}<div class="-h"></div></span>
                   <span class="layer-title">{{cbx.layer.label}}</span>
                 </div>
                 <span>
@@ -36,6 +36,8 @@
                       {{key.field}}
                     {{#unless key.unique}}
                     <small><i class="text-warning">&nbsp;(non unique)</i></small>
+                    {{else}}
+                    <small><i class="text-success">&nbsp;(unique)</i></small>
                     {{/unless}}
                     </li>
                     {{/each}}

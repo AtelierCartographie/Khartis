@@ -49,8 +49,8 @@ var noFilesCb = function() {
   postMessage({action: "import-error", error: "noFile"})
 };
 
-var generalErrorCb = function() {
-  postMessage({action: "import-error", error: "unknow"})
+var generalErrorCb = function(error) {
+  postMessage({action: "import-error", error})
 };
 
 var listLayerCb = function(layers) {

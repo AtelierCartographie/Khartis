@@ -101,7 +101,6 @@ var MapShaperModal = XModal.extend({
           this.set('state', 'finish');
         })
         .catch( e => {
-          console.log(e);
           this.setProperties({
             state: 'error',
             errorMessage: 'unknow'
@@ -109,6 +108,7 @@ var MapShaperModal = XModal.extend({
         });
       
     } else if (data.action === "import-error" || data.action === "export-error") {
+      console.log(data);
       this.set('state', "error");
       this.set('errorMessage', data.error);
     }

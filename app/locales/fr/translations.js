@@ -23,8 +23,9 @@ export default {
     "width": "largeur",
     "yes": "oui",
     "no": "non",
-    "warning": "warning",
     "add": "ajouter",
+    "imported": "importé",
+    "warning": "warning",
     "error": {
      "one": "erreur",
      "other": "erreurs"
@@ -55,8 +56,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "importer les données par copier-coller depuis un tableur ou glisser-déposer",
-        "fileCsv": "un fichier csv",
+        "importData": "choix des données",
+        "fileCsv": "ou charger un fichier csv",
         "testData": "Essayer nos données test",
         "selectAMap": "Choix du fond de carte",
         "orImportMap": "importer son propre fond"
@@ -66,6 +67,7 @@ export default {
         "resumeProject": "Le dernier projet édité sur ce poste sera restauré",
         "importProject": "Importer un projet sauvegardé"
       },
+      "importPasteCsv": "importer les données par copier-coller depuis un tableur",
       "pasteCsv": "coller ici votre tableau de données ou glisser un fichier csv",
       "downloadCsvModel": "télécharger le modèle (.csv)",
       "importPoject": {
@@ -630,8 +632,10 @@ export default {
 
   "importMap": {
     "title": "Importer son propre fond",
+    "importOrDrop": "importer ou glisser votre fond",
     "success": "Les fichiers ont bien été traités, voulez-vous les importer ?",
-    "selectLayer": "Choisissez les couches à importer.",
+    "selectId": "Sélection de l'identifiant",
+    "selectIdDescription": "Cet identifiant unique servira à relier les polygones (fond de carte) aux données. C'est l'opération de la \"jointure\".",
     "nonUniqueKey": "Attention : plusieurs objets de la carte auront le même identifiant",
     "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empécher le bon fonctionnement de Khartis.",
     "askSimplify": "Voulez-vous simplifier automatiquement le tracé des polygones ?",
@@ -645,8 +649,12 @@ export default {
       "title": "erreur",
       "noFile": "Aucun fichier valide trouvé",
       "unknow": "Impossible de traiter les fichiers sélectionnés",
+      "general": "Impossible de traiter les fichiers sélectionnés",
       "unknownProjection": "Projection non reconnue",
-      "layersOnError": "Des couches contiennent des erreurs"
+      "layersOnError": "Des couches contiennent des erreurs",
+      "file_load": "Impossible de charger le fichier sélectionné",
+      "dbf_num_records": "Le nombre de ligne du fichier .dbf differt du nombre de géométries",
+      "dataEmpty": "Aucune donnée n'a été trouvée"
     }
   }
 

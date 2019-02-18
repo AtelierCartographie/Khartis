@@ -274,8 +274,8 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   }
 
   //handlers
-  function handleImportError() {
-    errorCb("general");
+  function handleImportError(msg) {
+    errorCb(msg || "general");
   }
 
   function addFilesToQueue(files) {
@@ -322,7 +322,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
 
     reader.addEventListener('loadend', function(e) {
       if (!reader.result) {
-        handleImportError("Web browser was unable to load the file.", name);
+        handleImportError("file_load", name);
       } else {
         readFileContent(name, reader.result);
       }
@@ -355,7 +355,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
         lyr = dataset.layers[0];
         lyr.data = new internal.ShapefileTable(content, importOpts.encoding);
         if (lyr.shapes && lyr.data.size() != lyr.shapes.length) {
-          return handleImportError("Different number of records in .shp and .dbf files");
+          return handleImportError("dbf_num_records");
         }
         if (!lyr.geometry_type) {
           // kludge: trigger display of table cells if .shp has null geometry
@@ -401,8 +401,7 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
         model.addDataset(dataset);
         readNext();
       } catch(e) {
-        console.log(e);
-        handleImportError(e, path);
+        handleImportError((e || e.message) || "general");
       }
     }, delay);
   }
@@ -431,7 +430,6 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   function readZipFile(file) {
     setTimeout(function() {
       utils.readZipFile(file, function(err, files) {
-        console.log(err, files);
         if (err) {
           handleImportError(err, file.name);
         } else {
@@ -480,13 +478,16 @@ var ExportControl = function(model, opts, listLayerCb, confirmSimplifyCb, export
         })
       }).catch(console.log);
     } else {
-      listLayerCb(initLayerMenu());
+      try {
+        listLayerCb(initLayerMenu());
+      } catch (e) {
+        handleExportError(e);
+      }
     }
   }
 
   function handleExportError(e) {
-    console.log(e, e.stack);
-    errorCb("unknow");
+    errorCb((e && e.message) || "unknow");
   }
 
   function extractProjections(targets) {
@@ -633,22 +634,26 @@ var ExportControl = function(model, opts, listLayerCb, confirmSimplifyCb, export
   }
 
   function getPossibleKeys(data) {
-    var fields = data.getFields(),
-        props = internal.exportProperties(data, {});
-    
-    return fields.map(f => {
-      return {
-        field: f,
-        unique: !props.some(function(seen, row) {
-          if (seen.indexOf(row[f]) == -1) {
-            seen.push(row[f]);
-            return false;
-          } else {
-            return true;
-          }
-        }.bind(props, []))
-      }
-    });
+    if (data) {
+      var fields = data.getFields(),
+          props = internal.exportProperties(data, {});
+      
+      return fields.map(f => {
+        return {
+          field: f,
+          unique: !props.some(function(seen, row) {
+            if (seen.indexOf(row[f]) == -1) {
+              seen.push(row[f]);
+              return false;
+            } else {
+              return true;
+            }
+          }.bind(props, []))
+        }
+      });
+    } else {
+      throw new Error("dataEmpty");
+    }
   }
 
   function getSelectedFormat() {

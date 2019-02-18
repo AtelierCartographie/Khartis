@@ -21,6 +21,7 @@ var ImportedBasemap = Basemap.extend({
   mapData: null,
   dictionaryData: null,
   availableProjections: null,
+  isCustom: true,
   /* ---------- */
 
   compositeProjection: function() {

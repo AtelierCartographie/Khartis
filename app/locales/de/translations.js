@@ -22,8 +22,9 @@ export default {
     "save": "Speichern",
     "yes": "Ja",
     "no": "Nein",
-    "warning": "warning",
     "add": "ajouter",
+    "imported": "imported",
+    "warning": "warning",
     "error": {
      "one": "Fehler",
      "other": "Fehler"
@@ -50,8 +51,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "Importieren",
-        "fileCsv": "Eine CSV-Datei",
+        "importData": "data selection",
+        "fileCsv": "or select a csv file",
         "testData": "Nutzen Sie einen Beispiel-Datensatz",
         "selectAMap": "Wählen Sie eine Karte",
         "orImportMap": "Importiere deine eigene Karte"
@@ -61,6 +62,7 @@ export default {
         "resumeProject": "Das letzte Projekt wiederherstellen",
         "importProject": "Importieren Sie ein Khartis Projekt"
       },
+      "importPasteCsv": "import data by pasting from a spreadsheet",
       "pasteCsv": "Daten aus der Zwischenablage einfügen oder einfach per 'Drag & Drop' eine CSV-Datei einspielen.",
       "downloadCsvModel": "Download des Modells (.csv)",
       "importPoject": {
@@ -560,8 +562,10 @@ export default {
 
   "importMap": {
     "title": "Import your own map",
+    "importOrDrop": "import or drop your basemap",
     "success": "Files have been successfuly processed. Do you want to import ?",
-    "selectLayer": "Select layers to import",
+    "selectId": "Select identifier",
+    "selectIdDescription": "This identifier will be used to bind polygons (basemap) to the data. It's the \"joining\" operation.",
     "nonUniqueKey": "Warning : different objects will share the same id",
     "tooBig": "Basemap file seems very large! This could slow down Khartis.",
     "askSimplify": "Do you want to simplify the polygon layout automatically?",
@@ -576,7 +580,10 @@ export default {
       "noFile": "No valid file found",
       "unknow": "Unable to process selected files",
       "unknownProjection": "Unknow projection",
-      "layersOnError": "Some layers have errors"
+      "layersOnError": "Some layers have errors",
+      "file_load": "Unable to load selected file",
+      "dbf_num_records": "Different number of records in .shp and .dbf files",
+      "dataEmpty": "No data has been found"
     }
   }
 

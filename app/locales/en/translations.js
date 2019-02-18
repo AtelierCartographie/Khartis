@@ -24,6 +24,7 @@ export default {
     "yes": "yes",
     "no": "no",
     "add": "ajouter",
+    "imported": "imported",
     "warning": "warning",
     "error": {
      "one": "error",
@@ -55,8 +56,8 @@ export default {
 
     "step1": {
       "title": {
-        "import": "import data by copy-pasted from a spreadsheet or drag & drop a",
-        "fileCsv": "csv file",
+        "importData": "data selection",
+        "fileCsv": "or select a csv file",
         "testData": "Try our sample datasets",
         "selectAMap": "Select a map",
         "orImportMap": "import your own map"
@@ -66,6 +67,7 @@ export default {
         "resumeProject": "Will resume the last project edited on this computer ",
         "importProject": "Import a saved project"
       },
+      "importPasteCsv": "import data by pasting from a spreadsheet",
       "pasteCsv": "paste your data here or drop a csv file",
       "downloadCsvModel": "download model (.csv)",
       "importPoject": {
@@ -615,8 +617,10 @@ export default {
 
   "importMap": {
     "title": "Import your own map",
+    "importOrDrop": "import or drop your basemap",
     "success": "Files have been successfuly processed. Do you want to import ?",
-    "selectLayer": "Select layers to import",
+    "selectId": "Select identifier",
+    "selectIdDescription": "This identifier will be used to bind polygons (basemap) to the data. It's the \"joining\" operation.",
     "nonUniqueKey": "Warning : different objects will share the same id",
     "tooBig": "Basemap file seems very large! This could slow down Khartis.",
     "askSimplify": "Do you want to simplify the polygon layout automatically?",
@@ -631,7 +635,10 @@ export default {
       "noFile": "No valid file found",
       "unknow": "Unable to process selected files",
       "unknownProjection": "Unknow projection",
-      "layersOnError": "Some layers have errors"
+      "layersOnError": "Some layers have errors",
+      "file_load": "Unable to load selected file",
+      "dbf_num_records": "Different number of records in .shp and .dbf files",
+      "dataEmpty": "No data has been found",
     }
   }
 

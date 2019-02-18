@@ -7,7 +7,7 @@
     {{#each queryMaps as |map|}}
       <li {{action 'select' map}} class="{{if (x-eq selection.mapConfig.id map.id) 'selected'}}">
         {{#if map.custom}}
-        <span>{{map.id}} [Importé]</span>
+        <span>{{map.id}} [{{x-capitalize (t 'general.imported')}}]</span>
         {{else}}
         <span> {{x-capitalize (t (concat 'basemap.' map.id))}}</span>
         {{/if}}
