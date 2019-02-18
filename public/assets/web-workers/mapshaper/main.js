@@ -274,8 +274,12 @@ function ImportControl(model, importedCb, noFilesCb, errorCb, opts) {
   }
 
   //handlers
-  function handleImportError(msg) {
-    errorCb(msg || "general");
+  function handleImportError(e) {
+    if (e && e.message) {
+      errorCb(e.message || "general");
+    } else {
+      errorCb(e || "general");
+    }
   }
 
   function addFilesToQueue(files) {

@@ -98,7 +98,11 @@ var MapShaperModal = XModal.extend({
           }, {valid: [], invalid: []});
           this.set('mapConfigs', partition.valid);
           this.set('mapConfigsOnError', partition.invalid);
-          this.set('state', 'finish');
+          if (this.get('mapConfigsOnError').length) {
+            this.set('state', 'finish');
+          } else {
+            this.commit();
+          }
         })
         .catch( e => {
           this.setProperties({
@@ -108,7 +112,6 @@ var MapShaperModal = XModal.extend({
         });
       
     } else if (data.action === "import-error" || data.action === "export-error") {
-      console.log(data);
       this.set('state', "error");
       this.set('errorMessage', data.error);
     }
@@ -159,6 +162,11 @@ var MapShaperModal = XModal.extend({
     });
   },
 
+  commit() {
+    this.get('_promise').resolve(this.get('mapConfigs'));
+    this.hide();
+  },
+
   actions: {
     selectPropKey(cbx, key) {
       cbx.set('selectedPropKey', key);
@@ -180,8 +188,7 @@ var MapShaperModal = XModal.extend({
       } else if (this.get('isAskingForSimplifyConfirm')) {
           this.confirmSimplify();
       } else if (this.get('state') === "finish") {
-        this.get('_promise').resolve(this.get('mapConfigs'));
-        this.hide();
+        this.commit();
       }
     },
     downloadDebug(mc) {
