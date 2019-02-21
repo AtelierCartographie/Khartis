@@ -100,7 +100,6 @@ var ReProjModal = XModal.extend({
   actions: {
     reject() {
       this.hide();
-      this.get('workerStream').terminate();
       this.get('_promise').reject();
     },
     next() {
