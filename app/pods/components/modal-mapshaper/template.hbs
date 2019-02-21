@@ -82,6 +82,10 @@
             </div>
           {{/if}}
 
+          {{#if isAskingForProjection}}
+            {{input value=wktOverrideValue}}
+          {{/if}}
+
           {{#if (x-eq state 'error')}}
             {{x-capitalize (t 'importMap.error.title')}} : {{x-capitalize (t (concat 'importMap.error.' errorMessage))}}
           {{/if}}

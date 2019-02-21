@@ -138,7 +138,6 @@ export default Ember.Controller.extend({
       this.get('ModalManager')
         .show('modal-mapshaper', {model: files})
         .then( mapConfigs => {
-          console.log(mapConfigs);
           if (mapConfigs.length) {
             //avoid duplicate id
             mapConfigs.forEach(mc => {
@@ -196,6 +195,18 @@ export default Ember.Controller.extend({
         this.set('model.project.graphLayout.basemap', null);
       }
       this.set('selectMapMethod', method);
+    },
+
+    overrideProjWkt() {
+      this.get('ModalManager')
+        .show('modal-reproj', {model: null})
+        .then( wkt => {
+          console.log(wkt);
+          const bm = this.get('model.project.graphLayout.basemap');
+          bm.overrideProjectionWkt(wkt);
+          this.get('model.project.graphLayout').setBasemap(bm);
+        })
+        .catch(e => console.log);
     }
 
   }

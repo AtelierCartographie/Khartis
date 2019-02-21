@@ -656,6 +656,10 @@ export default {
       "dbf_num_records": "Le nombre de ligne du fichier .dbf differt du nombre de géométries",
       "dataEmpty": "Aucune donnée n'a été trouvée"
     }
+  },
+
+  "reproj": {
+    "title": "Changer la projection du fond de carte"
   }
 
 };

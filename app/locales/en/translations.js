@@ -640,6 +640,10 @@ export default {
       "dbf_num_records": "Different number of records in .shp and .dbf files",
       "dataEmpty": "No data has been found",
     }
+  },
+
+  "reproj": {
+    "title": "Change basemap's projection"
   }
 
 };

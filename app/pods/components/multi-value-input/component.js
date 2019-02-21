@@ -8,43 +8,47 @@ export default AbstractComponent.extend({
     filterData: function() {
         
         return new Ember.RSVP.Promise((resolve, reject) => {
-            
-            var levenshteined = this.get('suggestionProvider').map( x => {
-                
-                let fields = this.get('filterField');
-                
-                if (!(fields instanceof Array)) {
-                    fields = Em.A([fields]);
-                }
-                
-                let min = fields.reduce((m, field) => {
+
+            if (this.get('query') && this.get('query').length) {
+                var levenshteined = this.get('suggestionProvider').map( x => {
                     
-                    let str = x.get(field),
-                        parts = str.split(/[\s']/);
+                    let fields = this.get('filterField');
                     
-                    for (let i = 0, l = 0; i < parts.length; i++) {
-                        
-                        m = Math.min(m, TolerentLevenshtein(str.substring(l+i), this.get('query')));
-                        l += parts[i].length;
-                        
+                    if (!(fields instanceof Array)) {
+                        fields = Em.A([fields]);
                     }
                     
-                    return m;
+                    let min = fields.reduce((m, field) => {
+                        
+                        let str = x.get(field),
+                            parts = str.split(/[\s']/);
+                        
+                        for (let i = 0, l = 0; i < parts.length; i++) {
+                            
+                            m = Math.min(m, TolerentLevenshtein(str.substring(l+i), this.get('query')));
+                            l += parts[i].length;
+                            
+                        }
+                        
+                        return m;
+                        
+                    }, 1000);
+    
+                   return {
+                      val: x,
+                      lv: min
+                    };
                     
-                }, 1000);
-
-               return {
-                  val: x,
-                  lv: min
-                };
-                
-            });
-
-            resolve(
-                levenshteined.filter( x => {
-                    return (x.lv <= 2);
-                }).sortBy('lv').map( x => x.val )
-            );
+                });
+    
+                resolve(
+                    levenshteined.filter( x => {
+                        return (x.lv <= 2);
+                    }).sortBy('lv').map( x => x.val )
+                );
+            } else {
+                resolve(this.get('suggestionProvider').slice());
+            }
 
         });
     

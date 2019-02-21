@@ -143,7 +143,15 @@ var ImportedBasemap = Basemap.extend({
       
     });
 		 
-	},
+  },
+  
+  overrideProjectionWkt(wkt) {
+    let source = {
+      ...this.get('mapConfig.sources')[0],
+      wkt
+    };
+    this.set('mapConfig.sources', [source]);
+  },
   
   deferredChange: Ember.debouncedObserver(
     'config', 'mapData', 'dictionaryData',

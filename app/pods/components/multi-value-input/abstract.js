@@ -321,13 +321,13 @@ export default Ember.Component.extend({
             this.get('selection').addObject(o);
             this.set('query', '');
             this.$().attr('tabindex', -1).focus();
-            this.sendAction()
+            this.sendAction('select', this.get('selection'))
         },
 
         remove: function (o) {
             this.get('selection').removeObject(o);
             this.set('query', '');
-            this.sendAction()
+            this.sendAction('remove', this.get('selection'))
         }
 
     }

@@ -68,6 +68,12 @@
         </div>
       </div>
       <div class="horizontal right flow">
+          {{#x-button class="solid filled primary" action=(action 'overrideProjWkt')}}
+            change projection
+            <i class="iconfont iconfont-download"></i>
+          {{/x-button}}
+      </div>
+      <div class="horizontal right flow">
         {{#unless model.project.graphLayout.basemap.isCustom}}
           {{#x-button class="solid filled primary" action=(action 'downloadTemplate')}}
             {{x-capitalize (t 'project.step1.downloadCsvModel')}}
@@ -151,4 +157,5 @@
 
 
 {{modal-mapshaper}}
+{{modal-reproj}}
 

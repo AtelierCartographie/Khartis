@@ -1,0 +1,39 @@
+<div class="modal-dialog modal--large">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">{{x-capitalize (t 'reproj.title')}}</h3>
+        </div>
+
+        <div class="modal-body">
+          {{#if isLoading}}
+          <div class="loading-bar"></div>
+          {{/if}}
+          {{#if isLoaded}}
+            Choisir une projection dans la liste
+            {{#multi-value-input uniqueSelection=selectedEpsg selectionMaxLength=1 
+              suggestionProvider=epsgDictAsArray filterField=(x-array "name" "code")
+              select=(action 'selectEspg')
+              queryMinLength=0 as |facet o this|}}
+                {{#if facet.isSuggestionRow}}
+                  {{get o "name"}}
+                {{else if facet.isSelectedValue}}
+                  {{get o "name"}}
+                {{/if}}
+            {{/multi-value-input}}
+            ou rensignez le code proj4 en wkt
+            {{input value=wktText}}
+          {{/if}}
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="button filled default" {{action 'reject'}}>{{x-capitalize (t 'general.cancel')}}</button>
+            <button type="button" class="button filled primary" {{action 'next'}}>
+              {{x-capitalize (t 'general.next')}}
+            </button>
+        </div>
+
+    </div>
+
+</div>
