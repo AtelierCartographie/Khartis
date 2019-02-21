@@ -73,6 +73,7 @@ var ReProjModal = XModal.extend({
     this.set('wktText', null);
     this.set('selectedEpsg', null);
     this.set('state', 'loading');
+    this.set('errorMessage', null);
     this._super(opts);
 
     return this.loadEspg().then(epsgDict => {
@@ -91,7 +92,9 @@ var ReProjModal = XModal.extend({
       proj4(wkt); //raise exception if invalid
       this.get('_promise').resolve(wkt);
       this.hide();
-    } catch (e) {}
+    } catch (e) {
+      this.set('errorMessage', 'invalid');
+    }
   },
 
   actions: {
@@ -105,7 +108,6 @@ var ReProjModal = XModal.extend({
     },
 
     selectEspg(selection) {
-      console.log(selection);
       this.set('wktText', selection[0].proj4);
     }
   }

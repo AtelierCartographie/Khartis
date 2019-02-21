@@ -25,13 +25,18 @@
             ou rensignez le code proj4 en wkt
             {{input value=wktText}}
           {{/if}}
+          {{#if errorMessage}}
+            <span class="text-danger">le wkt est invalide</span>
+          {{/if}}
         </div>
 
         <div class="modal-footer">
             <button type="button" class="button filled default" {{action 'reject'}}>{{x-capitalize (t 'general.cancel')}}</button>
+            {{#if isCommitable}}
             <button type="button" class="button filled primary" {{action 'next'}}>
               {{x-capitalize (t 'general.next')}}
             </button>
+            {{/if}}
         </div>
 
     </div>

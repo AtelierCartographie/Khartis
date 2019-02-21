@@ -118,6 +118,7 @@ var MapShaperModal = XModal.extend({
   },
 
   show: function (opts) {
+    this.set('errorMessage', null);
     this.set('keepVars', true);
     this.set('doSimplify', true);
     this.set('state', "processing");
