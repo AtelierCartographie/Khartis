@@ -622,7 +622,7 @@ export default {
     "selectId": "Select identifier",
     "selectIdDescription": "This identifier will be used to bind polygons (basemap) to the data. It's the \"joining\" operation.",
     "nonUniqueKey": "Warning : different objects will share the same id",
-    "tooBig": "Basemap file seems very large! This could slow down Khartis.",
+    "tooBig": "Basemap file seems very large! This could slow down Khartis",
     "askSimplify": "Do you want to simplify the polygon layout automatically?",
     "askKeepVars": {
       "title": "Keep the other variables ?",

@@ -637,7 +637,7 @@ export default {
     "selectId": "Sélection de l'identifiant",
     "selectIdDescription": "Cet identifiant unique servira à relier les polygones (fond de carte) aux données. C'est l'opération de la \"jointure\".",
     "nonUniqueKey": "Attention : plusieurs objets de la carte auront le même identifiant",
-    "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empécher le bon fonctionnement de Khartis.",
+    "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empêcher le bon fonctionnement de Khartis",
     "askSimplify": "Voulez-vous simplifier automatiquement le tracé des polygones ?",
     "askKeepVars": {
       "title": "Conserver les autres variables ?",
