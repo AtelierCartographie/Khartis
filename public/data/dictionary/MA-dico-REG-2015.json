@@ -1,0 +1,74 @@
+[
+ {
+   "ID": 1,
+   "ISO 3166-2": "MA-01",
+   "Name-Ar": "طنجة - تطوان - الحسيمة",
+   "Name-Fr": "Tanger-Tétouan-Al Hoceima"
+ },
+ {
+   "ID": 2,
+   "ISO 3166-2": "MA-02",
+   "Name-Ar": "الشرق",
+   "Name-Fr": "Oriental"
+ },
+ {
+   "ID": 3,
+   "ISO 3166-2": "MA-03",
+   "Name-Ar": "فاس - مكناس",
+   "Name-Fr": "Fès-Meknès"
+ },
+ {
+   "ID": 4,
+   "ISO 3166-2": "MA-04",
+   "Name-Ar": "الرباط - سلا - القنيطرة",
+   "Name-Fr": "Rabat-Salé-Kénitra"
+ },
+ {
+   "ID": 5,
+   "ISO 3166-2": "MA-05",
+   "Name-Ar": "بني ملال - خنيفرة",
+   "Name-Fr": "Béni Mellal-Khénifra"
+ },
+ {
+   "ID": 6,
+   "ISO 3166-2": "MA-06",
+   "Name-Ar": "الدار البيضاء - سطات",
+   "Name-Fr": "Casablanca-Settat"
+ },
+ {
+   "ID": 7,
+   "ISO 3166-2": "MA-07",
+   "Name-Ar": "مراكش - آسفي",
+   "Name-Fr": "Marrakech-Safi"
+ },
+ {
+   "ID": 8,
+   "ISO 3166-2": "MA-08",
+   "Name-Ar": "درعة - تافيلالت",
+   "Name-Fr": "Drâa-Tafilalet"
+ },
+ {
+   "ID": 9,
+   "ISO 3166-2": "MA-09",
+   "Name-Ar": "سوس - ماسة",
+   "Name-Fr": "Souss-Massa"
+ },
+ {
+   "ID": 10,
+   "ISO 3166-2": "MA-10",
+   "Name-Ar": "كلميم - واد نون",
+   "Name-Fr": "Guelmim-Oued Noun"
+ },
+ {
+   "ID": 11,
+   "ISO 3166-2": "MA-11",
+   "Name-Ar": "العيون -  الساقية الحمراء",
+   "Name-Fr": "Laayoune-Sakia El Hamra"
+ },
+ {
+   "ID": 12,
+   "ISO 3166-2": "MA-12",
+   "Name-Ar": "الداخلة - وادي الذهب",
+   "Name-Fr": "Eddakhla-Oued Eddahab"
+ }
+]

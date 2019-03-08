@@ -597,7 +597,9 @@ export default {
     "FRA20 com 2017": "France > communes (2017) > Martinique",
     "FRA30 com 2017": "France > communes (2017) > Guyane",
     "FRA40 com 2017": "France > communes (2017) > La Réunion",
-    "FRA50 com 2017": "France > communes (2017) > Mayotte"
+    "FRA50 com 2017": "France > communes (2017) > Mayotte",
+    "maroc reg 2015": "Maroc > régions (2015)",
+    "maroc prov 2015": "Maroc > provinces (2015)"
   },
 
   "examples": {
@@ -627,7 +629,9 @@ export default {
     "eu_nuts2-agriculture": "Surperficie agricole utilisée (SAU) selon la taille des exploitations (2013)",
     "eu_nuts3-pop": "Densité de population (2015)",
     "ca-prov-life-2015": "Espérance de vie (2013-2015)",
-    "ca-cd-pop-2017": "Population (2011-2017)"
+    "ca-cd-pop-2017": "Population (2011-2017)",
+    "ma-reg-pop-2014": "Population (2014)",
+    "ma-prov-pop-2014": "Population (2014)"
   },
 
   "importMap": {

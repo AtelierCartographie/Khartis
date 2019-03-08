@@ -16,7 +16,7 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'fr'
     },
-    
+
     projection: {
       default: "natural_earth"
     },
@@ -577,6 +577,40 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "maroc reg 2015",
+        attribution: "basemap from OpenStreetMap contributors (ODbl license)",
+        sources: [
+          {source: "MA-reg-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MA-dico-REG-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "ma-reg-pop-2014",
+                source: "ma-reg-2015-pop-2014.csv"
+            }
+        ]
+      },
+      {
+        id: "maroc prov 2015",
+        attribution: "basemap from OpenStreetMap contributors (ODbl license)",
+        sources: [
+          {source: "MA-reg-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MA-dico-PROV-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "ma-prov-pop-2014",
+                source: "ma-prov-2015-pop-2014.csv"
+            }
+        ]
+      },
+      {
         id: "france dept",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
@@ -1084,7 +1118,7 @@ module.exports = function(environment) {
           identifier: "ID"
         }
       }
-      
+
     ],
 
     //configure here analytics services. view ember-metrics for more info
