@@ -361,6 +361,23 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "algeria wil 2008",
+        attribution: "basemap from ",
+        sources: [
+          {source: "DZ-wil-2008.json", projection: "d3.geoTransverseMercator()", transforms:{rotate: [-3, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "DZ-dico-WIL-2008.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "dz-wil-pop-2008",
+            source: "dz-wil-pop-2008.csv"
+          },
+        ]
+      },
+      {
         id: "brazil ufe 2015",
         attribution: "basemap from IBGE",
         sources: [
