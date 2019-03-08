@@ -599,7 +599,9 @@ export default {
     "FRA40 com 2017": "France > communes (2017) > La Réunion",
     "FRA50 com 2017": "France > communes (2017) > Mayotte",
     "maroc reg 2015": "Maroc > régions (2015)",
-    "maroc prov 2015": "Maroc > provinces (2015)"
+    "maroc prov 2015": "Maroc > provinces (2015)",
+    "uk nuts1 2018": "Royaume-Uni > NUTS 1 (2018)",
+    "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)"
   },
 
   "examples": {
@@ -631,7 +633,9 @@ export default {
     "ca-prov-life-2015": "Espérance de vie (2013-2015)",
     "ca-cd-pop-2017": "Population (2011-2017)",
     "ma-reg-pop-2014": "Population (2014)",
-    "ma-prov-pop-2014": "Population (2014)"
+    "ma-prov-pop-2014": "Population (2014)",
+    "uk-nuts1-pop-2017": "Population (2017)",
+    "uk-nuts3-pop-2018": "Population (2014-2018)"
   },
 
   "importMap": {

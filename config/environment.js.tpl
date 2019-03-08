@@ -611,6 +611,40 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "uk nuts1 2018",
+        attribution: "basemap from Office for National Statistics (UK)",
+        sources: [
+          {source: "UK-nuts-1-2018.json", projection: "d3.geoTransverseMercator()", scale: 1, transforms:{ rotate: [2, -49] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "UK-dico-NUTS-1-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "uk-nuts1-pop-2017",
+                source: "uk-nuts-1-2018-pop-2017.csv"
+            }
+        ]
+      },
+      {
+        id: "uk nuts3 2018",
+        attribution: "basemap from Office for National Statistics (UK)",
+        sources: [
+          {source: "UK-nuts-3-2018.json", projection: "d3.geoTransverseMercator()", scale: 1, transforms:{ rotate: [2, -49] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "UK-dico-NUTS-3-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "uk-nuts3-pop-2018",
+                source: "uk-nuts-3-2018-pop-2018.csv"
+            }
+        ]
+      },
+      {
         id: "france dept",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
