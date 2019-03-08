@@ -446,6 +446,23 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "china prov 2018",
+        attribution: "basemap from OCHA",
+        sources: [
+          {source: "CN-prov-2018.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [-104, 0], parallels: [ 23, 48 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "CN-dico-prov-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "cn-prov-grp-2017",
+                source: "cn-prov-GRP-2017.csv"
+            }
+        ]
+      },
+      {
         id: "eu country 2013",
         attribution: "basemap from GISCO - Eurostat (European Commission)",
         sources: [

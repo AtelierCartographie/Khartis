@@ -601,7 +601,8 @@ export default {
     "maroc reg 2015": "Maroc > régions (2015)",
     "maroc prov 2015": "Maroc > provinces (2015)",
     "uk nuts1 2018": "Royaume-Uni > NUTS 1 (2018)",
-    "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)"
+    "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)",
+    "china prov 2018": "Chine > provinces (2018)"
   },
 
   "examples": {
@@ -635,7 +636,8 @@ export default {
     "ma-reg-pop-2014": "Population (2014)",
     "ma-prov-pop-2014": "Population (2014)",
     "uk-nuts1-pop-2017": "Population (2017)",
-    "uk-nuts3-pop-2018": "Population (2014-2018)"
+    "uk-nuts3-pop-2018": "Population (2014-2018)",
+    "cn-prov-grp-2017": "Produit régional brut (2009-2017)"
   },
 
   "importMap": {
