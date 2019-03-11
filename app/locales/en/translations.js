@@ -588,7 +588,8 @@ export default {
     "uk nuts1 2018": "United Kingdom > NUTS 1 (2018)",
     "uk nuts3 2018": "United Kingdom > NUTS 3 (2018)",
     "china prov 2018": "China > provinces (2018)",
-    "algeria wil 2008": "Algeria > Wilayas (2008)"
+    "algeria wil 2008": "Algeria > Wilayas (2008)",
+    "nc com 2017": "New Caledonia > municipalities (2017)"
   },
 
   "examples": {
@@ -624,7 +625,9 @@ export default {
     "uk-nuts1-pop-2017": "Population (2017)",
     "uk-nuts3-pop-2018": "Population (2014-2018)",
     "cn-prov-grp-2017": "Gross regional product (2009-2017)",
-    "dz-wil-pop-2008": "Population (2008)"
+    "dz-wil-pop-2008": "Population (2008)",
+    "nc-com-pop-2014": "Population (2014)",
+    "nc-com-ref-2018": "Independence referendum (2018)"
   },
 
   "importMap": {

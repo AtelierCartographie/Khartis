@@ -645,6 +645,27 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "nc com 2017",
+        attribution: "basemap from DITTT (CC BY-NC-SA)",
+        sources: [
+          {source: "NC-com-2017.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [-166, 0], parallels: [ -20.66, -22.33 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "NC-dico-COM-2017.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "nc-com-pop-2014",
+                source: "nc-com-pop-2014.csv"
+            },
+            {
+              id: "nc-com-ref-2018",
+              source: "nc-com-ref-2018.csv"
+            }
+        ]
+      },
+      {
         id: "uk nuts1 2018",
         attribution: "basemap from Office for National Statistics (UK)",
         sources: [
