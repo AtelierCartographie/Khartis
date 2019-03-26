@@ -92,7 +92,7 @@
     "electron-simple-updater": "^1.2.2",
     "electron-squirrel-startup": "^1.0.0",
     "normalize-scss": "^7.0.1",
-    "proj4": "^2.4.4"
+    "proj4": "^2.5.0"
   },
   "main": "electron.js",
   "ember-electron": {

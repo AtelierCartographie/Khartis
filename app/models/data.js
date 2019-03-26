@@ -190,10 +190,10 @@ let ColumnStruct = Struct.extend({
             }
           });
 
-        let type = Object.keys(p).reduce( (r, key) => {
-          return r == null || p[key] > p[r] ? key : r;
-        }, null);
-        
+        let orderedTypes = Object.keys(p).sort((a, b) => p[b] - p[a]);
+
+        let type = orderedTypes[0];
+
         if (type === "numeric") {
           let ntype = coordTypeFromHeader();
           if (ntype !== undefined) {
