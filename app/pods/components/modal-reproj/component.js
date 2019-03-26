@@ -125,7 +125,7 @@ var ReProjModal = XModal.extend({
     },
 
     openDocumentation() {
-      this.get('documentationService').trigger("openAtUrl", "couleurs-ordonnees/index.html");
+      this.get('documentationService').trigger("openAtUrl", "importer-propre-fond/index.html");
     }
   }
 });
