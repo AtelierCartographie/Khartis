@@ -598,7 +598,14 @@ export default {
     "FRA20 com 2017": "France > communes (2017) > Martinique",
     "FRA30 com 2017": "France > communes (2017) > Guyane",
     "FRA40 com 2017": "France > communes (2017) > La Réunion",
-    "FRA50 com 2017": "France > communes (2017) > Mayotte"
+    "FRA50 com 2017": "France > communes (2017) > Mayotte",
+    "maroc reg 2015": "Maroc > régions (2015)",
+    "maroc prov 2015": "Maroc > provinces (2015)",
+    "uk nuts1 2018": "Royaume-Uni > NUTS 1 (2018)",
+    "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)",
+    "china prov 2018": "Chine > provinces (2018)",
+    "algeria wil 2008": "Algérie > Wilayas (2008)",
+    "nc com 2017": "Nouvelle-Calédonie > Communes (2017)"
   },
 
   "examples": {
@@ -628,7 +635,15 @@ export default {
     "eu_nuts2-agriculture": "Surperficie agricole utilisée (SAU) selon la taille des exploitations (2013)",
     "eu_nuts3-pop": "Densité de population (2015)",
     "ca-prov-life-2015": "Espérance de vie (2013-2015)",
-    "ca-cd-pop-2017": "Population (2011-2017)"
+    "ca-cd-pop-2017": "Population (2011-2017)",
+    "ma-reg-pop-2014": "Population (2014)",
+    "ma-prov-pop-2014": "Population (2014)",
+    "uk-nuts1-pop-2017": "Population (2017)",
+    "uk-nuts3-pop-2018": "Population (2014-2018)",
+    "cn-prov-grp-2017": "Produit régional brut (2009-2017)",
+    "dz-wil-pop-2008": "Population (2008)",
+    "nc-com-pop-2014": "Population (2014)",
+    "nc-com-ref-2018": "Référendum d'autodétermination (2018)"
   },
 
   "importMap": {
@@ -638,7 +653,7 @@ export default {
     "selectId": "Sélection de l'identifiant",
     "selectIdDescription": "Cet identifiant unique servira à relier les polygones (fond de carte) aux données. C'est l'opération de la \"jointure\".",
     "nonUniqueKey": "Attention : plusieurs objets de la carte auront le même identifiant",
-    "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empécher le bon fonctionnement de Khartis.",
+    "tooBig": "Le fond de carte semble volumineux ! Cela risque d'empêcher le bon fonctionnement de Khartis",
     "askSimplify": "Voulez-vous simplifier automatiquement le tracé des polygones ?",
     "askKeepVars": {
       "title": "Conserver les autres variables ?",

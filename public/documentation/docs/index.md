@@ -6,6 +6,7 @@ Un projet open source de [Sciences Po - Atelier de cartographie](http://www.scie
 ## Tutoriels
 * [Premiers pas avec Khartis (1)](premiers-pas-avec-Khartis-(1)) - symboles proportionnels
 * [Premiers pas avec Khartis (2)](premiers-pas-avec-Khartis-(2)) - choroplèthe + coordonnées lat/long
+* [Importer son propre fond de carte](importer-propre-fond)
 
 ## Visualisations
 * [Liste des visualisations](liste-des-visualisations)

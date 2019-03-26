@@ -19,12 +19,12 @@
             {{#each layersCbx as |cbx|}}
             <li class="padded">
               <div class="horizontal airy middle flow">
-                <div class="solid horizontal airy middle flow w7">
+                <!-- <div class="solid horizontal airy middle flow w7">
                   <span class="layer-title">{{cbx.layer.label}}</span>
                 </div>
                 <span>
                   {{x-capitalize (t 'importMap.withId')}}
-                </span>
+                </span> -->
                 {{#x-dropdown-plus as |facet|}}
                   {{#facet.trigger class="filled on-white"}}
                     {{cbx.selectedPropKey}}
@@ -97,7 +97,7 @@
             {{#if mapConfigsOnError.length}}
               <b>{{x-capitalize (t 'importMap.error.layersOnError')}}</b><br/>
               {{#each mapConfigsOnError as |mc|}}
-                {{mc.id}} : 
+                {{mc.id}} :
                 {{#each mc._debug_errors as |err|}}
                   {{err}} &nbsp;
                 {{/each}}
@@ -112,7 +112,7 @@
               <a style="text-decoration: underline; color: red;" {{action 'downloadDebug' mc}}>[Erreur] Télécharger le topojson {{mc.id}}</a> simplifié à {{mc._debug_simplify}}%<br/>
             {{/each}} --}}
           {{/if}}
-            
+
         </div>
 
         <div class="modal-footer">

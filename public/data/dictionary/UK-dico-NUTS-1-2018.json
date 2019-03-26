@@ -1,0 +1,62 @@
+[
+ {
+   "ID": "UKC",
+   "Code_ONS": "E12000001",
+   "Region": "North East (England)"
+ },
+ {
+   "ID": "UKD",
+   "Code_ONS": "E12000002",
+   "Region": "North West (England)"
+ },
+ {
+   "ID": "UKE",
+   "Code_ONS": "E12000003",
+   "Region": "Yorkshire and The Humber"
+ },
+ {
+   "ID": "UKF",
+   "Code_ONS": "E12000004",
+   "Region": "East Midlands (England)"
+ },
+ {
+   "ID": "UKI",
+   "Code_ONS": "E12000007",
+   "Region": "London"
+ },
+ {
+   "ID": "UKG",
+   "Code_ONS": "E12000005",
+   "Region": "West Midlands (England)"
+ },
+ {
+   "ID": "UKH",
+   "Code_ONS": "E12000006",
+   "Region": "East of England"
+ },
+ {
+   "ID": "UKJ",
+   "Code_ONS": "E12000008",
+   "Region": "South East (England)"
+ },
+ {
+   "ID": "UKK",
+   "Code_ONS": "E12000009",
+   "Region": "South West (England)"
+ },
+ {
+   "ID": "UKL",
+   "Code_ONS": "W92000004",
+   "Region": "Wales"
+ },
+ {
+   "ID": "UKM",
+   "Code_ONS": "S92000003",
+   "Region": "Scotland"
+ },
+ {
+   "ID": "UKN",
+   "Code_ONS": "N92000002",
+   "Region": "Northern Ireland"
+ }
+]

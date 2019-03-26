@@ -16,7 +16,7 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'fr'
     },
-    
+
     projection: {
       default: "natural_earth"
     },
@@ -361,6 +361,23 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "algeria wil 2008",
+        attribution: "basemap from ",
+        sources: [
+          {source: "DZ-wil-2008.json", projection: "d3.geoTransverseMercator()", transforms:{rotate: [-3, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "DZ-dico-WIL-2008.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "dz-wil-pop-2008",
+            source: "dz-wil-pop-2008.csv"
+          },
+        ]
+      },
+      {
         id: "brazil ufe 2015",
         attribution: "basemap from IBGE",
         sources: [
@@ -442,6 +459,23 @@ module.exports = function(environment) {
             {
                 id: "ca-cd-pop-2017",
                 source: "ca-cd-pop-2017.csv"
+            }
+        ]
+      },
+      {
+        id: "china prov 2018",
+        attribution: "basemap from OCHA",
+        sources: [
+          {source: "CN-prov-2018.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [-104, 0], parallels: [ 23, 48 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "CN-dico-prov-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "cn-prov-grp-2017",
+                source: "cn-prov-GRP-2017.csv"
             }
         ]
       },
@@ -574,6 +608,95 @@ module.exports = function(environment) {
             id: "us_state-pop",
             source: "us-state-pop-2015.csv"
           }
+        ]
+      },
+      {
+        id: "maroc reg 2015",
+        attribution: "basemap from OpenStreetMap contributors (ODbl license)",
+        sources: [
+          {source: "MA-reg-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MA-dico-REG-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "ma-reg-pop-2014",
+                source: "ma-reg-2015-pop-2014.csv"
+            }
+        ]
+      },
+      {
+        id: "maroc prov 2015",
+        attribution: "basemap from OpenStreetMap contributors (ODbl license)",
+        sources: [
+          {source: "MA-reg-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MA-dico-PROV-2015.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "ma-prov-pop-2014",
+                source: "ma-prov-2015-pop-2014.csv"
+            }
+        ]
+      },
+      {
+        id: "nc com 2017",
+        attribution: "basemap from DITTT (CC BY-NC-SA)",
+        sources: [
+          {source: "NC-com-2017.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [-166, 0], parallels: [ -20.66, -22.33 ] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "NC-dico-COM-2017.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "nc-com-pop-2014",
+                source: "nc-com-pop-2014.csv"
+            },
+            {
+              id: "nc-com-ref-2018",
+              source: "nc-com-ref-2018.csv"
+            }
+        ]
+      },
+      {
+        id: "uk nuts1 2018",
+        attribution: "basemap from Office for National Statistics (UK)",
+        sources: [
+          {source: "UK-nuts-1-2018.json", projection: "d3.geoTransverseMercator()", scale: 1, transforms:{ rotate: [2, -49] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "UK-dico-NUTS-1-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "uk-nuts1-pop-2017",
+                source: "uk-nuts-1-2018-pop-2017.csv"
+            }
+        ]
+      },
+      {
+        id: "uk nuts3 2018",
+        attribution: "basemap from Office for National Statistics (UK)",
+        sources: [
+          {source: "UK-nuts-3-2018.json", projection: "d3.geoTransverseMercator()", scale: 1, transforms:{ rotate: [2, -49] }, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "UK-dico-NUTS-3-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "uk-nuts3-pop-2018",
+                source: "uk-nuts-3-2018-pop-2018.csv"
+            }
         ]
       },
       {
@@ -1084,7 +1207,7 @@ module.exports = function(environment) {
           identifier: "ID"
         }
       }
-      
+
     ],
 
     //configure here analytics services. view ember-metrics for more info
