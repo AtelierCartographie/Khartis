@@ -188,6 +188,23 @@ module.exports = function(environment) {
         "rotation_z": 0
       },
       {
+        "id": "waterman_butterfly",
+        "name": "Waterman b.",
+        "scale": 118,
+        "d3_geo": "d3.geoPolyhedralWaterman()",
+        "rotate": [20,0],
+        "d3_link": "http://bl.ocks.org/mbostock/4458497",
+        "rotate_alternative": [-160,0],
+        "score_area": 3,
+        "score_angle": 3,
+        "score_distance": 3,
+        "author": "Steve Waterman",
+        "year": "1996",
+        "translation_x": 1,
+        "translation_y": 1,
+        "rotation_z": 1
+      },
+      {
         "id": "armadillo",
         "name": "Armadillo",
         "scale": 150,
@@ -251,23 +268,6 @@ module.exports = function(environment) {
         "translation_x": 1,
         "translation_y": 0,
         "rotation_z": 0
-      },
-      {
-        "id": "waterman_butterfly",
-        "name": "Waterman b.",
-        "scale": 118,
-        "d3_geo": "d3.geoPolyhedralWaterman()",
-        "rotate": [20,0],
-        "d3_link": "http://bl.ocks.org/mbostock/4458497",
-        "rotate_alternative": [-160,0],
-        "score_area": 3,
-        "score_angle": 3,
-        "score_distance": 3,
-        "author": "Steve Waterman",
-        "year": "1996",
-        "translation_x": 1,
-        "translation_y": 1,
-        "rotation_z": 1
       }
     ],
 
