@@ -30,7 +30,7 @@
   {{#if model.project.graphLayout.basemap}}
     <div class="vertical flow">
       <div class="horizontal airy flow">
-        <div class="map-preview solid">
+        <div class="map-preview solid vertical flow">
         {{#if model.project.graphLayout.projection}}
           {{map-editor
             graphLayout=model.project.graphLayout
@@ -43,6 +43,13 @@
             hasDocumentMaskFeature=false
           }}
         {{/if}}
+        <div class="horizontal left flow" style="margin-top: 0.5em;">
+          {{#if model.project.graphLayout.basemap.isCustom}}
+            {{#x-button class="small fluid filled primary" action=(action 'overrideProjWkt')}}
+              {{x-capitalize (t 'project.step1.projectionSettings')}}
+            {{/x-button}}
+          {{/if}}
+        </div>
         </div>
         <div class="map-dictionary-preview">
         {{#if model.project.graphLayout.basemap.dictionaryData}}
@@ -66,13 +73,6 @@
           </table>
         {{/if}}
         </div>
-      </div>
-      <div class="horizontal left flow">
-        {{#if model.project.graphLayout.basemap.isCustom}}
-          {{#x-button class="solid filled primary" action=(action 'overrideProjWkt')}}
-            change projection
-          {{/x-button}}
-        {{/if}}
       </div>
       <div class="horizontal right flow">
         {{#unless model.project.graphLayout.basemap.isCustom}}

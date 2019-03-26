@@ -198,11 +198,10 @@ export default Ember.Controller.extend({
     },
 
     overrideProjWkt() {
+      const bm = this.get('model.project.graphLayout.basemap');
       this.get('ModalManager')
-        .show('modal-reproj', {model: null})
+        .show('modal-reproj', {model: bm})
         .then( wkt => {
-          console.log(wkt);
-          const bm = this.get('model.project.graphLayout.basemap');
           bm.overrideProjectionWkt(wkt);
           this.get('model.project.graphLayout').setBasemap(bm);
         })

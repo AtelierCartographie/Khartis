@@ -20,8 +20,10 @@
   }
 
   .map-preview {
-    height: 200px;
-    width: 200px;
+    svg {
+      height: 200px;
+      width: 200px;
+    }
     margin: auto;
   }
 

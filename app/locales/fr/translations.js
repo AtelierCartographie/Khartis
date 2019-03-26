@@ -9,6 +9,7 @@ export default {
     "import": "importer",
     "continue": "continuer",
     "validate": "valider",
+    "reset": "réinitialiser",
     "open": "Ouvrir",
     "close": "Fermer",
     "or": "ou",
@@ -41,7 +42,7 @@ export default {
   "help.documentation": "Aide - Documentation de Khartis",
   "help.knowMore": "En savoir plus",
   "help.createViz": "Pour en savoir plus sur les visualisations disponibles et sur la manière de les réaliser :",
-  "help.createViz.link": "consultez l'aide",
+  "help.link": "consultez l'aide",
 
   "updater": {
     "title": "Une mise à jour est disponible",
@@ -76,7 +77,8 @@ export default {
         "projectExists": "Ce projet existe déjà dans votre historique"
       },
       "search" : "Rechercher un pays, une région, un département...",
-      "useImportedData": "Utiliser les données du fond de carte"
+      "useImportedData": "Utiliser les données du fond de carte",
+      "projectionSettings": "options de projection"
     },
 
     "step2": {
@@ -451,7 +453,6 @@ export default {
         "unselectAll": "tout décocher",
       },
       "show": "afficher",
-      "reset": "réinitialiser",
       "edit": "Éditer",
       "legend": {
         "stacking": "présentation",
@@ -659,7 +660,13 @@ export default {
   },
 
   "reproj": {
-    "title": "Changer la projection du fond de carte"
+    "title": "Options de projection",
+    "knowMore": "Pour en savoir plus sur les options de projection",
+    "initalLabel": "Projection initiale",
+    "modifyLabel": "Changer de projection",
+    "orWktProj4": "ou rensigner les paramètres au format proj4",
+    "errorWktInvalid": "le wkt est invalide",
+    "selectInList": "choisir dans la liste"
   }
 
 };

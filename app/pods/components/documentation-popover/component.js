@@ -3,6 +3,7 @@ import config from 'khartis/config/environment';
 
 export default Ember.Component.extend({
 
+  classNames: ['documentation-popover'],
   classNameBindings: ['expanded'],
 
   documentationService: Ember.inject.service('documentation'),

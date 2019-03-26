@@ -63,6 +63,7 @@ var XModal = Ember.Component.extend({
     this.$().modal({
       backdrop: this.get('preventBackdropClick') ? 'static' : true
     });
+    this.$(".modal-backdrop").detach().insertAfter('.documentation-popover');
     this.$().css("z-index", parseInt($(".modal-backdrop").css("z-index")) + 1);
     this.sendAction.apply(this, ['onShow'].concat(Array.prototype.slice.call(arguments)));
 

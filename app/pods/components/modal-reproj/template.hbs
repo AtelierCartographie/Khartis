@@ -11,32 +11,53 @@
           <div class="loading-bar"></div>
           {{/if}}
           {{#if isLoaded}}
-            Choisir une projection dans la liste
-            {{#multi-value-input uniqueSelection=selectedEpsg selectionMaxLength=1 
-              suggestionProvider=epsgDictAsArray filterField=(x-array "name" "code")
-              select=(action 'selectEspg')
-              queryMinLength=0 as |facet o this|}}
-                {{#if facet.isSuggestionRow}}
-                  {{get o "name"}}
-                {{else if facet.isSelectedValue}}
-                  {{get o "name"}}
+            <div class="vertical airy flow">
+              <div>
+                <div class="solid"><i>{{x-capitalize (t 'reproj.knowMore')}}, <a class="know-more" {{action 'openDocumentation'}}>{{t 'help.link'}}</a></i></div>
+              </div>
+              <div>
+                <label>{{x-capitalize (t 'reproj.initalLabel')}}</label>
+                <div class="initial-wkt-box">{{model.initialWkt}}</div>
+              </div>
+              <div>
+                <label>{{x-capitalize (t 'reproj.modifyLabel')}}</label>
+                {{#multi-value-input uniqueSelection=selectedEpsg selectionMaxLength=1 
+                  suggestionProvider=epsgDictAsArray filterField=(x-array "name" "code")
+                  select=(action 'selectEspg')
+                  placeholder=(t 'reproj.selectInList')
+                  queryMinLength=0 as |facet o this|}}
+                    {{#if facet.isSuggestionRow}}
+                      {{get o "name"}}
+                    {{else if facet.isSelectedValue}}
+                      {{get o "name"}}
+                    {{/if}}
+                {{/multi-value-input}}
+              </div>
+              <div>
+                <label>{{t 'reproj.orWktProj4'}}</label>
+                {{input value=wktText}}
+                {{#if errorMessage}}
+                  <span class="text-danger">{{x-capitalize (t 'reproj.errorWktInvalid')}}</span>
                 {{/if}}
-            {{/multi-value-input}}
-            ou rensignez le code proj4 en wkt
-            {{input value=wktText}}
-          {{/if}}
-          {{#if errorMessage}}
-            <span class="text-danger">le wkt est invalide</span>
+              </div>
+            </div>
           {{/if}}
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="button filled default" {{action 'reject'}}>{{x-capitalize (t 'general.cancel')}}</button>
-            {{#if isCommitable}}
-            <button type="button" class="button filled primary" {{action 'next'}}>
-              {{x-capitalize (t 'general.next')}}
-            </button>
-            {{/if}}
+          <div class="horizontal space-between flow">
+            <div class="solid">
+              <button type="button" class="button filled default" {{action 'reset'}}>{{x-capitalize (t 'general.reset')}}</button>
+            </div>
+            <div class="solid">
+              <button type="button" class="button filled default" {{action 'reject'}}>{{x-capitalize (t 'general.cancel')}}</button>
+              {{#if isCommitable}}
+              <button type="button" class="button filled primary" {{action 'next'}}>
+                {{x-capitalize (t 'general.validate')}}
+              </button>
+              {{/if}}
+            </div>
+          </div>
         </div>
 
     </div>

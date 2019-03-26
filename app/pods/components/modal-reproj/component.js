@@ -1,8 +1,11 @@
+import Ember from "ember";
 import XModal from '../x-modal/component';
 import config from '../../../config/environment';
 import proj4 from "npm:proj4";
 
 var ReProjModal = XModal.extend({
+
+  documentationService: Ember.inject.service('documentation'),
 
   classNames: ["modal", "fade", "confirm"],
   name: 'modal-reproj',
@@ -53,7 +56,6 @@ var ReProjModal = XModal.extend({
         xhr.open('GET', `${config.rootURL}data/epsg.json`, true);
         
         xhr.onload = (e) => {
-          console.log(e);
           if (e.target.status == 200) {
             res(JSON.parse(e.target.response));
           }
@@ -74,10 +76,15 @@ var ReProjModal = XModal.extend({
     this.set('selectedEpsg', null);
     this.set('state', 'loading');
     this.set('errorMessage', null);
+    this.set('model', opts.model);
     this._super(opts);
 
     return this.loadEspg().then(epsgDict => {
       this.set('epsgDict', epsgDict);
+      if (this.get('model.currentWkt') !== this.get('model.initialWkt')) {
+        this.set('selectedEpsg', this.get('epsgDictAsArray').find(r => r.proj4.trim() === this.get('model.currentWkt')));
+        this.set('wktText', this.get('model.currentWkt'));
+      }
       this.set('state', 'loaded');
     }).then(() => {
       return new Promise( (resolve, reject) => {
@@ -87,7 +94,7 @@ var ReProjModal = XModal.extend({
   },
 
   commit() {
-    const wkt = this.get('wktText');
+    const wkt = this.get('wktText').trim();
     try {
       proj4(wkt); //raise exception if invalid
       this.get('_promise').resolve(wkt);
@@ -98,16 +105,27 @@ var ReProjModal = XModal.extend({
   },
 
   actions: {
+
     reject() {
       this.hide();
       this.get('_promise').reject();
     },
+
+    reset() {
+      this.set('wktText', this.get('model.initialWkt'));
+      this.commit();
+    },
+
     next() {
       this.commit();
     },
 
     selectEspg(selection) {
       this.set('wktText', selection[0].proj4);
+    },
+
+    openDocumentation() {
+      this.get('documentationService').trigger("openAtUrl", "couleurs-ordonnees/index.html");
     }
   }
 });

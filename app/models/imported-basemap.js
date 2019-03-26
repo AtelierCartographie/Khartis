@@ -42,6 +42,14 @@ var ImportedBasemap = Basemap.extend({
 
   }.observes('id').on("init"),
 
+  initialWkt: function() {
+    return this.get('mapConfig.initialWkt');
+  }.property('mapConfig.initialWkt'),
+
+  currentWkt: function() {
+    return this.get('mapConfig.sources')[0].wkt;
+  }.property('mapConfig.sources.@each.wkt'),
+
   setup() {
     return Promise.all([
       this.loadMapData(),
@@ -202,6 +210,7 @@ ImportedBasemap.reopenClass({
           source: tuple.dict,
           identifier: dictIds[i]
         },
+        initialWkt: tuple.proj4Wkt,
         _debug_simplify: tuple.simplifyPct
       }
     });

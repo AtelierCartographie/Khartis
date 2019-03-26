@@ -9,6 +9,7 @@ export default {
     "import": "import",
     "continue": "continue",
     "validate": "validate",
+    "reset": "reset",
     "open": "Open",
     "close": "Close",
     "or": "or",
@@ -76,7 +77,8 @@ export default {
         "projectExists": "Project already exists"
       },
       "search" : "Search by country, region or department",
-      "useImportedData": "Use data from base map"
+      "useImportedData": "Use data from base map",
+      "projectionSettings": "projection settings"
     },
 
     "step2": {
@@ -643,7 +645,13 @@ export default {
   },
 
   "reproj": {
-    "title": "Change basemap's projection"
+    "title": "Projection settings",
+    "knowMore": "To know more about projections",
+    "initalLabel": "Initial projection",
+    "modifyLabel": "Change projection",
+    "orWktProj4": "or set parameters (proj4 format)",
+    "errorWktInvalid": "wkt is not valid",
+    "selectInList": "select in the list"
   }
 
 };
