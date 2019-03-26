@@ -90,7 +90,7 @@
 
     <div class="vertical half-airy flow">
 
-      {{#if (x-every model.project.graphLayout.basemap.isCustom model.project.graphLayout.basemap.dictionaryData)}}
+      {{#if (x-every model.project.graphLayout.basemap.isCustom dictionaryDataSuitableForMapping)}}
       <div class="solid">
         {{#x-button class="horizontal center flow filled primary2" action=(action 'useImportedData')}}
           {{x-capitalize (t "project.step1.useImportedData")}}

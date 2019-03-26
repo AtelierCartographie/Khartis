@@ -49,6 +49,11 @@ export default Ember.Controller.extend({
     return this.get('model.project.graphLayout.basemap.dictionaryData').slice(0, 8);
   }.property('model.project.graphLayout.basemap.dictionaryData'),
 
+  dictionaryDataSuitableForMapping: function() {
+    return this.get('model.project.graphLayout.basemap.dictionaryData')
+      && this.get('dictionaryDataHeaders').length > 1;
+  }.property('model.project.graphLayout.basemap.dictionaryData', 'dictionaryDataHeaders.[]'),
+
   downloadTemplate() {
 
     let modelKeys = Object.keys(this.get('model.project.graphLayout.basemap.dictionaryData')[0]),
