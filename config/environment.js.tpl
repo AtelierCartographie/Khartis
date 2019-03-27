@@ -700,6 +700,40 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "MGP com 2018",
+        attribution: "basemap from APUR",
+        sources: [
+          {source: "GRANDPARIS-com-2018.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MGP-dico-COM-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "MGP-com-2018-pop-2013",
+                source: "MGP-com-2018-pop-2013.csv"
+            }
+        ]
+      },
+      {
+        id: "MGP iris 2016",
+        attribution: "basemap from OSM and IGN",
+        sources: [
+          {source: "GRANDPARIS-iris-2016.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MGP-dico-IRIS-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "MGP-iris-2016-pop-2013",
+                source: "MGP-iris-2016-pop-2013.csv"
+            }
+        ]
+      },
+      {
         id: "france dept",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [

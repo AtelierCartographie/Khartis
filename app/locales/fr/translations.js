@@ -605,7 +605,9 @@ export default {
     "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)",
     "china prov 2018": "Chine > provinces (2018)",
     "algeria wil 2008": "Algérie > Wilayas (2008)",
-    "nc com 2017": "Nouvelle-Calédonie > Communes (2017)"
+    "nc com 2017": "Nouvelle-Calédonie > Communes (2017)",
+    "MGP com 2018": "Grand Paris > Communes (2018)",
+    "MGP iris 2016": "Grand Paris > Iris (2016)"
   },
 
   "examples": {
@@ -643,7 +645,9 @@ export default {
     "cn-prov-grp-2017": "Produit régional brut (2009-2017)",
     "dz-wil-pop-2008": "Population (2008)",
     "nc-com-pop-2014": "Population (2014)",
-    "nc-com-ref-2018": "Référendum d'autodétermination (2018)"
+    "nc-com-ref-2018": "Référendum d'autodétermination (2018)",
+    "MGP-com-2018-pop-2013": "Population (2013)",
+    "MGP-iris-2016-pop-2013": "Population (2013)"
   },
 
   "importMap": {
