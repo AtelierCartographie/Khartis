@@ -236,7 +236,7 @@ export default Ember.Mixin.create({
         theta = angle([ox, oy], anchor),
         hasBoxBounds = d.bounds.some( b => b.type === "box" ),
         theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
-    console.log(absoluteXY);
+        
     //intersect with bounds and keep extremums
     let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
       let x, y, rx = bounds.width/2, ry = bounds.height/2;
