@@ -1,18 +1,14 @@
 import Ember from 'ember';
 import d3 from 'npm:d3';
 import d3lper from 'khartis/utils/d3lper';
-import d3Annotation from 'npm:d3-svg-annotation';
 import SymbolMaker from 'khartis/utils/symbol-maker';
 
-const ENABLE_DRAG_FEATURE = true; //TODO : finish
+const ENABLE_DRAG_FEATURE = true;
 
 const {abs, sqrt, cos, sin, atan2, PI:pi} = Math,
       pyt = (a, o) => sqrt(a*a + o*o),
       angle = function(o, p) {
         return atan2(p[1] - o[1], p[0] - o[0]);
-      },
-      truncate = function(v) { //equals to ceil for neagtive numbers and floor for postive ones
-        return v - v%1;
       };
 
 export default Ember.Mixin.create({
@@ -240,7 +236,7 @@ export default Ember.Mixin.create({
         theta = angle([ox, oy], anchor),
         hasBoxBounds = d.bounds.some( b => b.type === "box" ),
         theta2 = piScale(theta, hasBoxBounds ? pi/2 : pi/4);
-    
+    console.log(absoluteXY);
     //intersect with bounds and keep extremums
     let {x: offsetedOx, y: offsetedOy} = d.bounds.reduce( (out, bounds) => {
       let x, y, rx = bounds.width/2, ry = bounds.height/2;

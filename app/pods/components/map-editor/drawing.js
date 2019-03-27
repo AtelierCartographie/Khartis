@@ -121,7 +121,7 @@ export default Ember.Mixin.create({
                     .filter(d => d == this.get('drawingSelectedFeature'));
                 let selectedEl = drawingZone.node().children[0];
                 let nodeBox = d3lper.absoluteSVGBox(this.d3l().node(), selectedEl);
-                let rect = drawingZone.selectOrCreate("rect.drawing-feature-box", function() {
+                drawingZone.selectOrCreate("rect.drawing-feature-box", function() {
                     return this.append("rect")
                         .classed("drawing-feature-box", true)
                         .attr("kis:kis:transient", "true");

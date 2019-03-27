@@ -30,9 +30,11 @@ let d3lper = {
   },
 
   xyRelativeTo(from, to) {
+    const bboxTo = d3lper.normalizedClientRect(to);
+    const bboxFrom = d3lper.normalizedClientRect(from);
     return {
-      x: from.getBoundingClientRect().x - to.getBoundingClientRect().x,
-      y: from.getBoundingClientRect().y - to.getBoundingClientRect().y
+      x: bboxFrom.x - bboxTo.x,
+      y: bboxFrom.y - bboxTo.y
     }
   },
 
@@ -145,11 +147,25 @@ let d3lper = {
 
   absoluteSVGBox(svg, element) {
     let xy = svg.createSVGPoint(),
-        elemBox = element.getBoundingClientRect();
+        elemBox = d3lper.normalizedClientRect(element);
     xy.x = elemBox.x;
     xy.y = elemBox.y;
     xy = xy.matrixTransform(svg.getScreenCTM().inverse());
     return {x: xy.x, y: xy.y, width: elemBox.width*svg.getScreenCTM().inverse().d, height: elemBox.height*svg.getScreenCTM().inverse().a};
+  },
+
+  normalizedClientRect(element) {
+    let box = element.getBoundingClientRect();
+    return {
+      left: box.left, 
+      right: box.right,
+      top: box.top,
+      bottom: box.bottom,
+      width: box.width,
+      height: box.height,
+      x: box.width < 0 ? box.left + box.width : box.left,
+      y: box.height < 0 ? box.top + box.height : box.top
+    };
   }
 	
 	

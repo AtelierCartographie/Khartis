@@ -99,7 +99,7 @@ export default Ember.Mixin.create({
     } else {
       selectedLayerEl = d3.select(this).selectAll("g.legend-layer").nodes()
         .find( n => {
-          let bbox = n.getBoundingClientRect();
+          let bbox = d3lper.normalizedClientRect(n);
           return mouseX > bbox.x + margin && mouseX <= bbox.x + bbox.width - margin
             && mouseY > bbox.y + margin && mouseY <= bbox.y + bbox.height - margin;
         });
@@ -119,7 +119,7 @@ export default Ember.Mixin.create({
     let excludes = excludeSel.classed("legend-group") ? excludeSel.selectAll("g.legend-layer").nodes() : [excludeSel.node()];
     let layerEls = this.d3l().selectAll("g.legend-layer").nodes()
       .filter( n => {
-        let bbox = n.getBoundingClientRect();
+        let bbox = d3lper.normalizedClientRect(n);
         return excludes.indexOf(n) === -1 && mouseX > bbox.x && mouseX <= bbox.x + bbox.width
           && mouseY > bbox.y && mouseY <= bbox.y + bbox.height;
       })
@@ -127,7 +127,7 @@ export default Ember.Mixin.create({
     if (layerEls.length) {
       let n = layerEls[0],
           anchors = {vertical: null, horizontal: null};
-      let bbox = n.getBoundingClientRect();
+      let bbox = d3lper.normalizedClientRect(n);
       if (mouseX < bbox.x + bbox.width / 2 ) anchors.horizontal = "left";
       if (mouseX >= bbox.x + bbox.width / 2 ) anchors.horizontal = "right";
       if (mouseY < bbox.y + bbox.height / 2 ) anchors.vertical = "top";
