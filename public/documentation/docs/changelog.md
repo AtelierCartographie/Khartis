@@ -1,9 +1,21 @@
+## v2.3 (01/04/2019)
+### Basemaps
+-   add Morocco at two levels: regions and provinces (2015)
+-   add United-Kingdom at two levels: NUTS-1 and NUTS-3 (2018)
+-   add Algeria wilayas (2008)
+-   add China provinces (2018)
+-   add New-Caledonia municipalities (2017)
+-   add Grand Paris at two levels: municipalities and iris
+
+### Import basemap
+New functionality to import your own basemap in three possible format: shapefile, geojson or topojson.
+
 ## v2.2 (13/11/2018)
 -   Redesign of visualizations panel: new classification more clear and readable
 -   3 new viz than combine two variables
 -   Documentation is now directly accessible in Khartis
 -   Map title and labels can be styled: font, size, bold, italic, underline, align, color
--   Labels can now be moved and connectors appears automatically. Thanks to d3-annotation by @susielu
+-   Labels can now be moved and connectors appears automatically.
 -   New projection available: Armadillo by Erwin Raisz and Airocean by Buckminster Fuller
 -   Fix Jenks discretization thresholds
 -   Dependancies: upgrade to ember 3.1
