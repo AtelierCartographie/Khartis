@@ -347,29 +347,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#selection-de-lidentifiant" title="Sélection de l'identifiant" class="md-nav__link">
-    Sélection de l'identifiant
+  <a href="#1-selection-de-lidentifiant" title="1. Sélection de l'identifiant" class="md-nav__link">
+    1. Sélection de l'identifiant
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#conserver-les-autres-variables" title="Conserver les autres variables ?" class="md-nav__link">
-    Conserver les autres variables ?
+  <a href="#2-conserver-les-autres-variables" title="2. Conserver les autres variables ?" class="md-nav__link">
+    2. Conserver les autres variables ?
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simplification-optionnel-et-selon-le-fond" title="Simplification (optionnel et selon le fond)" class="md-nav__link">
-    Simplification (optionnel et selon le fond)
+  <a href="#3-simplification-optionnel-et-selon-le-fond" title="3. Simplification (optionnel et selon le fond)" class="md-nav__link">
+    3. Simplification (optionnel et selon le fond)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#options-de-projection-optionnel" title="Options de projection (optionnel)" class="md-nav__link">
-    Options de projection (optionnel)
+  <a href="#4-options-de-projection-optionnel" title="4. Options de projection (optionnel)" class="md-nav__link">
+    4. Options de projection (optionnel)
   </a>
   
 </li>
@@ -743,29 +743,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#selection-de-lidentifiant" title="Sélection de l'identifiant" class="md-nav__link">
-    Sélection de l'identifiant
+  <a href="#1-selection-de-lidentifiant" title="1. Sélection de l'identifiant" class="md-nav__link">
+    1. Sélection de l'identifiant
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#conserver-les-autres-variables" title="Conserver les autres variables ?" class="md-nav__link">
-    Conserver les autres variables ?
+  <a href="#2-conserver-les-autres-variables" title="2. Conserver les autres variables ?" class="md-nav__link">
+    2. Conserver les autres variables ?
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simplification-optionnel-et-selon-le-fond" title="Simplification (optionnel et selon le fond)" class="md-nav__link">
-    Simplification (optionnel et selon le fond)
+  <a href="#3-simplification-optionnel-et-selon-le-fond" title="3. Simplification (optionnel et selon le fond)" class="md-nav__link">
+    3. Simplification (optionnel et selon le fond)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#options-de-projection-optionnel" title="Options de projection (optionnel)" class="md-nav__link">
-    Options de projection (optionnel)
+  <a href="#4-options-de-projection-optionnel" title="4. Options de projection (optionnel)" class="md-nav__link">
+    4. Options de projection (optionnel)
   </a>
   
 </li>
@@ -803,60 +803,68 @@
                 
                   <h1>Importer son propre fond de carte</h1>
                 
-                <p>Nous allons réaliser une carte de l'abstention au second tour de la présidentielle 2017 à Nantes par bureau de vote.</p>
+                <p>Nous allons réaliser une carte de l'abstention au second tour de l'élection présidentielle de 2017, à Nantes et par bureau de vote.</p>
 <p><img alt="import-final" src="../assets/tuto3-9.png" /></p>
 <h2 id="recuperer-le-fond-de-carte">Récupérer le fond de carte</h2>
 <p>La plateforme open data de Nantes met à disposition <a href="https://data.nantesmetropole.fr/explore/dataset/244400404_decoupage-geographique-bureaux-vote-nantes/export/?disjunctive.lieu_nom&amp;disjunctive.lieu_site">le découpage géographique des bureaux de vote de la ville</a>.
-Plusieurs format d'export sont disponibles et deux sont compatibles avec Khartis : geojson et shapefile.
+Plusieurs formats d'export sont disponibles dont deux sont compatibles avec Khartis : geojson et shapefile.
 <img alt="aperçu plateforme" src="../assets/tuto3-1.png" /></p>
 <p>Nous allons utiliser le format geojson que vous pouvez <a href="../assets/decoupage-geographique-bureaux-vote-nantes.geojson">récupérer directement ici</a> (clic droit 'enregistrer le lien sous').</p>
+<blockquote>
+<p><strong>Notion clé</strong>
+Khartis supporte trois formats :
+-   geojson (contenu dans un seul fichier à l'extension .geojson ou .json)
+-   shapefile (en fait au moins 3 fichiers avec les extensions .shp, .dbf et .prj)
+-   topojson (contenu dans un seul fichier à l'extension .topojson ou .json)</p>
+</blockquote>
 <h2 id="recuperer-les-donnees">Récupérer les données</h2>
-<p>Maintenant que nous avons un fond de carte, nous allons chercher des données électorales par bureau de vote. Toujours sur la plateforme open data de Nantes, <a href="https://data.nantesmetropole.fr/explore/?disjunctive.diffuseur&amp;disjunctive.theme&amp;disjunctive.features&amp;disjunctive.publisher&amp;disjunctive.gestionnaire&amp;disjunctive.keyword&amp;disjunctive.license&amp;sort=explore.popularity_score&amp;q=bureau+de+vote">plusieurs résultats d'élections</a> sont disponibles à cette échelle.
-Nous allons utiliser les résultats du second tour de l'élection présidentielle de 2017 en <a href="https://data.nantesmetropole.fr/explore/dataset/244400404_election-presidentielle-2017-nantes-2nd-tour/export/?disjunctive.bureau_de_vote">téléchargeant le format csv</a>.
-En consultant l'aperçu des données depuis la plateforme, on constate que les résultats ne sont qu'en nombre de votes.
+<p>Maintenant que nous avons un fond de carte, il nous faut chercher des données électorales par bureau de vote. Cette même plateforme open data de Nantes propose <a href="https://data.nantesmetropole.fr/explore/?disjunctive.diffuseur&amp;disjunctive.theme&amp;disjunctive.features&amp;disjunctive.publisher&amp;disjunctive.gestionnaire&amp;disjunctive.keyword&amp;disjunctive.license&amp;sort=explore.popularity_score&amp;q=bureau+de+vote">plusieurs résultats d'élections</a> à cette échelle.
+Pour cet exemple nous choisissons les résultats du second tour de l'élection présidentielle de 2017 en <a href="https://data.nantesmetropole.fr/explore/dataset/244400404_election-presidentielle-2017-nantes-2nd-tour/export/?disjunctive.bureau_de_vote">téléchargeant le format csv</a>.
+L'aperçu des données depuis la plateforme montre que les résultats sont exprimés en nombre de votes.
 <img alt="aperçu tableau" src="../assets/tuto3-2.png" /></p>
-<p>Pour plus de possibilités dans Khartis ensuite, nous avons calculé les résultats en pourcentage. Le <a href="../assets/Nantes-résultat-presidentielles-second-tour-2017-bureau-vote.csv">nouveau tableau est directement récupérable ici</a>.</p>
+<p>Pour envisager des visualisations plus riches et variés dans Khartis, il est possible de calculer les résultats en pourcentage à l'aide d'un tableur. Le <a href="../assets/Nantes-résultat-presidentielles-second-tour-2017-bureau-vote.csv">nouveau tableau après calculs est directement récupérable ici</a>.</p>
 <h2 id="importer-le-fond-de-carte-dans-khartis">Importer le fond de carte dans Khartis</h2>
-<p>Nous pouvons maintenant ouvrir <a href="https://www.sciencespo.fr/cartographie/khartis">Khartis</a>. Avant de pouvoir utiliser notre fond de carte avec toutes les possibilités de visualisations de Khartis, nous devons  l'importer. Cette opération s'effectue en deux étapes. D'abord cliquer sur le bouton "Importer son propre fond" puis glisser ou sélectionner le fichier geojson récupéré précedemment.
+<p>Nous pouvons ouvrir <a href="https://www.sciencespo.fr/cartographie/khartis">Khartis</a>. Pour visualiser les résultats du vote, il nous faut d'abord importer le fond de carte. Cette opération s'effectue en deux étapes : 1. cliquer sur le bouton "Importer son propre fond", 2. glisser ou sélectionner le fichier geojson récupéré précédemment.
 <img alt="import-fond" src="../assets/tuto3-3.gif" /></p>
-<p>Nous sommes ensuite guidé dans une série d'étapes qui va tester et permettre la compatibilité de notre fond avec Khartis.</p>
-<h3 id="selection-de-lidentifiant">Sélection de l'identifiant</h3>
-<p>Le fond de carte que nous venons d'importer contient des données sous forme de variables. C'est à dire des données associées à chaque entité géographique (ici un bureau de vote). Parmi ces variables il y en a généralement une qui permet d'identifier de manière unique chaque entité géographique du fond (chaque bureau de vote).
-Dans notre cas il y a justement une variable appelée <strong>idburo</strong> qui est un numéro unique de bureau de vote.
-Nous allons la sélectionner et cliquer sur suivant.
+<p>En quelques étapes Khartis va tester et rendre compatible le fond de carte.</p>
+<h3 id="1-selection-de-lidentifiant">1. Sélection de l'identifiant</h3>
+<p>Le fond de carte importé contient des données propres, sous forme de variables. Celles-ci sont généralement organisées en colonnes. Une de ces variables permet d'identifier de manière unique chaque entité géographique du fond (chacun des bureaux de vote).
+Dans notre cas elle s'appelle <strong>idburo</strong>, un numéro unique de bureau de vote.
+Nous la sélectionnons et cliquons sur le bouton suivant.
 <img alt="import-choix-ID" src="../assets/tuto3-4.png" /></p>
-<h3 id="conserver-les-autres-variables">Conserver les autres variables ?</h3>
+<h3 id="2-conserver-les-autres-variables">2. Conserver les autres variables ?</h3>
 <p>Pour comprendre la raison de cette question, faisons un détour plus général avant de revenir à notre carte des élections.</p>
 <blockquote>
-<p>Lorsque l'on importe son propre fond dans Khartis, deux cas de figures sont possibles. Soit le fond contient les données que vous voulez représenter, par exemple une variable population dans un fond par commune. Soit le fond ne contient que la géométrie avec à minima une variable d'identifiant et vous avez par ailleurs des données dans un tableau.
-Dans le premier cas il faut à cette étape conserver les autres variables puisqu'elles contiennent les données que vous voulez visualiser avec Khartis.
-Dans le second cas, seul la variable servant d'identifiant est conservée. Elle permettra de faire le lien avec votre tableau de données.</p>
+<p><strong>Notion clé</strong>
+Lorsque on importe son propre fond dans Khartis, deux cas de figures se présentent :
+-   le fond contient les données que l'on veut représenter, par exemple une variable population dans un fond par commune.
+-   le fond ne contient que la géométrie avec un identifiant. Il faut dans ce cas un fichier-tableau avec les données, distinct du fond.</p>
+<p>Dans le premier cas, Khartis permet de conserver les autres variables pour les visualiser ensuite.
+Dans le second cas, seule la variable servant d'identifiant est conservée. Elle permettra de faire le lien avec le tableau de données qui devra comporter une variable avec les mêmes identifiants que ceux du fond de carte.</p>
 </blockquote>
-<p>Revenons maintenant à notre fond des bureaux de votes à Nantes. Nous avons récupérer en plus du fond, un tableau de données des résultats du second tour, nous sommes donc dans le deuxième cas de figure expliqué ci-dessus.</p>
+<p>Revenons maintenant à notre fond des bureaux de vote à Nantes. Nous avons deux fichiers distincts, nous sommes dans le second cas : un fond de carte et un tableau de données.</p>
 <p><img alt="import-choix-conserver-variables" src="../assets/tuto3-5.png" /></p>
-<h3 id="simplification-optionnel-et-selon-le-fond">Simplification (optionnel et selon le fond)</h3>
-<p>Cette étape n'apparait pas systématiquement et dépend du niveau de détail du fond de carte importé. Lorsque celui-ci est très détaillé, son poids augmente et Khartis peut être ralenti ou bloqué. Afin d'éviter ce problème une simplification du tracé de la géométrie du fond est proposé. Elle se fait de manière automatique et le résultat pourra présenter de légères différences avec le fond original.
+<h3 id="3-simplification-optionnel-et-selon-le-fond">3. Simplification (optionnel et selon le fond)</h3>
+<p>Cette étape n'apparait pas systématiquement et dépend du niveau de détail du fond de carte importé. Lorsque celui-ci est très détaillé, son poids augmente et Khartis peut être ralenti ou bloqué. Une simplification du tracé de la géométrie du fond est donc proposée. Khartis le fait de manière automatique et le tracé-résultat pourra présenter de légères différences avec le fond original.
 <img alt="import-simplification" src="../assets/tuto3-6.png" /></p>
-<h3 id="options-de-projection-optionnel">Options de projection (optionnel)</h3>
-<p>À ce stade nous retrouvons l'interface d'accueil habituel de Khartis. Le fond que nous venons d'importer est présélectionné dans la liste et nous en avons un aperçu juste en dessous. Nous pourrions alors passer directement à l'import des données.
-Avant cela nous allons détailler une étape optionnelle qui concerne la projection du fond que nous avons importé.
-Les utilisateurs réguliers de Khartis ont déjà croisés cette notion avec les possibilités de changement de projection lié au fond monde. C'est d'ailleurs l'objet d'un paragraphe d'un précédent tutoriel : <a href="../premiers-pas-avec-Khartis-(2)#projections">Premier pas avec Khartis (2)</a>.
-Là les possibilités sont plus nombreuses et les options s'adressent à des utilisateurs plus averties.</p>
+<h3 id="4-options-de-projection-optionnel">4. Options de projection (optionnel)</h3>
+<p>Le fond que nous venons d'importer est présélectionné dans la liste et nous en avons un aperçu juste en dessous. Nous pourrions directement passer à l'import des données, mais il est possible, pour les utilisateurs avertis, de paramétrer la projection ; et cela plus finement que dans le précédent tutoriel <a href="../premiers-pas-avec-Khartis-(2)#projections">Premier pas avec Khartis (2)</a>.</p>
 <blockquote>
-<p>Nous avons vu avant qu'un fichier de fond de carte contient des données sous forme de variables. Mais ce n'est pas la seule information qui lui est associé. La projection en fait aussi partie. Mais qu'est ce que cela signifie ? Pour représenter la terre, que l'on peut assimiler à un globe, sur une surface plane en deux dimensions, on applique une projection cartographique (un procédé mathématique). Il existe des centaines de projections différentes avec des propriétés plus ou moins avantageuses selon les usages et les zones représentées. Une des projections les plus communes lors de la mise à disposition de fond cartographique est la WGS84.</p>
+<p><strong>Notion clé</strong>
+Nous avons vu précédemment qu'un fichier de fond de carte contient des données organisées en variables. L'information sur la projection en fait aussi partie. Rappelons que la projection cartographique est l'étape mathématique qui transpose la Terre (une sphère) sur un plan en deux dimensions. Il existe des centaines de projections différentes avec des propriétés propres, plus ou moins adaptées selon les usages et les zones représentées. Une des projections les plus communes lors de la mise à disposition de fond cartographique est la <a href="https://fr.wikipedia.org/wiki/WGS_84">WGS84</a>.</p>
 </blockquote>
 <p><img alt="import-bouton-projection" src="../assets/tuto3-7.png" />
-Dans notre cas, en cliquant sur le bouton "Options de projection", on peut voir que notre fond est projeté en WGS84 et nous avons la possibilité de changer la projection. En quoi est-ce utile ? La projection WGS84 appliquée sur la ville de Nantes n'est pas du tout adaptée (déformation importante de forme et de surface). On peut plutôt sélectionner une projection officielle utilisée en France comme la <a href="https://fr.wikipedia.org/wiki/Projection_conique_conforme_de_Lambert#Lambert_93">Lambert 93</a>.
+Dans notre cas, en cliquant sur le bouton "Options de projection", on peut voir que le fond est déjà projeté en WGS84. Nous pouvons changer cette projection. En quoi est-ce utile ? Dans le cas de Nantes la projection WGS84 est inadaptée. Elle déforme trop les formes et les surfaces. La projection officielle utilisée en France, la <a href="https://fr.wikipedia.org/wiki/Projection_conique_conforme_de_Lambert#Lambert_93">Lambert 93</a>, est plus adaptée.
 <img alt="import-projection" src="../assets/tuto3-8.gif" /></p>
-<p>Pour les plus curieux, les possibilités ne se limitent pas à la liste de projection que l'on aperçoit (dérivé de la liste officielle <a href="http://www.epsg.org/">EPSG</a>) car un code personnalisé proj4 peut-être appliqué (par exemple depuis un site comme <a href="https://epsg.io/">EPSG.io</a>).</p>
+<p>Pour les utilisateurs avertis, les projections sont entièrement personnalisables grâce à l'application d'un code proj4. Les possibilités deviennent alors quasi-infinies. Les sites <a href="https://epsg.io/">EPSG.io</a> et <a href="http://projectionwizard.org/">Projection Wizard</a> sont une bonne porte d'entrée dans ce vaste domaine.</p>
 <h2 id="importer-les-donnees-et-visualiser">Importer les données et visualiser</h2>
-<p>À partir de maintenant les étapes sont similaires à ce que les deux tutoriels <a href="../premiers-pas-avec-Khartis-(1)">Premier pas avec Khartis (1)</a> et <a href="../premiers-pas-avec-Khartis-(2)">Premier pas avec Khartis (2)</a> peuvent proposer.</p>
+<p>À partir de maintenant les étapes sont similaires à celles présentées dans les deux tutoriels [Premier pas avec Khartis (1)](../premiers-pas-avec-Khartis-(1) et [Premier pas avec Khartis (2)](../premiers-pas-avec-Khartis-(2) :</p>
 <ul>
-<li>Glisser déposer le fichier csv précédemment téléchargé</li>
-<li>Vérifier que le bon identifiant est sélectionné et vérifier le typage des données (texte ou numérique)</li>
-<li>Ajouter une ou des visualisations. Dans notre cas le taux d'abstention par bureau de vote à l'aide de la visualisation <strong>couleurs ordonnées</strong>. Pour en savoir plus sur les réglages consulter la <a href="../couleurs-ordonnees">page d'aide dédiée</a></li>
-<li>Habiller la carte avec les éléments essentiels (Titre, source, auteur) et facultatifs (étiquettes, personnalisation de la légende)</li>
-<li>Sauvegarder et exporter la carte</li>
+<li>Glisser déposer le fichier csv précédemment téléchargé ;</li>
+<li>Vérifier que le bon identifiant est sélectionné et vérifier le typage des données (texte ou numérique) ;</li>
+<li>Ajouter une ou des visualisations. Dans notre cas le taux d'abstention par bureau de vote à l'aide de la visualisation <strong>couleurs ordonnées</strong>. Pour en savoir plus sur les réglages consulter la <a href="../couleurs-ordonnees">page d'aide dédiée</a> ;</li>
+<li>Habiller la carte avec les éléments essentiels (titre, source, auteur) et facultatifs (étiquettes, personnalisation de la légende) ;</li>
+<li>Sauvegarder et exporter la carte.</li>
 </ul>
 <p>Un aperçu d'un résultat est disponible ci-dessous et le projet Khartis peut-être <a href="../assets/Projet-Khartis-Nantes-abstention-2017.kh">récupéré directement ici</a></p>
 <p><img alt="import-final" src="../assets/tuto3-9.png" /></p>

@@ -864,36 +864,38 @@
 </ul>
 <h2 id="choisir-le-fond-de-carte">Choisir le fond de carte</h2>
 <p>Les données sont à l’échelle des pays du monde alors nous choisissons ‘Monde &gt; pays (2016)’
-<img alt="choix du fond de carte" src="../assets/select-basemap.gif" /></p>
+<img alt="choix du fond de carte" src="../assets/02_01-select-basemap.gif" /></p>
 <p>Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du <a href="../definitions#dictionnaire-dun-fond-de-carte">dictionnaire</a></p>
 <h2 id="importer-les-donnees">Importer les données</h2>
 <p>Dans Khartis il existe trois manières de charger des données :</p>
 <ul>
 <li>
-<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est rangé</p>
+<p>copier-coller les données directement depuis un logiciel de tableur ouvert</p>
+</li>
+<li>
+<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est situé sur votre ordinateur</p>
 </li>
 <li>
 <p>glisser le fichier csv depuis son dossier directement dans le cadre</p>
 </li>
-<li>
-<p>copier-coller les données directement depuis un logiciel de tableur ouvert</p>
-</li>
 </ul>
-<p>Pour cette fois nous utiliserons la deuxième option. Cliquer ensuite sur ‘suivant’</p>
-<p><img alt="import des données" src="../assets/upload-drag-drop.gif" /></p>
+<p>Pour cette fois nous utiliserons la troisième option. Cliquer ensuite sur ‘suivant’</p>
+<p><img alt="import des données" src="../assets/02_02-drop-data.gif" /></p>
 <h2 id="georeferencer-les-donnees">Géoréférencer les données</h2>
 <p>Il faut maintenant s’assurer que nos données ont bien été reconnues, particulièrement la colonne du tableau qui fait le lien avec le fond de carte. Nous l’appelons ‘colonne de référence géographique’.</p>
-<p>Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Et nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge :</p>
-<p><img alt="erreur données" src="../assets/error-data.png" /></p>
+<p>Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues, dans ce cas, le nombre d'erreur s'affiche en rouge et il nous est possible de les corriger en cliquant sur le bouton, hors ici, tous les pays ont étés automatiquement reconnus.</p>
+<p><img alt="georef" src="../assets/02_03-georef.png" /></p>
 <p>Passons à l’étape suivante</p>
 <p><img alt="étape 2" src="../assets/step-2.gif" /></p>
 <h2 id="visualiser-les-donnees">Visualiser les données</h2>
 <p>Nous voulons représenter les émissions de CO2 par pays en 2013 à l’aide de symboles proportionnels aux valeurs (des points plus ou moins gros selon que les émissions sont plus ou moins fortes).</p>
-<p>Cliquez sur le ‘+’ puis sélectionnez la variable à représenter "2013 - CO2 emissions (kt)" et enfin choisissez la visualisation “valeurs &gt; symboles”.</p>
-<p><img alt="choix visualisation" src="../assets/select-variable-viz.gif" /></p>
+<p>Cliquez sur ‘Ajouter une visualisation’ puis sélectionnez le type de visualisation le plus approprié, à savoir les symboles proportionnels.</p>
+<p><img alt="choix visualisation" src="./assets/choose-viz.gif" /></p>
+<p>Sélectionner ensuite la variable à représenter "2013 - CO2 emissions (kt)".</p>
+<p><img alt="choix visualisation" src="./assets/choose-variable.gif" /></p>
 <p>Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert.</p>
-<p>Nous allons améliorer la lisibilité de la carte en renforçant la taille des cercles : par exemple passer de 10 à 40. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.</p>
-<p><img alt="taille 40" src="../assets/symbol-size-40.png" /></p>
+<p>Nous allons améliorer la lisibilité de la carte en renforçant la taille des symboles : par exemple passer de 10 à 40 et nous ajoutons un léger contour aux points. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.</p>
+<p><img alt="taille 40" src="../assets/symbol-settings.png" /></p>
 <p>Passons à la dernière étape</p>
 <p><img alt="étape 3" src="../assets/step-3.gif" /></p>
 <h2 id="export">Export</h2>
@@ -910,7 +912,7 @@
 <li>
 <p>D’où proviennent les données ?</p>
 <ul>
-<li>Source : Banque mondiale d’après le Carbon Dioxide Information Analysis Center, <a href="http://data.worldbank.org">http://data.worldbank.org</a></li>
+<li>Source : Banque mondiale, d’après le Carbon Dioxide Information Analysis Center, <a href="http://data.worldbank.org">http://data.worldbank.org</a></li>
 </ul>
 </li>
 <li>
@@ -929,7 +931,7 @@
 </ul>
 <h3 id="mise-en-page">Mise en page</h3>
 <p>Maintenant que nous sommes assurés que la carte contient les éléments essentiels à sa bonne lecture, nous pouvons améliorer rapidement la mise en page.</p>
-<p>Trois moyens d’actions sont à notre disposition :</p>
+<p>Nous allons ici utiliser trois moyens à notre disposition :</p>
 <ul>
 <li>
 <p>les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche. <br />
@@ -942,21 +944,22 @@
 <p>le placement de la légende qui peut être déplacée par cliquer-glisser</p>
 </li>
 </ul>
-<p>On peut par exemple réduire la hauteur du document à 800px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges. Et enfin déplacer la légende.</p>
+<p>On peut par exemple réduire la hauteur du document à 700px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges et  déplacer la légende.</p>
 <p><img alt="mise en page" src="../assets/export-layout-steps.gif" /></p>
 <h3 id="format-dexport">Format d’export</h3>
 <p>Khartis propose trois formats d’export :</p>
 <ul>
 <li>
-<p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image. Adapté si on ne souhaite pas retoucher la carte.</p>
+<p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image, à différentes réolutions. Adapté si on ne souhaite pas retoucher la carte.</p>
 </li>
 <li>
 <p><a href="../definitions#fichier-svg">svg</a> : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.</p>
 </li>
 <li>
-<p>svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator</p>
+<p>svg (pour Illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator</p>
 </li>
 </ul>
+<p><img alt="type téléchargement" src="../assets/export-download.gif" /></p>
 <p><img alt="résultat tutoriel" src="../assets/export_tuto-CO2.png" /></p>
                 
                   
