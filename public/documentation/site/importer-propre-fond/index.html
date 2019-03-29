@@ -37,31 +37,32 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href=".././assets/favicon.ico">
-      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.2">
+      <link rel="shortcut icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
     
     
       
-        <title>Importer propre fond - Khartis Documentation</title>
+        <title>Importer son propre fond de carte - Khartis Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.8d40d89b.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.6079476c.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+      
       
     
     
       <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
     
@@ -77,7 +78,7 @@
         
         
           <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="github">
+    viewBox="0 0 416 448" id="__github">
   <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
         8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
         18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
@@ -97,9 +98,13 @@
         
       </defs>
     </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../#recuperer-le-fond-de-carte" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
     
     
       <header class="md-header" data-md-component="header">
@@ -108,12 +113,12 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="http://www.sciencespo.fr/cartographie/khartis/docs" title="Khartis Documentation" class="md-header-nav__button md-logo">
           
-            <img src=".././assets/Khartis-logo.svg" width="24" height="24">
+            <img src="../assets/Khartis-logo.svg" width="24" height="24">
           
         </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
@@ -123,7 +128,7 @@
                 Khartis Documentation
               </span>
               <span class="md-header-nav__topic">
-                Importer propre fond
+                Importer son propre fond de carte
               </span>
             
           
@@ -132,14 +137,14 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
             
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
+      <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
         &#xE5CD;
       </button>
@@ -172,7 +177,7 @@
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
+          <use xlink:href="#__github" width="24" height="24"></use>
         </svg>
       </div>
     
@@ -201,12 +206,12 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://www.sciencespo.fr/cartographie/khartis/docs" title="Khartis Documentation" class="md-nav__button md-logo">
       
-        <img src=".././assets/Khartis-logo.svg" width="48" height="48">
+        <img src="../assets/Khartis-logo.svg" width="48" height="48">
       
-    </span>
+    </a>
     Khartis Documentation
   </label>
   
@@ -221,7 +226,7 @@
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
+          <use xlink:href="#__github" width="24" height="24"></use>
         </svg>
       </div>
     
@@ -240,128 +245,8 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../FAQ/" title="FAQ" class="md-nav__link">
-      FAQ
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../changelog/" title="Changelog" class="md-nav__link">
-      Changelog
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../contraste/" title="Le contraste (valeurs > symboles)" class="md-nav__link">
-      Le contraste (valeurs > symboles)
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../couleurs-differentes/" title="Couleurs différentes" class="md-nav__link">
-      Couleurs différentes
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../couleurs-ordonnees/" title="Couleurs ordonnées" class="md-nav__link">
-      Couleurs ordonnées
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../definitions/" title="Definitions" class="md-nav__link">
-      Definitions
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../discretisation/" title="Discretisation" class="md-nav__link">
-      Discretisation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../double-symboles-proportionnels/" title="Doubles symboles proportionnels" class="md-nav__link">
-      Doubles symboles proportionnels
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../how-to-create-a-basemap-for-Khartis/" title="how to create a basemap for Khartis" class="md-nav__link">
-      how to create a basemap for Khartis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../importer-des-donnees/" title="Importer des données" class="md-nav__link">
-      Importer des données
+    <a href=".." title="Accueil" class="md-nav__link">
+      Accueil
     </a>
   </li>
 
@@ -373,15 +258,147 @@
   
 
 
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutoriels
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutoriels
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../premiers-pas-avec-Khartis-(1)/" title="Premiers pas avec Khartis (1)" class="md-nav__link">
+      Premiers pas avec Khartis (1)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../premiers-pas-avec-Khartis-(2)/" title="Premiers pas avec Khartis (2)" class="md-nav__link">
+      Premiers pas avec Khartis (2)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
   <li class="md-nav__item md-nav__item--active">
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
-    <a href="./" title="Importer propre fond" class="md-nav__link md-nav__link--active">
-      Importer propre fond
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Importer son propre fond de carte
+      </label>
+    
+    <a href="./" title="Importer son propre fond de carte" class="md-nav__link md-nav__link--active">
+      Importer son propre fond de carte
     </a>
     
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-le-fond-de-carte" title="Récupérer le fond de carte" class="md-nav__link">
+    Récupérer le fond de carte
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-les-donnees" title="Récupérer les données" class="md-nav__link">
+    Récupérer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-le-fond-de-carte-dans-khartis" title="Importer le fond de carte dans Khartis" class="md-nav__link">
+    Importer le fond de carte dans Khartis
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selection-de-lidentifiant" title="Sélection de l'identifiant" class="md-nav__link">
+    Sélection de l'identifiant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conserver-les-autres-variables" title="Conserver les autres variables ?" class="md-nav__link">
+    Conserver les autres variables ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplification-optionnel-et-selon-le-fond" title="Simplification (optionnel et selon le fond)" class="md-nav__link">
+    Simplification (optionnel et selon le fond)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#options-de-projection-optionnel" title="Options de projection (optionnel)" class="md-nav__link">
+    Options de projection (optionnel)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-les-donnees-et-visualiser" title="Importer les données et visualiser" class="md-nav__link">
+    Importer les données et visualiser
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -390,40 +407,23 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../les-fonds-de-carte-disponibles/" title="Les fonds de carte disponibles" class="md-nav__link">
-      Les fonds de carte disponibles
-    </a>
-  </li>
-
+  <li class="md-nav__item md-nav__item--nested">
     
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../les-projections-disponibles/" title="Les projections disponibles" class="md-nav__link">
-      Les projections disponibles
-    </a>
-  </li>
-
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../les-sources-des-exemples-a-disposition/" title="Les sources des exemples a disposition" class="md-nav__link">
-      Les sources des exemples a disposition
-    </a>
-  </li>
-
-    
-      
-      
-      
+    <label class="md-nav__link" for="nav-3">
+      Visualisations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Visualisations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
@@ -432,88 +432,273 @@
     </a>
   </li>
 
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../premiers-pas-avec-Khartis-(1)/" title="premiers pas avec Khartis (1)" class="md-nav__link">
-      premiers pas avec Khartis (1)
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../premiers-pas-avec-Khartis-(2)/" title="premiers pas avec Khartis (2)" class="md-nav__link">
-      premiers pas avec Khartis (2)
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../symboles-differents/" title="Symboles differents" class="md-nav__link">
-      Symboles differents
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../symboles-ordonnes/" title="Symboles ordonnes" class="md-nav__link">
-      Symboles ordonnes
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../symboles-proportionnels-colores-difference/" title="Symboles proportionnels colores difference" class="md-nav__link">
-      Symboles proportionnels colores difference
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../symboles-proportionnels-colores-ordre/" title="Symboles proportionnels colores ordre" class="md-nav__link">
-      Symboles proportionnels colores ordre
-    </a>
-  </li>
-
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
     <a href="../symboles-proportionnels/" title="Symboles proportionnels" class="md-nav__link">
       Symboles proportionnels
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../couleurs-ordonnees/" title="Couleurs ordonnées" class="md-nav__link">
+      Couleurs ordonnées
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../symboles-ordonnes/" title="Symboles ordonnées" class="md-nav__link">
+      Symboles ordonnées
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../symboles-differents/" title="Symboles différents" class="md-nav__link">
+      Symboles différents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../couleurs-differentes/" title="Couleurs différentes" class="md-nav__link">
+      Couleurs différentes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../symboles-proportionnels-colores-ordre/" title="Symboles proportionnels colorés (ordre)" class="md-nav__link">
+      Symboles proportionnels colorés (ordre)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../symboles-proportionnels-colores-difference/" title="Symboles proportionnels colorés (différence)" class="md-nav__link">
+      Symboles proportionnels colorés (différence)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../double-symboles-proportionnels/" title="Double symboles proportionnels" class="md-nav__link">
+      Double symboles proportionnels
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Ressources
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Ressources
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../importer-des-donnees/" title="Importer des données" class="md-nav__link">
+      Importer des données
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-fonds-de-carte-disponibles/" title="Les fonds de carte disponibles" class="md-nav__link">
+      Les fonds de carte disponibles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-projections-disponibles/" title="Les projections disponibles" class="md-nav__link">
+      Les projections disponibles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../les-sources-des-exemples-a-disposition/" title="Les sources des exemples à disposition" class="md-nav__link">
+      Les sources des exemples à disposition
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../discretisation/" title="Discrétisation" class="md-nav__link">
+      Discrétisation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../contraste/" title="Le contraste" class="md-nav__link">
+      Le contraste
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FAQ/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../definitions/" title="Définitions" class="md-nav__link">
+      Définitions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../changelog/" title="Historique des versions" class="md-nav__link">
+      Historique des versions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Contribute
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Contribute
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../how-to-create-a-basemap-for-Khartis/" title="Add a basemap" class="md-nav__link">
+      Add a basemap
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -524,6 +709,90 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table des matières</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-le-fond-de-carte" title="Récupérer le fond de carte" class="md-nav__link">
+    Récupérer le fond de carte
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperer-les-donnees" title="Récupérer les données" class="md-nav__link">
+    Récupérer les données
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-le-fond-de-carte-dans-khartis" title="Importer le fond de carte dans Khartis" class="md-nav__link">
+    Importer le fond de carte dans Khartis
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selection-de-lidentifiant" title="Sélection de l'identifiant" class="md-nav__link">
+    Sélection de l'identifiant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conserver-les-autres-variables" title="Conserver les autres variables ?" class="md-nav__link">
+    Conserver les autres variables ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplification-optionnel-et-selon-le-fond" title="Simplification (optionnel et selon le fond)" class="md-nav__link">
+    Simplification (optionnel et selon le fond)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#options-de-projection-optionnel" title="Options de projection (optionnel)" class="md-nav__link">
+    Options de projection (optionnel)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importer-les-donnees-et-visualiser" title="Importer les données et visualiser" class="md-nav__link">
+    Importer les données et visualiser
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -532,9 +801,65 @@
                   <a href="https://github.com/AtelierCartographie/Khartis/edit/master/docs/importer-propre-fond.md" title="Editer cette page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Importer propre fond</h1>
+                  <h1>Importer son propre fond de carte</h1>
                 
-                <p><em>à venir</em></p>
+                <p>Nous allons réaliser une carte de l'abstention au second tour de la présidentielle 2017 à Nantes par bureau de vote.</p>
+<p><img alt="import-final" src="../assets/tuto3-9.png" /></p>
+<h2 id="recuperer-le-fond-de-carte">Récupérer le fond de carte</h2>
+<p>La plateforme open data de Nantes met à disposition <a href="https://data.nantesmetropole.fr/explore/dataset/244400404_decoupage-geographique-bureaux-vote-nantes/export/?disjunctive.lieu_nom&amp;disjunctive.lieu_site">le découpage géographique des bureaux de vote de la ville</a>.
+Plusieurs format d'export sont disponibles et deux sont compatibles avec Khartis : geojson et shapefile.
+<img alt="aperçu plateforme" src="../assets/tuto3-1.png" /></p>
+<p>Nous allons utiliser le format geojson que vous pouvez <a href="../assets/decoupage-geographique-bureaux-vote-nantes.geojson">récupérer directement ici</a> (clic droit 'enregistrer le lien sous').</p>
+<h2 id="recuperer-les-donnees">Récupérer les données</h2>
+<p>Maintenant que nous avons un fond de carte, nous allons chercher des données électorales par bureau de vote. Toujours sur la plateforme open data de Nantes, <a href="https://data.nantesmetropole.fr/explore/?disjunctive.diffuseur&amp;disjunctive.theme&amp;disjunctive.features&amp;disjunctive.publisher&amp;disjunctive.gestionnaire&amp;disjunctive.keyword&amp;disjunctive.license&amp;sort=explore.popularity_score&amp;q=bureau+de+vote">plusieurs résultats d'élections</a> sont disponibles à cette échelle.
+Nous allons utiliser les résultats du second tour de l'élection présidentielle de 2017 en <a href="https://data.nantesmetropole.fr/explore/dataset/244400404_election-presidentielle-2017-nantes-2nd-tour/export/?disjunctive.bureau_de_vote">téléchargeant le format csv</a>.
+En consultant l'aperçu des données depuis la plateforme, on constate que les résultats ne sont qu'en nombre de votes.
+<img alt="aperçu tableau" src="../assets/tuto3-2.png" /></p>
+<p>Pour plus de possibilités dans Khartis ensuite, nous avons calculé les résultats en pourcentage. Le <a href="../assets/Nantes-résultat-presidentielles-second-tour-2017-bureau-vote.csv">nouveau tableau est directement récupérable ici</a>.</p>
+<h2 id="importer-le-fond-de-carte-dans-khartis">Importer le fond de carte dans Khartis</h2>
+<p>Nous pouvons maintenant ouvrir <a href="https://www.sciencespo.fr/cartographie/khartis">Khartis</a>. Avant de pouvoir utiliser notre fond de carte avec toutes les possibilités de visualisations de Khartis, nous devons  l'importer. Cette opération s'effectue en deux étapes. D'abord cliquer sur le bouton "Importer son propre fond" puis glisser ou sélectionner le fichier geojson récupéré précedemment.
+<img alt="import-fond" src="../assets/tuto3-3.gif" /></p>
+<p>Nous sommes ensuite guidé dans une série d'étapes qui va tester et permettre la compatibilité de notre fond avec Khartis.</p>
+<h3 id="selection-de-lidentifiant">Sélection de l'identifiant</h3>
+<p>Le fond de carte que nous venons d'importer contient des données sous forme de variables. C'est à dire des données associées à chaque entité géographique (ici un bureau de vote). Parmi ces variables il y en a généralement une qui permet d'identifier de manière unique chaque entité géographique du fond (chaque bureau de vote).
+Dans notre cas il y a justement une variable appelée <strong>idburo</strong> qui est un numéro unique de bureau de vote.
+Nous allons la sélectionner et cliquer sur suivant.
+<img alt="import-choix-ID" src="../assets/tuto3-4.png" /></p>
+<h3 id="conserver-les-autres-variables">Conserver les autres variables ?</h3>
+<p>Pour comprendre la raison de cette question, faisons un détour plus général avant de revenir à notre carte des élections.</p>
+<blockquote>
+<p>Lorsque l'on importe son propre fond dans Khartis, deux cas de figures sont possibles. Soit le fond contient les données que vous voulez représenter, par exemple une variable population dans un fond par commune. Soit le fond ne contient que la géométrie avec à minima une variable d'identifiant et vous avez par ailleurs des données dans un tableau.
+Dans le premier cas il faut à cette étape conserver les autres variables puisqu'elles contiennent les données que vous voulez visualiser avec Khartis.
+Dans le second cas, seul la variable servant d'identifiant est conservée. Elle permettra de faire le lien avec votre tableau de données.</p>
+</blockquote>
+<p>Revenons maintenant à notre fond des bureaux de votes à Nantes. Nous avons récupérer en plus du fond, un tableau de données des résultats du second tour, nous sommes donc dans le deuxième cas de figure expliqué ci-dessus.</p>
+<p><img alt="import-choix-conserver-variables" src="../assets/tuto3-5.png" /></p>
+<h3 id="simplification-optionnel-et-selon-le-fond">Simplification (optionnel et selon le fond)</h3>
+<p>Cette étape n'apparait pas systématiquement et dépend du niveau de détail du fond de carte importé. Lorsque celui-ci est très détaillé, son poids augmente et Khartis peut être ralenti ou bloqué. Afin d'éviter ce problème une simplification du tracé de la géométrie du fond est proposé. Elle se fait de manière automatique et le résultat pourra présenter de légères différences avec le fond original.
+<img alt="import-simplification" src="../assets/tuto3-6.png" /></p>
+<h3 id="options-de-projection-optionnel">Options de projection (optionnel)</h3>
+<p>À ce stade nous retrouvons l'interface d'accueil habituel de Khartis. Le fond que nous venons d'importer est présélectionné dans la liste et nous en avons un aperçu juste en dessous. Nous pourrions alors passer directement à l'import des données.
+Avant cela nous allons détailler une étape optionnelle qui concerne la projection du fond que nous avons importé.
+Les utilisateurs réguliers de Khartis ont déjà croisés cette notion avec les possibilités de changement de projection lié au fond monde. C'est d'ailleurs l'objet d'un paragraphe d'un précédent tutoriel : <a href="../premiers-pas-avec-Khartis-(2)#projections">Premier pas avec Khartis (2)</a>.
+Là les possibilités sont plus nombreuses et les options s'adressent à des utilisateurs plus averties.</p>
+<blockquote>
+<p>Nous avons vu avant qu'un fichier de fond de carte contient des données sous forme de variables. Mais ce n'est pas la seule information qui lui est associé. La projection en fait aussi partie. Mais qu'est ce que cela signifie ? Pour représenter la terre, que l'on peut assimiler à un globe, sur une surface plane en deux dimensions, on applique une projection cartographique (un procédé mathématique). Il existe des centaines de projections différentes avec des propriétés plus ou moins avantageuses selon les usages et les zones représentées. Une des projections les plus communes lors de la mise à disposition de fond cartographique est la WGS84.</p>
+</blockquote>
+<p><img alt="import-bouton-projection" src="../assets/tuto3-7.png" />
+Dans notre cas, en cliquant sur le bouton "Options de projection", on peut voir que notre fond est projeté en WGS84 et nous avons la possibilité de changer la projection. En quoi est-ce utile ? La projection WGS84 appliquée sur la ville de Nantes n'est pas du tout adaptée (déformation importante de forme et de surface). On peut plutôt sélectionner une projection officielle utilisée en France comme la <a href="https://fr.wikipedia.org/wiki/Projection_conique_conforme_de_Lambert#Lambert_93">Lambert 93</a>.
+<img alt="import-projection" src="../assets/tuto3-8.gif" /></p>
+<p>Pour les plus curieux, les possibilités ne se limitent pas à la liste de projection que l'on aperçoit (dérivé de la liste officielle <a href="http://www.epsg.org/">EPSG</a>) car un code personnalisé proj4 peut-être appliqué (par exemple depuis un site comme <a href="https://epsg.io/">EPSG.io</a>).</p>
+<h2 id="importer-les-donnees-et-visualiser">Importer les données et visualiser</h2>
+<p>À partir de maintenant les étapes sont similaires à ce que les deux tutoriels <a href="../premiers-pas-avec-Khartis-(1)">Premier pas avec Khartis (1)</a> et <a href="../premiers-pas-avec-Khartis-(2)">Premier pas avec Khartis (2)</a> peuvent proposer.</p>
+<ul>
+<li>Glisser déposer le fichier csv précédemment téléchargé</li>
+<li>Vérifier que le bon identifiant est sélectionné et vérifier le typage des données (texte ou numérique)</li>
+<li>Ajouter une ou des visualisations. Dans notre cas le taux d'abstention par bureau de vote à l'aide de la visualisation <strong>couleurs ordonnées</strong>. Pour en savoir plus sur les réglages consulter la <a href="../couleurs-ordonnees">page d'aide dédiée</a></li>
+<li>Habiller la carte avec les éléments essentiels (Titre, source, auteur) et facultatifs (étiquettes, personnalisation de la légende)</li>
+<li>Sauvegarder et exporter la carte</li>
+</ul>
+<p>Un aperçu d'un résultat est disponible ci-dessous et le projet Khartis peut-être <a href="../assets/Projet-Khartis-Nantes-abstention-2017.kh">récupéré directement ici</a></p>
+<p><img alt="import-final" src="../assets/tuto3-9.png" /></p>
                 
                   
                 
@@ -555,7 +880,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../importer-des-donnees/" title="Importer des données" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../premiers-pas-avec-Khartis-(2)/" title="Premiers pas avec Khartis (2)" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -564,19 +889,19 @@
                 <span class="md-footer-nav__direction">
                   Précédent
                 </span>
-                Importer des données
+                Premiers pas avec Khartis (2)
               </span>
             </div>
           </a>
         
         
-          <a href="../les-fonds-de-carte-disponibles/" title="Les fonds de carte disponibles" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../liste-des-visualisations/" title="Liste des visualisations" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Suivant
                 </span>
-                Les fonds de carte disponibles
+                Liste des visualisations
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -596,7 +921,7 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
+        <a href="https://www.mkdocs.org">MkDocs</a>
         and
         <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
@@ -610,7 +935,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.b438e6c5.js"></script>
+      <script src="../assets/javascripts/application.583bbe55.js"></script>
       
         
         
@@ -627,7 +952,7 @@
           
         
       
-      <script>app.initialize({version:"0.17.3",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
         <script src="../extra.js"></script>
       
