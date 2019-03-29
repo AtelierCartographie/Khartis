@@ -18,7 +18,7 @@ Nous avons téléchargé les données au format csv depuis le site de la [Banque
 ## Choisir le fond de carte
 
 Les données sont à l’échelle des pays du monde alors nous choisissons ‘Monde > pays (2016)’
-![choix du fond de carte](./assets/select-basemap.gif)
+![choix du fond de carte](./assets/02_01-select-basemap.gif)
 
 Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d’un aperçu du [dictionnaire](../definitions#dictionnaire-dun-fond-de-carte)
 
@@ -26,24 +26,24 @@ Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d�
 
 Dans Khartis il existe trois manières de charger des données :
 
-* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est rangé
+* copier-coller les données directement depuis un logiciel de tableur ouvert
+
+* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est situé sur votre ordinateur
 
 * glisser le fichier csv depuis son dossier directement dans le cadre
 
-* copier-coller les données directement depuis un logiciel de tableur ouvert
+Pour cette fois nous utiliserons la troisième option. Cliquer ensuite sur ‘suivant’
 
-Pour cette fois nous utiliserons la deuxième option. Cliquer ensuite sur ‘suivant’
-
-![import des données](./assets/upload-drag-drop.gif)
+![import des données](./assets/02_02-drop-data.gif)
 
 
 ## Géoréférencer les données
 
 Il faut maintenant s’assurer que nos données ont bien été reconnues, particulièrement la colonne du tableau qui fait le lien avec le fond de carte. Nous l’appelons ‘colonne de référence géographique’.
 
-Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Et nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues en cliquant sur le texte d’erreur en rouge :
+Khartis reconnaît et identifie automatiquement les colonnes susceptibles de faire ce lien. Dans le cas présent la colonne "Country Name". Nous pouvons au besoin corriger les cellules de la colonne qui n’auraient pas été reconnues, dans ce cas, le nombre d'erreur s'affiche en rouge et il nous est possible de les corriger en cliquant sur le bouton, hors ici, tous les pays ont étés automatiquement reconnus.
 
- ![erreur données](./assets/error-data.png)
+ ![georef](./assets/02_03-georef.png)
 
 
 Passons à l’étape suivante
@@ -54,15 +54,19 @@ Passons à l’étape suivante
 
 Nous voulons représenter les émissions de CO2 par pays en 2013 à l’aide de symboles proportionnels aux valeurs (des points plus ou moins gros selon que les émissions sont plus ou moins fortes).
 
-Cliquez sur le ‘+’ puis sélectionnez la variable à représenter "2013 - CO2 emissions (kt)" et enfin choisissez la visualisation “valeurs > symboles”.
+Cliquez sur ‘Ajouter une visualisation’ puis sélectionnez le type de visualisation le plus approprié, à savoir les symboles proportionnels.
 
-![choix visualisation](./assets/select-variable-viz.gif)
+![choix visualisation](./assets/choose-viz.gif)
+
+Sélectionner ensuite la variable à représenter "2013 - CO2 emissions (kt)".
+
+![choix visualisation](./assets/choose-variable.gif)
 
 Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert.
 
-Nous allons améliorer la lisibilité de la carte en renforçant la taille des cercles : par exemple passer de 10 à 40. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.
+Nous allons améliorer la lisibilité de la carte en renforçant la taille des symboles : par exemple passer de 10 à 40 et nous ajoutons un léger contour aux points. On aperçoit alors les plus petits cercles et les zones denses en cercles restent lisibles.
 
-![taille 40](./assets/symbol-size-40.png)
+![taille 40](./assets/symbol-settings.png)
 
 Passons à la dernière étape
 
@@ -82,7 +86,7 @@ Voici une proposition qui répond à une série de questions que l’on peut se 
 
 * D’où proviennent les données ?
 
-    * Source : Banque mondiale d’après le Carbon Dioxide Information Analysis Center, [http://data.worldbank.org](http://data.worldbank.org)
+    * Source : Banque mondiale, d’après le Carbon Dioxide Information Analysis Center, [http://data.worldbank.org](http://data.worldbank.org)
 
 * Quelle est l’unité des données ?
 
@@ -97,7 +101,7 @@ Voici une proposition qui répond à une série de questions que l’on peut se 
 
 Maintenant que nous sommes assurés que la carte contient les éléments essentiels à sa bonne lecture, nous pouvons améliorer rapidement la mise en page.
 
-Trois moyens d’actions sont à notre disposition :
+Nous allons ici utiliser trois moyens à notre disposition :
 
 * les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche.   
 ![dimensions](./assets/export-dimensions.png)
@@ -106,7 +110,7 @@ Trois moyens d’actions sont à notre disposition :
 
 * le placement de la légende qui peut être déplacée par cliquer-glisser
 
-On peut par exemple réduire la hauteur du document à 800px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges. Et enfin déplacer la légende.
+On peut par exemple réduire la hauteur du document à 700px car le fond de carte est davantage rectangulaire que carré. Puis ensuite équilibrer les marges et  déplacer la légende.
 
 ![mise en page](./assets/export-layout-steps.gif)
 
@@ -114,10 +118,12 @@ On peut par exemple réduire la hauteur du document à 800px car le fond de cart
 
 Khartis propose trois formats d’export :
 
-* [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image. Adapté si on ne souhaite pas retoucher la carte.
+* [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image, à différentes réolutions. Adapté si on ne souhaite pas retoucher la carte.
 
 * [svg](../definitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
 
-* svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator
+* svg (pour Illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator
+
+![type téléchargement](./assets/export-download.gif)
 
 ![résultat tutoriel](./assets/export_tuto-CO2.png)
