@@ -24,7 +24,7 @@ Ensuite, pour que Khartis puisse lire vos données, il est nécessaire d’assem
 
 ![structure du tableau](./assets/02-01-data-structuration.png)
 
-Pour ce tutoriel, vous pouvez aussi télécharger ce tableau [directement ici](./assets/02-urbanisation-2015.csv).
+Pour suivre ce tutoriel, vous pouvez aussi télécharger ce tableau [directement ici](./assets/02-urbanisation-2015.csv).
 
 ## Choisir le fond de carte
 
@@ -38,13 +38,13 @@ Une fois sélectionné, une vignette du fond de carte s’affiche accompagné d�
 
 Vous pouvez charger des données de trois manières différentes :
 
-* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est rangé
+* copier-coller les données directement depuis un logiciel de tableur ouvert
+
+* cliquer sur ‘Importer’ et sélectionner le [fichier csv](../definitions#fichier-csv) là où il est situé sur votre ordinateur
 
 * glisser le fichier csv depuis son dossier directement dans le cadre
 
-* copier-coller les données directement depuis un logiciel de tableur ouvert
-
-Pour cette fois nous utiliserons la troisième option, un simple copier-coller à partir de notre tableur. Cliquer ensuite sur ‘suivant’
+Pour cette fois nous utiliserons la première option, un simple copier-coller à partir de notre tableur. Cliquer ensuite sur ‘suivant’
 
 ![import des données](./assets/02_02-paste-data.gif)
 
@@ -66,11 +66,11 @@ Passons à l’étape suivante.
 
 Nous voulons tout d’abord représenter la part en 2015 à l’aide d’une carte choroplèthe (plages de couleurs plus ou moins intenses en couleur selon la part des urbains).
 
-Cliquez sur le ‘+’ puis sélectionnez la variable à représenter ‘2015 Urban pop %’ et choisissez enfin la visualisation ‘valeurs > surfaces’.
+Cliquez sur ‘Ajouter une visualisation’ puis sélectionnez la visualisation ‘couleurs ordonnées’ puis ‘regrouper les données en classes’ et enfin la variable à représenter ‘2015 Urban pop %’.
 
-![choisir une variable](./assets/02_04-choose-variable.gif)
+![choisir une variable](./assets/02_04-choose-viz-variable.gif)
 
-Maintenant les pays sont colorés selon la part d’urbains présente dans le pays et un volet de réglage de la visualisation est ouvert.
+Maintenant les pays sont colorés selon la part d’urbains présente dans le pays et un volet de réglages de la visualisation est ouvert.
 
 Nous pouvons choisir le mode de discrétisation (découpage en classes) ainsi que le gradient de couleur pour cette variable.
 
@@ -80,7 +80,7 @@ _Pour en savoir plus sur les discrétisations, [cliquez ici](../discretisation).
 
 Cette première variable représentée, nous pouvons ensuite passer à la seconde, à savoir les agglomérations de plus de 10 millions habitants.
 
-Géoréférencer les données
+## Géoréférencer les données, à partir de coordonnées
 
 Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de [coordonnées géographique](../definitions#latlong-coordonnees-geographiques). Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.
 
@@ -92,7 +92,7 @@ Si cela n’a pas été fait automatiquement par Khartis, nous devons identifier
 
 ## Visualiser les données
 
-Après avoir cliqué sur l’onglet ‘visualisations’, cliquez sur le ‘+’ , sélectionnez la variable à représenter, à savoir  ‘2015 Agglo Pop’ et choisissez enfin la visualisation ‘valeurs > symboles’. Vous verrez ainsi apparaître chacune des agglomérations de plus de 10 millions habitants grâce aux points proportionnels représentant leurs populations.
+Après avoir cliqué sur l’onglet ‘visualisations’, cliquez sur ‘Ajouter une visualisation’ , sélectionnez la visualisation ‘symboles proportionnels’ puis’Choisir une variable > symboles’ avec la variable ‘2015 Agglo Pop’. Vous verrez ainsi apparaître chacune des agglomérations de plus de 10 millions habitants grâce aux points proportionnels représentant leurs populations.
 
 Le volet de réglage de la visualisation s’est ouvert pour régler entre autre la taille, la forme et la couleur de vos symboles.
 
@@ -102,7 +102,7 @@ Attention : le fonctionnement de Khartis peut être ralenti lorsqu’un grand no
 
 ### Projections
 
-Khartis vous propose différentes manières de voir le monde au travers de plusieurs projections cartographiques. Vous pouvez la choisir à tout moment dans l’élaboration de votre carte, sans perturber les paramètres de celle-ci. Nous allons ici changer de projection en choisissant la ‘Briesemeister’.
+Khartis vous propose différentes manières de voir le monde au travers de plusieurs projections cartographiques. Vous pouvez la choisir à tout moment dans l’élaboration de votre carte, sans perturber les paramètres de celle-ci. Nous allons ici changer de projection en choisissant la ‘Bertin (1953)’.
 
 ![choix de la projection](./assets/02_09-choose-projection.gif)
 
@@ -123,7 +123,7 @@ Pour modifier l’entête de légende, cliquez simplement sur le texte.
 
 ### Mise en page
 
-Une fois la carte complétée avec ces éléments textuels assurant une bonne lecture de celle-ci, nous pouvons améliorer la mise en page avec trois paramètres :
+Une fois la carte complétée avec ces éléments textuels assurant une bonne lecture de celle-ci, nous pouvons améliorer la mise en page, notamment avec trois paramètres :
 
 * les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche.
 
@@ -133,7 +133,7 @@ Une fois la carte complétée avec ces éléments textuels assurant une bonne le
 
 * le placement de la légende qui peut être déplacée par cliquer-glisser.
 
-On peut par exemple réduire la hauteur du document à 800px en essayant d’articuler au mieux la disposition des différents éléments grâce aux marge et en déplaçant la carte et sa légende.
+On peut par exemple réduire la hauteur du document à 700px en essayant d’articuler au mieux la disposition des différents éléments grâce aux marges et en déplaçant la carte et sa légende.
 
 ![composition](./assets/02_12-compose.gif)
 
@@ -141,12 +141,10 @@ On peut par exemple réduire la hauteur du document à 800px en essayant d’art
 
 Khartis propose trois formats d’export :
 
-* [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image. Adapté si on ne souhaite pas retoucher la carte.
+* [png](https://fr.wikipedia.org/wiki/Portable_Network_Graphics) : format image, à différentes réolutions. Adapté si on ne souhaite pas retoucher la carte.
 
 * [svg](../definitions#fichier-svg) : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.
 
-* svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator.
+* svg (pour Illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator
 
-Ci-dessous un exemple de reprise du document sous un logiciel de dessin vectoriel.
-
-![reprise document](./assets/02_14-edit-urbanisation2015.png)
+![type téléchargement](./assets/export-download.gif)
