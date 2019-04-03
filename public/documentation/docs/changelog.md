@@ -8,7 +8,7 @@
 -   add Grand Paris at two levels: municipalities and iris
 
 ### Import basemap
-New functionality to import your own basemap in three possible format: shapefile, geojson or topojson.
+New functionality to import your own basemap in three possible formats: shapefile, geojson or topojson.
 
 ## v2.2 (13/11/2018)
 -   Redesign of visualizations panel: new classification more clear and readable
