@@ -368,6 +368,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#georeferencer-les-donnees-a-partir-de-coordonnees" title="Géoréférencer les données, à partir de coordonnées" class="md-nav__link">
+    Géoréférencer les données, à partir de coordonnées
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#visualiser-les-donnees_1" title="Visualiser les données" class="md-nav__link">
     Visualiser les données
   </a>
@@ -440,6 +447,18 @@
   <li class="md-nav__item">
     <a href="../importer-propre-fond/" title="Importer son propre fond de carte" class="md-nav__link">
       Importer son propre fond de carte
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gestion-etiquettes/" title="Gestion des étiquettes" class="md-nav__link">
+      Gestion des étiquettes
     </a>
   </li>
 
@@ -823,6 +842,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#georeferencer-les-donnees-a-partir-de-coordonnees" title="Géoréférencer les données, à partir de coordonnées" class="md-nav__link">
+    Géoréférencer les données, à partir de coordonnées
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#visualiser-les-donnees_1" title="Visualiser les données" class="md-nav__link">
     Visualiser les données
   </a>
@@ -918,7 +944,7 @@
 <p>Afin de rendre notre carte plus lisible, nous allons ‘alléger’ l’information en ne gardant que les agglomérations supérieures à 10 millions d’habitants. Pour cela, à l’aide d’un tableur (LibreOffice, Excel ou encore Google Sheets) vous pouvez trier vos données selon le nombre d’habitants et ne garder que les agglomérations supérieures à notre seuil de 10 millions.</p>
 <p>Ensuite, pour que Khartis puisse lire vos données, il est nécessaire d’assembler les deux tableaux données au sein d’un même tableau. Toujours à l’aide d’un tableur, nous allons regrouper les deux tableaux en un seul de façon à obtenir une structure similaire à celle figurant ci-dessous.</p>
 <p><img alt="structure du tableau" src="../assets/02-01-data-structuration.png" /></p>
-<p>Pour ce tutoriel, vous pouvez aussi télécharger ce tableau <a href="../assets/02-urbanisation-2015.csv">directement ici</a>.</p>
+<p>Pour suivre ce tutoriel, vous pouvez aussi télécharger ce tableau <a href="../assets/02-urbanisation-2015.csv">directement ici</a>.</p>
 <h2 id="choisir-le-fond-de-carte">Choisir le fond de carte</h2>
 <p>Revenons sur Khartis et choisissons le fond de carte sur lequel nous allons travailler. Les données sont à l’échelle mondiale alors nous choisissons ‘Monde &gt; pays (2016)’.</p>
 <p><img alt="Choix du fond de carte" src="../assets/02_01-select-basemap.gif" /></p>
@@ -927,17 +953,17 @@
 <p>Vous pouvez charger des données de trois manières différentes :</p>
 <ul>
 <li>
-<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est rangé</p>
+<p>copier-coller les données directement depuis un logiciel de tableur ouvert</p>
+</li>
+<li>
+<p>cliquer sur ‘Importer’ et sélectionner le <a href="../definitions#fichier-csv">fichier csv</a> là où il est situé sur votre ordinateur</p>
 </li>
 <li>
 <p>glisser le fichier csv depuis son dossier directement dans le cadre</p>
 </li>
-<li>
-<p>copier-coller les données directement depuis un logiciel de tableur ouvert</p>
-</li>
 </ul>
-<p>Pour cette fois nous utiliserons la troisième option, un simple copier-coller à partir de notre tableur. Cliquer ensuite sur ‘suivant’</p>
-<p><img alt="import des données" src="./assets/02_02-paste-data.gif" /></p>
+<p>Pour cette fois nous utiliserons la première option, un simple copier-coller à partir de notre tableur. Cliquer ensuite sur ‘suivant’</p>
+<p><img alt="import des données" src="../assets/02_02-paste-data.gif" /></p>
 <h2 id="georeferencer-les-donnees">Géoréférencer les données</h2>
 <p>Pour rappel, nous allons représenter deux variables. Celles-ci ne seront pas identifiées de la même manière par Khartis pour qu’elles puissent être représentées sur la carte.</p>
 <p>Pour la part des urbains, les pays seront reconnus grâce au code ISO ou bien aux noms des pays. Pour les agglomérations, Khartis utilisera <a href="../definitions#latlong-coordonnees-geographiques">la latitude et la longitude</a> de chaque ville pour les représenter sur la carte.</p>
@@ -947,25 +973,25 @@
 <p>Passons à l’étape suivante.</p>
 <h2 id="visualiser-les-donnees">Visualiser les données</h2>
 <p>Nous voulons tout d’abord représenter la part en 2015 à l’aide d’une carte choroplèthe (plages de couleurs plus ou moins intenses en couleur selon la part des urbains).</p>
-<p>Cliquez sur le ‘+’ puis sélectionnez la variable à représenter ‘2015 Urban pop %’ et choisissez enfin la visualisation ‘valeurs &gt; surfaces’.</p>
-<p><img alt="choisir une variable" src="../assets/02_04-choose-variable.gif" /></p>
-<p>Maintenant les pays sont colorés selon la part d’urbains présente dans le pays et un volet de réglage de la visualisation est ouvert.</p>
+<p>Cliquez sur ‘Ajouter une visualisation’ puis sélectionnez la visualisation ‘couleurs ordonnées’ puis ‘regrouper les données en classes’ et enfin la variable à représenter ‘2015 Urban pop %’.</p>
+<p><img alt="choisir une variable" src="../assets/02_04-choose-viz-variable.gif" /></p>
+<p>Maintenant les pays sont colorés selon la part d’urbains présente dans le pays et un volet de réglages de la visualisation est ouvert.</p>
 <p>Nous pouvons choisir le mode de discrétisation (découpage en classes) ainsi que le gradient de couleur pour cette variable.</p>
 <p><img alt="choix discrétisation" src="../assets/02_05-choose-discretization.gif" /></p>
 <p><em>Pour en savoir plus sur les discrétisations, <a href="../discretisation">cliquez ici</a>.</em></p>
 <p>Cette première variable représentée, nous pouvons ensuite passer à la seconde, à savoir les agglomérations de plus de 10 millions habitants.</p>
-<p>Géoréférencer les données</p>
+<h2 id="georeferencer-les-donnees-a-partir-de-coordonnees">Géoréférencer les données, à partir de coordonnées</h2>
 <p>Il s’agit maintenant de ‘géoréférencer’ cette deuxième variable à l’aide de <a href="../definitions#latlong-coordonnees-geographiques">coordonnées géographique</a>. Pour cela, fermez le volet de réglage et revenez à la première étape en cliquant sur l’onglet ‘données’.</p>
 <p><img alt="retour au géoréférencement" src="../assets/02_06-back-data.gif" /></p>
 <p>Si cela n’a pas été fait automatiquement par Khartis, nous devons identifier les colonnes latitude et longitude comme telles et ensuite choisir comme ‘colonne de référence géographique’, ‘Latitude/Longitude’.</p>
 <p><img alt="typer les coordonnées" src="../assets/02_07-georef.gif" /></p>
 <h2 id="visualiser-les-donnees_1">Visualiser les données</h2>
-<p>Après avoir cliqué sur l’onglet ‘visualisations’, cliquez sur le ‘+’ , sélectionnez la variable à représenter, à savoir  ‘2015 Agglo Pop’ et choisissez enfin la visualisation ‘valeurs &gt; symboles’. Vous verrez ainsi apparaître chacune des agglomérations de plus de 10 millions habitants grâce aux points proportionnels représentant leurs populations.</p>
+<p>Après avoir cliqué sur l’onglet ‘visualisations’, cliquez sur ‘Ajouter une visualisation’ , sélectionnez la visualisation ‘symboles proportionnels’ puis’Choisir une variable &gt; symboles’ avec la variable ‘2015 Agglo Pop’. Vous verrez ainsi apparaître chacune des agglomérations de plus de 10 millions habitants grâce aux points proportionnels représentant leurs populations.</p>
 <p>Le volet de réglage de la visualisation s’est ouvert pour régler entre autre la taille, la forme et la couleur de vos symboles.</p>
 <p><img alt="réglages de la visualisation" src="../assets/02_08-symb-settings.gif" /></p>
 <p>Attention : le fonctionnement de Khartis peut être ralenti lorsqu’un grand nombre de points est représenté.</p>
 <h3 id="projections">Projections</h3>
-<p>Khartis vous propose différentes manières de voir le monde au travers de plusieurs projections cartographiques. Vous pouvez la choisir à tout moment dans l’élaboration de votre carte, sans perturber les paramètres de celle-ci. Nous allons ici changer de projection en choisissant la ‘Briesemeister’.</p>
+<p>Khartis vous propose différentes manières de voir le monde au travers de plusieurs projections cartographiques. Vous pouvez la choisir à tout moment dans l’élaboration de votre carte, sans perturber les paramètres de celle-ci. Nous allons ici changer de projection en choisissant la ‘Bertin (1953)’.</p>
 <p><img alt="choix de la projection" src="../assets/02_09-choose-projection.gif" /></p>
 <p><em>Pour en savoir plus sur les projections disponibles, <a href="../les-projections-disponibles">cliquez ici</a>.</em></p>
 <h2 id="export">Export</h2>
@@ -976,7 +1002,7 @@
 <p>Pour modifier l’entête de légende, cliquez simplement sur le texte.
 <img alt="éditer la légende" src="../assets/02_11-edit-legend.gif" /></p>
 <h3 id="mise-en-page">Mise en page</h3>
-<p>Une fois la carte complétée avec ces éléments textuels assurant une bonne lecture de celle-ci, nous pouvons améliorer la mise en page avec trois paramètres :</p>
+<p>Une fois la carte complétée avec ces éléments textuels assurant une bonne lecture de celle-ci, nous pouvons améliorer la mise en page, notamment avec trois paramètres :</p>
 <ul>
 <li>les dimensions du document sont matérialisées en blanc et se distinguent du fond gris. Ce sont la largeur et la hauteur en pixels modifiables depuis le panneau de réglage à gauche.</li>
 </ul>
@@ -989,23 +1015,22 @@
 <p>le placement de la légende qui peut être déplacée par cliquer-glisser.</p>
 </li>
 </ul>
-<p>On peut par exemple réduire la hauteur du document à 800px en essayant d’articuler au mieux la disposition des différents éléments grâce aux marge et en déplaçant la carte et sa légende.</p>
+<p>On peut par exemple réduire la hauteur du document à 700px en essayant d’articuler au mieux la disposition des différents éléments grâce aux marges et en déplaçant la carte et sa légende.</p>
 <p><img alt="composition" src="../assets/02_12-compose.gif" /></p>
 <h3 id="format-dexport">Format d’export</h3>
 <p>Khartis propose trois formats d’export :</p>
 <ul>
 <li>
-<p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image. Adapté si on ne souhaite pas retoucher la carte.</p>
+<p><a href="https://fr.wikipedia.org/wiki/Portable_Network_Graphics">png</a> : format image, à différentes réolutions. Adapté si on ne souhaite pas retoucher la carte.</p>
 </li>
 <li>
 <p><a href="../definitions#fichier-svg">svg</a> : format vectoriel. Adapté si on souhaite continuer à travailler la carte dans un logiciel de dessin.</p>
 </li>
 <li>
-<p>svg (optimisé illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator.</p>
+<p>svg (pour Illustrator) : meilleure compatibilité avec le logiciel Adobe Illustrator</p>
 </li>
 </ul>
-<p>Ci-dessous un exemple de reprise du document sous un logiciel de dessin vectoriel.</p>
-<p><img alt="reprise document" src="../assets/02_14-edit-urbanisation2015.png" /></p>
+<p><img alt="type téléchargement" src="../assets/export-download.gif" /></p>
                 
                   
                 

@@ -6,6 +6,7 @@
 -   add China provinces (2018)
 -   add New-Caledonia municipalities (2017)
 -   add Grand Paris at two levels: municipalities and iris
+-   update Europe at two levels: NUTS-2 and NUTS-3 (2016)
 
 ### Import basemap
 New functionality to import your own basemap in three possible formats: shapefile, geojson or topojson.
