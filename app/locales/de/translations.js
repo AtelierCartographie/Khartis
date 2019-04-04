@@ -491,6 +491,8 @@ export default {
     "eu country 2013": "Europa > Staaten (2016)",
     "eu nuts-2 2013": "Europa > Regionen (NUTS-2, 2013)",
     "eu nuts-3 2013": "Europa > Gemeinden (NUTS-3, 2013)",
+    "eu nuts-2 2016": "Europa > Regionen (NUTS-2, 2016)",
+    "eu nuts-3 2016": "Europa > Gemeinden (NUTS-3, 2016)",
     "france dept": "Frankreich > Departments (2016)",
     "spain prov 2015": "Spanien > Provinzen (2015)",
     "spain auto 2015": "Spanien > Gemeinden (2015)",

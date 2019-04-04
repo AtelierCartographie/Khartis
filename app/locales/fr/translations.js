@@ -556,6 +556,8 @@ export default {
     "eu country 2013": "Europe > pays (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
     "eu nuts-3 2013": "Europe > nuts 3 (2013)",
+    "eu nuts-2 2016": "Europe > nuts 2 (2016)",
+    "eu nuts-3 2016": "Europe > nuts 3 (2016)",
     "spain prov 2015": "Espagne > provinces (2015)",
     "spain auto 2015": "Espagne > communautés (2015)",
     "us state 2015": "États-Unis > États (2015)",
