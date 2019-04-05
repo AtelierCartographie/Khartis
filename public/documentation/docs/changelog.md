@@ -11,6 +11,9 @@
 ### Import basemap
 New functionality to import your own basemap in three possible formats: shapefile, geojson or topojson.
 
+### Export
+More customization for world basemap at export step: equator, sphere, seas, background 
+
 ## v2.2 (13/11/2018)
 -   Redesign of visualizations panel: new classification more clear and readable
 -   3 new viz than combine two variables
