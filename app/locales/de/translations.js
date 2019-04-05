@@ -406,7 +406,11 @@ export default {
       },
       "borders": "Rand",
       "grid": "Raster",
-      "background": "Basiskarte",
+      "backmap": "Basiskarte",
+      "sphere": "sphere",
+      "sea": "meere",
+      "parallel": "Äquator",
+      "background": "Hintergrund",
       "image": {
         "title": "image",
         "normal": "normal",

@@ -32,20 +32,20 @@ export default Ember.Mixin.create({
 			.classed("document", true)
       .attr("width", "100%")
       .attr("height", "100%")
-      .attr("opacity", 0.9)
+      .attr("opacity", 1)
       .attr("mask", `url(#document-mask)`)
-      .attr("fill", this.get('displayDocumentMask') ? "#cdcdcd":"#e2e2e2");
+      .attr("fill", this.get('displayDocumentMask') ? "#c7ced1":"#dee2e4");
 
     this.updateDocumentMask();
 
   },
 
   updateDocumentMask: function() {
-    
+
 		let {w, h} = this.getSize(),
         d3l = this.d3l(),
         self = this;
-		
+
     let bbox = d3l.node().getBoundingClientRect(),
         ratio = Math.min(bbox.width/w, bbox.height/h),
         mX = (bbox.width - w*ratio) / 2 / ratio, //marges de compensation du viewport / viewBox
@@ -57,7 +57,7 @@ export default Ember.Mixin.create({
         outer = `M ${-mX} ${-mY}, ${w+2*mX} ${-mY}, ${w+2*mX} ${h+2*mY}, ${-mX} ${h+2*mY} Z`,
         inner =  `M ${hOf} ${vOf}, ${w - hOf} ${vOf},
                    ${w - hOf} ${h - vOf}, ${hOf} ${h - vOf}Z`;
-    
+
     d3l.select("defs #document-mask path")
       .attr("d", `${outer} ${inner}`);
 
@@ -70,11 +70,11 @@ export default Ember.Mixin.create({
         "y": -mY,
         "width": w+2*mX,
         "height": h+2*mY,
-        "fill": this.get('displayDocumentMask') ? "#cdcdcd":"#e2e2e2"
+        "fill": this.get('displayDocumentMask') ? "#c7ced1":"#dee2e4"
       })
-    
+
     // ===========
-		
+
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
     'graphLayout.margin.h',  'graphLayout.margin.v', 'displayDocumentMask', 'resizingMargin', 'projector'),
 

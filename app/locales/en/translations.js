@@ -457,7 +457,11 @@ export default {
       },
       "borders": "borders",
       "grid": "graticules",
-      "background": "basemap",
+      "backmap": "basemap",
+      "sphere": "sphere",
+      "sea": "seas",
+      "parallel": "equator",
+      "background": "background",
       "image": {
         "title": "image",
         "normal": "normal",

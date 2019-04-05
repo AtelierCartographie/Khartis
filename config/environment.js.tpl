@@ -362,7 +362,7 @@ module.exports = function(environment) {
       },
       {
         id: "algeria wil 2008",
-        attribution: "basemap from ",
+        attribution: "basemap from OSM",
         sources: [
           {source: "DZ-wil-2008.json", projection: "d3.geoTransverseMercator()", transforms:{rotate: [-3, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],

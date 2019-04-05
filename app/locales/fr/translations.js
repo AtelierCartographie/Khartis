@@ -470,7 +470,11 @@ export default {
       },
       "borders": "frontières ou limites",
       "grid": "graticules",
-      "background": "fond de carte",
+      "backmap": "fond de carte",
+      "sphere": "sphere",
+      "sea": "mers",
+      "parallel": "équateur",
+      "background": "arrière-plan",
       "image": {
         "title": "image",
         "normal": "normale",

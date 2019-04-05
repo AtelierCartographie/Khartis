@@ -210,13 +210,13 @@
 
     <div class="title underlined">{{x-capitalize (t 'export.title.drawings')}}</div>
     <div class="settings vertical flow">
-      <div class="horizontal middle flow">  
+      <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.show')}}</label>
         <div class="horizontal solid half-airy flow w3">
           <a {{action 'toggleDrawingTools'}}><i class="iconfont {{if drawingToolsEnabled 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
         </div>
       </div>
-      <div class="horizontal middle flow">  
+      <div class="horizontal middle flow">
         <label class="solid w12">
           {{x-capitalize (t 'export.drawings.addDrawing.1')}}
           <a {{action 'activateDrawingTool' 'text'}} class="add-text-drawing-button"><i class="iconfont iconfont-text"></i></a>
@@ -241,6 +241,22 @@
         </div>
       </div>
       <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.backmap')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
+          {{color-picker class="on-white" value=model.graphLayout.backmapColor}}
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.parallel')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          <a {{action 'toggleParallelVisibility' layer}}><i class="iconfont {{if model.graphLayout.showParallel 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+          {{#if model.graphLayout.showParallel}}
+          {{color-picker class="on-white" value=model.graphLayout.parallelColor}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.grid')}}</label>
         <div class="horizontal solid half-airy flow w7">
           <a {{action 'toggleGridVisibility' layer}}><i class="iconfont {{if model.graphLayout.showGrid 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
@@ -250,10 +266,28 @@
         </div>
       </div>
       <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.sphere')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          <a {{action 'toggleSphereVisibility' layer}}><i class="iconfont {{if model.graphLayout.showSphere 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+          {{#if model.graphLayout.showSphere}}
+          {{color-picker class="on-white" value=model.graphLayout.sphereColor}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="horizontal middle flow">
+        <label class="solid w4">{{x-capitalize (t 'export.settings.sea')}}</label>
+        <div class="horizontal solid half-airy flow w7">
+          <a {{action 'toggleSeaVisibility' layer}}><i class="iconfont {{if model.graphLayout.showSea 'iconfont-eye' 'iconfont-eye-slash'}}"></i></a>
+          {{#if model.graphLayout.showSea}}
+          {{color-picker class="on-white" value=model.graphLayout.seaColor}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="horizontal middle flow">
         <label class="solid w4">{{x-capitalize (t 'export.settings.background')}}</label>
         <div class="horizontal solid half-airy flow w7">
           <a style="visibility: hidden"><i class="iconfont iconfont-eye"></i></a>
-          {{color-picker class="on-white" value=model.graphLayout.backmapColor}}
+          {{color-picker class="on-white" value=model.graphLayout.backgroundColor}}
         </div>
       </div>
     </div>
