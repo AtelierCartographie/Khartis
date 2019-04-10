@@ -1,4 +1,4 @@
-Dans **Khartis**, 5 méthodes de discrétisations sont disponibles. Chacune permet de découper la série statistique en groupes.
+Dans **Khartis**, 6 méthodes de discrétisations sont disponibles. Chacune permet de découper la série statistique en groupes.
 
 #### intervalles égaux
 >L'amplitude (min-max) de la série statistique est divisée par le nombre de classes souhaitées.   

@@ -470,7 +470,11 @@ export default {
       },
       "borders": "frontières ou limites",
       "grid": "graticules",
-      "background": "fond de carte",
+      "backmap": "fond de carte",
+      "sphere": "sphere",
+      "sea": "mers",
+      "parallel": "équateur",
+      "background": "arrière-plan",
       "image": {
         "title": "image",
         "normal": "normale",
@@ -556,6 +560,8 @@ export default {
     "eu country 2013": "Europe > pays (2016)",
     "eu nuts-2 2013": "Europe > nuts 2 (2013)",
     "eu nuts-3 2013": "Europe > nuts 3 (2013)",
+    "eu nuts-2 2016": "Europe > nuts 2 (2016)",
+    "eu nuts-3 2016": "Europe > nuts 3 (2016)",
     "spain prov 2015": "Espagne > provinces (2015)",
     "spain auto 2015": "Espagne > communautés (2015)",
     "us state 2015": "États-Unis > États (2015)",
@@ -605,7 +611,9 @@ export default {
     "uk nuts3 2018": "Royaume-Uni > NUTS 3 (2018)",
     "china prov 2018": "Chine > provinces (2018)",
     "algeria wil 2008": "Algérie > Wilayas (2008)",
-    "nc com 2017": "Nouvelle-Calédonie > Communes (2017)"
+    "nc com 2017": "Nouvelle-Calédonie > Communes (2017)",
+    "MGP com 2018": "Grand Paris > Communes (2018)",
+    "MGP iris 2016": "Grand Paris > Iris (2016)"
   },
 
   "examples": {
@@ -643,7 +651,9 @@ export default {
     "cn-prov-grp-2017": "Produit régional brut (2009-2017)",
     "dz-wil-pop-2008": "Population (2008)",
     "nc-com-pop-2014": "Population (2014)",
-    "nc-com-ref-2018": "Référendum d'autodétermination (2018)"
+    "nc-com-ref-2018": "Référendum d'autodétermination (2018)",
+    "MGP-com-2018-pop-2013": "Population (2013)",
+    "MGP-iris-2016-pop-2013": "Population (2013)"
   },
 
   "importMap": {

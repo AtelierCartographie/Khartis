@@ -1,188 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
      <loc>http://www.sciencespo.fr/cartographie/khartis/docs/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/FAQ/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/changelog/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/contraste/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/couleurs-differentes/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/couleurs-ordonnees/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/definitions/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/discretisation/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/double-symboles-proportionnels/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/how-to-create-a-basemap-for-Khartis/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/importer-des-donnees/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/importer-propre-fond/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-fonds-de-carte-disponibles/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-projections-disponibles/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-sources-des-exemples-a-disposition/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/liste-des-visualisations/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
     <url>
      <loc>http://www.sciencespo.fr/cartographie/khartis/docs/premiers-pas-avec-Khartis-(1)/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
      <loc>http://www.sciencespo.fr/cartographie/khartis/docs/premiers-pas-avec-Khartis-(2)/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-differents/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/importer-propre-fond/</loc>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-ordonnes/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/gestion-etiquettes/</loc>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-proportionnels-colores-difference/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/liste-des-visualisations/</loc>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-proportionnels-colores-ordre/</loc>
-     <lastmod>2019-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
     <url>
      <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-proportionnels/</loc>
-     <lastmod>2019-03-26</lastmod>
+     <lastmod>2019-04-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/couleurs-ordonnees/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-ordonnes/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-differents/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/couleurs-differentes/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-proportionnels-colores-ordre/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/symboles-proportionnels-colores-difference/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/double-symboles-proportionnels/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/importer-des-donnees/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-fonds-de-carte-disponibles/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-projections-disponibles/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/les-sources-des-exemples-a-disposition/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/discretisation/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/contraste/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/FAQ/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/definitions/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/changelog/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://www.sciencespo.fr/cartographie/khartis/docs/how-to-create-a-basemap-for-Khartis/</loc>
+     <lastmod>2019-04-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
 </urlset>

@@ -11,7 +11,7 @@ import { DRAWING_EVENT } from '../components/map-editor/drawing';
 import EventNotifier from '../components/map-editor/event-notifier';
 
 export default Ember.Controller.extend(ExportMixin, {
-  
+
   store: Ember.inject.service(),
 
   queryParams: ['currentTab'],
@@ -25,9 +25,9 @@ export default Ember.Controller.extend(ExportMixin, {
     "export"
   ],
   state: "visualizations",
-  
+
   sidebarSubExpanded: false,
-  
+
   editedLayer: null,
   editedColumn: null,
 
@@ -66,22 +66,22 @@ export default Ember.Controller.extend(ExportMixin, {
   }.observes('currentTab').on("init"),
 
   projectionConfigurable: function() {
-     return !this.get('model.graphLayout.basemap.projectionProvided'); 
+     return !this.get('model.graphLayout.basemap.projectionProvided');
   }.property('model.graphLayout.basemap.projectionProvided'),
-  
+
   availableProjections: function() {
     return this.get('model.graphLayout.basemap.availableProjections')
       //.filter( p => p.id !== "lambert_azimuthal_equal_area");
   }.property('model.graphLayout.availableProjections'),
-  
+
   isInStateVisualization: function() {
     return this.get('state') === "visualizations";
   }.property('state'),
-  
+
   isInStateExport: function() {
     return this.get('state') === "export";
   }.property('state'),
-  
+
   sidebarPartial: function() {
     return `graph/_sidebar/${this.get('state')}`;
   }.property('state'),
@@ -101,7 +101,7 @@ export default Ember.Controller.extend(ExportMixin, {
   shouldDisplayDrawingTools: function() {
     return this.get('state') === "export" && this.get('drawingToolsEnabled');
   }.property('state', 'drawingToolsEnabled'),
-  
+
   layoutChange: function() {
     this.send('onAskVersioning', 'freeze');
   }.observes('model.graphLayout.width', 'model.graphLayout.height', 'model.graphLayout.zoom',
@@ -113,7 +113,7 @@ export default Ember.Controller.extend(ExportMixin, {
     'model.graphLayout.drawings.@each._defferedChangeIndicator',
     'model.title', 'model.author', 'model.dataSource', 'model.comment',
     'model.titleStyle', 'model.authorStyle', 'model.dataSourceStyle', 'model.commentStyle'),
-  
+
   layersChange: function() {
 
     if (this.get('model.graphLayout.showLegend') === null && this.get('model.graphLayers').length) {
@@ -129,7 +129,7 @@ export default Ember.Controller.extend(ExportMixin, {
   freeze: function() {
     this.get('store').versions().freeze(this.get('model'));
   },
-  
+
   invertSliderFn: function() {
     let fn = function(val) {
       return -val;
@@ -140,27 +140,27 @@ export default Ember.Controller.extend(ExportMixin, {
 
     return fn;
   }.property(),
-  
+
   actions: {
-    
+
     bindProjection(proj) {
       this.set('model.graphLayout.projection', Projection.create(proj.export()));
       this.send('onAskVersioning', 'freeze');
     },
-    
+
     editColumn(col) {
       if (col.get('incorrectCells.length')) {
         this.transitionToRoute('graph.column', col.get('_uuid'));
       }
     },
-    
+
     addLayer() {
       let layer = GraphLayer.createDefault(null, this.get('model.geoDef'));
       this.get('model.graphLayers').unshiftObject(layer);
       this.get('model.graphLayout.legendLayout').addLayer(layer);
       this.transitionToRoute('graph.layer', layer.get('_uuid'));
     },
-    
+
     editLayer(layerIndex) {
       let layer = this.get('model.graphLayers').objectAt(layerIndex);
       if (layer != this.get('editedLayer')) {
@@ -169,7 +169,7 @@ export default Ember.Controller.extend(ExportMixin, {
         this.transitionToRoute('graph');
       }
     },
-    
+
     removeLayer(layer) {
       this.get('ModalManager')
         .show('confirm', Ember.String.capitalize(this.get('i18n').t('visualization.alert.remove.content').string),
@@ -192,11 +192,11 @@ export default Ember.Controller.extend(ExportMixin, {
           this.get('model.labellingLayers').removeObject(layer);
         });
     },
-    
+
     toggleLayerVisibility(layer) {
       layer.toggleProperty('visible');
     },
-    
+
     bindLayerMapping(type, ordered) {
       if (type.split(".").indexOf("combined") !== -1) {
         this.set('editedLayer.mapping', MultiMapping.create({
@@ -219,29 +219,41 @@ export default Ember.Controller.extend(ExportMixin, {
     alignLabels(to) {
       this.get('model.labellingLayers')[0].set('mapping.visualization.anchor', to);
     },
-    
+
     bindMappingPattern(layer, pattern) {
       layer.set('mapping.pattern', pattern);
     },
-    
+
     bindMappingShape(layer, shape) {
       layer.set('mapping.shape', shape);
     },
-    
+
     bindMappingLabelCol(layer, col) {
       layer.set('mapping.labelCol', col);
     },
-    
+
     bind(root, prop, value) {
       root.set(prop, value);
     },
-    
+
     toggleBordersVisibility() {
       this.toggleProperty('model.graphLayout.showBorders');
     },
 
     toggleGridVisibility() {
       this.toggleProperty('model.graphLayout.showGrid');
+    },
+
+    toggleSphereVisibility() {
+      this.toggleProperty('model.graphLayout.showSphere');
+    },
+
+    toggleSeaVisibility() {
+      this.toggleProperty('model.graphLayout.showSea');
+    },
+
+    toggleParallelVisibility() {
+      this.toggleProperty('model.graphLayout.showParallel');
     },
 
     toggleLegendVisibility() {
@@ -285,7 +297,7 @@ export default Ember.Controller.extend(ExportMixin, {
     selectAllLabellingFilterCategory(filter, mod) {
       filter.selectAllCategory(mod);
     },
-    
+
     resetTranslate() {
       this.get('model.graphLayout').setProperties({
         zoom: 1,
@@ -293,13 +305,13 @@ export default Ember.Controller.extend(ExportMixin, {
         ty: 0
       });
     },
-    
+
     zoomPlus() {
       if (this.get('model.graphLayout.zoom') < 12) {
         this.incrementProperty('model.graphLayout.zoom');
       }
     },
-    
+
     zoomMoins() {
       if (this.get('model.graphLayout.zoom') > 0) {
         this.decrementProperty('model.graphLayout.zoom');
@@ -317,7 +329,7 @@ export default Ember.Controller.extend(ExportMixin, {
         this.exportPNG(opts);
       }
     },
-    
+
     selectState(state) {
       this.transitionToRoute('graph', this.get('model._uuid'), { queryParams: { currentTab: state }});
     },
@@ -329,7 +341,7 @@ export default Ember.Controller.extend(ExportMixin, {
     next() {
       this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))+1]);
     },
-    
+
     back() {
       if (this.get('states').indexOf(this.get('state')) > 0) {
         this.set('state', this.get('states')[this.get('states').indexOf(this.get('state'))-1]);
@@ -382,7 +394,7 @@ export default Ember.Controller.extend(ExportMixin, {
       this.get('mapEditorEventNotifier').triggerThen(DRAWING_EVENT, "activate")
         .then( eventNotifier => eventNotifier.trigger(DRAWING_EVENT, type) );
     },
-    
+
     onDeleteDrawingFeature(feature) {
       this.get('model.graphLayout.drawings').removeObject(feature);
       this.set('selectedDrawingFeature', null);
@@ -391,13 +403,13 @@ export default Ember.Controller.extend(ExportMixin, {
     openHelpCreateViz() {
       this.get('documentationService').trigger("openAtUrl", "index.html");
     },
-    
+
     onAskVersioning(type) {
       switch (type) {
         case "undo":
           this.get('store').versions().undo();
           break;
-        case "redo": 
+        case "redo":
           this.get('store').versions().redo();
           break;
         case "freeze":
@@ -405,7 +417,7 @@ export default Ember.Controller.extend(ExportMixin, {
           break;
       }
     }
-    
+
   }
-  
+
 });

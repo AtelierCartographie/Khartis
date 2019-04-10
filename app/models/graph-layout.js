@@ -11,17 +11,17 @@ import DrawingFactory from './drawing/factory';
 const MARGIN_DEFAULTS = {t: 30, b: 30, l: 16, r: 16};
 
 var Margin = Struct.extend({
-  
+
   manual: false,
   l: MARGIN_DEFAULTS.l,
   r: MARGIN_DEFAULTS.r,
   t: MARGIN_DEFAULTS.t,
   b: MARGIN_DEFAULTS.b,
-  
+
   h: function() {
     return this.get('l') + this.get('r');
   }.property('l', 'r'),
-  
+
   v: function() {
     return this.get('t') + this.get('b');
   }.property('t', 'b'),
@@ -40,7 +40,7 @@ var Margin = Struct.extend({
       this.notifyDefferedChange();
     },
     50),
-  
+
   export() {
     return this._super({
       manual: this.get('manual'),
@@ -50,11 +50,11 @@ var Margin = Struct.extend({
       b: this.get('b')
     });
   }
-  
+
 });
 
 Margin.reopenClass({
-  
+
   restore(json, refs = {}) {
       let o = this._super(json, refs);
       o.setProperties({
@@ -66,33 +66,42 @@ Margin.reopenClass({
       });
       return o;
   }
-    
+
 });
 
 var GraphLayout = Struct.extend({
-	
+
   basemap: null,
-  
+
 	stroke: "#ffffff",
 	strokeWidth: 1,
-	
-	backgroundColor: "#ffffff",
-  backmapColor: "#cfd1d1",
 
-  backlandsColor: function() {
-    return "#e0e1e1";
-  }.property('backmapColor'),
-  
+	backgroundColor: "#ffffff",
+  backmapColor: "#dad5cc",
+
+  // backlandsColor: function() {
+  //   return "#e3e0d9";
+  // }.property('backmapColor'),
+
   showBorders: true,
 
+	showParallel: true,
+  parallelColor: "#d9d9d9",
+
   showGrid: true,
-  gridColor: "#e1e3ee",
-  
+  gridColor: "#d9d9d9",
+
+	showSphere: true,
+	sphereColor: "#d9d9d9",
+
+	showSea: false,
+	seaColor: "#f2f6f9",
+
   showLegend: null,
   legendLayout: null,
 
   drawings: null,
-	
+
 	autoCenter: false,
 
   canDisplayGrid: function() {
@@ -103,6 +112,14 @@ var GraphLayout = Struct.extend({
     return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
   }.property('projection', 'projection.isComposite'),
 
+	canDisplaySea: function() {
+    return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
+  }.property('projection', 'projection.isComposite'),
+
+	canDisplayParallel: function() {
+    return !this.get('projection.isComposite') && this.get('basemap.type') !== "imported";
+  }.property('projection', 'projection.isComposite'),
+
   tx: 0,
   ty: 0,
 	width: 900,
@@ -110,7 +127,7 @@ var GraphLayout = Struct.extend({
 	margin: null,
   zoom: 1,
   precision: 2.5,
-  
+
   projection: null,
 
   init() {
@@ -126,7 +143,7 @@ var GraphLayout = Struct.extend({
 	hOffset: function(screenWidth) {
 		return (screenWidth - this.get('width')) / 2;
 	},
-	
+
 	vOffset: function(screenHeight) {
 		return (screenHeight - this.get('height')) / 2;
 	},
@@ -138,7 +155,7 @@ var GraphLayout = Struct.extend({
         this.set('projection', basemap.assumeProjection());
       });
   },
-	
+
   export() {
     return this._super({
       basemap: this.get('basemap') ? this.get('basemap').export() : null,
@@ -147,6 +164,8 @@ var GraphLayout = Struct.extend({
       backgroundColor: this.get('backgroundColor'),
       backmapColor: this.get('backmapColor'),
       gridColor: this.get('gridColor'),
+			sphereColor: this.get('sphereColor'),
+			seaColor: this.get('seaColor'),
       stroke: this.get('stroke'),
       tx: this.get('tx'),
       ty: this.get('ty'),
@@ -171,11 +190,11 @@ var GraphLayout = Struct.extend({
       this.set('legendLayout', LegendLayout.restore(json.legendLayout, refs));
     }
   }
-  
+
 });
 
 GraphLayout.reopenClass({
-  
+
   createDefault() {
     let o = GraphLayout.create({margin: Margin.create()});
     return o;
@@ -187,13 +206,15 @@ GraphLayout.reopenClass({
     }
     return null;
   },
-  
+
   restore(json, refs = {}) {
       let o = this._super(json, refs, {
         basemap: GraphLayout.restoreBasemap(json.basemap),
         backgroundColor: json.backgroundColor,
         backmapColor: json.backmapColor,
         gridColor: json.gridColor,
+				sphereColor: json.sphereColor,
+				seaColor: json.seaColor,
         stroke: json.stroke,
         projection: json.projection ? Projection.restore(json.projection) : null,
         margin: json.margin ? Margin.restore(json.margin) : null,
@@ -210,7 +231,7 @@ GraphLayout.reopenClass({
       });
       return o;
   }
-    
+
 });
 
 

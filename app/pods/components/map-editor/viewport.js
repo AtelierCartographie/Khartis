@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
       .attrs({
         "fill-rule": "evenodd"
       })
-      .style("fill", "white");
+      .style("fill", this.get('graphLayout.backgroundColor'));
 
     defs.append("clipPath")
       .attrs({
@@ -34,24 +34,24 @@ export default Ember.Mixin.create({
 			.classed("viewport", true)
       .attr("width", "100%")
       .attr("height", "100%")
-      .attr("opacity", 0.8)
+      .attr("opacity", 1)
       .attr("mask", `url(#viewport-mask)`)
       .attr("fill", this.get('graphLayout.backgroundColor'));
 
     let og = d3g.append("g")
 			.classed("offset", true);
-			
+
 		og.append("line").classed("horizontal-top", true);
 		og.append("line").classed("horizontal-bottom", true);
 		og.append("line").classed("vertical-left", true);
 		og.append("line").classed("vertical-right", true);
-		
+
 		let mg = d3g.append("g")
 			.classed("margin", true);
 
     let mr = d3g.append("g")
       .classed("margin-resizer", true);
-			
+
 		mg.append("rect")
 			.attr("fill", "none");
 
@@ -60,13 +60,13 @@ export default Ember.Mixin.create({
   },
 
   updateViewport: function() {
-    
+
     this._super();
-		
+
 		let {w, h} = this.getSize(),
         d3l = this.d3l(),
         self = this;
-		
+
     let vpBbox = d3l.node().getBoundingClientRect(),
         ratio = Math.min(vpBbox.width/w, vpBbox.height/h),
         mX = (vpBbox.width - w*ratio) / 2 / ratio, //marges de compensation du viewport / viewBox
@@ -79,7 +79,7 @@ export default Ember.Mixin.create({
         outer = `M ${-mX} ${-mY}, ${w+2*mX} ${-mY}, ${w+2*mX} ${h+2*mY}, ${-mX} ${h+2*mY} Z`,
         inner =  `M ${hOf + m.l} ${vOf + m.t}, ${w - hOf - m.r} ${vOf + m.t},
                    ${w - hOf - m.r} ${h - vOf - m.b}, ${hOf + m.l} ${h - vOf - m.b}Z`;
-    
+
     d3l.select("defs #viewport-mask path")
       .attr("d", `${outer} ${inner}`);
 
@@ -91,11 +91,12 @@ export default Ember.Mixin.create({
         "x": -mX,
         "y": -mY,
         "width": w+2*mX,
-        "height": h+2*mY
+        "height": h+2*mY,
+				"fill": this.get('graphLayout.backgroundColor')
       })
-    
+
     // ===========
-		
+
 		d3l.selectAll("g.offset line.horizontal-top")
       .classed("visible", this.get('displayOffsets') || this.get('resizingMargin'))
 			.attr("x1", 0)
@@ -103,7 +104,7 @@ export default Ember.Mixin.create({
 			.attr("x2", w)
 			.attr("y2", vOf)
 		  .attr("stroke-width", "1");
-    
+
 		d3l.selectAll("g.offset line.horizontal-bottom")
       .classed("visible", this.get('displayOffsets') || this.get('resizingMargin'))
 			.attr("x1", 0)
@@ -111,7 +112,7 @@ export default Ember.Mixin.create({
 			.attr("x2", w)
 			.attr("y2", h - vOf)
 		  .attr("stroke-width", "1");
-			
+
 		d3l.selectAll("g.offset line.vertical-left")
       .classed("visible", this.get('displayOffsets') || this.get('resizingMargin'))
 			.attr("x1", hOf)
@@ -119,7 +120,7 @@ export default Ember.Mixin.create({
 			.attr("x2", hOf)
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
-      
+
 		d3l.selectAll("g.offset line.vertical-right")
       .classed("visible", this.get('displayOffsets') || this.get('resizingMargin'))
 			.attr("x1", w - hOf)
@@ -127,7 +128,7 @@ export default Ember.Mixin.create({
 			.attr("x2", w - hOf)
 			.attr("y2", h)
 		  .attr("stroke-width", "1");
-		
+
 		d3l.select("g.margin")
 			.attr("transform", `translate(${hOf}, ${vOf})`)
 			.selectAll("rect")
@@ -200,7 +201,7 @@ export default Ember.Mixin.create({
       .call(bindAttr);
 
     sel.exit().remove();
-      
+
     d3l.select("rect.bg")
       .attrs({
         x: 0,
@@ -210,7 +211,7 @@ export default Ember.Mixin.create({
       });
 
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
-    'graphLayout.margin.h',  'graphLayout.margin.v', 'displayOffsets', 'resizingMargin', 'projector'),
+    'graphLayout.margin.h',  'graphLayout.margin.v', 'graphLayout.backgroundColor', 'displayOffsets', 'resizingMargin', 'projector'),
 
 
 });

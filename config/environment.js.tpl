@@ -362,7 +362,7 @@ module.exports = function(environment) {
       },
       {
         id: "algeria wil 2008",
-        attribution: "basemap from ",
+        attribution: "basemap from OSM",
         sources: [
           {source: "DZ-wil-2008.json", projection: "d3.geoTransverseMercator()", transforms:{rotate: [-3, 0]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
@@ -501,6 +501,48 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "eu nuts-2 2016",
+        attribution: "basemap from GISCO - Eurostat (European Commission)",
+        sources: [
+          {source: "EU-nuts2-2016/EU.json", projection: "d3.geoAzimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 0.8]]},
+          {source: "EU-nuts2-2016/acores.json", projection: "d3.geoMercator()", scale: 0.8, zoning: [[0, 0.8], [0.25, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/canarias.json", projection: "d3.geoMercator()", scale: 0.8, zoning: [[0.25, 0.8], [0.5, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/guadeloupe.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.25, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/guyane.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.5, 0.9], [0.75, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/madeira.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.9], [0.25, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/martinique.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.5, 0.8], [0.75, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts2-2016/mayotte.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.75, 0.9], [1, 1]], borders: ["t"]},
+          {source: "EU-nuts2-2016/reunion.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.75, 0.8], [1, 0.9]], borders: ["t"]}
+        ],
+        dictionary: {
+          source: "EU-dico-NUTS-2-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+        ]
+      },
+      {
+        id: "eu nuts-3 2016",
+        attribution: "basemap from GISCO - Eurostat (European Commission)",
+        sources: [
+          {source: "EU-nuts3-2016/EU.json", projection: "d3.geoAzimuthalEqualArea()", transforms:{rotate: [-10, -52]}, scale: 1, zoning: [[0, 0], [1, 0.8]]},
+          {source: "EU-nuts3-2016/acores.json", projection: "d3.geoMercator()", scale: 0.8, zoning: [[0, 0.8], [0.25, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/canarias.json", projection: "d3.geoMercator()", scale: 0.8, zoning: [[0.25, 0.8], [0.5, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/guadeloupe.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.25, 0.9], [0.5, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/guyane.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.5, 0.9], [0.75, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/madeira.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.9], [0.25, 1]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/martinique.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.5, 0.8], [0.75, 0.9]], borders: ["r", "t"]},
+          {source: "EU-nuts3-2016/mayotte.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.75, 0.9], [1, 1]], borders: ["t"]},
+          {source: "EU-nuts3-2016/reunion.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.75, 0.8], [1, 0.9]], borders: ["t"]}
+        ],
+        dictionary: {
+          source: "EU-dico-NUTS-3-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+        ]
+      },
+      {
         id: "eu nuts-2 2013",
         attribution: "basemap from GISCO - Eurostat (European Commission)",
         sources: [
@@ -631,7 +673,7 @@ module.exports = function(environment) {
         id: "maroc prov 2015",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
-          {source: "MA-reg-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
+          {source: "MA-prov-2015.json", projection: "d3.geoConicConformal()", scale: 1, transforms:{ rotate: [5.4, 0], parallels: [ 33.3, 33.3 ] }, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "MA-dico-PROV-2015.json",
@@ -696,6 +738,40 @@ module.exports = function(environment) {
             {
                 id: "uk-nuts3-pop-2018",
                 source: "uk-nuts-3-2018-pop-2018.csv"
+            }
+        ]
+      },
+      {
+        id: "MGP com 2018",
+        attribution: "basemap from APUR",
+        sources: [
+          {source: "GRANDPARIS-com-2018.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MGP-dico-COM-2018.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "MGP-com-2018-pop-2013",
+                source: "MGP-com-2018-pop-2013.csv"
+            }
+        ]
+      },
+      {
+        id: "MGP iris 2016",
+        attribution: "basemap from OSM and IGN",
+        sources: [
+          {source: "GRANDPARIS-iris-2016.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "MGP-dico-IRIS-2016.json",
+          identifier: "ID"
+        },
+        examples: [
+            {
+                id: "MGP-iris-2016-pop-2013",
+                source: "MGP-iris-2016-pop-2013.csv"
             }
         ]
       },

@@ -18,7 +18,7 @@ import { EventNotifierFeature } from './event-notifier';
 /* global Em */
 
 export default Ember.Component.extend(EventNotifierFeature, {
-  
+
   tagName: "svg",
   attributeBindings: ['width', 'height', 'xmlns', 'version'],
   classNames: ["map-editor"],
@@ -29,13 +29,13 @@ export default Ember.Component.extend(EventNotifierFeature, {
 
   $width: null,
   $height: null,
-	
+
   graphLayout: null,
-  
+
 	base: function() {
     return this.get('graphLayout.basemap.mapData');
   }.property('graphLayout.basemap.mapData'),
-  
+
   dataSource: null,
   title: null,
   author: null,
@@ -64,7 +64,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
   windowLocation: function() {
     return window.location;
   }.property(),
-  
+
   init() {
     this._super();
     this.set('_landSelSet', new Set());
@@ -88,11 +88,11 @@ export default Ember.Component.extend(EventNotifierFeature, {
       return index;
     }, {});
   },
-  
+
 	draw: function() {
-    
+
 		var d3g = this.d3l();
-    
+
     d3g.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
     d3.namespaces.illustrator = 'http://ns.adobe.com/AdobeIllustrator/10.0/';
     d3g.attr("xmlns:i", d3.namespaces.illustrator);
@@ -101,18 +101,24 @@ export default Ember.Component.extend(EventNotifierFeature, {
     d3.namespaces.flowcss = 'http://www.apyx.fr/flowcss/';
     d3g.attr("xmlns:flow", d3.namespaces.flowcss);
     d3g.style("font-family", "verdana");
-		
+
 		// ========
 		// = DEFS =
 		// ========
-		
+
 		let defs = d3g.append("defs");
-    
+
     defs.append("path")
       .attr("id", "sphere");
-      
+
     defs.append("path")
       .attr("id", "grid");
+
+		defs.append("path")
+	    .attr("id", "sea");
+
+		defs.append("path")
+		  .attr("id", "parallel");
 
     defs.append("clipPath")
       .attr("id", "clip")
@@ -120,14 +126,14 @@ export default Ember.Component.extend(EventNotifierFeature, {
 
     defs.append("clipPath")
       .attr("id", "border-square-clip");
-    
+
 		// ---------
-		
+
     // HANDLE RESIZE
     let $size = () => {
       let $width = this.element.parentElement.clientWidth,
           $height = this.element.parentElement.clientHeight;
-      
+
       if ($width != this.get('$width') || $height != this.get('$height')) {
         this.setProperties({
           '$width': $width,
@@ -138,30 +144,36 @@ export default Ember.Component.extend(EventNotifierFeature, {
     this.set('_resizeInterval', setInterval($size, 500));
     $size();
     // ---------
-    
+
 		d3g.append("rect")
 			.classed("bg", true)
       .attr("fill", this.get("graphLayout.backgroundColor"));
-		
+
     let mapG = d3g.append("g")
       .attr("id", "outerMap", true)
       .append("g")
       .classed("map", true)
       .classed("zoomable", true)
       .attr("id", "map");
-    
+
     let backMap = mapG.append("g")
       .attr("id", "backmap");
-      
-    backMap.append("use")
-      .classed("sphere", true);
-      
+
+		backMap.append("use")
+		  .classed("sea", true);
+
+		backMap.append("use")
+	    .classed("sphere", true);
+
     backMap.append("use")
       .classed("grid", true);
-      
+
+		backMap.append("use")
+	    .classed("parallel", true);
+
 		let layers = mapG.append("g")
       .attr("id", "layers");
-    
+
     let bordersMap = layers.append("g")
       .attr("id", "borders")
       .datum({isBorderLayer: true});
@@ -204,98 +216,98 @@ export default Ember.Component.extend(EventNotifierFeature, {
     if (this.get('hasHoverFeature')) {
       this.reopen(HoverFeature, {defaultGeoDef: this.get('defaultGeoDef')});
     }
-    
+
 		this.projectAndDraw();
 		this.updateColors();
-          
+
 	}.on("didInsertElement"),
-  
+
   cleanup: function() {
     clearInterval(this.get('_resizeInterval'));
   }.on("willDestroyElement"),
-  
+
   getSize() {
     return {
       w: Math.max(this.get('$width'), this.get('graphLayout.width')),
       h: Math.max(this.get('$height'), this.get('graphLayout.height'))
     };
   },
-  
+
   getViewboxTransform() {
-    
+
     let {w, h} = this.getSize(),
         l = this.get('graphLayout').hOffset(w),
         t = this.get('graphLayout').vOffset(h);
-        
+
     let transform = function({x, y}) {
-      
+
       return {
         x: x - l,
         y: y - t
       };
-      
+
     };
-    
+
     transform.invert = function({x, y}) {
-      
+
       return {
         x: x + l,
         y: y + t
       };
-      
+
     }
-    
+
     return transform;
-    
+
   },
 
   /* may be overrided by viewport feature */
   updateViewport: function() {
-    
+
     // ===========
 		// = VIEWBOX =
 		// ===========
 		let {w, h} = this.getSize(),
         d3l = this.d3l();
-		
+
 		d3l.attr("viewBox", "0 0 "+w+" "+h);
 		// ===========
 
   }.observes('$width', '$height', 'graphLayout.width', 'graphLayout.height',
     'displayOffsets', 'projector'),
-	
+
 	updateColors: function() {
-		
+
 		var d3g = this.d3l();
-		
+
 		d3g.selectAll("defs pattern g")
  			.style("stroke", this.get("graphLayout.virginPatternColor"));
-		
+
 		d3g.style("background-color", this.get("graphLayout.backgroundColor"));
-			
+
 		d3g.select("rect.bg")
 			.attr("fill", this.get("graphLayout.backgroundColor"));
-		
+
 		d3g.selectAll("g.offset line")
 			.attr("stroke", "#C0E2EF");
-			
+
 		d3g.selectAll("g.margin rect")
 			.attr("stroke", "#20E2EF");
-		
+
 	}.observes('graphLayout.stroke', 'graphLayout.backgroundColor',
     'graphLayout.virginPatternColorAuto', 'graphLayout.virginPatternColor'),
-	
+
 	updateStroke: function() {
-		
+
 		var d3g = this.d3l();
-		
+
 		d3g.selectAll("path.feature")
 			.attr("stroke-width", this.get("graphLayout.strokeWidth"));
-		
+
 	}.observes('graphLayout.strokeWidth'),
-  
+
   projector: function() {
-    
+
     let {w, h} = this.getSize(),
         projector = this.get('graphLayout.projection').projector();
 
@@ -311,7 +323,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
     this.scaleProjector(projector);
 
     return projector;
-    
+
   }.property('$width', '$height', 'graphLayout.autoCenter', 'graphLayout.width',
     'graphLayout.height', 'graphLayout.margin._defferedChangeIndicator', 'graphLayout.precision',
     'graphLayout.projection', 'graphLayout.projection._defferedChangeIndicator'),
@@ -319,9 +331,9 @@ export default Ember.Component.extend(EventNotifierFeature, {
   projectionFor(idx) {
     return this.get('projector').projectionAt(idx);
   },
-    
+
   scaleProjector(projector) {
-    
+
     projector.forEachProjection( projection => {
       let bbox = d3lper.scaleCoords(this.get('graphLayout.zoom'), projection.bboxPx[0], projection.bboxPx[1]),
           tx = this.get('graphLayout.tx')*this.getSize().w,
@@ -338,22 +350,22 @@ export default Ember.Component.extend(EventNotifierFeature, {
       .scale(projection.resolution * this.get('graphLayout.zoom'))
       .clipExtent(bbox);
     });
-    
+
   },
-  
+
   getProjectedPath(idx) {
-    
+
     let path = d3.geoPath(),
         proj = idx ? this.projectionFor(idx) : this.get('projector');
-    
+
     path.projection(proj);
-    
+
     return path;
-     
+
   },
 
   assumePathForLatLon(latLon) {
-    
+
     let path = d3.geoPath(),
        projs = this.get('projector').projectionsForLatLon(
         latLon,
@@ -386,29 +398,37 @@ export default Ember.Component.extend(EventNotifierFeature, {
   redraw: function() {
     this.projectAndDraw();
   }.observes('windowLocation', 'projector'),
-	
+
 	projectAndDraw() {
-    
+
     let {w, h} = this.getSize();
-    
+
     let path = this.getProjectedPath(),
         precision = this.get('graphLayout.precision'),
         defs = this.d3l().select("defs");
-    
-    if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid')) {
+
+    if (this.get('graphLayout.canDisplaySphere') || this.get('graphLayout.canDisplayGrid') || this.get('graphLayout.canDisplaySea') || this.get('graphLayout.canDisplayParallel')) {
 
       defs.select("#sphere")
         .datum({type: "Sphere"})
         .attr("d", path);
-    
+
+			defs.select("#sea")
+		    .datum({type: "Sphere"})
+		    .attr("d", path);
+
       defs.select("#grid")
         .datum(d3.geoGraticule())
         .attr("d", path)
         .attr("clip-path", `url(#clip)`);
 
+			defs.select("#parallel")
+	    .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
+	    .attr("d", path);
+
       defs.select("#clip use")
         .attr("xlink:href", `#sphere`);
-    
+
       this.d3l().select("#map").attr("clip-path", `url(#clip)`);
 
       this.drawGrid();
@@ -416,57 +436,75 @@ export default Ember.Component.extend(EventNotifierFeature, {
     } else {
       this.d3l().select("#map").attr("clip-path", null);
     }
-      
+
     this.drawBackmap();
 
 	},
-  
+
   registerLandSel(id) {
     this.get('_landSelSet').add(`${id}`);
     return `#f-path-${id}`;
   },
-  
+
   drawLandSel() {
 
-    
+
     let geoKey = this.get('graphLayout.basemap.mapConfig.dictionary.identifier'),
         features = this.getFeaturesFromBase("lands")
           .filter( f => this.get('_landSelSet').has(`${f.feature.properties[geoKey]}`) );
-    
+
     let sel = this.d3l().select("defs")
       .selectAll("path.feature")
       .data(features)
       .attr("d", d => d.path(d.feature) );
-      
+
     sel.enter()
       .append("path")
       .attr("d", d => d.path(d.feature))
       .attr("id", d => `f-path-${d.feature.properties[geoKey]}`)
       .classed("feature", true);
-     
+
     sel.exit().remove();
-    
+
   },
 
   drawGrid: function() {
-     
+
     let sphere = this.d3l().select("#backmap").selectAll("use.sphere"),
-        grid = this.d3l().select("#backmap").selectAll("use.grid");
+				sea = this.d3l().select("#backmap").selectAll("use.sea"),
+        grid = this.d3l().select("#backmap").selectAll("use.grid"),
+				parallel = this.d3l().select("#backmap").selectAll("use.parallel");
+
 
     sphere.styles({
       "fill": "none",
-      "stroke": this.get('graphLayout.gridColor'),
+      "stroke": this.get('graphLayout.sphereColor'),
       "stroke-width": 3
     })
     .attrs({
       "xlink:href": `#sphere`,
       "display": this.get('graphLayout.canDisplaySphere') ? null : "none"
+    }).styles({
+      "opacity": this.get('graphLayout.showSphere') ? 1 : 0
     })
     .classed("sphere", true);
-  
+
+		sea.styles({
+      "fill": this.get('graphLayout.seaColor'),
+      "stroke": "none",
+    })
+    .attrs({
+      "xlink:href": `#sea`,
+      "display": this.get('graphLayout.canDisplaySea') ? null : "none"
+    }).styles({
+      "opacity": this.get('graphLayout.showSea') ? 1 : 0
+    })
+    .classed("sea", true);
+
     grid.styles({
       "fill": "none",
-      "stroke": this.get('graphLayout.gridColor')
+      "stroke": this.get('graphLayout.gridColor'),
+			"stroke-width": 0.75
     })
     .attrs({
       "xlink:href": `#grid`,
@@ -475,10 +513,24 @@ export default Ember.Component.extend(EventNotifierFeature, {
       "opacity": this.get('graphLayout.showGrid') ? 1 : 0
     })
     .classed("grid", true);
-     
-   }.observes('graphLayout.gridColor', 'graphLayout.showGrid',
-    'graphLayout.canDisplaySphere', 'graphLayout.canDisplayGrid'),
-   
+
+		parallel.styles({
+      "fill": "none",
+      "stroke": this.get('graphLayout.parallelColor'),
+			"stroke-width": 1.25
+    })
+    .attrs({
+      "xlink:href": `#parallel`,
+      "display": this.get('graphLayout.canDisplayParallel') ? null : "none"
+    }).styles({
+      "opacity": this.get('graphLayout.showParallel') ? 1 : 0
+    })
+    .classed("parallel", true);
+
+	}.observes('graphLayout.gridColor', 'graphLayout.sphereColor', 'graphLayout.seaColor', 'graphLayout.parallelColor',
+	 'graphLayout.showGrid', 'graphLayout.showSphere', 'graphLayout.showSea', 'graphLayout.showParallel',
+	 'graphLayout.canDisplayGrid', 'graphLayout.canDisplaySphere', 'graphLayout.canDisplaySea', 'graphLayout.canDisplayParallel'),
+
    drawBackmap: function() {
 
     let d3l = this.d3l(),
@@ -496,7 +548,8 @@ export default Ember.Component.extend(EventNotifierFeature, {
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.backLands) )
             .styles({
-              "fill": this.get('graphLayout.backlandsColor')
+              "fill": this.get('graphLayout.backmapColor'),
+							"opacity": 0.7,
             });
         }
       });
@@ -512,7 +565,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.land) )
             .styles({
-              "fill": this.get('graphLayout.backmapColor')
+              "fill": this.get('graphLayout.backmapColor'),
             });
         }
       });
@@ -561,7 +614,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.squares))
             .styles({
-              "stroke-width": 1,
+              "stroke-width": 0.8,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
@@ -579,7 +632,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUp) )
             .styles({
-              "stroke-width": this.get('graphLayout.strokeWidth')+1,
+              "stroke-width": this.get('graphLayout.strokeWidth')+0.8,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
@@ -596,8 +649,8 @@ export default Ember.Component.extend(EventNotifierFeature, {
         update: (sel) => {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.linesUpDisputed) )
             .styles({
-              "stroke-width": this.get('graphLayout.strokeWidth')+1,
-              "stroke-dasharray": "5,5",
+              "stroke-width": this.get('graphLayout.strokeWidth')+0.8,
+              "stroke-dasharray": "3,3",
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
@@ -615,7 +668,7 @@ export default Ember.Component.extend(EventNotifierFeature, {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.borders) )
             .attr("clip-path", `url(#border-square-clip)`)
             .styles({
-              "stroke-width": 1,
+              "stroke-width": 0.8,
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
@@ -633,16 +686,16 @@ export default Ember.Component.extend(EventNotifierFeature, {
           return sel.attr("d", d => this.getProjectedPath(d.projection)(d.bordersDisputed) )
             .attr("clip-path", `url(#border-square-clip)`)
             .styles({
-              "stroke-width": 1,
-              "stroke-dasharray": "5,5",
+              "stroke-width": 0.8,
+              "stroke-dasharray": "3,3",
               "stroke": this.get("graphLayout.stroke"),
               "fill": "none"
             });
         }
       });
 
-    
+
 
   }.observes('graphLayout.backmapColor', 'graphLayout.showBorders', 'graphLayout.stroke')
-  
+
 });
