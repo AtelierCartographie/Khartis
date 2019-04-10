@@ -179,5 +179,8 @@
   "updater": {
     "url": "https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/updates.json"
   },
-  "ember-addon": {}
+  "ember-addon": {},
+  "toolchain": {
+    "node": "11.13.0"
+  }
 }

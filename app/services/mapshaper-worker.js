@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import Worker from 'ember-web-workers/services/worker';
-const { get, assert, A, RSVP, Evented, computed, Service, on, isPresent } = Ember;
+import config from 'khartis/config/environment';
+const { get, RSVP } = Ember;
 
 export default Worker.extend({
 
   init() {
     this._super();
-    this.set('webWorkersPath', "/" + this.get('webWorkersPath'));
+    this.set('webWorkersPath', config.rootURL + this.get('webWorkersPath'));
   },
 
   open(name) {
