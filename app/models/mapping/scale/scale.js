@@ -91,6 +91,7 @@ let Scale = Struct.extend({
           this.get('classes') - this.get('classesBeforeBreak'),
           [vb, undefined]
         ));
+      intervals = intervals.map(v => !isNaN(v) ? v : vb);
     } else {
       intervals = calc(
         this.get('intervalType'),
@@ -99,7 +100,7 @@ let Scale = Struct.extend({
       );
     }
 
-    return intervals.map(v => !isNaN(v) ? v : 0);
+    return intervals;
   },
 
   computeManual(ext) {
