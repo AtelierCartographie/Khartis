@@ -99,7 +99,7 @@ let Scale = Struct.extend({
       );
     }
 
-    return intervals;
+    return intervals.map(v => !isNaN(v) ? v : 0);
   },
 
   computeManual(ext) {
