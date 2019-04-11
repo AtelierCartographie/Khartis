@@ -20,7 +20,7 @@ module.exports = function(defaults) {
           includePolyfill: true
         },
         fingerprint: {
-          exclude: ['assets/images/']
+          exclude: ['assets/images/', 'assets/web-workers', 'documentation']
         },
         replace: {
           files: [
