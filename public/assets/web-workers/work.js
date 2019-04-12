@@ -1,17 +1,17 @@
 importScripts(
-  '/assets/web-workers/mapshaper/zip.js',
-  '/assets/web-workers/mapshaper/deflate.js',
-  '/assets/web-workers/mapshaper/inflate.js',
-  '/assets/web-workers/mapshaper/rsvp.js',
-  '/assets/web-workers/mapshaper/modules.js',
-  '/assets/web-workers/mapshaper/mapshaper.js',
-  '/assets/web-workers/mapshaper/main.js'
+  'mapshaper/zip.js',
+  'mapshaper/deflate.js',
+  'mapshaper/inflate.js',
+  'mapshaper/rsvp.js',
+  'mapshaper/modules.js',
+  'mapshaper/mapshaper.js',
+  'mapshaper/main.js'
 );
 
 zip.useWebWorkers = false;
 zip.workerScripts = {
-  deflater: ['/assets/web-workers/mapshaper/z-worker.js', '/assets/web-workers/mapshaper/pako.deflate.js', '/assets/web-workers/mapshaper/codecs.js'],
-  inflater: ['/assets/web-workers/mapshaper/z-worker.js', '/assets/web-workers/mapshaper/pako.inflate.js', '/assets/web-workers/mapshaper/codecs.js']
+  deflater: ['mapshaper/z-worker.js', 'mapshaper/pako.deflate.js', 'mapshaper/codecs.js'],
+  inflater: ['mapshaper/z-worker.js', 'mapshaper/pako.inflate.js', 'mapshaper/codecs.js']
 };
 
 /* Sequential promises - Arnaud PEZEL */
