@@ -56,11 +56,11 @@ Nous voulons représenter les émissions de CO2 par pays en 2013 à l’aide de 
 
 Cliquez sur ‘Ajouter une visualisation’ puis sélectionnez le type de visualisation le plus approprié, à savoir les symboles proportionnels.
 
-![choix visualisation](./assets/choose-viz.gif)
+![choix visualisation](./assets/02_04-choose-viz.gif)
 
 Sélectionner ensuite la variable à représenter "2013 - CO2 emissions (kt)".
 
-![choix visualisation](./assets/choose-variable.gif)
+![choix visualisation](./assets/02_04-choose-variable.gif)
 
 Maintenant des cercles proportionnels aux émissions de CO2 sont placés dans tous les pays et un volet de réglage de la visualisation est ouvert.
 

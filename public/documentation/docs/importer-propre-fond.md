@@ -75,6 +75,6 @@ Pour les utilisateurs avertis, les projections sont entièrement personnalisable
 -   Habiller la carte avec les éléments essentiels (titre, source, auteur) et facultatifs (étiquettes, personnalisation de la légende) ;
 -   Sauvegarder et exporter la carte.
 
-Un aperçu d'un résultat est disponible ci-dessous et le projet Khartis peut-être [récupéré directement ici](./assets/Projet-Khartis-Nantes-abstention-2017.kh)
+Un aperçu d'un résultat est disponible ci-dessous et le projet Khartis peut-être [récupéré directement ici](./assets/Projet-Khartis-Nantes-abstention-2017.kh.zip)
 
 ![import-final](./assets/tuto3-9.png)
