@@ -74,7 +74,7 @@
     "ember-wormhole": "^0.5.2",
     "emberx-select": "2.0.2",
     "eslint-plugin-ember": "^5.0.0",
-    "ivy-codemirror": "git://github.com/IvyApp/ivy-codemirror.git#master",
+    "ivy-codemirror": "git://github.com/AtelierCartographie/ivy-codemirror.git#master",
     "khartis-build-tools": "git://github.com/AtelierCartographie/khartis-build-tools.git#master",
     "loader.js": "^4.2.3",
     "normalize.css": "~4.1.1",
