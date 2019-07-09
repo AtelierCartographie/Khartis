@@ -21,7 +21,7 @@ build:
     - dist
     expire_in: 1 week
   only:
-    - staging
+    - master
     - production
 
 deploy:
@@ -37,5 +37,5 @@ deploy:
     - chmod o-rwx $RSYNC_PASSWORD_FILE
     - rsync  -avz --password-file=$RSYNC_PASSWORD_FILE  dist/  $RSYNC_USER@$RSYNC_HOST::$RSYNC_MODULE/
   only:
-    - staging
+    - master
     - production
