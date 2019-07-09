@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'khartis',
     podModulePrefix: 'khartis/pods',
     environment: environment,
-    rootURL: process.env.EMBER_CLI_ELECTRON ? '' : '/',
+    rootURL: process.env.EMBER_CLI_ELECTRON ? '' : (process.env.EMBER_ROOT_URL === "" ? '/' : process.env.EMBER_ROOT_URL),
     locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',
     EmberENV: {
       FEATURES: {
