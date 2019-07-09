@@ -23,3 +23,19 @@ build:
   only:
     - staging
     - production
+
+deploy:
+  stage: deploy
+  image: instrumentisto/rsync-ssh
+  dependencies: 
+    - build
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - chmod o-rwx $RSYNC_PASSWORD_FILE
+    - rsync  -avz --password-file=$RSYNC_PASSWORD_FILE  dist/  $RSYNC_USER@$RSYNC_HOST::$RSYNC_MODULE/
+  only:
+    - staging
+    - production
