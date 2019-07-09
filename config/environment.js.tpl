@@ -7,6 +7,7 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: process.env.EMBER_CLI_ELECTRON ? '' : '/',
     locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',
+    ga_id: process.env.EMBER_GA_ID ? '' : 'UA-XXXX-Y',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -1292,7 +1293,7 @@ module.exports = function(environment) {
         name: 'GoogleAnalytics',
         environments: ['production'],
         config: {
-          id: process.env.EMBER_GA_ID ? '' : 'UA-XXXX-Y'
+          id: ENV.ga_id
         }
       } 
  /*     {
