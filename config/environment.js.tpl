@@ -1288,13 +1288,13 @@ module.exports = function(environment) {
 
     //configure here analytics services. view ember-metrics for more info
     metricsAdapters: [
- /*     {
+      {
         name: 'GoogleAnalytics',
         environments: ['production'],
         config: {
-          id: 'UA-XXXX-Y'
+          id: process.env.EMBER_GA_ID ? '' : 'UA-XXXX-Y'
         }
-      }, */
+      } 
  /*     {
         name: 'Piwik',
         environments: ['production'],
