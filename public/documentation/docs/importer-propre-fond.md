@@ -3,11 +3,11 @@ Nous allons réaliser une carte de l'abstention au second tour de l'élection pr
 ![import-final](./assets/tuto3-9.png)
 
 ## Récupérer le fond de carte
-La plateforme open data de Nantes met à disposition [le découpage géographique des bureaux de vote de la ville](https://data.nantesmetropole.fr/explore/dataset/244400404_decoupage-geographique-bureaux-vote-nantes/export/?disjunctive.lieu_nom&disjunctive.lieu_site).
+La plateforme open data de Nantes met à disposition [le découpage géographique des bureaux de vote de la ville](https://data.nantesmetropole.fr/explore/dataset/244400404_decoupage-geographique-bureaux-vote-nantes-2015-2018/export/?disjunctive.lieu_nom&disjunctive.lieu_site).
 Plusieurs formats d'export sont disponibles dont deux sont compatibles avec Khartis : geojson et shapefile.
 ![aperçu plateforme](./assets/tuto3-1.png)
 
-Nous allons utiliser le format geojson que vous pouvez [récupérer directement ici](./assets/decoupage-geographique-bureaux-vote-nantes.geojson) (clic droit 'enregistrer le lien sous').
+Nous allons utiliser le format geojson que vous pouvez [récupérer directement ici](./assets/decoupage-geographique-bureaux-vote-nantes.json) (clic droit 'enregistrer le lien sous').
 
 > **Notion clé**
 > Khartis supporte trois formats :
@@ -21,7 +21,7 @@ Pour cet exemple nous choisissons les résultats du second tour de l'élection p
 L'aperçu des données depuis la plateforme montre que les résultats sont exprimés en nombre de votes.
 ![aperçu tableau](./assets/tuto3-2.png)
 
-Pour envisager des visualisations plus riches et variés dans Khartis, il est possible de calculer les résultats en pourcentage à l'aide d'un tableur. Le [nouveau tableau après calculs est directement récupérable ici](./assets/Nantes-résultat-presidentielles-second-tour-2017-bureau-vote.csv).
+Pour envisager des visualisations plus riches et variés dans Khartis, il est possible de calculer les résultats en pourcentage à l'aide d'un tableur. Le [nouveau tableau après calculs est directement récupérable ici](./assets/Nantes-resultat-presidentielles-second-tour-2017-bureau-vote.csv).
 
 ## Importer le fond de carte dans Khartis
 Nous pouvons ouvrir [Khartis](https://www.sciencespo.fr/cartographie/khartis). Pour visualiser les résultats du vote, il nous faut d'abord importer le fond de carte. Cette opération s'effectue en deux étapes : 1. cliquer sur le bouton "Importer son propre fond", 2. glisser ou sélectionner le fichier geojson récupéré précédemment.
