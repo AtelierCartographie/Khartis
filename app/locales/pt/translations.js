@@ -424,7 +424,7 @@ export default {
       "sizes": "dimensões",
       "legend": "legenda",
       "export": "exportar",
-      "drawings": "desenhos"
+      "drawings": "adicionando informações"
     },
     "placeholder": {
       "mapTitle": "título do mapa",

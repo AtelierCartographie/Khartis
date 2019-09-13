@@ -373,7 +373,7 @@ export default {
       "sizes": "Größe",
       "legend": "legende",
       "export": "Export",
-      "drawings": "drawings"
+      "drawings": "information hinzufügen"
     },
     "placeholder": {
       "mapTitle": "Kartentitel",

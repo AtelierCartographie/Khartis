@@ -438,7 +438,7 @@ export default {
       "styles": "personnaliser",
       "sizes": "dimensions",
       "export": "export",
-      "drawings": "habillage",
+      "drawings": "ajout d'informations",
     },
     "placeholder": {
       "mapTitle": "titre de la carte",
