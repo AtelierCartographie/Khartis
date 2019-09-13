@@ -157,6 +157,22 @@ module.exports = function(environment) {
         "rotation_z": 0
       },
       {
+        "id": "equalearth",
+        "name": "Equal Earth",
+        "scale": 177,
+        "d3_geo": "d3.geoEqualEarth()",
+        "d3_link": "https://observablehq.com/@d3/equal-earth",
+        "center": "longitude and latitude",
+        "score_area": 4,
+        "score_angle": 2,
+        "score_distance": 2,
+        "author": "Šavrič et al.",
+        "year": "2019",
+        "translation_x": 1,
+        "translation_y": 0,
+        "rotation_z": 0
+      },
+      {
         "id": "natural_earth",
         "name": "Natural Earth",
         "scale": 150,
@@ -265,22 +281,6 @@ module.exports = function(environment) {
         "score_distance": 1,
         "author": "Gérard Mercator",
         "year": "1569",
-        "translation_x": 1,
-        "translation_y": 0,
-        "rotation_z": 0
-      },
-      {
-        "id": "equalearth",
-        "name": "Equal Earth",
-        "scale": 177,
-        "d3_geo": "d3.geoEqualEarth()",
-        "d3_link": "https://observablehq.com/@d3/equal-earth",
-        "center": "longitude and latitude",
-        "score_area": 4,
-        "score_angle": 2,
-        "score_distance": 2,
-        "author": "Šavrič et al.",
-        "year": "2019",
         "translation_x": 1,
         "translation_y": 0,
         "rotation_z": 0
