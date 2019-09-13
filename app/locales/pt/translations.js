@@ -215,6 +215,10 @@ export default {
     "airocean": {
       "name": "Air Ocean",
       "description": "Esta é uma descrição"
+    },
+    "equalearth": {
+      "name": "Equal Earth",
+      "description": "Ceci est une description"
     }
   },
 

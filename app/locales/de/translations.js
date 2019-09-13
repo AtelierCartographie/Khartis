@@ -206,6 +206,10 @@ export default {
     "armadillo": {
       "name": "Armadillo",
       "description": "Bitte einen Beschreibungstext für diese Projektion einpflegen."
+    },
+    "equalearth": {
+      "name": "Equal Earth",
+      "description": "Ceci est une description"
     }
   },
 
