@@ -43,5 +43,5 @@ Le résultat donne des codes et des noms de communes mais pas d’informations p
 
 ![cartes-france-symboles-ordonnes](./assets/viz-05-07-carte-IGN.jpg)  
 
-Accès au [dataset pour refaire la carte](./assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-2016.csv)  
-Accès au [projet Khartis de la carte](./assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-Projet-Khartis.kh.zip) de la typologie des communes de la région PACA, 2016
+Accès au [dataset pour refaire la carte](.assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-2016.csv)  
+Accès au [projet Khartis de la carte](.assets/data/5-symboles-ordonnes-CHEFS-LIEUX-PACA-Projet-Khartis.kh.zip) de la typologie des communes de la région PACA, 2016
