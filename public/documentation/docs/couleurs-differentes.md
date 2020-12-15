@@ -25,5 +25,5 @@ Cette carte essaie de montrer 2 choses : d’une part le vote des Etats au momen
 
 ![carte-commerce-armes-legeres-2018](./assets/viz-04-05-carte-traite-commerce-armes-2018-medium-full-3x.jpeg)
 
-Accès au [dataset pour refaire la carte](.assets/data/4-Couleurs-differentes-Traite-commerce-armes-2018.csv)  
-Accès au [projet Khartis](.assets/data/4-Couleurs-differentes-Traite-commerce-armes-2018-Projet-Khartis.kh.zip) de la carte du Traité sur le commerce des armes
+Accès au [dataset pour refaire la carte](./assets/data/4-Couleurs-differentes-Traite-commerce-armes-2018.csv)  
+Accès au [projet Khartis](./assets/data/4-Couleurs-differentes-Traite-commerce-armes-2018-Projet-Khartis.kh.zip) de la carte du Traité sur le commerce des armes
