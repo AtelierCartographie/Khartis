@@ -16,7 +16,7 @@ Pour chaque fonds de carte disponible dans Khartis, un ou plusieurs jeux de donn
 
     * web : [http://hdr.undp.org/fr/data](http://hdr.undp.org/fr/data)
 
-    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/02-evolution-idh-1990-2014.csv) 
+    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/02-evolution-idh-1990-2014.csv)
 
 * Sous-alimentation (2014-2016)
 
@@ -24,7 +24,7 @@ Pour chaque fonds de carte disponible dans Khartis, un ou plusieurs jeux de donn
 
     * web : [www.fao.org/hunger/fr](http://www.fao.org/hunger/fr)
 
-    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/03-sous-alimentation-2014-2016.csv) 
+    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/03-sous-alimentation-2014-2016.csv)
 
 * Sites de l'Unesco (2015)
 
@@ -70,7 +70,7 @@ Source commune à tous les exemples : **Eurostat** [http://ec.europa.eu/eurostat
     * web : [www.insee.fr/fr/statistiques/2388572](https://www.insee.fr/fr/statistiques/2388572)
 
     * csv : [département](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/fr-dpt-pauvrete-2013.csv), [région 2015](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/fr-reg2015-pauvrete-2013.csv), [région 2016](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/fr-reg2016-pauvrete-2013.csv)
-    
+
 * Résultats des élections présidentielles de 2012
 
     * source : CDSP de Sciences Po via data.gouv.fr
@@ -78,6 +78,12 @@ Source commune à tous les exemples : **Eurostat** [http://ec.europa.eu/eurostat
     * web : [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/elections-presidentielles-1965-2012-1/)
 
     * csv : [1er tour 2012](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/examples/fr-pres-2012-t1.csv), [2ème tour 2012](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/examples/fr-pres-2012-t2.csv)
+
+* Recensement de population sous la IIIe république
+
+    * source : Recensement de 1872 à 1936 compilé par Victor Gay
+
+    * csv : [1872-1911](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/examples/fr-dpt-1872-1911.csv), [1921-1936](https://github.com/AtelierCartographie/Khartis/raw/master/public/data/examples/ffr-dpt-1921-1936.csv)
 
 ## Espagne
 
@@ -97,4 +103,4 @@ Source commune à tous les exemples : **Eurostat** [http://ec.europa.eu/eurostat
 
     * web : www.census.gov
 
-    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/us-state-pop-2015.csv) 
+    * [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/examples/us-state-pop-2015.csv)

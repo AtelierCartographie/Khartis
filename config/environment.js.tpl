@@ -792,6 +792,40 @@ module.exports = function(environment) {
         ]
       },
       {
+        id: "france dept 1918",
+        attribution: "basemap from Victor Gay (2020) (CC-BY 4.0 license)",
+        sources: [
+          {source: "fr-dpt-1918.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-DPT-1872-1911.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "fr_dpt_pop1918",
+            source: "fr-dpt-1872-1911.csv"
+          }
+        ]
+      },
+      {
+        id: "france dept 1919",
+        attribution: "basemap from Victor Gay (2020) (CC-BY 4.0 license)",
+        sources: [
+          {source: "fr-dpt-1919.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-DPT-1921-1936.json",
+          identifier: "ID"
+        },
+        examples: [
+          {
+            id: "fr_dpt-pop1919",
+            source: "fr-dpt-1921-1936.csv"
+          }
+        ]
+      },
+      {
         id: "france dept",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [

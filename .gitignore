@@ -21,6 +21,7 @@
 npm-debug.log
 testem.log
 yarn.lock
+.DS_STORE
 
 electron-out/
 publisher.json

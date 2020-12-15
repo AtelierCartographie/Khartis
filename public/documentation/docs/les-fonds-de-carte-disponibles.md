@@ -14,6 +14,8 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
 | France     | communes  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2016)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2016)               |
 | France     | communes  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-com-2017)  | [json](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/dictionary/FR-dico-COM-2017)               |
 | France     | circonscriptions législatives  | 2017 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-circ-2017)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-circ-2017.csv)               |
+| France     | départements  | 1870-1918 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/fr-dpt-1918)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-DPT-1872-1911.csv)               |
+| France     | départements  | 1919-1940 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/fr-dpt-1919)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-DPT-1921-1936.csv)               |
 | France     | départements  | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-dpt-2016)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-DPT-2016.csv)               |
 | France     | régions      | 2015 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-reg-2015)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-REG-2015.csv)               |
 | France     | régions      | 2016 | [topojson](https://github.com/AtelierCartographie/Khartis/tree/master/public/data/map/FR-reg-2016)  | [csv](https://raw.githubusercontent.com/AtelierCartographie/Khartis/master/public/data/dictionary/csv/FR-dico-REG-2016.csv)               |
@@ -82,6 +84,8 @@ Khartis propose une série de fonds de carte à différentes échelles. Ils sont
     * [Régions 2014](https://www.data.gouv.fr/fr/datasets/contours-des-regions-francaises-sur-openstreetmap/) - Open Street Map depuis data.gouv.fr
 
 * Dictionnaire : [Wikipédia - Codes géographiques de la France](https://fr.wikipedia.org/wiki/Codes_geographiques_de_la_France) et [Insee - Code officiel géographique](https://www.insee.fr/fr/information/2016807)
+
+* Fond de carte historique par département de la IIIe république. D'après : [Victor Gay, 2020, "Mapping the Third Republic. A Geographic Information System of France (1870–1940)."](https://hal.archives-ouvertes.fr/hal-02951461). Base disponible sur data.gouv.fr : [Système d'Information Géographique de la France de la Troisième République (1870–1940)](https://www.data.gouv.fr/fr/datasets/systeme-dinformation-geographique-de-la-france-de-la-troisieme-republique-1870-1940/)
 
 ### Espagne
 

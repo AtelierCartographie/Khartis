@@ -501,10 +501,12 @@ export default {
     "eu nuts-3 2013": "Europa > Gemeinden (NUTS-3, 2013)",
     "eu nuts-2 2016": "Europa > Regionen (NUTS-2, 2016)",
     "eu nuts-3 2016": "Europa > Gemeinden (NUTS-3, 2016)",
-    "france dept": "Frankreich > Departments (2016)",
     "spain prov 2015": "Spanien > Provinzen (2015)",
     "spain auto 2015": "Spanien > Gemeinden (2015)",
     "us state 2015": "USA > Staaten (2015)",
+    "france dept 1918": "Frankreich > departments IIIe rep. (1871-1918)",
+    "france dept 1919": "Frankreich > departments IIIe rep. (1919-1940)",
+    "france dept": "Frankreich > Departments (2016)",
     "france reg 2015": "Frankreich > Regionen (2015)",
     "france reg 2016": "Frankreich > Regionen (2016)",
     "france circ 2017": "Frankreich > Wahlkreis (2012 & 2017)",
@@ -588,7 +590,9 @@ export default {
     "nc-com-pop-2014": "Bevölkerungstatistik (2014)",
     "nc-com-ref-2018": "Unabhängigkeitsreferendum (2018)",
     "MGP-com-2018-pop-2013": "Bevölkerungstatistik (2013)",
-    "MGP-iris-2016-pop-2013": "Bevölkerungstatistik (2013)"
+    "MGP-iris-2016-pop-2013": "Bevölkerungstatistik (2013)",
+    "fr_dpt_pop1918": "Bevölkerungstatistik (1872-1911)",
+    "fr_dpt_pop1919": "Bevölkerungstatistik (1921-1936)"
   },
 
   "importMap": {

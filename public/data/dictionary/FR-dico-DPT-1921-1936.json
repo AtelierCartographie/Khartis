@@ -1,0 +1,452 @@
+[
+ {
+   "ID": 1,
+   "name": "AIN",
+   "name_prop": "Ain"
+ },
+ {
+   "ID": 2,
+   "name": "AISNE",
+   "name_prop": "Aisne"
+ },
+ {
+   "ID": 3,
+   "name": "ALLIER",
+   "name_prop": "Allier"
+ },
+ {
+   "ID": 4,
+   "name": "BASSES-ALPES",
+   "name_prop": "Basses-Alpes"
+ },
+ {
+   "ID": 5,
+   "name": "HAUTES-ALPES",
+   "name_prop": "Hautes-Alpes"
+ },
+ {
+   "ID": 6,
+   "name": "ALPES-MARITIMES",
+   "name_prop": "Alpes-Maritimes"
+ },
+ {
+   "ID": 7,
+   "name": "ARDECHE",
+   "name_prop": "Ardèche"
+ },
+ {
+   "ID": 8,
+   "name": "ARDENNES",
+   "name_prop": "Ardennes"
+ },
+ {
+   "ID": 9,
+   "name": "ARIEGE",
+   "name_prop": "Ariège"
+ },
+ {
+   "ID": 10,
+   "name": "AUBE",
+   "name_prop": "Aube"
+ },
+ {
+   "ID": 11,
+   "name": "AUDE",
+   "name_prop": "Aude"
+ },
+ {
+   "ID": 12,
+   "name": "AVEYRON",
+   "name_prop": "Aveyron"
+ },
+ {
+   "ID": 13,
+   "name": "BOUCHES-DU-RHONE",
+   "name_prop": "Bouches-du-Rhône"
+ },
+ {
+   "ID": 14,
+   "name": "CALVADOS",
+   "name_prop": "Calvados"
+ },
+ {
+   "ID": 15,
+   "name": "CANTAL",
+   "name_prop": "Cantal"
+ },
+ {
+   "ID": 16,
+   "name": "CHARENTE",
+   "name_prop": "Charente"
+ },
+ {
+   "ID": 17,
+   "name": "CHARENTE-INFERIEURE",
+   "name_prop": "Charente-Inférieure"
+ },
+ {
+   "ID": 18,
+   "name": "CHER",
+   "name_prop": "Cher"
+ },
+ {
+   "ID": 19,
+   "name": "CORREZE",
+   "name_prop": "Corrèze"
+ },
+ {
+   "ID": 20,
+   "name": "CORSE",
+   "name_prop": "Corse"
+ },
+ {
+   "ID": 21,
+   "name": "COTE-D'OR",
+   "name_prop": "Côte-d'Or"
+ },
+ {
+   "ID": 22,
+   "name": "COTES-DU-NORD",
+   "name_prop": "Côtes-du-Nord"
+ },
+ {
+   "ID": 23,
+   "name": "CREUSE",
+   "name_prop": "Creuse"
+ },
+ {
+   "ID": 24,
+   "name": "DORDOGNE",
+   "name_prop": "Dordogne"
+ },
+ {
+   "ID": 25,
+   "name": "DOUBS",
+   "name_prop": "Doubs"
+ },
+ {
+   "ID": 26,
+   "name": "DROME",
+   "name_prop": "Drôme"
+ },
+ {
+   "ID": 27,
+   "name": "EURE",
+   "name_prop": "Eure"
+ },
+ {
+   "ID": 28,
+   "name": "EURE-ET-LOIR",
+   "name_prop": "Eure-et-Loir"
+ },
+ {
+   "ID": 29,
+   "name": "FINISTERE",
+   "name_prop": "Finistère"
+ },
+ {
+   "ID": 30,
+   "name": "GARD",
+   "name_prop": "Gard"
+ },
+ {
+   "ID": 31,
+   "name": "HAUTE-GARONNE",
+   "name_prop": "Haute-Garonne"
+ },
+ {
+   "ID": 32,
+   "name": "GERS",
+   "name_prop": "Gers"
+ },
+ {
+   "ID": 33,
+   "name": "GIRONDE",
+   "name_prop": "Gironde"
+ },
+ {
+   "ID": 34,
+   "name": "HERAULT",
+   "name_prop": "Hérault"
+ },
+ {
+   "ID": 35,
+   "name": "ILLE-ET-VILAINE",
+   "name_prop": "Ille-et-Vilaine"
+ },
+ {
+   "ID": 36,
+   "name": "INDRE",
+   "name_prop": "Indre"
+ },
+ {
+   "ID": 37,
+   "name": "INDRE-ET-LOIRE",
+   "name_prop": "Indre-et-Loire"
+ },
+ {
+   "ID": 38,
+   "name": "ISERE",
+   "name_prop": "Isère"
+ },
+ {
+   "ID": 39,
+   "name": "JURA",
+   "name_prop": "Jura"
+ },
+ {
+   "ID": 40,
+   "name": "LANDES",
+   "name_prop": "Landes"
+ },
+ {
+   "ID": 41,
+   "name": "LOIR-ET-CHER",
+   "name_prop": "Loir-et-Cher"
+ },
+ {
+   "ID": 42,
+   "name": "LOIRE",
+   "name_prop": "Loire"
+ },
+ {
+   "ID": 43,
+   "name": "HAUTE-LOIRE",
+   "name_prop": "Haute-Loire"
+ },
+ {
+   "ID": 44,
+   "name": "LOIRE-INFERIEURE",
+   "name_prop": "Loire-Inférieure"
+ },
+ {
+   "ID": 45,
+   "name": "LOIRET",
+   "name_prop": "Loiret"
+ },
+ {
+   "ID": 46,
+   "name": "LOT",
+   "name_prop": "Lot"
+ },
+ {
+   "ID": 47,
+   "name": "LOT-ET-GARONNE",
+   "name_prop": "Lot-et-Garonne"
+ },
+ {
+   "ID": 48,
+   "name": "LOZERE",
+   "name_prop": "Lozère"
+ },
+ {
+   "ID": 49,
+   "name": "MAINE-ET-LOIRE",
+   "name_prop": "Maine-et-Loire"
+ },
+ {
+   "ID": 50,
+   "name": "MANCHE",
+   "name_prop": "Manche"
+ },
+ {
+   "ID": 51,
+   "name": "MARNE",
+   "name_prop": "Marne"
+ },
+ {
+   "ID": 52,
+   "name": "HAUTE-MARNE",
+   "name_prop": "Haute-Marne"
+ },
+ {
+   "ID": 53,
+   "name": "MAYENNE",
+   "name_prop": "Mayenne"
+ },
+ {
+   "ID": 54,
+   "name": "MEURTHE-ET-MOSELLE",
+   "name_prop": "Meurthe-et-Moselle"
+ },
+ {
+   "ID": 55,
+   "name": "MEUSE",
+   "name_prop": "Meuse"
+ },
+ {
+   "ID": 56,
+   "name": "MORBIHAN",
+   "name_prop": "Morbihan"
+ },
+ {
+   "ID": 57,
+   "name": "MOSELLE",
+   "name_prop": "Moselle"
+ },
+ {
+   "ID": 58,
+   "name": "NIEVRE",
+   "name_prop": "Nièvre"
+ },
+ {
+   "ID": 59,
+   "name": "NORD",
+   "name_prop": "Nord"
+ },
+ {
+   "ID": 60,
+   "name": "OISE",
+   "name_prop": "Oise"
+ },
+ {
+   "ID": 61,
+   "name": "ORNE",
+   "name_prop": "Orne"
+ },
+ {
+   "ID": 62,
+   "name": "PAS-DE-CALAIS",
+   "name_prop": "Pas-de-Calais"
+ },
+ {
+   "ID": 63,
+   "name": "PUY-DE-DOME",
+   "name_prop": "Puy-de-Dôme"
+ },
+ {
+   "ID": 64,
+   "name": "BASSES-PYRENEES",
+   "name_prop": "Basses-Pyrénées"
+ },
+ {
+   "ID": 65,
+   "name": "HAUTES-PYRENEES",
+   "name_prop": "Hautes-Pyrénées"
+ },
+ {
+   "ID": 66,
+   "name": "PYRENEES-ORIENTALES",
+   "name_prop": "Pyrénées-Orientales"
+ },
+ {
+   "ID": 67,
+   "name": "BAS-RHIN",
+   "name_prop": "Bas-Rhin"
+ },
+ {
+   "ID": 68,
+   "name": "HAUT-RHIN",
+   "name_prop": "Haut-Rhin"
+ },
+ {
+   "ID": 69,
+   "name": "RHONE",
+   "name_prop": "Rhône"
+ },
+ {
+   "ID": 70,
+   "name": "HAUTE-SAONE",
+   "name_prop": "Haute-Saône"
+ },
+ {
+   "ID": 71,
+   "name": "SAONE-ET-LOIRE",
+   "name_prop": "Saône-et-Loire"
+ },
+ {
+   "ID": 72,
+   "name": "SARTHE",
+   "name_prop": "Sarthe"
+ },
+ {
+   "ID": 73,
+   "name": "SAVOIE",
+   "name_prop": "Savoie"
+ },
+ {
+   "ID": 74,
+   "name": "HAUTE-SAVOIE",
+   "name_prop": "Haute-Savoie"
+ },
+ {
+   "ID": 75,
+   "name": "SEINE",
+   "name_prop": "Seine"
+ },
+ {
+   "ID": 76,
+   "name": "SEINE-INFERIEURE",
+   "name_prop": "Seine-Inférieure"
+ },
+ {
+   "ID": 77,
+   "name": "SEINE-ET-MARNE",
+   "name_prop": "Seine-et-Marne"
+ },
+ {
+   "ID": 78,
+   "name": "SEINE-ET-OISE",
+   "name_prop": "Seine-et-Oise"
+ },
+ {
+   "ID": 79,
+   "name": "DEUX-SEVRES",
+   "name_prop": "Deux-Sèvres"
+ },
+ {
+   "ID": 80,
+   "name": "SOMME",
+   "name_prop": "Somme"
+ },
+ {
+   "ID": 81,
+   "name": "TARN",
+   "name_prop": "Tarn"
+ },
+ {
+   "ID": 82,
+   "name": "TARN-ET-GARONNE",
+   "name_prop": "Tarn-et-Garonne"
+ },
+ {
+   "ID": 83,
+   "name": "VAR",
+   "name_prop": "Var"
+ },
+ {
+   "ID": 84,
+   "name": "VAUCLUSE",
+   "name_prop": "Vaucluse"
+ },
+ {
+   "ID": 85,
+   "name": "VENDEE",
+   "name_prop": "Vendée"
+ },
+ {
+   "ID": 86,
+   "name": "VIENNE",
+   "name_prop": "Vienne"
+ },
+ {
+   "ID": 87,
+   "name": "HAUTE-VIENNE",
+   "name_prop": "Haute-Vienne"
+ },
+ {
+   "ID": 88,
+   "name": "VOSGES",
+   "name_prop": "Vosges"
+ },
+ {
+   "ID": 89,
+   "name": "YONNE",
+   "name_prop": "Yonne"
+ },
+ {
+   "ID": 90,
+   "name": "TERRITOIRE-DE-BELFORT",
+   "name_prop": "Territoire-de-Belfort"
+ }
+]

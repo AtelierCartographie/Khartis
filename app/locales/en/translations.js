@@ -555,6 +555,8 @@ export default {
     "spain prov 2015": "Spain > provinces (2015)",
     "spain auto 2015": "Spain > communities (2015)",
     "us state 2015": "United States > States (2015)",
+    "france dept 1918": "France > departments IIIe rep. (1871-1918)",
+    "france dept 1919": "France > departments IIIe rep. (1919-1940)",
     "france dept": "France > departments (2016)",
     "france reg 2015": "France > regions (2015)",
     "france reg 2016": "France > regions (2016)",
@@ -643,7 +645,9 @@ export default {
     "nc-com-pop-2014": "Population (2014)",
     "nc-com-ref-2018": "Independence referendum (2018)",
     "MGP-com-2018-pop-2013": "Population (2013)",
-    "MGP-iris-2016-pop-2013": "Population (2013)"
+    "MGP-iris-2016-pop-2013": "Population (2013)",
+    "fr_dpt_pop1918": "Population (1872-1911)",
+    "fr_dpt_pop1919": "Population (1921-1936)"
   },
 
   "importMap": {
