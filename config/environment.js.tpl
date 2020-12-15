@@ -761,7 +761,7 @@ module.exports = function(environment) {
         id: "MGP com 2018",
         attribution: "basemap from APUR",
         sources: [
-          {source: "GRANDPARIS-com-2018.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "GRANDPARIS-com-2018.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "MGP-dico-COM-2018.json",
@@ -778,7 +778,7 @@ module.exports = function(environment) {
         id: "MGP iris 2016",
         attribution: "basemap from OSM and IGN",
         sources: [
-          {source: "GRANDPARIS-iris-2016.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "GRANDPARIS-iris-2016.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "MGP-dico-IRIS-2016.json",
@@ -795,7 +795,7 @@ module.exports = function(environment) {
         id: "france dept 1918",
         attribution: "basemap from Victor Gay (2020) (CC-BY 4.0 license)",
         sources: [
-          {source: "fr-dpt-1918.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "fr-dpt-1918.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-DPT-1872-1911.json",
@@ -812,7 +812,7 @@ module.exports = function(environment) {
         id: "france dept 1919",
         attribution: "basemap from Victor Gay (2020) (CC-BY 4.0 license)",
         sources: [
-          {source: "fr-dpt-1919.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "fr-dpt-1919.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-DPT-1921-1936.json",
@@ -820,7 +820,7 @@ module.exports = function(environment) {
         },
         examples: [
           {
-            id: "fr_dpt-pop1919",
+            id: "fr_dpt_pop1919",
             source: "fr-dpt-1921-1936.csv"
           }
         ]
@@ -829,7 +829,7 @@ module.exports = function(environment) {
         id: "france dept",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
-          {source: "FR-dpt-2016/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-dpt-2016/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-dpt-2016/FRA10.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-dpt-2016/FRA20.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-dpt-2016/FRA30.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -855,7 +855,7 @@ module.exports = function(environment) {
         id: "france reg 2015",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
-          {source: "FR-reg-2015/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2015/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-reg-2015/FRA1.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2015/FRA2.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2015/FRA3.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -881,7 +881,7 @@ module.exports = function(environment) {
         id: "france reg 2016",
         attribution: "basemap from OpenStreetMap contributors (ODbl license)",
         sources: [
-          {source: "FR-reg-2016/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-reg-2016/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-reg-2016/FRA1.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2016/FRA2.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-reg-2016/FRA3.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -907,7 +907,7 @@ module.exports = function(environment) {
         id: "france circ 2017",
         attribution: "basemap from toxicode (ODbl license)",
         sources: [
-          {source: "FR-circ-2017/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
+          {source: "FR-circ-2017/france.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 0.85]]},
           {source: "FR-circ-2017/FRA100.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0, 0.85], [0.2, 1]], borders: ["l", "t"]},
           {source: "FR-circ-2017/FRA200.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.2, 0.85], [0.4, 1]], borders: ["l", "t"]},
           {source: "FR-circ-2017/FRA300.json", projection: "d3.geoMercator()", scale: 0.6, zoning: [[0.4, 0.85], [0.6, 1]], borders: ["l", "t"]},
@@ -941,7 +941,7 @@ module.exports = function(environment) {
         id: "FR-11 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-11.json",
@@ -952,7 +952,7 @@ module.exports = function(environment) {
         id: "FR-24 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-24.json",
@@ -963,7 +963,7 @@ module.exports = function(environment) {
         id: "FR-27 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-27.json",
@@ -974,7 +974,7 @@ module.exports = function(environment) {
         id: "FR-28 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-28.json",
@@ -985,7 +985,7 @@ module.exports = function(environment) {
         id: "FR-32 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-32.json",
@@ -996,7 +996,7 @@ module.exports = function(environment) {
         id: "FR-44 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-44.json",
@@ -1007,7 +1007,7 @@ module.exports = function(environment) {
         id: "FR-52 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-52.json",
@@ -1018,7 +1018,7 @@ module.exports = function(environment) {
         id: "FR-53 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-53.json",
@@ -1029,7 +1029,7 @@ module.exports = function(environment) {
         id: "FR-75 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-75.json",
@@ -1040,7 +1040,7 @@ module.exports = function(environment) {
         id: "FR-76 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-76.json",
@@ -1051,7 +1051,7 @@ module.exports = function(environment) {
         id: "FR-84 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-84.json",
@@ -1062,7 +1062,7 @@ module.exports = function(environment) {
         id: "FR-93 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-93.json",
@@ -1073,7 +1073,7 @@ module.exports = function(environment) {
         id: "FR-94 com 2016",
         attribution: "basemap from Geofla IGN 2016",
         sources: [
-          {source: "FR-com-2016/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2016/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2016/FR-94.json",
@@ -1139,7 +1139,7 @@ module.exports = function(environment) {
         id: "FR-11 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-11.json",
@@ -1150,7 +1150,7 @@ module.exports = function(environment) {
         id: "FR-24 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-24.json",
@@ -1161,7 +1161,7 @@ module.exports = function(environment) {
         id: "FR-27 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-27.json",
@@ -1172,7 +1172,7 @@ module.exports = function(environment) {
         id: "FR-28 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-28.json",
@@ -1183,7 +1183,7 @@ module.exports = function(environment) {
         id: "FR-32 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-32.json",
@@ -1194,7 +1194,7 @@ module.exports = function(environment) {
         id: "FR-44 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-44.json",
@@ -1205,7 +1205,7 @@ module.exports = function(environment) {
         id: "FR-52 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-52.json",
@@ -1216,7 +1216,7 @@ module.exports = function(environment) {
         id: "FR-53 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-53.json",
@@ -1227,7 +1227,7 @@ module.exports = function(environment) {
         id: "FR-75 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-75.json",
@@ -1238,7 +1238,7 @@ module.exports = function(environment) {
         id: "FR-76 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-76.json",
@@ -1249,7 +1249,7 @@ module.exports = function(environment) {
         id: "FR-84 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-84.json",
@@ -1260,7 +1260,7 @@ module.exports = function(environment) {
         id: "FR-93 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-93.json",
@@ -1271,7 +1271,7 @@ module.exports = function(environment) {
         id: "FR-94 com 2017",
         attribution: "basemap from Admin Express IGN 2017",
         sources: [
-          {source: "FR-com-2017/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.3], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+          {source: "FR-com-2017/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
         ],
         dictionary: {
           source: "FR-dico-COM-2017/FR-94.json",
