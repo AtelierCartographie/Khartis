@@ -10,7 +10,7 @@ build:
   script:
     - apk add --update git python2 py-setuptools
     - easy_install-2.7 pip
-    - pip install mkdocs mkdocs-material 
+    - pip install mkdocs==1.0.4 mkdocs-material==4.5.0
     - yarn install
     - cp config/environment.js.tpl config/environment.js
     - ./node_modules/.bin/ember khartis:build --environment=production --thumbnails=false
