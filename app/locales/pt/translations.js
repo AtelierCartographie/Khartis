@@ -180,6 +180,10 @@ export default {
       "name": "Goode H.",
       "description": "Esta é uma descrição"
     },
+    "interrupted_goode_homolosine_oceans": {
+      "name": "Goode Oceans",
+      "description": "Ceci est une description"
+    },
     "lambert_azimuthal_equal_area": {
       "name": "LAEA",
       "description": "Esta é uma descrição"
