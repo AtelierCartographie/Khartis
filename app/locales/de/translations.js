@@ -175,6 +175,10 @@ export default {
       "name": "Goode H.",
       "description": "Pseudozylindrisch, Flächentreu. Diese Methode der Kartenprojektion wurde in den 1920er Jahren von John Paul Goode entwickelt. (Quelle: Deutsche Wikipedia, 2017, CC-BY-SA)"
     },
+    "interrupted_goode_homolosine_oceans": {
+      "name": "Goode Oceans",
+      "description": "Ceci est une description"
+    },
     "lambert_azimuthal_equal_area": {
       "name": "LAEA",
       "description": "Lambertsche Azimutalprojektion. Die Kartenabbildung ist weder längen- noch winkeltreu. Das Kartenzentrum wird verzerrungsfrei dargestellt, jedoch nimmt die Verzerrung zum Rand hin so stark zu, dass diese Bereiche sehr unanschaulich werden. Deshalb wird meist nur maximal eine Halbkugeloberfläche mit dieser Abbildung wiedergegeben. (Quelle: Deutsche Wikipedia, 2017)"
