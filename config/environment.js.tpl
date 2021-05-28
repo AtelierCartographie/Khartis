@@ -122,7 +122,7 @@ module.exports = function(environment) {
       },
       {
         "id": "interrupted_goode_homolosine_oceans",
-        "name": "Goode Oceans",
+        "name": "Interrupted Goode Homolosine Oceans",
         "scale": 150,
         "d3_geo": "d3.geoInterrupt(d3.geoHomolosineRaw,[[[[-180, 0], [-130, 90], [-90, 0]],[[-90, 0], [-30, 90], [60, 0]],[[60, 0], [120, 90], [180, 0]]],[[[-180, 0], [-120, -90], [-60, 0]],[[-60, 0], [20, -90], [100, 0]],[[100, 0], [140, -90], [180, 0]]]]).rotate([115, 0])",
         "rotate": [-200,0],
