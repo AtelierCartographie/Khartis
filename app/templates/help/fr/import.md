@@ -1,1 +1,0 @@
-La structuration des données représente une tâche préalable à toute carte. Un soin particulier doit y être accordé sous peine de devoir à nouveau y revenir pour continuer dans les étapes suivantes.

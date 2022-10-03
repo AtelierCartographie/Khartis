@@ -1,6 +1,0 @@
-{{#if label.length}}<span>{{label}}</span>{{/if}}{{yield}}
-{{#if (x-eq handler 'reader')}}
-  {{file-reader onready="onFileReaderReady" onread="onread" accept=accept multiple=multiple}}
-{{else if (x-eq handler 'uploader')}}
-  {{file-uploader onready="onFileReaderReady" onchange="onchange" ondrop="ondrop" accept=accept multiple=multiple}}
-{{/if}}

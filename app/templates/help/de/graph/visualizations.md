@@ -1,1 +1,0 @@
-Statistische Werte in Formen oder Farben wiederzugeben ist ein zentraler Schritt der Kartengestaltung. Je nach Datengrundlage sind manche Arten der Darstellung passender als andere. Versuchen Sie möglichst mehrdeutige oder schwer verständliche Karten zu vermeiden. Denken Sie an den Wesenskern ihrer Daten, was macht Ihre Daten aus?
