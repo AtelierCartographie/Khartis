@@ -1345,6 +1345,402 @@ module.exports = function(environment) {
           source: "FR-dico-COM-2017/FRA50.json",
           identifier: "ID"
         }
+      },
+      {
+        id: "FR-11 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-11.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-24 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-24.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-27 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-27.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-28 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-28.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-32 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-32.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-44 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-44.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-52 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-52.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-53 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-53.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-75 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-75.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-76 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-76.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-84 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-84.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-93 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-93.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-94 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FR-94.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA10 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FRA10.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FRA10.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA20 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FRA20.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FRA20.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA30 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FRA30.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FRA30.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA40 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FRA40.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FRA40.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA50 com 2021",
+        attribution: "basemap from Admin Express IGN 2021",
+        sources: [
+          {source: "FR-com-2021/FRA50.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2021/FRA50.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-11 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-11.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-11.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-24 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-24.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-24.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-27 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-27.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-27.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-28 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-28.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-28.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-32 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-32.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-32.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-44 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-44.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-44.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-52 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-52.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-52.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-53 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-53.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-53.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-75 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-75.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-75.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-76 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-76.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-76.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-84 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-84.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-84.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-93 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-93.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-93.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FR-94 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FR-94.json", projection: "d3.geoConicConformal()", transforms:{rotate: [-3, -46.5], parallels: [44, 49]}, scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FR-94.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA10 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FRA10.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FRA10.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA20 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FRA20.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FRA20.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA30 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FRA30.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FRA30.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA40 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FRA40.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FRA40.json",
+          identifier: "ID"
+        }
+      },
+      {
+        id: "FRA50 com 2022",
+        attribution: "basemap from Admin Express IGN 2022",
+        sources: [
+          {source: "FR-com-2022/FRA50.json", projection: "d3.geoMercator()", scale: 1, zoning: [[0, 0], [1, 1]]}
+        ],
+        dictionary: {
+          source: "FR-dico-COM-2022/FRA50.json",
+          identifier: "ID"
+        }
       }
 
     ],
