@@ -254,7 +254,7 @@ module.exports = function(environment) {
         "name": "Plate carrée",
         "scale": 150,
         "d3_geo": "d3.geoEquirectangular()",
-        "d3_link": "http://bl.ocks.org/mbostock/3757119",
+        "d3_link": "https://observablehq.com/@d3/equirectangular",
         "center": "longitude",
         "score_area": 2,
         "score_angle": 2,
