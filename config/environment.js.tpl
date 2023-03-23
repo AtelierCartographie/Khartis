@@ -222,7 +222,7 @@ module.exports = function(environment) {
         "scale": 118,
         "d3_geo": "d3.geoPolyhedralWaterman()",
         "rotate": [20,0],
-        "d3_link": "http://bl.ocks.org/mbostock/4458497",
+        "d3_link": "https://observablehq.com/@d3/watermans-butterfly",
         "rotate_alternative": [-160,0],
         "score_area": 3,
         "score_angle": 3,
