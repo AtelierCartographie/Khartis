@@ -6,7 +6,7 @@ stages:
 
 build:
   stage: build
-  image: node:10.23.0-alpine3.9
+  image: node:12.20.0-alpine3.9
   script:
     - apk add --update git python2 py2-setuptools
     - easy_install-2.7 pip==20.3.4
