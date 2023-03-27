@@ -287,7 +287,7 @@ module.exports = function(environment) {
         "name": "Mercator",
         "scale": "(width + 1) / 2 / Math.PI",
         "d3_geo": "d3.geoMercator()",
-        "d3_link": "http://bl.ocks.org/mbostock/3757132",
+        "d3_link": "https://observablehq.com/@d3/mercator",
         "center": "longitude and latitude",
         "score_area": 1,
         "score_angle": 4,
