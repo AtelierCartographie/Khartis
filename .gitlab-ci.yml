@@ -11,6 +11,7 @@ build:
     - apk add --update git python2 py2-setuptools
     - easy_install-2.7 pip==20.3.4
     - pip install mkdocs==1.0.4 mkdocs-material==4.5.0
+    - yarn config set network-timeout 600000 -g
     - yarn install
     - cp config/environment.js.tpl config/environment.js
     - ./node_modules/.bin/ember khartis:build --environment=production --thumbnails=false
