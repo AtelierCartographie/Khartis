@@ -10,6 +10,7 @@ build:
   script:
     - apk add --update git python2 py2-setuptools
     - easy_install-2.7 pip==20.3.4
+    - pip install "cython<3.0.0"
     - pip install mkdocs==1.0.4 mkdocs-material==4.5.0
     - yarn install --network-timeout 600000
     - cp config/environment.js.tpl config/environment.js
