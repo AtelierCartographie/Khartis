@@ -17,6 +17,7 @@ copyright: Creative Commons CC BY NC ND
 # Repository
 repo_name: 'AtelierCartographie/Khartis'
 repo_url: 'https://github.com/AtelierCartographie/Khartis'
+edit_uri: edit/master/public/documentation/docs/
 
 # Theme and options
 theme:
